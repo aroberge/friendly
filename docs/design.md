@@ -25,6 +25,15 @@ except Exception:
 It should be possible to translate almost all the text provided.
 Some exceptions and examples will be given below.
 
+The determination of which language is used to provide translations
+is normally determined by using Python's `locale.getdefaultlocale()`.
+However, it can be over-ridden in the following way, in order
+of precedence:
+
+1. Using `friendly_traceback.set_lang(lang)`
+2. Using the environment variable os.environ['FriendlyTracebackLang']
+3. Using variables found in a `.friendly_traceback.ini` file
+
 ## Verbosity
 
 There should be different levels of verbosity.
@@ -93,6 +102,15 @@ similar to what is provided by https://github.com/albertz/py_better_exchook
 In addition to what would be provided by the intermediate version,
 the advanced version would have the normal Python traceback appended at the end.
 
+### Setting the verbosity level
+
+This could be done when using `friendly_traceback` explicitly in the
+program, as an option in the calling function.
+
+If no such option is provided, then it should be set either from
+the local environment variables (as for the language) or from a global
+`.ini` file.
+
 ## Extensibility
 
 For projects that have their custom Exceptions, like AvantPy, it should
@@ -118,3 +136,17 @@ use one of these packages to do this analysis when an error is found,
 or to develop a simplified version that focuses on Syntax Errors,
 and is designed from the start to provide localized (i.e. translated)
 information.
+
+## Additional configuration
+
+It should be possible to add some colours to various parts of the
+traceback information; however, this should likely be done only
+
+1. if friendly_traceback is embedded in another application which has
+   full control over its display (some terminal emulators might not
+   support control characters required for colours - or do so in
+   a way that might be counter productive)
+2. Based on values found in a `.ini` file.
+
+This additional feature should only be implemented after all other
+issues have been dealt with.
