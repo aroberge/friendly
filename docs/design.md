@@ -20,6 +20,9 @@ except Exception:
     friendly_traceback.explain(*sys.exc_info())
 ```
 
+By default, friendly tracebacks will be written to sys.stderr.
+However, it should be possible to override this choice.
+
 ## Localization
 
 It should be possible to translate almost all the text provided.

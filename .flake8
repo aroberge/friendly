@@ -1,0 +1,13 @@
+[flake8]
+max-line-length = 88
+exclude =
+    # No need to traverse our git directory
+    .git/*,
+    # There's no value in checking cache directories
+    __pycache__,
+    # documentation, to be ignored
+    docs/*,
+    # This contains our tests directory
+    tests/*
+builtins =
+    _
