@@ -153,3 +153,22 @@ traceback information; however, this should likely be done only
 
 This additional feature should only be implemented after all other
 issues have been dealt with.
+
+## Other similar projects
+
+Many other projects do some enhanced traceback formatting, however
+none that we know of aim at
+
+1. making tracebacks easier to understand by beginners
+2. translating traceback information.
+
+Still, there is much to learn by looking at what others are doing.
+The following is an incomplete list of projects or modules to look at:
+
+- https://docs.python.org/3/library/cgitb.html
+- https://github.com/albertz/py_better_exchook/
+- https://github.com/Infinidat/infi.traceback
+- https://github.com/laurb9/rich-traceback
+- http://www.wotevah.com/code/log.py
+- https://github.com/ipython/ipython/blob/master/IPython/core/ultratb.py
+- https://github.com/patrys/great-justice

@@ -1,4 +1,5 @@
 """Contains a function that should raise NameError"""
+# flake8: noqa
 
 
 def test():
