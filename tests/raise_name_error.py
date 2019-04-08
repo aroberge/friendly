@@ -7,3 +7,8 @@ def test():
     a = 1
     b = c
     d = 3
+
+if __name__ == "__main__":
+    import friendly_traceback
+    friendly_traceback.install()
+    test()

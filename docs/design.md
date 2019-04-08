@@ -172,3 +172,4 @@ The following is an incomplete list of projects or modules to look at:
 - http://www.wotevah.com/code/log.py
 - https://github.com/ipython/ipython/blob/master/IPython/core/ultratb.py
 - https://github.com/patrys/great-justice
+- https://github.com/Qix-/better-exceptions

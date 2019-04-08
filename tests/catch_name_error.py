@@ -13,7 +13,7 @@ def test_name_error():
     except Exception:
         friendly_traceback.explain(*sys.exc_info(), redirect="capture")
     result = friendly_traceback.get_output()
-    assert "NameError" in result
+    assert "NameError: name 'c' is not defined" in result
     return result
 
 
@@ -28,7 +28,7 @@ def test_flush():
     except Exception:
         friendly_traceback.explain(*sys.exc_info(), redirect="capture")
     result = friendly_traceback.get_output(flush=False)
-    assert "NameError" in result
+    assert "NameError: name 'c' is not defined" in result
     result = friendly_traceback.get_output()  # flushes
     result = friendly_traceback.get_output()  # returns empty list
     assert not result
