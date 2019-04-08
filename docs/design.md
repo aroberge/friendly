@@ -2,7 +2,7 @@
 
 ## Basic usage
 
-There should be two ways of using friendly-traceback.
+There should be three ways of using friendly-traceback.
 
 1. As an import hook
 
@@ -11,13 +11,19 @@ import friendly_traceback
 friendly_traceback.install()  # sys.excepthook = friendly_traceback.explain
 ```
 
-2.Catching exceptions locally
+2. Catching exceptions locally
 
 ```py
 try:
     # Some code
 except Exception:
     friendly_traceback.explain(*sys.exc_info())
+```
+
+3. When launching a Python script (or the REPL)
+
+```bash
+python -m friendly_traceback myscript.py
 ```
 
 By default, friendly tracebacks will be written to sys.stderr.
