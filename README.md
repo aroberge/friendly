@@ -1,7 +1,7 @@
 # friendly-traceback
 Aimed at Python beginners: replacing standard traceback by something easier to understand, translatable into various languages.
 
-Some examples to follow.
+[See the documentation here](https://aroberge.github.io/friendly-traceback/docs/html/)
 
 
 ## Code of Conduct
