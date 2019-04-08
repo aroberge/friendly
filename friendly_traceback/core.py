@@ -61,7 +61,7 @@ class _State:
         self.write_err = _write_err
         lang, _ = locale.getdefaultlocale()
         self.install_gettext("en")
-        self.level = 2
+        self.level = 0
 
     def explain(self, etype, value, tb, redirect=None):
         """Replaces a standard traceback by a friendlier one"""
@@ -145,6 +145,7 @@ class _State:
         )
 
     def give_likely_cause(self, name, etype, value):
+        value = str(value)
         if name in get_cause:
             explanation = get_cause[name](etype, value)
         else:
@@ -198,12 +199,16 @@ class _State:
         Replaces sys.excepthook by friendly_traceback's own version
         """
         sys.excepthook = self.explain
+
         if lang is not None:
             self.install_gettext(lang)
-        if self.redirect == "capture":
-            self.write_err == self.capture
-        elif self.redirect is not None:
+        if redirect == "capture":
+            self.write_err = self.capture
+        elif redirect is not None:
             self.write_err = self.redirect
+
+        if redirect is not None:
+            self.redirect = redirect
 
 
 state = _State()

@@ -1,6 +1,13 @@
 """Basic information about Python exceptions"""
 
 
+def indentation_error(*args):
+    return _(
+        "    An indentation error occurs when a given line is\n"
+        "    not indented (aligned vertically) as expected.\n"
+    )
+
+
 def name_error(*args):
     return _(
         "    A NameError exception indicates that a variable or\n"
@@ -15,4 +22,8 @@ def unknown(*args):
     return _("    No information is known about this exception.\n")
 
 
-generic = {"NameError": name_error, "Unknown": unknown}
+generic = {
+    "IndentationError": indentation_error,
+    "NameError": name_error,
+    "Unknown": unknown,
+}
