@@ -9,6 +9,7 @@ import os
 import sys
 
 from .generic_info import generic
+from .specific_info import get_cause
 
 
 __all__ = ["install", "get_output", "explain"]
@@ -65,10 +66,11 @@ class _State:
         elif redirect is not None:
             self.write_err = redirect
 
-        self.give_generic_explanation(etype.__name__, value)
+        name = etype.__name__
+        self.give_generic_explanation(name, value)
 
         records = inspect.getinnerframes(tb, self.context)
-        # self.give_likely_cause(etype, value)
+        self.give_likely_cause(name, etype, value)
 
         last_call = records[0]
         if len(records) > 1:
@@ -122,16 +124,27 @@ class _State:
            error.
         """
         if name in generic:
-            explanation = generic[name]
+            explanation = generic[name]()
         else:
-            explanation = generic["Unknown"]
+            explanation = generic["Unknown"]()
         self.write_err(
             _(
                 "\n"
                 "    Python exception: \n"
                 "        {name}: {value}\n\n"
-                "{explanation}\n"
-            ).format(name=name, value=value, explanation=explanation())
+                "{explanation}"
+            ).format(name=name, value=value, explanation=explanation)
+        )
+
+    def give_likely_cause(self, name, etype, value):
+        if name in get_cause:
+            explanation = get_cause[name](etype, value)
+        else:
+            return
+        self.write_err(
+            _("\n" "    Likely cause: \n" "{explanation}").format(
+                name=name, value=value, explanation=explanation
+            )
         )
 
     def get_captured(self, flush=True):
