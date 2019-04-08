@@ -10,6 +10,7 @@ any language.
 
     This is pre-alpha software, currently in development.
 
+More info to be added soon.
 
 .. toctree::
    :maxdepth: 2
