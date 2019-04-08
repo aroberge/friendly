@@ -129,6 +129,17 @@ of precedence:</p>
 <li>Using the environment variable <code class="docutils literal notranslate"><span class="pre">os.environ['FriendlyTracebackLang']</span></code></li>
 <li>Using variables found in a <code class="docutils literal notranslate"><span class="pre">.friendly_traceback.ini</span></code> file</li>
 </ol>
+<p>The information provided by <code class="docutils literal notranslate"><span class="pre">locale.getdefaultlocale()</span></code> includes
+not only a language code, but information about a specific region as well.
+For example, on my computer, this is <code class="docutils literal notranslate"><span class="pre">fr_CA</span></code>. As far as I can tell,
+gettext does not have a graceful fallback from the specific (“fr_CA”)
+to the generic (“fr”); it does have the option of having a fallback
+to the version hard-coded in a program.
+What we have done is including the possibility
+of loading a specific translation with no fallback. If an exception is
+raised, we then reduce the length of the language code to the first two
+characters, and attempt to load the translation while using
+gettext’s option of falling back to the hard-coded version if needed.</p>
 </div>
 <div class="section" id="verbosity">
 <h2>Verbosity<a class="headerlink" href="#verbosity" title="Permalink to this headline">¶</a></h2>
@@ -166,6 +177,7 @@ and their values, similar to what is provided by
 <h3>3. Advanced<a class="headerlink" href="#advanced" title="Permalink to this headline">¶</a></h3>
 <p>In addition to what would be provided by the intermediate version,
 the advanced version would have the normal Python traceback appended at the end.</p>
+<a class="reference internal image-reference" href="_images/name_error_with_tb.png"><img alt="NameError traceback in English" src="_images/name_error_with_tb.png" style="width: 507.5px; height: 545.5px;" /></a>
 </div>
 <div class="section" id="setting-the-verbosity-level">
 <h3>Setting the verbosity level<a class="headerlink" href="#setting-the-verbosity-level" title="Permalink to this headline">¶</a></h3>
