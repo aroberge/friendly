@@ -1,4 +1,4 @@
-"""install.py
+"""core.py
 
 Just a first draft as proof of concept.
 """
