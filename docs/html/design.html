@@ -135,55 +135,25 @@ of precedence:</p>
 <p>There should be different levels of verbosity.</p>
 <div class="section" id="basic">
 <h3>1. Basic<a class="headerlink" href="#basic" title="Permalink to this headline">¶</a></h3>
-<p>A basic level would include four parts:</p>
+<p>A basic level would include five parts:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>A single line, introduced by <em>Python Exception:</em> showing the <strong>untranslated</strong> information from Python</li>
-<li>A section explaining what is normally meant by a given Exception</li>
-<li>A section showing the likely cause of the error.</li>
+<li>A single line, introduced by “Python Exception:”, or its equivalent in
+some other language, and showing the <strong>untranslated</strong> information from Python.</li>
+<li>A section explaining what is normally meant by that Exception</li>
+<li>A section explaining the likely cause of the error. For the English version,
+other than for SyntaxError, it often will be just rephrasing the standard
+Python message.</li>
+<li>and 5. Unlike normal Python tracebacks, which shows the entire calling
+history, we only show where the program stopped, and where the exception
+was generated.</li>
 </ol>
 </div></blockquote>
 <p>For example, in English:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Python</span> <span class="n">exception</span><span class="p">:</span>
-    <span class="ne">NameError</span><span class="p">:</span> <span class="n">name</span> <span class="s1">&#39;c&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
-
-<span class="n">Error</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;filename.py&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">4.</span>
-
-   <span class="mi">3</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="o">--&gt;</span><span class="mi">4</span><span class="p">:</span> <span class="n">b</span> <span class="o">=</span> <span class="n">c</span>
-   <span class="mi">5</span><span class="p">:</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">3</span>
-
-<span class="n">A</span> <span class="ne">NameError</span> <span class="n">exception</span> <span class="n">indicates</span> <span class="n">that</span> <span class="n">a</span> <span class="n">variable</span> <span class="ow">or</span>
-<span class="n">function</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">known</span> <span class="n">to</span> <span class="n">Python</span><span class="o">.</span>
-<span class="n">Most</span> <span class="n">often</span><span class="p">,</span> <span class="n">this</span> <span class="ow">is</span> <span class="n">because</span> <span class="n">there</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">spelling</span> <span class="n">mistake</span><span class="p">;</span>
-<span class="n">however</span><span class="p">,</span> <span class="n">sometimes</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">because</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">used</span>
-<span class="n">before</span> <span class="n">being</span> <span class="n">defined</span> <span class="ow">or</span> <span class="n">given</span> <span class="n">a</span> <span class="n">value</span><span class="o">.</span>
-
-<span class="n">Likely</span> <span class="n">cause</span><span class="p">:</span>
-    <span class="n">In</span> <span class="n">your</span> <span class="n">program</span><span class="p">,</span> <span class="n">the</span> <span class="n">unknown</span> <span class="n">name</span> <span class="ow">is</span> <span class="s1">&#39;c&#39;</span><span class="o">.</span>
-</pre></div>
-</div>
-<p>The corresponding French version:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">Python</span><span class="p">:</span>
-    <span class="ne">NameError</span><span class="p">:</span> <span class="n">name</span> <span class="s1">&#39;c&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
-
-<span class="n">Erreur</span> <span class="n">trouvée</span> <span class="n">dans</span> <span class="n">le</span> <span class="n">fichier</span> <span class="s1">&#39;filename.py&#39;</span> <span class="n">à</span> <span class="n">la</span> <span class="n">ligne</span> <span class="mf">4.</span>
-
-   <span class="mi">3</span><span class="p">:</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="o">--&gt;</span><span class="mi">4</span><span class="p">:</span> <span class="n">b</span> <span class="o">=</span> <span class="n">c</span>
-   <span class="mi">5</span><span class="p">:</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">3</span>
-
-<span class="n">Une</span> <span class="n">exception</span> <span class="n">de</span> <span class="nb">type</span> <span class="ne">NameError</span> <span class="n">indique</span> <span class="n">que</span> <span class="n">le</span> <span class="n">nom</span> <span class="n">d</span><span class="s1">&#39;une variable</span>
-<span class="n">ou</span> <span class="n">d</span><span class="s1">&#39;une fonction utilisée dans votre programme est inconnu par Python.</span>
-<span class="n">Le</span> <span class="n">plus</span> <span class="n">souvent</span><span class="p">,</span> <span class="n">ceci</span> <span class="n">se</span> <span class="n">produit</span> <span class="n">parce</span> <span class="n">que</span> <span class="n">vous</span> <span class="n">faites</span> <span class="n">une</span> <span class="n">faute</span>
-<span class="n">d</span><span class="s1">&#39;orthographe dans l&#39;</span><span class="n">écriture</span> <span class="n">de</span> <span class="n">votre</span> <span class="n">variable</span> <span class="n">ou</span> <span class="n">de</span> <span class="n">votre</span> <span class="n">fonction</span><span class="p">;</span>
-<span class="n">ceci</span> <span class="n">peut</span> <span class="n">également</span> <span class="n">se</span> <span class="n">produire</span> <span class="n">si</span> <span class="n">vous</span> <span class="n">invoquez</span> <span class="n">cette</span> <span class="n">fonction</span> <span class="n">ou</span> <span class="n">utilisez</span>
-<span class="n">cette</span> <span class="n">variable</span> <span class="n">sans</span> <span class="n">l</span><span class="s1">&#39;avoir définie auparavant.</span>
-
-<span class="n">Cause</span> <span class="n">probable</span><span class="p">:</span>
-    <span class="n">Dans</span> <span class="n">votre</span> <span class="n">programme</span><span class="p">,</span> <span class="n">le</span> <span class="n">nom</span> <span class="n">inconnu</span> <span class="n">est</span> <span class="s1">&#39;c&#39;</span><span class="o">.</span>
-</pre></div>
-</div>
+<a class="reference internal image-reference" href="_images/name_error.png"><img alt="NameError traceback in English" src="_images/name_error.png" style="width: 503.0px; height: 429.5px;" /></a>
+<p>The corresponding French version, where the highlighted blocks 1 and 3 are
+translated, and the block 2 is the same as that given by Python in English.</p>
+<a class="reference internal image-reference" href="_images/name_error_fr.png"><img alt="NameError traceback in French" src="_images/name_error_fr.png" style="width: 598.5px; height: 403.0px;" /></a>
 </div>
 <div class="section" id="intermediate">
 <h3>2. Intermediate<a class="headerlink" href="#intermediate" title="Permalink to this headline">¶</a></h3>

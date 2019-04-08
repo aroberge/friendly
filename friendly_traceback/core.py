@@ -5,8 +5,10 @@ Just a first draft as proof of concept.
 
 import gettext
 import inspect
+import locale
 import os
 import sys
+import traceback
 
 from .generic_info import generic
 from .specific_info import get_cause
@@ -57,7 +59,9 @@ class _State:
         self.redirect = None
         self.context = 3
         self.write_err = _write_err
+        lang, _ = locale.getdefaultlocale()
         self.install_gettext("en")
+        self.level = 2
 
     def explain(self, etype, value, tb, redirect=None):
         """Replaces a standard traceback by a friendlier one"""
@@ -86,6 +90,10 @@ class _State:
             _frame, filename, linenumber, _func, lines, index = origin
             info = self.get_source_info(filename, linenumber, lines, index)
             self.show_source_info(info, last_call=False)
+
+        if self.level == 2:
+            python_tb = traceback.format_exception(etype, value, tb)
+            self.write_err("\n" + "".join(python_tb) + "\n")
 
     def get_source_info(self, filename, linenumber, lines, index):
         if filename and os.path.abspath(filename):
@@ -160,14 +168,25 @@ class _State:
 
     def install_gettext(self, lang):
         """Sets the current language for gettext."""
-        gettext_lang = gettext.translation(
-            lang,
-            localedir=os.path.normpath(
-                os.path.join(os.path.dirname(__file__), "locales")
-            ),
-            languages=[lang],
-            fallback=True,
-        )
+        try:
+            gettext_lang = gettext.translation(
+                lang,
+                localedir=os.path.normpath(
+                    os.path.join(os.path.dirname(__file__), "locales")
+                ),
+                languages=[lang],
+                fallback=False,
+            )
+        except FileNotFoundError:
+            lang = lang[:2]
+            gettext_lang = gettext.translation(
+                lang,
+                localedir=os.path.normpath(
+                    os.path.join(os.path.dirname(__file__), "locales")
+                ),
+                languages=[lang],
+                fallback=True,
+            )
         gettext_lang.install()
 
     def write_err(self, text):

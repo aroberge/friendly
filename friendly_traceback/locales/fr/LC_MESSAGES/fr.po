@@ -1,0 +1,100 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2019-04-08 13:55-0300\n"
+"PO-Revision-Date: 2019-04-08 14:01-0300\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Generator: Poedit 2.2.1\n"
+"Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
+
+#: core.py:43
+msgid ""
+"\n"
+"    Error found in file '{filename}' on line {linenumber}.\n"
+"\n"
+"{partial_source}\n"
+msgstr ""
+"\n"
+"    Erreur trouvée dans le fichier '{filename}' à la ligne {linenumber}.\n"
+"\n"
+"{partial_source}\n"
+
+#: core.py:105
+msgid ""
+"\n"
+"    Execution stopped in file '{filename}' on line {linenumber}.\n"
+"\n"
+"{source}\n"
+msgstr ""
+"\n"
+"    L'exécution s'est arrêtée à la ligne {linenumber} du fichier '{filename}'\n"
+"\n"
+"{source}\n"
+
+#: core.py:113
+msgid ""
+"\n"
+"    Exception raised in file '{filename}' on line {linenumber}.\n"
+"\n"
+"{source}\n"
+msgstr ""
+"\n"
+"    Exception levée dans le fichier '{filename}' à la ligne {linenumber}.\n"
+"\n"
+"{source}\n"
+
+#: core.py:131
+msgid ""
+"\n"
+"    Python exception: \n"
+"        {name}: {value}\n"
+"\n"
+"{explanation}"
+msgstr ""
+"\n"
+"    Exception Python: \n"
+"        {name}: {value}\n"
+"\n"
+"{explanation}"
+
+#: core.py:145
+msgid ""
+"\n"
+"    Likely cause: \n"
+"{explanation}"
+msgstr ""
+"\n"
+"    Cause probable : \n"
+"{explanation}"
+
+#: generic_info.py:5
+msgid ""
+"    A NameError exception indicates that a variable or\n"
+"    function name is not known to Python.\n"
+"    Most often, this is because there is a spelling mistake.\n"
+"    However, sometimes it is because the name is used\n"
+"    before being defined or given a value.\n"
+msgstr ""
+"    Une exception NameError indique que le nom d'une variable\n"
+"    ou d'une fonction n'est pas connue par Python.\n"
+"    Habituellement, ceci indique une simple faute d'orthographe.\n"
+"    Cependant, cela peut également indiquer que le nom a été\n"
+"    utilisé avant qu'on ne lui ait associé une valeur.\n"
+
+#: generic_info.py:15
+msgid "    No information is known about this exception.\n"
+msgstr "    Aucune information n'est connue au sujet de cette exception.\n"
+
+#: specific_info.py:10
+msgid "        In your program, the unknown name is '{var_name}'.\n"
+msgstr "        Dans votre programme, le nom inconnu est '{var_name}'.\n"

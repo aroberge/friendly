@@ -49,6 +49,19 @@ of precedence:
 2. Using the environment variable ``os.environ['FriendlyTracebackLang']``
 3. Using variables found in a ``.friendly_traceback.ini`` file
 
+The information provided by ``locale.getdefaultlocale()`` includes
+not only a language code, but information about a specific region as well.
+For example, on my computer, this is ``fr_CA``. As far as I can tell,
+gettext does not have a graceful fallback from the specific ("fr_CA")
+to the generic ("fr"); it does have the option of having a fallback
+to the version hard-coded in a program.
+What we have done is including the possibility
+of loading a specific translation with no fallback. If an exception is
+raised, we then reduce the length of the language code to the first two
+characters, and attempt to load the translation while using
+gettext's option of falling back to the hard-coded version if needed.
+
+
 Verbosity
 ------------
 
@@ -56,54 +69,31 @@ There should be different levels of verbosity.
 
 1. Basic
 ~~~~~~~~
+A basic level would include five parts:
 
-A basic level would include four parts:
+  1. A single line, introduced by "Python Exception:", or its equivalent in
+     some other language, and showing the **untranslated** information from Python.
+  2. A section explaining what is normally meant by that Exception
+  3. A section explaining the likely cause of the error. For the English version,
+     other than for SyntaxError, it often will be just rephrasing the standard
+     Python message.
+  4. and 5. Unlike normal Python tracebacks, which shows the entire calling
+     history, we only show where the program stopped, and where the exception
+     was generated.
 
-  1. A single line, introduced by *Python Exception:* showing the **untranslated** information from Python
-  2. A section explaining what is normally meant by a given Exception
-  3. A section showing the likely cause of the error.
+For example, in English:
 
-For example, in English::
-
-    Python exception:
-        NameError: name 'c' is not defined
-
-    Error found in file 'filename.py' on line 4.
-
-       3: a = 1
-    -->4: b = c
-       5: d = 3
-
-    A NameError exception indicates that a variable or
-    function name is not known to Python.
-    Most often, this is because there is a spelling mistake;
-    however, sometimes it is because it is used
-    before being defined or given a value.
-
-    Likely cause:
-        In your program, the unknown name is 'c'.
+.. image:: images/name_error.png
+   :scale: 50 %
+   :alt: NameError traceback in English
 
 
-The corresponding French version::
+The corresponding French version, where the highlighted blocks 1 and 3 are
+translated, and the block 2 is the same as that given by Python in English.
 
-    Exception Python:
-        NameError: name 'c' is not defined
-
-    Erreur trouvée dans le fichier 'filename.py' à la ligne 4.
-
-       3: a = 1
-    -->4: b = c
-       5: d = 3
-
-    Une exception de type NameError indique que le nom d'une variable
-    ou d'une fonction utilisée dans votre programme est inconnu par Python.
-    Le plus souvent, ceci se produit parce que vous faites une faute
-    d'orthographe dans l'écriture de votre variable ou de votre fonction;
-    ceci peut également se produire si vous invoquez cette fonction ou utilisez
-    cette variable sans l'avoir définie auparavant.
-
-    Cause probable:
-        Dans votre programme, le nom inconnu est 'c'.
+.. image:: images/name_error_fr.png
+   :scale: 50 %
+   :alt: NameError traceback in French
 
 
 2. Intermediate
@@ -119,6 +109,10 @@ https://github.com/albertz/py_better_exchook
 
 In addition to what would be provided by the intermediate version,
 the advanced version would have the normal Python traceback appended at the end.
+
+.. image:: images/name_error_with_tb.png
+   :scale: 50 %
+   :alt: NameError traceback in English
 
 Setting the verbosity level
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
