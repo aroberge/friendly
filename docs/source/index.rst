@@ -17,6 +17,7 @@ More info to be added soon.
    :caption: Contents:
 
     Design <design>
+    Change Log <changelog>
 
 
 .. todolist::

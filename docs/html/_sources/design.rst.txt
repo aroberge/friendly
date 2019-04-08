@@ -114,6 +114,12 @@ the advanced version would have the normal Python traceback appended at the end.
    :scale: 50 %
    :alt: NameError traceback in English
 
+In the example given above, it is easy to see the relation between the
+standard Python traceback and the additional information we provide.
+In more general situations, the Python traceback will be much longer,
+and likely much more confusing to beginners.  Still, by giving the
+option of including it, we believe it might ease the learning curve for students.
+
 Setting the verbosity level
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
