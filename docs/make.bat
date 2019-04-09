@@ -9,8 +9,10 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=source
 set BUILDDIR=.
+set CLEANDIR=html
 
 if "%1" == "" goto help
+if "%1" == "clean" goto clean
 
 %SPHINXBUILD% >NUL 2>NUL
 if errorlevel 9009 (
@@ -26,6 +28,10 @@ if errorlevel 9009 (
 )
 
 %SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
+goto end
+
+:clean
+%SPHINXBUILD% -M %1 %SOURCEDIR% %CLEANDIR% %SPHINXOPTS%
 goto end
 
 :help
