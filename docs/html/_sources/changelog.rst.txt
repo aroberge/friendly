@@ -1,6 +1,8 @@
 Change Log
 ============
 
+- Added IndentationError
+- Fixed install() option with capture
 
 Version 0.0.2
 -------------

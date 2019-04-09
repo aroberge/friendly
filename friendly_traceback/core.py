@@ -145,14 +145,13 @@ class _State:
         )
 
     def give_likely_cause(self, name, etype, value):
-        value = str(value)
         if name in get_cause:
             explanation = get_cause[name](etype, value)
         else:
             return
         self.write_err(
             _("\n" "    Likely cause: \n" "{explanation}").format(
-                name=name, value=value, explanation=explanation
+                name=name, value=str(value), explanation=explanation
             )
         )
 

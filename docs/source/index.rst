@@ -17,6 +17,8 @@ More info to be added soon.
    :caption: Contents:
 
     Design <design>
+    Friendly tracebacks - in English <tracebacks_en>
+    Friendly tracebacks - en Français <tracebacks_fr>
     Change Log <changelog>
 
 
