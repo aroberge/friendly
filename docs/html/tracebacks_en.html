@@ -98,110 +98,112 @@ documentation using Sphinx.</p>
 Python version: 3.7.0</p>
 <div class="section" id="indentationerror-1-expected-an-indented-block">
 <h2>IndentationError - 1: expected an indented block<a class="headerlink" href="#indentationerror-1-expected-an-indented-block" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Python</span> <span class="n">exception</span><span class="p">:</span>
-    <span class="ne">IndentationError</span><span class="p">:</span> <span class="n">expected</span> <span class="n">an</span> <span class="n">indented</span> <span class="n">block</span> <span class="p">(</span><span class="n">raise_indentation_error1</span><span class="o">.</span><span class="n">py</span><span class="p">,</span> <span class="n">line</span> <span class="mi">4</span><span class="p">)</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    IndentationError: expected an indented block (raise_indentation_error1.py, line 4)
 
-<span class="n">An</span> <span class="n">indentation</span> <span class="n">error</span> <span class="n">occurs</span> <span class="n">when</span> <span class="n">a</span> <span class="n">given</span> <span class="n">line</span> <span class="ow">is</span>
-<span class="ow">not</span> <span class="n">indented</span> <span class="p">(</span><span class="n">aligned</span> <span class="n">vertically</span><span class="p">)</span> <span class="k">as</span> <span class="n">expected</span><span class="o">.</span>
+An indentation error occurs when a given line is
+not indented (aligned vertically) as expected.
 
-<span class="n">Likely</span> <span class="n">cause</span><span class="p">:</span>
 
-    <span class="n">Line</span> <span class="mi">4</span><span class="p">:</span> <span class="k">pass</span>
+    Line 4: pass
 
-    <span class="n">File</span><span class="p">:</span> <span class="n">raise_indentation_error1</span><span class="o">.</span><span class="n">py</span>
+    File: raise_indentation_error1.py
 
-    <span class="n">In</span> <span class="n">this</span> <span class="n">case</span><span class="p">,</span> <span class="n">the</span> <span class="n">line</span> <span class="n">identified</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">file</span> <span class="n">above</span>
-    <span class="n">was</span> <span class="n">expected</span> <span class="n">to</span> <span class="n">begin</span> <span class="n">a</span> <span class="n">new</span> <span class="n">indented</span> <span class="n">block</span><span class="o">.</span>
+    In this case, the line identified in the file above
+    was expected to begin a new indented block.
 
-<span class="n">Execution</span> <span class="n">stopped</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;tb_common.py&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">46.</span>
 
-   <span class="mi">45</span><span class="p">:</span>                 <span class="k">try</span><span class="p">:</span>
-<span class="o">--&gt;</span><span class="mi">46</span><span class="p">:</span>                     <span class="n">mod</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-   <span class="mi">47</span><span class="p">:</span>                     <span class="k">if</span> <span class="n">function</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+Execution stopped on line 46 of file &#39;tb_common.py&#39;.
+
+   44:                 make_title(title)
+   45:                 try:
+--&gt;46:                     mod = __import__(name)
+   47:                     if function is not None:
 </pre></div>
 </div>
 </div>
 <div class="section" id="indentationerror-2-unexpected-indent">
 <h2>IndentationError - 2: unexpected indent<a class="headerlink" href="#indentationerror-2-unexpected-indent" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Python</span> <span class="n">exception</span><span class="p">:</span>
-    <span class="ne">IndentationError</span><span class="p">:</span> <span class="n">unexpected</span> <span class="n">indent</span> <span class="p">(</span><span class="n">raise_indentation_error2</span><span class="o">.</span><span class="n">py</span><span class="p">,</span> <span class="n">line</span> <span class="mi">4</span><span class="p">)</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    IndentationError: unexpected indent (raise_indentation_error2.py, line 4)
 
-<span class="n">An</span> <span class="n">indentation</span> <span class="n">error</span> <span class="n">occurs</span> <span class="n">when</span> <span class="n">a</span> <span class="n">given</span> <span class="n">line</span> <span class="ow">is</span>
-<span class="ow">not</span> <span class="n">indented</span> <span class="p">(</span><span class="n">aligned</span> <span class="n">vertically</span><span class="p">)</span> <span class="k">as</span> <span class="n">expected</span><span class="o">.</span>
+An indentation error occurs when a given line is
+not indented (aligned vertically) as expected.
 
-<span class="n">Likely</span> <span class="n">cause</span><span class="p">:</span>
 
-    <span class="n">Line</span> <span class="mi">4</span><span class="p">:</span>       <span class="k">pass</span>
+    Line 4:       pass
 
-    <span class="n">File</span><span class="p">:</span> <span class="n">raise_indentation_error2</span><span class="o">.</span><span class="n">py</span>
+    File: raise_indentation_error2.py
 
-    <span class="n">In</span> <span class="n">this</span> <span class="n">case</span><span class="p">,</span> <span class="n">the</span> <span class="n">line</span> <span class="n">identified</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">file</span> <span class="n">above</span>
-    <span class="ow">is</span> <span class="n">more</span> <span class="n">indented</span> <span class="n">than</span> <span class="n">expected</span> <span class="ow">and</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">match</span>
-    <span class="n">the</span> <span class="n">indentation</span> <span class="n">of</span> <span class="n">the</span> <span class="n">previous</span> <span class="n">line</span><span class="o">.</span>
+    In this case, the line identified in the file above
+    is more indented than expected and does not match
+    the indentation of the previous line.
 
-<span class="n">Execution</span> <span class="n">stopped</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;tb_common.py&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">46.</span>
 
-   <span class="mi">45</span><span class="p">:</span>                 <span class="k">try</span><span class="p">:</span>
-<span class="o">--&gt;</span><span class="mi">46</span><span class="p">:</span>                     <span class="n">mod</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-   <span class="mi">47</span><span class="p">:</span>                     <span class="k">if</span> <span class="n">function</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+Execution stopped on line 46 of file &#39;tb_common.py&#39;.
+
+   44:                 make_title(title)
+   45:                 try:
+--&gt;46:                     mod = __import__(name)
+   47:                     if function is not None:
 </pre></div>
 </div>
 </div>
 <div class="section" id="indentationerror-3-no-match">
 <h2>IndentationError - 3: no match …<a class="headerlink" href="#indentationerror-3-no-match" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Python</span> <span class="n">exception</span><span class="p">:</span>
-    <span class="ne">IndentationError</span><span class="p">:</span> <span class="n">unindent</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">match</span> <span class="nb">any</span> <span class="n">outer</span> <span class="n">indentation</span> <span class="n">level</span> <span class="p">(</span><span class="n">raise_indentation_error3</span><span class="o">.</span><span class="n">py</span><span class="p">,</span> <span class="n">line</span> <span class="mi">4</span><span class="p">)</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    IndentationError: unindent does not match any outer indentation level (raise_indentation_error3.py, line 4)
 
-<span class="n">An</span> <span class="n">indentation</span> <span class="n">error</span> <span class="n">occurs</span> <span class="n">when</span> <span class="n">a</span> <span class="n">given</span> <span class="n">line</span> <span class="ow">is</span>
-<span class="ow">not</span> <span class="n">indented</span> <span class="p">(</span><span class="n">aligned</span> <span class="n">vertically</span><span class="p">)</span> <span class="k">as</span> <span class="n">expected</span><span class="o">.</span>
+An indentation error occurs when a given line is
+not indented (aligned vertically) as expected.
 
-<span class="n">Likely</span> <span class="n">cause</span><span class="p">:</span>
 
-    <span class="n">Line</span> <span class="mi">4</span><span class="p">:</span>     <span class="k">pass</span>
+    Line 4:     pass
 
-    <span class="n">File</span><span class="p">:</span> <span class="n">raise_indentation_error3</span><span class="o">.</span><span class="n">py</span>
+    File: raise_indentation_error3.py
 
-    <span class="n">In</span> <span class="n">this</span> <span class="n">case</span><span class="p">,</span> <span class="n">the</span> <span class="n">line</span> <span class="n">identified</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">file</span> <span class="n">above</span>
-    <span class="ow">is</span> <span class="n">less</span> <span class="n">indented</span> <span class="n">the</span> <span class="n">preceding</span> <span class="n">one</span><span class="p">,</span> <span class="ow">and</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">aligned</span>
-    <span class="n">vertically</span> <span class="k">with</span> <span class="n">another</span> <span class="n">block</span> <span class="n">of</span> <span class="n">code</span><span class="o">.</span>
+    In this case, the line identified in the file above
+    is less indented the preceding one, and is not aligned
+    vertically with another block of code.
 
-<span class="n">Execution</span> <span class="n">stopped</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;tb_common.py&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">46.</span>
 
-   <span class="mi">45</span><span class="p">:</span>                 <span class="k">try</span><span class="p">:</span>
-<span class="o">--&gt;</span><span class="mi">46</span><span class="p">:</span>                     <span class="n">mod</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-   <span class="mi">47</span><span class="p">:</span>                     <span class="k">if</span> <span class="n">function</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+Execution stopped on line 46 of file &#39;tb_common.py&#39;.
+
+   44:                 make_title(title)
+   45:                 try:
+--&gt;46:                     mod = __import__(name)
+   47:                     if function is not None:
 </pre></div>
 </div>
 </div>
 <div class="section" id="nameerror">
 <h2>NameError<a class="headerlink" href="#nameerror" title="Permalink to this headline">¶</a></h2>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Python</span> <span class="n">exception</span><span class="p">:</span>
-    <span class="ne">NameError</span><span class="p">:</span> <span class="n">name</span> <span class="s1">&#39;c&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    NameError: name &#39;c&#39; is not defined
 
-<span class="n">A</span> <span class="ne">NameError</span> <span class="n">exception</span> <span class="n">indicates</span> <span class="n">that</span> <span class="n">a</span> <span class="n">variable</span> <span class="ow">or</span>
-<span class="n">function</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">known</span> <span class="n">to</span> <span class="n">Python</span><span class="o">.</span>
-<span class="n">Most</span> <span class="n">often</span><span class="p">,</span> <span class="n">this</span> <span class="ow">is</span> <span class="n">because</span> <span class="n">there</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">spelling</span> <span class="n">mistake</span><span class="o">.</span>
-<span class="n">However</span><span class="p">,</span> <span class="n">sometimes</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">because</span> <span class="n">the</span> <span class="n">name</span> <span class="ow">is</span> <span class="n">used</span>
-<span class="n">before</span> <span class="n">being</span> <span class="n">defined</span> <span class="ow">or</span> <span class="n">given</span> <span class="n">a</span> <span class="n">value</span><span class="o">.</span>
+A NameError exception indicates that a variable or
+function name is not known to Python.
+Most often, this is because there is a spelling mistake.
+However, sometimes it is because the name is used
+before being defined or given a value.
 
-<span class="n">Likely</span> <span class="n">cause</span><span class="p">:</span>
-    <span class="n">In</span> <span class="n">your</span> <span class="n">program</span><span class="p">,</span> <span class="n">the</span> <span class="n">unknown</span> <span class="n">name</span> <span class="ow">is</span> <span class="s1">&#39;c&#39;</span><span class="o">.</span>
+    In your program, the unknown name is &#39;c&#39;.
 
-<span class="n">Execution</span> <span class="n">stopped</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;tb_common.py&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">48.</span>
 
-   <span class="mi">47</span><span class="p">:</span>                     <span class="k">if</span> <span class="n">function</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="o">--&gt;</span><span class="mi">48</span><span class="p">:</span>                         <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">function</span><span class="p">)()</span>
-   <span class="mi">49</span><span class="p">:</span>                 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+Execution stopped on line 48 of file &#39;tb_common.py&#39;.
 
-<span class="ne">Exception</span> <span class="n">raised</span> <span class="ow">in</span> <span class="n">file</span> <span class="s1">&#39;raise_name_error.py&#39;</span> <span class="n">on</span> <span class="n">line</span> <span class="mf">8.</span>
+   46:                     mod = __import__(name)
+   47:                     if function is not None:
+--&gt;48:                         getattr(mod, function)()
+   49:                 except Exception:
 
-   <span class="mi">7</span><span class="p">:</span>     <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="o">--&gt;</span><span class="mi">8</span><span class="p">:</span>     <span class="n">b</span> <span class="o">=</span> <span class="n">c</span>
-   <span class="mi">9</span><span class="p">:</span>     <span class="n">d</span> <span class="o">=</span> <span class="mi">3</span>
+
+Exception raised  on line 8 of file &#39;raise_name_error.py&#39;.
+
+    6:     &quot;&quot;&quot;Should raise NameError&quot;&quot;&quot;
+    7:     a = 1
+--&gt; 8:     b = c
+    9:     d = 3
 </pre></div>
 </div>
 </div>

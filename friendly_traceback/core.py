@@ -4,14 +4,13 @@ Just a first draft as proof of concept.
 """
 
 import gettext
-import inspect
 import locale
 import os
 import sys
 import traceback
 
-from .generic_info import generic
-from .specific_info import get_cause
+
+from . import formatter
 
 
 __all__ = ["install", "get_output", "explain"]
@@ -20,33 +19,6 @@ __all__ = ["install", "get_output", "explain"]
 def _write_err(text):
     """Default writer"""
     sys.stderr.write(text)
-
-
-def highlight_source(linenumber, index, lines):
-    """Displays a few relevant lines from a file, showing line numbers
-       and identifying a particular line.
-    """
-    new_lines = []
-    nb_digits = len(str(linenumber + index))
-    no_mark = "       {:%d}: " % nb_digits
-    with_mark = "    -->{:%d}: " % nb_digits
-    i = linenumber - index
-    for line in lines:
-        if i == linenumber:
-            num = with_mark.format(i)
-        else:
-            num = no_mark.format(i)
-        new_lines.append(num + line.rstrip())
-        i += 1
-    return "\n".join(new_lines)
-
-
-def python_exception_info(filename, linenumber, partial_source):
-    return _(
-        "\n"
-        "    Error found in file '{filename}' on line {linenumber}.\n\n"
-        "{partial_source}\n"
-    ).format(filename=filename, linenumber=linenumber, partial_source=partial_source)
 
 
 class _State:
@@ -60,7 +32,7 @@ class _State:
         self.context = 3
         self.write_err = _write_err
         lang, _ = locale.getdefaultlocale()
-        self.install_gettext("en")
+        self.install_gettext(lang)
         self.level = 0
 
     def explain(self, etype, value, tb, redirect=None):
@@ -70,90 +42,12 @@ class _State:
         elif redirect is not None:
             self.write_err = redirect
 
-        name = etype.__name__
-        self.give_generic_explanation(name, value)
-
-        records = inspect.getinnerframes(tb, self.context)
-        self.give_likely_cause(name, etype, value)
-
-        last_call = records[0]
-        if len(records) > 1:
-            origin = records[-1]
-        else:
-            origin = None
-
-        _frame, filename, linenumber, _func, lines, index = last_call
-        info = self.get_source_info(filename, linenumber, lines, index)
-        self.show_source_info(info)
-
-        if origin is not None:
-            _frame, filename, linenumber, _func, lines, index = origin
-            info = self.get_source_info(filename, linenumber, lines, index)
-            self.show_source_info(info, last_call=False)
+        explanation = formatter.explain_traceback(etype, value, tb)
+        self.write_err(explanation)
 
         if self.level == 2:
             python_tb = traceback.format_exception(etype, value, tb)
             self.write_err("\n" + "".join(python_tb) + "\n")
-
-    def get_source_info(self, filename, linenumber, lines, index):
-        if filename and os.path.abspath(filename):
-            filename = os.path.basename(filename)
-        elif not filename:
-            return None
-        if index is not None:
-            source = highlight_source(linenumber, index, lines)
-        else:
-            return None
-
-        return {"filename": filename, "source": source, "linenumber": linenumber}
-
-    def show_source_info(self, info, last_call=True):
-
-        if last_call:
-            message = _(
-                "\n"
-                "    Execution stopped in file '{filename}' on line {linenumber}.\n"
-                "\n"
-                "{source}\n"
-            ).format(**info)
-
-        else:
-            message = _(
-                "\n"
-                "    Exception raised in file '{filename}' on line {linenumber}.\n"
-                "\n"
-                "{source}\n"
-            ).format(**info)
-
-        self.write_err(message)
-
-    def give_generic_explanation(self, name, value):
-        """Provides a generic explanation about a particular
-           error.
-        """
-        if name in generic:
-            explanation = generic[name]()
-        else:
-            explanation = generic["Unknown"]()
-        self.write_err(
-            _(
-                "\n"
-                "    Python exception: \n"
-                "        {name}: {value}\n\n"
-                "{explanation}"
-            ).format(name=name, value=value, explanation=explanation)
-        )
-
-    def give_likely_cause(self, name, etype, value):
-        if name in get_cause:
-            explanation = get_cause[name](etype, value)
-        else:
-            return
-        self.write_err(
-            _("\n" "    Likely cause: \n" "{explanation}").format(
-                name=name, value=str(value), explanation=explanation
-            )
-        )
 
     def get_captured(self, flush=True):
         """Returns the result of captured output as a string"""
@@ -188,10 +82,6 @@ class _State:
                 fallback=True,
             )
         gettext_lang.install()
-
-    def write_err(self, text):
-        """Writes to stderr. Can be overriden."""
-        sys.stderr.write(text)
 
     def install(self, lang=None, redirect=None):
         """

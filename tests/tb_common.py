@@ -19,7 +19,7 @@ def write(text):
 def make_title(text):
     write("\n" + text)
     write("-" * len(text) + "\n")
-    write("Example::\n")
+    write(".. code-block:: none\n")
 
 
 all_imports = {

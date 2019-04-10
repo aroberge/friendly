@@ -23,7 +23,7 @@ Python version: 3.7.0
 IndentationError - 1: expected an indented block
 ------------------------------------------------
 
-Example::
+.. code-block:: none
 
 
     Exception Python: 
@@ -32,7 +32,6 @@ Example::
     An indentation error occurs when a given line is
     not indented (aligned vertically) as expected.
 
-    Cause probable : 
 
         Line 4: pass
 
@@ -41,8 +40,10 @@ Example::
         In this case, the line identified in the file above
         was expected to begin a new indented block.
 
-    L'exécution s'est arrêtée à la ligne 46 du fichier 'tb_common.py'
 
+    Execution stopped on line 46 of file 'tb_common.py'.
+
+       44:                 make_title(title)
        45:                 try:
     -->46:                     mod = __import__(name)
        47:                     if function is not None:
@@ -50,7 +51,7 @@ Example::
 IndentationError - 2: unexpected indent
 ---------------------------------------
 
-Example::
+.. code-block:: none
 
 
     Exception Python: 
@@ -59,7 +60,6 @@ Example::
     An indentation error occurs when a given line is
     not indented (aligned vertically) as expected.
 
-    Cause probable : 
 
         Line 4:       pass
 
@@ -69,8 +69,10 @@ Example::
         is more indented than expected and does not match
         the indentation of the previous line.
 
-    L'exécution s'est arrêtée à la ligne 46 du fichier 'tb_common.py'
 
+    Execution stopped on line 46 of file 'tb_common.py'.
+
+       44:                 make_title(title)
        45:                 try:
     -->46:                     mod = __import__(name)
        47:                     if function is not None:
@@ -78,7 +80,7 @@ Example::
 IndentationError - 3: no match ...
 ----------------------------------
 
-Example::
+.. code-block:: none
 
 
     Exception Python: 
@@ -87,7 +89,6 @@ Example::
     An indentation error occurs when a given line is
     not indented (aligned vertically) as expected.
 
-    Cause probable : 
 
         Line 4:     pass
 
@@ -97,8 +98,10 @@ Example::
         is less indented the preceding one, and is not aligned
         vertically with another block of code.
 
-    L'exécution s'est arrêtée à la ligne 46 du fichier 'tb_common.py'
 
+    Execution stopped on line 46 of file 'tb_common.py'.
+
+       44:                 make_title(title)
        45:                 try:
     -->46:                     mod = __import__(name)
        47:                     if function is not None:
@@ -106,7 +109,7 @@ Example::
 NameError
 ---------
 
-Example::
+.. code-block:: none
 
 
     Exception Python: 
@@ -118,17 +121,20 @@ Example::
     Cependant, cela peut également indiquer que le nom a été
     utilisé avant qu'on ne lui ait associé une valeur.
 
-    Cause probable : 
         Dans votre programme, le nom inconnu est 'c'.
 
-    L'exécution s'est arrêtée à la ligne 48 du fichier 'tb_common.py'
 
+    Execution stopped on line 48 of file 'tb_common.py'.
+
+       46:                     mod = __import__(name)
        47:                     if function is not None:
     -->48:                         getattr(mod, function)()
        49:                 except Exception:
 
-    Exception levée dans le fichier 'raise_name_error.py' à la ligne 8.
 
-       7:     a = 1
-    -->8:     b = c
-       9:     d = 3
+    Exception raised  on line 8 of file 'raise_name_error.py'.
+
+        6:     """Should raise NameError"""
+        7:     a = 1
+    --> 8:     b = c
+        9:     d = 3
