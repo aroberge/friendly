@@ -32,6 +32,7 @@ IndentationError - 1: expected an indented block
     An indentation error occurs when a given line is
     not indented (aligned vertically) as expected.
 
+    Likely cause:
 
         Line 4: pass
 
@@ -60,6 +61,7 @@ IndentationError - 2: unexpected indent
     An indentation error occurs when a given line is
     not indented (aligned vertically) as expected.
 
+    Likely cause:
 
         Line 4:       pass
 
@@ -89,6 +91,7 @@ IndentationError - 3: no match ...
     An indentation error occurs when a given line is
     not indented (aligned vertically) as expected.
 
+    Likely cause:
 
         Line 4:     pass
 
@@ -121,6 +124,7 @@ NameError
     Cependant, cela peut également indiquer que le nom a été
     utilisé avant qu'on ne lui ait associé une valeur.
 
+    Likely cause:
         Dans votre programme, le nom inconnu est 'c'.
 
 

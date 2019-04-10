@@ -5,13 +5,48 @@ First version - needs to be documented.
 import inspect
 import os
 
-from .generic_info import generic
-from .specific_info import get_cause
+from . import generic_info
+from . import specific_info
 
 CONTEXT = 4
 
 
 def explain_traceback(etype, value, tb):
+    """ Provides a basic explanation for a traceback.
+
+        Consider the following example, that has four different parts
+
+        # 1. Generic explanation
+        Python exception:
+            NameError: name 'c' is not defined
+
+        A NameError exception indicates that a variable or
+        function name is not known to Python.
+        Most often, this is because there is a spelling mistake.
+        However, sometimes it is because the name is used
+        before being defined or given a value.
+
+        # 2. Likely cause
+        Likely cause:
+            In your program, the unknown name is 'c'.
+
+        # 3. last call made
+        Execution stopped on line 48 of file 'tb_common.py'.
+
+           46:                     mod = __import__(name)
+           47:                     if function is not None:
+        -->48:                         getattr(mod, function)()
+           49:                 except Exception:
+
+        # 4. origin of the exception
+        Exception raised  on line 8 of file 'raise_name_error.py'.
+
+            6:     # Should raise NameError
+            7:     a = 1
+        --> 8:     b = c
+            9:     d = 3
+
+    """
     result = []
 
     result.append(provide_generic_explanation(etype.__name__, value))
@@ -34,13 +69,12 @@ def explain_traceback(etype, value, tb):
 
 
 def provide_generic_explanation(name, value):
-    """Provides a generic explanation about a particular
-       error.
+    """Provides a generic explanation about a particular error.
     """
-    if name in generic:
-        explanation = generic[name]()
+    if name in generic_info.generic:
+        explanation = generic_info.generic[name]()
     else:
-        explanation = generic["Unknown"]()
+        explanation = generic_info.generic["Unknown"]()
     # fmt: off
     return _(
         "\n"
@@ -53,8 +87,10 @@ def provide_generic_explanation(name, value):
 
 
 def get_likely_cause(etype, value):
-    if etype.__name__ in get_cause:
-        return get_cause[etype.__name__](etype, value)
+    if etype.__name__ in specific_info.get_cause:
+        return _("    Likely cause:\n{cause}").format(
+            cause=specific_info.get_cause[etype.__name__](etype, value)
+        )
     else:
         return None
 
