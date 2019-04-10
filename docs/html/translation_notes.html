@@ -1,0 +1,357 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Notes on translations - using gettext &#8212; Friendly tracebacks 0.0.3 documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Change Log" href="changelog.html" />
+    <link rel="prev" title="Friendly tracebacks - en Français" href="tracebacks_fr.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="changelog.html" title="Change Log"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tracebacks_fr.html" title="Friendly tracebacks - en Français"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.3 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Notes on translations - using gettext</a><ul>
+<li><a class="reference internal" href="#what-is-gettext">What is gettext?</a></li>
+<li><a class="reference internal" href="#structure-of-this-project">Structure of this project</a></li>
+<li><a class="reference internal" href="#how-to-use-gettext">How to use gettext</a></li>
+<li><a class="reference internal" href="#using-poedit">Using Poedit</a></li>
+<li><a class="reference internal" href="#telling-python-to-use-the-translations">Telling Python to use the translations</a></li>
+<li><a class="reference internal" href="#why-are-mo-files-in-the-repository">Why are .mo files in the repository</a></li>
+<li><a class="reference internal" href="#additional-considerations">Additional considerations</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tracebacks_fr.html"
+                        title="previous chapter">Friendly tracebacks - en Français</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="changelog.html"
+                        title="next chapter">Change Log</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/translation_notes.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="notes-on-translations-using-gettext">
+<h1>Notes on translations - using gettext<a class="headerlink" href="#notes-on-translations-using-gettext" title="Permalink to this headline">¶</a></h1>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>There are many sites that explain how to use gettext. However, I found
+that, no matter what individual explanation I read, it was either
+incomplete, too specific, or otherwise glossing over some minor point
+that was important for my project.</p>
+<p class="last">I wrote these notes mostly for myself, but they may be useful for
+you as well, perhaps even more so if you read a “standard” tutorial
+on using gettext first.</p>
+</div>
+<div class="section" id="what-is-gettext">
+<h2>What is gettext?<a class="headerlink" href="#what-is-gettext" title="Permalink to this headline">¶</a></h2>
+<p>gettext is basically a standardized way of internationalization (i18n)
+and localization (l10n) of computer programs.</p>
+<p>What this means for this project, is the translation of strings shown
+to the user in their preferred language.</p>
+</div>
+<div class="section" id="structure-of-this-project">
+<h2>Structure of this project<a class="headerlink" href="#structure-of-this-project" title="Permalink to this headline">¶</a></h2>
+<p>Below, I make references to various files. Here’s a simplified view of the
+directory structure of this project, showing only a few relevant files:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">friendly</span><span class="o">-</span><span class="n">traceback</span><span class="o">/</span>
+    <span class="n">docs</span><span class="o">/</span>
+    <span class="n">friendly_traceback</span><span class="o">/</span>
+        <span class="n">locales</span><span class="o">/</span>
+            <span class="n">fr</span><span class="o">/</span>
+                <span class="n">LC_MESSAGES</span><span class="o">/</span>
+                    <span class="n">fr</span><span class="o">.</span><span class="n">mo</span>
+                    <span class="n">fr</span><span class="o">.</span><span class="n">po</span>
+            <span class="n">messages</span><span class="o">.</span><span class="n">pot</span>
+        <span class="n">core</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">make_pot</span><span class="o">.</span><span class="n">bat</span>
+    <span class="n">tests</span><span class="o">/</span>
+    <span class="n">setup</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>If you look at the repository on Github (or cloned locally), you will not
+see the file <code class="docutils literal notranslate"><span class="pre">make_pot.bat</span></code>.
+I’ll explain its role below.</p>
+</div>
+<div class="section" id="how-to-use-gettext">
+<h2>How to use gettext<a class="headerlink" href="#how-to-use-gettext" title="Permalink to this headline">¶</a></h2>
+<p>Suppose we want to greet a user in their own language. For example,
+in English we might have the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello </span><span class="si">{name}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">username</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>while in French, we might have:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bonjour </span><span class="si">{name}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">username</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The first thing to do would normally be to choose one of these forms as
+our standard to be used as the reference for translation.
+This is what I eventually chose to do for this project.
+However, in the past, I have often
+used a variation where words are written in the source file in uppercase
+letter to make it more obvious to see if a translation is missing.</p>
+<p>To indicate that a string needs to be translated, the common way is to
+surround it by a function call, using <code class="docutils literal notranslate"><span class="pre">_</span></code> as the function name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>  <span class="n">_</span><span class="p">(</span> <span class="s2">&quot;Hello </span><span class="si">{name}</span><span class="s2">&quot;</span> <span class="p">)</span>  <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">username</span><span class="p">)</span>  <span class="p">)</span>
+
+<span class="c1"># extra spaces above added for clarity</span>
+</pre></div>
+</div>
+<p>Next, we need to create a “template” file for translations.
+I use <code class="docutils literal notranslate"><span class="pre">pygettext.py</span></code> included as a <strong>tool</strong> with Python.
+It is very likely not on the normal path where it can be found by Python.
+If you don’t know where your python files are located, you can use
+Python’s REPL and do the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
+<span class="go">C:\Users\andre\AppData\Local\Programs\Python\Python37</span>
+</pre></div>
+</div>
+<p>You can then navigate to the directory containing the Python version
+you are using and will almost certainly
+find <code class="docutils literal notranslate"><span class="pre">pygettext.py</span></code> under the <code class="docutils literal notranslate"><span class="pre">tools\i18n</span></code> subdirectory.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pygettext</span></code> will extract all the strings surronded by <code class="docutils literal notranslate"><span class="pre">_(</span> <span class="pre">)</span></code> in the
+input file you specify and create a “template” file (identified by a <code class="docutils literal notranslate"><span class="pre">.pot</span></code>
+extension). To make my life easier, I simply type <code class="docutils literal notranslate"><span class="pre">make_pot</span></code> at the prompt
+which executes the content of <code class="docutils literal notranslate"><span class="pre">make_pot.bat</span></code> (I’m using Windows):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">c</span><span class="p">:</span>\<span class="n">users</span>\<span class="n">andre</span>\<span class="n">appdata</span>\<span class="n">local</span>\<span class="n">programs</span>\<span class="n">python</span>\<span class="n">python37</span>\<span class="n">tools</span>\<span class="n">i18n</span>\<span class="n">pygettext</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">p</span> <span class="n">locales</span> <span class="o">*.</span><span class="n">py</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">make_pot.bat</span></code> is located in the same directory where the Python source files
+containing strings to be translated is located.</li>
+<li>I use <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">filename.py</span></code> instead of simply <code class="docutils literal notranslate"><span class="pre">filename.py</span></code> as I set my
+computer default to open <code class="docutils literal notranslate"><span class="pre">.py</span></code> files with my preferred editor instead of
+executing them.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">-p</span> <span class="pre">locales</span></code> option specifies that the template file is going to be
+created (or updated) in the <code class="docutils literal notranslate"><span class="pre">locales/</span></code> directory
+(see above for the directory structure).</li>
+<li>Since I did not specify a name to be used for the template file, the default
+<code class="docutils literal notranslate"><span class="pre">messages.pot</span></code> will be used (again, see above).</li>
+<li>The source files scanned by pygettext (<code class="docutils literal notranslate"><span class="pre">*.py</span></code>) will be all the
+Python files in that directory.</li>
+</ul>
+<p>There’s more to be done; let’s break this up into a few additional
+sections.</p>
+</div>
+<div class="section" id="using-poedit">
+<h2>Using Poedit<a class="headerlink" href="#using-poedit" title="Permalink to this headline">¶</a></h2>
+<p>In principle, template files can be edited with any standard text editor
+to create “portable object” (<code class="docutils literal notranslate"><span class="pre">.po</span></code>) files from a template file.
+However, this is more easily done using
+<a class="reference external" href="https://poedit.net/">Poedit</a> which is a free program especially designed
+for this task. There is a paid “pro” version but it is really not required for
+most tasks.  However, after a while, I have purchased it and found its
+suggested translations usually very useful, at least as a starting point.</p>
+<p>With Poedit, you have the choice of <strong>creating</strong> a new translation
+either from a <code class="docutils literal notranslate"><span class="pre">.pot</span></code> file, or from a <code class="docutils literal notranslate"><span class="pre">.po</span></code> file. Open the relevant file,
+choose a language, and start translating the various strings.</p>
+<p>If you are <strong>updating</strong> an existing translation, open the <code class="docutils literal notranslate"><span class="pre">.po</span></code> file
+and use Poedit’s “Catalog” menu (fourth at the top of the menu
+bar) to first update from the source (<code class="docutils literal notranslate"><span class="pre">messages.pot</span></code>) from which the
+<code class="docutils literal notranslate"><span class="pre">.po</span></code> file is derived.</p>
+<p>Poedit gives the choice to translate for specific regions (e.g. fr_CA for
+French used in Canada). For this project, I prefer to choose a generic
+two-letter code (fr) as it is assumed to be the case in various places.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>If, for a given language, you <strong>absolutely</strong> need different language
+translations, specific to a region, please file an issue
+first so that this can be discussed and the impact on the rest of
+the code can be properly evaluated.</p>
+<p class="last">One of the goals of this project is to provide easier to understand
+tracebacks than those provided by Python. These do not need to be
+absolutely perfect.</p>
+</div>
+<p>When it comes time to save the <code class="docutils literal notranslate"><span class="pre">.po</span></code> file, use a similar structure
+as that shown above and save
+it in the <code class="docutils literal notranslate"><span class="pre">LC_MESSAGES</span></code> directory of the appropriate language.
+Note that Poedit will automatically save another file with
+a <code class="docutils literal notranslate"><span class="pre">.mo</span></code> extension; this is a “machine object” (binary) file that will actually
+be used by your program.</p>
+<p>In addition to strings to be translated, <code class="docutils literal notranslate"><span class="pre">.po</span></code> files contain some
+information about who translated the file and some copyright information.
+In general, you might want to fill in the appropriate information.
+Note that Poedit allows you to set your personal information (name
+and email address) which will be automatically used, so that you don’t
+have to edit the created file by hand.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Please, do not contribute translations to Friendly-traceback
+where you attribute the copyright to yourself.
+Either do not include any copyright information
+or attribute it to the Friendly-traceback project.</p>
+</div>
+</div>
+<div class="section" id="telling-python-to-use-the-translations">
+<h2>Telling Python to use the translations<a class="headerlink" href="#telling-python-to-use-the-translations" title="Permalink to this headline">¶</a></h2>
+<p>In this project, the language selection is done in the file <code class="docutils literal notranslate"><span class="pre">core.py</span></code>.
+(See directory structure above.)
+At the top of <code class="docutils literal notranslate"><span class="pre">core.py</span></code>, <code class="docutils literal notranslate"><span class="pre">gettext</span></code> is imported.  Changing language
+is done using the <code class="docutils literal notranslate"><span class="pre">install_gettext</span></code> method; the relevant parts are as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">install_gettext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lang</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sets the current language for gettext.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">gettext_lang</span> <span class="o">=</span> <span class="n">gettext</span><span class="o">.</span><span class="n">translation</span><span class="p">(</span>
+            <span class="n">lang</span><span class="p">,</span>  <span class="c1"># 1</span>
+            <span class="n">localedir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;locales&quot;</span><span class="p">)</span>  <span class="c1"># 2</span>
+            <span class="p">),</span>
+            <span class="n">languages</span><span class="o">=</span><span class="p">[</span><span class="n">lang</span><span class="p">],</span>
+            <span class="n">fallback</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># 3</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="n">lang</span> <span class="o">=</span> <span class="n">lang</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># 4</span>
+        <span class="n">gettext_lang</span> <span class="o">=</span> <span class="n">gettext</span><span class="o">.</span><span class="n">translation</span><span class="p">(</span>
+            <span class="n">lang</span><span class="p">,</span>
+            <span class="n">localedir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;locales&quot;</span><span class="p">)</span>
+            <span class="p">),</span>
+            <span class="n">languages</span><span class="o">=</span><span class="p">[</span><span class="n">lang</span><span class="p">],</span>
+            <span class="n">fallback</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># 5</span>
+        <span class="p">)</span>
+    <span class="n">gettext_lang</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>  <span class="c1"># 6</span>
+</pre></div>
+</div>
+<p>Here is an explanation for the numbered comments above:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Indicates that translations will be found in files named <code class="docutils literal notranslate"><span class="pre">lang</span> <span class="pre">+</span> <span class="pre">&quot;.mo&quot;</span></code></li>
+<li>“Foolproof” way of locating the translation directory</li>
+<li>By default, fallback is <code class="docutils literal notranslate"><span class="pre">False</span></code>; for clarity, we explicitly set it.
+If a request is made to use a non-existing translation, an exception is raised.</li>
+<li>If an exception is raised, we try again under the assumption that the
+value for <code class="docutils literal notranslate"><span class="pre">lang</span></code> was specific to a region (for example <code class="docutils literal notranslate"><span class="pre">fr_CA</span></code>)
+and that we might have a translation for the generic version
+of that language.</li>
+<li>By using <code class="docutils literal notranslate"><span class="pre">fallback=True</span></code>, the untranslated string (as it exists in
+the source file) is used instead.</li>
+<li>This adds the function named <code class="docutils literal notranslate"><span class="pre">_</span></code> to the builtins. So, it will be known
+to all other modules.  <code class="docutils literal notranslate"><span class="pre">gettext_lang.install</span></code> takes an
+optional argument which makes it possible to use different behaviour.
+By using the default, we do not provide any support for dealing with
+alternative translations based on quantity (singular/plural).</li>
+</ol>
+</div></blockquote>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>When using flake8 (or likely other similar linters), <code class="docutils literal notranslate"><span class="pre">_</span></code> will be flagged
+as an unknown function.  This is taken care of in this project by adding:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">builtins</span> <span class="o">=</span>
+    <span class="n">_</span>
+</pre></div>
+</div>
+<p class="last">to the <code class="docutils literal notranslate"><span class="pre">.flake8</span></code> configuration file.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Every language has its own way to deal (or not) with plural forms of words.
+As mentioned, in principle, <code class="docutils literal notranslate"><span class="pre">gettext</span></code> offers a way to handle with the language specific complexities.
+In practice for this project, we assume a single form to be used.</p>
+</div>
+</div>
+<div class="section" id="why-are-mo-files-in-the-repository">
+<h2>Why are .mo files in the repository<a class="headerlink" href="#why-are-mo-files-in-the-repository" title="Permalink to this headline">¶</a></h2>
+<p>When configuring the project, the automatically generated <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> file
+include exclusion for <code class="docutils literal notranslate"><span class="pre">.pot</span></code> and <code class="docutils literal notranslate"><span class="pre">.mo</span></code> files.
+The rationale is that these files are automatically generated (by some standard
+programs) and it is generally suggested that such files not be included.</p>
+<p>However, in this case, we want these files to be available to end users.
+If someone clones the project, and needs to upload a version somewhere (e.g. pypi.org),
+these generated files (at least the <code class="docutils literal notranslate"><span class="pre">.mo</span></code> files) need to be included.</p>
+</div>
+<div class="section" id="additional-considerations">
+<h2>Additional considerations<a class="headerlink" href="#additional-considerations" title="Permalink to this headline">¶</a></h2>
+<p>The description above accurately reflected what was in the code at the time
+it was written.  At that time, I was also planning to have a way to allow
+other programs (for example, a modified version of Turtle) to use
+friendly-traceback but also add its own exceptions with its own set
+of translations. However, when using gettext in the way described above,
+the function <code class="docutils literal notranslate"><span class="pre">_</span></code> is added to the Python builtins and points to a single
+source for the catalogs.</p>
+<p>There is a different way to use gettext to deal with these situations.
+I plan to do this. It could happen that I have already done this with the
+code but not updated the information in this file.
+If you notice that this is the case, feel free to file an issue.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="changelog.html" title="Change Log"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tracebacks_fr.html" title="Friendly tracebacks - en Français"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.3 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, André Roberge.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

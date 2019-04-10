@@ -16,7 +16,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Change Log" href="changelog.html" />
+    <link rel="next" title="Notes on translations - using gettext" href="translation_notes.html" />
     <link rel="prev" title="Friendly tracebacks - in English" href="tracebacks_en.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -26,7 +26,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="changelog.html" title="Change Log"
+          <a href="translation_notes.html" title="Notes on translations - using gettext"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="tracebacks_en.html" title="Friendly tracebacks - in English"
@@ -43,6 +43,7 @@
 <li><a class="reference internal" href="#indentationerror-2-unexpected-indent">IndentationError - 2: unexpected indent</a></li>
 <li><a class="reference internal" href="#indentationerror-3-unindent-does-not-match">IndentationError - 3: unindent does not match …</a></li>
 <li><a class="reference internal" href="#nameerror">NameError</a></li>
+<li><a class="reference internal" href="#unknown-exception">Unknown exception</a></li>
 </ul>
 </li>
 </ul>
@@ -51,8 +52,8 @@
   <p class="topless"><a href="tracebacks_en.html"
                         title="previous chapter">Friendly tracebacks - in English</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="changelog.html"
-                        title="next chapter">Change Log</a></p>
+  <p class="topless"><a href="translation_notes.html"
+                        title="next chapter">Notes on translations - using gettext</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -118,12 +119,12 @@ Cause probable :
     normalement commencer un nouveau bloc de code indenté.
 
 
-L&#39;exécution s&#39;est arrêtée à la ligne 46 du fichier &#39;tb_common.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 47 du fichier &#39;tb_common.py&#39;
 
-   44:                 make_title(title)
-   45:                 try:
---&gt;46:                     mod = __import__(name)
-   47:                     if function is not None:
+   45:                 make_title(title)
+   46:                 try:
+--&gt;47:                     mod = __import__(name)
+   48:                     if function is not None:
 </pre></div>
 </div>
 </div>
@@ -150,12 +151,12 @@ Cause probable :
     correspond pas à l&#39;indentation de la ligne précédente.
 
 
-L&#39;exécution s&#39;est arrêtée à la ligne 46 du fichier &#39;tb_common.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 47 du fichier &#39;tb_common.py&#39;
 
-   44:                 make_title(title)
-   45:                 try:
---&gt;46:                     mod = __import__(name)
-   47:                     if function is not None:
+   45:                 make_title(title)
+   46:                 try:
+--&gt;47:                     mod = __import__(name)
+   48:                     if function is not None:
 </pre></div>
 </div>
 </div>
@@ -182,12 +183,12 @@ Cause probable :
     et n’est pas alignée verticalement avec un autre bloc de code.
 
 
-L&#39;exécution s&#39;est arrêtée à la ligne 46 du fichier &#39;tb_common.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 47 du fichier &#39;tb_common.py&#39;
 
-   44:                 make_title(title)
-   45:                 try:
---&gt;46:                     mod = __import__(name)
-   47:                     if function is not None:
+   45:                 make_title(title)
+   46:                 try:
+--&gt;47:                     mod = __import__(name)
+   48:                     if function is not None:
 </pre></div>
 </div>
 </div>
@@ -206,12 +207,12 @@ Cause probable :
     Dans votre programme, le nom inconnu est &#39;c&#39;.
 
 
-L&#39;exécution s&#39;est arrêtée à la ligne 48 du fichier &#39;tb_common.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 49 du fichier &#39;tb_common.py&#39;
 
-   46:                     mod = __import__(name)
-   47:                     if function is not None:
---&gt;48:                         getattr(mod, function)()
-   49:                 except Exception:
+   47:                     mod = __import__(name)
+   48:                     if function is not None:
+--&gt;49:                         getattr(mod, function)()
+   50:                 except Exception:
 
 
 Exception levée à la ligne du fichier &#39;raise_name_error.py&#39;.
@@ -220,6 +221,31 @@ Exception levée à la ligne du fichier &#39;raise_name_error.py&#39;.
     7:     a = 1
 --&gt; 8:     b = c
     9:     d = 3
+</pre></div>
+</div>
+</div>
+<div class="section" id="unknown-exception">
+<h2>Unknown exception<a class="headerlink" href="#unknown-exception" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
+    MyException: Some informative message
+
+Aucune information n&#39;est connue au sujet de cette exception.
+
+
+L&#39;exécution s&#39;est arrêtée à la ligne 49 du fichier &#39;tb_common.py&#39;
+
+   47:                     mod = __import__(name)
+   48:                     if function is not None:
+--&gt;49:                         getattr(mod, function)()
+   50:                 except Exception:
+
+
+Exception levée à la ligne du fichier &#39;raise_unknown_error.py&#39;.
+
+    6:
+    7: def test():
+--&gt; 8:     raise MyException(&quot;Some informative message&quot;)
+    9:
 </pre></div>
 </div>
 </div>
@@ -238,7 +264,7 @@ Exception levée à la ligne du fichier &#39;raise_name_error.py&#39;.
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="changelog.html" title="Change Log"
+          <a href="translation_notes.html" title="Notes on translations - using gettext"
              >next</a> |</li>
         <li class="right" >
           <a href="tracebacks_en.html" title="Friendly tracebacks - in English"

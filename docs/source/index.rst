@@ -20,6 +20,7 @@ More info to be added soon.
     Design <design>
     Friendly tracebacks - in English <tracebacks_en>
     Friendly tracebacks - en Français <tracebacks_fr>
+    Notes on translations - using gettext <translation_notes>
     Change Log <changelog>
 
 

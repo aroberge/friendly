@@ -46,12 +46,12 @@ IndentationError - 1: expected an indented block
         normalement commencer un nouveau bloc de code indenté.
 
 
-    L'exécution s'est arrêtée à la ligne 46 du fichier 'tb_common.py'
+    L'exécution s'est arrêtée à la ligne 47 du fichier 'tb_common.py'
 
-       44:                 make_title(title)
-       45:                 try:
-    -->46:                     mod = __import__(name)
-       47:                     if function is not None:
+       45:                 make_title(title)
+       46:                 try:
+    -->47:                     mod = __import__(name)
+       48:                     if function is not None:
 
 IndentationError - 2: unexpected indent
 ---------------------------------------
@@ -80,12 +80,12 @@ IndentationError - 2: unexpected indent
         correspond pas à l'indentation de la ligne précédente.
 
 
-    L'exécution s'est arrêtée à la ligne 46 du fichier 'tb_common.py'
+    L'exécution s'est arrêtée à la ligne 47 du fichier 'tb_common.py'
 
-       44:                 make_title(title)
-       45:                 try:
-    -->46:                     mod = __import__(name)
-       47:                     if function is not None:
+       45:                 make_title(title)
+       46:                 try:
+    -->47:                     mod = __import__(name)
+       48:                     if function is not None:
 
 IndentationError - 3: unindent does not match ...
 -------------------------------------------------
@@ -114,12 +114,12 @@ IndentationError - 3: unindent does not match ...
         et n’est pas alignée verticalement avec un autre bloc de code.
 
 
-    L'exécution s'est arrêtée à la ligne 46 du fichier 'tb_common.py'
+    L'exécution s'est arrêtée à la ligne 47 du fichier 'tb_common.py'
 
-       44:                 make_title(title)
-       45:                 try:
-    -->46:                     mod = __import__(name)
-       47:                     if function is not None:
+       45:                 make_title(title)
+       46:                 try:
+    -->47:                     mod = __import__(name)
+       48:                     if function is not None:
 
 NameError
 ---------
@@ -140,12 +140,12 @@ NameError
         Dans votre programme, le nom inconnu est 'c'.
 
 
-    L'exécution s'est arrêtée à la ligne 48 du fichier 'tb_common.py'
+    L'exécution s'est arrêtée à la ligne 49 du fichier 'tb_common.py'
 
-       46:                     mod = __import__(name)
-       47:                     if function is not None:
-    -->48:                         getattr(mod, function)()
-       49:                 except Exception:
+       47:                     mod = __import__(name)
+       48:                     if function is not None:
+    -->49:                         getattr(mod, function)()
+       50:                 except Exception:
 
 
     Exception levée à la ligne du fichier 'raise_name_error.py'.
@@ -154,3 +154,30 @@ NameError
         7:     a = 1
     --> 8:     b = c
         9:     d = 3
+
+Unknown exception
+-----------------
+
+.. code-block:: none
+
+
+    Exception Python: 
+        MyException: Some informative message
+
+    Aucune information n'est connue au sujet de cette exception.
+
+
+    L'exécution s'est arrêtée à la ligne 49 du fichier 'tb_common.py'
+
+       47:                     mod = __import__(name)
+       48:                     if function is not None:
+    -->49:                         getattr(mod, function)()
+       50:                 except Exception:
+
+
+    Exception levée à la ligne du fichier 'raise_unknown_error.py'.
+
+        6: 
+        7: def test():
+    --> 8:     raise MyException("Some informative message")
+        9: 

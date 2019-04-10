@@ -43,6 +43,7 @@
 <li><a class="reference internal" href="#indentationerror-2-unexpected-indent">IndentationError - 2: unexpected indent</a></li>
 <li><a class="reference internal" href="#indentationerror-3-unindent-does-not-match">IndentationError - 3: unindent does not match …</a></li>
 <li><a class="reference internal" href="#nameerror">NameError</a></li>
+<li><a class="reference internal" href="#unknown-exception">Unknown exception</a></li>
 </ul>
 </li>
 </ul>
@@ -117,12 +118,12 @@ Likely cause:
     was expected to begin a new indented block.
 
 
-Execution stopped on line 46 of file &#39;tb_common.py&#39;.
+Execution stopped on line 47 of file &#39;tb_common.py&#39;.
 
-   44:                 make_title(title)
-   45:                 try:
---&gt;46:                     mod = __import__(name)
-   47:                     if function is not None:
+   45:                 make_title(title)
+   46:                 try:
+--&gt;47:                     mod = __import__(name)
+   48:                     if function is not None:
 </pre></div>
 </div>
 </div>
@@ -148,12 +149,12 @@ Likely cause:
     does not match the indentation of the previous line.
 
 
-Execution stopped on line 46 of file &#39;tb_common.py&#39;.
+Execution stopped on line 47 of file &#39;tb_common.py&#39;.
 
-   44:                 make_title(title)
-   45:                 try:
---&gt;46:                     mod = __import__(name)
-   47:                     if function is not None:
+   45:                 make_title(title)
+   46:                 try:
+--&gt;47:                     mod = __import__(name)
+   48:                     if function is not None:
 </pre></div>
 </div>
 </div>
@@ -179,12 +180,12 @@ Likely cause:
     and is not aligned vertically with another block of code.
 
 
-Execution stopped on line 46 of file &#39;tb_common.py&#39;.
+Execution stopped on line 47 of file &#39;tb_common.py&#39;.
 
-   44:                 make_title(title)
-   45:                 try:
---&gt;46:                     mod = __import__(name)
-   47:                     if function is not None:
+   45:                 make_title(title)
+   46:                 try:
+--&gt;47:                     mod = __import__(name)
+   48:                     if function is not None:
 </pre></div>
 </div>
 </div>
@@ -203,12 +204,12 @@ Likely cause:
     In your program, the unknown name is &#39;c&#39;.
 
 
-Execution stopped on line 48 of file &#39;tb_common.py&#39;.
+Execution stopped on line 49 of file &#39;tb_common.py&#39;.
 
-   46:                     mod = __import__(name)
-   47:                     if function is not None:
---&gt;48:                         getattr(mod, function)()
-   49:                 except Exception:
+   47:                     mod = __import__(name)
+   48:                     if function is not None:
+--&gt;49:                         getattr(mod, function)()
+   50:                 except Exception:
 
 
 Exception raised on line 8 of file &#39;raise_name_error.py&#39;.
@@ -217,6 +218,31 @@ Exception raised on line 8 of file &#39;raise_name_error.py&#39;.
     7:     a = 1
 --&gt; 8:     b = c
     9:     d = 3
+</pre></div>
+</div>
+</div>
+<div class="section" id="unknown-exception">
+<h2>Unknown exception<a class="headerlink" href="#unknown-exception" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    MyException: Some informative message
+
+No information is known about this exception.
+
+
+Execution stopped on line 49 of file &#39;tb_common.py&#39;.
+
+   47:                     mod = __import__(name)
+   48:                     if function is not None:
+--&gt;49:                         getattr(mod, function)()
+   50:                 except Exception:
+
+
+Exception raised on line 8 of file &#39;raise_unknown_error.py&#39;.
+
+    6:
+    7: def test():
+--&gt; 8:     raise MyException(&quot;Some informative message&quot;)
+    9:
 </pre></div>
 </div>
 </div>
