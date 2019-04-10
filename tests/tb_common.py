@@ -25,7 +25,7 @@ def make_title(text):
 all_imports = {
     "IndentationError - 1: expected an indented block": "raise_indentation_error1",
     "IndentationError - 2: unexpected indent": "raise_indentation_error2",
-    "IndentationError - 3: no match ...": "raise_indentation_error3",
+    "IndentationError - 3: unindent does not match ...": "raise_indentation_error3",
     "NameError": ("raise_name_error", "test"),
 }
 

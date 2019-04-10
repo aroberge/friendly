@@ -41,7 +41,7 @@
 <li><a class="reference internal" href="#">Friendly tracebacks - en Français</a><ul>
 <li><a class="reference internal" href="#indentationerror-1-expected-an-indented-block">IndentationError - 1: expected an indented block</a></li>
 <li><a class="reference internal" href="#indentationerror-2-unexpected-indent">IndentationError - 2: unexpected indent</a></li>
-<li><a class="reference internal" href="#indentationerror-3-no-match">IndentationError - 3: no match …</a></li>
+<li><a class="reference internal" href="#indentationerror-3-unindent-does-not-match">IndentationError - 3: unindent does not match …</a></li>
 <li><a class="reference internal" href="#nameerror">NameError</a></li>
 </ul>
 </li>
@@ -101,20 +101,24 @@ Python version: 3.7.0</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
     IndentationError: expected an indented block (raise_indentation_error1.py, line 4)
 
-An indentation error occurs when a given line is
-not indented (aligned vertically) as expected.
+Une exception de type IndentationError se produit lorsqu&#39;une ligne de code
+n&#39;est pas indentée (c&#39;est-à-dire alignée verticalement avec les autres lignes)
+de la façon attendue.
 
-Likely cause:
+Cause probable :
+    Python peut seulement analyser le fichier &#39;raise_indentation_error1.py&#39;
+    jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
-    Line 4: pass
+   1: &#39;&#39;&#39;Should raise IndentationError&#39;&#39;&#39;
+   2:
+   3: if True:
+--&gt;4: pass
+         ^
+    Dans ce cas-ci, la ligne indiquée ci-dessus par --&gt; devrait
+    normalement commencer un nouveau bloc de code indenté.
 
-    File: raise_indentation_error1.py
 
-    In this case, the line identified in the file above
-    was expected to begin a new indented block.
-
-
-Execution stopped on line 46 of file &#39;tb_common.py&#39;.
+L&#39;exécution s&#39;est arrêtée à la ligne 46 du fichier &#39;tb_common.py&#39;
 
    44:                 make_title(title)
    45:                 try:
@@ -128,21 +132,25 @@ Execution stopped on line 46 of file &#39;tb_common.py&#39;.
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
     IndentationError: unexpected indent (raise_indentation_error2.py, line 4)
 
-An indentation error occurs when a given line is
-not indented (aligned vertically) as expected.
+Une exception de type IndentationError se produit lorsqu&#39;une ligne de code
+n&#39;est pas indentée (c&#39;est-à-dire alignée verticalement avec les autres lignes)
+de la façon attendue.
 
-Likely cause:
+Cause probable :
+    Python peut seulement analyser le fichier &#39;raise_indentation_error2.py&#39;
+    jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
-    Line 4:       pass
+   1: &#39;&#39;&#39;Should raise IndentationError&#39;&#39;&#39;
+   2: if True:
+   3:     pass
+--&gt;4:       pass
+           ^
+    Dans ce cas-ci, la ligne indiquée ci-dessus par --&gt;
+    est plus indentée que ce qui était attendu et ne
+    correspond pas à l&#39;indentation de la ligne précédente.
 
-    File: raise_indentation_error2.py
 
-    In this case, the line identified in the file above
-    is more indented than expected and does not match
-    the indentation of the previous line.
-
-
-Execution stopped on line 46 of file &#39;tb_common.py&#39;.
+L&#39;exécution s&#39;est arrêtée à la ligne 46 du fichier &#39;tb_common.py&#39;
 
    44:                 make_title(title)
    45:                 try:
@@ -151,26 +159,30 @@ Execution stopped on line 46 of file &#39;tb_common.py&#39;.
 </pre></div>
 </div>
 </div>
-<div class="section" id="indentationerror-3-no-match">
-<h2>IndentationError - 3: no match …<a class="headerlink" href="#indentationerror-3-no-match" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="indentationerror-3-unindent-does-not-match">
+<h2>IndentationError - 3: unindent does not match …<a class="headerlink" href="#indentationerror-3-unindent-does-not-match" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
     IndentationError: unindent does not match any outer indentation level (raise_indentation_error3.py, line 4)
 
-An indentation error occurs when a given line is
-not indented (aligned vertically) as expected.
+Une exception de type IndentationError se produit lorsqu&#39;une ligne de code
+n&#39;est pas indentée (c&#39;est-à-dire alignée verticalement avec les autres lignes)
+de la façon attendue.
 
-Likely cause:
+Cause probable :
+    Python peut seulement analyser le fichier &#39;raise_indentation_error3.py&#39;
+    jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
-    Line 4:     pass
+   1: &#39;&#39;&#39;Should raise IndentationError&#39;&#39;&#39;
+   2: if True:
+   3:       pass
+--&gt;4:     pass
+              ^
+    Dans ce cas-ci, la ligne indiquée ci-dessus par --&gt;
+    est moins indentée que la ligne précédente
+    et n’est pas alignée verticalement avec un autre bloc de code.
 
-    File: raise_indentation_error3.py
 
-    In this case, the line identified in the file above
-    is less indented the preceding one, and is not aligned
-    vertically with another block of code.
-
-
-Execution stopped on line 46 of file &#39;tb_common.py&#39;.
+L&#39;exécution s&#39;est arrêtée à la ligne 46 du fichier &#39;tb_common.py&#39;
 
    44:                 make_title(title)
    45:                 try:
@@ -190,11 +202,11 @@ Habituellement, ceci indique une simple faute d&#39;orthographe.
 Cependant, cela peut également indiquer que le nom a été
 utilisé avant qu&#39;on ne lui ait associé une valeur.
 
-Likely cause:
+Cause probable :
     Dans votre programme, le nom inconnu est &#39;c&#39;.
 
 
-Execution stopped on line 48 of file &#39;tb_common.py&#39;.
+L&#39;exécution s&#39;est arrêtée à la ligne 48 du fichier &#39;tb_common.py&#39;
 
    46:                     mod = __import__(name)
    47:                     if function is not None:
@@ -202,7 +214,7 @@ Execution stopped on line 48 of file &#39;tb_common.py&#39;.
    49:                 except Exception:
 
 
-Exception raised  on line 8 of file &#39;raise_name_error.py&#39;.
+Exception levée à la ligne du fichier &#39;raise_name_error.py&#39;.
 
     6:     &quot;&quot;&quot;Should raise NameError&quot;&quot;&quot;
     7:     a = 1

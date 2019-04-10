@@ -7,6 +7,7 @@ import os
 
 from . import generic_info
 from . import specific_info
+from . import utils
 
 CONTEXT = 4
 
@@ -108,7 +109,7 @@ def get_source_info(filename, linenumber, lines, index):
     elif not filename:
         raise FileNotFoundError("Cannot find %s" % filename)
     if index is not None:
-        source = highlight_source(linenumber, index, lines)
+        source = utils.highlight_source(linenumber, index, lines)
     else:
         source = _("Cannot find source code.")
 
@@ -128,28 +129,9 @@ def add_source_info(info, last_call=True):
     else:
         message = _(
             "\n"
-            "    Exception raised  on line {linenumber} of file '{filename}'.\n"
+            "    Exception raised on line {linenumber} of file '{filename}'.\n"
             "\n"
             "{source}\n"
         ).format(**info)
 
     return message
-
-
-def highlight_source(linenumber, index, lines):
-    """Displays a few relevant lines from a file, showing line numbers
-       and identifying a particular line.
-    """
-    new_lines = []
-    nb_digits = len(str(linenumber + index))
-    no_mark = "       {:%d}: " % nb_digits
-    with_mark = "    -->{:%d}: " % nb_digits
-    i = linenumber - index
-    for line in lines:
-        if i == linenumber:
-            num = with_mark.format(i)
-        else:
-            num = no_mark.format(i)
-        new_lines.append(num + line.rstrip())
-        i += 1
-    return "\n".join(new_lines)

@@ -41,7 +41,7 @@
 <li><a class="reference internal" href="#">Friendly tracebacks - in English</a><ul>
 <li><a class="reference internal" href="#indentationerror-1-expected-an-indented-block">IndentationError - 1: expected an indented block</a></li>
 <li><a class="reference internal" href="#indentationerror-2-unexpected-indent">IndentationError - 2: unexpected indent</a></li>
-<li><a class="reference internal" href="#indentationerror-3-no-match">IndentationError - 3: no match …</a></li>
+<li><a class="reference internal" href="#indentationerror-3-unindent-does-not-match">IndentationError - 3: unindent does not match …</a></li>
 <li><a class="reference internal" href="#nameerror">NameError</a></li>
 </ul>
 </li>
@@ -101,16 +101,19 @@ Python version: 3.7.0</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
     IndentationError: expected an indented block (raise_indentation_error1.py, line 4)
 
-An indentation error occurs when a given line is
-not indented (aligned vertically) as expected.
+An IndentationError occurs when a given line of code is
+not indented (aligned vertically with other lines) as expected.
 
 Likely cause:
+    Python could not parse the file &#39;raise_indentation_error1.py&#39;
+    beyond the location indicated below by --&gt; and ^.
 
-    Line 4: pass
-
-    File: raise_indentation_error1.py
-
-    In this case, the line identified in the file above
+   1: &#39;&#39;&#39;Should raise IndentationError&#39;&#39;&#39;
+   2:
+   3: if True:
+--&gt;4: pass
+         ^
+    In this case, the line identified above
     was expected to begin a new indented block.
 
 
@@ -128,18 +131,21 @@ Execution stopped on line 46 of file &#39;tb_common.py&#39;.
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
     IndentationError: unexpected indent (raise_indentation_error2.py, line 4)
 
-An indentation error occurs when a given line is
-not indented (aligned vertically) as expected.
+An IndentationError occurs when a given line of code is
+not indented (aligned vertically with other lines) as expected.
 
 Likely cause:
+    Python could not parse the file &#39;raise_indentation_error2.py&#39;
+    beyond the location indicated below by --&gt; and ^.
 
-    Line 4:       pass
-
-    File: raise_indentation_error2.py
-
-    In this case, the line identified in the file above
-    is more indented than expected and does not match
-    the indentation of the previous line.
+   1: &#39;&#39;&#39;Should raise IndentationError&#39;&#39;&#39;
+   2: if True:
+   3:     pass
+--&gt;4:       pass
+           ^
+    In this case, the line identified above
+    is more indented than expected and
+    does not match the indentation of the previous line.
 
 
 Execution stopped on line 46 of file &#39;tb_common.py&#39;.
@@ -151,23 +157,26 @@ Execution stopped on line 46 of file &#39;tb_common.py&#39;.
 </pre></div>
 </div>
 </div>
-<div class="section" id="indentationerror-3-no-match">
-<h2>IndentationError - 3: no match …<a class="headerlink" href="#indentationerror-3-no-match" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="indentationerror-3-unindent-does-not-match">
+<h2>IndentationError - 3: unindent does not match …<a class="headerlink" href="#indentationerror-3-unindent-does-not-match" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
     IndentationError: unindent does not match any outer indentation level (raise_indentation_error3.py, line 4)
 
-An indentation error occurs when a given line is
-not indented (aligned vertically) as expected.
+An IndentationError occurs when a given line of code is
+not indented (aligned vertically with other lines) as expected.
 
 Likely cause:
+    Python could not parse the file &#39;raise_indentation_error3.py&#39;
+    beyond the location indicated below by --&gt; and ^.
 
-    Line 4:     pass
-
-    File: raise_indentation_error3.py
-
-    In this case, the line identified in the file above
-    is less indented the preceding one, and is not aligned
-    vertically with another block of code.
+   1: &#39;&#39;&#39;Should raise IndentationError&#39;&#39;&#39;
+   2: if True:
+   3:       pass
+--&gt;4:     pass
+              ^
+    In this case, the line identified above is
+    less indented than the preceding one,
+    and is not aligned vertically with another block of code.
 
 
 Execution stopped on line 46 of file &#39;tb_common.py&#39;.
@@ -202,7 +211,7 @@ Execution stopped on line 48 of file &#39;tb_common.py&#39;.
    49:                 except Exception:
 
 
-Exception raised  on line 8 of file &#39;raise_name_error.py&#39;.
+Exception raised on line 8 of file &#39;raise_name_error.py&#39;.
 
     6:     &quot;&quot;&quot;Should raise NameError&quot;&quot;&quot;
     7:     a = 1

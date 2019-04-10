@@ -29,20 +29,24 @@ IndentationError - 1: expected an indented block
     Exception Python: 
         IndentationError: expected an indented block (raise_indentation_error1.py, line 4)
 
-    An indentation error occurs when a given line is
-    not indented (aligned vertically) as expected.
+    Une exception de type IndentationError se produit lorsqu'une ligne de code
+    n'est pas indentée (c'est-à-dire alignée verticalement avec les autres lignes)
+    de la façon attendue.
 
-    Likely cause:
+    Cause probable : 
+        Python peut seulement analyser le fichier 'raise_indentation_error1.py'
+        jusqu'à l'endroit indiqué par --> et ^.
 
-        Line 4: pass
+       1: '''Should raise IndentationError'''
+       2: 
+       3: if True:
+    -->4: pass
+             ^
+        Dans ce cas-ci, la ligne indiquée ci-dessus par --> devrait
+        normalement commencer un nouveau bloc de code indenté.
 
-        File: raise_indentation_error1.py
 
-        In this case, the line identified in the file above
-        was expected to begin a new indented block.
-
-
-    Execution stopped on line 46 of file 'tb_common.py'.
+    L'exécution s'est arrêtée à la ligne 46 du fichier 'tb_common.py'
 
        44:                 make_title(title)
        45:                 try:
@@ -58,29 +62,33 @@ IndentationError - 2: unexpected indent
     Exception Python: 
         IndentationError: unexpected indent (raise_indentation_error2.py, line 4)
 
-    An indentation error occurs when a given line is
-    not indented (aligned vertically) as expected.
+    Une exception de type IndentationError se produit lorsqu'une ligne de code
+    n'est pas indentée (c'est-à-dire alignée verticalement avec les autres lignes)
+    de la façon attendue.
 
-    Likely cause:
+    Cause probable : 
+        Python peut seulement analyser le fichier 'raise_indentation_error2.py'
+        jusqu'à l'endroit indiqué par --> et ^.
 
-        Line 4:       pass
+       1: '''Should raise IndentationError'''
+       2: if True:
+       3:     pass
+    -->4:       pass
+               ^
+        Dans ce cas-ci, la ligne indiquée ci-dessus par -->
+        est plus indentée que ce qui était attendu et ne
+        correspond pas à l'indentation de la ligne précédente.
 
-        File: raise_indentation_error2.py
 
-        In this case, the line identified in the file above
-        is more indented than expected and does not match
-        the indentation of the previous line.
-
-
-    Execution stopped on line 46 of file 'tb_common.py'.
+    L'exécution s'est arrêtée à la ligne 46 du fichier 'tb_common.py'
 
        44:                 make_title(title)
        45:                 try:
     -->46:                     mod = __import__(name)
        47:                     if function is not None:
 
-IndentationError - 3: no match ...
-----------------------------------
+IndentationError - 3: unindent does not match ...
+-------------------------------------------------
 
 .. code-block:: none
 
@@ -88,21 +96,25 @@ IndentationError - 3: no match ...
     Exception Python: 
         IndentationError: unindent does not match any outer indentation level (raise_indentation_error3.py, line 4)
 
-    An indentation error occurs when a given line is
-    not indented (aligned vertically) as expected.
+    Une exception de type IndentationError se produit lorsqu'une ligne de code
+    n'est pas indentée (c'est-à-dire alignée verticalement avec les autres lignes)
+    de la façon attendue.
 
-    Likely cause:
+    Cause probable : 
+        Python peut seulement analyser le fichier 'raise_indentation_error3.py'
+        jusqu'à l'endroit indiqué par --> et ^.
 
-        Line 4:     pass
+       1: '''Should raise IndentationError'''
+       2: if True:
+       3:       pass
+    -->4:     pass
+                  ^
+        Dans ce cas-ci, la ligne indiquée ci-dessus par -->
+        est moins indentée que la ligne précédente
+        et n’est pas alignée verticalement avec un autre bloc de code.
 
-        File: raise_indentation_error3.py
 
-        In this case, the line identified in the file above
-        is less indented the preceding one, and is not aligned
-        vertically with another block of code.
-
-
-    Execution stopped on line 46 of file 'tb_common.py'.
+    L'exécution s'est arrêtée à la ligne 46 du fichier 'tb_common.py'
 
        44:                 make_title(title)
        45:                 try:
@@ -124,11 +136,11 @@ NameError
     Cependant, cela peut également indiquer que le nom a été
     utilisé avant qu'on ne lui ait associé une valeur.
 
-    Likely cause:
+    Cause probable : 
         Dans votre programme, le nom inconnu est 'c'.
 
 
-    Execution stopped on line 48 of file 'tb_common.py'.
+    L'exécution s'est arrêtée à la ligne 48 du fichier 'tb_common.py'
 
        46:                     mod = __import__(name)
        47:                     if function is not None:
@@ -136,7 +148,7 @@ NameError
        49:                 except Exception:
 
 
-    Exception raised  on line 8 of file 'raise_name_error.py'.
+    Exception levée à la ligne du fichier 'raise_name_error.py'.
 
         6:     """Should raise NameError"""
         7:     a = 1

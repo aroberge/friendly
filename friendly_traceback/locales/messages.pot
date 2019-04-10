@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-04-08 13:55-0300\n"
+"POT-Creation-Date: 2019-04-10 07:30-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,31 +15,7 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: core.py:43
-msgid ""
-"\n"
-"    Error found in file '{filename}' on line {linenumber}.\n"
-"\n"
-"{partial_source}\n"
-msgstr ""
-
-#: core.py:105
-msgid ""
-"\n"
-"    Execution stopped in file '{filename}' on line {linenumber}.\n"
-"\n"
-"{source}\n"
-msgstr ""
-
-#: core.py:113
-msgid ""
-"\n"
-"    Exception raised in file '{filename}' on line {linenumber}.\n"
-"\n"
-"{source}\n"
-msgstr ""
-
-#: core.py:131
+#: formatter.py:87
 msgid ""
 "\n"
 "    Python exception: \n"
@@ -48,14 +24,39 @@ msgid ""
 "{explanation}"
 msgstr ""
 
-#: core.py:145
+#: formatter.py:99
+msgid ""
+"    Likely cause:\n"
+"{cause}"
+msgstr ""
+
+#: formatter.py:114
+msgid "Cannot find source code."
+msgstr ""
+
+#: formatter.py:122
 msgid ""
 "\n"
-"    Likely cause: \n"
-"{explanation}"
+"    Execution stopped on line {linenumber} of file '{filename}'.\n"
+"\n"
+"{source}\n"
+msgstr ""
+
+#: formatter.py:130
+msgid ""
+"\n"
+"    Exception raised on line {linenumber} of file '{filename}'.\n"
+"\n"
+"{source}\n"
 msgstr ""
 
 #: generic_info.py:5
+msgid ""
+"    An IndentationError occurs when a given line of code is\n"
+"    not indented (aligned vertically with other lines) as expected.\n"
+msgstr ""
+
+#: generic_info.py:12
 msgid ""
 "    A NameError exception indicates that a variable or\n"
 "    function name is not known to Python.\n"
@@ -64,13 +65,41 @@ msgid ""
 "    before being defined or given a value.\n"
 msgstr ""
 
-#: generic_info.py:15
+#: generic_info.py:22
 msgid ""
 "    No information is known about this exception.\n"
 msgstr ""
 
-#: specific_info.py:10
+#: specific_info.py:24
 msgid ""
 "        In your program, the unknown name is '{var_name}'.\n"
+msgstr ""
+
+#: specific_info.py:35
+msgid ""
+"        Python could not parse the file '{filename}'\n"
+"        beyond the location indicated below by --> and ^.\n"
+"\n"
+"{source}\n"
+msgstr ""
+
+#: specific_info.py:44
+msgid ""
+"        In this case, the line identified above\n"
+"        is more indented than expected and \n"
+"        does not match the indentation of the previous line.\n"
+msgstr ""
+
+#: specific_info.py:50
+msgid ""
+"        In this case, the line identified above\n"
+"        was expected to begin a new indented block.\n"
+msgstr ""
+
+#: specific_info.py:55
+msgid ""
+"        In this case, the line identified above is\n"
+"        less indented than the preceding one,\n"
+"        and is not aligned vertically with another block of code.\n"
 msgstr ""
 

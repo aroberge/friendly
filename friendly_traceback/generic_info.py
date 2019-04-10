@@ -3,8 +3,8 @@
 
 def indentation_error(*args):
     return _(
-        "    An indentation error occurs when a given line is\n"
-        "    not indented (aligned vertically) as expected.\n"
+        "    An IndentationError occurs when a given line of code is\n"
+        "    not indented (aligned vertically with other lines) as expected.\n"
     )
 
 

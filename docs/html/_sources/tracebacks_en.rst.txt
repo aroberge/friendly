@@ -29,16 +29,19 @@ IndentationError - 1: expected an indented block
     Python exception: 
         IndentationError: expected an indented block (raise_indentation_error1.py, line 4)
 
-    An indentation error occurs when a given line is
-    not indented (aligned vertically) as expected.
+    An IndentationError occurs when a given line of code is
+    not indented (aligned vertically with other lines) as expected.
 
     Likely cause:
+        Python could not parse the file 'raise_indentation_error1.py'
+        beyond the location indicated below by --> and ^.
 
-        Line 4: pass
-
-        File: raise_indentation_error1.py
-
-        In this case, the line identified in the file above
+       1: '''Should raise IndentationError'''
+       2: 
+       3: if True:
+    -->4: pass
+             ^
+        In this case, the line identified above
         was expected to begin a new indented block.
 
 
@@ -58,18 +61,21 @@ IndentationError - 2: unexpected indent
     Python exception: 
         IndentationError: unexpected indent (raise_indentation_error2.py, line 4)
 
-    An indentation error occurs when a given line is
-    not indented (aligned vertically) as expected.
+    An IndentationError occurs when a given line of code is
+    not indented (aligned vertically with other lines) as expected.
 
     Likely cause:
+        Python could not parse the file 'raise_indentation_error2.py'
+        beyond the location indicated below by --> and ^.
 
-        Line 4:       pass
-
-        File: raise_indentation_error2.py
-
-        In this case, the line identified in the file above
-        is more indented than expected and does not match
-        the indentation of the previous line.
+       1: '''Should raise IndentationError'''
+       2: if True:
+       3:     pass
+    -->4:       pass
+               ^
+        In this case, the line identified above
+        is more indented than expected and 
+        does not match the indentation of the previous line.
 
 
     Execution stopped on line 46 of file 'tb_common.py'.
@@ -79,8 +85,8 @@ IndentationError - 2: unexpected indent
     -->46:                     mod = __import__(name)
        47:                     if function is not None:
 
-IndentationError - 3: no match ...
-----------------------------------
+IndentationError - 3: unindent does not match ...
+-------------------------------------------------
 
 .. code-block:: none
 
@@ -88,18 +94,21 @@ IndentationError - 3: no match ...
     Python exception: 
         IndentationError: unindent does not match any outer indentation level (raise_indentation_error3.py, line 4)
 
-    An indentation error occurs when a given line is
-    not indented (aligned vertically) as expected.
+    An IndentationError occurs when a given line of code is
+    not indented (aligned vertically with other lines) as expected.
 
     Likely cause:
+        Python could not parse the file 'raise_indentation_error3.py'
+        beyond the location indicated below by --> and ^.
 
-        Line 4:     pass
-
-        File: raise_indentation_error3.py
-
-        In this case, the line identified in the file above
-        is less indented the preceding one, and is not aligned
-        vertically with another block of code.
+       1: '''Should raise IndentationError'''
+       2: if True:
+       3:       pass
+    -->4:     pass
+                  ^
+        In this case, the line identified above is
+        less indented than the preceding one,
+        and is not aligned vertically with another block of code.
 
 
     Execution stopped on line 46 of file 'tb_common.py'.
@@ -136,7 +145,7 @@ NameError
        49:                 except Exception:
 
 
-    Exception raised  on line 8 of file 'raise_name_error.py'.
+    Exception raised on line 8 of file 'raise_name_error.py'.
 
         6:     """Should raise NameError"""
         7:     a = 1
