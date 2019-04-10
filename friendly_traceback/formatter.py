@@ -14,7 +14,8 @@ CONTEXT = 4
 def explain_traceback(etype, value, tb):
     """ Provides a basic explanation for a traceback.
 
-        Consider the following example, that has four different parts
+        Rather than a standard explanation, we provide an example with
+        four different parts, which are noted as such in the code.
 
         # 1. Generic explanation
         Python exception:
@@ -38,7 +39,7 @@ def explain_traceback(etype, value, tb):
         -->48:                         getattr(mod, function)()
            49:                 except Exception:
 
-        # 4. origin of the exception
+        # 4. origin of the exception (could be the same as 3.)
         Exception raised  on line 8 of file 'raise_name_error.py'.
 
             6:     # Should raise NameError
@@ -49,19 +50,25 @@ def explain_traceback(etype, value, tb):
     """
     result = []
 
+    # 1. Generic explanation
     result.append(provide_generic_explanation(etype.__name__, value))
     cause = get_likely_cause(etype, value)
+
+    # 2. Likely cause
     if cause is not None:
         result.append(cause)
 
+    # first, get all calls
     records = inspect.getinnerframes(tb, CONTEXT)
 
-    _frame, filename, linenumber, _func, lines, index = records[0]  # last call
+    # 3. Last call made
+    _frame, filename, linenumber, _func, lines, index = records[0]
     info = get_source_info(filename, linenumber, lines, index)
     result.append(add_source_info(info))
 
+    # 4. origin of the exception
     if len(records) > 1:
-        _frame, filename, linenumber, _func, lines, index = records[-1]  # origin
+        _frame, filename, linenumber, _func, lines, index = records[-1]
         info = get_source_info(filename, linenumber, lines, index)
         result.append(add_source_info(info, last_call=False))
 
@@ -99,11 +106,11 @@ def get_source_info(filename, linenumber, lines, index):
     if filename and os.path.abspath(filename):
         filename = os.path.basename(filename)
     elif not filename:
-        return None
+        raise FileNotFoundError("Cannot find %s" % filename)
     if index is not None:
         source = highlight_source(linenumber, index, lines)
     else:
-        return None
+        source = _("Cannot find source code.")
 
     return {"filename": filename, "source": source, "linenumber": linenumber}
 
