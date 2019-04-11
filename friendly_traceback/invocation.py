@@ -46,15 +46,15 @@ def main():
     if args.source is not None:
         if sys.flags.interactive:
             if args.as_main:
-                module = runpy.run_module(args.source, run_name="__main__")
+                module_dict = core.run_script(args.source)
             else:
                 module = __import__(args.source)
-            module_dict = {}
-            for var in dir(module):
-                module_dict[var] = getattr(module, var)
+                module_dict = {}
+                for var in dir(module):
+                    module_dict[var] = getattr(module, var)
             console.start_console(local_vars=module_dict)
         elif args.as_main:
-            runpy.run_module(args.source, run_name="__main__")
+            core.run_script(args.source)
         else:
             module = __import__(args.source)
     else:

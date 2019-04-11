@@ -4,6 +4,7 @@ Just a first draft as proof of concept.
 """
 
 import locale
+import runpy
 import sys
 import traceback
 
@@ -31,7 +32,8 @@ class _State:
         self.write_err = _write_err
         lang, _ignore = locale.getdefaultlocale()
         self.install_gettext(lang)
-        self.level = 2
+        self.level = 0
+        self.running_script = False
 
     def explain(self, etype, value, tb, redirect=None):
         """Replaces a standard traceback by a friendlier one"""
@@ -40,7 +42,9 @@ class _State:
         elif redirect is not None:
             self.write_err = redirect
 
-        explanation = formatter.explain_traceback(etype, value, tb)
+        explanation = formatter.explain_traceback(
+            etype, value, tb, running_script=self.running_script
+        )
         self.write_err(explanation)
 
         if self.level == 2:
@@ -106,3 +110,10 @@ def get_output(flush=True):
        However, this can be overriden if desired.
     """
     return state.get_captured(flush=flush)
+
+
+def run_script(source):
+    state.running_script = True
+    mod_dict = runpy.run_module(source, run_name="__main__")
+    state.running_script = False
+    return mod_dict

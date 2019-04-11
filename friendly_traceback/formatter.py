@@ -4,6 +4,7 @@ First version - needs to be documented.
 """
 import inspect
 import os
+import sys
 
 from . import generic_info
 from . import specific_info
@@ -15,7 +16,7 @@ CONSOLE_SOURCE = utils.CONSOLE_SOURCE
 CONSOLE_NAME = utils.CONSOLE_NAME
 
 
-def explain_traceback(etype, value, tb):
+def explain_traceback(etype, value, tb, running_script=False):
     """ Provides a basic explanation for a traceback.
 
         Rather than a standard explanation, we provide an example with
@@ -54,6 +55,8 @@ def explain_traceback(etype, value, tb):
     """
     result = []
 
+    print("running_script", running_script)
+
     # 1. Generic explanation
     result.append(provide_generic_explanation(etype.__name__, value))
     cause = get_likely_cause(etype, value)
@@ -69,9 +72,18 @@ def explain_traceback(etype, value, tb):
     records = inspect.getinnerframes(tb, CONTEXT)
 
     # 3. Last call made
-    _frame, filename, linenumber, _func, lines, index = records[0]
-    info = get_source_info(filename, linenumber, lines, index)
-    result.append(add_source_info(info))
+    if running_script:
+        for record in records[:-1]:
+            # this would show a traceback originating from runpy or from our code
+            _frame, filename, linenumber, _func, lines, index = record
+            if ("friendly_traceback" in filename) or ("runpy.py" in filename):
+                continue
+            info = get_source_info(filename, linenumber, lines, index)
+            result.append(add_source_info(info))
+    else:
+        _frame, filename, linenumber, _func, lines, index = records[0]
+        info = get_source_info(filename, linenumber, lines, index)
+        result.append(add_source_info(info))
 
     # 4. origin of the exception
     if len(records) > 1:
