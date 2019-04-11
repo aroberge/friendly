@@ -31,7 +31,7 @@ class _State:
         self.write_err = _write_err
         lang, _ignore = locale.getdefaultlocale()
         self.install_gettext(lang)
-        self.level = 0
+        self.level = 2
 
     def explain(self, etype, value, tb, redirect=None):
         """Replaces a standard traceback by a friendlier one"""
