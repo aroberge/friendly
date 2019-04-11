@@ -6,9 +6,9 @@ Info to be written -- currently
 
 """
 import argparse
-import code
 import sys
 
+from . import console
 from . import core
 from . import version  # noqa
 
@@ -40,20 +40,14 @@ def main():
     core.install(lang=args.lang)
 
     if args.source is not None:
-        try:
-            main_module = __import__(args.source)
-            if sys.flags.interactive:
-                main_dict = {}
-                for var in dir(main_module):
-                    # if var in ["__cached__", "__loader__", "__package__", "__spec__"]:
-                    #     continue
-                    main_dict[var] = getattr(main_module, var)
-                code.interact(local=main_dict)
-        except ModuleNotFoundError:
-            print("Could not find module ", args.source, "\n")
-            raise
+        main_module = __import__(args.source)
+        if sys.flags.interactive:
+            main_dict = {}
+            for var in dir(main_module):
+                main_dict[var] = getattr(main_module, var)
+            console.start_console(local=main_dict)
     else:
-        code.interact()
+        console.start_console()
 
 
 if "-m" in sys.argv:

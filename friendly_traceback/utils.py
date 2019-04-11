@@ -1,14 +1,27 @@
 """utils.py"""
 
 CONTEXT = 4
+CONSOLE_SOURCE = {}
+CONSOLE_NAME = "<Friendly console>"
+
+
+def add_console_source(fake_filename, true_filename_and_source):
+    CONSOLE_SOURCE[fake_filename] = true_filename_and_source
+    # for key in CONSOLE_SOURCE:
+    #     print(key, CONSOLE_SOURCE[key])
 
 
 def get_partial_source(filename, linenumber, offset):
-    with open(filename) as f:
-        lines = f.readlines()
-    begin = linenumber - CONTEXT
+    if filename in CONSOLE_SOURCE:
+        _filename, source = CONSOLE_SOURCE[filename]
+        lines = source.split("\n")
+    else:
+        with open(filename) as f:
+            lines = f.readlines()
+
+    begin = max(0, linenumber - CONTEXT)
     return highlight_source(
-        linenumber, linenumber - 1, lines[begin:linenumber], offset=offset
+        linenumber, linenumber - begin - 1, lines[begin : linenumber + 1], offset=offset
     )
 
 

@@ -10,7 +10,9 @@ from . import specific_info
 from . import utils
 from .my_gettext import current_lang
 
-CONTEXT = 4
+CONTEXT = utils.CONTEXT
+CONSOLE_SOURCE = utils.CONSOLE_SOURCE
+CONSOLE_NAME = utils.CONSOLE_NAME
 
 
 def explain_traceback(etype, value, tb):
@@ -60,6 +62,9 @@ def explain_traceback(etype, value, tb):
     if cause is not None:
         result.append(cause)
 
+    if issubclass(etype, SyntaxError):
+        return "\n".join(result)
+
     # first, get all calls
     records = inspect.getinnerframes(tb, CONTEXT)
 
@@ -108,14 +113,15 @@ def get_likely_cause(etype, value):
 
 def get_source_info(filename, linenumber, lines, index):
     _ = current_lang.lang
-    if filename and os.path.abspath(filename):
+
+    if filename in CONSOLE_SOURCE:
+        _filename, source = CONSOLE_SOURCE[filename]
+        source = utils.get_partial_source(filename, linenumber, None)
+    elif filename and os.path.abspath(filename):
         filename = os.path.basename(filename)
+        source = utils.highlight_source(linenumber, index, lines)
     elif not filename:
         raise FileNotFoundError("Cannot find %s" % filename)
-    if index is not None:
-        source = utils.highlight_source(linenumber, index, lines)
-    else:
-        source = _("Cannot find source code.")
 
     return {"filename": filename, "source": source, "linenumber": linenumber}
 
