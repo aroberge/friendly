@@ -45,7 +45,7 @@ def main():
             main_dict = {}
             for var in dir(main_module):
                 main_dict[var] = getattr(main_module, var)
-            console.start_console(local=main_dict)
+            console.start_console(local_vars=main_dict)
     else:
         console.start_console()
 
