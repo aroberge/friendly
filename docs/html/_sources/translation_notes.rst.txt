@@ -271,3 +271,9 @@ There is a different way to use gettext to deal with these situations.
 I plan to do this. It could happen that I have already done this with the
 code but not updated the information in this file.
 If you notice that this is the case, feel free to file an issue.
+
+
+.. warning::
+
+    Using gettext with the default `_` as a builtin clashes with
+    an interactive console where `_` is redefined.

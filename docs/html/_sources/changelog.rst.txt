@@ -1,6 +1,7 @@
 Change Log
 ============
 
+- Added test for unknown exception
 - Added IndentationError, with translation
 - Fixed install() option with capture
 

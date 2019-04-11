@@ -3,13 +3,11 @@
 Just a first draft as proof of concept.
 """
 
-import gettext
 import locale
-import os
 import sys
 import traceback
 
-
+from .my_gettext import current_lang
 from . import formatter
 
 
@@ -31,7 +29,7 @@ class _State:
         self.redirect = None
         self.context = 3
         self.write_err = _write_err
-        lang, _ = locale.getdefaultlocale()
+        lang, _ignore = locale.getdefaultlocale()
         self.install_gettext(lang)
         self.level = 0
 
@@ -62,26 +60,7 @@ class _State:
 
     def install_gettext(self, lang):
         """Sets the current language for gettext."""
-        try:
-            gettext_lang = gettext.translation(
-                lang,
-                localedir=os.path.normpath(
-                    os.path.join(os.path.dirname(__file__), "locales")
-                ),
-                languages=[lang],
-                fallback=False,
-            )
-        except FileNotFoundError:
-            lang = lang[:2]
-            gettext_lang = gettext.translation(
-                lang,
-                localedir=os.path.normpath(
-                    os.path.join(os.path.dirname(__file__), "locales")
-                ),
-                languages=[lang],
-                fallback=True,
-            )
-        gettext_lang.install()
+        current_lang.install(lang)
 
     def install(self, lang=None, redirect=None):
         """

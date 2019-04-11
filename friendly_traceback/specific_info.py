@@ -7,6 +7,7 @@ import os
 
 
 from . import utils
+from .my_gettext import current_lang
 
 """Note for later
 
@@ -21,12 +22,14 @@ IndentationError and TabError are subclasses of SyntaxError.
 
 
 def name_error(etype, value):
+    _ = current_lang.lang
     return _("        In your program, the unknown name is '{var_name}'.\n").format(
         var_name=str(value).split("'")[1]
     )
 
 
 def indentation_error(etype, value):
+    _ = current_lang.lang
     filename = value.filename
     linenumber = value.lineno
     offset = value.offset

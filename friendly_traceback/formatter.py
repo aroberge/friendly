@@ -8,6 +8,7 @@ import os
 from . import generic_info
 from . import specific_info
 from . import utils
+from .my_gettext import current_lang
 
 CONTEXT = 4
 
@@ -79,6 +80,7 @@ def explain_traceback(etype, value, tb):
 def provide_generic_explanation(name, value):
     """Provides a generic explanation about a particular error.
     """
+    _ = current_lang.lang
     if name in generic_info.generic:
         explanation = generic_info.generic[name]()
     else:
@@ -95,6 +97,7 @@ def provide_generic_explanation(name, value):
 
 
 def get_likely_cause(etype, value):
+    _ = current_lang.lang
     if etype.__name__ in specific_info.get_cause:
         return _("    Likely cause:\n{cause}").format(
             cause=specific_info.get_cause[etype.__name__](etype, value)
@@ -104,6 +107,7 @@ def get_likely_cause(etype, value):
 
 
 def get_source_info(filename, linenumber, lines, index):
+    _ = current_lang.lang
     if filename and os.path.abspath(filename):
         filename = os.path.basename(filename)
     elif not filename:
@@ -117,7 +121,7 @@ def get_source_info(filename, linenumber, lines, index):
 
 
 def add_source_info(info, last_call=True):
-
+    _ = current_lang.lang
     if last_call:
         message = _(
             "\n"

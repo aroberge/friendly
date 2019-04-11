@@ -9,5 +9,3 @@ exclude =
     docs/*,
     # This contains our tests directory
     tests/*
-builtins =
-    _
