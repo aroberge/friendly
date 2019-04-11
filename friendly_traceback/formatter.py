@@ -4,7 +4,6 @@ First version - needs to be documented.
 """
 import inspect
 import os
-import sys
 
 from . import generic_info
 from . import specific_info
@@ -14,6 +13,16 @@ from .my_gettext import current_lang
 CONTEXT = utils.CONTEXT
 CONSOLE_SOURCE = utils.CONSOLE_SOURCE
 CONSOLE_NAME = utils.CONSOLE_NAME
+
+
+def excluded_file_names():
+    import runpy
+
+    excluded = [runpy.__file__]
+    dirname = os.path.dirname(__file__)
+    for file in os.listdir(os.path.dirname(__file__)):
+        excluded.append(os.path.join(dirname, file))
+    return excluded
 
 
 def explain_traceback(etype, value, tb, running_script=False):
@@ -55,8 +64,6 @@ def explain_traceback(etype, value, tb, running_script=False):
     """
     result = []
 
-    print("running_script", running_script)
-
     # 1. Generic explanation
     result.append(provide_generic_explanation(etype.__name__, value))
     cause = get_likely_cause(etype, value)
@@ -73,13 +80,15 @@ def explain_traceback(etype, value, tb, running_script=False):
 
     # 3. Last call made
     if running_script:
+        excluded_files = excluded_file_names()
         for record in records[:-1]:
             # this would show a traceback originating from runpy or from our code
             _frame, filename, linenumber, _func, lines, index = record
-            if ("friendly_traceback" in filename) or ("runpy.py" in filename):
+            if filename in excluded_files:
                 continue
             info = get_source_info(filename, linenumber, lines, index)
             result.append(add_source_info(info))
+            break
     else:
         _frame, filename, linenumber, _func, lines, index = records[0]
         info = get_source_info(filename, linenumber, lines, index)
