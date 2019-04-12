@@ -14,6 +14,10 @@ ici tous les exemples possibles tels qu'interprétés par friendly-traceback.
      Ceci a besoin d'être fait de manière explicite lorsqu'on veut
      faire des corrections ou des ajouts, avant de faire la mise
      à jour du reste de la documentation avec Sphinx.
+     Sous Windows, si Sphinx est installé sur votre ordinateur, il est
+     plutôt suggéré d'exécuter make_tb.bat qui est au premier niveau
+     du répertoire de fichier. Si vous faites ceci, la documentation pour
+     toutes les langues sera automatiquement mise à jour.
 
 Friendly-traceback version: 0.0.3
 Python version: 3.7.0
@@ -140,10 +144,10 @@ SyntaxError
     Exception Python: 
         SyntaxError: invalid syntax (raise_syntax_error1.py, line 3)
 
-    A SyntaxError occurs when Python cannot understand your code.
-    There could be many possible reasons:
-    - a keyword might be misspelled;
-    - a colon, :, or some other symbol like (, ], etc., might be missing;
+    Une exception SyntaxError se produit lorsque python ne peut pas comprendre votre code.
+    Il pourrait y avoir plusieurs raisons possibles:
+    - un mot-clé peut être mal orthographié;
+    - le symbole deux points, :, ou un autre symbole comme (,], etc., pourrait manquer;
     - etc.
 
     Cause probable : 
@@ -154,8 +158,8 @@ SyntaxError
        2: 
     -->3: pass = 2
                ^
-        Currently, we cannot give you more information
-        about the likely cause of this error.
+        Actuellement, nous ne pouvons pas vous donner plus d’informations
+        sur la cause probable de cette erreur.
 
 Unknown exception
 -----------------

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-04-10 07:30-0300\n"
+"POT-Creation-Date: 2019-04-12 07:47-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: formatter.py:87
+#: formatter.py:115
 msgid ""
 "\n"
 "    Python exception: \n"
@@ -24,17 +24,13 @@ msgid ""
 "{explanation}"
 msgstr ""
 
-#: formatter.py:99
+#: formatter.py:128
 msgid ""
 "    Likely cause:\n"
 "{cause}"
 msgstr ""
 
-#: formatter.py:114
-msgid "Cannot find source code."
-msgstr ""
-
-#: formatter.py:122
+#: formatter.py:153
 msgid ""
 "\n"
 "    Execution stopped on line {linenumber} of file '{filename}'.\n"
@@ -42,7 +38,7 @@ msgid ""
 "{source}\n"
 msgstr ""
 
-#: formatter.py:130
+#: formatter.py:161
 msgid ""
 "\n"
 "    Exception raised on line {linenumber} of file '{filename}'.\n"
@@ -50,13 +46,13 @@ msgid ""
 "{source}\n"
 msgstr ""
 
-#: generic_info.py:5
+#: generic_info.py:7
 msgid ""
 "    An IndentationError occurs when a given line of code is\n"
 "    not indented (aligned vertically with other lines) as expected.\n"
 msgstr ""
 
-#: generic_info.py:12
+#: generic_info.py:15
 msgid ""
 "    A NameError exception indicates that a variable or\n"
 "    function name is not known to Python.\n"
@@ -65,17 +61,21 @@ msgid ""
 "    before being defined or given a value.\n"
 msgstr ""
 
-#: generic_info.py:22
+#: generic_info.py:26
+msgid ""
+"    A SyntaxError occurs when Python cannot understand your code.\n"
+"    There could be many possible reasons:\n"
+"    - a keyword might be misspelled;\n"
+"    - a colon, :, or some other symbol like (, ], etc., might be missing;\n"
+"    - etc.\n"
+msgstr ""
+
+#: generic_info.py:37
 msgid ""
 "    No information is known about this exception.\n"
 msgstr ""
 
-#: specific_info.py:24
-msgid ""
-"        In your program, the unknown name is '{var_name}'.\n"
-msgstr ""
-
-#: specific_info.py:35
+#: specific_info.py:31 specific_info.py:73
 msgid ""
 "        Python could not parse the file '{filename}'\n"
 "        beyond the location indicated below by --> and ^.\n"
@@ -83,23 +83,34 @@ msgid ""
 "{source}\n"
 msgstr ""
 
-#: specific_info.py:44
+#: specific_info.py:40
 msgid ""
 "        In this case, the line identified above\n"
 "        is more indented than expected and \n"
 "        does not match the indentation of the previous line.\n"
 msgstr ""
 
-#: specific_info.py:50
+#: specific_info.py:46
 msgid ""
 "        In this case, the line identified above\n"
 "        was expected to begin a new indented block.\n"
 msgstr ""
 
-#: specific_info.py:55
+#: specific_info.py:51
 msgid ""
 "        In this case, the line identified above is\n"
 "        less indented than the preceding one,\n"
 "        and is not aligned vertically with another block of code.\n"
+msgstr ""
+
+#: specific_info.py:61
+msgid ""
+"        In your program, the unknown name is '{var_name}'.\n"
+msgstr ""
+
+#: specific_info.py:82
+msgid ""
+"        Currently, we cannot give you more information\n"
+"        about the likely cause of this error.\n"
 msgstr ""
 

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-10 07:30-0300\n"
-"PO-Revision-Date: 2019-04-10 07:37-0300\n"
+"POT-Creation-Date: 2019-04-12 07:47-0300\n"
+"PO-Revision-Date: 2019-04-12 07:52-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: formatter.py:87
+#: formatter.py:115
 msgid ""
 "\n"
 "    Python exception: \n"
@@ -31,7 +31,7 @@ msgstr ""
 "\n"
 "{explanation}"
 
-#: formatter.py:99
+#: formatter.py:128
 msgid ""
 "    Likely cause:\n"
 "{cause}"
@@ -39,11 +39,7 @@ msgstr ""
 "    Cause probable : \n"
 "{cause}"
 
-#: formatter.py:114
-msgid "Cannot find source code."
-msgstr "Impossible de trouver la source du code."
-
-#: formatter.py:122
+#: formatter.py:153
 msgid ""
 "\n"
 "    Execution stopped on line {linenumber} of file '{filename}'.\n"
@@ -56,7 +52,7 @@ msgstr ""
 "\n"
 "{source}\n"
 
-#: formatter.py:130
+#: formatter.py:161
 msgid ""
 "\n"
 "    Exception raised on line {linenumber} of file '{filename}'.\n"
@@ -68,7 +64,7 @@ msgstr ""
 "\n"
 "{source}\n"
 
-#: generic_info.py:5
+#: generic_info.py:7
 msgid ""
 "    An IndentationError occurs when a given line of code is\n"
 "    not indented (aligned vertically with other lines) as expected.\n"
@@ -79,7 +75,7 @@ msgstr ""
 "lignes)\n"
 "    de la façon attendue.\n"
 
-#: generic_info.py:12
+#: generic_info.py:15
 msgid ""
 "    A NameError exception indicates that a variable or\n"
 "    function name is not known to Python.\n"
@@ -93,15 +89,27 @@ msgstr ""
 "    Cependant, cela peut également indiquer que le nom a été\n"
 "    utilisé avant qu'on ne lui ait associé une valeur.\n"
 
-#: generic_info.py:22
+#: generic_info.py:26
+msgid ""
+"    A SyntaxError occurs when Python cannot understand your code.\n"
+"    There could be many possible reasons:\n"
+"    - a keyword might be misspelled;\n"
+"    - a colon, :, or some other symbol like (, ], etc., might be missing;\n"
+"    - etc.\n"
+msgstr ""
+"    Une exception SyntaxError se produit lorsque python ne peut pas "
+"comprendre votre code.\n"
+"    Il pourrait y avoir plusieurs raisons possibles:\n"
+"    - un mot-clé peut être mal orthographié;\n"
+"    - le symbole deux points, :, ou un autre symbole comme (,], etc., "
+"pourrait manquer;\n"
+"    - etc.\n"
+
+#: generic_info.py:37
 msgid "    No information is known about this exception.\n"
 msgstr "    Aucune information n'est connue au sujet de cette exception.\n"
 
-#: specific_info.py:24
-msgid "        In your program, the unknown name is '{var_name}'.\n"
-msgstr "        Dans votre programme, le nom inconnu est '{var_name}'.\n"
-
-#: specific_info.py:35
+#: specific_info.py:31 specific_info.py:73
 msgid ""
 "        Python could not parse the file '{filename}'\n"
 "        beyond the location indicated below by --> and ^.\n"
@@ -113,7 +121,7 @@ msgstr ""
 "\n"
 "{source}\n"
 
-#: specific_info.py:44
+#: specific_info.py:40
 msgid ""
 "        In this case, the line identified above\n"
 "        is more indented than expected and \n"
@@ -123,7 +131,7 @@ msgstr ""
 "        est plus indentée que ce qui était attendu et ne\n"
 "        correspond pas à l'indentation de la ligne précédente.\n"
 
-#: specific_info.py:50
+#: specific_info.py:46
 msgid ""
 "        In this case, the line identified above\n"
 "        was expected to begin a new indented block.\n"
@@ -131,7 +139,7 @@ msgstr ""
 "        Dans ce cas-ci, la ligne indiquée ci-dessus par --> devrait\n"
 "        normalement commencer un nouveau bloc de code indenté.\n"
 
-#: specific_info.py:55
+#: specific_info.py:51
 msgid ""
 "        In this case, the line identified above is\n"
 "        less indented than the preceding one,\n"
@@ -140,6 +148,21 @@ msgstr ""
 "        Dans ce cas-ci, la ligne indiquée ci-dessus par -->\n"
 "        est moins indentée que la ligne précédente\n"
 "        et n’est pas alignée verticalement avec un autre bloc de code.\n"
+
+#: specific_info.py:61
+msgid "        In your program, the unknown name is '{var_name}'.\n"
+msgstr "        Dans votre programme, le nom inconnu est '{var_name}'.\n"
+
+#: specific_info.py:82
+msgid ""
+"        Currently, we cannot give you more information\n"
+"        about the likely cause of this error.\n"
+msgstr ""
+"        Actuellement, nous ne pouvons pas vous donner plus d’informations\n"
+"        sur la cause probable de cette erreur.\n"
+
+#~ msgid "Cannot find source code."
+#~ msgstr "Impossible de trouver la source du code."
 
 #~ msgid ""
 #~ "\n"

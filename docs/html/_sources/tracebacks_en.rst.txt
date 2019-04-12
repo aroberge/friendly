@@ -14,6 +14,9 @@ should be included here.
      tb_english.py located in the ``tests/`` directory.
      This needs to be done explicitly, independently of updating the
      documentation using Sphinx.
+     On Windows, if Sphinx is installed on your computer, it is suggested
+     instead to run make_tb.bat in the root directory as it will create
+     similar files for all languages *and* update the documentation.
 
 Friendly-traceback version: 0.0.3
 Python version: 3.7.0
