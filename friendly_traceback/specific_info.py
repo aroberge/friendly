@@ -58,6 +58,11 @@ def indentation_error(etype, value):
 
 def name_error(etype, value):
     _ = current_lang.lang
+    # value is expected to be something like
+    #
+    # NameError: name 'c' is not defined
+    #
+    # By splitting value using ', we can extract the variable name.
     return _("        In your program, the unknown name is '{var_name}'.\n").format(
         var_name=str(value).split("'")[1]
     )

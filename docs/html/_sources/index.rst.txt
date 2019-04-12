@@ -18,6 +18,7 @@ More info to be added soon.
    :caption: Contents:
 
     Design <design>
+    Adding an Exception <adding_exception>
     Friendly tracebacks - in English <tracebacks_en>
     Friendly tracebacks - en Français <tracebacks_fr>
     Notes on translations - using gettext <translation_notes>

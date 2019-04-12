@@ -3,6 +3,8 @@ Aimed at Python beginners: replacing standard traceback by something easier to u
 
 [See the documentation here](https://aroberge.github.io/friendly-traceback/docs/html/)
 
+Friendly-traceback uses Black.
+![Black logo](https://img.shields.io/badge/code%20style-black-000000.svg)
 
 ## Code of Conduct
 
