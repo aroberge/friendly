@@ -98,3 +98,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# windows bat file specific to my computer
+friendly_traceback/*.bat

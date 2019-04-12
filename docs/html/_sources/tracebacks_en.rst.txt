@@ -44,14 +44,6 @@ IndentationError - 1: expected an indented block
         In this case, the line identified above
         was expected to begin a new indented block.
 
-
-    Execution stopped on line 47 of file 'tb_common.py'.
-
-       45:                 make_title(title)
-       46:                 try:
-    -->47:                     mod = __import__(name)
-       48:                     if function is not None:
-
 IndentationError - 2: unexpected indent
 ---------------------------------------
 
@@ -76,14 +68,6 @@ IndentationError - 2: unexpected indent
         In this case, the line identified above
         is more indented than expected and 
         does not match the indentation of the previous line.
-
-
-    Execution stopped on line 47 of file 'tb_common.py'.
-
-       45:                 make_title(title)
-       46:                 try:
-    -->47:                     mod = __import__(name)
-       48:                     if function is not None:
 
 IndentationError - 3: unindent does not match ...
 -------------------------------------------------
@@ -110,14 +94,6 @@ IndentationError - 3: unindent does not match ...
         less indented than the preceding one,
         and is not aligned vertically with another block of code.
 
-
-    Execution stopped on line 47 of file 'tb_common.py'.
-
-       45:                 make_title(title)
-       46:                 try:
-    -->47:                     mod = __import__(name)
-       48:                     if function is not None:
-
 NameError
 ---------
 
@@ -137,20 +113,46 @@ NameError
         In your program, the unknown name is 'c'.
 
 
-    Execution stopped on line 49 of file 'tb_common.py'.
+    Execution stopped on line 50 of file 'tb_common.py'.
 
-       47:                     mod = __import__(name)
-       48:                     if function is not None:
-    -->49:                         getattr(mod, function)()
-       50:                 except Exception:
+       48:                     mod = __import__(name)
+       49:                     if function is not None:
+    -->50:                         getattr(mod, function)()
+       51:                 except Exception:
 
 
-    Exception raised on line 8 of file 'raise_name_error.py'.
+    Exception raised on line 6 of file 'raise_name_error.py'.
 
-        6:     """Should raise NameError"""
-        7:     a = 1
-    --> 8:     b = c
-        9:     d = 3
+       4: def test():
+       5:     """Should raise NameError"""
+    -->6:     b = c
+       7:     d = 3
+
+SyntaxError
+-----------
+
+.. code-block:: none
+
+
+    Python exception: 
+        SyntaxError: invalid syntax (raise_syntax_error1.py, line 3)
+
+    A SyntaxError occurs when Python cannot understand your code.
+    There could be many possible reasons:
+    - a keyword might be misspelled;
+    - a colon, :, or some other symbol like (, ], etc., might be missing;
+    - etc.
+
+    Likely cause:
+        Python could not parse the file 'raise_syntax_error1.py'
+        beyond the location indicated below by --> and ^.
+
+       1: """ Should raise SyntaxError"""
+       2: 
+    -->3: pass = 2
+               ^
+        Currently, we cannot give you more information
+        about the likely cause of this error.
 
 Unknown exception
 -----------------
@@ -164,12 +166,12 @@ Unknown exception
     No information is known about this exception.
 
 
-    Execution stopped on line 49 of file 'tb_common.py'.
+    Execution stopped on line 50 of file 'tb_common.py'.
 
-       47:                     mod = __import__(name)
-       48:                     if function is not None:
-    -->49:                         getattr(mod, function)()
-       50:                 except Exception:
+       48:                     mod = __import__(name)
+       49:                     if function is not None:
+    -->50:                         getattr(mod, function)()
+       51:                 except Exception:
 
 
     Exception raised on line 8 of file 'raise_unknown_error.py'.

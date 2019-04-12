@@ -9,7 +9,7 @@ import os
 from . import utils
 from .my_gettext import current_lang
 
-"""Note for later
+"""
 
 Syntax error, and its subclasses, contain:
     filename = exc_value.filename
@@ -19,13 +19,6 @@ Syntax error, and its subclasses, contain:
     msg = exc_value.msg
 IndentationError and TabError are subclasses of SyntaxError.
 """
-
-
-def name_error(etype, value):
-    _ = current_lang.lang
-    return _("        In your program, the unknown name is '{var_name}'.\n").format(
-        var_name=str(value).split("'")[1]
-    )
 
 
 def indentation_error(etype, value):
@@ -63,4 +56,39 @@ def indentation_error(etype, value):
     return info + this_case
 
 
-get_cause = {"NameError": name_error, "IndentationError": indentation_error}
+def name_error(etype, value):
+    _ = current_lang.lang
+    return _("        In your program, the unknown name is '{var_name}'.\n").format(
+        var_name=str(value).split("'")[1]
+    )
+
+
+def syntax_error(etype, value):
+    _ = current_lang.lang
+    filename = value.filename
+    linenumber = value.lineno
+    offset = value.offset
+    source = utils.get_partial_source(filename, linenumber, offset)
+    filename = os.path.basename(filename)
+    info = _(
+        "        Python could not parse the file '{filename}'\n"
+        "        beyond the location indicated below by --> and ^.\n"
+        "\n"
+        "{source}\n"
+    ).format(filename=filename, source=source)
+
+    value = str(value)
+
+    this_case = _(
+        "        Currently, we cannot give you more information\n"
+        "        about the likely cause of this error.\n"
+    )
+
+    return info + this_case
+
+
+get_cause = {
+    "IndentationError": indentation_error,
+    "NameError": name_error,
+    "SyntaxError": syntax_error,
+}

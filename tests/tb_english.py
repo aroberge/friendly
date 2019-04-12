@@ -47,6 +47,9 @@ should be included here.
      {name} located in the ``tests/`` directory.
      This needs to be done explicitly, independently of updating the
      documentation using Sphinx.
+     On Windows, if Sphinx is installed on your computer, it is suggested
+     instead to run make_tb.bat in the root directory as it will create
+     similar files for all languages *and* update the documentation.
 
 Friendly-traceback version: {friendly}
 Python version: {python}

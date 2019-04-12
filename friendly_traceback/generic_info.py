@@ -21,6 +21,17 @@ def name_error(*args):
     )
 
 
+def syntax_error(*args):
+    _ = current_lang.lang
+    return _(
+        "    A SyntaxError occurs when Python cannot understand your code.\n"
+        "    There could be many possible reasons:\n"
+        "    - a keyword might be misspelled;\n"
+        "    - a colon, :, or some other symbol like (, ], etc., might be missing;\n"
+        "    - etc.\n"
+    )
+
+
 def unknown(*args):
     _ = current_lang.lang
     return _("    No information is known about this exception.\n")
@@ -29,5 +40,6 @@ def unknown(*args):
 generic = {
     "IndentationError": indentation_error,
     "NameError": name_error,
+    "SyntaxError": syntax_error,
     "Unknown": unknown,
 }

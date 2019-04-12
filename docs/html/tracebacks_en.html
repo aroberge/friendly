@@ -43,6 +43,7 @@
 <li><a class="reference internal" href="#indentationerror-2-unexpected-indent">IndentationError - 2: unexpected indent</a></li>
 <li><a class="reference internal" href="#indentationerror-3-unindent-does-not-match">IndentationError - 3: unindent does not match …</a></li>
 <li><a class="reference internal" href="#nameerror">NameError</a></li>
+<li><a class="reference internal" href="#syntaxerror">SyntaxError</a></li>
 <li><a class="reference internal" href="#unknown-exception">Unknown exception</a></li>
 </ul>
 </li>
@@ -116,14 +117,6 @@ Likely cause:
          ^
     In this case, the line identified above
     was expected to begin a new indented block.
-
-
-Execution stopped on line 47 of file &#39;tb_common.py&#39;.
-
-   45:                 make_title(title)
-   46:                 try:
---&gt;47:                     mod = __import__(name)
-   48:                     if function is not None:
 </pre></div>
 </div>
 </div>
@@ -147,14 +140,6 @@ Likely cause:
     In this case, the line identified above
     is more indented than expected and
     does not match the indentation of the previous line.
-
-
-Execution stopped on line 47 of file &#39;tb_common.py&#39;.
-
-   45:                 make_title(title)
-   46:                 try:
---&gt;47:                     mod = __import__(name)
-   48:                     if function is not None:
 </pre></div>
 </div>
 </div>
@@ -178,14 +163,6 @@ Likely cause:
     In this case, the line identified above is
     less indented than the preceding one,
     and is not aligned vertically with another block of code.
-
-
-Execution stopped on line 47 of file &#39;tb_common.py&#39;.
-
-   45:                 make_title(title)
-   46:                 try:
---&gt;47:                     mod = __import__(name)
-   48:                     if function is not None:
 </pre></div>
 </div>
 </div>
@@ -204,20 +181,44 @@ Likely cause:
     In your program, the unknown name is &#39;c&#39;.
 
 
-Execution stopped on line 49 of file &#39;tb_common.py&#39;.
+Execution stopped on line 50 of file &#39;tb_common.py&#39;.
 
-   47:                     mod = __import__(name)
-   48:                     if function is not None:
---&gt;49:                         getattr(mod, function)()
-   50:                 except Exception:
+   48:                     mod = __import__(name)
+   49:                     if function is not None:
+--&gt;50:                         getattr(mod, function)()
+   51:                 except Exception:
 
 
-Exception raised on line 8 of file &#39;raise_name_error.py&#39;.
+Exception raised on line 6 of file &#39;raise_name_error.py&#39;.
 
-    6:     &quot;&quot;&quot;Should raise NameError&quot;&quot;&quot;
-    7:     a = 1
---&gt; 8:     b = c
-    9:     d = 3
+   4: def test():
+   5:     &quot;&quot;&quot;Should raise NameError&quot;&quot;&quot;
+--&gt;6:     b = c
+   7:     d = 3
+</pre></div>
+</div>
+</div>
+<div class="section" id="syntaxerror">
+<h2>SyntaxError<a class="headerlink" href="#syntaxerror" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    SyntaxError: invalid syntax (raise_syntax_error1.py, line 3)
+
+A SyntaxError occurs when Python cannot understand your code.
+There could be many possible reasons:
+- a keyword might be misspelled;
+- a colon, :, or some other symbol like (, ], etc., might be missing;
+- etc.
+
+Likely cause:
+    Python could not parse the file &#39;raise_syntax_error1.py&#39;
+    beyond the location indicated below by --&gt; and ^.
+
+   1: &quot;&quot;&quot; Should raise SyntaxError&quot;&quot;&quot;
+   2:
+--&gt;3: pass = 2
+           ^
+    Currently, we cannot give you more information
+    about the likely cause of this error.
 </pre></div>
 </div>
 </div>
@@ -229,12 +230,12 @@ Exception raised on line 8 of file &#39;raise_name_error.py&#39;.
 No information is known about this exception.
 
 
-Execution stopped on line 49 of file &#39;tb_common.py&#39;.
+Execution stopped on line 50 of file &#39;tb_common.py&#39;.
 
-   47:                     mod = __import__(name)
-   48:                     if function is not None:
---&gt;49:                         getattr(mod, function)()
-   50:                 except Exception:
+   48:                     mod = __import__(name)
+   49:                     if function is not None:
+--&gt;50:                         getattr(mod, function)()
+   51:                 except Exception:
 
 
 Exception raised on line 8 of file &#39;raise_unknown_error.py&#39;.

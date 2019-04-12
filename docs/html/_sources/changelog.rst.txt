@@ -1,6 +1,7 @@
 Change Log
 ============
 
+- Added basic console (REPL) support
 - Added test for unknown exception
 - Added IndentationError, with translation
 - Fixed install() option with capture

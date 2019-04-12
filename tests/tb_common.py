@@ -27,6 +27,7 @@ all_imports = {
     "IndentationError - 2: unexpected indent": "raise_indentation_error2",
     "IndentationError - 3: unindent does not match ...": "raise_indentation_error3",
     "NameError": ("raise_name_error", "test"),
+    "SyntaxError": "raise_syntax_error1",
     "Unknown exception": ("raise_unknown_error", "test")
 }
 
