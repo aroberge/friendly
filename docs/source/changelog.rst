@@ -1,7 +1,11 @@
 Change Log
 ============
 
-- Added basic console (REPL) support
+Version 0.0.3
+-------------
+
+- Documentation: adding new exception
+- Added console (REPL) support
 - Added test for unknown exception
 - Added IndentationError, with translation
 - Fixed install() option with capture
