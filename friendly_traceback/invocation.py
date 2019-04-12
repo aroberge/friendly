@@ -18,7 +18,7 @@ parser = argparse.ArgumentParser(
         understand.
         """
 )
-parser.add_argument("source")
+parser.add_argument("source", nargs="?")
 
 parser.add_argument(
     "--lang",
@@ -38,7 +38,7 @@ parser.add_argument(
 
 
 def main():
-    # console_dict = {}
+    console_dict = {"set_lang": core.set_lang}
     args = parser.parse_args()
     core.install(lang=args.lang)
 
@@ -51,7 +51,8 @@ def main():
                 module_dict = {}
                 for var in dir(module):
                     module_dict[var] = getattr(module, var)
-            console.start_console(local_vars=module_dict)
+            console_dict.update(module_dict)
+            console.start_console(local_vars=console_dict)
         elif args.as_main:
             core.run_script(args.source)
         else:

@@ -85,6 +85,18 @@ class _State:
 
 state = _State()
 
+
+def run_script(source):
+    state.running_script = True
+    mod_dict = runpy.run_module(source, run_name="__main__")
+    state.running_script = False
+    return mod_dict
+
+
+def set_lang(lang):
+    state.install_gettext(lang)
+
+
 # ----------------
 # Public API
 # ----------------
@@ -110,10 +122,3 @@ def get_output(flush=True):
        However, this can be overriden if desired.
     """
     return state.get_captured(flush=flush)
-
-
-def run_script(source):
-    state.running_script = True
-    mod_dict = runpy.run_module(source, run_name="__main__")
-    state.running_script = False
-    return mod_dict
