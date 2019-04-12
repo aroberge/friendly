@@ -28,6 +28,8 @@ all_imports = {
     "IndentationError - 3: unindent does not match ...": "raise_indentation_error3",
     "NameError": ("raise_name_error", "test"),
     "SyntaxError": "raise_syntax_error1",
+    "TabError - 1": ("raise_tab_error1", "test_tab_error1"),
+    "TabError - 2": ("raise_tab_error2", "test_tab_error2"),
     "Unknown exception": ("raise_unknown_error", "test")
 }
 

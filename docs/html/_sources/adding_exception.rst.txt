@@ -98,20 +98,6 @@ language for which translations do not exists, the output should look something 
     No information is known about this exception.
 
 
-    Execution stopped on line 13 of file 'raise_unknown_error.py'.
-
-       10: if __name__ == "__main__":
-       11:     import friendly_traceback
-       12:     friendly_traceback.install()
-    -->13:     test()
-
-    Exception raised on line 8 of file 'raise_unknown_error.py'.
-
-        6:
-        7: def test():
-    --> 8:     raise MyException("Some informative message")
-        9:
-
 If this is the case, you are ready to go to the next step.
 
 Catching an exception
@@ -170,7 +156,12 @@ numbered comments added, to which we refer below::
    beginning of the line just below ``Python exception:`` that
    was shown when running something like ``raise_myexception.py``
    previously. For reliability, we should include more than
-   just the name of the Exception.
+   just the name of the Exception. Just leave any information
+   about the line and file number out, to avoid making the tests
+   brittle if we were to change either. For example, we might
+   discover that a given exception has more than one case
+   (``IndentationError``, for example, has three cases) and we
+   might want to number each individual test file.
 8. We must return the previously captured result for independent
    testing.
 9. By adding this, we can run something like::
@@ -178,6 +169,9 @@ numbered comments added, to which we refer below::
       python tests/catch_name_error.py
 
    and see the expected result.
+
+At this point, running pytest from the root directory should
+work, and you should see your test case included.
 
 
 Adding generic information

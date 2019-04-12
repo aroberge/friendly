@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-04-12 07:47-0300\n"
+"POT-Creation-Date: 2019-04-12 16:37-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,10 +72,20 @@ msgstr ""
 
 #: generic_info.py:37
 msgid ""
+"    A TabError indicates that you have used both spaces\n"
+"    and tab characters to indent your code.\n"
+"    This is not allowed in Python.\n"
+"    Indenting your code means to have block of codes aligned vertically\n"
+"    by inserting either spaces or tab characters at the beginning of lines.\n"
+"    Python's recommendation is to always use spaces to indent your code.\n"
+msgstr ""
+
+#: generic_info.py:49
+msgid ""
 "    No information is known about this exception.\n"
 msgstr ""
 
-#: specific_info.py:31 specific_info.py:73
+#: specific_info.py:31 specific_info.py:78 specific_info.py:106
 msgid ""
 "        Python could not parse the file '{filename}'\n"
 "        beyond the location indicated below by --> and ^.\n"
@@ -103,14 +113,20 @@ msgid ""
 "        and is not aligned vertically with another block of code.\n"
 msgstr ""
 
-#: specific_info.py:61
+#: specific_info.py:66
 msgid ""
 "        In your program, the unknown name is '{var_name}'.\n"
 msgstr ""
 
-#: specific_info.py:82
+#: specific_info.py:85
 msgid ""
 "        Currently, we cannot give you more information\n"
 "        about the likely cause of this error.\n"
+msgstr ""
+
+#: specific_info.py:99
+msgid ""
+"        Unfortunately, no additional information is available:\n"
+"        the content of file '<string>' is not accessible.\n"
 msgstr ""
 

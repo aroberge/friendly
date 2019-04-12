@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Friendly tracebacks - in English &#8212; Friendly tracebacks 0.0.3 documentation</title>
+    <title>Friendly tracebacks - in English &#8212; Friendly tracebacks 0.0.4 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -31,7 +31,7 @@
         <li class="right" >
           <a href="adding_exception.html" title="Adding an Exception"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.4 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -44,6 +44,8 @@
 <li><a class="reference internal" href="#indentationerror-3-unindent-does-not-match">IndentationError - 3: unindent does not match …</a></li>
 <li><a class="reference internal" href="#nameerror">NameError</a></li>
 <li><a class="reference internal" href="#syntaxerror">SyntaxError</a></li>
+<li><a class="reference internal" href="#taberror-1">TabError - 1</a></li>
+<li><a class="reference internal" href="#taberror-2">TabError - 2</a></li>
 <li><a class="reference internal" href="#unknown-exception">Unknown exception</a></li>
 </ul>
 </li>
@@ -99,7 +101,7 @@ On Windows, if Sphinx is installed on your computer, it is suggested
 instead to run make_tb.bat in the root directory as it will create
 similar files for all languages <em>and</em> update the documentation.</p>
 </div>
-<p>Friendly-traceback version: 0.0.3
+<p>Friendly-traceback version: 0.0.4
 Python version: 3.7.0</p>
 <div class="section" id="indentationerror-1-expected-an-indented-block">
 <h2>IndentationError - 1: expected an indented block<a class="headerlink" href="#indentationerror-1-expected-an-indented-block" title="Permalink to this headline">¶</a></h2>
@@ -184,12 +186,12 @@ Likely cause:
     In your program, the unknown name is &#39;c&#39;.
 
 
-Execution stopped on line 50 of file &#39;tb_common.py&#39;.
+Execution stopped on line 52 of file &#39;tb_common.py&#39;.
 
-   48:                     mod = __import__(name)
-   49:                     if function is not None:
---&gt;50:                         getattr(mod, function)()
-   51:                 except Exception:
+   50:                     mod = __import__(name)
+   51:                     if function is not None:
+--&gt;52:                         getattr(mod, function)()
+   53:                 except Exception:
 
 
 Exception raised on line 6 of file &#39;raise_name_error.py&#39;.
@@ -225,6 +227,49 @@ Likely cause:
 </pre></div>
 </div>
 </div>
+<div class="section" id="taberror-1">
+<h2>TabError - 1<a class="headerlink" href="#taberror-1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    TabError: inconsistent use of tabs and spaces in indentation (&lt;string&gt;, line 3)
+
+A TabError indicates that you have used both spaces
+and tab characters to indent your code.
+This is not allowed in Python.
+Indenting your code means to have block of codes aligned vertically
+by inserting either spaces or tab characters at the beginning of lines.
+Python&#39;s recommendation is to always use spaces to indent your code.
+
+Likely cause:
+    Unfortunately, no additional information is available:
+    the content of file &#39;&lt;string&gt;&#39; is not accessible.
+</pre></div>
+</div>
+</div>
+<div class="section" id="taberror-2">
+<h2>TabError - 2<a class="headerlink" href="#taberror-2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    TabError: inconsistent use of tabs and spaces in indentation (raise_tab_error2.py, line 7)
+
+A TabError indicates that you have used both spaces
+and tab characters to indent your code.
+This is not allowed in Python.
+Indenting your code means to have block of codes aligned vertically
+by inserting either spaces or tab characters at the beginning of lines.
+Python&#39;s recommendation is to always use spaces to indent your code.
+
+Likely cause:
+    Python could not parse the file &#39;raise_tab_error2.py&#39;
+    beyond the location indicated below by --&gt; and ^.
+
+    4:
+    5: def test_tab_error2():
+    6:     if True:
+--&gt; 7:      pass
+    8:
+            ^
+</pre></div>
+</div>
+</div>
 <div class="section" id="unknown-exception">
 <h2>Unknown exception<a class="headerlink" href="#unknown-exception" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
@@ -233,12 +278,12 @@ Likely cause:
 No information is known about this exception.
 
 
-Execution stopped on line 50 of file &#39;tb_common.py&#39;.
+Execution stopped on line 52 of file &#39;tb_common.py&#39;.
 
-   48:                     mod = __import__(name)
-   49:                     if function is not None:
---&gt;50:                         getattr(mod, function)()
-   51:                 except Exception:
+   50:                     mod = __import__(name)
+   51:                     if function is not None:
+--&gt;52:                         getattr(mod, function)()
+   53:                 except Exception:
 
 
 Exception raised on line 8 of file &#39;raise_unknown_error.py&#39;.
@@ -270,7 +315,7 @@ Exception raised on line 8 of file &#39;raise_unknown_error.py&#39;.
         <li class="right" >
           <a href="adding_exception.html" title="Adding an Exception"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.4 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

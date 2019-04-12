@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-12 07:47-0300\n"
-"PO-Revision-Date: 2019-04-12 07:52-0300\n"
+"POT-Creation-Date: 2019-04-12 16:37-0300\n"
+"PO-Revision-Date: 2019-04-12 16:41-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -106,10 +106,30 @@ msgstr ""
 "    - etc.\n"
 
 #: generic_info.py:37
+msgid ""
+"    A TabError indicates that you have used both spaces\n"
+"    and tab characters to indent your code.\n"
+"    This is not allowed in Python.\n"
+"    Indenting your code means to have block of codes aligned vertically\n"
+"    by inserting either spaces or tab characters at the beginning of "
+"lines.\n"
+"    Python's recommendation is to always use spaces to indent your code.\n"
+msgstr ""
+"    Un exception de type TabError indique que vous avez utilisé des "
+"espaces ainsi que\n"
+"    des caractères de tabulation pour indenter votre code.\n"
+"    Cela n’est pas autorisé dans Python.\n"
+"    L’indentation de votre code signifie que le bloc de codes est aligné "
+"verticalement \n"
+"    en insérant des espaces ou des tabulations au début des lignes.\n"
+"    La recommandation de Python est de toujours utiliser des espaces pour "
+"indenter votre code.\n"
+
+#: generic_info.py:49
 msgid "    No information is known about this exception.\n"
 msgstr "    Aucune information n'est connue au sujet de cette exception.\n"
 
-#: specific_info.py:31 specific_info.py:73
+#: specific_info.py:31 specific_info.py:78 specific_info.py:106
 msgid ""
 "        Python could not parse the file '{filename}'\n"
 "        beyond the location indicated below by --> and ^.\n"
@@ -149,17 +169,26 @@ msgstr ""
 "        est moins indentée que la ligne précédente\n"
 "        et n’est pas alignée verticalement avec un autre bloc de code.\n"
 
-#: specific_info.py:61
+#: specific_info.py:66
 msgid "        In your program, the unknown name is '{var_name}'.\n"
 msgstr "        Dans votre programme, le nom inconnu est '{var_name}'.\n"
 
-#: specific_info.py:82
+#: specific_info.py:85
 msgid ""
 "        Currently, we cannot give you more information\n"
 "        about the likely cause of this error.\n"
 msgstr ""
 "        Actuellement, nous ne pouvons pas vous donner plus d’informations\n"
 "        sur la cause probable de cette erreur.\n"
+
+#: specific_info.py:99
+msgid ""
+"        Unfortunately, no additional information is available:\n"
+"        the content of file '<string>' is not accessible.\n"
+msgstr ""
+"        Malheureusement, aucune information supplémentaire n’est "
+"disponible:\n"
+"        le contenu du fichier '<string>' n’est pas accessible.\n"
 
 #~ msgid "Cannot find source code."
 #~ msgstr "Impossible de trouver la source du code."

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Adding an Exception &#8212; Friendly tracebacks 0.0.3 documentation</title>
+    <title>Adding an Exception &#8212; Friendly tracebacks 0.0.4 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -31,7 +31,7 @@
         <li class="right" >
           <a href="design.html" title="Some thoughts on the design of friendly-traceback"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.4 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -190,21 +190,6 @@ language for which translations do not exists, the output should look something 
     MyException: Some informative message
 
 No information is known about this exception.
-
-
-Execution stopped on line 13 of file &#39;raise_unknown_error.py&#39;.
-
-   10: if __name__ == &quot;__main__&quot;:
-   11:     import friendly_traceback
-   12:     friendly_traceback.install()
---&gt;13:     test()
-
-Exception raised on line 8 of file &#39;raise_unknown_error.py&#39;.
-
-    6:
-    7: def test():
---&gt; 8:     raise MyException(&quot;Some informative message&quot;)
-    9:
 </pre></div>
 </div>
 <p>If this is the case, you are ready to go to the next step.</p>
@@ -270,7 +255,12 @@ what we expect to see in the output. This is usually the
 beginning of the line just below <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">exception:</span></code> that
 was shown when running something like <code class="docutils literal notranslate"><span class="pre">raise_myexception.py</span></code>
 previously. For reliability, we should include more than
-just the name of the Exception.</p>
+just the name of the Exception. Just leave any information
+about the line and file number out, to avoid making the tests
+brittle if we were to change either. For example, we might
+discover that a given exception has more than one case
+(<code class="docutils literal notranslate"><span class="pre">IndentationError</span></code>, for example, has three cases) and we
+might want to number each individual test file.</p>
 </li>
 <li><p class="first">We must return the previously captured result for independent
 testing.</p>
@@ -282,6 +272,8 @@ testing.</p>
 <p>and see the expected result.</p>
 </li>
 </ol>
+<p>At this point, running pytest from the root directory should
+work, and you should see your test case included.</p>
 </div>
 </div>
 <div class="section" id="adding-generic-information">
@@ -478,7 +470,7 @@ not hesitate to ask for clarification.</p>
         <li class="right" >
           <a href="design.html" title="Some thoughts on the design of friendly-traceback"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.4 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

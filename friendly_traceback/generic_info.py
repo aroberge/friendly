@@ -32,6 +32,18 @@ def syntax_error(*args):
     )
 
 
+def tab_error(*args):
+    _ = current_lang.lang
+    return _(
+        "    A TabError indicates that you have used both spaces\n"
+        "    and tab characters to indent your code.\n"
+        "    This is not allowed in Python.\n"
+        "    Indenting your code means to have block of codes aligned vertically\n"
+        "    by inserting either spaces or tab characters at the beginning of lines.\n"
+        "    Python's recommendation is to always use spaces to indent your code.\n"
+    )
+
+
 def unknown(*args):
     _ = current_lang.lang
     return _("    No information is known about this exception.\n")
@@ -41,5 +53,6 @@ generic = {
     "IndentationError": indentation_error,
     "NameError": name_error,
     "SyntaxError": syntax_error,
+    "TabError": tab_error,
     "Unknown": unknown,
 }

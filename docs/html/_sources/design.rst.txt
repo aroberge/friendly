@@ -307,7 +307,7 @@ In the following, those that are followed by an * have been implemented::
           +-- RuntimeError
           |    +-- NotImplementedError
           |    +-- RecursionError
-          +-- SyntaxError
+          +-- SyntaxError *
           |    +-- IndentationError *
           |         +-- TabError
           +-- SystemError

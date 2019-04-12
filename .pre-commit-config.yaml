@@ -1,15 +1,15 @@
 repos:
 -   repo: https://github.com/ambv/black
-    rev: stable
+    rev: 19.3b0
     hooks:
     - id: black
       language_version: python3
       exclude: ^tests/
 -   repo: https://gitlab.com/pycqa/flake8
-    rev: 3.7.1
+    rev: 3.7.7
     hooks:
     -   id: flake8
 -   repo: https://github.com/pre-commit/pygrep-hooks
-    rev: v1.2.0
+    rev: v1.3.0
     hooks:
     -   id: rst-backticks

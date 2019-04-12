@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Friendly tracebacks - en Français &#8212; Friendly tracebacks 0.0.3 documentation</title>
+    <title>Friendly tracebacks - en Français &#8212; Friendly tracebacks 0.0.4 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -31,7 +31,7 @@
         <li class="right" >
           <a href="tracebacks_en.html" title="Friendly tracebacks - in English"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.4 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -44,6 +44,8 @@
 <li><a class="reference internal" href="#indentationerror-3-unindent-does-not-match">IndentationError - 3: unindent does not match …</a></li>
 <li><a class="reference internal" href="#nameerror">NameError</a></li>
 <li><a class="reference internal" href="#syntaxerror">SyntaxError</a></li>
+<li><a class="reference internal" href="#taberror-1">TabError - 1</a></li>
+<li><a class="reference internal" href="#taberror-2">TabError - 2</a></li>
 <li><a class="reference internal" href="#unknown-exception">Unknown exception</a></li>
 </ul>
 </li>
@@ -100,7 +102,7 @@ plutôt suggéré d’exécuter make_tb.bat qui est au premier niveau
 du répertoire de fichier. Si vous faites ceci, la documentation pour
 toutes les langues sera automatiquement mise à jour.</p>
 </div>
-<p>Friendly-traceback version: 0.0.3
+<p>Friendly-traceback version: 0.0.4
 Python version: 3.7.0</p>
 <div class="section" id="indentationerror-1-expected-an-indented-block">
 <h2>IndentationError - 1: expected an indented block<a class="headerlink" href="#indentationerror-1-expected-an-indented-block" title="Permalink to this headline">¶</a></h2>
@@ -188,12 +190,12 @@ Cause probable :
     Dans votre programme, le nom inconnu est &#39;c&#39;.
 
 
-L&#39;exécution s&#39;est arrêtée à la ligne 50 du fichier &#39;tb_common.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 52 du fichier &#39;tb_common.py&#39;
 
-   48:                     mod = __import__(name)
-   49:                     if function is not None:
---&gt;50:                         getattr(mod, function)()
-   51:                 except Exception:
+   50:                     mod = __import__(name)
+   51:                     if function is not None:
+--&gt;52:                         getattr(mod, function)()
+   53:                 except Exception:
 
 
 Exception levée à la ligne du fichier &#39;raise_name_error.py&#39;.
@@ -229,6 +231,49 @@ Cause probable :
 </pre></div>
 </div>
 </div>
+<div class="section" id="taberror-1">
+<h2>TabError - 1<a class="headerlink" href="#taberror-1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
+    TabError: inconsistent use of tabs and spaces in indentation (&lt;string&gt;, line 3)
+
+Un exception de type TabError indique que vous avez utilisé des espaces ainsi que
+des caractères de tabulation pour indenter votre code.
+Cela n’est pas autorisé dans Python.
+L’indentation de votre code signifie que le bloc de codes est aligné verticalement
+en insérant des espaces ou des tabulations au début des lignes.
+La recommandation de Python est de toujours utiliser des espaces pour indenter votre code.
+
+Cause probable :
+    Malheureusement, aucune information supplémentaire n’est disponible:
+    le contenu du fichier &#39;&lt;string&gt;&#39; n’est pas accessible.
+</pre></div>
+</div>
+</div>
+<div class="section" id="taberror-2">
+<h2>TabError - 2<a class="headerlink" href="#taberror-2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
+    TabError: inconsistent use of tabs and spaces in indentation (raise_tab_error2.py, line 7)
+
+Un exception de type TabError indique que vous avez utilisé des espaces ainsi que
+des caractères de tabulation pour indenter votre code.
+Cela n’est pas autorisé dans Python.
+L’indentation de votre code signifie que le bloc de codes est aligné verticalement
+en insérant des espaces ou des tabulations au début des lignes.
+La recommandation de Python est de toujours utiliser des espaces pour indenter votre code.
+
+Cause probable :
+    Python peut seulement analyser le fichier &#39;raise_tab_error2.py&#39;
+    jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
+
+    4:
+    5: def test_tab_error2():
+    6:     if True:
+--&gt; 7:      pass
+    8:
+            ^
+</pre></div>
+</div>
+</div>
 <div class="section" id="unknown-exception">
 <h2>Unknown exception<a class="headerlink" href="#unknown-exception" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
@@ -237,12 +282,12 @@ Cause probable :
 Aucune information n&#39;est connue au sujet de cette exception.
 
 
-L&#39;exécution s&#39;est arrêtée à la ligne 50 du fichier &#39;tb_common.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 52 du fichier &#39;tb_common.py&#39;
 
-   48:                     mod = __import__(name)
-   49:                     if function is not None:
---&gt;50:                         getattr(mod, function)()
-   51:                 except Exception:
+   50:                     mod = __import__(name)
+   51:                     if function is not None:
+--&gt;52:                         getattr(mod, function)()
+   53:                 except Exception:
 
 
 Exception levée à la ligne du fichier &#39;raise_unknown_error.py&#39;.
@@ -274,7 +319,7 @@ Exception levée à la ligne du fichier &#39;raise_unknown_error.py&#39;.
         <li class="right" >
           <a href="tracebacks_en.html" title="Friendly tracebacks - in English"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.4 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

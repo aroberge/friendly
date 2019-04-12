@@ -18,7 +18,7 @@ should be included here.
      instead to run make_tb.bat in the root directory as it will create
      similar files for all languages *and* update the documentation.
 
-Friendly-traceback version: 0.0.3
+Friendly-traceback version: 0.0.4
 Python version: 3.7.0
 
 
@@ -116,12 +116,12 @@ NameError
         In your program, the unknown name is 'c'.
 
 
-    Execution stopped on line 50 of file 'tb_common.py'.
+    Execution stopped on line 52 of file 'tb_common.py'.
 
-       48:                     mod = __import__(name)
-       49:                     if function is not None:
-    -->50:                         getattr(mod, function)()
-       51:                 except Exception:
+       50:                     mod = __import__(name)
+       51:                     if function is not None:
+    -->52:                         getattr(mod, function)()
+       53:                 except Exception:
 
 
     Exception raised on line 6 of file 'raise_name_error.py'.
@@ -157,6 +157,53 @@ SyntaxError
         Currently, we cannot give you more information
         about the likely cause of this error.
 
+TabError - 1
+------------
+
+.. code-block:: none
+
+
+    Python exception: 
+        TabError: inconsistent use of tabs and spaces in indentation (<string>, line 3)
+
+    A TabError indicates that you have used both spaces
+    and tab characters to indent your code.
+    This is not allowed in Python.
+    Indenting your code means to have block of codes aligned vertically
+    by inserting either spaces or tab characters at the beginning of lines.
+    Python's recommendation is to always use spaces to indent your code.
+
+    Likely cause:
+        Unfortunately, no additional information is available:
+        the content of file '<string>' is not accessible.
+
+TabError - 2
+------------
+
+.. code-block:: none
+
+
+    Python exception: 
+        TabError: inconsistent use of tabs and spaces in indentation (raise_tab_error2.py, line 7)
+
+    A TabError indicates that you have used both spaces
+    and tab characters to indent your code.
+    This is not allowed in Python.
+    Indenting your code means to have block of codes aligned vertically
+    by inserting either spaces or tab characters at the beginning of lines.
+    Python's recommendation is to always use spaces to indent your code.
+
+    Likely cause:
+        Python could not parse the file 'raise_tab_error2.py'
+        beyond the location indicated below by --> and ^.
+
+        4: 
+        5: def test_tab_error2():
+        6:     if True:
+    --> 7: 	pass
+        8: 
+                ^
+
 Unknown exception
 -----------------
 
@@ -169,12 +216,12 @@ Unknown exception
     No information is known about this exception.
 
 
-    Execution stopped on line 50 of file 'tb_common.py'.
+    Execution stopped on line 52 of file 'tb_common.py'.
 
-       48:                     mod = __import__(name)
-       49:                     if function is not None:
-    -->50:                         getattr(mod, function)()
-       51:                 except Exception:
+       50:                     mod = __import__(name)
+       51:                     if function is not None:
+    -->52:                         getattr(mod, function)()
+       53:                 except Exception:
 
 
     Exception raised on line 8 of file 'raise_unknown_error.py'.
