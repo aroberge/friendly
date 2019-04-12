@@ -2,7 +2,7 @@
 # tab character embedded in file
 
 
-def test_tab_error2():
+def no_pytest_tab_error2():
     if True:
 	pass
 
@@ -10,4 +10,4 @@ def test_tab_error2():
 if __name__ == "__main__":
     import friendly_traceback
     friendly_traceback.install()
-    test_tab_error2()
+    no_pytest_tab_error2()

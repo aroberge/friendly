@@ -95,22 +95,14 @@ def tab_error(etype, value):
     filename = value.filename
     linenumber = value.lineno
     offset = value.offset
-    if filename == "<string>":
-        info = _(
-            "        Unfortunately, no additional information is available:\n"
-            "        the content of file '<string>' is not accessible.\n"
-        )
-    else:
-        source = utils.get_partial_source(filename, linenumber, offset)
-        filename = os.path.basename(filename)
-        info = _(
-            "        Python could not parse the file '{filename}'\n"
-            "        beyond the location indicated below by --> and ^.\n"
-            "\n"
-            "{source}\n"
-        ).format(filename=filename, source=source)
-
-    return info
+    source = utils.get_partial_source(filename, linenumber, offset)
+    filename = os.path.basename(filename)
+    return _(
+        "        Python could not parse the file '{filename}'\n"
+        "        beyond the location indicated below by --> and ^.\n"
+        "\n"
+        "{source}\n"
+    ).format(filename=filename, source=source)
 
 
 get_cause = {

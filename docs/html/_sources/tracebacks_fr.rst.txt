@@ -177,7 +177,6 @@ TabError - 1
     en insérant des espaces ou des tabulations au début des lignes.
     La recommandation de Python est de toujours utiliser des espaces pour indenter votre code.
 
-    Cause probable : 
         Malheureusement, aucune information supplémentaire n’est disponible:
         le contenu du fichier '<string>' n’est pas accessible.
 
@@ -202,7 +201,7 @@ TabError - 2
         jusqu'à l'endroit indiqué par --> et ^.
 
         4: 
-        5: def test_tab_error2():
+        5: def no_pytest_tab_error2():
         6:     if True:
     --> 7: 	pass
         8: 

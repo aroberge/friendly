@@ -17,14 +17,9 @@ def test_tab_error1():
     return result
 
 
-def test_tab_error2():
+def no_pytest_tab_error2():
     try:
-        from . import raise_tab_error2  # for pytest
-    except ImportError:
         import raise_tab_error2
-
-    try:
-        raise_tab_error2.test_tab_error2()
     except Exception:
         friendly_traceback.explain(*sys.exc_info(), redirect="capture")
     result = friendly_traceback.get_output()
@@ -35,6 +30,6 @@ def test_tab_error2():
 if __name__ == "__main__":
     result = test_tab_error1()
     print(result)
-    print("\n" "-"*50, "\n")
-    result = test_tab_error2()
+    print("-"*50)
+    result = no_pytest_tab_error2()
     print(result)

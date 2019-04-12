@@ -173,7 +173,6 @@ TabError - 1
     by inserting either spaces or tab characters at the beginning of lines.
     Python's recommendation is to always use spaces to indent your code.
 
-    Likely cause:
         Unfortunately, no additional information is available:
         the content of file '<string>' is not accessible.
 
@@ -198,7 +197,7 @@ TabError - 2
         beyond the location indicated below by --> and ^.
 
         4: 
-        5: def test_tab_error2():
+        5: def no_pytest_tab_error2():
         6:     if True:
     --> 7: 	pass
         8: 

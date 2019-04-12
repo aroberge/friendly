@@ -4,6 +4,7 @@ First version - needs to be documented.
 """
 import inspect
 import os
+import runpy
 
 from . import generic_info
 from . import specific_info
@@ -15,9 +16,19 @@ CONSOLE_SOURCE = utils.CONSOLE_SOURCE
 CONSOLE_NAME = utils.CONSOLE_NAME
 
 
-def excluded_file_names():
-    import runpy
+def cannot_analyze_string():
+    _ = current_lang.lang
+    return _(
+        "        Unfortunately, no additional information is available:\n"
+        "        the content of file '<string>' is not accessible.\n"
+    )
 
+
+def excluded_file_names():
+    """In many places, by default we exclude the files from this project,
+       as well as runpy from the standard Python library, in order to
+       restrict tracebacks to code written by the users.
+    """
     excluded = [runpy.__file__]
     dirname = os.path.dirname(__file__)
     for file in os.listdir(os.path.dirname(__file__)):
@@ -66,7 +77,10 @@ def explain_traceback(etype, value, tb, running_script=False):
 
     # 1. Generic explanation
     result.append(provide_generic_explanation(etype.__name__, value))
-    cause = get_likely_cause(etype, value)
+    if issubclass(etype, SyntaxError) and value.filename == "<string>":
+        cause = cannot_analyze_string()
+    else:
+        cause = get_likely_cause(etype, value)
 
     # 2. Likely cause
     if cause is not None:
@@ -86,18 +100,27 @@ def explain_traceback(etype, value, tb, running_script=False):
             _frame, filename, linenumber, _func, lines, index = record
             if filename in excluded_files:
                 continue
-            info = get_source_info(filename, linenumber, lines, index)
+            if filename == "<string>":
+                info = cannot_analyze_string()
+            else:
+                info = get_source_info(filename, linenumber, lines, index)
             result.append(add_source_info(info))
             break
     else:
         _frame, filename, linenumber, _func, lines, index = records[0]
-        info = get_source_info(filename, linenumber, lines, index)
+        if filename == "<string>":
+            info = cannot_analyze_string()
+        else:
+            info = get_source_info(filename, linenumber, lines, index)
         result.append(add_source_info(info))
 
     # 4. origin of the exception
     if len(records) > 1:
         _frame, filename, linenumber, _func, lines, index = records[-1]
-        info = get_source_info(filename, linenumber, lines, index)
+        if filename == "<string>":
+            info = cannot_analyze_string()
+        else:
+            info = get_source_info(filename, linenumber, lines, index)
         result.append(add_source_info(info, last_call=False))
 
     return "\n".join(result)
