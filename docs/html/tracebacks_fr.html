@@ -48,6 +48,8 @@
 <li><a class="reference internal" href="#taberror-2">TabError - 2</a></li>
 <li><a class="reference internal" href="#unboundlocalerror">UnboundLocalError</a></li>
 <li><a class="reference internal" href="#unknown-exception">Unknown exception</a></li>
+<li><a class="reference internal" href="#zerodivisionerror-1">ZeroDivisionError - 1</a></li>
+<li><a class="reference internal" href="#zerodivisionerror-2">ZeroDivisionError - 2</a></li>
 </ul>
 </li>
 </ul>
@@ -232,12 +234,12 @@ Cause probable :
 Aucune information n&#39;est connue au sujet de cette exception.
 
 
-L&#39;exécution s&#39;est arrêtée à la ligne 53 du fichier &#39;trb_common.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 55 du fichier &#39;trb_common.py&#39;
 
-   51:                     mod = __import__(name)
-   52:                     if function is not None:
---&gt;53:                         result = getattr(mod, function)()
-   54:                         write(result)
+   53:                     mod = __import__(name)
+   54:                     if function is not None:
+--&gt;55:                         result = getattr(mod, function)()
+   56:                         write(result)
 </pre></div>
 </div>
 </div>
@@ -316,6 +318,48 @@ L&#39;exécution s&#39;est arrêtée à la ligne 11 du fichier &#39;test_unknown
    10:     try:
 --&gt;11:         raise MyException(&quot;Some informative message&quot;)
    12:     except Exception:
+</pre></div>
+</div>
+</div>
+<div class="section" id="zerodivisionerror-1">
+<h2>ZeroDivisionError - 1<a class="headerlink" href="#zerodivisionerror-1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
+    ZeroDivisionError: division by zero
+
+Une exception de type ZeroDivisionError se produit lorsque
+vous tentez de diviser une valeur par zéro:
+    résultat = ma_variable / 0
+Ceci peut également se produire si vous calculez le reste d’une division
+à l’aide de l’opérateur modulo &#39;%&#39;
+    résultat = ma_variable % 0
+
+L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;test_zero_division_error.py&#39;
+
+   5: def test_zero_division_error():
+   6:     try:
+--&gt;7:         1 / 0
+   8:     except Exception:
+</pre></div>
+</div>
+</div>
+<div class="section" id="zerodivisionerror-2">
+<h2>ZeroDivisionError - 2<a class="headerlink" href="#zerodivisionerror-2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
+    ZeroDivisionError: integer division or modulo by zero
+
+Une exception de type ZeroDivisionError se produit lorsque
+vous tentez de diviser une valeur par zéro:
+    résultat = ma_variable / 0
+Ceci peut également se produire si vous calculez le reste d’une division
+à l’aide de l’opérateur modulo &#39;%&#39;
+    résultat = ma_variable % 0
+
+L&#39;exécution s&#39;est arrêtée à la ligne 17 du fichier &#39;test_zero_division_error.py&#39;
+
+   15: def test_zero_division_error2():
+   16:     try:
+--&gt;17:         1 % 0
+   18:     except Exception:
 </pre></div>
 </div>
 </div>

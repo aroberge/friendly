@@ -255,6 +255,13 @@ used.
 Add specific information
 ------------------------
 
+.. note::
+
+    In some cases, it could happen that no specific information, as
+    described below, is needed. In this case, you should still define
+    a function for the specific information, so that we know it has
+    not been overlooked, but have that function simply return None.
+
 Let's look again at the output for UnboundLocalError.
 At the top of the feedback given by friendly_traceback, we
 see the following:

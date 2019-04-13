@@ -120,10 +120,15 @@ def unbound_local_error(etype, value):
     ).format(var_name=str(value).split("'")[1])
 
 
+def zero_division_error(*args):
+    return None
+
+
 get_cause = {
     "IndentationError": indentation_error,
     "NameError": name_error,
     "SyntaxError": syntax_error,
     "TabError": tab_error,
     "UnboundLocalError": unbound_local_error,
+    "ZeroDivisionError": zero_division_error,
 }

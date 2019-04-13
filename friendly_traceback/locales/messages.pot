@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-04-13 08:06-0300\n"
+"POT-Creation-Date: 2019-04-13 15:06-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,13 +30,13 @@ msgid ""
 "{explanation}"
 msgstr ""
 
-#: formatter.py:151
+#: formatter.py:153
 msgid ""
 "    Likely cause:\n"
 "{cause}"
 msgstr ""
 
-#: formatter.py:176
+#: formatter.py:175
 msgid ""
 "\n"
 "    Execution stopped on line {linenumber} of file '{filename}'.\n"
@@ -44,7 +44,7 @@ msgid ""
 "{source}\n"
 msgstr ""
 
-#: formatter.py:184
+#: formatter.py:183
 msgid ""
 "\n"
 "    Exception raised on line {linenumber} of file '{filename}'.\n"
@@ -101,6 +101,16 @@ msgstr ""
 #: generic_info.py:63
 msgid ""
 "    No information is known about this exception.\n"
+msgstr ""
+
+#: generic_info.py:68
+msgid ""
+"    A ZeroDivisionError occurs when you are attempting to divide\n"
+"    a value by zero:\n"
+"        result = my_variable / 0\n"
+"    It can also happen if you calculate the remainder of a division\n"
+"    using the modulo operator '%'\n"
+"        result = my_variable % 0"
 msgstr ""
 
 #: specific_info.py:31 specific_info.py:78 specific_info.py:100

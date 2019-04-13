@@ -31,7 +31,9 @@ all_imports = {
     "TabError - 1": ("syntax.raise_tab_error1", "test_tab_error1"),
     "TabError - 2": "syntax.raise_tab_error2",
     "UnboundLocalError": ("test_unbound_local_error", "test_unbound_local_error"),
-    "Unknown exception": ("test_unknown_error", "test_unknown_error")
+    "Unknown exception": ("test_unknown_error", "test_unknown_error"),
+    "ZeroDivisionError - 1": ("test_zero_division_error", "test_zero_division_error"),
+    "ZeroDivisionError - 2": ("test_zero_division_error", "test_zero_division_error2"),
 }
 
 

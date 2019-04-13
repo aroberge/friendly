@@ -166,12 +166,12 @@ TabError - 1
     Aucune information n'est connue au sujet de cette exception.
 
 
-    L'exécution s'est arrêtée à la ligne 53 du fichier 'trb_common.py'
+    L'exécution s'est arrêtée à la ligne 55 du fichier 'trb_common.py'
 
-       51:                     mod = __import__(name)
-       52:                     if function is not None:
-    -->53:                         result = getattr(mod, function)()
-       54:                         write(result)
+       53:                     mod = __import__(name)
+       54:                     if function is not None:
+    -->55:                         result = getattr(mod, function)()
+       56:                         write(result)
 
 TabError - 2
 ------------
@@ -257,4 +257,52 @@ Unknown exception
        10:     try:
     -->11:         raise MyException("Some informative message")
        12:     except Exception:
+
+
+ZeroDivisionError - 1
+---------------------
+
+.. code-block:: none
+
+
+    Exception Python: 
+        ZeroDivisionError: division by zero
+
+    Une exception de type ZeroDivisionError se produit lorsque
+    vous tentez de diviser une valeur par zéro:
+        résultat = ma_variable / 0
+    Ceci peut également se produire si vous calculez le reste d’une division 
+    à l’aide de l’opérateur modulo '%'
+        résultat = ma_variable % 0
+
+    L'exécution s'est arrêtée à la ligne 7 du fichier 'test_zero_division_error.py'
+
+       5: def test_zero_division_error():
+       6:     try:
+    -->7:         1 / 0
+       8:     except Exception:
+
+
+ZeroDivisionError - 2
+---------------------
+
+.. code-block:: none
+
+
+    Exception Python: 
+        ZeroDivisionError: integer division or modulo by zero
+
+    Une exception de type ZeroDivisionError se produit lorsque
+    vous tentez de diviser une valeur par zéro:
+        résultat = ma_variable / 0
+    Ceci peut également se produire si vous calculez le reste d’une division 
+    à l’aide de l’opérateur modulo '%'
+        résultat = ma_variable % 0
+
+    L'exécution s'est arrêtée à la ligne 17 du fichier 'test_zero_division_error.py'
+
+       15: def test_zero_division_error2():
+       16:     try:
+    -->17:         1 % 0
+       18:     except Exception:
 

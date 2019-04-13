@@ -148,11 +148,10 @@ def provide_generic_explanation(name, value):
 def get_likely_cause(etype, value):
     _ = current_lang.lang
     if etype.__name__ in specific_info.get_cause:
-        return _("    Likely cause:\n{cause}").format(
-            cause=specific_info.get_cause[etype.__name__](etype, value)
-        )
-    else:
-        return None
+        cause = specific_info.get_cause[etype.__name__](etype, value)
+        if cause is not None:
+            return _("    Likely cause:\n{cause}").format(cause=cause)
+    return None
 
 
 def get_source_info(filename, linenumber, lines, index):

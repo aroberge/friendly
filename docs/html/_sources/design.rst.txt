@@ -263,14 +263,16 @@ Reference: known exceptions
 ---------------------------
 
 In the following, those that are followed by an * had been implemented
-when this page was last update. It is likely that more have been added
-since them.
+when this page was last updated. Those followed by ** have been
+excluded as it seemed rather counter-productive to intercept them.
+
+It is very likely that the information below is not up to date.
 
 .. code-block:: none
 
     BaseException
-     +-- SystemExit
-     +-- KeyboardInterrupt
+     +-- SystemExit **
+     +-- KeyboardInterrupt **
      +-- GeneratorExit
      +-- Exception
           +-- StopIteration

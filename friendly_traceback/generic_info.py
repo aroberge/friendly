@@ -63,6 +63,18 @@ def unknown(*args):
     return _("    No information is known about this exception.\n")
 
 
+def zero_division_error(*args):
+    _ = current_lang.lang
+    return _(
+        "    A ZeroDivisionError occurs when you are attempting to divide\n"
+        "    a value by zero:\n"
+        "        result = my_variable / 0\n"
+        "    It can also happen if you calculate the remainder of a division\n"
+        "    using the modulo operator '%'\n"
+        "        result = my_variable % 0"
+    )
+
+
 generic = {
     "IndentationError": indentation_error,
     "NameError": name_error,
@@ -70,4 +82,5 @@ generic = {
     "TabError": tab_error,
     "UnboundLocalError": unbound_local_error,
     "Unknown": unknown,
+    "ZeroDivisionError": zero_division_error,
 }

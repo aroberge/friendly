@@ -162,12 +162,12 @@ TabError - 1
     No information is known about this exception.
 
 
-    Execution stopped on line 53 of file 'trb_common.py'.
+    Execution stopped on line 55 of file 'trb_common.py'.
 
-       51:                     mod = __import__(name)
-       52:                     if function is not None:
-    -->53:                         result = getattr(mod, function)()
-       54:                         write(result)
+       53:                     mod = __import__(name)
+       54:                     if function is not None:
+    -->55:                         result = getattr(mod, function)()
+       56:                         write(result)
 
 TabError - 2
 ------------
@@ -254,4 +254,54 @@ Unknown exception
        10:     try:
     -->11:         raise MyException("Some informative message")
        12:     except Exception:
+
+
+ZeroDivisionError - 1
+---------------------
+
+.. code-block:: none
+
+
+    Python exception: 
+        ZeroDivisionError: division by zero
+
+    A ZeroDivisionError occurs when you are attempting to divide
+    a value by zero:
+        result = my_variable / 0
+
+    It can also happen if you calculate the remainder of a division
+    using the modulo operator '%'
+        result = my_variable % 0
+
+    Execution stopped on line 7 of file 'test_zero_division_error.py'.
+
+       5: def test_zero_division_error():
+       6:     try:
+    -->7:         1 / 0
+       8:     except Exception:
+
+
+ZeroDivisionError - 2
+---------------------
+
+.. code-block:: none
+
+
+    Python exception: 
+        ZeroDivisionError: integer division or modulo by zero
+
+    A ZeroDivisionError occurs when you are attempting to divide
+    a value by zero:
+        result = my_variable / 0
+
+    It can also happen if you calculate the remainder of a division
+    using the modulo operator '%'
+        result = my_variable % 0
+
+    Execution stopped on line 17 of file 'test_zero_division_error.py'.
+
+       15: def test_zero_division_error2():
+       16:     try:
+    -->17:         1 % 0
+       18:     except Exception:
 
