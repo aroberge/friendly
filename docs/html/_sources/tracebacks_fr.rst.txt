@@ -10,7 +10,7 @@ ici tous les exemples possibles tels qu'interprétés par friendly-traceback.
 .. note::
 
      Le contenu de cette page a été généré par l'exécution de
-     tb_french.py situé dans le répertoire ``tests/``.
+     trb_french.py situé dans le répertoire ``tests/``.
      Ceci a besoin d'être fait de manière explicite lorsqu'on veut
      faire des corrections ou des ajouts, avant de faire la mise
      à jour du reste de la documentation avec Sphinx.
@@ -166,7 +166,7 @@ TabError - 1
     Aucune information n'est connue au sujet de cette exception.
 
 
-    L'exécution s'est arrêtée à la ligne 53 du fichier 'tb_common.py'
+    L'exécution s'est arrêtée à la ligne 53 du fichier 'trb_common.py'
 
        51:                     mod = __import__(name)
        52:                     if function is not None:
