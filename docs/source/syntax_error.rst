@@ -60,6 +60,13 @@ For this project, pytest has been configured such that it only
 includes files whose names begin with ``test_`` or ``catch_``.
 Therefore, it will ignore this file.
 
+You can nonetheless test it directly, by doing:
+
+.. code-block:: none
+
+    python -m friendly_traceback tests.syntax.raise_indentation_error1
+
+from the root directory of the repository.
 
 Catching an exception
 ~~~~~~~~~~~~~~~~~~~~~

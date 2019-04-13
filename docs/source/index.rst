@@ -9,9 +9,14 @@ any language.
 
 .. warning::
 
-    This is pre-alpha software, currently in development.
+    This is pre-alpha software, currently in development. We're focusing
+    on breadth of coverage (i.e. the number of Exceptions explained in
+    simple language) over quality of code and its documentation.
+    However, everything included should work.
 
-More info to be added soon.
+More info to be added soon.  But, please, see the Design section
+for a description of the goal of this project, in particular, the
+section on "Verbosity".
 
 .. toctree::
    :maxdepth: 2

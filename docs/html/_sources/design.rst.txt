@@ -262,7 +262,11 @@ The following is an incomplete list of projects or modules to look at:
 Reference: known exceptions
 ---------------------------
 
-In the following, those that are followed by an * have been implemented::
+In the following, those that are followed by an * had been implemented
+when this page was last update. It is likely that more have been added
+since them.
+
+.. code-block:: none
 
     BaseException
      +-- SystemExit
@@ -286,7 +290,7 @@ In the following, those that are followed by an * have been implemented::
           |    +-- KeyError
           +-- MemoryError
           +-- NameError  *
-          |    +-- UnboundLocalError
+          |    +-- UnboundLocalError *
           +-- OSError
           |    +-- BlockingIOError
           |    +-- ChildProcessError
@@ -309,7 +313,7 @@ In the following, those that are followed by an * have been implemented::
           |    +-- RecursionError
           +-- SyntaxError *
           |    +-- IndentationError *
-          |         +-- TabError
+          |         +-- TabError *
           +-- SystemError
           +-- TypeError
           +-- ValueError

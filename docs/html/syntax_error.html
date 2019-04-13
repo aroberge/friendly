@@ -142,6 +142,11 @@ Here is the content of that file:</p>
 <p>For this project, pytest has been configured such that it only
 includes files whose names begin with <code class="docutils literal notranslate"><span class="pre">test_</span></code> or <code class="docutils literal notranslate"><span class="pre">catch_</span></code>.
 Therefore, it will ignore this file.</p>
+<p>You can nonetheless test it directly, by doing:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python -m friendly_traceback tests.syntax.raise_indentation_error1
+</pre></div>
+</div>
+<p>from the root directory of the repository.</p>
 </div>
 <div class="section" id="catching-an-exception">
 <h3>Catching an exception<a class="headerlink" href="#catching-an-exception" title="Permalink to this headline">¶</a></h3>

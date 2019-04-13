@@ -6,8 +6,16 @@ Aimed at Python beginners: replacing standard traceback by something easier to u
 Friendly-traceback uses Black.
 ![Black logo](https://img.shields.io/badge/code%20style-black-000000.svg)
 
+## State of this project
+
+Friendly-traceback is in pre-alpha. The current focus is on quickly increasing
+the number of exceptions covered.  We strive to test the code as new additions
+are made: everything included should work.  However, the code itself
+could probably be refactored and could definitely be better documented.
+
 ## Code of Conduct
 
 We completely support the
 [Python Community Code of Conduct](https://www.python.org/psf/codeofconduct/).
-Contributors to this project are expected to do the same.
+Contributors to this project, including those filing or commenting on an issue,
+are expected to do the same.

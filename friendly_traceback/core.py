@@ -12,9 +12,6 @@ from .my_gettext import current_lang
 from . import formatter
 
 
-__all__ = ["explain", "get_output", "install", "set_lang"]
-
-
 def _write_err(text):
     """Default writer"""
     sys.stderr.write(text)
@@ -36,13 +33,21 @@ class _State:
         self.running_script = False
 
     def explain(self, etype, value, tb, redirect=None):
-        """Replaces a standard traceback by a friendlier one"""
+        """Replaces a standard traceback by a friendlier one,
+           except for SystemExit and KeyboardInterrupt which
+           are re-raised.
+        """
         if redirect == "capture":
             self.write_err = self.capture
         elif redirect is not None:
             self.write_err = redirect
         else:
             self.write_err = _write_err
+
+        if etype.__name__ == "SystemExit":
+            raise SystemExit(str(value))
+        if etype.__name__ == "KeyboardInterrupt":
+            raise KeyboardInterrupt(str(value))
 
         explanation = formatter.explain_traceback(
             etype, value, tb, running_script=self.running_script
@@ -96,8 +101,10 @@ def run_script(source):
 
 
 # ----------------
-# Public API
+# Public API available through a * import
 # ----------------
+
+__all__ = ["explain", "get_output", "install", "set_lang"]
 
 
 def explain(etype, value, tb, redirect=None):

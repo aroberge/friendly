@@ -323,71 +323,73 @@ The following is an incomplete list of projects or modules to look at:</p>
 </div>
 <div class="section" id="reference-known-exceptions">
 <h2>Reference: known exceptions<a class="headerlink" href="#reference-known-exceptions" title="Permalink to this headline">¶</a></h2>
-<p>In the following, those that are followed by an * have been implemented:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">BaseException</span>
- <span class="o">+--</span> <span class="ne">SystemExit</span>
- <span class="o">+--</span> <span class="ne">KeyboardInterrupt</span>
- <span class="o">+--</span> <span class="ne">GeneratorExit</span>
- <span class="o">+--</span> <span class="ne">Exception</span>
-      <span class="o">+--</span> <span class="ne">StopIteration</span>
-      <span class="o">+--</span> <span class="n">StopAsyncIteration</span>
-      <span class="o">+--</span> <span class="ne">ArithmeticError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">FloatingPointError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">OverflowError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">ZeroDivisionError</span>
-      <span class="o">+--</span> <span class="ne">AssertionError</span>
-      <span class="o">+--</span> <span class="ne">AttributeError</span>
-      <span class="o">+--</span> <span class="ne">BufferError</span>
-      <span class="o">+--</span> <span class="ne">EOFError</span>
-      <span class="o">+--</span> <span class="ne">ImportError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="n">ModuleNotFoundError</span>
-      <span class="o">+--</span> <span class="ne">LookupError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">IndexError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">KeyError</span>
-      <span class="o">+--</span> <span class="ne">MemoryError</span>
-      <span class="o">+--</span> <span class="ne">NameError</span>  <span class="o">*</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">UnboundLocalError</span>
-      <span class="o">+--</span> <span class="ne">OSError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">BlockingIOError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">ChildProcessError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">ConnectionError</span>
-      <span class="o">|</span>    <span class="o">|</span>    <span class="o">+--</span> <span class="ne">BrokenPipeError</span>
-      <span class="o">|</span>    <span class="o">|</span>    <span class="o">+--</span> <span class="ne">ConnectionAbortedError</span>
-      <span class="o">|</span>    <span class="o">|</span>    <span class="o">+--</span> <span class="ne">ConnectionRefusedError</span>
-      <span class="o">|</span>    <span class="o">|</span>    <span class="o">+--</span> <span class="ne">ConnectionResetError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">FileExistsError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">FileNotFoundError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">InterruptedError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">IsADirectoryError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">NotADirectoryError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">PermissionError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">ProcessLookupError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">TimeoutError</span>
-      <span class="o">+--</span> <span class="ne">ReferenceError</span>
-      <span class="o">+--</span> <span class="ne">RuntimeError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">NotImplementedError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="n">RecursionError</span>
-      <span class="o">+--</span> <span class="ne">SyntaxError</span> <span class="o">*</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">IndentationError</span> <span class="o">*</span>
-      <span class="o">|</span>         <span class="o">+--</span> <span class="ne">TabError</span>
-      <span class="o">+--</span> <span class="ne">SystemError</span>
-      <span class="o">+--</span> <span class="ne">TypeError</span>
-      <span class="o">+--</span> <span class="ne">ValueError</span>
-      <span class="o">|</span>    <span class="o">+--</span> <span class="ne">UnicodeError</span>
-      <span class="o">|</span>         <span class="o">+--</span> <span class="ne">UnicodeDecodeError</span>
-      <span class="o">|</span>         <span class="o">+--</span> <span class="ne">UnicodeEncodeError</span>
-      <span class="o">|</span>         <span class="o">+--</span> <span class="ne">UnicodeTranslateError</span>
-      <span class="o">+--</span> <span class="ne">Warning</span>
-           <span class="o">+--</span> <span class="ne">DeprecationWarning</span>
-           <span class="o">+--</span> <span class="ne">PendingDeprecationWarning</span>
-           <span class="o">+--</span> <span class="ne">RuntimeWarning</span>
-           <span class="o">+--</span> <span class="ne">SyntaxWarning</span>
-           <span class="o">+--</span> <span class="ne">UserWarning</span>
-           <span class="o">+--</span> <span class="ne">FutureWarning</span>
-           <span class="o">+--</span> <span class="ne">ImportWarning</span>
-           <span class="o">+--</span> <span class="ne">UnicodeWarning</span>
-           <span class="o">+--</span> <span class="ne">BytesWarning</span>
-           <span class="o">+--</span> <span class="ne">ResourceWarning</span>
+<p>In the following, those that are followed by an * had been implemented
+when this page was last update. It is likely that more have been added
+since them.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>BaseException
+ +-- SystemExit
+ +-- KeyboardInterrupt
+ +-- GeneratorExit
+ +-- Exception
+      +-- StopIteration
+      +-- StopAsyncIteration
+      +-- ArithmeticError
+      |    +-- FloatingPointError
+      |    +-- OverflowError
+      |    +-- ZeroDivisionError
+      +-- AssertionError
+      +-- AttributeError
+      +-- BufferError
+      +-- EOFError
+      +-- ImportError
+      |    +-- ModuleNotFoundError
+      +-- LookupError
+      |    +-- IndexError
+      |    +-- KeyError
+      +-- MemoryError
+      +-- NameError  *
+      |    +-- UnboundLocalError *
+      +-- OSError
+      |    +-- BlockingIOError
+      |    +-- ChildProcessError
+      |    +-- ConnectionError
+      |    |    +-- BrokenPipeError
+      |    |    +-- ConnectionAbortedError
+      |    |    +-- ConnectionRefusedError
+      |    |    +-- ConnectionResetError
+      |    +-- FileExistsError
+      |    +-- FileNotFoundError
+      |    +-- InterruptedError
+      |    +-- IsADirectoryError
+      |    +-- NotADirectoryError
+      |    +-- PermissionError
+      |    +-- ProcessLookupError
+      |    +-- TimeoutError
+      +-- ReferenceError
+      +-- RuntimeError
+      |    +-- NotImplementedError
+      |    +-- RecursionError
+      +-- SyntaxError *
+      |    +-- IndentationError *
+      |         +-- TabError *
+      +-- SystemError
+      +-- TypeError
+      +-- ValueError
+      |    +-- UnicodeError
+      |         +-- UnicodeDecodeError
+      |         +-- UnicodeEncodeError
+      |         +-- UnicodeTranslateError
+      +-- Warning
+           +-- DeprecationWarning
+           +-- PendingDeprecationWarning
+           +-- RuntimeWarning
+           +-- SyntaxWarning
+           +-- UserWarning
+           +-- FutureWarning
+           +-- ImportWarning
+           +-- UnicodeWarning
+           +-- BytesWarning
+           +-- ResourceWarning
 </pre></div>
 </div>
 </div>

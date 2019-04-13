@@ -262,11 +262,17 @@ The following is an incomplete list of projects or modules to look at:
 Reference: known exceptions
 ---------------------------
 
-In the following, those that are followed by an * have been implemented::
+In the following, those that are followed by an * had been implemented
+when this page was last updated. Those followed by ** have been
+excluded as it seemed rather counter-productive to intercept them.
+
+It is very likely that the information below is not up to date.
+
+.. code-block:: none
 
     BaseException
-     +-- SystemExit
-     +-- KeyboardInterrupt
+     +-- SystemExit **
+     +-- KeyboardInterrupt **
      +-- GeneratorExit
      +-- Exception
           +-- StopIteration
@@ -286,7 +292,7 @@ In the following, those that are followed by an * have been implemented::
           |    +-- KeyError
           +-- MemoryError
           +-- NameError  *
-          |    +-- UnboundLocalError
+          |    +-- UnboundLocalError *
           +-- OSError
           |    +-- BlockingIOError
           |    +-- ChildProcessError
@@ -309,7 +315,7 @@ In the following, those that are followed by an * have been implemented::
           |    +-- RecursionError
           +-- SyntaxError *
           |    +-- IndentationError *
-          |         +-- TabError
+          |         +-- TabError *
           +-- SystemError
           +-- TypeError
           +-- ValueError
