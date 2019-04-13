@@ -55,10 +55,8 @@ with some numbered comments added::
     import friendly_traceback
     import sys
 
-    friendly_traceback.set_lang('en')  # 1
 
-
-    def test_unbound_local_error():    # 2
+    def test_unbound_local_error():    # 1
         """Should raise UnboundLocalError"""
         a = 1
 
@@ -66,37 +64,33 @@ with some numbered comments added::
             a += 1
 
         try:
-            inner()   # 3
+            inner()   # 2
         except Exception:
-            friendly_traceback.explain(*sys.exc_info(), redirect="capture")  # 4
-        result = friendly_traceback.get_output()  # 5
-        assert "UnboundLocalError" in result  # 6
-        return result  # 7
+            friendly_traceback.explain(*sys.exc_info(), redirect="capture")  # 3
+        result = friendly_traceback.get_output()  # 4
+        assert "UnboundLocalError" in result  # 5
+        return result  # 6
 
 
     if __name__ == "__main__":
-        print(test_unbound_local_error())  # 8
+        print(test_unbound_local_error())  # 7
 
 
-1. We set the language to English. This is done so that everyone running the
-   tests can see exactly the same output regardless of their OS's locale,
-   or what translations are available in friendly-traceback.  This could
-   be useful when discussing issues on github.
-2. Test functions should start with `test_`, so as to be recognized by pytest.
-3. The code raising an error is inserted in a try/except clause.
+1. Test functions should start with `test_`, so as to be recognized by pytest.
+2. The code raising an error is inserted in a try/except clause.
    Friendly-traceback can be installed globally as an exception hook but
    this would not work when using pytest.
-4. By default, friendly_traceback outputs its result to sys.stderr.
+3. By default, friendly_traceback outputs its result to sys.stderr.
    However, this can be redirected to any other user provided
    function. In addition, there is a "capture" mode, as indicated,
    which simply stores the result.
-5. To retrieve the previously stored result, we use the
+4. To retrieve the previously stored result, we use the
    ``get_output()`` method. By default, this method also empties
    the cache used to capture the output. There is an optional
    argument to change this behaviour but it would be counter
    productive in this situation as we wish our tests to be done
    independently.
-6. Pytest checks for assertion errors. So, we include parts of
+5. Pytest checks for assertion errors. So, we include parts of
    what we expect to see in the output. This is usually the
    beginning of the line just below ``Python exception:`` that
    was shown when running something like ``raise_myexception.py``
@@ -107,9 +101,9 @@ with some numbered comments added::
    discover that a given exception has more than one case
    (``IndentationError``, for example, has three cases) and we
    might want to number each individual test file.
-7. We must return the previously captured result for independent
+6. We must return the previously captured result for independent
    testing.
-8. This enables us to run this test by itself, without Pytest.
+7. This enables us to run this test by itself, without Pytest.
 
 So, let's see what happens if we do run this test by itself.
 

@@ -16,7 +16,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Friendly tracebacks - in English" href="tracebacks_en.html" />
+    <link rel="next" title="Dealing with Syntax Errors" href="syntax_error.html" />
     <link rel="prev" title="Some thoughts on the design of friendly-traceback" href="design.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -26,7 +26,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="tracebacks_en.html" title="Friendly tracebacks - in English"
+          <a href="syntax_error.html" title="Dealing with Syntax Errors"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="design.html" title="Some thoughts on the design of friendly-traceback"
@@ -58,8 +58,8 @@
   <p class="topless"><a href="design.html"
                         title="previous chapter">Some thoughts on the design of friendly-traceback</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="tracebacks_en.html"
-                        title="next chapter">Friendly tracebacks - in English</a></p>
+  <p class="topless"><a href="syntax_error.html"
+                        title="next chapter">Dealing with Syntax Errors</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -147,10 +147,8 @@ with some numbered comments added:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">friendly_traceback</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="n">friendly_traceback</span><span class="o">.</span><span class="n">set_lang</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">)</span>  <span class="c1"># 1</span>
 
-
-<span class="k">def</span> <span class="nf">test_unbound_local_error</span><span class="p">():</span>    <span class="c1"># 2</span>
+<span class="k">def</span> <span class="nf">test_unbound_local_error</span><span class="p">():</span>    <span class="c1"># 1</span>
     <span class="sd">&quot;&quot;&quot;Should raise UnboundLocalError&quot;&quot;&quot;</span>
     <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
 
@@ -158,23 +156,19 @@ with some numbered comments added:</p>
         <span class="n">a</span> <span class="o">+=</span> <span class="mi">1</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">inner</span><span class="p">()</span>   <span class="c1"># 3</span>
+        <span class="n">inner</span><span class="p">()</span>   <span class="c1"># 2</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-        <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="o">*</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">(),</span> <span class="n">redirect</span><span class="o">=</span><span class="s2">&quot;capture&quot;</span><span class="p">)</span>  <span class="c1"># 4</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">get_output</span><span class="p">()</span>  <span class="c1"># 5</span>
-    <span class="k">assert</span> <span class="s2">&quot;UnboundLocalError&quot;</span> <span class="ow">in</span> <span class="n">result</span>  <span class="c1"># 6</span>
-    <span class="k">return</span> <span class="n">result</span>  <span class="c1"># 7</span>
+        <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="o">*</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">(),</span> <span class="n">redirect</span><span class="o">=</span><span class="s2">&quot;capture&quot;</span><span class="p">)</span>  <span class="c1"># 3</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">friendly_traceback</span><span class="o">.</span><span class="n">get_output</span><span class="p">()</span>  <span class="c1"># 4</span>
+    <span class="k">assert</span> <span class="s2">&quot;UnboundLocalError&quot;</span> <span class="ow">in</span> <span class="n">result</span>  <span class="c1"># 5</span>
+    <span class="k">return</span> <span class="n">result</span>  <span class="c1"># 6</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">test_unbound_local_error</span><span class="p">())</span>  <span class="c1"># 8</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">test_unbound_local_error</span><span class="p">())</span>  <span class="c1"># 7</span>
 </pre></div>
 </div>
 <ol class="arabic simple">
-<li>We set the language to English. This is done so that everyone running the
-tests can see exactly the same output regardless of their OS’s locale,
-or what translations are available in friendly-traceback.  This could
-be useful when discussing issues on github.</li>
 <li>Test functions should start with <cite>test_</cite>, so as to be recognized by pytest.</li>
 <li>The code raising an error is inserted in a try/except clause.
 Friendly-traceback can be installed globally as an exception hook but
@@ -461,7 +455,7 @@ not hesitate to ask for clarification.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="tracebacks_en.html" title="Friendly tracebacks - in English"
+          <a href="syntax_error.html" title="Dealing with Syntax Errors"
              >next</a> |</li>
         <li class="right" >
           <a href="design.html" title="Some thoughts on the design of friendly-traceback"

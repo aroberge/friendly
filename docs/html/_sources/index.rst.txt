@@ -19,6 +19,7 @@ More info to be added soon.
 
     Design <design>
     Adding an Exception <adding_exception>
+    Dealing with Syntax Errors <syntax_error.rst>
     Friendly tracebacks - in English <tracebacks_en>
     Friendly tracebacks - en Français <tracebacks_fr>
     Notes on translations - using gettext <translation_notes>

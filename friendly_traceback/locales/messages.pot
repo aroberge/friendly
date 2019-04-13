@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-04-12 16:37-0300\n"
+"POT-Creation-Date: 2019-04-13 08:06-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,7 +15,13 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: formatter.py:115
+#: formatter.py:21
+msgid ""
+"        Unfortunately, no additional information is available:\n"
+"        the content of file '<string>' is not accessible.\n"
+msgstr ""
+
+#: formatter.py:138
 msgid ""
 "\n"
 "    Python exception: \n"
@@ -24,13 +30,13 @@ msgid ""
 "{explanation}"
 msgstr ""
 
-#: formatter.py:128
+#: formatter.py:151
 msgid ""
 "    Likely cause:\n"
 "{cause}"
 msgstr ""
 
-#: formatter.py:153
+#: formatter.py:176
 msgid ""
 "\n"
 "    Execution stopped on line {linenumber} of file '{filename}'.\n"
@@ -38,7 +44,7 @@ msgid ""
 "{source}\n"
 msgstr ""
 
-#: formatter.py:161
+#: formatter.py:184
 msgid ""
 "\n"
 "    Exception raised on line {linenumber} of file '{filename}'.\n"
@@ -82,10 +88,22 @@ msgstr ""
 
 #: generic_info.py:49
 msgid ""
+"    In Python, variables that are used inside a function are known as \n"
+"    local variables. Before they are used, they must be assigned a value.\n"
+"    A variable that is used before it is assigned a value is assumed to\n"
+"    be defined outside that function; it is known as a 'global'\n"
+"    (or sometimes 'nonlocal') variable. You cannot assign a value to such\n"
+"    a global variable inside a function without first indicating to\n"
+"    Python that this is a global variable, otherwise you will see\n"
+"    an UnboundLocalError.\n"
+msgstr ""
+
+#: generic_info.py:63
+msgid ""
 "    No information is known about this exception.\n"
 msgstr ""
 
-#: specific_info.py:31 specific_info.py:78 specific_info.py:106
+#: specific_info.py:31 specific_info.py:78 specific_info.py:100
 msgid ""
 "        Python could not parse the file '{filename}'\n"
 "        beyond the location indicated below by --> and ^.\n"
@@ -124,9 +142,11 @@ msgid ""
 "        about the likely cause of this error.\n"
 msgstr ""
 
-#: specific_info.py:99
+#: specific_info.py:115
 msgid ""
-"        Unfortunately, no additional information is available:\n"
-"        the content of file '<string>' is not accessible.\n"
+"        The variable that appears to cause the problem is '{var_name}'.\n"
+"        Try inserting the statement\n"
+"            global {var_name}\n"
+"        as the first line inside your function."
 msgstr ""
 

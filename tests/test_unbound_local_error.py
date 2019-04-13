@@ -1,8 +1,6 @@
 import friendly_traceback
 import sys
 
-friendly_traceback.set_lang('en')
-
 
 def test_unbound_local_error():
     """Should raise UnboundLocalError"""

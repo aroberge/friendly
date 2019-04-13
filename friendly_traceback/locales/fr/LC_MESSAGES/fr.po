@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-12 16:37-0300\n"
-"PO-Revision-Date: 2019-04-12 16:41-0300\n"
+"POT-Creation-Date: 2019-04-13 08:06-0300\n"
+"PO-Revision-Date: 2019-04-13 08:12-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -17,7 +17,16 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: formatter.py:115
+#: formatter.py:21
+msgid ""
+"        Unfortunately, no additional information is available:\n"
+"        the content of file '<string>' is not accessible.\n"
+msgstr ""
+"        Malheureusement, aucune information supplémentaire n’est "
+"disponible:\n"
+"        le contenu du fichier '<string>' n’est pas accessible.\n"
+
+#: formatter.py:138
 msgid ""
 "\n"
 "    Python exception: \n"
@@ -31,7 +40,7 @@ msgstr ""
 "\n"
 "{explanation}"
 
-#: formatter.py:128
+#: formatter.py:151
 msgid ""
 "    Likely cause:\n"
 "{cause}"
@@ -39,7 +48,7 @@ msgstr ""
 "    Cause probable : \n"
 "{cause}"
 
-#: formatter.py:153
+#: formatter.py:176
 msgid ""
 "\n"
 "    Execution stopped on line {linenumber} of file '{filename}'.\n"
@@ -52,7 +61,7 @@ msgstr ""
 "\n"
 "{source}\n"
 
-#: formatter.py:161
+#: formatter.py:184
 msgid ""
 "\n"
 "    Exception raised on line {linenumber} of file '{filename}'.\n"
@@ -115,8 +124,8 @@ msgid ""
 "lines.\n"
 "    Python's recommendation is to always use spaces to indent your code.\n"
 msgstr ""
-"    Un exception de type TabError indique que vous avez utilisé des "
-"espaces ainsi que\n"
+"    Un exception de type TabError indique que vous avez utilisé des espaces "
+"ainsi que\n"
 "    des caractères de tabulation pour indenter votre code.\n"
 "    Cela n’est pas autorisé dans Python.\n"
 "    L’indentation de votre code signifie que le bloc de codes est aligné "
@@ -126,10 +135,35 @@ msgstr ""
 "indenter votre code.\n"
 
 #: generic_info.py:49
+msgid ""
+"    In Python, variables that are used inside a function are known as \n"
+"    local variables. Before they are used, they must be assigned a value.\n"
+"    A variable that is used before it is assigned a value is assumed to\n"
+"    be defined outside that function; it is known as a 'global'\n"
+"    (or sometimes 'nonlocal') variable. You cannot assign a value to such\n"
+"    a global variable inside a function without first indicating to\n"
+"    Python that this is a global variable, otherwise you will see\n"
+"    an UnboundLocalError.\n"
+msgstr ""
+"    En Python, les variables utilisées à l’intérieur d’une fonction sont "
+"appelées variables «locales».\n"
+"    Avant d’utiliser une variable locale, une valeur doit lui être "
+"attribuée.\n"
+"    Une variable utilisée avant l’attribution d’une valeur est supposée "
+"être définie en\n"
+"    dehors de cette fonction; elle est connu comme une variable "
+"«globale» ('global' ou parfois 'nonlocal').\n"
+"    Vous ne pouvez pas assigner une valeur à une telle variable globale à "
+"l’intérieur d’une fonction\n"
+"    sans d’abord confirmer à python qu’il s’agit d’une variable globale, "
+"sinon vous verrez\n"
+"    une exception UnboundLocalError.\n"
+
+#: generic_info.py:63
 msgid "    No information is known about this exception.\n"
 msgstr "    Aucune information n'est connue au sujet de cette exception.\n"
 
-#: specific_info.py:31 specific_info.py:78 specific_info.py:106
+#: specific_info.py:31 specific_info.py:78 specific_info.py:100
 msgid ""
 "        Python could not parse the file '{filename}'\n"
 "        beyond the location indicated below by --> and ^.\n"
@@ -181,14 +215,17 @@ msgstr ""
 "        Actuellement, nous ne pouvons pas vous donner plus d’informations\n"
 "        sur la cause probable de cette erreur.\n"
 
-#: specific_info.py:99
+#: specific_info.py:115
 msgid ""
-"        Unfortunately, no additional information is available:\n"
-"        the content of file '<string>' is not accessible.\n"
+"        The variable that appears to cause the problem is '{var_name}'.\n"
+"        Try inserting the statement\n"
+"            global {var_name}\n"
+"        as the first line inside your function."
 msgstr ""
-"        Malheureusement, aucune information supplémentaire n’est "
-"disponible:\n"
-"        le contenu du fichier '<string>' n’est pas accessible.\n"
+"        La variable qui semble causer le problème est' {var_name} '.\n"
+"        Essayez d’insérer l’instruction\n"
+"            global {var_name}\n"
+"        comme première ligne à l’intérieur de votre fonction."
 
 #~ msgid "Cannot find source code."
 #~ msgstr "Impossible de trouver la source du code."
