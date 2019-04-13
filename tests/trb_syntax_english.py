@@ -1,4 +1,4 @@
-"""Creates a version of traceback_en.rst to insert in the documentation.
+"""Creates a version of syntax_traceback_en.rst to insert in the documentation.
 """
 
 # When creating a new translation, you need to:
@@ -27,18 +27,17 @@ friendly_traceback.install(lang=LANG)
 sys.path.insert(0, this_dir)
 
 
-import trb_common  # noqa
+import trb_syntax_common  # noqa
 
-target = os.path.normpath(os.path.join(root_dir, f"docs/source/tracebacks_{LANG}.rst"))
+target = os.path.normpath(os.path.join(root_dir, f"docs/source/syntax_tracebacks_{LANG}.rst"))
 
 intro_text = """
-Friendly tracebacks - in English
-======================================
+Friendly SyntaxError tracebacks - in English
+=============================================
 
 Friendly-traceback aims to provide friendlier feedback when an exception
 is raised than what is done by Python.
-Below, we can find some examples. SyntaxError cases are
-shown in a separate page.
+This file contains only examples of SyntaxError.
 Ideally, an example of each case handled by friendly-traceback
 should be included here.
 
@@ -60,4 +59,4 @@ Python version: {python}
 )
 
 
-trb_common.create_tracebacks(target, intro_text)
+trb_syntax_common.create_tracebacks(target, intro_text)

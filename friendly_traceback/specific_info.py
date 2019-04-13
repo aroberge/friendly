@@ -8,17 +8,7 @@ import os
 
 from . import utils
 from .my_gettext import current_lang
-
-"""
-
-Syntax error, and its subclasses, contain:
-    filename = exc_value.filename
-    lineno = str(exc_value.lineno)
-    text = exc_value.text
-    offset = exc_value.offset
-    msg = exc_value.msg
-IndentationError and TabError are subclasses of SyntaxError.
-"""
+from .analyze_syntax import find_likely_cause
 
 
 def indentation_error(etype, value):
@@ -70,22 +60,23 @@ def name_error(etype, value):
 
 def syntax_error(etype, value):
     _ = current_lang.lang
-    filename = value.filename
+    filepath = value.filename
     linenumber = value.lineno
     offset = value.offset
-    source = utils.get_partial_source(filename, linenumber, offset)
-    filename = os.path.basename(filename)
+    # message = value.msg
+    partial_source = utils.get_partial_source(filepath, linenumber, offset)
+    filename = os.path.basename(filepath)
     info = _(
         "        Python could not parse the file '{filename}'\n"
         "        beyond the location indicated below by --> and ^.\n"
         "\n"
         "{source}\n"
-    ).format(filename=filename, source=source)
+    ).format(filename=filename, source=partial_source)
 
-    this_case = _(
-        "        Currently, we cannot give you more information\n"
-        "        about the likely cause of this error.\n"
-    )
+    source = utils.get_source(filepath)
+    cause = find_likely_cause(source, linenumber, offset)
+    print("CAUSE = ", cause)
+    this_case = syntax_error_causes(cause)
 
     return info + this_case
 
@@ -132,3 +123,76 @@ get_cause = {
     "UnboundLocalError": unbound_local_error,
     "ZeroDivisionError": zero_division_error,
 }
+
+
+def syntax_error_causes(cause):
+    _ = current_lang.lang
+
+    if cause == "Assigning to Python keyword":
+        return _(
+            "        My best guess: you were trying to assign a value\n"
+            "        to a Python keyword. This is not allowed.\n"
+            "\n"
+        )
+
+    if cause == "class missing colon":
+        return _(
+            "       My best guess: you wanted to define a class but\n"
+            "       forgot to add a colon ':' at the end\n"
+            "\n"
+        )
+
+    if cause == "def missing colon":
+        return _(
+            "       My best guess: you wanted to define a function but\n"
+            "       forgot to add a colon ':' at the end\n"
+            "\n"
+        )
+
+    if cause == "elif missing colon":
+        return _(
+            "       My best guess: you wrote an elif statement but\n"
+            "       forgot to add a colon ':' at the end\n"
+            "\n"
+        )
+
+    if cause == "else missing colon":
+        return _(
+            "       My best guess: you wrote an else statement but\n"
+            "       forgot to add a colon ':' at the end\n"
+            "\n"
+        )
+
+    if cause == "finally missing colon":
+        return _(
+            "       My best guess: you wrote a finally statement but\n"
+            "       forgot to add a colon ':' at the end\n"
+            "\n"
+        )
+
+    if cause == "for missing colon":
+        return _(
+            "       My best guess: you wrote a for loop but\n"
+            "       forgot to add a colon ':' at the end\n"
+            "\n"
+        )
+
+    if cause == "if missing colon":
+        return _(
+            "       My best guess: you wrote an if statement but\n"
+            "       forgot to add a colon ':' at the end\n"
+            "\n"
+        )
+
+    if cause == "while missing colon":
+        return _(
+            "       My best guess: you wrote a while loop but\n"
+            "       forgot to add a colon ':' at the end\n"
+            "\n"
+        )
+
+    return _(
+        "        Currently, we cannot give you more information\n"
+        "        about the likely cause of this error.\n"
+        "\n"
+    )

@@ -7,22 +7,30 @@ CONSOLE_NAME = "<Friendly console>"
 
 def add_console_source(fake_filename, true_filename_and_source):
     CONSOLE_SOURCE[fake_filename] = true_filename_and_source
-    # for key in CONSOLE_SOURCE:
-    #     print(key, CONSOLE_SOURCE[key])
 
 
-def get_partial_source(filename, linenumber, offset):
+def get_source(filename):
     if filename in CONSOLE_SOURCE:
         _filename, source = CONSOLE_SOURCE[filename]
         lines = source.split("\n")
     else:
         with open(filename) as f:
             lines = f.readlines()
+    return lines
+
+
+def get_partial_source(filename, linenumber, offset):
+    lines = get_source(filename)
 
     begin = max(0, linenumber - CONTEXT)
+    # fmt: off
     return highlight_source(
-        linenumber, linenumber - begin - 1, lines[begin : linenumber + 1], offset=offset
+        linenumber,
+        linenumber - begin - 1,
+        lines[begin: linenumber + 1],
+        offset=offset
     )
+    # fmt: on
 
 
 def highlight_source(linenumber, index, lines, offset=None):
@@ -39,10 +47,12 @@ def highlight_source(linenumber, index, lines, offset=None):
     for line in lines:
         if i == linenumber:
             num = with_mark.format(i)
+            if offset is not None:
+                new_lines.append(num + line.rstrip())
+                new_lines.append(offset_mark)
+                break
         else:
             num = no_mark.format(i)
         new_lines.append(num + line.rstrip())
         i += 1
-    if offset is not None:
-        new_lines.append(offset_mark)
     return "\n".join(new_lines)

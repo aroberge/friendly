@@ -151,8 +151,9 @@ SyntaxError
        2: 
     -->3: pass = 2
                ^
-        Actuellement, nous ne pouvons pas vous donner plus d’informations
-        sur la cause probable de cette erreur.
+        Ma meilleure hypothèse: vous essayiez d’assigner une valeur à un mot clé Python.
+        Ceci n’est pas permis.
+
 
 TabError - 1
 ------------
@@ -161,17 +162,17 @@ TabError - 1
 
 
     Exception Python: 
-        AttributeError: module 'syntax' has no attribute 'test_tab_error1'
+        TypeError: 'module' object is not callable
 
     Aucune information n'est connue au sujet de cette exception.
 
 
-    L'exécution s'est arrêtée à la ligne 55 du fichier 'trb_common.py'
+    L'exécution s'est arrêtée à la ligne 51 du fichier 'trb_common.py'
 
-       53:                     mod = __import__(name)
-       54:                     if function is not None:
-    -->55:                         result = getattr(mod, function)()
-       56:                         write(result)
+       49:                     mod = __import__(name)
+       50:                     if function is not None:
+    -->51:                         result = getattr(mod, function)()
+       52:                         write(result)
 
 TabError - 2
 ------------
@@ -197,7 +198,6 @@ TabError - 2
         5: def no_pytest_tab_error2():
         6:     if True:
     --> 7: 	pass
-        8: 
                 ^
 
 UnboundLocalError

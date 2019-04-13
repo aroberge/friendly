@@ -26,9 +26,10 @@ section on "Verbosity".
     Adding an Exception <adding_exception>
     Dealing with Syntax Errors <syntax_error.rst>
     Friendly tracebacks - in English <tracebacks_en>
+    Friendly SyntaxError tracebacks - in English <syntax_tracebacks_en>
     Friendly tracebacks - en Français <tracebacks_fr>
+    Friendly SyntaxError tracebacks - en Français <syntax_tracebacks_fr>
     Notes on translations - using gettext <translation_notes>
     Change Log <changelog>
-
 
 .. todolist::

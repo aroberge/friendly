@@ -16,8 +16,8 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Notes on translations - using gettext" href="translation_notes.html" />
-    <link rel="prev" title="Friendly tracebacks - in English" href="tracebacks_en.html" /> 
+    <link rel="next" title="Friendly SyntaxError tracebacks - en Français" href="syntax_tracebacks_fr.html" />
+    <link rel="prev" title="Friendly SyntaxError tracebacks - in English" href="syntax_tracebacks_en.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -26,10 +26,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="translation_notes.html" title="Notes on translations - using gettext"
+          <a href="syntax_tracebacks_fr.html" title="Friendly SyntaxError tracebacks - en Français"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="tracebacks_en.html" title="Friendly tracebacks - in English"
+          <a href="syntax_tracebacks_en.html" title="Friendly SyntaxError tracebacks - in English"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.4 documentation</a> &#187;</li> 
       </ul>
@@ -55,11 +55,11 @@
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="tracebacks_en.html"
-                        title="previous chapter">Friendly tracebacks - in English</a></p>
+  <p class="topless"><a href="syntax_tracebacks_en.html"
+                        title="previous chapter">Friendly SyntaxError tracebacks - in English</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="translation_notes.html"
-                        title="next chapter">Notes on translations - using gettext</a></p>
+  <p class="topless"><a href="syntax_tracebacks_fr.html"
+                        title="next chapter">Friendly SyntaxError tracebacks - en Français</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -221,25 +221,25 @@ Cause probable :
    2:
 --&gt;3: pass = 2
            ^
-    Actuellement, nous ne pouvons pas vous donner plus d’informations
-    sur la cause probable de cette erreur.
+    Ma meilleure hypothèse: vous essayiez d’assigner une valeur à un mot clé Python.
+    Ceci n’est pas permis.
 </pre></div>
 </div>
 </div>
 <div class="section" id="taberror-1">
 <h2>TabError - 1<a class="headerlink" href="#taberror-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
-    AttributeError: module &#39;syntax&#39; has no attribute &#39;test_tab_error1&#39;
+    TypeError: &#39;module&#39; object is not callable
 
 Aucune information n&#39;est connue au sujet de cette exception.
 
 
-L&#39;exécution s&#39;est arrêtée à la ligne 55 du fichier &#39;trb_common.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 51 du fichier &#39;trb_common.py&#39;
 
-   53:                     mod = __import__(name)
-   54:                     if function is not None:
---&gt;55:                         result = getattr(mod, function)()
-   56:                         write(result)
+   49:                     mod = __import__(name)
+   50:                     if function is not None:
+--&gt;51:                         result = getattr(mod, function)()
+   52:                         write(result)
 </pre></div>
 </div>
 </div>
@@ -263,7 +263,6 @@ Cause probable :
     5: def no_pytest_tab_error2():
     6:     if True:
 --&gt; 7:      pass
-    8:
             ^
 </pre></div>
 </div>
@@ -378,10 +377,10 @@ L&#39;exécution s&#39;est arrêtée à la ligne 17 du fichier &#39;test_zero_di
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="translation_notes.html" title="Notes on translations - using gettext"
+          <a href="syntax_tracebacks_fr.html" title="Friendly SyntaxError tracebacks - en Français"
              >next</a> |</li>
         <li class="right" >
-          <a href="tracebacks_en.html" title="Friendly tracebacks - in English"
+          <a href="syntax_tracebacks_en.html" title="Friendly SyntaxError tracebacks - in English"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.4 documentation</a> &#187;</li> 
       </ul>

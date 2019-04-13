@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-13 15:06-0300\n"
-"PO-Revision-Date: 2019-04-13 15:06-0300\n"
+"POT-Creation-Date: 2019-04-13 17:57-0300\n"
+"PO-Revision-Date: 2019-04-13 18:03-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -179,7 +179,7 @@ msgstr ""
 "    à l’aide de l’opérateur modulo '%'\n"
 "        résultat = ma_variable % 0"
 
-#: specific_info.py:31 specific_info.py:78 specific_info.py:100
+#: specific_info.py:21 specific_info.py:69 specific_info.py:91
 msgid ""
 "        Python could not parse the file '{filename}'\n"
 "        beyond the location indicated below by --> and ^.\n"
@@ -191,7 +191,7 @@ msgstr ""
 "\n"
 "{source}\n"
 
-#: specific_info.py:40
+#: specific_info.py:30
 msgid ""
 "        In this case, the line identified above\n"
 "        is more indented than expected and \n"
@@ -201,7 +201,7 @@ msgstr ""
 "        est plus indentée que ce qui était attendu et ne\n"
 "        correspond pas à l'indentation de la ligne précédente.\n"
 
-#: specific_info.py:46
+#: specific_info.py:36
 msgid ""
 "        In this case, the line identified above\n"
 "        was expected to begin a new indented block.\n"
@@ -209,7 +209,7 @@ msgstr ""
 "        Dans ce cas-ci, la ligne indiquée ci-dessus par --> devrait\n"
 "        normalement commencer un nouveau bloc de code indenté.\n"
 
-#: specific_info.py:51
+#: specific_info.py:41
 msgid ""
 "        In this case, the line identified above is\n"
 "        less indented than the preceding one,\n"
@@ -219,19 +219,11 @@ msgstr ""
 "        est moins indentée que la ligne précédente\n"
 "        et n’est pas alignée verticalement avec un autre bloc de code.\n"
 
-#: specific_info.py:66
+#: specific_info.py:56
 msgid "        In your program, the unknown name is '{var_name}'.\n"
 msgstr "        Dans votre programme, le nom inconnu est '{var_name}'.\n"
 
-#: specific_info.py:85
-msgid ""
-"        Currently, we cannot give you more information\n"
-"        about the likely cause of this error.\n"
-msgstr ""
-"        Actuellement, nous ne pouvons pas vous donner plus d’informations\n"
-"        sur la cause probable de cette erreur.\n"
-
-#: specific_info.py:115
+#: specific_info.py:106
 msgid ""
 "        The variable that appears to cause the problem is '{var_name}'.\n"
 "        Try inserting the statement\n"
@@ -242,6 +234,107 @@ msgstr ""
 "        Essayez d’insérer l’instruction\n"
 "            global {var_name}\n"
 "        comme première ligne à l’intérieur de votre fonction."
+
+#: specific_info.py:132
+msgid ""
+"        My best guess: you were trying to assign a value\n"
+"        to a Python keyword. This is not allowed.\n"
+"\n"
+msgstr ""
+"        Ma meilleure hypothèse: vous essayiez d’assigner une valeur à un mot "
+"clé Python.\n"
+"        Ceci n’est pas permis.\n"
+"\n"
+
+#: specific_info.py:139
+msgid ""
+"       My best guess: you wanted to define a class but\n"
+"       forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+"        Ma meilleure hypothèse: vous vouliez définir une classe,\n"
+"        mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
+"\n"
+
+#: specific_info.py:146
+msgid ""
+"       My best guess: you wanted to define a function but\n"
+"       forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+"        Ma meilleure hypothèse: vous vouliez définir une fonction,\n"
+"        mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
+"\n"
+
+#: specific_info.py:153
+msgid ""
+"       My best guess: you wrote an elif statement but\n"
+"       forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+"        Ma meilleure hypothèse: vous avez écrit un énoncé 'elif'\n"
+"        mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
+"\n"
+
+#: specific_info.py:160
+msgid ""
+"       My best guess: you wrote an else statement but\n"
+"       forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+"        Ma meilleure hypothèse: vous avez écrit un énoncé 'else'\n"
+"        mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
+"\n"
+
+#: specific_info.py:167
+msgid ""
+"       My best guess: you wrote a finally statement but\n"
+"       forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+"        Ma meilleure hypothèse: vous avez écrit un énoncé 'finally'\n"
+"        mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
+"\n"
+
+#: specific_info.py:174
+msgid ""
+"       My best guess: you wrote a for loop but\n"
+"       forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+"        Ma meilleure hypothèse: vous vouliez débuter une boucle 'for'\n"
+"        mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
+"\n"
+
+#: specific_info.py:181
+msgid ""
+"       My best guess: you wrote an if statement but\n"
+"       forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+"        Ma meilleure hypothèse: vous avez écrit un énoncé 'if'\n"
+"        mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
+"\n"
+
+#: specific_info.py:188
+msgid ""
+"       My best guess: you wrote a while loop but\n"
+"       forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+"        Ma meilleure hypothèse: vous vouliez débuter une boucle 'while'\n"
+"        mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
+"\n"
+
+#: specific_info.py:194
+msgid ""
+"        Currently, we cannot give you more information\n"
+"        about the likely cause of this error.\n"
+"\n"
+msgstr ""
+"        Actuellement, nous ne pouvons pas vous donner plus d’informations\n"
+"        sur la cause probable de cette erreur.\n"
+"\n"
 
 #~ msgid "Cannot find source code."
 #~ msgstr "Impossible de trouver la source du code."

@@ -4,7 +4,8 @@ Friendly tracebacks - in English
 
 Friendly-traceback aims to provide friendlier feedback when an exception
 is raised than what is done by Python.
-Below, we can find some examples.
+Below, we can find some examples. SyntaxError cases are
+shown in a separate page.
 Ideally, an example of each case handled by friendly-traceback
 should be included here.
 
@@ -147,8 +148,9 @@ SyntaxError
        2: 
     -->3: pass = 2
                ^
-        Currently, we cannot give you more information
-        about the likely cause of this error.
+        My best guess: you were trying to assign a value
+        to a Python keyword. This is not allowed.
+
 
 TabError - 1
 ------------
@@ -157,17 +159,17 @@ TabError - 1
 
 
     Python exception: 
-        AttributeError: module 'syntax' has no attribute 'test_tab_error1'
+        TypeError: 'module' object is not callable
 
     No information is known about this exception.
 
 
-    Execution stopped on line 55 of file 'trb_common.py'.
+    Execution stopped on line 51 of file 'trb_common.py'.
 
-       53:                     mod = __import__(name)
-       54:                     if function is not None:
-    -->55:                         result = getattr(mod, function)()
-       56:                         write(result)
+       49:                     mod = __import__(name)
+       50:                     if function is not None:
+    -->51:                         result = getattr(mod, function)()
+       52:                         write(result)
 
 TabError - 2
 ------------
@@ -193,7 +195,6 @@ TabError - 2
         5: def no_pytest_tab_error2():
         6:     if True:
     --> 7: 	pass
-        8: 
                 ^
 
 UnboundLocalError
@@ -268,7 +269,6 @@ ZeroDivisionError - 1
     A ZeroDivisionError occurs when you are attempting to divide
     a value by zero:
         result = my_variable / 0
-
     It can also happen if you calculate the remainder of a division
     using the modulo operator '%'
         result = my_variable % 0
@@ -293,7 +293,6 @@ ZeroDivisionError - 2
     A ZeroDivisionError occurs when you are attempting to divide
     a value by zero:
         result = my_variable / 0
-
     It can also happen if you calculate the remainder of a division
     using the modulo operator '%'
         result = my_variable % 0

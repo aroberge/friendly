@@ -1,0 +1,108 @@
+
+Friendly SyntaxError tracebacks - en Français
+=============================================
+
+Le but principal de friendly-traceback est de fournir des rétroactions plus
+conviviales que les fameux **tracebacks** de Python lorsqu'une exception survient.
+Ci-dessous, on peut voir quelques exemples, uniquement pour les
+exceptions de type SyntaxError; les autres sont couvertes dans une autre page.
+Le but éventuel est de documenter
+ici tous les exemples possibles tels qu'interprétés par friendly-traceback.
+
+.. note::
+
+     Le contenu de cette page a été généré par l'exécution de
+     trb_syntax_french.py situé dans le répertoire ``tests/``.
+     Ceci a besoin d'être fait de manière explicite lorsqu'on veut
+     faire des corrections ou des ajouts, avant de faire la mise
+     à jour du reste de la documentation avec Sphinx.
+     Sous Windows, si Sphinx est installé sur votre ordinateur, il est
+     plutôt suggéré d'exécuter make_tb.bat qui est au premier niveau
+     du répertoire de fichier. Si vous faites ceci, la documentation pour
+     toutes les langues sera automatiquement mise à jour.
+
+Friendly-traceback version: 0.0.4
+Python version: 3.7.0
+
+
+
+SyntaxError - Assign to keyword
+-------------------------------
+
+.. code-block:: none
+
+
+    Exception Python: 
+        SyntaxError: invalid syntax (raise_syntax_error1.py, line 3)
+
+    Une exception SyntaxError se produit lorsque python ne peut pas comprendre votre code.
+    Il pourrait y avoir plusieurs raisons possibles:
+    - un mot-clé peut être mal orthographié;
+    - le symbole deux points, :, ou un autre symbole comme (,], etc., pourrait manquer;
+    - etc.
+
+    Cause probable : 
+        Python peut seulement analyser le fichier 'raise_syntax_error1.py'
+        jusqu'à l'endroit indiqué par --> et ^.
+
+       1: """ Should raise SyntaxError"""
+       2: 
+    -->3: pass = 2
+               ^
+        Ma meilleure hypothèse: vous essayiez d’assigner une valeur à un mot clé Python.
+        Ceci n’est pas permis.
+
+
+SyntaxError - Missing colon 1
+-----------------------------
+
+.. code-block:: none
+
+
+    Exception Python: 
+        SyntaxError: invalid syntax (raise_syntax_error2.py, line 3)
+
+    Une exception SyntaxError se produit lorsque python ne peut pas comprendre votre code.
+    Il pourrait y avoir plusieurs raisons possibles:
+    - un mot-clé peut être mal orthographié;
+    - le symbole deux points, :, ou un autre symbole comme (,], etc., pourrait manquer;
+    - etc.
+
+    Cause probable : 
+        Python peut seulement analyser le fichier 'raise_syntax_error2.py'
+        jusqu'à l'endroit indiqué par --> et ^.
+
+       1: """Should raise SyntaxError"""
+       2: 
+    -->3: if True
+                 ^
+        Ma meilleure hypothèse: vous avez écrit un énoncé 'if'
+        mais vous avez oublié d’ajouter deux points ':' à la fin.
+
+
+SyntaxError - Missing colon 2
+-----------------------------
+
+.. code-block:: none
+
+
+    Exception Python: 
+        SyntaxError: invalid syntax (raise_syntax_error3.py, line 3)
+
+    Une exception SyntaxError se produit lorsque python ne peut pas comprendre votre code.
+    Il pourrait y avoir plusieurs raisons possibles:
+    - un mot-clé peut être mal orthographié;
+    - le symbole deux points, :, ou un autre symbole comme (,], etc., pourrait manquer;
+    - etc.
+
+    Cause probable : 
+        Python peut seulement analyser le fichier 'raise_syntax_error3.py'
+        jusqu'à l'endroit indiqué par --> et ^.
+
+       1: """Should raise SyntaxError"""
+       2: 
+    -->3: while True  # a comment
+                                 ^
+        Ma meilleure hypothèse: vous vouliez débuter une boucle 'while'
+        mais vous avez oublié d’ajouter deux points ':' à la fin.
+

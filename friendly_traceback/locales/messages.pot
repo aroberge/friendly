@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-04-13 15:06-0300\n"
+"POT-Creation-Date: 2019-04-13 17:57-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,7 +113,7 @@ msgid ""
 "        result = my_variable % 0"
 msgstr ""
 
-#: specific_info.py:31 specific_info.py:78 specific_info.py:100
+#: specific_info.py:21 specific_info.py:69 specific_info.py:91
 msgid ""
 "        Python could not parse the file '{filename}'\n"
 "        beyond the location indicated below by --> and ^.\n"
@@ -121,42 +121,106 @@ msgid ""
 "{source}\n"
 msgstr ""
 
-#: specific_info.py:40
+#: specific_info.py:30
 msgid ""
 "        In this case, the line identified above\n"
 "        is more indented than expected and \n"
 "        does not match the indentation of the previous line.\n"
 msgstr ""
 
-#: specific_info.py:46
+#: specific_info.py:36
 msgid ""
 "        In this case, the line identified above\n"
 "        was expected to begin a new indented block.\n"
 msgstr ""
 
-#: specific_info.py:51
+#: specific_info.py:41
 msgid ""
 "        In this case, the line identified above is\n"
 "        less indented than the preceding one,\n"
 "        and is not aligned vertically with another block of code.\n"
 msgstr ""
 
-#: specific_info.py:66
+#: specific_info.py:56
 msgid ""
 "        In your program, the unknown name is '{var_name}'.\n"
 msgstr ""
 
-#: specific_info.py:85
-msgid ""
-"        Currently, we cannot give you more information\n"
-"        about the likely cause of this error.\n"
-msgstr ""
-
-#: specific_info.py:115
+#: specific_info.py:106
 msgid ""
 "        The variable that appears to cause the problem is '{var_name}'.\n"
 "        Try inserting the statement\n"
 "            global {var_name}\n"
 "        as the first line inside your function."
+msgstr ""
+
+#: specific_info.py:132
+msgid ""
+"        My best guess: you were trying to assign a value\n"
+"        to a Python keyword. This is not allowed.\n"
+"\n"
+msgstr ""
+
+#: specific_info.py:139
+msgid ""
+"       My best guess: you wanted to define a class but\n"
+"       forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: specific_info.py:146
+msgid ""
+"       My best guess: you wanted to define a function but\n"
+"       forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: specific_info.py:153
+msgid ""
+"       My best guess: you wrote an elif statement but\n"
+"       forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: specific_info.py:160
+msgid ""
+"       My best guess: you wrote an else statement but\n"
+"       forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: specific_info.py:167
+msgid ""
+"       My best guess: you wrote a finally statement but\n"
+"       forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: specific_info.py:174
+msgid ""
+"       My best guess: you wrote a for loop but\n"
+"       forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: specific_info.py:181
+msgid ""
+"       My best guess: you wrote an if statement but\n"
+"       forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: specific_info.py:188
+msgid ""
+"       My best guess: you wrote a while loop but\n"
+"       forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: specific_info.py:194
+msgid ""
+"        Currently, we cannot give you more information\n"
+"        about the likely cause of this error.\n"
+"\n"
 msgstr ""
 

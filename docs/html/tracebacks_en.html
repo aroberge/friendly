@@ -16,7 +16,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Friendly tracebacks - en Français" href="tracebacks_fr.html" />
+    <link rel="next" title="Friendly SyntaxError tracebacks - in English" href="syntax_tracebacks_en.html" />
     <link rel="prev" title="Dealing with Syntax Errors" href="syntax_error.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -26,7 +26,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="tracebacks_fr.html" title="Friendly tracebacks - en Français"
+          <a href="syntax_tracebacks_en.html" title="Friendly SyntaxError tracebacks - in English"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="syntax_error.html" title="Dealing with Syntax Errors"
@@ -58,8 +58,8 @@
   <p class="topless"><a href="syntax_error.html"
                         title="previous chapter">Dealing with Syntax Errors</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="tracebacks_fr.html"
-                        title="next chapter">Friendly tracebacks - en Français</a></p>
+  <p class="topless"><a href="syntax_tracebacks_en.html"
+                        title="next chapter">Friendly SyntaxError tracebacks - in English</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -91,7 +91,8 @@
 <h1>Friendly tracebacks - in English<a class="headerlink" href="#friendly-tracebacks-in-english" title="Permalink to this headline">¶</a></h1>
 <p>Friendly-traceback aims to provide friendlier feedback when an exception
 is raised than what is done by Python.
-Below, we can find some examples.
+Below, we can find some examples. SyntaxError cases are
+shown in a separate page.
 Ideally, an example of each case handled by friendly-traceback
 should be included here.</p>
 <div class="admonition note">
@@ -217,25 +218,25 @@ Likely cause:
    2:
 --&gt;3: pass = 2
            ^
-    Currently, we cannot give you more information
-    about the likely cause of this error.
+    My best guess: you were trying to assign a value
+    to a Python keyword. This is not allowed.
 </pre></div>
 </div>
 </div>
 <div class="section" id="taberror-1">
 <h2>TabError - 1<a class="headerlink" href="#taberror-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
-    AttributeError: module &#39;syntax&#39; has no attribute &#39;test_tab_error1&#39;
+    TypeError: &#39;module&#39; object is not callable
 
 No information is known about this exception.
 
 
-Execution stopped on line 55 of file &#39;trb_common.py&#39;.
+Execution stopped on line 51 of file &#39;trb_common.py&#39;.
 
-   53:                     mod = __import__(name)
-   54:                     if function is not None:
---&gt;55:                         result = getattr(mod, function)()
-   56:                         write(result)
+   49:                     mod = __import__(name)
+   50:                     if function is not None:
+--&gt;51:                         result = getattr(mod, function)()
+   52:                         write(result)
 </pre></div>
 </div>
 </div>
@@ -259,7 +260,6 @@ Likely cause:
     5: def no_pytest_tab_error2():
     6:     if True:
 --&gt; 7:      pass
-    8:
             ^
 </pre></div>
 </div>
@@ -326,7 +326,6 @@ Execution stopped on line 11 of file &#39;test_unknown_error.py&#39;.
 A ZeroDivisionError occurs when you are attempting to divide
 a value by zero:
     result = my_variable / 0
-
 It can also happen if you calculate the remainder of a division
 using the modulo operator &#39;%&#39;
     result = my_variable % 0
@@ -348,7 +347,6 @@ Execution stopped on line 7 of file &#39;test_zero_division_error.py&#39;.
 A ZeroDivisionError occurs when you are attempting to divide
 a value by zero:
     result = my_variable / 0
-
 It can also happen if you calculate the remainder of a division
 using the modulo operator &#39;%&#39;
     result = my_variable % 0
@@ -377,7 +375,7 @@ Execution stopped on line 17 of file &#39;test_zero_division_error.py&#39;.
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="tracebacks_fr.html" title="Friendly tracebacks - en Français"
+          <a href="syntax_tracebacks_en.html" title="Friendly SyntaxError tracebacks - in English"
              >next</a> |</li>
         <li class="right" >
           <a href="syntax_error.html" title="Dealing with Syntax Errors"

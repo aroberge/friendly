@@ -1,0 +1,204 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Friendly SyntaxError tracebacks - en Français &#8212; Friendly tracebacks 0.0.4 documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Notes on translations - using gettext" href="translation_notes.html" />
+    <link rel="prev" title="Friendly tracebacks - en Français" href="tracebacks_fr.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="translation_notes.html" title="Notes on translations - using gettext"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tracebacks_fr.html" title="Friendly tracebacks - en Français"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.4 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Friendly SyntaxError tracebacks - en Français</a><ul>
+<li><a class="reference internal" href="#syntaxerror-assign-to-keyword">SyntaxError - Assign to keyword</a></li>
+<li><a class="reference internal" href="#syntaxerror-missing-colon-1">SyntaxError - Missing colon 1</a></li>
+<li><a class="reference internal" href="#syntaxerror-missing-colon-2">SyntaxError - Missing colon 2</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tracebacks_fr.html"
+                        title="previous chapter">Friendly tracebacks - en Français</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="translation_notes.html"
+                        title="next chapter">Notes on translations - using gettext</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/syntax_tracebacks_fr.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="friendly-syntaxerror-tracebacks-en-francais">
+<h1>Friendly SyntaxError tracebacks - en Français<a class="headerlink" href="#friendly-syntaxerror-tracebacks-en-francais" title="Permalink to this headline">¶</a></h1>
+<p>Le but principal de friendly-traceback est de fournir des rétroactions plus
+conviviales que les fameux <strong>tracebacks</strong> de Python lorsqu’une exception survient.
+Ci-dessous, on peut voir quelques exemples, uniquement pour les
+exceptions de type SyntaxError; les autres sont couvertes dans une autre page.
+Le but éventuel est de documenter
+ici tous les exemples possibles tels qu’interprétés par friendly-traceback.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Le contenu de cette page a été généré par l’exécution de
+trb_syntax_french.py situé dans le répertoire <code class="docutils literal notranslate"><span class="pre">tests/</span></code>.
+Ceci a besoin d’être fait de manière explicite lorsqu’on veut
+faire des corrections ou des ajouts, avant de faire la mise
+à jour du reste de la documentation avec Sphinx.
+Sous Windows, si Sphinx est installé sur votre ordinateur, il est
+plutôt suggéré d’exécuter make_tb.bat qui est au premier niveau
+du répertoire de fichier. Si vous faites ceci, la documentation pour
+toutes les langues sera automatiquement mise à jour.</p>
+</div>
+<p>Friendly-traceback version: 0.0.4
+Python version: 3.7.0</p>
+<div class="section" id="syntaxerror-assign-to-keyword">
+<h2>SyntaxError - Assign to keyword<a class="headerlink" href="#syntaxerror-assign-to-keyword" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
+    SyntaxError: invalid syntax (raise_syntax_error1.py, line 3)
+
+Une exception SyntaxError se produit lorsque python ne peut pas comprendre votre code.
+Il pourrait y avoir plusieurs raisons possibles:
+- un mot-clé peut être mal orthographié;
+- le symbole deux points, :, ou un autre symbole comme (,], etc., pourrait manquer;
+- etc.
+
+Cause probable :
+    Python peut seulement analyser le fichier &#39;raise_syntax_error1.py&#39;
+    jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
+
+   1: &quot;&quot;&quot; Should raise SyntaxError&quot;&quot;&quot;
+   2:
+--&gt;3: pass = 2
+           ^
+    Ma meilleure hypothèse: vous essayiez d’assigner une valeur à un mot clé Python.
+    Ceci n’est pas permis.
+</pre></div>
+</div>
+</div>
+<div class="section" id="syntaxerror-missing-colon-1">
+<h2>SyntaxError - Missing colon 1<a class="headerlink" href="#syntaxerror-missing-colon-1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
+    SyntaxError: invalid syntax (raise_syntax_error2.py, line 3)
+
+Une exception SyntaxError se produit lorsque python ne peut pas comprendre votre code.
+Il pourrait y avoir plusieurs raisons possibles:
+- un mot-clé peut être mal orthographié;
+- le symbole deux points, :, ou un autre symbole comme (,], etc., pourrait manquer;
+- etc.
+
+Cause probable :
+    Python peut seulement analyser le fichier &#39;raise_syntax_error2.py&#39;
+    jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
+
+   1: &quot;&quot;&quot;Should raise SyntaxError&quot;&quot;&quot;
+   2:
+--&gt;3: if True
+             ^
+    Ma meilleure hypothèse: vous avez écrit un énoncé &#39;if&#39;
+    mais vous avez oublié d’ajouter deux points &#39;:&#39; à la fin.
+</pre></div>
+</div>
+</div>
+<div class="section" id="syntaxerror-missing-colon-2">
+<h2>SyntaxError - Missing colon 2<a class="headerlink" href="#syntaxerror-missing-colon-2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
+    SyntaxError: invalid syntax (raise_syntax_error3.py, line 3)
+
+Une exception SyntaxError se produit lorsque python ne peut pas comprendre votre code.
+Il pourrait y avoir plusieurs raisons possibles:
+- un mot-clé peut être mal orthographié;
+- le symbole deux points, :, ou un autre symbole comme (,], etc., pourrait manquer;
+- etc.
+
+Cause probable :
+    Python peut seulement analyser le fichier &#39;raise_syntax_error3.py&#39;
+    jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
+
+   1: &quot;&quot;&quot;Should raise SyntaxError&quot;&quot;&quot;
+   2:
+--&gt;3: while True  # a comment
+                             ^
+    Ma meilleure hypothèse: vous vouliez débuter une boucle &#39;while&#39;
+    mais vous avez oublié d’ajouter deux points &#39;:&#39; à la fin.
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="translation_notes.html" title="Notes on translations - using gettext"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tracebacks_fr.html" title="Friendly tracebacks - en Français"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.4 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, André Roberge.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>
