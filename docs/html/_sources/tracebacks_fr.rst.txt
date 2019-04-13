@@ -120,12 +120,12 @@ NameError
         Dans votre programme, le nom inconnu est 'c'.
 
 
-    L'exécution s'est arrêtée à la ligne 52 du fichier 'tb_common.py'
+    L'exécution s'est arrêtée à la ligne 53 du fichier 'tb_common.py'
 
-       50:                     mod = __import__(name)
-       51:                     if function is not None:
-    -->52:                         getattr(mod, function)()
-       53:                 except Exception:
+       51:                     mod = __import__(name)
+       52:                     if function is not None:
+    -->53:                         result = getattr(mod, function)()
+       54:                         write(result)
 
 
     Exception levée à la ligne du fichier 'raise_name_error.py'.
@@ -207,27 +207,67 @@ TabError - 2
         8: 
                 ^
 
+UnboundLocalError
+-----------------
+
+.. code-block:: none
+
+
+    Python exception: 
+        UnboundLocalError: local variable 'a' referenced before assignment
+
+    In Python, variables that are used inside a function are known as 
+    local variables. Before they are used, they must be assigned a value.
+    A variable that is used before it is assigned a value is assumed to
+    be defined outside that function; it is known as a 'global'
+    (or sometimes 'nonlocal') variable. You cannot assign a value to such
+    a global variable inside a function without first indicating to
+    Python that this is a global variable, otherwise you will see
+    an UnboundLocalError.
+
+    Likely cause:
+        The variable that appears to cause the problem is 'a'.
+        Try inserting the statement
+            global a
+        as the first line inside your function.
+
+    Execution stopped on line 15 of file 'test_unbound_local_error.py'.
+
+       13: 
+       14:     try:
+    -->15:         inner()
+       16:     except Exception:
+
+
+    Exception raised on line 12 of file 'test_unbound_local_error.py'.
+
+       10: 
+       11:     def inner():
+    -->12:         a += 1
+       13: 
+
+
 Unknown exception
 -----------------
 
 .. code-block:: none
 
 
-    Exception Python: 
+    Python exception: 
         MyException: Some informative message
 
-    Aucune information n'est connue au sujet de cette exception.
+    No information is known about this exception.
 
 
-    L'exécution s'est arrêtée à la ligne 52 du fichier 'tb_common.py'
+    Execution stopped on line 53 of file 'tb_common.py'.
 
-       50:                     mod = __import__(name)
-       51:                     if function is not None:
-    -->52:                         getattr(mod, function)()
-       53:                 except Exception:
+       51:                     mod = __import__(name)
+       52:                     if function is not None:
+    -->53:                         result = getattr(mod, function)()
+       54:                         write(result)
 
 
-    Exception levée à la ligne du fichier 'raise_unknown_error.py'.
+    Exception raised on line 8 of file 'raise_unknown_error.py'.
 
         6: 
         7: def test():

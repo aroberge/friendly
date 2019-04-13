@@ -12,7 +12,7 @@ from .my_gettext import current_lang
 from . import formatter
 
 
-__all__ = ["install", "get_output", "explain"]
+__all__ = ["explain", "get_output", "install", "set_lang"]
 
 
 def _write_err(text):
@@ -41,6 +41,8 @@ class _State:
             self.write_err = self.capture
         elif redirect is not None:
             self.write_err = redirect
+        else:
+            self.write_err = _write_err
 
         explanation = formatter.explain_traceback(
             etype, value, tb, running_script=self.running_script
@@ -93,20 +95,9 @@ def run_script(source):
     return mod_dict
 
 
-def set_lang(lang):
-    state.install_gettext(lang)
-
-
 # ----------------
 # Public API
 # ----------------
-
-
-def install(lang=None, redirect=None):
-    """
-    Replaces sys.excepthook by friendly_traceback's own version
-    """
-    state.install(lang=lang, redirect=redirect)
 
 
 def explain(etype, value, tb, redirect=None):
@@ -122,3 +113,19 @@ def get_output(flush=True):
        However, this can be overriden if desired.
     """
     return state.get_captured(flush=flush)
+
+
+def install(lang=None, redirect=None):
+    """
+    Replaces sys.excepthook by friendly_traceback's own version
+    """
+    state.install(lang=lang, redirect=redirect)
+
+
+def set_lang(lang):
+    """Sets the language to be used by gettext.
+
+       If not translations exist for that language, the original
+       English strings will be used.
+    """
+    state.install_gettext(lang)

@@ -30,6 +30,7 @@ all_imports = {
     "SyntaxError": "raise_syntax_error1",
     "TabError - 1": ("raise_tab_error1", "test_tab_error1"),
     "TabError - 2": ("raise_tab_error2", "test_tab_error2"),
+    "UnboundLocalError": ("test_unbound_local_error", "test_unbound_local_error"),
     "Unknown exception": ("raise_unknown_error", "test")
 }
 
@@ -49,6 +50,7 @@ def create_tracebacks(target, intro_text):
                 try:
                     mod = __import__(name)
                     if function is not None:
-                        getattr(mod, function)()
+                        result = getattr(mod, function)()
+                        write(result)
                 except Exception:
-                    friendly_traceback.explain(*sys.exc_info())
+                    friendly_traceback.explain(*sys.exc_info(), redirect=None)

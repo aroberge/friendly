@@ -44,6 +44,20 @@ def tab_error(*args):
     )
 
 
+def unbound_local_error(*args):
+    _ = current_lang.lang
+    return _(
+        "    In Python, variables that are used inside a function are known as \n"
+        "    local variables. Before they are used, they must be assigned a value.\n"
+        "    A variable that is used before it is assigned a value is assumed to\n"
+        "    be defined outside that function; it is known as a 'global'\n"
+        "    (or sometimes 'nonlocal') variable. You cannot assign a value to such\n"
+        "    a global variable inside a function without first indicating to\n"
+        "    Python that this is a global variable, otherwise you will see\n"
+        "    an UnboundLocalError.\n"
+    )
+
+
 def unknown(*args):
     _ = current_lang.lang
     return _("    No information is known about this exception.\n")
@@ -54,5 +68,6 @@ generic = {
     "NameError": name_error,
     "SyntaxError": syntax_error,
     "TabError": tab_error,
+    "UnboundLocalError": unbound_local_error,
     "Unknown": unknown,
 }

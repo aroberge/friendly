@@ -46,6 +46,7 @@
 <li><a class="reference internal" href="#syntaxerror">SyntaxError</a></li>
 <li><a class="reference internal" href="#taberror-1">TabError - 1</a></li>
 <li><a class="reference internal" href="#taberror-2">TabError - 2</a></li>
+<li><a class="reference internal" href="#unboundlocalerror">UnboundLocalError</a></li>
 <li><a class="reference internal" href="#unknown-exception">Unknown exception</a></li>
 </ul>
 </li>
@@ -190,12 +191,12 @@ Cause probable :
     Dans votre programme, le nom inconnu est &#39;c&#39;.
 
 
-L&#39;exécution s&#39;est arrêtée à la ligne 52 du fichier &#39;tb_common.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 53 du fichier &#39;tb_common.py&#39;
 
-   50:                     mod = __import__(name)
-   51:                     if function is not None:
---&gt;52:                         getattr(mod, function)()
-   53:                 except Exception:
+   51:                     mod = __import__(name)
+   52:                     if function is not None:
+--&gt;53:                         result = getattr(mod, function)()
+   54:                         write(result)
 
 
 Exception levée à la ligne du fichier &#39;raise_name_error.py&#39;.
@@ -273,23 +274,60 @@ Cause probable :
 </pre></div>
 </div>
 </div>
+<div class="section" id="unboundlocalerror">
+<h2>UnboundLocalError<a class="headerlink" href="#unboundlocalerror" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    UnboundLocalError: local variable &#39;a&#39; referenced before assignment
+
+In Python, variables that are used inside a function are known as
+local variables. Before they are used, they must be assigned a value.
+A variable that is used before it is assigned a value is assumed to
+be defined outside that function; it is known as a &#39;global&#39;
+(or sometimes &#39;nonlocal&#39;) variable. You cannot assign a value to such
+a global variable inside a function without first indicating to
+Python that this is a global variable, otherwise you will see
+an UnboundLocalError.
+
+Likely cause:
+    The variable that appears to cause the problem is &#39;a&#39;.
+    Try inserting the statement
+        global a
+    as the first line inside your function.
+
+Execution stopped on line 15 of file &#39;test_unbound_local_error.py&#39;.
+
+   13:
+   14:     try:
+--&gt;15:         inner()
+   16:     except Exception:
+
+
+Exception raised on line 12 of file &#39;test_unbound_local_error.py&#39;.
+
+   10:
+   11:     def inner():
+--&gt;12:         a += 1
+   13:
+</pre></div>
+</div>
+</div>
 <div class="section" id="unknown-exception">
 <h2>Unknown exception<a class="headerlink" href="#unknown-exception" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
     MyException: Some informative message
 
-Aucune information n&#39;est connue au sujet de cette exception.
+No information is known about this exception.
 
 
-L&#39;exécution s&#39;est arrêtée à la ligne 52 du fichier &#39;tb_common.py&#39;
+Execution stopped on line 53 of file &#39;tb_common.py&#39;.
 
-   50:                     mod = __import__(name)
-   51:                     if function is not None:
---&gt;52:                         getattr(mod, function)()
-   53:                 except Exception:
+   51:                     mod = __import__(name)
+   52:                     if function is not None:
+--&gt;53:                         result = getattr(mod, function)()
+   54:                         write(result)
 
 
-Exception levée à la ligne du fichier &#39;raise_unknown_error.py&#39;.
+Exception raised on line 8 of file &#39;raise_unknown_error.py&#39;.
 
     6:
     7: def test():

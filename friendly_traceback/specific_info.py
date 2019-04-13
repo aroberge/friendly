@@ -105,9 +105,25 @@ def tab_error(etype, value):
     ).format(filename=filename, source=source)
 
 
+def unbound_local_error(etype, value):
+    _ = current_lang.lang
+    # value is expected to be something like
+    #
+    # UnboundLocalError: local variable 'a' referenced before assignment
+    #
+    # By splitting value using ', we can extract the variable name.
+    return _(
+        "        The variable that appears to cause the problem is '{var_name}'.\n"
+        "        Try inserting the statement\n"
+        "            global {var_name}\n"
+        "        as the first line inside your function."
+    ).format(var_name=str(value).split("'")[1])
+
+
 get_cause = {
     "IndentationError": indentation_error,
     "NameError": name_error,
     "SyntaxError": syntax_error,
     "TabError": tab_error,
+    "UnboundLocalError": unbound_local_error,
 }
