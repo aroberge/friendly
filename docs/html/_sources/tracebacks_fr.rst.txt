@@ -120,20 +120,13 @@ NameError
         Dans votre programme, le nom inconnu est 'c'.
 
 
-    L'exécution s'est arrêtée à la ligne 53 du fichier 'tb_common.py'
+    L'exécution s'est arrêtée à la ligne 7 du fichier 'test_name_error.py'
 
-       51:                     mod = __import__(name)
-       52:                     if function is not None:
-    -->53:                         result = getattr(mod, function)()
-       54:                         write(result)
+       5: def test_name_error():
+       6:     try:
+    -->7:         b = c
+       8:     except Exception:
 
-
-    Exception levée à la ligne du fichier 'raise_name_error.py'.
-
-       4: def test():
-       5:     """Should raise NameError"""
-    -->6:     b = c
-       7:     d = 3
 
 SyntaxError
 -----------
@@ -168,17 +161,17 @@ TabError - 1
 
 
     Exception Python: 
-        TabError: inconsistent use of tabs and spaces in indentation (<string>, line 3)
+        AttributeError: module 'syntax' has no attribute 'test_tab_error1'
 
-    Un exception de type TabError indique que vous avez utilisé des espaces ainsi que
-    des caractères de tabulation pour indenter votre code.
-    Cela n’est pas autorisé dans Python.
-    L’indentation de votre code signifie que le bloc de codes est aligné verticalement 
-    en insérant des espaces ou des tabulations au début des lignes.
-    La recommandation de Python est de toujours utiliser des espaces pour indenter votre code.
+    Aucune information n'est connue au sujet de cette exception.
 
-        Malheureusement, aucune information supplémentaire n’est disponible:
-        le contenu du fichier '<string>' n’est pas accessible.
+
+    L'exécution s'est arrêtée à la ligne 53 du fichier 'tb_common.py'
+
+       51:                     mod = __import__(name)
+       52:                     if function is not None:
+    -->53:                         result = getattr(mod, function)()
+       54:                         write(result)
 
 TabError - 2
 ------------
@@ -213,38 +206,37 @@ UnboundLocalError
 .. code-block:: none
 
 
-    Python exception: 
+    Exception Python: 
         UnboundLocalError: local variable 'a' referenced before assignment
 
-    In Python, variables that are used inside a function are known as 
-    local variables. Before they are used, they must be assigned a value.
-    A variable that is used before it is assigned a value is assumed to
-    be defined outside that function; it is known as a 'global'
-    (or sometimes 'nonlocal') variable. You cannot assign a value to such
-    a global variable inside a function without first indicating to
-    Python that this is a global variable, otherwise you will see
-    an UnboundLocalError.
+    En Python, les variables utilisées à l’intérieur d’une fonction sont appelées variables «locales».
+    Avant d’utiliser une variable locale, une valeur doit lui être attribuée.
+    Une variable utilisée avant l’attribution d’une valeur est supposée être définie en
+    dehors de cette fonction; elle est connu comme une variable «globale» ('global' ou parfois 'nonlocal').
+    Vous ne pouvez pas assigner une valeur à une telle variable globale à l’intérieur d’une fonction
+    sans d’abord confirmer à python qu’il s’agit d’une variable globale, sinon vous verrez
+    une exception UnboundLocalError.
 
-    Likely cause:
-        The variable that appears to cause the problem is 'a'.
-        Try inserting the statement
+    Cause probable : 
+        La variable qui semble causer le problème est' a '.
+        Essayez d’insérer l’instruction
             global a
-        as the first line inside your function.
+        comme première ligne à l’intérieur de votre fonction.
 
-    Execution stopped on line 15 of file 'test_unbound_local_error.py'.
+    L'exécution s'est arrêtée à la ligne 13 du fichier 'test_unbound_local_error.py'
 
-       13: 
-       14:     try:
-    -->15:         inner()
-       16:     except Exception:
+       11: 
+       12:     try:
+    -->13:         inner()
+       14:     except Exception:
 
 
-    Exception raised on line 12 of file 'test_unbound_local_error.py'.
+    Exception levée à la ligne du fichier 'test_unbound_local_error.py'.
 
-       10: 
-       11:     def inner():
-    -->12:         a += 1
-       13: 
+        8: 
+        9:     def inner():
+    -->10:         a += 1
+       11: 
 
 
 Unknown exception
@@ -253,23 +245,16 @@ Unknown exception
 .. code-block:: none
 
 
-    Python exception: 
+    Exception Python: 
         MyException: Some informative message
 
-    No information is known about this exception.
+    Aucune information n'est connue au sujet de cette exception.
 
 
-    Execution stopped on line 53 of file 'tb_common.py'.
+    L'exécution s'est arrêtée à la ligne 11 du fichier 'test_unknown_error.py'
 
-       51:                     mod = __import__(name)
-       52:                     if function is not None:
-    -->53:                         result = getattr(mod, function)()
-       54:                         write(result)
+        9: def test_unknown_error():
+       10:     try:
+    -->11:         raise MyException("Some informative message")
+       12:     except Exception:
 
-
-    Exception raised on line 8 of file 'raise_unknown_error.py'.
-
-        6: 
-        7: def test():
-    --> 8:     raise MyException("Some informative message")
-        9: 

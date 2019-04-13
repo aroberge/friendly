@@ -191,20 +191,12 @@ Cause probable :
     Dans votre programme, le nom inconnu est &#39;c&#39;.
 
 
-L&#39;exécution s&#39;est arrêtée à la ligne 53 du fichier &#39;tb_common.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;test_name_error.py&#39;
 
-   51:                     mod = __import__(name)
-   52:                     if function is not None:
---&gt;53:                         result = getattr(mod, function)()
-   54:                         write(result)
-
-
-Exception levée à la ligne du fichier &#39;raise_name_error.py&#39;.
-
-   4: def test():
-   5:     &quot;&quot;&quot;Should raise NameError&quot;&quot;&quot;
---&gt;6:     b = c
-   7:     d = 3
+   5: def test_name_error():
+   6:     try:
+--&gt;7:         b = c
+   8:     except Exception:
 </pre></div>
 </div>
 </div>
@@ -235,17 +227,17 @@ Cause probable :
 <div class="section" id="taberror-1">
 <h2>TabError - 1<a class="headerlink" href="#taberror-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
-    TabError: inconsistent use of tabs and spaces in indentation (&lt;string&gt;, line 3)
+    AttributeError: module &#39;syntax&#39; has no attribute &#39;test_tab_error1&#39;
 
-Un exception de type TabError indique que vous avez utilisé des espaces ainsi que
-des caractères de tabulation pour indenter votre code.
-Cela n’est pas autorisé dans Python.
-L’indentation de votre code signifie que le bloc de codes est aligné verticalement
-en insérant des espaces ou des tabulations au début des lignes.
-La recommandation de Python est de toujours utiliser des espaces pour indenter votre code.
+Aucune information n&#39;est connue au sujet de cette exception.
 
-    Malheureusement, aucune information supplémentaire n’est disponible:
-    le contenu du fichier &#39;&lt;string&gt;&#39; n’est pas accessible.
+
+L&#39;exécution s&#39;est arrêtée à la ligne 53 du fichier &#39;tb_common.py&#39;
+
+   51:                     mod = __import__(name)
+   52:                     if function is not None:
+--&gt;53:                         result = getattr(mod, function)()
+   54:                         write(result)
 </pre></div>
 </div>
 </div>
@@ -276,63 +268,54 @@ Cause probable :
 </div>
 <div class="section" id="unboundlocalerror">
 <h2>UnboundLocalError<a class="headerlink" href="#unboundlocalerror" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
     UnboundLocalError: local variable &#39;a&#39; referenced before assignment
 
-In Python, variables that are used inside a function are known as
-local variables. Before they are used, they must be assigned a value.
-A variable that is used before it is assigned a value is assumed to
-be defined outside that function; it is known as a &#39;global&#39;
-(or sometimes &#39;nonlocal&#39;) variable. You cannot assign a value to such
-a global variable inside a function without first indicating to
-Python that this is a global variable, otherwise you will see
-an UnboundLocalError.
+En Python, les variables utilisées à l’intérieur d’une fonction sont appelées variables «locales».
+Avant d’utiliser une variable locale, une valeur doit lui être attribuée.
+Une variable utilisée avant l’attribution d’une valeur est supposée être définie en
+dehors de cette fonction; elle est connu comme une variable «globale» (&#39;global&#39; ou parfois &#39;nonlocal&#39;).
+Vous ne pouvez pas assigner une valeur à une telle variable globale à l’intérieur d’une fonction
+sans d’abord confirmer à python qu’il s’agit d’une variable globale, sinon vous verrez
+une exception UnboundLocalError.
 
-Likely cause:
-    The variable that appears to cause the problem is &#39;a&#39;.
-    Try inserting the statement
+Cause probable :
+    La variable qui semble causer le problème est&#39; a &#39;.
+    Essayez d’insérer l’instruction
         global a
-    as the first line inside your function.
+    comme première ligne à l’intérieur de votre fonction.
 
-Execution stopped on line 15 of file &#39;test_unbound_local_error.py&#39;.
+L&#39;exécution s&#39;est arrêtée à la ligne 13 du fichier &#39;test_unbound_local_error.py&#39;
 
-   13:
-   14:     try:
---&gt;15:         inner()
-   16:     except Exception:
+   11:
+   12:     try:
+--&gt;13:         inner()
+   14:     except Exception:
 
 
-Exception raised on line 12 of file &#39;test_unbound_local_error.py&#39;.
+Exception levée à la ligne du fichier &#39;test_unbound_local_error.py&#39;.
 
-   10:
-   11:     def inner():
---&gt;12:         a += 1
-   13:
+    8:
+    9:     def inner():
+--&gt;10:         a += 1
+   11:
 </pre></div>
 </div>
 </div>
 <div class="section" id="unknown-exception">
 <h2>Unknown exception<a class="headerlink" href="#unknown-exception" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
     MyException: Some informative message
 
-No information is known about this exception.
+Aucune information n&#39;est connue au sujet de cette exception.
 
 
-Execution stopped on line 53 of file &#39;tb_common.py&#39;.
+L&#39;exécution s&#39;est arrêtée à la ligne 11 du fichier &#39;test_unknown_error.py&#39;
 
-   51:                     mod = __import__(name)
-   52:                     if function is not None:
---&gt;53:                         result = getattr(mod, function)()
-   54:                         write(result)
-
-
-Exception raised on line 8 of file &#39;raise_unknown_error.py&#39;.
-
-    6:
-    7: def test():
---&gt; 8:     raise MyException(&quot;Some informative message&quot;)
-    9:
+    9: def test_unknown_error():
+   10:     try:
+--&gt;11:         raise MyException(&quot;Some informative message&quot;)
+   12:     except Exception:
 </pre></div>
 </div>
 </div>

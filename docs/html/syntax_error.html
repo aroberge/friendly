@@ -126,6 +126,7 @@ adding coverage for an exception that is not previously
 covered, you need to start by adding a test case.
 As an example throughout, I will use the existing one for
 <code class="docutils literal notranslate"><span class="pre">raise_indentation_error1.py</span></code>.</p>
+<p>Note that tests for these exceptions are found in the tests/syntax/ directory.</p>
 <div class="section" id="raising-an-exception">
 <h3>Raising an exception<a class="headerlink" href="#raising-an-exception" title="Permalink to this headline">¶</a></h3>
 <p>Your test file name should start with <code class="docutils literal notranslate"><span class="pre">raise_</span></code>,
@@ -179,7 +180,7 @@ as specific as possible in terms of which case will be indicated by Python.</li>
 <p>At this point, running pytest from the root directory should
 work, and you should see your test case included.  You can also
 run this test directly, using:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">tests</span><span class="o">/</span><span class="n">catch_indentation_error</span><span class="o">.</span><span class="n">py</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">tests</span><span class="o">/</span><span class="n">syntax</span><span class="o">/</span><span class="n">catch_indentation_error</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
 </div>

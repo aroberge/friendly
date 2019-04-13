@@ -116,20 +116,13 @@ NameError
         In your program, the unknown name is 'c'.
 
 
-    Execution stopped on line 53 of file 'tb_common.py'.
+    Execution stopped on line 7 of file 'test_name_error.py'.
 
-       51:                     mod = __import__(name)
-       52:                     if function is not None:
-    -->53:                         result = getattr(mod, function)()
-       54:                         write(result)
+       5: def test_name_error():
+       6:     try:
+    -->7:         b = c
+       8:     except Exception:
 
-
-    Exception raised on line 6 of file 'raise_name_error.py'.
-
-       4: def test():
-       5:     """Should raise NameError"""
-    -->6:     b = c
-       7:     d = 3
 
 SyntaxError
 -----------
@@ -164,17 +157,17 @@ TabError - 1
 
 
     Python exception: 
-        TabError: inconsistent use of tabs and spaces in indentation (<string>, line 3)
+        AttributeError: module 'syntax' has no attribute 'test_tab_error1'
 
-    A TabError indicates that you have used both spaces
-    and tab characters to indent your code.
-    This is not allowed in Python.
-    Indenting your code means to have block of codes aligned vertically
-    by inserting either spaces or tab characters at the beginning of lines.
-    Python's recommendation is to always use spaces to indent your code.
+    No information is known about this exception.
 
-        Unfortunately, no additional information is available:
-        the content of file '<string>' is not accessible.
+
+    Execution stopped on line 53 of file 'tb_common.py'.
+
+       51:                     mod = __import__(name)
+       52:                     if function is not None:
+    -->53:                         result = getattr(mod, function)()
+       54:                         write(result)
 
 TabError - 2
 ------------
@@ -227,20 +220,20 @@ UnboundLocalError
             global a
         as the first line inside your function.
 
-    Execution stopped on line 15 of file 'test_unbound_local_error.py'.
+    Execution stopped on line 13 of file 'test_unbound_local_error.py'.
 
-       13: 
-       14:     try:
-    -->15:         inner()
-       16:     except Exception:
+       11: 
+       12:     try:
+    -->13:         inner()
+       14:     except Exception:
 
 
-    Exception raised on line 12 of file 'test_unbound_local_error.py'.
+    Exception raised on line 10 of file 'test_unbound_local_error.py'.
 
-       10: 
-       11:     def inner():
-    -->12:         a += 1
-       13: 
+        8: 
+        9:     def inner():
+    -->10:         a += 1
+       11: 
 
 
 Unknown exception
@@ -255,17 +248,10 @@ Unknown exception
     No information is known about this exception.
 
 
-    Execution stopped on line 53 of file 'tb_common.py'.
+    Execution stopped on line 11 of file 'test_unknown_error.py'.
 
-       51:                     mod = __import__(name)
-       52:                     if function is not None:
-    -->53:                         result = getattr(mod, function)()
-       54:                         write(result)
+        9: def test_unknown_error():
+       10:     try:
+    -->11:         raise MyException("Some informative message")
+       12:     except Exception:
 
-
-    Exception raised on line 8 of file 'raise_unknown_error.py'.
-
-        6: 
-        7: def test():
-    --> 8:     raise MyException("Some informative message")
-        9: 

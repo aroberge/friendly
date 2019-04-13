@@ -187,20 +187,12 @@ Likely cause:
     In your program, the unknown name is &#39;c&#39;.
 
 
-Execution stopped on line 53 of file &#39;tb_common.py&#39;.
+Execution stopped on line 7 of file &#39;test_name_error.py&#39;.
 
-   51:                     mod = __import__(name)
-   52:                     if function is not None:
---&gt;53:                         result = getattr(mod, function)()
-   54:                         write(result)
-
-
-Exception raised on line 6 of file &#39;raise_name_error.py&#39;.
-
-   4: def test():
-   5:     &quot;&quot;&quot;Should raise NameError&quot;&quot;&quot;
---&gt;6:     b = c
-   7:     d = 3
+   5: def test_name_error():
+   6:     try:
+--&gt;7:         b = c
+   8:     except Exception:
 </pre></div>
 </div>
 </div>
@@ -231,17 +223,17 @@ Likely cause:
 <div class="section" id="taberror-1">
 <h2>TabError - 1<a class="headerlink" href="#taberror-1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
-    TabError: inconsistent use of tabs and spaces in indentation (&lt;string&gt;, line 3)
+    AttributeError: module &#39;syntax&#39; has no attribute &#39;test_tab_error1&#39;
 
-A TabError indicates that you have used both spaces
-and tab characters to indent your code.
-This is not allowed in Python.
-Indenting your code means to have block of codes aligned vertically
-by inserting either spaces or tab characters at the beginning of lines.
-Python&#39;s recommendation is to always use spaces to indent your code.
+No information is known about this exception.
 
-    Unfortunately, no additional information is available:
-    the content of file &#39;&lt;string&gt;&#39; is not accessible.
+
+Execution stopped on line 53 of file &#39;tb_common.py&#39;.
+
+   51:                     mod = __import__(name)
+   52:                     if function is not None:
+--&gt;53:                         result = getattr(mod, function)()
+   54:                         write(result)
 </pre></div>
 </div>
 </div>
@@ -290,20 +282,20 @@ Likely cause:
         global a
     as the first line inside your function.
 
-Execution stopped on line 15 of file &#39;test_unbound_local_error.py&#39;.
+Execution stopped on line 13 of file &#39;test_unbound_local_error.py&#39;.
 
-   13:
-   14:     try:
---&gt;15:         inner()
-   16:     except Exception:
+   11:
+   12:     try:
+--&gt;13:         inner()
+   14:     except Exception:
 
 
-Exception raised on line 12 of file &#39;test_unbound_local_error.py&#39;.
+Exception raised on line 10 of file &#39;test_unbound_local_error.py&#39;.
 
-   10:
-   11:     def inner():
---&gt;12:         a += 1
-   13:
+    8:
+    9:     def inner():
+--&gt;10:         a += 1
+   11:
 </pre></div>
 </div>
 </div>
@@ -315,20 +307,12 @@ Exception raised on line 12 of file &#39;test_unbound_local_error.py&#39;.
 No information is known about this exception.
 
 
-Execution stopped on line 53 of file &#39;tb_common.py&#39;.
+Execution stopped on line 11 of file &#39;test_unknown_error.py&#39;.
 
-   51:                     mod = __import__(name)
-   52:                     if function is not None:
---&gt;53:                         result = getattr(mod, function)()
-   54:                         write(result)
-
-
-Exception raised on line 8 of file &#39;raise_unknown_error.py&#39;.
-
-    6:
-    7: def test():
---&gt; 8:     raise MyException(&quot;Some informative message&quot;)
-    9:
+    9: def test_unknown_error():
+   10:     try:
+--&gt;11:         raise MyException(&quot;Some informative message&quot;)
+   12:     except Exception:
 </pre></div>
 </div>
 </div>

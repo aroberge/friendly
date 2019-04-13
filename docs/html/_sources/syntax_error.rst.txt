@@ -39,6 +39,7 @@ covered, you need to start by adding a test case.
 As an example throughout, I will use the existing one for
 ``raise_indentation_error1.py``.
 
+Note that tests for these exceptions are found in the tests/syntax/ directory.
 
 Raising an exception
 ~~~~~~~~~~~~~~~~~~~~~
@@ -99,7 +100,7 @@ At this point, running pytest from the root directory should
 work, and you should see your test case included.  You can also
 run this test directly, using::
 
-    python tests/catch_indentation_error.py
+    python tests/syntax/catch_indentation_error.py
 
 
 Adding generic information

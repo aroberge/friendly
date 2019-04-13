@@ -2,14 +2,13 @@ import friendly_traceback
 import sys
 
 
+class MyException(Exception):
+    pass
+
+
 def test_unknown_error():
     try:
-        from . import raise_unknown_error  # for pytest
-    except ImportError:
-        import raise_unknown_error
-
-    try:
-        raise_unknown_error.test()
+        raise MyException("Some informative message")
     except Exception:
         friendly_traceback.explain(*sys.exc_info(), redirect="capture")
     result = friendly_traceback.get_output()
@@ -18,5 +17,4 @@ def test_unknown_error():
 
 
 if __name__ == "__main__":
-    result = test_unknown_error()
-    print(result)
+    print(test_unknown_error())
