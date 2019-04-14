@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-14 09:19-0300\n"
-"PO-Revision-Date: 2019-04-14 09:20-0300\n"
+"POT-Creation-Date: 2019-04-14 18:01-0300\n"
+"PO-Revision-Date: 2019-04-14 18:03-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -179,7 +179,7 @@ msgstr ""
 "    à l’aide de l’opérateur modulo '%'\n"
 "        résultat = ma_variable % 0"
 
-#: specific_info.py:21 specific_info.py:69 specific_info.py:91
+#: specific_info.py:21 specific_info.py:69 specific_info.py:90
 msgid ""
 "        Python could not parse the file '{filename}'\n"
 "        beyond the location indicated below by --> and ^.\n"
@@ -223,7 +223,7 @@ msgstr ""
 msgid "        In your program, the unknown name is '{var_name}'.\n"
 msgstr "        Dans votre programme, le nom inconnu est '{var_name}'.\n"
 
-#: specific_info.py:106
+#: specific_info.py:105
 msgid ""
 "        The variable that appears to cause the problem is '{var_name}'.\n"
 "        Try inserting the statement\n"
@@ -235,7 +235,7 @@ msgstr ""
 "            global {var_name}\n"
 "        comme première ligne à l’intérieur de votre fonction."
 
-#: specific_info.py:132
+#: specific_info.py:131
 msgid ""
 "        My best guess: you were trying to assign a value\n"
 "        to a Python keyword. This is not allowed.\n"
@@ -246,15 +246,25 @@ msgstr ""
 "        Ceci n’est pas permis.\n"
 "\n"
 
-#: specific_info.py:142
+#: specific_info.py:139
+msgid ""
+"        My best guess: you meant to use Python's 'elif' keyword\n"
+"        but wrote '{name}' instead\n"
+"\n"
+msgstr ""
+"        Ma meilleure hypothèse: vous avez écrit '{name}'\n"
+"        au lieu d'utiliser le mot-clé 'elif'.\n"
+"\n"
+
+#: specific_info.py:149
 msgid "a class"
 msgstr "une classe"
 
-#: specific_info.py:144
+#: specific_info.py:151
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: specific_info.py:145
+#: specific_info.py:152
 msgid ""
 "       My best guess: you wanted to define {class_or_function}\n"
 "       but forgot to add a colon ':' at the end\n"
@@ -264,7 +274,7 @@ msgstr ""
 "        mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:151
+#: specific_info.py:158
 msgid ""
 "       My best guess: you wrote a '{name}' loop but\n"
 "       forgot to add a colon ':' at the end\n"
@@ -274,7 +284,7 @@ msgstr ""
 "        mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:157
+#: specific_info.py:164
 msgid ""
 "       My best guess: you wrote a statement beginning with\n"
 "       '{name}' but forgot to add a colon ':' at the end\n"
@@ -284,7 +294,7 @@ msgstr ""
 "        '{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:163
+#: specific_info.py:170
 msgid ""
 "        Currently, we cannot give you more information\n"
 "        about the likely cause of this error.\n"
@@ -293,15 +303,6 @@ msgstr ""
 "        Actuellement, nous ne pouvons pas vous donner plus d’informations\n"
 "        sur la cause probable de cette erreur.\n"
 "\n"
-
-#~ msgid ""
-#~ "       My best guess: you wanted to define {name}\n"
-#~ "       but forgot to add a colon ':' at the end\n"
-#~ "\n"
-#~ msgstr ""
-#~ "        Ma meilleure hypothèse: vous vouliez définir {name},\n"
-#~ "        mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
-#~ "\n"
 
 #~ msgid ""
 #~ "       My best guess: you wrote an elif statement but\n"

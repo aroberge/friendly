@@ -22,6 +22,8 @@ all_imports = {
     "SyntaxError - Assign to keyword": "syntax.raise_syntax_error1",
     "SyntaxError - Missing colon 1": "syntax.raise_syntax_error2",
     "SyntaxError - Missing colon 2": "syntax.raise_syntax_error3",
+    "SyntaxError - elif, not else if": "syntax.raise_syntax_error4",
+    "SyntaxError - elif, not elseif": "syntax.raise_syntax_error5",
 }
 
 

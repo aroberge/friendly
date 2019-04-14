@@ -42,6 +42,8 @@
 <li><a class="reference internal" href="#syntaxerror-assign-to-keyword">SyntaxError - Assign to keyword</a></li>
 <li><a class="reference internal" href="#syntaxerror-missing-colon-1">SyntaxError - Missing colon 1</a></li>
 <li><a class="reference internal" href="#syntaxerror-missing-colon-2">SyntaxError - Missing colon 2</a></li>
+<li><a class="reference internal" href="#syntaxerror-elif-not-else-if">SyntaxError - elif, not else if</a></li>
+<li><a class="reference internal" href="#syntaxerror-elif-not-elseif">SyntaxError - elif, not elseif</a></li>
 </ul>
 </li>
 </ul>
@@ -167,6 +169,56 @@ Likely cause:
                              ^
    My best guess: you wrote a &#39;while&#39; loop but
    forgot to add a colon &#39;:&#39; at the end
+</pre></div>
+</div>
+</div>
+<div class="section" id="syntaxerror-elif-not-else-if">
+<h2>SyntaxError - elif, not else if<a class="headerlink" href="#syntaxerror-elif-not-else-if" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    SyntaxError: invalid syntax (raise_syntax_error4.py, line 5)
+
+A SyntaxError occurs when Python cannot understand your code.
+There could be many possible reasons:
+- a keyword might be misspelled;
+- a colon, :, or some other symbol like (, ], etc., might be missing;
+- etc.
+
+Likely cause:
+    Python could not parse the file &#39;raise_syntax_error4.py&#39;
+    beyond the location indicated below by --&gt; and ^.
+
+   2:
+   3: if False:
+   4:     pass
+--&gt;5: else if True:
+            ^
+    My best guess: you meant to use Python&#39;s &#39;elif&#39; keyword
+    but wrote &#39;else if&#39; instead
+</pre></div>
+</div>
+</div>
+<div class="section" id="syntaxerror-elif-not-elseif">
+<h2>SyntaxError - elif, not elseif<a class="headerlink" href="#syntaxerror-elif-not-elseif" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    SyntaxError: invalid syntax (raise_syntax_error5.py, line 5)
+
+A SyntaxError occurs when Python cannot understand your code.
+There could be many possible reasons:
+- a keyword might be misspelled;
+- a colon, :, or some other symbol like (, ], etc., might be missing;
+- etc.
+
+Likely cause:
+    Python could not parse the file &#39;raise_syntax_error5.py&#39;
+    beyond the location indicated below by --&gt; and ^.
+
+   2:
+   3: if False:
+   4:     pass
+--&gt;5: elseif True:
+                ^
+    My best guess: you meant to use Python&#39;s &#39;elif&#39; keyword
+    but wrote &#39;elseif&#39; instead
 </pre></div>
 </div>
 </div>

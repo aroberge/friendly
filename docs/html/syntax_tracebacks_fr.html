@@ -42,6 +42,8 @@
 <li><a class="reference internal" href="#syntaxerror-assign-to-keyword">SyntaxError - Assign to keyword</a></li>
 <li><a class="reference internal" href="#syntaxerror-missing-colon-1">SyntaxError - Missing colon 1</a></li>
 <li><a class="reference internal" href="#syntaxerror-missing-colon-2">SyntaxError - Missing colon 2</a></li>
+<li><a class="reference internal" href="#syntaxerror-elif-not-else-if">SyntaxError - elif, not else if</a></li>
+<li><a class="reference internal" href="#syntaxerror-elif-not-elseif">SyntaxError - elif, not elseif</a></li>
 </ul>
 </li>
 </ul>
@@ -170,6 +172,56 @@ Cause probable :
                              ^
     Ma meilleure hypothèse: vous vouliez débuter une boucle &#39;while&#39;
     mais vous avez oublié d’ajouter deux points &#39;:&#39; à la fin.
+</pre></div>
+</div>
+</div>
+<div class="section" id="syntaxerror-elif-not-else-if">
+<h2>SyntaxError - elif, not else if<a class="headerlink" href="#syntaxerror-elif-not-else-if" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
+    SyntaxError: invalid syntax (raise_syntax_error4.py, line 5)
+
+Une exception SyntaxError se produit lorsque python ne peut pas comprendre votre code.
+Il pourrait y avoir plusieurs raisons possibles:
+- un mot-clé peut être mal orthographié;
+- le symbole deux points, :, ou un autre symbole comme (,], etc., pourrait manquer;
+- etc.
+
+Cause probable :
+    Python peut seulement analyser le fichier &#39;raise_syntax_error4.py&#39;
+    jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
+
+   2:
+   3: if False:
+   4:     pass
+--&gt;5: else if True:
+            ^
+    Ma meilleure hypothèse: vous avez écrit &#39;else if&#39;
+    au lieu d&#39;utiliser le mot-clé &#39;elif&#39;.
+</pre></div>
+</div>
+</div>
+<div class="section" id="syntaxerror-elif-not-elseif">
+<h2>SyntaxError - elif, not elseif<a class="headerlink" href="#syntaxerror-elif-not-elseif" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
+    SyntaxError: invalid syntax (raise_syntax_error5.py, line 5)
+
+Une exception SyntaxError se produit lorsque python ne peut pas comprendre votre code.
+Il pourrait y avoir plusieurs raisons possibles:
+- un mot-clé peut être mal orthographié;
+- le symbole deux points, :, ou un autre symbole comme (,], etc., pourrait manquer;
+- etc.
+
+Cause probable :
+    Python peut seulement analyser le fichier &#39;raise_syntax_error5.py&#39;
+    jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
+
+   2:
+   3: if False:
+   4:     pass
+--&gt;5: elseif True:
+                ^
+    Ma meilleure hypothèse: vous avez écrit &#39;elseif&#39;
+    au lieu d&#39;utiliser le mot-clé &#39;elif&#39;.
 </pre></div>
 </div>
 </div>

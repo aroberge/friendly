@@ -103,3 +103,59 @@ SyntaxError - Missing colon 2
        My best guess: you wrote a 'while' loop but
        forgot to add a colon ':' at the end
 
+
+SyntaxError - elif, not else if
+-------------------------------
+
+.. code-block:: none
+
+
+    Python exception: 
+        SyntaxError: invalid syntax (raise_syntax_error4.py, line 5)
+
+    A SyntaxError occurs when Python cannot understand your code.
+    There could be many possible reasons:
+    - a keyword might be misspelled;
+    - a colon, :, or some other symbol like (, ], etc., might be missing;
+    - etc.
+
+    Likely cause:
+        Python could not parse the file 'raise_syntax_error4.py'
+        beyond the location indicated below by --> and ^.
+
+       2: 
+       3: if False:
+       4:     pass
+    -->5: else if True:
+                ^
+        My best guess: you meant to use Python's 'elif' keyword
+        but wrote 'else if' instead
+
+
+SyntaxError - elif, not elseif
+------------------------------
+
+.. code-block:: none
+
+
+    Python exception: 
+        SyntaxError: invalid syntax (raise_syntax_error5.py, line 5)
+
+    A SyntaxError occurs when Python cannot understand your code.
+    There could be many possible reasons:
+    - a keyword might be misspelled;
+    - a colon, :, or some other symbol like (, ], etc., might be missing;
+    - etc.
+
+    Likely cause:
+        Python could not parse the file 'raise_syntax_error5.py'
+        beyond the location indicated below by --> and ^.
+
+       2: 
+       3: if False:
+       4:     pass
+    -->5: elseif True:
+                    ^
+        My best guess: you meant to use Python's 'elif' keyword
+        but wrote 'elseif' instead
+

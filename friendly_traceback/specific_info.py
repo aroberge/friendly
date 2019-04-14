@@ -134,10 +134,10 @@ def syntax_error_causes(cause):
             "\n"
         )
 
-    if cause.startswith("elif not else if"):
+    if cause.startswith("elif not"):
         cause = cause.replace("elif not ", "")
         return _(
-            "        My best guess: you wanted to use Python's 'elif' keyword\n"
+            "        My best guess: you meant to use Python's 'elif' keyword\n"
             "        but wrote '{name}' instead\n"
             "\n"
         ).format(name=cause)

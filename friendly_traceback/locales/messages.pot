@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-04-14 09:19-0300\n"
+"POT-Creation-Date: 2019-04-14 18:01-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,7 +113,7 @@ msgid ""
 "        result = my_variable % 0"
 msgstr ""
 
-#: specific_info.py:21 specific_info.py:69 specific_info.py:91
+#: specific_info.py:21 specific_info.py:69 specific_info.py:90
 msgid ""
 "        Python could not parse the file '{filename}'\n"
 "        beyond the location indicated below by --> and ^.\n"
@@ -146,7 +146,7 @@ msgid ""
 "        In your program, the unknown name is '{var_name}'.\n"
 msgstr ""
 
-#: specific_info.py:106
+#: specific_info.py:105
 msgid ""
 "        The variable that appears to cause the problem is '{var_name}'.\n"
 "        Try inserting the statement\n"
@@ -154,43 +154,50 @@ msgid ""
 "        as the first line inside your function."
 msgstr ""
 
-#: specific_info.py:132
+#: specific_info.py:131
 msgid ""
 "        My best guess: you were trying to assign a value\n"
 "        to a Python keyword. This is not allowed.\n"
 "\n"
 msgstr ""
 
-#: specific_info.py:142
+#: specific_info.py:139
+msgid ""
+"        My best guess: you meant to use Python's 'elif' keyword\n"
+"        but wrote '{name}' instead\n"
+"\n"
+msgstr ""
+
+#: specific_info.py:149
 msgid "a class"
 msgstr ""
 
-#: specific_info.py:144
+#: specific_info.py:151
 msgid "a function or method"
 msgstr ""
 
-#: specific_info.py:145
+#: specific_info.py:152
 msgid ""
 "       My best guess: you wanted to define {class_or_function}\n"
 "       but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: specific_info.py:151
+#: specific_info.py:158
 msgid ""
 "       My best guess: you wrote a '{name}' loop but\n"
 "       forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: specific_info.py:157
+#: specific_info.py:164
 msgid ""
 "       My best guess: you wrote a statement beginning with\n"
 "       '{name}' but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: specific_info.py:163
+#: specific_info.py:170
 msgid ""
 "        Currently, we cannot give you more information\n"
 "        about the likely cause of this error.\n"

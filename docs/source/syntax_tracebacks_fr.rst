@@ -106,3 +106,59 @@ SyntaxError - Missing colon 2
         Ma meilleure hypothèse: vous vouliez débuter une boucle 'while'
         mais vous avez oublié d’ajouter deux points ':' à la fin.
 
+
+SyntaxError - elif, not else if
+-------------------------------
+
+.. code-block:: none
+
+
+    Exception Python: 
+        SyntaxError: invalid syntax (raise_syntax_error4.py, line 5)
+
+    Une exception SyntaxError se produit lorsque python ne peut pas comprendre votre code.
+    Il pourrait y avoir plusieurs raisons possibles:
+    - un mot-clé peut être mal orthographié;
+    - le symbole deux points, :, ou un autre symbole comme (,], etc., pourrait manquer;
+    - etc.
+
+    Cause probable : 
+        Python peut seulement analyser le fichier 'raise_syntax_error4.py'
+        jusqu'à l'endroit indiqué par --> et ^.
+
+       2: 
+       3: if False:
+       4:     pass
+    -->5: else if True:
+                ^
+        Ma meilleure hypothèse: vous avez écrit 'else if'
+        au lieu d'utiliser le mot-clé 'elif'.
+
+
+SyntaxError - elif, not elseif
+------------------------------
+
+.. code-block:: none
+
+
+    Exception Python: 
+        SyntaxError: invalid syntax (raise_syntax_error5.py, line 5)
+
+    Une exception SyntaxError se produit lorsque python ne peut pas comprendre votre code.
+    Il pourrait y avoir plusieurs raisons possibles:
+    - un mot-clé peut être mal orthographié;
+    - le symbole deux points, :, ou un autre symbole comme (,], etc., pourrait manquer;
+    - etc.
+
+    Cause probable : 
+        Python peut seulement analyser le fichier 'raise_syntax_error5.py'
+        jusqu'à l'endroit indiqué par --> et ^.
+
+       2: 
+       3: if False:
+       4:     pass
+    -->5: elseif True:
+                    ^
+        Ma meilleure hypothèse: vous avez écrit 'elseif'
+        au lieu d'utiliser le mot-clé 'elif'.
+

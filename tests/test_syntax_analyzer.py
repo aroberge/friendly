@@ -11,7 +11,7 @@ def test_confused_elif():
     assert last("else if") == "elif not else if"
     assert last("else if whatever:") == "elif not else if"
     assert last("elseif ") == "elif not elseif"
-    assert last("elseif whatever:") == "elif not elseif"
+    assert last("elseif True:") == "elif not elseif"
 
 
 def test_missing_colon():
