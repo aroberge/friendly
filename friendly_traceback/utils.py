@@ -26,8 +26,8 @@ def get_partial_source(filename, linenumber, offset):
     # fmt: off
     return highlight_source(
         linenumber,
-        linenumber - begin - 1,
-        lines[begin: linenumber + 1],
+        linenumber-begin-1,
+        lines[begin: linenumber+1],
         offset=offset
     )
     # fmt: on
@@ -36,6 +36,15 @@ def get_partial_source(filename, linenumber, offset):
 def highlight_source(linenumber, index, lines, offset=None):
     """Displays a few relevant lines from a file, showing line numbers
        and identifying a particular line.
+
+       When dealing with a SyntaxError and subclasses, offset is an
+       integer normally used by Python to indicate the position of
+       the error, like:
+
+           if True
+                  ^
+        which, in this case, points to a missing colon. We use the same
+        representation in this case.
     """
     new_lines = []
     nb_digits = len(str(linenumber + index))

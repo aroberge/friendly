@@ -76,8 +76,8 @@ SyntaxError - Missing colon 1
        2: 
     -->3: if True
                  ^
-        Ma meilleure hypothèse: vous avez écrit un énoncé 'if'
-        mais vous avez oublié d’ajouter deux points ':' à la fin.
+        Ma meilleure hypothèse: vous avez écrit un énoncé débutant avec
+        'if' mais vous avez oublié d’ajouter deux points ':' à la fin.
 
 
 SyntaxError - Missing colon 2

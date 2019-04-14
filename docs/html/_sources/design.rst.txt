@@ -90,9 +90,13 @@ of precedence:
 
 1. Using ``friendly_traceback.set_lang(lang)``
 2. Using the environment variable ``os.environ['FriendlyTracebackLang']``
-3. Using variables found in a ``.friendly_traceback.ini`` file
+3. Using variables found in a ``friendly.ini`` file
 4. As mentioned above, and last in priority, the default is to use
    the information provided by ``locale.getdefaultlocale()``.
+
+.. todo::
+
+    Document how to use friendly.ini
 
 The information provided by ``locale.getdefaultlocale()`` includes
 not only a language code, but information about a specific region as well.

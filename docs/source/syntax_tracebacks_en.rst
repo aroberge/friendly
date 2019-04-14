@@ -73,8 +73,8 @@ SyntaxError - Missing colon 1
        2: 
     -->3: if True
                  ^
-       My best guess: you wrote an if statement but
-       forgot to add a colon ':' at the end
+       My best guess: you wrote a statement beginning with
+       'if' but forgot to add a colon ':' at the end
 
 
 SyntaxError - Missing colon 2
@@ -100,6 +100,6 @@ SyntaxError - Missing colon 2
        2: 
     -->3: while True  # a comment
                                  ^
-       My best guess: you wrote a while loop but
+       My best guess: you wrote a 'while' loop but
        forgot to add a colon ':' at the end
 

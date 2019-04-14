@@ -12,7 +12,7 @@ import tokenize
 from io import StringIO
 
 
-class Token:  # Likely overkill
+class Token:
     """Token as generated from tokenize.generate_tokens written here in
        a more convenient form for our purpose.
     """
@@ -26,16 +26,21 @@ class Token:  # Likely overkill
 
 
 def find_likely_cause(source, linenumber, offset):
-    offending_line = source[linenumber - 1].rstrip()
 
+    offending_line = source[linenumber - 1]
+    line = offending_line.rstrip()
+
+    return analyze_last_line(line)
+
+
+def analyze_last_line(line):
     tokens = []
-
     try:
-        for tok in tokenize.generate_tokens(StringIO(offending_line).readline):
+        for tok in tokenize.generate_tokens(StringIO(line).readline):
             token = Token(tok)
             if not token.string.strip():  # ignore spaces
                 continue
-            tokens.append([token.type, token.string])
+            tokens.append(token)
     except Exception as e:
         return "%s raised while analyzing a SyntaxError" % repr(e)
 
@@ -43,17 +48,20 @@ def find_likely_cause(source, linenumber, offset):
         cause = possible(tokens)
         if cause:
             return cause
-
-    return "No cause found."
+    return "No cause found"
 
 
 def assign_to_a_keyword(tokens):
-    # needs unit tests
+    """Checks to see if it is of the formm
+
+       keyword = ...
+    """
     if len(tokens) < 2:
         return False
-    _, name = tokens[0]
-    _, op = tokens[1]
-    if name in keyword.kwlist and op == "=":
+    if tokens[0].string not in keyword.kwlist:
+        return False
+
+    if tokens[1].string == "=":
         return "Assigning to Python keyword"
     return False
 
@@ -62,7 +70,8 @@ def missing_colon(tokens):
     # needs unit tests:
     if len(tokens) < 2:
         return False
-    _, name = tokens[0]
+
+    name = tokens[0].string
     if name in [
         "class",
         "def",
@@ -75,9 +84,8 @@ def missing_colon(tokens):
         "while",
         "try",
     ]:
-        t, last = tokens[-1]
-        print("last = ", repr(last), t == tokenize.COMMENT)
-        if last != ":":
+        last = tokens[-1]
+        if last.string != ":":
             return "%s missing colon" % name
     return False
 

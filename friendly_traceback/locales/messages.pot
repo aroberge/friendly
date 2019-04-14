@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-04-13 17:57-0300\n"
+"POT-Creation-Date: 2019-04-14 09:19-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -161,63 +161,36 @@ msgid ""
 "\n"
 msgstr ""
 
-#: specific_info.py:139
+#: specific_info.py:142
+msgid "a class"
+msgstr ""
+
+#: specific_info.py:144
+msgid "a function or method"
+msgstr ""
+
+#: specific_info.py:145
 msgid ""
-"       My best guess: you wanted to define a class but\n"
+"       My best guess: you wanted to define {class_or_function}\n"
+"       but forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: specific_info.py:151
+msgid ""
+"       My best guess: you wrote a '{name}' loop but\n"
 "       forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: specific_info.py:146
+#: specific_info.py:157
 msgid ""
-"       My best guess: you wanted to define a function but\n"
-"       forgot to add a colon ':' at the end\n"
+"       My best guess: you wrote a statement beginning with\n"
+"       '{name}' but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: specific_info.py:153
-msgid ""
-"       My best guess: you wrote an elif statement but\n"
-"       forgot to add a colon ':' at the end\n"
-"\n"
-msgstr ""
-
-#: specific_info.py:160
-msgid ""
-"       My best guess: you wrote an else statement but\n"
-"       forgot to add a colon ':' at the end\n"
-"\n"
-msgstr ""
-
-#: specific_info.py:167
-msgid ""
-"       My best guess: you wrote a finally statement but\n"
-"       forgot to add a colon ':' at the end\n"
-"\n"
-msgstr ""
-
-#: specific_info.py:174
-msgid ""
-"       My best guess: you wrote a for loop but\n"
-"       forgot to add a colon ':' at the end\n"
-"\n"
-msgstr ""
-
-#: specific_info.py:181
-msgid ""
-"       My best guess: you wrote an if statement but\n"
-"       forgot to add a colon ':' at the end\n"
-"\n"
-msgstr ""
-
-#: specific_info.py:188
-msgid ""
-"       My best guess: you wrote a while loop but\n"
-"       forgot to add a colon ':' at the end\n"
-"\n"
-msgstr ""
-
-#: specific_info.py:194
+#: specific_info.py:163
 msgid ""
 "        Currently, we cannot give you more information\n"
 "        about the likely cause of this error.\n"

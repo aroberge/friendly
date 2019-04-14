@@ -75,7 +75,6 @@ def syntax_error(etype, value):
 
     source = utils.get_source(filepath)
     cause = find_likely_cause(source, linenumber, offset)
-    print("CAUSE = ", cause)
     this_case = syntax_error_causes(cause)
 
     return info + this_case
@@ -135,61 +134,30 @@ def syntax_error_causes(cause):
             "\n"
         )
 
-    if cause == "class missing colon":
-        return _(
-            "       My best guess: you wanted to define a class but\n"
-            "       forgot to add a colon ':' at the end\n"
-            "\n"
-        )
-
-    if cause == "def missing colon":
-        return _(
-            "       My best guess: you wanted to define a function but\n"
-            "       forgot to add a colon ':' at the end\n"
-            "\n"
-        )
-
-    if cause == "elif missing colon":
-        return _(
-            "       My best guess: you wrote an elif statement but\n"
-            "       forgot to add a colon ':' at the end\n"
-            "\n"
-        )
-
-    if cause == "else missing colon":
-        return _(
-            "       My best guess: you wrote an else statement but\n"
-            "       forgot to add a colon ':' at the end\n"
-            "\n"
-        )
-
-    if cause == "finally missing colon":
-        return _(
-            "       My best guess: you wrote a finally statement but\n"
-            "       forgot to add a colon ':' at the end\n"
-            "\n"
-        )
-
-    if cause == "for missing colon":
-        return _(
-            "       My best guess: you wrote a for loop but\n"
-            "       forgot to add a colon ':' at the end\n"
-            "\n"
-        )
-
-    if cause == "if missing colon":
-        return _(
-            "       My best guess: you wrote an if statement but\n"
-            "       forgot to add a colon ':' at the end\n"
-            "\n"
-        )
-
-    if cause == "while missing colon":
-        return _(
-            "       My best guess: you wrote a while loop but\n"
-            "       forgot to add a colon ':' at the end\n"
-            "\n"
-        )
+    if cause.endswith("missing colon"):
+        name = cause.split(" ")[0]
+        if name in ["class", "def"]:
+            if name == "class":
+                name = _("a class")
+            else:
+                name = _("a function or method")
+            return _(
+                "       My best guess: you wanted to define {class_or_function}\n"
+                "       but forgot to add a colon ':' at the end\n"
+                "\n"
+            ).format(class_or_function=name)
+        elif name in ["for", "while"]:
+            return _(
+                "       My best guess: you wrote a '{name}' loop but\n"
+                "       forgot to add a colon ':' at the end\n"
+                "\n"
+            ).format(name=name)
+        else:
+            return _(
+                "       My best guess: you wrote a statement beginning with\n"
+                "       '{name}' but forgot to add a colon ':' at the end\n"
+                "\n"
+            ).format(name=name)
 
     return _(
         "        Currently, we cannot give you more information\n"
