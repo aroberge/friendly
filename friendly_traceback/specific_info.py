@@ -134,6 +134,14 @@ def syntax_error_causes(cause):
             "\n"
         )
 
+    if cause.startswith("elif not else if"):
+        cause = cause.replace("elif not ", "")
+        return _(
+            "        My best guess: you wanted to use Python's 'elif' keyword\n"
+            "        but wrote '{name}' instead\n"
+            "\n"
+        ).format(name=cause)
+
     if cause.endswith("missing colon"):
         name = cause.split(" ")[0]
         if name in ["class", "def"]:

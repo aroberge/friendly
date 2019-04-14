@@ -12,6 +12,18 @@ import tokenize
 from io import StringIO
 
 
+possible_causes = []
+
+
+def add_cause(func):
+    possible_causes.append(func)
+
+    def wrapper(*args):
+        return func(*args)
+
+    return wrapper
+
+
 class Token:
     """Token as generated from tokenize.generate_tokens written here in
        a more convenient form for our purpose.
@@ -40,17 +52,27 @@ def analyze_last_line(line):
             token = Token(tok)
             if not token.string.strip():  # ignore spaces
                 continue
+            if token.type == tokenize.COMMENT:
+                continue
             tokens.append(token)
     except Exception as e:
         return "%s raised while analyzing a SyntaxError" % repr(e)
 
     for possible in possible_causes:
-        cause = possible(tokens)
-        if cause:
-            return cause
+        if tokens:
+            cause = possible(tokens)
+            if cause:
+                return cause
     return "No cause found"
 
 
+# ==================
+# IMPORTANT: causes are looked at in the same order as they appear below.
+# Changing the order can yield incorrect results
+# ==================
+
+
+@add_cause
 def assign_to_a_keyword(tokens):
     """Checks to see if it is of the formm
 
@@ -66,6 +88,17 @@ def assign_to_a_keyword(tokens):
     return False
 
 
+@add_cause
+def confused_elif(tokens):
+    if tokens[0].string == "elseif":
+        return "elif not elseif"
+
+    if tokens[0].string == "else" and len(tokens) > 1 and tokens[1].string == "if":
+        return "elif not else if"
+    return False
+
+
+@add_cause
 def missing_colon(tokens):
     # needs unit tests:
     if len(tokens) < 2:
@@ -88,6 +121,3 @@ def missing_colon(tokens):
         if last.string != ":":
             return "%s missing colon" % name
     return False
-
-
-possible_causes = [assign_to_a_keyword, missing_colon]
