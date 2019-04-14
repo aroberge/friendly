@@ -3,7 +3,9 @@
 Just a first draft as proof of concept.
 """
 
+import configparser
 import locale
+import os
 import runpy
 import sys
 import traceback
@@ -28,6 +30,13 @@ class _State:
         self.context = 3
         self.write_err = _write_err
         lang, _ignore = locale.getdefaultlocale()
+        loc = os.path.join(os.path.expanduser("~"), "friendly.ini")
+        if os.path.isfile(loc):
+            config = configparser.ConfigParser()
+            config.read(loc)
+            if "friendly" in config:
+                if "lang" in config["friendly"]:
+                    lang = config["friendly"]["lang"]
         self.install_gettext(lang)
         self.level = 0
         self.running_script = False
