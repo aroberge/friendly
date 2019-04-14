@@ -162,3 +162,90 @@ SyntaxError - elif, not elseif
         Ma meilleure hypothèse: vous avez écrit 'elseif'
         au lieu d'utiliser le mot-clé 'elif'.
 
+
+SyntaxError - malformed def statment - 1
+----------------------------------------
+
+.. code-block:: none
+
+
+    Exception Python: 
+        SyntaxError: invalid syntax (raise_syntax_error6.py, line 3)
+
+    Une exception SyntaxError se produit lorsque python ne peut pas comprendre votre code.
+    Il pourrait y avoir plusieurs raisons possibles:
+    - un mot-clé peut être mal orthographié;
+    - le symbole deux points, :, ou un autre symbole comme (,], etc., pourrait manquer;
+    - etc.
+
+    Cause probable : 
+        Python peut seulement analyser le fichier 'raise_syntax_error6.py'
+        jusqu'à l'endroit indiqué par --> et ^.
+
+       1: """Should raise SyntaxError"""
+       2: 
+    -->3: def :
+              ^
+        Ma meilleure hypothèse: vous vouliez définir une fonction ou une méthode,
+        mais vous avez fait des erreurs de syntaxe.
+        La syntaxe correcte est:
+            def nom ( arguments_optionnels ) :
+
+
+SyntaxError - malformed def statment - 2
+----------------------------------------
+
+.. code-block:: none
+
+
+    Exception Python: 
+        SyntaxError: invalid syntax (raise_syntax_error7.py, line 3)
+
+    Une exception SyntaxError se produit lorsque python ne peut pas comprendre votre code.
+    Il pourrait y avoir plusieurs raisons possibles:
+    - un mot-clé peut être mal orthographié;
+    - le symbole deux points, :, ou un autre symbole comme (,], etc., pourrait manquer;
+    - etc.
+
+    Cause probable : 
+        Python peut seulement analyser le fichier 'raise_syntax_error7.py'
+        jusqu'à l'endroit indiqué par --> et ^.
+
+       1: """Should raise SyntaxError"""
+       2: 
+    -->3: def name  :
+                    ^
+        Ma meilleure hypothèse: vous vouliez définir une fonction ou une méthode,
+        mais vous avez fait des erreurs de syntaxe.
+        La syntaxe correcte est:
+            def nom ( arguments_optionnels ) :
+
+
+SyntaxError - malformed def statment - 3
+----------------------------------------
+
+.. code-block:: none
+
+
+    Exception Python: 
+        SyntaxError: invalid syntax (raise_syntax_error8.py, line 3)
+
+    Une exception SyntaxError se produit lorsque python ne peut pas comprendre votre code.
+    Il pourrait y avoir plusieurs raisons possibles:
+    - un mot-clé peut être mal orthographié;
+    - le symbole deux points, :, ou un autre symbole comme (,], etc., pourrait manquer;
+    - etc.
+
+    Cause probable : 
+        Python peut seulement analyser le fichier 'raise_syntax_error8.py'
+        jusqu'à l'endroit indiqué par --> et ^.
+
+       1: """Should raise SyntaxError"""
+       2: 
+    -->3: def ( arg )  :
+              ^
+        Ma meilleure hypothèse: vous vouliez définir une fonction ou une méthode,
+        mais vous avez fait des erreurs de syntaxe.
+        La syntaxe correcte est:
+            def nom ( arguments_optionnels ) :
+

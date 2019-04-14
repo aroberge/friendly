@@ -44,6 +44,9 @@
 <li><a class="reference internal" href="#syntaxerror-missing-colon-2">SyntaxError - Missing colon 2</a></li>
 <li><a class="reference internal" href="#syntaxerror-elif-not-else-if">SyntaxError - elif, not else if</a></li>
 <li><a class="reference internal" href="#syntaxerror-elif-not-elseif">SyntaxError - elif, not elseif</a></li>
+<li><a class="reference internal" href="#syntaxerror-malformed-def-statment-1">SyntaxError - malformed def statment - 1</a></li>
+<li><a class="reference internal" href="#syntaxerror-malformed-def-statment-2">SyntaxError - malformed def statment - 2</a></li>
+<li><a class="reference internal" href="#syntaxerror-malformed-def-statment-3">SyntaxError - malformed def statment - 3</a></li>
 </ul>
 </li>
 </ul>
@@ -219,6 +222,84 @@ Likely cause:
                 ^
     My best guess: you meant to use Python&#39;s &#39;elif&#39; keyword
     but wrote &#39;elseif&#39; instead
+</pre></div>
+</div>
+</div>
+<div class="section" id="syntaxerror-malformed-def-statment-1">
+<h2>SyntaxError - malformed def statment - 1<a class="headerlink" href="#syntaxerror-malformed-def-statment-1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    SyntaxError: invalid syntax (raise_syntax_error6.py, line 3)
+
+A SyntaxError occurs when Python cannot understand your code.
+There could be many possible reasons:
+- a keyword might be misspelled;
+- a colon, :, or some other symbol like (, ], etc., might be missing;
+- etc.
+
+Likely cause:
+    Python could not parse the file &#39;raise_syntax_error6.py&#39;
+    beyond the location indicated below by --&gt; and ^.
+
+   1: &quot;&quot;&quot;Should raise SyntaxError&quot;&quot;&quot;
+   2:
+--&gt;3: def :
+          ^
+    My best guess: you tried to define a function or method
+    and did not use the correct syntax.
+    The correct syntax is:
+        def name ( optional_arguments ):
+</pre></div>
+</div>
+</div>
+<div class="section" id="syntaxerror-malformed-def-statment-2">
+<h2>SyntaxError - malformed def statment - 2<a class="headerlink" href="#syntaxerror-malformed-def-statment-2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    SyntaxError: invalid syntax (raise_syntax_error7.py, line 3)
+
+A SyntaxError occurs when Python cannot understand your code.
+There could be many possible reasons:
+- a keyword might be misspelled;
+- a colon, :, or some other symbol like (, ], etc., might be missing;
+- etc.
+
+Likely cause:
+    Python could not parse the file &#39;raise_syntax_error7.py&#39;
+    beyond the location indicated below by --&gt; and ^.
+
+   1: &quot;&quot;&quot;Should raise SyntaxError&quot;&quot;&quot;
+   2:
+--&gt;3: def name  :
+                ^
+    My best guess: you tried to define a function or method
+    and did not use the correct syntax.
+    The correct syntax is:
+        def name ( optional_arguments ):
+</pre></div>
+</div>
+</div>
+<div class="section" id="syntaxerror-malformed-def-statment-3">
+<h2>SyntaxError - malformed def statment - 3<a class="headerlink" href="#syntaxerror-malformed-def-statment-3" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    SyntaxError: invalid syntax (raise_syntax_error8.py, line 3)
+
+A SyntaxError occurs when Python cannot understand your code.
+There could be many possible reasons:
+- a keyword might be misspelled;
+- a colon, :, or some other symbol like (, ], etc., might be missing;
+- etc.
+
+Likely cause:
+    Python could not parse the file &#39;raise_syntax_error8.py&#39;
+    beyond the location indicated below by --&gt; and ^.
+
+   1: &quot;&quot;&quot;Should raise SyntaxError&quot;&quot;&quot;
+   2:
+--&gt;3: def ( arg )  :
+          ^
+    My best guess: you tried to define a function or method
+    and did not use the correct syntax.
+    The correct syntax is:
+        def name ( optional_arguments ):
 </pre></div>
 </div>
 </div>

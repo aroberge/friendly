@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-14 18:01-0300\n"
-"PO-Revision-Date: 2019-04-14 18:03-0300\n"
+"POT-Creation-Date: 2019-04-14 18:58-0300\n"
+"PO-Revision-Date: 2019-04-14 20:01-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -256,25 +256,21 @@ msgstr ""
 "        au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: specific_info.py:149
+#: specific_info.py:148
 msgid "a class"
 msgstr "une classe"
 
-#: specific_info.py:151
-msgid "a function or method"
-msgstr "une fonction ou une méthode"
-
-#: specific_info.py:152
+#: specific_info.py:149
 msgid ""
-"       My best guess: you wanted to define {class_or_function}\n"
+"       My best guess: you wanted to define {class_}\n"
 "       but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
-"        Ma meilleure hypothèse: vous vouliez définir {class_or_function},\n"
+"        Ma meilleure hypothèse: vous vouliez définir {class_},\n"
 "        mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:158
+#: specific_info.py:155
 msgid ""
 "       My best guess: you wrote a '{name}' loop but\n"
 "       forgot to add a colon ':' at the end\n"
@@ -284,7 +280,7 @@ msgstr ""
 "        mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:164
+#: specific_info.py:161
 msgid ""
 "       My best guess: you wrote a statement beginning with\n"
 "       '{name}' but forgot to add a colon ':' at the end\n"
@@ -294,7 +290,24 @@ msgstr ""
 "        '{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:170
+#: specific_info.py:168
+msgid "a function or method"
+msgstr "une fonction ou une méthode"
+
+#: specific_info.py:169
+msgid ""
+"        My best guess: you tried to define {class_or_function}\n"
+"        and did not use the correct syntax.\n"
+"        The correct syntax is:\n"
+"            def name ( optional_arguments ):\n"
+msgstr ""
+"        Ma meilleure hypothèse: vous vouliez définir {class_or_function},\n"
+"        mais vous avez fait des erreurs de syntaxe.\n"
+"        La syntaxe correcte est:\n"
+"            def nom ( arguments_optionnels ) :\n"
+"\n"
+
+#: specific_info.py:177
 msgid ""
 "        Currently, we cannot give you more information\n"
 "        about the likely cause of this error.\n"

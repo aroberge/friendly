@@ -24,6 +24,9 @@ all_imports = {
     "SyntaxError - Missing colon 2": "syntax.raise_syntax_error3",
     "SyntaxError - elif, not else if": "syntax.raise_syntax_error4",
     "SyntaxError - elif, not elseif": "syntax.raise_syntax_error5",
+    "SyntaxError - malformed def statment - 1": "syntax.raise_syntax_error6",
+    "SyntaxError - malformed def statment - 2": "syntax.raise_syntax_error7",
+    "SyntaxError - malformed def statment - 3": "syntax.raise_syntax_error8",
 }
 
 

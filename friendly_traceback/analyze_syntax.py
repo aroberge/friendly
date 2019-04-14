@@ -121,3 +121,21 @@ def missing_colon(tokens):
         if last.string != ":":
             return "%s missing colon" % name
     return False
+
+
+@add_cause
+def malformed_def(tokens):
+    # need at least five tokens: def name ( ) :
+    if tokens[0].string != "def":
+        return False
+
+    if (
+        len(tokens) < 5
+        or tokens[1].type != tokenize.NAME
+        or tokens[2].string != "("
+        or tokens[-2].string != ")"
+        or tokens[-1].string != ":"
+    ):
+        return "malformed def"
+
+    return False

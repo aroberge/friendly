@@ -16,7 +16,6 @@ def test_confused_elif():
 
 def test_missing_colon():
     assert last("class True") == "class missing colon"
-    assert last("def True") == "def missing colon"
     assert last("if True") == "if missing colon"
     assert last("elif True") == "elif missing colon"
     assert last("else True") == "else missing colon"
@@ -27,6 +26,16 @@ def test_missing_colon():
     assert last("finally True") == "finally missing colon"
 
 
+def test_malformed_def():
+    assert last("def () :") == "malformed def"
+    assert last("def name  :") == "malformed def"
+    assert last("def (arg) :") == "malformed def"
+    assert last("def :") == "malformed def"
+
+
 if __name__ == '__main__':
+    test_assign_to_keyword()
+    test_confused_elif()
     test_missing_colon()
+    test_malformed_def()
     print("Tests ran successfully")

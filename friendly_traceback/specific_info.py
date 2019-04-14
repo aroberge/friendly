@@ -144,16 +144,13 @@ def syntax_error_causes(cause):
 
     if cause.endswith("missing colon"):
         name = cause.split(" ")[0]
-        if name in ["class", "def"]:
-            if name == "class":
-                name = _("a class")
-            else:
-                name = _("a function or method")
+        if name == "class":
+            name = _("a class")
             return _(
-                "       My best guess: you wanted to define {class_or_function}\n"
+                "       My best guess: you wanted to define {class_}\n"
                 "       but forgot to add a colon ':' at the end\n"
                 "\n"
-            ).format(class_or_function=name)
+            ).format(class_=name)
         elif name in ["for", "while"]:
             return _(
                 "       My best guess: you wrote a '{name}' loop but\n"
@@ -166,6 +163,16 @@ def syntax_error_causes(cause):
                 "       '{name}' but forgot to add a colon ':' at the end\n"
                 "\n"
             ).format(name=name)
+
+    if cause == "malformed def":
+        name = _("a function or method")
+        return _(
+            "        My best guess: you tried to define {class_or_function}\n"
+            "        and did not use the correct syntax.\n"
+            "        The correct syntax is:\n"
+            "            def name ( optional_arguments ):"
+            "\n"
+        ).format(class_or_function=name)
 
     return _(
         "        Currently, we cannot give you more information\n"

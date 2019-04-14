@@ -159,3 +159,87 @@ SyntaxError - elif, not elseif
         My best guess: you meant to use Python's 'elif' keyword
         but wrote 'elseif' instead
 
+
+SyntaxError - malformed def statment - 1
+----------------------------------------
+
+.. code-block:: none
+
+
+    Python exception: 
+        SyntaxError: invalid syntax (raise_syntax_error6.py, line 3)
+
+    A SyntaxError occurs when Python cannot understand your code.
+    There could be many possible reasons:
+    - a keyword might be misspelled;
+    - a colon, :, or some other symbol like (, ], etc., might be missing;
+    - etc.
+
+    Likely cause:
+        Python could not parse the file 'raise_syntax_error6.py'
+        beyond the location indicated below by --> and ^.
+
+       1: """Should raise SyntaxError"""
+       2: 
+    -->3: def :
+              ^
+        My best guess: you tried to define a function or method
+        and did not use the correct syntax.
+        The correct syntax is:
+            def name ( optional_arguments ):
+
+SyntaxError - malformed def statment - 2
+----------------------------------------
+
+.. code-block:: none
+
+
+    Python exception: 
+        SyntaxError: invalid syntax (raise_syntax_error7.py, line 3)
+
+    A SyntaxError occurs when Python cannot understand your code.
+    There could be many possible reasons:
+    - a keyword might be misspelled;
+    - a colon, :, or some other symbol like (, ], etc., might be missing;
+    - etc.
+
+    Likely cause:
+        Python could not parse the file 'raise_syntax_error7.py'
+        beyond the location indicated below by --> and ^.
+
+       1: """Should raise SyntaxError"""
+       2: 
+    -->3: def name  :
+                    ^
+        My best guess: you tried to define a function or method
+        and did not use the correct syntax.
+        The correct syntax is:
+            def name ( optional_arguments ):
+
+SyntaxError - malformed def statment - 3
+----------------------------------------
+
+.. code-block:: none
+
+
+    Python exception: 
+        SyntaxError: invalid syntax (raise_syntax_error8.py, line 3)
+
+    A SyntaxError occurs when Python cannot understand your code.
+    There could be many possible reasons:
+    - a keyword might be misspelled;
+    - a colon, :, or some other symbol like (, ], etc., might be missing;
+    - etc.
+
+    Likely cause:
+        Python could not parse the file 'raise_syntax_error8.py'
+        beyond the location indicated below by --> and ^.
+
+       1: """Should raise SyntaxError"""
+       2: 
+    -->3: def ( arg )  :
+              ^
+        My best guess: you tried to define a function or method
+        and did not use the correct syntax.
+        The correct syntax is:
+            def name ( optional_arguments ):
