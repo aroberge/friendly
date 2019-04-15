@@ -27,6 +27,7 @@ all_imports = {
     "SyntaxError - malformed def statment - 1": "syntax.raise_syntax_error6",
     "SyntaxError - malformed def statment - 2": "syntax.raise_syntax_error7",
     "SyntaxError - malformed def statment - 3": "syntax.raise_syntax_error8",
+    "SyntaxError - can't assign to literal": "syntax.raise_syntax_error9",
 }
 
 

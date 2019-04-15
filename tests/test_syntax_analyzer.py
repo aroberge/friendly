@@ -1,6 +1,12 @@
 """test_syntax_analyzer"""
 
 from friendly_traceback.analyze_syntax import analyze_last_line as last
+from friendly_traceback.analyze_syntax import assign_to_literal as assign
+
+
+def test_assign_to_literal():
+    assert assign("can't assign to literal", "1 = a") == "can't assign to literal 1"
+
 
 
 def test_assign_to_keyword():

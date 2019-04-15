@@ -63,7 +63,7 @@ def syntax_error(etype, value):
     filepath = value.filename
     linenumber = value.lineno
     offset = value.offset
-    # message = value.msg
+    message = value.msg
     partial_source = utils.get_partial_source(filepath, linenumber, offset)
     filename = os.path.basename(filepath)
     info = _(
@@ -74,7 +74,7 @@ def syntax_error(etype, value):
     ).format(filename=filename, source=partial_source)
 
     source = utils.get_source(filepath)
-    cause = find_likely_cause(source, linenumber, offset)
+    cause = find_likely_cause(source, linenumber, message, offset)
     this_case = syntax_error_causes(cause)
 
     return info + this_case
@@ -173,6 +173,18 @@ def syntax_error_causes(cause):
             "            def name ( optional_arguments ):"
             "\n"
         ).format(class_or_function=name)
+
+    if cause.startswith("can't assign to literal"):
+        name = cause.replace("can't assign to literal", "").strip()
+        return _(
+            "        My best guess: you wrote an expression like\n"
+            "            {name} = something\n"
+            "        where <{name}>, on the left hand-side of the equal sign, is\n"
+            "        an actual number or string (what Python calls a 'literal'),\n"
+            "        and not the name of a variable.  Perhaps you meant to write:\n"
+            "            something = {name}\n"
+            "\n"
+        ).format(name=name)
 
     return _(
         "        Currently, we cannot give you more information\n"

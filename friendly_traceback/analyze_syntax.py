@@ -37,12 +37,20 @@ class Token:
         # ignore last parameter which is the logical line
 
 
-def find_likely_cause(source, linenumber, offset):
+def find_likely_cause(source, linenumber, message, offset):
 
     offending_line = source[linenumber - 1]
     line = offending_line.rstrip()
 
+    if message == "can't assign to literal":
+        return assign_to_literal(message, line)
+
     return analyze_last_line(line)
+
+
+def assign_to_literal(message, line):
+    variable = line.split("=")[0].strip()
+    return message + " %s" % variable
 
 
 def analyze_last_line(line):
