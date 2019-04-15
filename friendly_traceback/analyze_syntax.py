@@ -38,6 +38,11 @@ class Token:
 
 
 def find_likely_cause(source, linenumber, message, offset):
+    """Given some source code as a list of lines, a linenumber
+       (starting at 1) indicating where a SyntaxError was detected,
+       a message (which follows SyntaxError:) and an offset,
+       this attempts to find a probable cause for the Syntax Error.
+    """
 
     offending_line = source[linenumber - 1]
     line = offending_line.rstrip()

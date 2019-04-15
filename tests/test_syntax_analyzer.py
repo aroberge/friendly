@@ -2,11 +2,21 @@
 
 from friendly_traceback.analyze_syntax import analyze_last_line as last
 from friendly_traceback.analyze_syntax import assign_to_literal as assign
+from friendly_traceback.analyze_syntax import find_likely_cause as find
+
+
+def test_no_false_positive():
+    # The following tests use valid syntax. We should not be able to
+    # find a likely cause.
+    # find_likely_cause(source, linenumber, message, offset)
+    assert find(["def test(arg1, arg2):"], 1, "irrelevant", 1) == "No cause found"
+    assert find(["for i in range(3):"], 1, "irrelevant", 1) == "No cause found"
+    assert find(["while True:"], 1, "irrelevant", 1) == "No cause found"
 
 
 def test_assign_to_literal():
     assert assign("can't assign to literal", "1 = a") == "can't assign to literal 1"
-
+    assert assign("can't assign to literal", "'a' = a") == "can't assign to literal 'a'"
 
 
 def test_assign_to_keyword():
@@ -39,7 +49,7 @@ def test_malformed_def():
     assert last("def :") == "malformed def"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_assign_to_keyword()
     test_confused_elif()
     test_missing_colon()
