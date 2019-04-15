@@ -1,12 +1,28 @@
 """Basic information about Python exceptions"""
+import os
 from .my_gettext import current_lang
+from . import utils
 
 
-def indentation_error(*args):
+def indentation_error(etype, value):
     _ = current_lang.lang
-    return _(
-        "    An IndentationError occurs when a given line of code is\n"
-        "    not indented (aligned vertically with other lines) as expected.\n"
+    filename = value.filename
+    linenumber = value.lineno
+    offset = value.offset
+    source = utils.get_partial_source(filename, linenumber, offset)
+    filename = os.path.basename(filename)
+    info = _(
+        "    Python could not parse the file '{filename}'\n"
+        "    beyond the location indicated below by --> and ^.\n"
+        "\n"
+        "{source}\n"
+    ).format(filename=filename, source=source)
+    return (
+        _(
+            "    An IndentationError occurs when a given line of code is\n"
+            "    not indented (aligned vertically with other lines) as expected.\n"
+        )
+        + info
     )
 
 
@@ -23,13 +39,7 @@ def name_error(*args):
 
 def syntax_error(*args):
     _ = current_lang.lang
-    return _(
-        "    A SyntaxError occurs when Python cannot understand your code.\n"
-        "    There could be many possible reasons:\n"
-        "    - a keyword might be misspelled;\n"
-        "    - a colon, :, or some other symbol like (, ], etc., might be missing;\n"
-        "    - etc.\n"
-    )
+    return _("    A SyntaxError occurs when Python cannot understand your code.\n")
 
 
 def tab_error(*args):

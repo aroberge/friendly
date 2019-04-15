@@ -76,7 +76,7 @@ def explain_traceback(etype, value, tb, running_script=False):
     result = []
 
     # 1. Generic explanation
-    result.append(provide_generic_explanation(etype.__name__, value))
+    result.append(provide_generic_explanation(etype.__name__, etype, value))
     if issubclass(etype, SyntaxError) and value.filename == "<string>":
         cause = cannot_analyze_string()
     else:
@@ -126,12 +126,12 @@ def explain_traceback(etype, value, tb, running_script=False):
     return "\n".join(result)
 
 
-def provide_generic_explanation(name, value):
+def provide_generic_explanation(name, etype, value):
     """Provides a generic explanation about a particular error.
     """
     _ = current_lang.lang
     if name in generic_info.generic:
-        explanation = generic_info.generic[name]()
+        explanation = generic_info.generic[name](etype, value)
     else:
         explanation = generic_info.generic["Unknown"]()
     # fmt: off
@@ -150,7 +150,10 @@ def get_likely_cause(etype, value):
     if etype.__name__ in specific_info.get_cause:
         cause = specific_info.get_cause[etype.__name__](etype, value)
         if cause is not None:
-            return _("    Likely cause:\n{cause}").format(cause=cause)
+            if issubclass(etype, SyntaxError):
+                return cause
+            else:
+                return _("    Likely cause:\n{cause}").format(cause=cause)
     return None
 
 

@@ -13,17 +13,6 @@ from .analyze_syntax import find_likely_cause
 
 def indentation_error(etype, value):
     _ = current_lang.lang
-    filename = value.filename
-    linenumber = value.lineno
-    offset = value.offset
-    source = utils.get_partial_source(filename, linenumber, offset)
-    filename = os.path.basename(filename)
-    info = _(
-        "        Python could not parse the file '{filename}'\n"
-        "        beyond the location indicated below by --> and ^.\n"
-        "\n"
-        "{source}\n"
-    ).format(filename=filename, source=source)
 
     value = str(value)
     if "unexpected indent" in value:
@@ -43,7 +32,7 @@ def indentation_error(etype, value):
             "        less indented than the preceding one,\n"
             "        and is not aligned vertically with another block of code.\n"
         )
-    return info + this_case
+    return _("    Likely cause:\n{cause}").format(cause=this_case)
 
 
 def name_error(etype, value):
@@ -67,8 +56,8 @@ def syntax_error(etype, value):
     partial_source = utils.get_partial_source(filepath, linenumber, offset)
     filename = os.path.basename(filepath)
     info = _(
-        "        Python could not parse the file '{filename}'\n"
-        "        beyond the location indicated below by --> and ^.\n"
+        "    Python could not parse the file '{filename}'\n"
+        "    beyond the location indicated below by --> and ^.\n"
         "\n"
         "{source}\n"
     ).format(filename=filename, source=partial_source)
@@ -88,8 +77,8 @@ def tab_error(etype, value):
     source = utils.get_partial_source(filename, linenumber, offset)
     filename = os.path.basename(filename)
     return _(
-        "        Python could not parse the file '{filename}'\n"
-        "        beyond the location indicated below by --> and ^.\n"
+        "    Python could not parse the file '{filename}'\n"
+        "    beyond the location indicated below by --> and ^.\n"
         "\n"
         "{source}\n"
     ).format(filename=filename, source=source)
@@ -129,16 +118,16 @@ def syntax_error_causes(cause):
 
     if cause == "Assigning to Python keyword":
         return _(
-            "        My best guess: you were trying to assign a value\n"
-            "        to a Python keyword. This is not allowed.\n"
+            "    My best guess: you were trying to assign a value\n"
+            "    to a Python keyword. This is not allowed.\n"
             "\n"
         )
 
     if cause.startswith("elif not"):
         cause = cause.replace("elif not ", "")
         return _(
-            "        My best guess: you meant to use Python's 'elif' keyword\n"
-            "        but wrote '{name}' instead\n"
+            "    My best guess: you meant to use Python's 'elif' keyword\n"
+            "    but wrote '{name}' instead\n"
             "\n"
         ).format(name=cause)
 
@@ -147,47 +136,50 @@ def syntax_error_causes(cause):
         if name == "class":
             name = _("a class")
             return _(
-                "       My best guess: you wanted to define {class_}\n"
-                "       but forgot to add a colon ':' at the end\n"
+                "    My best guess: you wanted to define {class_}\n"
+                "    but forgot to add a colon ':' at the end\n"
                 "\n"
             ).format(class_=name)
         elif name in ["for", "while"]:
             return _(
-                "       My best guess: you wrote a '{name}' loop but\n"
-                "       forgot to add a colon ':' at the end\n"
+                "    My best guess: you wrote a '{name}' loop but\n"
+                "    forgot to add a colon ':' at the end\n"
                 "\n"
             ).format(name=name)
         else:
             return _(
-                "       My best guess: you wrote a statement beginning with\n"
-                "       '{name}' but forgot to add a colon ':' at the end\n"
+                "    My best guess: you wrote a statement beginning with\n"
+                "    '{name}' but forgot to add a colon ':' at the end\n"
                 "\n"
             ).format(name=name)
 
     if cause == "malformed def":
         name = _("a function or method")
         return _(
-            "        My best guess: you tried to define {class_or_function}\n"
-            "        and did not use the correct syntax.\n"
-            "        The correct syntax is:\n"
-            "            def name ( optional_arguments ):"
+            "    My best guess: you tried to define {class_or_function}\n"
+            "    and did not use the correct syntax.\n"
+            "    The correct syntax is:\n"
+            "        def name ( optional_arguments ):"
             "\n"
         ).format(class_or_function=name)
 
     if cause.startswith("can't assign to literal"):
         name = cause.replace("can't assign to literal", "").strip()
         return _(
-            "        My best guess: you wrote an expression like\n"
-            "            {name} = something\n"
-            "        where <{name}>, on the left hand-side of the equal sign, is\n"
-            "        an actual number or string (what Python calls a 'literal'),\n"
-            "        and not the name of a variable.  Perhaps you meant to write:\n"
-            "            something = {name}\n"
+            "    My best guess: you wrote an expression like\n"
+            "        {name} = something\n"
+            "    where <{name}>, on the left hand-side of the equal sign, is\n"
+            "    an actual number or string (what Python calls a 'literal'),\n"
+            "    and not the name of a variable.  Perhaps you meant to write:\n"
+            "        something = {name}\n"
             "\n"
         ).format(name=name)
 
     return _(
-        "        Currently, we cannot give you more information\n"
-        "        about the likely cause of this error.\n"
+        "    Currently, we cannot guess the likely cause of this error.\n"
+        "\n"
+        "    Try to examine closely the line indicated as well as the line\n"
+        "    immediately above to see if you can identify some misspelled\n"
+        "    word, or missing symbols, like (, ), [, ], :, etc.\n"
         "\n"
     )

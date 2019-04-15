@@ -44,8 +44,7 @@
 <li><a class="reference internal" href="#indentationerror-3-unindent-does-not-match">IndentationError - 3: unindent does not match …</a></li>
 <li><a class="reference internal" href="#nameerror">NameError</a></li>
 <li><a class="reference internal" href="#syntaxerror">SyntaxError</a></li>
-<li><a class="reference internal" href="#taberror-1">TabError - 1</a></li>
-<li><a class="reference internal" href="#taberror-2">TabError - 2</a></li>
+<li><a class="reference internal" href="#taberror">TabError</a></li>
 <li><a class="reference internal" href="#unboundlocalerror">UnboundLocalError</a></li>
 <li><a class="reference internal" href="#unknown-exception">Unknown exception</a></li>
 <li><a class="reference internal" href="#zerodivisionerror-1">ZeroDivisionError - 1</a></li>
@@ -115,16 +114,16 @@ Python version: 3.7.0</p>
 Une exception de type IndentationError se produit lorsqu&#39;une ligne de code
 n&#39;est pas indentée (c&#39;est-à-dire alignée verticalement avec les autres lignes)
 de la façon attendue.
-
-Cause probable :
-    Python peut seulement analyser le fichier &#39;raise_indentation_error1.py&#39;
-    jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
+Python peut seulement analyser le fichier &#39;raise_indentation_error1.py&#39;
+jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
    1: &#39;&#39;&#39;Should raise IndentationError&#39;&#39;&#39;
    2:
    3: if True:
 --&gt;4: pass
          ^
+
+Cause probable :
     Dans ce cas-ci, la ligne indiquée ci-dessus par --&gt; devrait
     normalement commencer un nouveau bloc de code indenté.
 </pre></div>
@@ -138,16 +137,16 @@ Cause probable :
 Une exception de type IndentationError se produit lorsqu&#39;une ligne de code
 n&#39;est pas indentée (c&#39;est-à-dire alignée verticalement avec les autres lignes)
 de la façon attendue.
-
-Cause probable :
-    Python peut seulement analyser le fichier &#39;raise_indentation_error2.py&#39;
-    jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
+Python peut seulement analyser le fichier &#39;raise_indentation_error2.py&#39;
+jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
    1: &#39;&#39;&#39;Should raise IndentationError&#39;&#39;&#39;
    2: if True:
    3:     pass
 --&gt;4:       pass
            ^
+
+Cause probable :
     Dans ce cas-ci, la ligne indiquée ci-dessus par --&gt;
     est plus indentée que ce qui était attendu et ne
     correspond pas à l&#39;indentation de la ligne précédente.
@@ -162,16 +161,16 @@ Cause probable :
 Une exception de type IndentationError se produit lorsqu&#39;une ligne de code
 n&#39;est pas indentée (c&#39;est-à-dire alignée verticalement avec les autres lignes)
 de la façon attendue.
-
-Cause probable :
-    Python peut seulement analyser le fichier &#39;raise_indentation_error3.py&#39;
-    jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
+Python peut seulement analyser le fichier &#39;raise_indentation_error3.py&#39;
+jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
    1: &#39;&#39;&#39;Should raise IndentationError&#39;&#39;&#39;
    2: if True:
    3:       pass
 --&gt;4:     pass
               ^
+
+Cause probable :
     Dans ce cas-ci, la ligne indiquée ci-dessus par --&gt;
     est moins indentée que la ligne précédente
     et n’est pas alignée verticalement avec un autre bloc de code.
@@ -207,44 +206,22 @@ L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;test_name_err
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
     SyntaxError: invalid syntax (raise_syntax_error1.py, line 3)
 
-Une exception SyntaxError se produit lorsque python ne peut pas comprendre votre code.
-Il pourrait y avoir plusieurs raisons possibles:
-- un mot-clé peut être mal orthographié;
-- le symbole deux points, :, ou un autre symbole comme (,], etc., pourrait manquer;
-- etc.
+Une exception de type SyntaxError se produit lorsque python ne peut pas comprendre votre code.
 
-Cause probable :
-    Python peut seulement analyser le fichier &#39;raise_syntax_error1.py&#39;
-    jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
+Python peut seulement analyser le fichier &#39;raise_syntax_error1.py&#39;
+jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
    1: &quot;&quot;&quot; Should raise SyntaxError&quot;&quot;&quot;
    2:
 --&gt;3: pass = 2
            ^
-    Ma meilleure hypothèse: vous essayiez d’assigner une valeur à un mot clé Python.
-    Ceci n’est pas permis.
+Ma meilleure hypothèse: vous essayiez d’assigner une valeur à un mot clé Python.
+Ceci n’est pas permis.
 </pre></div>
 </div>
 </div>
-<div class="section" id="taberror-1">
-<h2>TabError - 1<a class="headerlink" href="#taberror-1" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
-    TypeError: &#39;module&#39; object is not callable
-
-Aucune information n&#39;est connue au sujet de cette exception.
-
-
-L&#39;exécution s&#39;est arrêtée à la ligne 51 du fichier &#39;trb_common.py&#39;
-
-   49:                     mod = __import__(name)
-   50:                     if function is not None:
---&gt;51:                         result = getattr(mod, function)()
-   52:                         write(result)
-</pre></div>
-</div>
-</div>
-<div class="section" id="taberror-2">
-<h2>TabError - 2<a class="headerlink" href="#taberror-2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="taberror">
+<h2>TabError<a class="headerlink" href="#taberror" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
     TabError: inconsistent use of tabs and spaces in indentation (raise_tab_error2.py, line 7)
 
@@ -255,9 +232,8 @@ L’indentation de votre code signifie que le bloc de codes est aligné vertical
 en insérant des espaces ou des tabulations au début des lignes.
 La recommandation de Python est de toujours utiliser des espaces pour indenter votre code.
 
-Cause probable :
-    Python peut seulement analyser le fichier &#39;raise_tab_error2.py&#39;
-    jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
+Python peut seulement analyser le fichier &#39;raise_tab_error2.py&#39;
+jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
     4:
     5: def no_pytest_tab_error2():

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-14 18:58-0300\n"
-"PO-Revision-Date: 2019-04-14 20:01-0300\n"
+"POT-Creation-Date: 2019-04-15 10:43-0300\n"
+"PO-Revision-Date: 2019-04-15 10:47-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -40,7 +40,7 @@ msgstr ""
 "\n"
 "{explanation}"
 
-#: formatter.py:153
+#: formatter.py:156 specific_info.py:35
 msgid ""
 "    Likely cause:\n"
 "{cause}"
@@ -48,7 +48,7 @@ msgstr ""
 "    Cause probable : \n"
 "{cause}"
 
-#: formatter.py:175
+#: formatter.py:178
 msgid ""
 "\n"
 "    Execution stopped on line {linenumber} of file '{filename}'.\n"
@@ -61,7 +61,7 @@ msgstr ""
 "\n"
 "{source}\n"
 
-#: formatter.py:183
+#: formatter.py:186
 msgid ""
 "\n"
 "    Exception raised on line {linenumber} of file '{filename}'.\n"
@@ -73,7 +73,19 @@ msgstr ""
 "\n"
 "{source}\n"
 
-#: generic_info.py:7
+#: generic_info.py:14 specific_info.py:58 specific_info.py:79
+msgid ""
+"    Python could not parse the file '{filename}'\n"
+"    beyond the location indicated below by --> and ^.\n"
+"\n"
+"{source}\n"
+msgstr ""
+"    Python peut seulement analyser le fichier '{filename}'\n"
+"    jusqu'à l'endroit indiqué par --> et ^.\n"
+"\n"
+"{source}\n"
+
+#: generic_info.py:21
 msgid ""
 "    An IndentationError occurs when a given line of code is\n"
 "    not indented (aligned vertically with other lines) as expected.\n"
@@ -84,7 +96,7 @@ msgstr ""
 "lignes)\n"
 "    de la façon attendue.\n"
 
-#: generic_info.py:15
+#: generic_info.py:31
 msgid ""
 "    A NameError exception indicates that a variable or\n"
 "    function name is not known to Python.\n"
@@ -98,23 +110,13 @@ msgstr ""
 "    Cependant, cela peut également indiquer que le nom a été\n"
 "    utilisé avant qu'on ne lui ait associé une valeur.\n"
 
-#: generic_info.py:26
-msgid ""
-"    A SyntaxError occurs when Python cannot understand your code.\n"
-"    There could be many possible reasons:\n"
-"    - a keyword might be misspelled;\n"
-"    - a colon, :, or some other symbol like (, ], etc., might be missing;\n"
-"    - etc.\n"
+#: generic_info.py:42
+msgid "    A SyntaxError occurs when Python cannot understand your code.\n"
 msgstr ""
-"    Une exception SyntaxError se produit lorsque python ne peut pas "
+"    Une exception de type SyntaxError se produit lorsque python ne peut pas "
 "comprendre votre code.\n"
-"    Il pourrait y avoir plusieurs raisons possibles:\n"
-"    - un mot-clé peut être mal orthographié;\n"
-"    - le symbole deux points, :, ou un autre symbole comme (,], etc., "
-"pourrait manquer;\n"
-"    - etc.\n"
 
-#: generic_info.py:37
+#: generic_info.py:47
 msgid ""
 "    A TabError indicates that you have used both spaces\n"
 "    and tab characters to indent your code.\n"
@@ -133,7 +135,7 @@ msgstr ""
 "    La recommandation de Python est de toujours utiliser des espaces pour "
 "indenter votre code.\n"
 
-#: generic_info.py:49
+#: generic_info.py:59
 msgid ""
 "    In Python, variables that are used inside a function are known as \n"
 "    local variables. Before they are used, they must be assigned a value.\n"
@@ -158,11 +160,11 @@ msgstr ""
 "sinon vous verrez\n"
 "    une exception UnboundLocalError.\n"
 
-#: generic_info.py:63
+#: generic_info.py:73
 msgid "    No information is known about this exception.\n"
 msgstr "    Aucune information n'est connue au sujet de cette exception.\n"
 
-#: generic_info.py:68
+#: generic_info.py:78
 msgid ""
 "    A ZeroDivisionError occurs when you are attempting to divide\n"
 "    a value by zero:\n"
@@ -179,19 +181,7 @@ msgstr ""
 "    à l’aide de l’opérateur modulo '%'\n"
 "        résultat = ma_variable % 0"
 
-#: specific_info.py:21 specific_info.py:69 specific_info.py:90
-msgid ""
-"        Python could not parse the file '{filename}'\n"
-"        beyond the location indicated below by --> and ^.\n"
-"\n"
-"{source}\n"
-msgstr ""
-"        Python peut seulement analyser le fichier '{filename}'\n"
-"        jusqu'à l'endroit indiqué par --> et ^.\n"
-"\n"
-"{source}\n"
-
-#: specific_info.py:30
+#: specific_info.py:19
 msgid ""
 "        In this case, the line identified above\n"
 "        is more indented than expected and \n"
@@ -201,7 +191,7 @@ msgstr ""
 "        est plus indentée que ce qui était attendu et ne\n"
 "        correspond pas à l'indentation de la ligne précédente.\n"
 
-#: specific_info.py:36
+#: specific_info.py:25
 msgid ""
 "        In this case, the line identified above\n"
 "        was expected to begin a new indented block.\n"
@@ -209,7 +199,7 @@ msgstr ""
 "        Dans ce cas-ci, la ligne indiquée ci-dessus par --> devrait\n"
 "        normalement commencer un nouveau bloc de code indenté.\n"
 
-#: specific_info.py:41
+#: specific_info.py:30
 msgid ""
 "        In this case, the line identified above is\n"
 "        less indented than the preceding one,\n"
@@ -219,11 +209,11 @@ msgstr ""
 "        est moins indentée que la ligne précédente\n"
 "        et n’est pas alignée verticalement avec un autre bloc de code.\n"
 
-#: specific_info.py:56
+#: specific_info.py:45
 msgid "        In your program, the unknown name is '{var_name}'.\n"
 msgstr "        Dans votre programme, le nom inconnu est '{var_name}'.\n"
 
-#: specific_info.py:105
+#: specific_info.py:94
 msgid ""
 "        The variable that appears to cause the problem is '{var_name}'.\n"
 "        Try inserting the statement\n"
@@ -235,87 +225,140 @@ msgstr ""
 "            global {var_name}\n"
 "        comme première ligne à l’intérieur de votre fonction."
 
-#: specific_info.py:131
+#: specific_info.py:120
 msgid ""
-"        My best guess: you were trying to assign a value\n"
-"        to a Python keyword. This is not allowed.\n"
+"    My best guess: you were trying to assign a value\n"
+"    to a Python keyword. This is not allowed.\n"
 "\n"
 msgstr ""
-"        Ma meilleure hypothèse: vous essayiez d’assigner une valeur à un mot "
-"clé Python.\n"
-"        Ceci n’est pas permis.\n"
+"    Ma meilleure hypothèse: vous essayiez d’assigner une valeur à un mot clé "
+"Python.\n"
+"    Ceci n’est pas permis.\n"
 "\n"
 
-#: specific_info.py:139
+#: specific_info.py:128
 msgid ""
-"        My best guess: you meant to use Python's 'elif' keyword\n"
-"        but wrote '{name}' instead\n"
+"    My best guess: you meant to use Python's 'elif' keyword\n"
+"    but wrote '{name}' instead\n"
 "\n"
 msgstr ""
-"        Ma meilleure hypothèse: vous avez écrit '{name}'\n"
-"        au lieu d'utiliser le mot-clé 'elif'.\n"
+"    Ma meilleure hypothèse: vous avez écrit '{name}'\n"
+"    au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: specific_info.py:148
+#: specific_info.py:137
 msgid "a class"
 msgstr "une classe"
 
-#: specific_info.py:149
+#: specific_info.py:138
 msgid ""
-"       My best guess: you wanted to define {class_}\n"
-"       but forgot to add a colon ':' at the end\n"
+"    My best guess: you wanted to define {class_}\n"
+"    but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
-"        Ma meilleure hypothèse: vous vouliez définir {class_},\n"
-"        mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
+"    Ma meilleure hypothèse: vous vouliez définir {class_},\n"
+"    mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:155
+#: specific_info.py:144
 msgid ""
-"       My best guess: you wrote a '{name}' loop but\n"
-"       forgot to add a colon ':' at the end\n"
+"    My best guess: you wrote a '{name}' loop but\n"
+"    forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
-"        Ma meilleure hypothèse: vous vouliez débuter une boucle '{name}'\n"
-"        mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
+"    Ma meilleure hypothèse: vous vouliez débuter une boucle '{name}'\n"
+"    mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:161
+#: specific_info.py:150
 msgid ""
-"       My best guess: you wrote a statement beginning with\n"
-"       '{name}' but forgot to add a colon ':' at the end\n"
+"    My best guess: you wrote a statement beginning with\n"
+"    '{name}' but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
-"        Ma meilleure hypothèse: vous avez écrit un énoncé débutant avec\n"
-"        '{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
+"    Ma meilleure hypothèse: vous avez écrit un énoncé débutant avec\n"
+"    '{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:168
+#: specific_info.py:157
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: specific_info.py:169
+#: specific_info.py:158
 msgid ""
-"        My best guess: you tried to define {class_or_function}\n"
-"        and did not use the correct syntax.\n"
-"        The correct syntax is:\n"
-"            def name ( optional_arguments ):\n"
+"    My best guess: you tried to define {class_or_function}\n"
+"    and did not use the correct syntax.\n"
+"    The correct syntax is:\n"
+"        def name ( optional_arguments ):\n"
 msgstr ""
-"        Ma meilleure hypothèse: vous vouliez définir {class_or_function},\n"
-"        mais vous avez fait des erreurs de syntaxe.\n"
-"        La syntaxe correcte est:\n"
-"            def nom ( arguments_optionnels ) :\n"
+"    Ma meilleure hypothèse: vous vouliez définir {class_or_function},\n"
+"    mais vous avez fait des erreurs de syntaxe.\n"
+"    La syntaxe correcte est:\n"
+"        def nom ( arguments_optionnels ) :\n"
 "\n"
 
-#: specific_info.py:177
+#: specific_info.py:168
 msgid ""
-"        Currently, we cannot give you more information\n"
-"        about the likely cause of this error.\n"
+"    My best guess: you wrote an expression like\n"
+"        {name} = something\n"
+"    where <{name}>, on the left hand-side of the equal sign, is\n"
+"    an actual number or string (what Python calls a 'literal'),\n"
+"    and not the name of a variable.  Perhaps you meant to write:\n"
+"        something = {name}\n"
 "\n"
 msgstr ""
-"        Actuellement, nous ne pouvons pas vous donner plus d’informations\n"
-"        sur la cause probable de cette erreur.\n"
+"    Ma meilleure hypothèse: vous avez écrit une expression comme\n"
+"        {name} = variable\n"
+"    où < {name} >, sur le côté gauche du signe égal, est ce que Python\n"
+"    appelle un 'literal', c'est-à dire soit soit une chaîne de caractères ou "
+"un nombre,\n"
+"    et non le nom d’une variable. Peut-être que vous vouliez plutôt écrire:\n"
+"        variable = {name}\n"
 "\n"
+
+#: specific_info.py:178
+msgid ""
+"    Currently, we cannot guess the likely cause of this error.\n"
+"\n"
+"    Try to examine closely the line indicated as well as the line\n"
+"    immediately above to see if you can identify some misspelled\n"
+"    word, or missing symbols, like (, ), [, ], :, etc.\n"
+"\n"
+msgstr ""
+"    Présentement, nous ne pouvons pas deviner la cause probable de cette "
+"erreur.\n"
+"\n"
+"    Essayez d’examiner attentivement la ligne indiquée ainsi que celle\n"
+"    immédiatement au dessus pour voir si vous pouvez identifier\n"
+"    un mot mal orthographié, ou des symboles manquants, comme (,), [,],:, "
+"etc.\n"
+"\n"
+
+#~ msgid ""
+#~ "    A SyntaxError occurs when Python cannot understand your code.\n"
+#~ "    There could be many possible reasons:\n"
+#~ "    - a keyword might be misspelled;\n"
+#~ "    - a colon, :, or some other symbol like (, ], etc., might be "
+#~ "missing;\n"
+#~ "    - etc.\n"
+#~ msgstr ""
+#~ "    Une exception SyntaxError se produit lorsque python ne peut pas "
+#~ "comprendre votre code.\n"
+#~ "    Il pourrait y avoir plusieurs raisons possibles:\n"
+#~ "    - un mot-clé peut être mal orthographié;\n"
+#~ "    - le symbole deux points, :, ou un autre symbole comme (,], etc., "
+#~ "pourrait manquer;\n"
+#~ "    - etc.\n"
+
+#~ msgid ""
+#~ "        Currently, we cannot give you more information\n"
+#~ "        about the likely cause of this error.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "        Actuellement, nous ne pouvons pas vous donner plus "
+#~ "d’informations\n"
+#~ "        sur la cause probable de cette erreur.\n"
+#~ "\n"
 
 #~ msgid ""
 #~ "       My best guess: you wrote an elif statement but\n"

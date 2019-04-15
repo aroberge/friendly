@@ -44,8 +44,7 @@
 <li><a class="reference internal" href="#indentationerror-3-unindent-does-not-match">IndentationError - 3: unindent does not match …</a></li>
 <li><a class="reference internal" href="#nameerror">NameError</a></li>
 <li><a class="reference internal" href="#syntaxerror">SyntaxError</a></li>
-<li><a class="reference internal" href="#taberror-1">TabError - 1</a></li>
-<li><a class="reference internal" href="#taberror-2">TabError - 2</a></li>
+<li><a class="reference internal" href="#taberror">TabError</a></li>
 <li><a class="reference internal" href="#unboundlocalerror">UnboundLocalError</a></li>
 <li><a class="reference internal" href="#unknown-exception">Unknown exception</a></li>
 <li><a class="reference internal" href="#zerodivisionerror-1">ZeroDivisionError - 1</a></li>
@@ -114,16 +113,16 @@ Python version: 3.7.0</p>
 
 An IndentationError occurs when a given line of code is
 not indented (aligned vertically with other lines) as expected.
-
-Likely cause:
-    Python could not parse the file &#39;raise_indentation_error1.py&#39;
-    beyond the location indicated below by --&gt; and ^.
+Python could not parse the file &#39;raise_indentation_error1.py&#39;
+beyond the location indicated below by --&gt; and ^.
 
    1: &#39;&#39;&#39;Should raise IndentationError&#39;&#39;&#39;
    2:
    3: if True:
 --&gt;4: pass
          ^
+
+Likely cause:
     In this case, the line identified above
     was expected to begin a new indented block.
 </pre></div>
@@ -136,16 +135,16 @@ Likely cause:
 
 An IndentationError occurs when a given line of code is
 not indented (aligned vertically with other lines) as expected.
-
-Likely cause:
-    Python could not parse the file &#39;raise_indentation_error2.py&#39;
-    beyond the location indicated below by --&gt; and ^.
+Python could not parse the file &#39;raise_indentation_error2.py&#39;
+beyond the location indicated below by --&gt; and ^.
 
    1: &#39;&#39;&#39;Should raise IndentationError&#39;&#39;&#39;
    2: if True:
    3:     pass
 --&gt;4:       pass
            ^
+
+Likely cause:
     In this case, the line identified above
     is more indented than expected and
     does not match the indentation of the previous line.
@@ -159,16 +158,16 @@ Likely cause:
 
 An IndentationError occurs when a given line of code is
 not indented (aligned vertically with other lines) as expected.
-
-Likely cause:
-    Python could not parse the file &#39;raise_indentation_error3.py&#39;
-    beyond the location indicated below by --&gt; and ^.
+Python could not parse the file &#39;raise_indentation_error3.py&#39;
+beyond the location indicated below by --&gt; and ^.
 
    1: &#39;&#39;&#39;Should raise IndentationError&#39;&#39;&#39;
    2: if True:
    3:       pass
 --&gt;4:     pass
               ^
+
+Likely cause:
     In this case, the line identified above is
     less indented than the preceding one,
     and is not aligned vertically with another block of code.
@@ -205,43 +204,21 @@ Execution stopped on line 7 of file &#39;test_name_error.py&#39;.
     SyntaxError: invalid syntax (raise_syntax_error1.py, line 3)
 
 A SyntaxError occurs when Python cannot understand your code.
-There could be many possible reasons:
-- a keyword might be misspelled;
-- a colon, :, or some other symbol like (, ], etc., might be missing;
-- etc.
 
-Likely cause:
-    Python could not parse the file &#39;raise_syntax_error1.py&#39;
-    beyond the location indicated below by --&gt; and ^.
+Python could not parse the file &#39;raise_syntax_error1.py&#39;
+beyond the location indicated below by --&gt; and ^.
 
    1: &quot;&quot;&quot; Should raise SyntaxError&quot;&quot;&quot;
    2:
 --&gt;3: pass = 2
            ^
-    My best guess: you were trying to assign a value
-    to a Python keyword. This is not allowed.
+My best guess: you were trying to assign a value
+to a Python keyword. This is not allowed.
 </pre></div>
 </div>
 </div>
-<div class="section" id="taberror-1">
-<h2>TabError - 1<a class="headerlink" href="#taberror-1" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
-    TypeError: &#39;module&#39; object is not callable
-
-No information is known about this exception.
-
-
-Execution stopped on line 51 of file &#39;trb_common.py&#39;.
-
-   49:                     mod = __import__(name)
-   50:                     if function is not None:
---&gt;51:                         result = getattr(mod, function)()
-   52:                         write(result)
-</pre></div>
-</div>
-</div>
-<div class="section" id="taberror-2">
-<h2>TabError - 2<a class="headerlink" href="#taberror-2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="taberror">
+<h2>TabError<a class="headerlink" href="#taberror" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
     TabError: inconsistent use of tabs and spaces in indentation (raise_tab_error2.py, line 7)
 
@@ -252,9 +229,8 @@ Indenting your code means to have block of codes aligned vertically
 by inserting either spaces or tab characters at the beginning of lines.
 Python&#39;s recommendation is to always use spaces to indent your code.
 
-Likely cause:
-    Python could not parse the file &#39;raise_tab_error2.py&#39;
-    beyond the location indicated below by --&gt; and ^.
+Python could not parse the file &#39;raise_tab_error2.py&#39;
+beyond the location indicated below by --&gt; and ^.
 
     4:
     5: def no_pytest_tab_error2():

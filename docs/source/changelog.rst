@@ -5,7 +5,9 @@ Change Log
 
     Unless otherwise noted, "with translation" means with French translation.
 
-
+- Added a way to set the language from an environment variable
+- Added a way to set the language from a .ini file
+- Added many ways to find the possibly cause of a SyntaxError
 - Added ZeroDivisionError, with translation
 - Added UnboundLocalError, with translation
 - Took care of SystemExit and KeyboardInterrupt

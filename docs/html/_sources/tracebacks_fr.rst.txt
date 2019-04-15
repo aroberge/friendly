@@ -36,16 +36,16 @@ IndentationError - 1: expected an indented block
     Une exception de type IndentationError se produit lorsqu'une ligne de code
     n'est pas indentée (c'est-à-dire alignée verticalement avec les autres lignes)
     de la façon attendue.
-
-    Cause probable : 
-        Python peut seulement analyser le fichier 'raise_indentation_error1.py'
-        jusqu'à l'endroit indiqué par --> et ^.
+    Python peut seulement analyser le fichier 'raise_indentation_error1.py'
+    jusqu'à l'endroit indiqué par --> et ^.
 
        1: '''Should raise IndentationError'''
        2: 
        3: if True:
     -->4: pass
              ^
+
+    Cause probable : 
         Dans ce cas-ci, la ligne indiquée ci-dessus par --> devrait
         normalement commencer un nouveau bloc de code indenté.
 
@@ -61,16 +61,16 @@ IndentationError - 2: unexpected indent
     Une exception de type IndentationError se produit lorsqu'une ligne de code
     n'est pas indentée (c'est-à-dire alignée verticalement avec les autres lignes)
     de la façon attendue.
-
-    Cause probable : 
-        Python peut seulement analyser le fichier 'raise_indentation_error2.py'
-        jusqu'à l'endroit indiqué par --> et ^.
+    Python peut seulement analyser le fichier 'raise_indentation_error2.py'
+    jusqu'à l'endroit indiqué par --> et ^.
 
        1: '''Should raise IndentationError'''
        2: if True:
        3:     pass
     -->4:       pass
                ^
+
+    Cause probable : 
         Dans ce cas-ci, la ligne indiquée ci-dessus par -->
         est plus indentée que ce qui était attendu et ne
         correspond pas à l'indentation de la ligne précédente.
@@ -87,16 +87,16 @@ IndentationError - 3: unindent does not match ...
     Une exception de type IndentationError se produit lorsqu'une ligne de code
     n'est pas indentée (c'est-à-dire alignée verticalement avec les autres lignes)
     de la façon attendue.
-
-    Cause probable : 
-        Python peut seulement analyser le fichier 'raise_indentation_error3.py'
-        jusqu'à l'endroit indiqué par --> et ^.
+    Python peut seulement analyser le fichier 'raise_indentation_error3.py'
+    jusqu'à l'endroit indiqué par --> et ^.
 
        1: '''Should raise IndentationError'''
        2: if True:
        3:       pass
     -->4:     pass
                   ^
+
+    Cause probable : 
         Dans ce cas-ci, la ligne indiquée ci-dessus par -->
         est moins indentée que la ligne précédente
         et n’est pas alignée verticalement avec un autre bloc de code.
@@ -137,45 +137,21 @@ SyntaxError
     Exception Python: 
         SyntaxError: invalid syntax (raise_syntax_error1.py, line 3)
 
-    Une exception SyntaxError se produit lorsque python ne peut pas comprendre votre code.
-    Il pourrait y avoir plusieurs raisons possibles:
-    - un mot-clé peut être mal orthographié;
-    - le symbole deux points, :, ou un autre symbole comme (,], etc., pourrait manquer;
-    - etc.
+    Une exception de type SyntaxError se produit lorsque python ne peut pas comprendre votre code.
 
-    Cause probable : 
-        Python peut seulement analyser le fichier 'raise_syntax_error1.py'
-        jusqu'à l'endroit indiqué par --> et ^.
+    Python peut seulement analyser le fichier 'raise_syntax_error1.py'
+    jusqu'à l'endroit indiqué par --> et ^.
 
        1: """ Should raise SyntaxError"""
        2: 
     -->3: pass = 2
                ^
-        Ma meilleure hypothèse: vous essayiez d’assigner une valeur à un mot clé Python.
-        Ceci n’est pas permis.
+    Ma meilleure hypothèse: vous essayiez d’assigner une valeur à un mot clé Python.
+    Ceci n’est pas permis.
 
 
-TabError - 1
-------------
-
-.. code-block:: none
-
-
-    Exception Python: 
-        TypeError: 'module' object is not callable
-
-    Aucune information n'est connue au sujet de cette exception.
-
-
-    L'exécution s'est arrêtée à la ligne 51 du fichier 'trb_common.py'
-
-       49:                     mod = __import__(name)
-       50:                     if function is not None:
-    -->51:                         result = getattr(mod, function)()
-       52:                         write(result)
-
-TabError - 2
-------------
+TabError
+--------
 
 .. code-block:: none
 
@@ -190,9 +166,8 @@ TabError - 2
     en insérant des espaces ou des tabulations au début des lignes.
     La recommandation de Python est de toujours utiliser des espaces pour indenter votre code.
 
-    Cause probable : 
-        Python peut seulement analyser le fichier 'raise_tab_error2.py'
-        jusqu'à l'endroit indiqué par --> et ^.
+    Python peut seulement analyser le fichier 'raise_tab_error2.py'
+    jusqu'à l'endroit indiqué par --> et ^.
 
         4: 
         5: def no_pytest_tab_error2():

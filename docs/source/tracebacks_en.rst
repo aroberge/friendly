@@ -35,16 +35,16 @@ IndentationError - 1: expected an indented block
 
     An IndentationError occurs when a given line of code is
     not indented (aligned vertically with other lines) as expected.
-
-    Likely cause:
-        Python could not parse the file 'raise_indentation_error1.py'
-        beyond the location indicated below by --> and ^.
+    Python could not parse the file 'raise_indentation_error1.py'
+    beyond the location indicated below by --> and ^.
 
        1: '''Should raise IndentationError'''
        2: 
        3: if True:
     -->4: pass
              ^
+
+    Likely cause:
         In this case, the line identified above
         was expected to begin a new indented block.
 
@@ -59,16 +59,16 @@ IndentationError - 2: unexpected indent
 
     An IndentationError occurs when a given line of code is
     not indented (aligned vertically with other lines) as expected.
-
-    Likely cause:
-        Python could not parse the file 'raise_indentation_error2.py'
-        beyond the location indicated below by --> and ^.
+    Python could not parse the file 'raise_indentation_error2.py'
+    beyond the location indicated below by --> and ^.
 
        1: '''Should raise IndentationError'''
        2: if True:
        3:     pass
     -->4:       pass
                ^
+
+    Likely cause:
         In this case, the line identified above
         is more indented than expected and 
         does not match the indentation of the previous line.
@@ -84,16 +84,16 @@ IndentationError - 3: unindent does not match ...
 
     An IndentationError occurs when a given line of code is
     not indented (aligned vertically with other lines) as expected.
-
-    Likely cause:
-        Python could not parse the file 'raise_indentation_error3.py'
-        beyond the location indicated below by --> and ^.
+    Python could not parse the file 'raise_indentation_error3.py'
+    beyond the location indicated below by --> and ^.
 
        1: '''Should raise IndentationError'''
        2: if True:
        3:       pass
     -->4:     pass
                   ^
+
+    Likely cause:
         In this case, the line identified above is
         less indented than the preceding one,
         and is not aligned vertically with another block of code.
@@ -135,44 +135,20 @@ SyntaxError
         SyntaxError: invalid syntax (raise_syntax_error1.py, line 3)
 
     A SyntaxError occurs when Python cannot understand your code.
-    There could be many possible reasons:
-    - a keyword might be misspelled;
-    - a colon, :, or some other symbol like (, ], etc., might be missing;
-    - etc.
 
-    Likely cause:
-        Python could not parse the file 'raise_syntax_error1.py'
-        beyond the location indicated below by --> and ^.
+    Python could not parse the file 'raise_syntax_error1.py'
+    beyond the location indicated below by --> and ^.
 
        1: """ Should raise SyntaxError"""
        2: 
     -->3: pass = 2
                ^
-        My best guess: you were trying to assign a value
-        to a Python keyword. This is not allowed.
+    My best guess: you were trying to assign a value
+    to a Python keyword. This is not allowed.
 
 
-TabError - 1
-------------
-
-.. code-block:: none
-
-
-    Python exception: 
-        TypeError: 'module' object is not callable
-
-    No information is known about this exception.
-
-
-    Execution stopped on line 51 of file 'trb_common.py'.
-
-       49:                     mod = __import__(name)
-       50:                     if function is not None:
-    -->51:                         result = getattr(mod, function)()
-       52:                         write(result)
-
-TabError - 2
-------------
+TabError
+--------
 
 .. code-block:: none
 
@@ -187,9 +163,8 @@ TabError - 2
     by inserting either spaces or tab characters at the beginning of lines.
     Python's recommendation is to always use spaces to indent your code.
 
-    Likely cause:
-        Python could not parse the file 'raise_tab_error2.py'
-        beyond the location indicated below by --> and ^.
+    Python could not parse the file 'raise_tab_error2.py'
+    beyond the location indicated below by --> and ^.
 
         4: 
         5: def no_pytest_tab_error2():

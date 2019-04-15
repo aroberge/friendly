@@ -19,6 +19,34 @@ def _write_err(text):
     sys.stderr.write(text)
 
 
+def get_default_lang():
+    """The default language to be used for translations is determined
+       in order of priority by:
+          1. The latest explicit call to Friendly-traceback, either as a flag
+             from the command line, or as an argument to a function or method.
+          2. The environment value set by the a user in a given console.
+             For windows, the value is set with
+                set FriendlyLang=some value
+             and is stored in all uppercase
+          3. A value set in a .ini file in the user's home directory.
+          4. A value determined by the locale - e.g. default language for the OS
+    """
+    lang, _ignore = locale.getdefaultlocale()  # lowest priority
+
+    loc = os.path.join(os.path.expanduser("~"), "friendly.ini")
+    if os.path.isfile(loc):
+        config = configparser.ConfigParser()
+        config.read(loc)
+        if "friendly" in config:
+            if "lang" in config["friendly"]:
+                lang = config["friendly"]["lang"]
+
+    if "FRIENDLYLANG" in os.environ:
+        lang = os.environ["FRIENDLYLANG"]
+
+    return lang
+
+
 class _State:
     """Keeping track of various parameters in a single object meant
        to be instantiated only once.
@@ -29,14 +57,7 @@ class _State:
         self.redirect = None
         self.context = 3
         self.write_err = _write_err
-        lang, _ignore = locale.getdefaultlocale()
-        loc = os.path.join(os.path.expanduser("~"), "friendly.ini")
-        if os.path.isfile(loc):
-            config = configparser.ConfigParser()
-            config.read(loc)
-            if "friendly" in config:
-                if "lang" in config["friendly"]:
-                    lang = config["friendly"]["lang"]
+        lang = get_default_lang()
         self.install_gettext(lang)
         self.level = 0
         self.running_script = False

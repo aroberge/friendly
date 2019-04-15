@@ -33,21 +33,16 @@ SyntaxError - Assign to keyword
         SyntaxError: invalid syntax (raise_syntax_error1.py, line 3)
 
     A SyntaxError occurs when Python cannot understand your code.
-    There could be many possible reasons:
-    - a keyword might be misspelled;
-    - a colon, :, or some other symbol like (, ], etc., might be missing;
-    - etc.
 
-    Likely cause:
-        Python could not parse the file 'raise_syntax_error1.py'
-        beyond the location indicated below by --> and ^.
+    Python could not parse the file 'raise_syntax_error1.py'
+    beyond the location indicated below by --> and ^.
 
        1: """ Should raise SyntaxError"""
        2: 
     -->3: pass = 2
                ^
-        My best guess: you were trying to assign a value
-        to a Python keyword. This is not allowed.
+    My best guess: you were trying to assign a value
+    to a Python keyword. This is not allowed.
 
 
 SyntaxError - Missing colon 1
@@ -60,21 +55,16 @@ SyntaxError - Missing colon 1
         SyntaxError: invalid syntax (raise_syntax_error2.py, line 3)
 
     A SyntaxError occurs when Python cannot understand your code.
-    There could be many possible reasons:
-    - a keyword might be misspelled;
-    - a colon, :, or some other symbol like (, ], etc., might be missing;
-    - etc.
 
-    Likely cause:
-        Python could not parse the file 'raise_syntax_error2.py'
-        beyond the location indicated below by --> and ^.
+    Python could not parse the file 'raise_syntax_error2.py'
+    beyond the location indicated below by --> and ^.
 
        1: """Should raise SyntaxError"""
        2: 
     -->3: if True
                  ^
-       My best guess: you wrote a statement beginning with
-       'if' but forgot to add a colon ':' at the end
+    My best guess: you wrote a statement beginning with
+    'if' but forgot to add a colon ':' at the end
 
 
 SyntaxError - Missing colon 2
@@ -87,21 +77,16 @@ SyntaxError - Missing colon 2
         SyntaxError: invalid syntax (raise_syntax_error3.py, line 3)
 
     A SyntaxError occurs when Python cannot understand your code.
-    There could be many possible reasons:
-    - a keyword might be misspelled;
-    - a colon, :, or some other symbol like (, ], etc., might be missing;
-    - etc.
 
-    Likely cause:
-        Python could not parse the file 'raise_syntax_error3.py'
-        beyond the location indicated below by --> and ^.
+    Python could not parse the file 'raise_syntax_error3.py'
+    beyond the location indicated below by --> and ^.
 
        1: """Should raise SyntaxError"""
        2: 
     -->3: while True  # a comment
                                  ^
-       My best guess: you wrote a 'while' loop but
-       forgot to add a colon ':' at the end
+    My best guess: you wrote a 'while' loop but
+    forgot to add a colon ':' at the end
 
 
 SyntaxError - elif, not else if
@@ -114,22 +99,17 @@ SyntaxError - elif, not else if
         SyntaxError: invalid syntax (raise_syntax_error4.py, line 5)
 
     A SyntaxError occurs when Python cannot understand your code.
-    There could be many possible reasons:
-    - a keyword might be misspelled;
-    - a colon, :, or some other symbol like (, ], etc., might be missing;
-    - etc.
 
-    Likely cause:
-        Python could not parse the file 'raise_syntax_error4.py'
-        beyond the location indicated below by --> and ^.
+    Python could not parse the file 'raise_syntax_error4.py'
+    beyond the location indicated below by --> and ^.
 
        2: 
        3: if False:
        4:     pass
     -->5: else if True:
                 ^
-        My best guess: you meant to use Python's 'elif' keyword
-        but wrote 'else if' instead
+    My best guess: you meant to use Python's 'elif' keyword
+    but wrote 'else if' instead
 
 
 SyntaxError - elif, not elseif
@@ -142,22 +122,17 @@ SyntaxError - elif, not elseif
         SyntaxError: invalid syntax (raise_syntax_error5.py, line 5)
 
     A SyntaxError occurs when Python cannot understand your code.
-    There could be many possible reasons:
-    - a keyword might be misspelled;
-    - a colon, :, or some other symbol like (, ], etc., might be missing;
-    - etc.
 
-    Likely cause:
-        Python could not parse the file 'raise_syntax_error5.py'
-        beyond the location indicated below by --> and ^.
+    Python could not parse the file 'raise_syntax_error5.py'
+    beyond the location indicated below by --> and ^.
 
        2: 
        3: if False:
        4:     pass
     -->5: elseif True:
                     ^
-        My best guess: you meant to use Python's 'elif' keyword
-        but wrote 'elseif' instead
+    My best guess: you meant to use Python's 'elif' keyword
+    but wrote 'elseif' instead
 
 
 SyntaxError - malformed def statment - 1
@@ -170,23 +145,18 @@ SyntaxError - malformed def statment - 1
         SyntaxError: invalid syntax (raise_syntax_error6.py, line 3)
 
     A SyntaxError occurs when Python cannot understand your code.
-    There could be many possible reasons:
-    - a keyword might be misspelled;
-    - a colon, :, or some other symbol like (, ], etc., might be missing;
-    - etc.
 
-    Likely cause:
-        Python could not parse the file 'raise_syntax_error6.py'
-        beyond the location indicated below by --> and ^.
+    Python could not parse the file 'raise_syntax_error6.py'
+    beyond the location indicated below by --> and ^.
 
        1: """Should raise SyntaxError"""
        2: 
     -->3: def :
               ^
-        My best guess: you tried to define a function or method
-        and did not use the correct syntax.
-        The correct syntax is:
-            def name ( optional_arguments ):
+    My best guess: you tried to define a function or method
+    and did not use the correct syntax.
+    The correct syntax is:
+        def name ( optional_arguments ):
 
 SyntaxError - malformed def statment - 2
 ----------------------------------------
@@ -198,23 +168,18 @@ SyntaxError - malformed def statment - 2
         SyntaxError: invalid syntax (raise_syntax_error7.py, line 3)
 
     A SyntaxError occurs when Python cannot understand your code.
-    There could be many possible reasons:
-    - a keyword might be misspelled;
-    - a colon, :, or some other symbol like (, ], etc., might be missing;
-    - etc.
 
-    Likely cause:
-        Python could not parse the file 'raise_syntax_error7.py'
-        beyond the location indicated below by --> and ^.
+    Python could not parse the file 'raise_syntax_error7.py'
+    beyond the location indicated below by --> and ^.
 
        1: """Should raise SyntaxError"""
        2: 
     -->3: def name  :
                     ^
-        My best guess: you tried to define a function or method
-        and did not use the correct syntax.
-        The correct syntax is:
-            def name ( optional_arguments ):
+    My best guess: you tried to define a function or method
+    and did not use the correct syntax.
+    The correct syntax is:
+        def name ( optional_arguments ):
 
 SyntaxError - malformed def statment - 3
 ----------------------------------------
@@ -226,20 +191,41 @@ SyntaxError - malformed def statment - 3
         SyntaxError: invalid syntax (raise_syntax_error8.py, line 3)
 
     A SyntaxError occurs when Python cannot understand your code.
-    There could be many possible reasons:
-    - a keyword might be misspelled;
-    - a colon, :, or some other symbol like (, ], etc., might be missing;
-    - etc.
 
-    Likely cause:
-        Python could not parse the file 'raise_syntax_error8.py'
-        beyond the location indicated below by --> and ^.
+    Python could not parse the file 'raise_syntax_error8.py'
+    beyond the location indicated below by --> and ^.
 
        1: """Should raise SyntaxError"""
        2: 
     -->3: def ( arg )  :
               ^
-        My best guess: you tried to define a function or method
-        and did not use the correct syntax.
-        The correct syntax is:
-            def name ( optional_arguments ):
+    My best guess: you tried to define a function or method
+    and did not use the correct syntax.
+    The correct syntax is:
+        def name ( optional_arguments ):
+
+SyntaxError - can't assign to literal
+-------------------------------------
+
+.. code-block:: none
+
+
+    Python exception: 
+        SyntaxError: can't assign to literal (raise_syntax_error9.py, line 3)
+
+    A SyntaxError occurs when Python cannot understand your code.
+
+    Python could not parse the file 'raise_syntax_error9.py'
+    beyond the location indicated below by --> and ^.
+
+       1: """Should raise SyntaxError: can't assign to literal"""
+       2: 
+    -->3: 1 = a
+         ^
+    My best guess: you wrote an expression like
+        1 = something
+    where <1>, on the left hand-side of the equal sign, is
+    an actual number or string (what Python calls a 'literal'),
+    and not the name of a variable.  Perhaps you meant to write:
+        something = 1
+
