@@ -55,7 +55,7 @@ Basic usage
 
 There should be three ways of using friendly-traceback.
 
-1. As an import hook::
+1. As an exception hook::
 
     import friendly_traceback
     friendly_traceback.install()  # sys.excepthook = friendly_traceback.explain

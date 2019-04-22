@@ -22,7 +22,8 @@ root_dir = os.path.abspath(os.path.join(this_dir, ".."))
 # sys.path.insert(0, root_dir)
 
 LANG = "en"
-friendly_traceback.install(lang=LANG)
+friendly_traceback.install()
+friendly_traceback.set_lang(LANG)
 
 sys.path.insert(0, this_dir)
 
@@ -48,7 +49,7 @@ should be included here.
      This needs to be done explicitly, independently of updating the
      documentation using Sphinx.
      On Windows, if Sphinx is installed on your computer, it is suggested
-     instead to run make_tb.bat in the root directory as it will create
+     instead to run make_trb.bat in the root directory as it will create
      similar files for all languages *and* update the documentation.
 
 Friendly-traceback version: {friendly}

@@ -22,6 +22,7 @@ section on "Verbosity".
    :maxdepth: 2
    :caption: Contents:
 
+    Usage <usage>
     Design <design>
     Adding an Exception <adding_exception>
     Dealing with Syntax Errors <syntax_error.rst>

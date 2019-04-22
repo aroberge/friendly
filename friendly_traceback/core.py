@@ -47,6 +47,34 @@ def get_default_lang():
     return lang
 
 
+def get_level():
+    """The verbosity level to be used by Friendly-traceback is determined
+       in order of priority by:
+          1. The latest explicit call to Friendly-traceback as a flag
+             from the command line, or by a call to the set_level() function.
+          2. The environment value set by the a user in a given console.
+             For windows, the value is set with
+                set FriendlyLevel=some value
+             and is stored in all uppercase.
+          3. A value set in a .ini file in the user's home directory.
+          4. A default value of 1
+    """
+    level = 1
+
+    loc = os.path.join(os.path.expanduser("~"), "friendly.ini")
+    if os.path.isfile(loc):
+        config = configparser.ConfigParser()
+        config.read(loc)
+        if "friendly" in config:
+            if "level" in config["friendly"]:
+                level = config["friendly"]["level"]
+
+    if "FRIENDLYLEVEL" in os.environ:
+        level = os.environ["FRIENDLYLEVEL"]
+
+    return level
+
+
 class _State:
     """Keeping track of various parameters in a single object meant
        to be instantiated only once.
@@ -54,12 +82,11 @@ class _State:
 
     def __init__(self):
         self._captured = []
-        self.redirect = None
         self.context = 3
         self.write_err = _write_err
         lang = get_default_lang()
         self.install_gettext(lang)
-        self.level = 0
+        self.level = get_level()
         self.running_script = False
 
     def explain(self, etype, value, tb, redirect=None):
@@ -74,6 +101,11 @@ class _State:
         else:
             self.write_err = _write_err
 
+        if self.level == 0:
+            python_tb = traceback.format_exception(etype, value, tb)
+            self.write_err("\n" + "".join(python_tb) + "\n")
+            return
+
         if etype.__name__ == "SystemExit":
             raise SystemExit(str(value))
         if etype.__name__ == "KeyboardInterrupt":
@@ -84,7 +116,7 @@ class _State:
         )
         self.write_err(explanation)
 
-        if self.level == 2:
+        if self.level == 9:
             python_tb = traceback.format_exception(etype, value, tb)
             self.write_err("\n" + "".join(python_tb) + "\n")
 
@@ -103,21 +135,26 @@ class _State:
         """Sets the current language for gettext."""
         current_lang.install(lang)
 
-    def install(self, lang=None, redirect=None):
+    def set_level(self, level):
+        if level != 0:
+            sys.excepthook = self.explain
+        else:
+            sys.excepthook = sys.__excepthook__
+        self.level = level
+
+    def install(self, lang=None, redirect=None, level=None):
         """
         Replaces sys.excepthook by friendly_traceback's own version
         """
-        sys.excepthook = self.explain
-
         if lang is not None:
             self.install_gettext(lang)
+
         if redirect == "capture":
             self.write_err = self.capture
         elif redirect is not None:
-            self.write_err = self.redirect
-
-        if redirect is not None:
-            self.redirect = redirect
+            self.write_err = redirect
+        else:
+            self.write_err = _write_err
 
 
 state = _State()
@@ -152,11 +189,11 @@ def get_output(flush=True):
     return state.get_captured(flush=flush)
 
 
-def install(lang=None, redirect=None):
+def install(redirect=None):
     """
     Replaces sys.excepthook by friendly_traceback's own version
     """
-    state.install(lang=lang, redirect=redirect)
+    state.install(redirect=redirect)
 
 
 def set_lang(lang):
@@ -166,3 +203,15 @@ def set_lang(lang):
        English strings will be used.
     """
     state.install_gettext(lang)
+
+
+def set_level(level):
+    """Sets the verbosity level to be used.
+
+       0. Normal Python tracebacks - restoring sys.__except_hook
+       1. Default
+       9. "Default" + Python tracebacks at the end.
+
+       Some other values may be available on an experimental basis.
+    """
+    state.set_level(level)

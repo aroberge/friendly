@@ -22,7 +22,8 @@ root_dir = os.path.abspath(os.path.join(this_dir, ".."))
 # sys.path.insert(0, root_dir)
 
 LANG = "fr"
-friendly_traceback.install(lang=LANG)
+friendly_traceback.install()
+friendly_traceback.set_lang(LANG)
 
 sys.path.insert(0, this_dir)
 
@@ -48,7 +49,7 @@ ici tous les exemples possibles tels qu'interprétés par friendly-traceback.
      faire des corrections ou des ajouts, avant de faire la mise
      à jour du reste de la documentation avec Sphinx.
      Sous Windows, si Sphinx est installé sur votre ordinateur, il est
-     plutôt suggéré d'exécuter make_tb.bat qui est au premier niveau
+     plutôt suggéré d'exécuter make_trb.bat qui est au premier niveau
      du répertoire de fichier. Si vous faites ceci, la documentation pour
      toutes les langues sera automatiquement mise à jour.
 
