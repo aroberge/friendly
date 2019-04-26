@@ -87,6 +87,7 @@ class _State:
         lang = get_default_lang()
         self.install_gettext(lang)
         self.level = get_level()
+        self.set_level(self.level)
         self.running_script = False
 
     def explain(self, etype, value, tb, redirect=None):
