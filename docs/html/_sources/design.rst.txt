@@ -14,9 +14,12 @@ The content of this file **will** be changed as this project evolve.
 Purpose
 -------
 
-friendly-traceback aims to make it easier for beginners and/or for people
-that have limited knowledge of English to understand what caused a
-program to generate a traceback.
+friendly-traceback primary purpose is to make it easier for
+beginners and/or for people that have limited knowledge of English
+to understand what caused a program to generate a traceback.
+A secondary goal is to help them learn how to decipher a normal Python
+traceback and use the information to understand what went wrong and how
+to fix it.
 
 
 .. sidebar:: Thought...
@@ -38,8 +41,8 @@ this document.
 - In addition to showing the line of code where an exception is raised, how
   many other lines of code should be shown?
   Python's `cgitb module <https://docs.python.org/3/library/cgitb.html>`_
-  shows 5 lines of context for each "item" in a traceback. We currently
-  show only three.
+  shows five lines of context for each "item" in a traceback. We currently
+  show only four.
 
 - Should we aim to provide information about **all** standard Python
   Exceptions, or just a subset?  Should we include also Warnings?
@@ -49,6 +52,14 @@ this document.
 - Should translations (``.po`` files) be limited to general translations
   for a given language (e.g. ``fr``) and not include region-specific version
   (e.g. ``fr_CA``)?
+
+- Should we offer a single explanation as to the likely cause of the error,
+  or do like Thonny and offer weighted alternatives?
+  See Issue8_
+  for a discussion.
+
+
+.. _Issue8: https://github.com/aroberge/friendly-traceback/issues/8
 
 Basic usage
 --------------
@@ -153,6 +164,10 @@ translated, and the block 2 is the same as that given by Python in English.
    :scale: 50 %
    :alt: NameError traceback in French
 
+This basic level should be such that a user is never shown an overwhelming
+amount of information; ideally, when using a REPL, no scrolling should be
+required to display all the information.
+
 
 2. Intermediate
 ~~~~~~~~~~~~~~~
@@ -185,7 +200,9 @@ option of including it, we believe it might ease the learning curve for students
 3. Advanced
 ~~~~~~~~~~~
 
-In the advanced version, the normal Python traceback is shown.
+In the advanced version, the normal Python traceback is shown, in addition
+to the basic information given by Friendly.
+
 
 Setting the verbosity level
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -202,14 +219,16 @@ Extensibility
 
 For projects that have their custom Exceptions, like AvantPy, it should
 be possible to add the custom exceptions to those handled by
-friendly-traceback.  Perhaps with something like::
+friendly-traceback.  This could perhaps be achieved by having custom
+exceptions include a special method, like::
 
-    import friendly_traceback as friendly
-    from my_project import my_exceptions
+    class MyException(Exception):
 
-    friendly.extend(my_exceptions)
-    friendly.install()
+        def explain(self):
+            return _("Some detailed explanation")
 
+Friendly-tracebacks could then first look to see if this special method
+exists for a given exception; if so, it would just use it "as is".
 
 About the likely cause
 --------------------------
@@ -222,7 +241,18 @@ or flake8 before running the code. It should be possible to either
 use one of these packages to do this analysis when an error is found,
 or to develop a simplified version that focuses on syntax errors,
 and is designed from the start to provide localized (i.e. translated)
-information.
+information.  We note that `PyTA <https://github.com/pyta-uoft/pyta>`_ does
+something similar. Also, Thonny `implements something similar <https://github.com/thonny/thonny/blob/master/thonny/plugins/stdlib_error_helpers.py>`_ to
+what we have in mind.
+
+We have already implemented a basic framework for examining ``SyntaxError``
+which can handle a few cases and can be a good starting point for further
+explorations.
+
+As discussed in Issue8_, Thonny_ presents more than one possible cause for
+a given error. This is something to be considered.
+
+.. _Thonny: https://thonny.org/
 
 Additional configuration
 -------------------------
@@ -240,6 +270,10 @@ traceback information; however, this should likely be done only:
 
     This additional colour feature should only be implemented after all other
     issues have been dealt with.
+
+3. It might be potentially useful to save the information in some "structured"
+   form, as suggested in Issue8_, so that it could be formatted differently
+   by any program using Friendly-traceback.
 
 Other similar projects
 ------------------------
@@ -261,6 +295,8 @@ The following is an incomplete list of projects or modules to look at:
 - https://github.com/ipython/ipython/blob/master/IPython/core/ultratb.py
 - https://github.com/patrys/great-justice
 - https://github.com/Qix-/better-exceptions
+- As mentioned in Issue8_, Thonny_ already has something
+  similar implemented.
 
 
 Reference: known exceptions

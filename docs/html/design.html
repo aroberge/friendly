@@ -105,9 +105,12 @@ and not on keeping this document up to date.</p>
 </div>
 <div class="section" id="purpose">
 <h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
-<p>friendly-traceback aims to make it easier for beginners and/or for people
-that have limited knowledge of English to understand what caused a
-program to generate a traceback.</p>
+<p>friendly-traceback primary purpose is to make it easier for
+beginners and/or for people that have limited knowledge of English
+to understand what caused a program to generate a traceback.
+A secondary goal is to help them learn how to decipher a normal Python
+traceback and use the information to understand what went wrong and how
+to fix it.</p>
 <div class="sidebar">
 <p class="first sidebar-title">Thought…</p>
 <p class="last">The success of this module is predicated on contributions (mostly to
@@ -127,8 +130,8 @@ this document.</p>
 <li>In addition to showing the line of code where an exception is raised, how
 many other lines of code should be shown?
 Python’s <a class="reference external" href="https://docs.python.org/3/library/cgitb.html">cgitb module</a>
-shows 5 lines of context for each “item” in a traceback. We currently
-show only three.</li>
+shows five lines of context for each “item” in a traceback. We currently
+show only four.</li>
 <li>Should we aim to provide information about <strong>all</strong> standard Python
 Exceptions, or just a subset?  Should we include also Warnings?
 The full list of exceptions and warnings is included at the end of
@@ -136,6 +139,10 @@ this document.</li>
 <li>Should translations (<code class="docutils literal notranslate"><span class="pre">.po</span></code> files) be limited to general translations
 for a given language (e.g. <code class="docutils literal notranslate"><span class="pre">fr</span></code>) and not include region-specific version
 (e.g. <code class="docutils literal notranslate"><span class="pre">fr_CA</span></code>)?</li>
+<li>Should we offer a single explanation as to the likely cause of the error,
+or do like Thonny and offer weighted alternatives?
+See <a class="reference external" href="https://github.com/aroberge/friendly-traceback/issues/8">Issue8</a>
+for a discussion.</li>
 </ul>
 </div>
 <div class="section" id="basic-usage">
@@ -229,6 +236,9 @@ provide a few additional lines. [See open question above.]</li>
 <p>The corresponding French version, where the highlighted blocks 1 and 3 are
 translated, and the block 2 is the same as that given by Python in English.</p>
 <a class="reference internal image-reference" href="_images/name_error_fr.png"><img alt="NameError traceback in French" src="_images/name_error_fr.png" style="width: 598.5px; height: 403.0px;" /></a>
+<p>This basic level should be such that a user is never shown an overwhelming
+amount of information; ideally, when using a REPL, no scrolling should be
+required to display all the information.</p>
 </div>
 <div class="section" id="intermediate">
 <h3>2. Intermediate<a class="headerlink" href="#intermediate" title="Permalink to this headline">¶</a></h3>
@@ -251,7 +261,8 @@ but perhaps without added colours, at least initially.</p>
 </div>
 <div class="section" id="advanced">
 <h3>3. Advanced<a class="headerlink" href="#advanced" title="Permalink to this headline">¶</a></h3>
-<p>In the advanced version, the normal Python traceback is shown.</p>
+<p>In the advanced version, the normal Python traceback is shown, in addition
+to the basic information given by Friendly.</p>
 </div>
 <div class="section" id="setting-the-verbosity-level">
 <h3>Setting the verbosity level<a class="headerlink" href="#setting-the-verbosity-level" title="Permalink to this headline">¶</a></h3>
@@ -266,14 +277,16 @@ the local environment variables (as for the language) or from a global
 <h2>Extensibility<a class="headerlink" href="#extensibility" title="Permalink to this headline">¶</a></h2>
 <p>For projects that have their custom Exceptions, like AvantPy, it should
 be possible to add the custom exceptions to those handled by
-friendly-traceback.  Perhaps with something like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">friendly_traceback</span> <span class="k">as</span> <span class="nn">friendly</span>
-<span class="kn">from</span> <span class="nn">my_project</span> <span class="k">import</span> <span class="n">my_exceptions</span>
+friendly-traceback.  This could perhaps be achieved by having custom
+exceptions include a special method, like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 
-<span class="n">friendly</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">my_exceptions</span><span class="p">)</span>
-<span class="n">friendly</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">explain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Some detailed explanation&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Friendly-tracebacks could then first look to see if this special method
+exists for a given exception; if so, it would just use it “as is”.</p>
 </div>
 <div class="section" id="about-the-likely-cause">
 <h2>About the likely cause<a class="headerlink" href="#about-the-likely-cause" title="Permalink to this headline">¶</a></h2>
@@ -285,7 +298,14 @@ or flake8 before running the code. It should be possible to either
 use one of these packages to do this analysis when an error is found,
 or to develop a simplified version that focuses on syntax errors,
 and is designed from the start to provide localized (i.e. translated)
-information.</p>
+information.  We note that <a class="reference external" href="https://github.com/pyta-uoft/pyta">PyTA</a> does
+something similar. Also, Thonny <a class="reference external" href="https://github.com/thonny/thonny/blob/master/thonny/plugins/stdlib_error_helpers.py">implements something similar</a> to
+what we have in mind.</p>
+<p>We have already implemented a basic framework for examining <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>
+which can handle a few cases and can be a good starting point for further
+explorations.</p>
+<p>As discussed in <a class="reference external" href="https://github.com/aroberge/friendly-traceback/issues/8">Issue8</a>, <a class="reference external" href="https://thonny.org/">Thonny</a> presents more than one possible cause for
+a given error. This is something to be considered.</p>
 </div>
 <div class="section" id="additional-configuration">
 <h2>Additional configuration<a class="headerlink" href="#additional-configuration" title="Permalink to this headline">¶</a></h2>
@@ -303,6 +323,11 @@ a way that might be counter productive)</li>
 <p class="last">This additional colour feature should only be implemented after all other
 issues have been dealt with.</p>
 </div>
+<ol class="arabic simple" start="3">
+<li>It might be potentially useful to save the information in some “structured”
+form, as suggested in <a class="reference external" href="https://github.com/aroberge/friendly-traceback/issues/8">Issue8</a>, so that it could be formatted differently
+by any program using Friendly-traceback.</li>
+</ol>
 </div>
 <div class="section" id="other-similar-projects">
 <h2>Other similar projects<a class="headerlink" href="#other-similar-projects" title="Permalink to this headline">¶</a></h2>
@@ -323,6 +348,8 @@ The following is an incomplete list of projects or modules to look at:</p>
 <li><a class="reference external" href="https://github.com/ipython/ipython/blob/master/IPython/core/ultratb.py">https://github.com/ipython/ipython/blob/master/IPython/core/ultratb.py</a></li>
 <li><a class="reference external" href="https://github.com/patrys/great-justice">https://github.com/patrys/great-justice</a></li>
 <li><a class="reference external" href="https://github.com/Qix-/better-exceptions">https://github.com/Qix-/better-exceptions</a></li>
+<li>As mentioned in <a class="reference external" href="https://github.com/aroberge/friendly-traceback/issues/8">Issue8</a>, <a class="reference external" href="https://thonny.org/">Thonny</a> already has something
+similar implemented.</li>
 </ul>
 </div>
 <div class="section" id="reference-known-exceptions">
