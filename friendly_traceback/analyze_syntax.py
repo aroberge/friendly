@@ -112,6 +112,24 @@ def confused_elif(tokens):
 
 
 @add_cause
+def import_from(tokens):
+    """Looks for
+            import X from Y
+       instead of
+            from Y import X
+    """
+    if len(tokens) < 4:
+        return
+    first = tokens[0].string
+    if first != "import":
+        return
+    third = tokens[2].string
+    if third == "from":
+        return "import X from Y"
+    return False
+
+
+@add_cause
 def missing_colon(tokens):
     # needs unit tests:
     if len(tokens) < 2:

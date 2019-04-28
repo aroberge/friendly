@@ -100,7 +100,7 @@ Ceci a besoin d’être fait de manière explicite lorsqu’on veut
 faire des corrections ou des ajouts, avant de faire la mise
 à jour du reste de la documentation avec Sphinx.
 Sous Windows, si Sphinx est installé sur votre ordinateur, il est
-plutôt suggéré d’exécuter make_tb.bat qui est au premier niveau
+plutôt suggéré d’exécuter make_trb.bat qui est au premier niveau
 du répertoire de fichier. Si vous faites ceci, la documentation pour
 toutes les langues sera automatiquement mise à jour.</p>
 </div>
@@ -223,7 +223,7 @@ Ceci n’est pas permis.
 <div class="section" id="taberror">
 <h2>TabError<a class="headerlink" href="#taberror" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
-    TabError: inconsistent use of tabs and spaces in indentation (raise_tab_error2.py, line 7)
+    TabError: inconsistent use of tabs and spaces in indentation (raise_tab_error.py, line 7)
 
 Un exception de type TabError indique que vous avez utilisé des espaces ainsi que
 des caractères de tabulation pour indenter votre code.
@@ -232,11 +232,11 @@ L’indentation de votre code signifie que le bloc de codes est aligné vertical
 en insérant des espaces ou des tabulations au début des lignes.
 La recommandation de Python est de toujours utiliser des espaces pour indenter votre code.
 
-Python peut seulement analyser le fichier &#39;raise_tab_error2.py&#39;
+Python peut seulement analyser le fichier &#39;raise_tab_error.py&#39;
 jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 
     4:
-    5: def no_pytest_tab_error2():
+    5: def test_tab_error():
     6:     if True:
 --&gt; 7:      pass
             ^

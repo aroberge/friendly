@@ -17,7 +17,7 @@ ici tous les exemples possibles tels qu'interprétés par friendly-traceback.
      faire des corrections ou des ajouts, avant de faire la mise
      à jour du reste de la documentation avec Sphinx.
      Sous Windows, si Sphinx est installé sur votre ordinateur, il est
-     plutôt suggéré d'exécuter make_tb.bat qui est au premier niveau
+     plutôt suggéré d'exécuter make_trb.bat qui est au premier niveau
      du répertoire de fichier. Si vous faites ceci, la documentation pour
      toutes les langues sera automatiquement mise à jour.
 
@@ -234,4 +234,29 @@ SyntaxError - can't assign to literal
     appelle un 'literal', c'est-à dire soit soit une chaîne de caractères ou un nombre,
     et non le nom d’une variable. Peut-être que vous vouliez plutôt écrire:
         variable = 1
+
+
+SyntaxError - import X from Y
+-----------------------------
+
+.. code-block:: none
+
+
+    Exception Python: 
+        SyntaxError: invalid syntax (raise_syntax_error10.py, line 3)
+
+    Une exception de type SyntaxError se produit lorsque python ne peut pas comprendre votre code.
+
+    Python peut seulement analyser le fichier 'raise_syntax_error10.py'
+    jusqu'à l'endroit indiqué par --> et ^.
+
+       1: """Should raise SyntaxError: invalid syntax"""
+       2: 
+    -->3: import pen from turtle
+                        ^
+    Ma meilleure hypothèse: vous avez écrit quelque chose comme
+        import X from Y
+    au lieu de
+        from Y import X
+
 

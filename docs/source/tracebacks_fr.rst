@@ -15,7 +15,7 @@ ici tous les exemples possibles tels qu'interprétés par friendly-traceback.
      faire des corrections ou des ajouts, avant de faire la mise
      à jour du reste de la documentation avec Sphinx.
      Sous Windows, si Sphinx est installé sur votre ordinateur, il est
-     plutôt suggéré d'exécuter make_tb.bat qui est au premier niveau
+     plutôt suggéré d'exécuter make_trb.bat qui est au premier niveau
      du répertoire de fichier. Si vous faites ceci, la documentation pour
      toutes les langues sera automatiquement mise à jour.
 
@@ -157,7 +157,7 @@ TabError
 
 
     Exception Python: 
-        TabError: inconsistent use of tabs and spaces in indentation (raise_tab_error2.py, line 7)
+        TabError: inconsistent use of tabs and spaces in indentation (raise_tab_error.py, line 7)
 
     Un exception de type TabError indique que vous avez utilisé des espaces ainsi que
     des caractères de tabulation pour indenter votre code.
@@ -166,11 +166,11 @@ TabError
     en insérant des espaces ou des tabulations au début des lignes.
     La recommandation de Python est de toujours utiliser des espaces pour indenter votre code.
 
-    Python peut seulement analyser le fichier 'raise_tab_error2.py'
+    Python peut seulement analyser le fichier 'raise_tab_error.py'
     jusqu'à l'endroit indiqué par --> et ^.
 
         4: 
-        5: def no_pytest_tab_error2():
+        5: def test_tab_error():
         6:     if True:
     --> 7: 	pass
                 ^

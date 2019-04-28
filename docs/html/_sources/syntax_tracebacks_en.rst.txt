@@ -15,7 +15,7 @@ should be included here.
      This needs to be done explicitly, independently of updating the
      documentation using Sphinx.
      On Windows, if Sphinx is installed on your computer, it is suggested
-     instead to run make_tb.bat in the root directory as it will create
+     instead to run make_trb.bat in the root directory as it will create
      similar files for all languages *and* update the documentation.
 
 Friendly-traceback version: 0.0.4
@@ -228,4 +228,28 @@ SyntaxError - can't assign to literal
     an actual number or string (what Python calls a 'literal'),
     and not the name of a variable.  Perhaps you meant to write:
         something = 1
+
+
+SyntaxError - import X from Y
+-----------------------------
+
+.. code-block:: none
+
+
+    Python exception: 
+        SyntaxError: invalid syntax (raise_syntax_error10.py, line 3)
+
+    A SyntaxError occurs when Python cannot understand your code.
+
+    Python could not parse the file 'raise_syntax_error10.py'
+    beyond the location indicated below by --> and ^.
+
+       1: """Should raise SyntaxError: invalid syntax"""
+       2: 
+    -->3: import pen from turtle
+                        ^
+    My best guess: you wrote something like
+        import X from Y
+    instead of
+        from Y import X
 

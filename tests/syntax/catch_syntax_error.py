@@ -7,7 +7,7 @@ import sys
 
 
 def test_syntax_errors():
-    for i in range(1, 10):
+    for i in range(1, 11):
         try:
             exec("from . import raise_syntax_error%d" % i)
         except Exception:

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-15 10:43-0300\n"
-"PO-Revision-Date: 2019-04-15 10:47-0300\n"
+"POT-Creation-Date: 2019-04-28 07:26-0300\n"
+"PO-Revision-Date: 2019-04-28 07:28-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -236,7 +236,22 @@ msgstr ""
 "    Ceci n’est pas permis.\n"
 "\n"
 
-#: specific_info.py:128
+#: specific_info.py:127
+msgid ""
+"    My best guess: you wrote something like\n"
+"        import X from Y\n"
+"    instead of\n"
+"        from Y import X\n"
+"\n"
+msgstr ""
+"    Ma meilleure hypothèse: vous avez écrit quelque chose comme\n"
+"        import X from Y\n"
+"    au lieu de\n"
+"        from Y import X\n"
+"\n"
+"\n"
+
+#: specific_info.py:137
 msgid ""
 "    My best guess: you meant to use Python's 'elif' keyword\n"
 "    but wrote '{name}' instead\n"
@@ -246,11 +261,11 @@ msgstr ""
 "    au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: specific_info.py:137
+#: specific_info.py:146
 msgid "a class"
 msgstr "une classe"
 
-#: specific_info.py:138
+#: specific_info.py:147
 msgid ""
 "    My best guess: you wanted to define {class_}\n"
 "    but forgot to add a colon ':' at the end\n"
@@ -260,7 +275,7 @@ msgstr ""
 "    mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:144
+#: specific_info.py:153
 msgid ""
 "    My best guess: you wrote a '{name}' loop but\n"
 "    forgot to add a colon ':' at the end\n"
@@ -270,7 +285,7 @@ msgstr ""
 "    mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:150
+#: specific_info.py:159
 msgid ""
 "    My best guess: you wrote a statement beginning with\n"
 "    '{name}' but forgot to add a colon ':' at the end\n"
@@ -280,11 +295,11 @@ msgstr ""
 "    '{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:157
+#: specific_info.py:166
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: specific_info.py:158
+#: specific_info.py:167
 msgid ""
 "    My best guess: you tried to define {class_or_function}\n"
 "    and did not use the correct syntax.\n"
@@ -297,7 +312,7 @@ msgstr ""
 "        def nom ( arguments_optionnels ) :\n"
 "\n"
 
-#: specific_info.py:168
+#: specific_info.py:177
 msgid ""
 "    My best guess: you wrote an expression like\n"
 "        {name} = something\n"
@@ -316,7 +331,7 @@ msgstr ""
 "        variable = {name}\n"
 "\n"
 
-#: specific_info.py:178
+#: specific_info.py:187
 msgid ""
 "    Currently, we cannot guess the likely cause of this error.\n"
 "\n"

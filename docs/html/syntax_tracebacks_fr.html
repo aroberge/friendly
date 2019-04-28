@@ -48,6 +48,7 @@
 <li><a class="reference internal" href="#syntaxerror-malformed-def-statment-2">SyntaxError - malformed def statment - 2</a></li>
 <li><a class="reference internal" href="#syntaxerror-malformed-def-statment-3">SyntaxError - malformed def statment - 3</a></li>
 <li><a class="reference internal" href="#syntaxerror-can-t-assign-to-literal">SyntaxError - can’t assign to literal</a></li>
+<li><a class="reference internal" href="#syntaxerror-import-x-from-y">SyntaxError - import X from Y</a></li>
 </ul>
 </li>
 </ul>
@@ -101,7 +102,7 @@ Ceci a besoin d’être fait de manière explicite lorsqu’on veut
 faire des corrections ou des ajouts, avant de faire la mise
 à jour du reste de la documentation avec Sphinx.
 Sous Windows, si Sphinx est installé sur votre ordinateur, il est
-plutôt suggéré d’exécuter make_tb.bat qui est au premier niveau
+plutôt suggéré d’exécuter make_trb.bat qui est au premier niveau
 du répertoire de fichier. Si vous faites ceci, la documentation pour
 toutes les langues sera automatiquement mise à jour.</p>
 </div>
@@ -287,6 +288,27 @@ où &lt; 1 &gt;, sur le côté gauche du signe égal, est ce que Python
 appelle un &#39;literal&#39;, c&#39;est-à dire soit soit une chaîne de caractères ou un nombre,
 et non le nom d’une variable. Peut-être que vous vouliez plutôt écrire:
     variable = 1
+</pre></div>
+</div>
+</div>
+<div class="section" id="syntaxerror-import-x-from-y">
+<h2>SyntaxError - import X from Y<a class="headerlink" href="#syntaxerror-import-x-from-y" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
+    SyntaxError: invalid syntax (raise_syntax_error10.py, line 3)
+
+Une exception de type SyntaxError se produit lorsque python ne peut pas comprendre votre code.
+
+Python peut seulement analyser le fichier &#39;raise_syntax_error10.py&#39;
+jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
+
+   1: &quot;&quot;&quot;Should raise SyntaxError: invalid syntax&quot;&quot;&quot;
+   2:
+--&gt;3: import pen from turtle
+                    ^
+Ma meilleure hypothèse: vous avez écrit quelque chose comme
+    import X from Y
+au lieu de
+    from Y import X
 </pre></div>
 </div>
 </div>

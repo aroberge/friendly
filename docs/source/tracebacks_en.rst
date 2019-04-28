@@ -16,7 +16,7 @@ should be included here.
      This needs to be done explicitly, independently of updating the
      documentation using Sphinx.
      On Windows, if Sphinx is installed on your computer, it is suggested
-     instead to run make_tb.bat in the root directory as it will create
+     instead to run make_trb.bat in the root directory as it will create
      similar files for all languages *and* update the documentation.
 
 Friendly-traceback version: 0.0.4
@@ -154,7 +154,7 @@ TabError
 
 
     Python exception: 
-        TabError: inconsistent use of tabs and spaces in indentation (raise_tab_error2.py, line 7)
+        TabError: inconsistent use of tabs and spaces in indentation (raise_tab_error.py, line 7)
 
     A TabError indicates that you have used both spaces
     and tab characters to indent your code.
@@ -163,11 +163,11 @@ TabError
     by inserting either spaces or tab characters at the beginning of lines.
     Python's recommendation is to always use spaces to indent your code.
 
-    Python could not parse the file 'raise_tab_error2.py'
+    Python could not parse the file 'raise_tab_error.py'
     beyond the location indicated below by --> and ^.
 
         4: 
-        5: def no_pytest_tab_error2():
+        5: def test_tab_error():
         6:     if True:
     --> 7: 	pass
                 ^

@@ -101,7 +101,7 @@ trb_english.py located in the <code class="docutils literal notranslate"><span c
 This needs to be done explicitly, independently of updating the
 documentation using Sphinx.
 On Windows, if Sphinx is installed on your computer, it is suggested
-instead to run make_tb.bat in the root directory as it will create
+instead to run make_trb.bat in the root directory as it will create
 similar files for all languages <em>and</em> update the documentation.</p>
 </div>
 <p>Friendly-traceback version: 0.0.4
@@ -220,7 +220,7 @@ to a Python keyword. This is not allowed.
 <div class="section" id="taberror">
 <h2>TabError<a class="headerlink" href="#taberror" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
-    TabError: inconsistent use of tabs and spaces in indentation (raise_tab_error2.py, line 7)
+    TabError: inconsistent use of tabs and spaces in indentation (raise_tab_error.py, line 7)
 
 A TabError indicates that you have used both spaces
 and tab characters to indent your code.
@@ -229,11 +229,11 @@ Indenting your code means to have block of codes aligned vertically
 by inserting either spaces or tab characters at the beginning of lines.
 Python&#39;s recommendation is to always use spaces to indent your code.
 
-Python could not parse the file &#39;raise_tab_error2.py&#39;
+Python could not parse the file &#39;raise_tab_error.py&#39;
 beyond the location indicated below by --&gt; and ^.
 
     4:
-    5: def no_pytest_tab_error2():
+    5: def test_tab_error():
     6:     if True:
 --&gt; 7:      pass
             ^

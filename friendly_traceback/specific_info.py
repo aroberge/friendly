@@ -123,6 +123,15 @@ def syntax_error_causes(cause):
             "\n"
         )
 
+    if cause == "import X from Y":
+        return _(
+            "    My best guess: you wrote something like\n"
+            "        import X from Y\n"
+            "    instead of\n"
+            "        from Y import X\n"
+            "\n"
+        )
+
     if cause.startswith("elif not"):
         cause = cause.replace("elif not ", "")
         return _(

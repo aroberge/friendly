@@ -48,6 +48,7 @@
 <li><a class="reference internal" href="#syntaxerror-malformed-def-statment-2">SyntaxError - malformed def statment - 2</a></li>
 <li><a class="reference internal" href="#syntaxerror-malformed-def-statment-3">SyntaxError - malformed def statment - 3</a></li>
 <li><a class="reference internal" href="#syntaxerror-can-t-assign-to-literal">SyntaxError - can’t assign to literal</a></li>
+<li><a class="reference internal" href="#syntaxerror-import-x-from-y">SyntaxError - import X from Y</a></li>
 </ul>
 </li>
 </ul>
@@ -99,7 +100,7 @@ trb_syntax_english.py located in the <code class="docutils literal notranslate">
 This needs to be done explicitly, independently of updating the
 documentation using Sphinx.
 On Windows, if Sphinx is installed on your computer, it is suggested
-instead to run make_tb.bat in the root directory as it will create
+instead to run make_trb.bat in the root directory as it will create
 similar files for all languages <em>and</em> update the documentation.</p>
 </div>
 <p>Friendly-traceback version: 0.0.4
@@ -284,6 +285,27 @@ where &lt;1&gt;, on the left hand-side of the equal sign, is
 an actual number or string (what Python calls a &#39;literal&#39;),
 and not the name of a variable.  Perhaps you meant to write:
     something = 1
+</pre></div>
+</div>
+</div>
+<div class="section" id="syntaxerror-import-x-from-y">
+<h2>SyntaxError - import X from Y<a class="headerlink" href="#syntaxerror-import-x-from-y" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    SyntaxError: invalid syntax (raise_syntax_error10.py, line 3)
+
+A SyntaxError occurs when Python cannot understand your code.
+
+Python could not parse the file &#39;raise_syntax_error10.py&#39;
+beyond the location indicated below by --&gt; and ^.
+
+   1: &quot;&quot;&quot;Should raise SyntaxError: invalid syntax&quot;&quot;&quot;
+   2:
+--&gt;3: import pen from turtle
+                    ^
+My best guess: you wrote something like
+    import X from Y
+instead of
+    from Y import X
 </pre></div>
 </div>
 </div>
