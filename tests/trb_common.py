@@ -23,6 +23,7 @@ all_imports = {
     "IndentationError - 1: expected an indented block": "syntax.raise_indentation_error1",
     "IndentationError - 2: unexpected indent": "syntax.raise_indentation_error2",
     "IndentationError - 3: unindent does not match ...": "syntax.raise_indentation_error3",
+    "ModuleNotFoundError": ("test_module_not_found_error", "test_module_not_found_error"),
     "NameError": ("test_name_error", "test_name_error"),
     "TabError": "syntax.raise_tab_error",
     "UnboundLocalError": ("test_unbound_local_error", "test_unbound_local_error"),

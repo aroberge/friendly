@@ -362,7 +362,9 @@ have been excluded as it seemed rather counter-productive to intercept them.</p>
 <p>Those followed by <code class="docutils literal notranslate"><span class="pre">#</span></code>, namely <code class="docutils literal notranslate"><span class="pre">GeneratorExit</span></code>, <code class="docutils literal notranslate"><span class="pre">StopIteration</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">StopAsyncIteration</span></code>, are excluded as they should not normally be
 seen by an end user - at least, not by beginners who would need
-additional explanation about the meaning of such exceptions.</p>
+additional explanation about the meaning of such exceptions.
+Furthermore, in the case of <code class="docutils literal notranslate"><span class="pre">StopIteration</span></code>, see
+<a class="reference external" href="https://www.python.org/dev/peps/pep-0479/">PEP 479</a></p>
 <p>It is very likely that the information below is not up to date.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>BaseException
  +-- SystemExit **
@@ -380,7 +382,7 @@ additional explanation about the meaning of such exceptions.</p>
       +-- BufferError
       +-- EOFError
       +-- ImportError
-      |    +-- ModuleNotFoundError
+      |    +-- ModuleNotFoundError *
       +-- LookupError
       |    +-- IndexError
       |    +-- KeyError

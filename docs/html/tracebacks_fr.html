@@ -43,6 +43,7 @@
 <li><a class="reference internal" href="#indentationerror-1-expected-an-indented-block">IndentationError - 1: expected an indented block</a></li>
 <li><a class="reference internal" href="#indentationerror-2-unexpected-indent">IndentationError - 2: unexpected indent</a></li>
 <li><a class="reference internal" href="#indentationerror-3-unindent-does-not-match">IndentationError - 3: unindent does not match …</a></li>
+<li><a class="reference internal" href="#modulenotfounderror">ModuleNotFoundError</a></li>
 <li><a class="reference internal" href="#nameerror">NameError</a></li>
 <li><a class="reference internal" href="#taberror">TabError</a></li>
 <li><a class="reference internal" href="#unboundlocalerror">UnboundLocalError</a></li>
@@ -194,6 +195,29 @@ Cause probable :
     Dans ce cas-ci, la ligne indiquée ci-dessus par --&gt;
     est moins indentée que la ligne précédente
     et n’est pas alignée verticalement avec un autre bloc de code.
+</pre></div>
+</div>
+</div>
+<div class="section" id="modulenotfounderror">
+<h2>ModuleNotFoundError<a class="headerlink" href="#modulenotfounderror" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
+    ModuleNotFoundError: No module named &#39;does_not_exist&#39;
+
+Une exception ModuleNotFoundError indique que vous
+essayez d’importer un module qui ne peut pas être trouvé par Python.
+Cela pourrait être parce que vous fait une faute d&#39;orthographe en écrivant le nom du module
+ou parce qu’il n’est pas installé sur votre ordinateur.
+
+Cause probable :
+    Dans votre programme, le nom du module inconnu est &#39;does_not_exist&#39;.
+
+
+L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;test_module_not_found_error.py&#39;
+
+   5: def test_module_not_found_error():
+   6:     try:
+--&gt;7:         import does_not_exist
+   8:     except Exception:
 </pre></div>
 </div>
 </div>

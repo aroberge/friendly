@@ -121,6 +121,33 @@ IndentationError - 3: unindent does not match ...
         less indented than the preceding one,
         and is not aligned vertically with another block of code.
 
+ModuleNotFoundError
+-------------------
+
+.. code-block:: none
+
+
+    Python exception: 
+        ModuleNotFoundError: No module named 'does_not_exist'
+
+    A ModuleNotFoundError exception indicates that you
+    are trying to import a module that cannot be found by Python.
+    This could be because you misspelled the name of the module
+    or because it is not installed on your computer.
+
+    Likely cause:
+        In your program, the name of the
+    module that cannot be found is 'does_not_exist'.
+
+
+    Execution stopped on line 7 of file 'test_module_not_found_error.py'.
+
+       5: def test_module_not_found_error():
+       6:     try:
+    -->7:         import does_not_exist
+       8:     except Exception:
+
+
 NameError
 ---------
 

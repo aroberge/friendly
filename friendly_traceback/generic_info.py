@@ -36,6 +36,16 @@ def indentation_error(etype, value):
     )
 
 
+def module_not_found_error(*args):
+    _ = current_lang.lang
+    return _(
+        "    A ModuleNotFoundError exception indicates that you\n"
+        "    are trying to import a module that cannot be found by Python.\n"
+        "    This could be because you misspelled the name of the module\n"
+        "    or because it is not installed on your computer.\n"
+    )
+
+
 def name_error(*args):
     _ = current_lang.lang
     return _(
@@ -98,6 +108,7 @@ def zero_division_error(*args):
 generic = {
     "ArithmeticError": arithmetic_error,
     "IndentationError": indentation_error,
+    "ModuleNotFoundError": module_not_found_error,
     "NameError": name_error,
     "SyntaxError": syntax_error,
     "TabError": tab_error,

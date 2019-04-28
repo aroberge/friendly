@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-28 08:51-0300\n"
-"PO-Revision-Date: 2019-04-28 08:53-0300\n"
+"POT-Creation-Date: 2019-04-28 09:43-0300\n"
+"PO-Revision-Date: 2019-04-28 09:44-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -85,7 +85,7 @@ msgstr ""
 "    Il est inhabituel que vous voyiez cette exception;\n"
 "    normalement, une exception plus spécifique aurait dû être soulevée.\n"
 
-#: generic_info.py:24 specific_info.py:58 specific_info.py:79
+#: generic_info.py:24 specific_info.py:71 specific_info.py:92
 msgid ""
 "    Python could not parse the file '{filename}'\n"
 "    beyond the location indicated below by --> and ^.\n"
@@ -110,6 +110,19 @@ msgstr ""
 
 #: generic_info.py:41
 msgid ""
+"    A ModuleNotFoundError exception indicates that you\n"
+"    are trying to import a module that cannot be found by Python.\n"
+"    This could be because you misspelled the name of the module\n"
+"    or because it is not installed on your computer.\n"
+msgstr ""
+"    Une exception ModuleNotFoundError indique que vous\n"
+"    essayez d’importer un module qui ne peut pas être trouvé par Python.\n"
+"    Cela pourrait être parce que vous fait une faute d'orthographe en "
+"écrivant le nom du module\n"
+"    ou parce qu’il n’est pas installé sur votre ordinateur.\n"
+
+#: generic_info.py:51
+msgid ""
 "    A NameError exception indicates that a variable or\n"
 "    function name is not known to Python.\n"
 "    Most often, this is because there is a spelling mistake.\n"
@@ -122,13 +135,13 @@ msgstr ""
 "    Cependant, cela peut également indiquer que le nom a été\n"
 "    utilisé avant qu'on ne lui ait associé une valeur.\n"
 
-#: generic_info.py:52
+#: generic_info.py:62
 msgid "    A SyntaxError occurs when Python cannot understand your code.\n"
 msgstr ""
 "    Une exception de type SyntaxError se produit lorsque python ne peut pas "
 "comprendre votre code.\n"
 
-#: generic_info.py:57
+#: generic_info.py:67
 msgid ""
 "    A TabError indicates that you have used both spaces\n"
 "    and tab characters to indent your code.\n"
@@ -147,7 +160,7 @@ msgstr ""
 "    La recommandation de Python est de toujours utiliser des espaces pour "
 "indenter votre code.\n"
 
-#: generic_info.py:69
+#: generic_info.py:79
 msgid ""
 "    In Python, variables that are used inside a function are known as \n"
 "    local variables. Before they are used, they must be assigned a value.\n"
@@ -172,11 +185,11 @@ msgstr ""
 "sinon vous verrez\n"
 "    une exception UnboundLocalError.\n"
 
-#: generic_info.py:83
+#: generic_info.py:93
 msgid "    No information is known about this exception.\n"
 msgstr "    Aucune information n'est connue au sujet de cette exception.\n"
 
-#: generic_info.py:88
+#: generic_info.py:98
 msgid ""
 "    A ZeroDivisionError occurs when you are attempting to divide\n"
 "    a value by zero:\n"
@@ -222,10 +235,17 @@ msgstr ""
 "        et n’est pas alignée verticalement avec un autre bloc de code.\n"
 
 #: specific_info.py:45
+msgid ""
+"        In your program, the name of the\n"
+"        module that cannot be found is '{mod_name}'.\n"
+msgstr ""
+"        Dans votre programme, le nom du module inconnu est '{mod_name}'.\n"
+
+#: specific_info.py:58
 msgid "        In your program, the unknown name is '{var_name}'.\n"
 msgstr "        Dans votre programme, le nom inconnu est '{var_name}'.\n"
 
-#: specific_info.py:94
+#: specific_info.py:107
 msgid ""
 "        The variable that appears to cause the problem is '{var_name}'.\n"
 "        Try inserting the statement\n"
@@ -237,7 +257,7 @@ msgstr ""
 "            global {var_name}\n"
 "        comme première ligne à l’intérieur de votre fonction."
 
-#: specific_info.py:120
+#: specific_info.py:134
 msgid ""
 "    My best guess: you were trying\n"
 "    to assign a value to a Python keyword.\n"
@@ -249,7 +269,7 @@ msgstr ""
 "    Ceci n’est pas permis.\n"
 "\n"
 
-#: specific_info.py:128
+#: specific_info.py:142
 msgid ""
 "    My best guess: you wrote something like\n"
 "        import X from Y\n"
@@ -264,7 +284,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: specific_info.py:138
+#: specific_info.py:152
 msgid ""
 "    My best guess: you meant to use Python's 'elif' keyword\n"
 "    but wrote '{name}' instead\n"
@@ -274,11 +294,11 @@ msgstr ""
 "    au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: specific_info.py:147
+#: specific_info.py:161
 msgid "a class"
 msgstr "une classe"
 
-#: specific_info.py:148
+#: specific_info.py:162
 msgid ""
 "    My best guess: you wanted to define {class_}\n"
 "    but forgot to add a colon ':' at the end\n"
@@ -288,7 +308,7 @@ msgstr ""
 "    mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:154
+#: specific_info.py:168
 msgid ""
 "    My best guess: you wrote a '{name}' loop but\n"
 "    forgot to add a colon ':' at the end\n"
@@ -298,7 +318,7 @@ msgstr ""
 "    mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:160
+#: specific_info.py:174
 msgid ""
 "    My best guess: you wrote a statement beginning with\n"
 "    '{name}' but forgot to add a colon ':' at the end\n"
@@ -308,11 +328,11 @@ msgstr ""
 "    '{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:167
+#: specific_info.py:181
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: specific_info.py:168
+#: specific_info.py:182
 msgid ""
 "    My best guess: you tried to define {class_or_function}\n"
 "    and did not use the correct syntax.\n"
@@ -325,7 +345,7 @@ msgstr ""
 "        def nom ( arguments_optionnels ) :\n"
 "\n"
 
-#: specific_info.py:178
+#: specific_info.py:192
 msgid ""
 "    My best guess: you wrote an expression like\n"
 "        {name} = something\n"
@@ -344,7 +364,7 @@ msgstr ""
 "        variable = {name}\n"
 "\n"
 
-#: specific_info.py:188
+#: specific_info.py:202
 msgid ""
 "    Currently, we cannot guess the likely cause of this error.\n"
 "\n"

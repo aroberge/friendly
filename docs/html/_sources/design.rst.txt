@@ -313,6 +313,8 @@ Those followed by ``#``, namely ``GeneratorExit``, ``StopIteration``, and
 ``StopAsyncIteration``, are excluded as they should not normally be
 seen by an end user - at least, not by beginners who would need
 additional explanation about the meaning of such exceptions.
+Furthermore, in the case of ``StopIteration``, see
+`PEP 479 <https://www.python.org/dev/peps/pep-0479/>`_
 
 It is very likely that the information below is not up to date.
 
@@ -334,7 +336,7 @@ It is very likely that the information below is not up to date.
           +-- BufferError
           +-- EOFError
           +-- ImportError
-          |    +-- ModuleNotFoundError
+          |    +-- ModuleNotFoundError *
           +-- LookupError
           |    +-- IndexError
           |    +-- KeyError
