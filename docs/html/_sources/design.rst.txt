@@ -335,7 +335,7 @@ It is very likely that the information below is not up to date.
           +-- AttributeError
           +-- BufferError
           +-- EOFError
-          +-- ImportError
+          +-- ImportError *
           |    +-- ModuleNotFoundError *
           +-- LookupError
           |    +-- IndexError

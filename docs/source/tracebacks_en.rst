@@ -47,6 +47,33 @@ ArithmeticError
        11:     except Exception:
 
 
+ImportError
+-----------
+
+.. code-block:: none
+
+
+    Python exception: 
+        ImportError: cannot import name 'Pi' from 'math' (unknown location)
+
+    This exception indicates that a certain object could not
+    be imported from a module or package. Most often, this is
+    because the name of the object is not spelled correctly.
+
+    Likely cause:
+        The object that could not be imported is 'Pi'.
+        The module or package where it was 
+        expected to be found is 'math'.
+
+
+    Execution stopped on line 7 of file 'test_import_error.py'.
+
+       5: def test_import_error():
+       6:     try:
+    -->7:         from math import Pi
+       8:     except Exception:
+
+
 IndentationError - 1: expected an indented block
 ------------------------------------------------
 
@@ -137,7 +164,7 @@ ModuleNotFoundError
 
     Likely cause:
         In your program, the name of the
-    module that cannot be found is 'does_not_exist'.
+        module that cannot be found is 'does_not_exist'.
 
 
     Execution stopped on line 7 of file 'test_module_not_found_error.py'.

@@ -20,6 +20,7 @@ def make_title(text):
 
 all_imports = {
     "ArithmeticError": ("test_arithmetic_error", "test_arithmetic_error"),
+    "ImportError": ("test_import_error", "test_import_error"),
     "IndentationError - 1: expected an indented block": "syntax.raise_indentation_error1",
     "IndentationError - 2: unexpected indent": "syntax.raise_indentation_error2",
     "IndentationError - 3: unindent does not match ...": "syntax.raise_indentation_error3",

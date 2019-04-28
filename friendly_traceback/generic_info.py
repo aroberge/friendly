@@ -14,6 +14,15 @@ def arithmetic_error(*args):
     )
 
 
+def import_error(*args):
+    _ = current_lang.lang
+    return _(
+        "    This exception indicates that a certain object could not\n"
+        "    be imported from a module or package. Most often, this is\n"
+        "    because the name of the object is not spelled correctly.\n"
+    )
+
+
 def indentation_error(etype, value):
     _ = current_lang.lang
     filename = value.filename
@@ -107,6 +116,7 @@ def zero_division_error(*args):
 
 generic = {
     "ArithmeticError": arithmetic_error,
+    "ImportError": import_error,
     "IndentationError": indentation_error,
     "ModuleNotFoundError": module_not_found_error,
     "NameError": name_error,

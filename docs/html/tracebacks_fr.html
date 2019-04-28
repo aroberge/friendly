@@ -40,6 +40,7 @@
   <ul>
 <li><a class="reference internal" href="#">Friendly tracebacks - en Français</a><ul>
 <li><a class="reference internal" href="#arithmeticerror">ArithmeticError</a></li>
+<li><a class="reference internal" href="#importerror">ImportError</a></li>
 <li><a class="reference internal" href="#indentationerror-1-expected-an-indented-block">IndentationError - 1: expected an indented block</a></li>
 <li><a class="reference internal" href="#indentationerror-2-unexpected-indent">IndentationError - 2: unexpected indent</a></li>
 <li><a class="reference internal" href="#indentationerror-3-unindent-does-not-match">IndentationError - 3: unindent does not match …</a></li>
@@ -124,6 +125,30 @@ L&#39;exécution s&#39;est arrêtée à la ligne 10 du fichier &#39;test_arithme
     9:         # likely be raised.
 --&gt;10:         raise ArithmeticError
    11:     except Exception:
+</pre></div>
+</div>
+</div>
+<div class="section" id="importerror">
+<h2>ImportError<a class="headerlink" href="#importerror" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
+    ImportError: cannot import name &#39;Pi&#39; from &#39;math&#39; (unknown location)
+
+Cette exception indique qu’un certain objet n’a pas pu
+être importé à partir d’un module ou d’un paquet. Très souvent, c’est
+parce que le nom de l’objet n’est pas écrit correctement.
+
+Cause probable :
+    L’objet qui n’a pas pu être importé est &#39;Pi&#39;.
+    Le module ou le paquet d&#39;où il devait être importé
+    est &#39;math&#39;.
+
+
+L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;test_import_error.py&#39;
+
+   5: def test_import_error():
+   6:     try:
+--&gt;7:         from math import Pi
+   8:     except Exception:
 </pre></div>
 </div>
 </div>

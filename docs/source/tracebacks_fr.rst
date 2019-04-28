@@ -47,6 +47,33 @@ ArithmeticError
        11:     except Exception:
 
 
+ImportError
+-----------
+
+.. code-block:: none
+
+
+    Exception Python: 
+        ImportError: cannot import name 'Pi' from 'math' (unknown location)
+
+    Cette exception indique qu’un certain objet n’a pas pu
+    être importé à partir d’un module ou d’un paquet. Très souvent, c’est
+    parce que le nom de l’objet n’est pas écrit correctement.
+
+    Cause probable : 
+        L’objet qui n’a pas pu être importé est 'Pi'.
+        Le module ou le paquet d'où il devait être importé
+        est 'math'.
+
+
+    L'exécution s'est arrêtée à la ligne 7 du fichier 'test_import_error.py'
+
+       5: def test_import_error():
+       6:     try:
+    -->7:         from math import Pi
+       8:     except Exception:
+
+
 IndentationError - 1: expected an indented block
 ------------------------------------------------
 
