@@ -1,11 +1,12 @@
 """analyze_syntax.py
 
-Attempts to find the cause of a SyntaxError.
+Attempts to find the most likely cause of a SyntaxError.
 """
 
 # Note: we do not attempt to translate strings here,
-# so that we can test it. Note that we have not created
-# separate unit tests yet - which we really should do.
+# so that we could more easily write targeted unit tests.
+# However, note that we have not created
+# separate unit tests yet.
 
 import keyword
 import tokenize
@@ -16,6 +17,8 @@ possible_causes = []
 
 
 def add_cause(func):
+    """A simple decorator that adds a given cause to the list
+       of probable causes."""
     possible_causes.append(func)
 
     def wrapper(*args):
@@ -47,9 +50,14 @@ def find_likely_cause(source, linenumber, message, offset):
     offending_line = source[linenumber - 1]
     line = offending_line.rstrip()
 
+    # If Python includes a descriptive enough message, we rely
+    # on the information that it provides.
     if message == "can't assign to literal":
         return assign_to_literal(message, line)
 
+    # If not, we guess based on the content of the last line of code
+    # Note: we will need to do more than this to catch other types
+    # of errors, such as mismatched brackets, etc.
     return analyze_last_line(line)
 
 
@@ -59,6 +67,22 @@ def assign_to_literal(message, line):
 
 
 def analyze_last_line(line):
+    """Analyzes the last line of code as identified by Python as that
+       on which the error occurred."""
+    tokens = collect_tokens(line)
+
+    if not tokens:
+        return "No cause found"
+
+    for possible in possible_causes:
+        cause = possible(tokens)
+        if cause:
+            return cause
+    return "No cause found"
+
+
+def collect_tokens(line):
+    """Makes a list of tokens on a line, ignoring spaces"""
     tokens = []
     try:
         for tok in tokenize.generate_tokens(StringIO(line).readline):
@@ -66,17 +90,12 @@ def analyze_last_line(line):
             if not token.string.strip():  # ignore spaces
                 continue
             if token.type == tokenize.COMMENT:
-                continue
+                break
             tokens.append(token)
     except Exception as e:
         return "%s raised while analyzing a SyntaxError" % repr(e)
 
-    for possible in possible_causes:
-        if tokens:
-            cause = possible(tokens)
-            if cause:
-                return cause
-    return "No cause found"
+    return tokens
 
 
 # ==================

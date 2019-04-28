@@ -118,8 +118,9 @@ def syntax_error_causes(cause):
 
     if cause == "Assigning to Python keyword":
         return _(
-            "    My best guess: you were trying to assign a value\n"
-            "    to a Python keyword. This is not allowed.\n"
+            "    My best guess: you were trying\n"
+            "    to assign a value to a Python keyword.\n"
+            "    This is not allowed.\n"
             "\n"
         )
 
