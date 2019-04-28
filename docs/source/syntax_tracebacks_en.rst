@@ -41,8 +41,9 @@ SyntaxError - Assign to keyword
        2: 
     -->3: pass = 2
                ^
-    My best guess: you were trying to assign a value
-    to a Python keyword. This is not allowed.
+    My best guess: you were trying
+    to assign a value to a Python keyword.
+    This is not allowed.
 
 
 SyntaxError - Missing colon 1

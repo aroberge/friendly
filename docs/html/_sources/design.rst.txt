@@ -47,7 +47,8 @@ this document.
 - Should we aim to provide information about **all** standard Python
   Exceptions, or just a subset?  Should we include also Warnings?
   The full list of exceptions and warnings is included at the end of
-  this document.
+  this document as well as some notes about some Exceptions that have
+  been purposely excluded.
 
 - Should translations (``.po`` files) be limited to general translations
   for a given language (e.g. ``fr``) and not include region-specific version
@@ -303,8 +304,15 @@ Reference: known exceptions
 ---------------------------
 
 In the following, those that are followed by an * had been implemented
-when this page was last updated. Those followed by ** have been
-excluded as it seemed rather counter-productive to intercept them.
+when this page was last updated.
+
+Those followed by ``**``, namely ``SystemExit`` and ``KeyboardInterrupt``,
+have been excluded as it seemed rather counter-productive to intercept them.
+
+Those followed by ``#``, namely ``GeneratorExit``, ``StopIteration``, and
+``StopAsyncIteration``, are excluded as they should not normally be
+seen by an end user - at least, not by beginners who would need
+additional explanation about the meaning of such exceptions.
 
 It is very likely that the information below is not up to date.
 
@@ -313,14 +321,14 @@ It is very likely that the information below is not up to date.
     BaseException
      +-- SystemExit **
      +-- KeyboardInterrupt **
-     +-- GeneratorExit
+     +-- GeneratorExit #
      +-- Exception
-          +-- StopIteration
-          +-- StopAsyncIteration
-          +-- ArithmeticError
+          +-- StopIteration #
+          +-- StopAsyncIteration #
+          +-- ArithmeticError *
           |    +-- FloatingPointError
           |    +-- OverflowError
-          |    +-- ZeroDivisionError
+          |    +-- ZeroDivisionError *
           +-- AssertionError
           +-- AttributeError
           +-- BufferError

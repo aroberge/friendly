@@ -24,6 +24,29 @@ Python version: 3.7.0
 
 
 
+ArithmeticError
+---------------
+
+.. code-block:: none
+
+
+    Exception Python: 
+        ArithmeticError: 
+
+    ArithmeticError est la classe de base pour les exceptions
+    qui sont soulevées pour diverses erreurs arithmétiques.
+    Il est inhabituel que vous voyiez cette exception;
+    normalement, une exception plus spécifique aurait dû être soulevée.
+
+
+    L'exécution s'est arrêtée à la ligne 10 du fichier 'test_arithmetic_error.py'
+
+        8:         # Usually, a subclass such as ZeroDivisionError, etc., would
+        9:         # likely be raised.
+    -->10:         raise ArithmeticError
+       11:     except Exception:
+
+
 IndentationError - 1: expected an indented block
 ------------------------------------------------
 
@@ -126,28 +149,6 @@ NameError
        6:     try:
     -->7:         b = c
        8:     except Exception:
-
-
-SyntaxError
------------
-
-.. code-block:: none
-
-
-    Exception Python: 
-        SyntaxError: invalid syntax (raise_syntax_error1.py, line 3)
-
-    Une exception de type SyntaxError se produit lorsque python ne peut pas comprendre votre code.
-
-    Python peut seulement analyser le fichier 'raise_syntax_error1.py'
-    jusqu'à l'endroit indiqué par --> et ^.
-
-       1: """ Should raise SyntaxError"""
-       2: 
-    -->3: pass = 2
-               ^
-    Ma meilleure hypothèse: vous essayiez d’assigner une valeur à un mot clé Python.
-    Ceci n’est pas permis.
 
 
 TabError

@@ -135,7 +135,8 @@ show only four.</li>
 <li>Should we aim to provide information about <strong>all</strong> standard Python
 Exceptions, or just a subset?  Should we include also Warnings?
 The full list of exceptions and warnings is included at the end of
-this document.</li>
+this document as well as some notes about some Exceptions that have
+been purposely excluded.</li>
 <li>Should translations (<code class="docutils literal notranslate"><span class="pre">.po</span></code> files) be limited to general translations
 for a given language (e.g. <code class="docutils literal notranslate"><span class="pre">fr</span></code>) and not include region-specific version
 (e.g. <code class="docutils literal notranslate"><span class="pre">fr_CA</span></code>)?</li>
@@ -355,20 +356,25 @@ similar implemented.</li>
 <div class="section" id="reference-known-exceptions">
 <h2>Reference: known exceptions<a class="headerlink" href="#reference-known-exceptions" title="Permalink to this headline">¶</a></h2>
 <p>In the following, those that are followed by an * had been implemented
-when this page was last updated. Those followed by ** have been
-excluded as it seemed rather counter-productive to intercept them.</p>
+when this page was last updated.</p>
+<p>Those followed by <code class="docutils literal notranslate"><span class="pre">**</span></code>, namely <code class="docutils literal notranslate"><span class="pre">SystemExit</span></code> and <code class="docutils literal notranslate"><span class="pre">KeyboardInterrupt</span></code>,
+have been excluded as it seemed rather counter-productive to intercept them.</p>
+<p>Those followed by <code class="docutils literal notranslate"><span class="pre">#</span></code>, namely <code class="docutils literal notranslate"><span class="pre">GeneratorExit</span></code>, <code class="docutils literal notranslate"><span class="pre">StopIteration</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">StopAsyncIteration</span></code>, are excluded as they should not normally be
+seen by an end user - at least, not by beginners who would need
+additional explanation about the meaning of such exceptions.</p>
 <p>It is very likely that the information below is not up to date.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>BaseException
  +-- SystemExit **
  +-- KeyboardInterrupt **
- +-- GeneratorExit
+ +-- GeneratorExit #
  +-- Exception
-      +-- StopIteration
-      +-- StopAsyncIteration
-      +-- ArithmeticError
+      +-- StopIteration #
+      +-- StopAsyncIteration #
+      +-- ArithmeticError *
       |    +-- FloatingPointError
       |    +-- OverflowError
-      |    +-- ZeroDivisionError
+      |    +-- ZeroDivisionError *
       +-- AssertionError
       +-- AttributeError
       +-- BufferError

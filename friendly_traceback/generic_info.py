@@ -4,6 +4,16 @@ from .my_gettext import current_lang
 from . import utils
 
 
+def arithmetic_error(*args):
+    _ = current_lang.lang
+    return _(
+        "    ArithmeticError is the base class for those built-in exceptions\n"
+        "    that are raised for various arithmetic errors.\n"
+        "    It is unusual that you are seeing this exception;\n"
+        "    normally, a more specific exception should have been raised.\n"
+    )
+
+
 def indentation_error(etype, value):
     _ = current_lang.lang
     filename = value.filename
@@ -86,6 +96,7 @@ def zero_division_error(*args):
 
 
 generic = {
+    "ArithmeticError": arithmetic_error,
     "IndentationError": indentation_error,
     "NameError": name_error,
     "SyntaxError": syntax_error,

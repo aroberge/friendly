@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-28 07:26-0300\n"
-"PO-Revision-Date: 2019-04-28 07:28-0300\n"
+"POT-Creation-Date: 2019-04-28 08:51-0300\n"
+"PO-Revision-Date: 2019-04-28 08:53-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -73,7 +73,19 @@ msgstr ""
 "\n"
 "{source}\n"
 
-#: generic_info.py:14 specific_info.py:58 specific_info.py:79
+#: generic_info.py:9
+msgid ""
+"    ArithmeticError is the base class for those built-in exceptions\n"
+"    that are raised for various arithmetic errors.\n"
+"    It is unusual that you are seeing this exception;\n"
+"    normally, a more specific exception should have been raised.\n"
+msgstr ""
+"    ArithmeticError est la classe de base pour les exceptions\n"
+"    qui sont soulevées pour diverses erreurs arithmétiques.\n"
+"    Il est inhabituel que vous voyiez cette exception;\n"
+"    normalement, une exception plus spécifique aurait dû être soulevée.\n"
+
+#: generic_info.py:24 specific_info.py:58 specific_info.py:79
 msgid ""
 "    Python could not parse the file '{filename}'\n"
 "    beyond the location indicated below by --> and ^.\n"
@@ -85,7 +97,7 @@ msgstr ""
 "\n"
 "{source}\n"
 
-#: generic_info.py:21
+#: generic_info.py:31
 msgid ""
 "    An IndentationError occurs when a given line of code is\n"
 "    not indented (aligned vertically with other lines) as expected.\n"
@@ -96,7 +108,7 @@ msgstr ""
 "lignes)\n"
 "    de la façon attendue.\n"
 
-#: generic_info.py:31
+#: generic_info.py:41
 msgid ""
 "    A NameError exception indicates that a variable or\n"
 "    function name is not known to Python.\n"
@@ -110,13 +122,13 @@ msgstr ""
 "    Cependant, cela peut également indiquer que le nom a été\n"
 "    utilisé avant qu'on ne lui ait associé une valeur.\n"
 
-#: generic_info.py:42
+#: generic_info.py:52
 msgid "    A SyntaxError occurs when Python cannot understand your code.\n"
 msgstr ""
 "    Une exception de type SyntaxError se produit lorsque python ne peut pas "
 "comprendre votre code.\n"
 
-#: generic_info.py:47
+#: generic_info.py:57
 msgid ""
 "    A TabError indicates that you have used both spaces\n"
 "    and tab characters to indent your code.\n"
@@ -135,7 +147,7 @@ msgstr ""
 "    La recommandation de Python est de toujours utiliser des espaces pour "
 "indenter votre code.\n"
 
-#: generic_info.py:59
+#: generic_info.py:69
 msgid ""
 "    In Python, variables that are used inside a function are known as \n"
 "    local variables. Before they are used, they must be assigned a value.\n"
@@ -160,11 +172,11 @@ msgstr ""
 "sinon vous verrez\n"
 "    une exception UnboundLocalError.\n"
 
-#: generic_info.py:73
+#: generic_info.py:83
 msgid "    No information is known about this exception.\n"
 msgstr "    Aucune information n'est connue au sujet de cette exception.\n"
 
-#: generic_info.py:78
+#: generic_info.py:88
 msgid ""
 "    A ZeroDivisionError occurs when you are attempting to divide\n"
 "    a value by zero:\n"
@@ -227,8 +239,9 @@ msgstr ""
 
 #: specific_info.py:120
 msgid ""
-"    My best guess: you were trying to assign a value\n"
-"    to a Python keyword. This is not allowed.\n"
+"    My best guess: you were trying\n"
+"    to assign a value to a Python keyword.\n"
+"    This is not allowed.\n"
 "\n"
 msgstr ""
 "    Ma meilleure hypothèse: vous essayiez d’assigner une valeur à un mot clé "
@@ -236,7 +249,7 @@ msgstr ""
 "    Ceci n’est pas permis.\n"
 "\n"
 
-#: specific_info.py:127
+#: specific_info.py:128
 msgid ""
 "    My best guess: you wrote something like\n"
 "        import X from Y\n"
@@ -251,7 +264,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: specific_info.py:137
+#: specific_info.py:138
 msgid ""
 "    My best guess: you meant to use Python's 'elif' keyword\n"
 "    but wrote '{name}' instead\n"
@@ -261,11 +274,11 @@ msgstr ""
 "    au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: specific_info.py:146
+#: specific_info.py:147
 msgid "a class"
 msgstr "une classe"
 
-#: specific_info.py:147
+#: specific_info.py:148
 msgid ""
 "    My best guess: you wanted to define {class_}\n"
 "    but forgot to add a colon ':' at the end\n"
@@ -275,7 +288,7 @@ msgstr ""
 "    mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:153
+#: specific_info.py:154
 msgid ""
 "    My best guess: you wrote a '{name}' loop but\n"
 "    forgot to add a colon ':' at the end\n"
@@ -285,7 +298,7 @@ msgstr ""
 "    mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:159
+#: specific_info.py:160
 msgid ""
 "    My best guess: you wrote a statement beginning with\n"
 "    '{name}' but forgot to add a colon ':' at the end\n"
@@ -295,11 +308,11 @@ msgstr ""
 "    '{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:166
+#: specific_info.py:167
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: specific_info.py:167
+#: specific_info.py:168
 msgid ""
 "    My best guess: you tried to define {class_or_function}\n"
 "    and did not use the correct syntax.\n"
@@ -312,7 +325,7 @@ msgstr ""
 "        def nom ( arguments_optionnels ) :\n"
 "\n"
 
-#: specific_info.py:177
+#: specific_info.py:178
 msgid ""
 "    My best guess: you wrote an expression like\n"
 "        {name} = something\n"
@@ -331,7 +344,7 @@ msgstr ""
 "        variable = {name}\n"
 "\n"
 
-#: specific_info.py:187
+#: specific_info.py:188
 msgid ""
 "    Currently, we cannot guess the likely cause of this error.\n"
 "\n"

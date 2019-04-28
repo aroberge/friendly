@@ -19,11 +19,11 @@ def make_title(text):
 
 
 all_imports = {
+    "ArithmeticError": ("test_arithmetic_error", "test_arithmetic_error"),
     "IndentationError - 1: expected an indented block": "syntax.raise_indentation_error1",
     "IndentationError - 2: unexpected indent": "syntax.raise_indentation_error2",
     "IndentationError - 3: unindent does not match ...": "syntax.raise_indentation_error3",
     "NameError": ("test_name_error", "test_name_error"),
-    "SyntaxError": "syntax.raise_syntax_error1",
     "TabError": "syntax.raise_tab_error",
     "UnboundLocalError": ("test_unbound_local_error", "test_unbound_local_error"),
     "Unknown exception": ("test_unknown_error", "test_unknown_error"),

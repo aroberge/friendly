@@ -39,11 +39,11 @@
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Friendly tracebacks - in English</a><ul>
+<li><a class="reference internal" href="#arithmeticerror">ArithmeticError</a></li>
 <li><a class="reference internal" href="#indentationerror-1-expected-an-indented-block">IndentationError - 1: expected an indented block</a></li>
 <li><a class="reference internal" href="#indentationerror-2-unexpected-indent">IndentationError - 2: unexpected indent</a></li>
 <li><a class="reference internal" href="#indentationerror-3-unindent-does-not-match">IndentationError - 3: unindent does not match …</a></li>
 <li><a class="reference internal" href="#nameerror">NameError</a></li>
-<li><a class="reference internal" href="#syntaxerror">SyntaxError</a></li>
 <li><a class="reference internal" href="#taberror">TabError</a></li>
 <li><a class="reference internal" href="#unboundlocalerror">UnboundLocalError</a></li>
 <li><a class="reference internal" href="#unknown-exception">Unknown exception</a></li>
@@ -106,6 +106,26 @@ similar files for all languages <em>and</em> update the documentation.</p>
 </div>
 <p>Friendly-traceback version: 0.0.4
 Python version: 3.7.0</p>
+<div class="section" id="arithmeticerror">
+<h2>ArithmeticError<a class="headerlink" href="#arithmeticerror" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    ArithmeticError:
+
+ArithmeticError is the base class for those built-in exceptions
+that are raised for various arithmetic errors.
+It is unusual that you are seeing this exception;
+normally, a more specific exception should have been raised.
+
+
+Execution stopped on line 10 of file &#39;test_arithmetic_error.py&#39;.
+
+    8:         # Usually, a subclass such as ZeroDivisionError, etc., would
+    9:         # likely be raised.
+--&gt;10:         raise ArithmeticError
+   11:     except Exception:
+</pre></div>
+</div>
+</div>
 <div class="section" id="indentationerror-1-expected-an-indented-block">
 <h2>IndentationError - 1: expected an indented block<a class="headerlink" href="#indentationerror-1-expected-an-indented-block" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
@@ -195,25 +215,6 @@ Execution stopped on line 7 of file &#39;test_name_error.py&#39;.
    6:     try:
 --&gt;7:         b = c
    8:     except Exception:
-</pre></div>
-</div>
-</div>
-<div class="section" id="syntaxerror">
-<h2>SyntaxError<a class="headerlink" href="#syntaxerror" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
-    SyntaxError: invalid syntax (raise_syntax_error1.py, line 3)
-
-A SyntaxError occurs when Python cannot understand your code.
-
-Python could not parse the file &#39;raise_syntax_error1.py&#39;
-beyond the location indicated below by --&gt; and ^.
-
-   1: &quot;&quot;&quot; Should raise SyntaxError&quot;&quot;&quot;
-   2:
---&gt;3: pass = 2
-           ^
-My best guess: you were trying to assign a value
-to a Python keyword. This is not allowed.
 </pre></div>
 </div>
 </div>
