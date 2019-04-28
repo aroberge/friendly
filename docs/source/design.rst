@@ -337,7 +337,7 @@ It is very likely that the information below is not up to date.
           +-- EOFError
           +-- ImportError *
           |    +-- ModuleNotFoundError *
-          +-- LookupError
+          +-- LookupError *
           |    +-- IndexError
           |    +-- KeyError
           +-- MemoryError

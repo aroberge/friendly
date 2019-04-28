@@ -45,6 +45,15 @@ def indentation_error(etype, value):
     )
 
 
+def lookup_error(*args):
+    _ = current_lang.lang
+    return _(
+        "    LookupError is the base class for the exceptions that are raised\n"
+        "    when a key or index used on a mapping or sequence is invalid.\n"
+        "    It can also be raised directly by codecs.lookup().\n"
+    )
+
+
 def module_not_found_error(*args):
     _ = current_lang.lang
     return _(
@@ -118,6 +127,7 @@ generic = {
     "ArithmeticError": arithmetic_error,
     "ImportError": import_error,
     "IndentationError": indentation_error,
+    "LookupError": lookup_error,
     "ModuleNotFoundError": module_not_found_error,
     "NameError": name_error,
     "SyntaxError": syntax_error,

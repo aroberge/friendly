@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-28 15:15-0300\n"
-"PO-Revision-Date: 2019-04-28 15:21-0300\n"
+"POT-Creation-Date: 2019-04-28 16:12-0300\n"
+"PO-Revision-Date: 2019-04-28 16:15-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -120,6 +120,17 @@ msgstr ""
 
 #: generic_info.py:50
 msgid ""
+"    LookupError is the base class for the exceptions that are raised\n"
+"    when a key or index used on a mapping or sequence is invalid.\n"
+"    It can also be raised directly by codecs.lookup().\n"
+msgstr ""
+"    LookupError est la classe de base pour les exceptions qui sont levées\n"
+"    lorsqu’une clé ou un index utilisé sur un tableau de correspondance ou "
+"une séquence est invalide.\n"
+"    Elle peut également être levée directement par codecs.lookup().\n"
+
+#: generic_info.py:59
+msgid ""
 "    A ModuleNotFoundError exception indicates that you\n"
 "    are trying to import a module that cannot be found by Python.\n"
 "    This could be because you misspelled the name of the module\n"
@@ -131,7 +142,7 @@ msgstr ""
 "écrivant le nom du module\n"
 "    ou parce qu’il n’est pas installé sur votre ordinateur.\n"
 
-#: generic_info.py:60
+#: generic_info.py:69
 msgid ""
 "    A NameError exception indicates that a variable or\n"
 "    function name is not known to Python.\n"
@@ -145,13 +156,13 @@ msgstr ""
 "    Cependant, cela peut également indiquer que le nom a été\n"
 "    utilisé avant qu'on ne lui ait associé une valeur.\n"
 
-#: generic_info.py:71
+#: generic_info.py:80
 msgid "    A SyntaxError occurs when Python cannot understand your code.\n"
 msgstr ""
 "    Une exception de type SyntaxError se produit lorsque python ne peut pas "
 "comprendre votre code.\n"
 
-#: generic_info.py:76
+#: generic_info.py:85
 msgid ""
 "    A TabError indicates that you have used both spaces\n"
 "    and tab characters to indent your code.\n"
@@ -170,7 +181,7 @@ msgstr ""
 "    La recommandation de Python est de toujours utiliser des espaces pour "
 "indenter votre code.\n"
 
-#: generic_info.py:88
+#: generic_info.py:97
 msgid ""
 "    In Python, variables that are used inside a function are known as \n"
 "    local variables. Before they are used, they must be assigned a value.\n"
@@ -195,11 +206,11 @@ msgstr ""
 "sinon vous verrez\n"
 "    une exception UnboundLocalError.\n"
 
-#: generic_info.py:102
+#: generic_info.py:111
 msgid "    No information is known about this exception.\n"
 msgstr "    Aucune information n'est connue au sujet de cette exception.\n"
 
-#: generic_info.py:107
+#: generic_info.py:116
 msgid ""
 "    A ZeroDivisionError occurs when you are attempting to divide\n"
 "    a value by zero:\n"

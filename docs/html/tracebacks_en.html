@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Friendly tracebacks - in English &#8212; Friendly tracebacks 0.0.4 documentation</title>
+    <title>Friendly tracebacks - in English &#8212; Friendly tracebacks 0.0.5 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -31,7 +31,7 @@
         <li class="right" >
           <a href="syntax_error.html" title="Dealing with Syntax Errors"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.4 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.5 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -44,6 +44,7 @@
 <li><a class="reference internal" href="#indentationerror-1-expected-an-indented-block">IndentationError - 1: expected an indented block</a></li>
 <li><a class="reference internal" href="#indentationerror-2-unexpected-indent">IndentationError - 2: unexpected indent</a></li>
 <li><a class="reference internal" href="#indentationerror-3-unindent-does-not-match">IndentationError - 3: unindent does not match …</a></li>
+<li><a class="reference internal" href="#lookuperror">LookupError</a></li>
 <li><a class="reference internal" href="#modulenotfounderror">ModuleNotFoundError</a></li>
 <li><a class="reference internal" href="#nameerror">NameError</a></li>
 <li><a class="reference internal" href="#taberror">TabError</a></li>
@@ -106,7 +107,7 @@ On Windows, if Sphinx is installed on your computer, it is suggested
 instead to run make_trb.bat in the root directory as it will create
 similar files for all languages <em>and</em> update the documentation.</p>
 </div>
-<p>Friendly-traceback version: 0.0.4
+<p>Friendly-traceback version: 0.0.5
 Python version: 3.7.0</p>
 <div class="section" id="arithmeticerror">
 <h2>ArithmeticError<a class="headerlink" href="#arithmeticerror" title="Permalink to this headline">¶</a></h2>
@@ -217,6 +218,25 @@ Likely cause:
     In this case, the line identified above is
     less indented than the preceding one,
     and is not aligned vertically with another block of code.
+</pre></div>
+</div>
+</div>
+<div class="section" id="lookuperror">
+<h2>LookupError<a class="headerlink" href="#lookuperror" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    LookupError:
+
+LookupError is the base class for the exceptions that are raised
+when a key or index used on a mapping or sequence is invalid.
+It can also be raised directly by codecs.lookup().
+
+
+Execution stopped on line 11 of file &#39;test_lookup_error.py&#39;.
+
+    9:         # other than possibly codecs.lookup(), which is why we raise
+   10:         # it directly here for our example.
+--&gt;11:         raise LookupError
+   12:     except Exception:
 </pre></div>
 </div>
 </div>
@@ -407,7 +427,7 @@ Execution stopped on line 17 of file &#39;test_zero_division_error.py&#39;.
         <li class="right" >
           <a href="syntax_error.html" title="Dealing with Syntax Errors"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.4 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Friendly tracebacks 0.0.5 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

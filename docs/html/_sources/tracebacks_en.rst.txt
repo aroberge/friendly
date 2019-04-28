@@ -19,7 +19,7 @@ should be included here.
      instead to run make_trb.bat in the root directory as it will create
      similar files for all languages *and* update the documentation.
 
-Friendly-traceback version: 0.0.4
+Friendly-traceback version: 0.0.5
 Python version: 3.7.0
 
 
@@ -147,6 +147,28 @@ IndentationError - 3: unindent does not match ...
         In this case, the line identified above is
         less indented than the preceding one,
         and is not aligned vertically with another block of code.
+
+LookupError
+-----------
+
+.. code-block:: none
+
+
+    Python exception: 
+        LookupError: 
+
+    LookupError is the base class for the exceptions that are raised
+    when a key or index used on a mapping or sequence is invalid.
+    It can also be raised directly by codecs.lookup().
+
+
+    Execution stopped on line 11 of file 'test_lookup_error.py'.
+
+        9:         # other than possibly codecs.lookup(), which is why we raise
+       10:         # it directly here for our example.
+    -->11:         raise LookupError
+       12:     except Exception:
+
 
 ModuleNotFoundError
 -------------------

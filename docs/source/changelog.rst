@@ -5,6 +5,11 @@ Change Log
 
     Unless otherwise noted, "with translation" means with French translation.
 
+- Added LookupError, with translation
+
+Version 0.0.4
+-------------
+
 - Added ImportError, with translation
 - Added ModuleNotFoundError, with translation
 - Added ArithmeticError, with translation
@@ -14,7 +19,7 @@ Change Log
 - Added ZeroDivisionError, with translation
 - Added UnboundLocalError, with translation
 - Took care of SystemExit and KeyboardInterrupt
-- Reorgazed tests structure
+- Reorganized tests structure
 - Added TabError, with translation
 - Documentation: Dealing with Syntax Errors
 

@@ -19,7 +19,7 @@ ici tous les exemples possibles tels qu'interprétés par friendly-traceback.
      du répertoire de fichier. Si vous faites ceci, la documentation pour
      toutes les langues sera automatiquement mise à jour.
 
-Friendly-traceback version: 0.0.4
+Friendly-traceback version: 0.0.5
 Python version: 3.7.0
 
 
@@ -150,6 +150,28 @@ IndentationError - 3: unindent does not match ...
         Dans ce cas-ci, la ligne indiquée ci-dessus par -->
         est moins indentée que la ligne précédente
         et n’est pas alignée verticalement avec un autre bloc de code.
+
+LookupError
+-----------
+
+.. code-block:: none
+
+
+    Exception Python: 
+        LookupError: 
+
+    LookupError est la classe de base pour les exceptions qui sont levées
+    lorsqu’une clé ou un index utilisé sur un tableau de correspondance ou une séquence est invalide.
+    Elle peut également être levée directement par codecs.lookup().
+
+
+    L'exécution s'est arrêtée à la ligne 11 du fichier 'test_lookup_error.py'
+
+        9:         # other than possibly codecs.lookup(), which is why we raise
+       10:         # it directly here for our example.
+    -->11:         raise LookupError
+       12:     except Exception:
+
 
 ModuleNotFoundError
 -------------------
