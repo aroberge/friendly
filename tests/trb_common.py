@@ -25,6 +25,8 @@ all_imports = {
     "IndentationError - 2: unexpected indent": "syntax.raise_indentation_error2",
     "IndentationError - 3: unindent does not match ...": "syntax.raise_indentation_error3",
     "LookupError": ("test_lookup_error", "test_lookup_error"),
+    "IndexError - short tuple": ("test_index_error", "test_index_error1"),
+    "IndexError - long list": ("test_index_error", "test_index_error2"),
     "ModuleNotFoundError": ("test_module_not_found_error", "test_module_not_found_error"),
     "NameError": ("test_name_error", "test_name_error"),
     "TabError": "syntax.raise_tab_error",

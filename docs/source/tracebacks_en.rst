@@ -170,6 +170,64 @@ LookupError
        12:     except Exception:
 
 
+IndexError - short tuple
+------------------------
+
+.. code-block:: none
+
+
+    Python exception: 
+        IndexError: tuple index out of range
+
+    An IndexError occurs when you are try to get an item from a list,
+    a tuple, or a similar object (sequence), by using an index which
+    does not exists; typically, this is because the index you give
+    is greater than the length of the sequence.
+
+    Likely cause:
+        In this case, the sequence is a tuple.
+
+
+    Execution stopped on line 9 of file 'test_index_error.py'.
+
+        7:     b = [1, 2, 3]
+        8:     try:
+    --> 9:         print(a[3], b[2])
+       10:     except Exception:
+
+    a: (1, 2, 3)
+    b: [1, 2, 3]
+
+
+IndexError - long list
+----------------------
+
+.. code-block:: none
+
+
+    Python exception: 
+        IndexError: list index out of range
+
+    An IndexError occurs when you are try to get an item from a list,
+    a tuple, or a similar object (sequence), by using an index which
+    does not exists; typically, this is because the index you give
+    is greater than the length of the sequence.
+
+    Likely cause:
+        In this case, the sequence is a list.
+
+
+    Execution stopped on line 21 of file 'test_index_error.py'.
+
+       19:     b = tuple(range(50))
+       20:     try:
+    -->21:         print(a[50], b[0])
+       22:     except Exception:
+
+    a: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1... ]  | len(a): 40
+    b: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1... )  | len(b): 50
+
+
 ModuleNotFoundError
 -------------------
 

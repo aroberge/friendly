@@ -53,6 +53,18 @@ def indentation_error(etype, value):
     return _("    Likely cause:\n{cause}").format(cause=this_case)
 
 
+def index_error(etype, value):
+    _ = current_lang.lang
+    value = str(value)
+    if "list" in value:
+        this_case = _("        In this case, the sequence is a list.\n")
+    elif "tuple" in value:
+        this_case = _("        In this case, the sequence is a tuple.\n")
+    else:
+        this_case = None
+    return this_case
+
+
 def module_not_found_error(etype, value):
     _ = current_lang.lang
     # value is expected to be something like
@@ -137,6 +149,7 @@ def zero_division_error(*args):
 get_cause = {
     "ImportError": import_error,
     "IndentationError": indentation_error,
+    "IndexError": index_error,
     "ModuleNotFoundError": module_not_found_error,
     "NameError": name_error,
     "SyntaxError": syntax_error,

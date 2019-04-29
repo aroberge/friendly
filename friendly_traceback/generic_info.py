@@ -45,6 +45,16 @@ def indentation_error(etype, value):
     )
 
 
+def index_error(*args):
+    _ = current_lang.lang
+    return _(
+        "    An IndexError occurs when you are try to get an item from a list,\n"
+        "    a tuple, or a similar object (sequence), by using an index which\n"
+        "    does not exists; typically, this is because the index you give\n"
+        "    is greater than the length of the sequence.\n"
+    )
+
+
 def lookup_error(*args):
     _ = current_lang.lang
     return _(
@@ -127,6 +137,7 @@ generic = {
     "ArithmeticError": arithmetic_error,
     "ImportError": import_error,
     "IndentationError": indentation_error,
+    "IndexError": index_error,
     "LookupError": lookup_error,
     "ModuleNotFoundError": module_not_found_error,
     "NameError": name_error,

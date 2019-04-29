@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-04-28 16:12-0300\n"
+"POT-Creation-Date: 2019-04-29 13:59-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,13 +15,13 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: formatter.py:21
+#: formatter.py:22
 msgid ""
 "        Unfortunately, no additional information is available:\n"
 "        the content of file '<string>' is not accessible.\n"
 msgstr ""
 
-#: formatter.py:138
+#: formatter.py:144
 msgid ""
 "\n"
 "    Python exception: \n"
@@ -30,13 +30,13 @@ msgid ""
 "{explanation}"
 msgstr ""
 
-#: formatter.py:156 specific_info.py:53
+#: formatter.py:162 specific_info.py:53
 msgid ""
 "    Likely cause:\n"
 "{cause}"
 msgstr ""
 
-#: formatter.py:178
+#: formatter.py:189
 msgid ""
 "\n"
 "    Execution stopped on line {linenumber} of file '{filename}'.\n"
@@ -44,7 +44,7 @@ msgid ""
 "{source}\n"
 msgstr ""
 
-#: formatter.py:186
+#: formatter.py:197
 msgid ""
 "\n"
 "    Exception raised on line {linenumber} of file '{filename}'.\n"
@@ -67,7 +67,7 @@ msgid ""
 "    because the name of the object is not spelled correctly.\n"
 msgstr ""
 
-#: generic_info.py:33 specific_info.py:89 specific_info.py:110
+#: generic_info.py:33 specific_info.py:101 specific_info.py:122
 msgid ""
 "    Python could not parse the file '{filename}'\n"
 "    beyond the location indicated below by --> and ^.\n"
@@ -83,12 +83,20 @@ msgstr ""
 
 #: generic_info.py:50
 msgid ""
+"    An IndexError occurs when you are try to get an item from a list,\n"
+"    a tuple, or a similar object (sequence), by using an index which\n"
+"    does not exists; typically, this is because the index you give\n"
+"    is greater than the length of the sequence.\n"
+msgstr ""
+
+#: generic_info.py:60
+msgid ""
 "    LookupError is the base class for the exceptions that are raised\n"
 "    when a key or index used on a mapping or sequence is invalid.\n"
 "    It can also be raised directly by codecs.lookup().\n"
 msgstr ""
 
-#: generic_info.py:59
+#: generic_info.py:69
 msgid ""
 "    A ModuleNotFoundError exception indicates that you\n"
 "    are trying to import a module that cannot be found by Python.\n"
@@ -96,7 +104,7 @@ msgid ""
 "    or because it is not installed on your computer.\n"
 msgstr ""
 
-#: generic_info.py:69
+#: generic_info.py:79
 msgid ""
 "    A NameError exception indicates that a variable or\n"
 "    function name is not known to Python.\n"
@@ -105,12 +113,12 @@ msgid ""
 "    before being defined or given a value.\n"
 msgstr ""
 
-#: generic_info.py:80
+#: generic_info.py:90
 msgid ""
 "    A SyntaxError occurs when Python cannot understand your code.\n"
 msgstr ""
 
-#: generic_info.py:85
+#: generic_info.py:95
 msgid ""
 "    A TabError indicates that you have used both spaces\n"
 "    and tab characters to indent your code.\n"
@@ -120,7 +128,7 @@ msgid ""
 "    Python's recommendation is to always use spaces to indent your code.\n"
 msgstr ""
 
-#: generic_info.py:97
+#: generic_info.py:107
 msgid ""
 "    In Python, variables that are used inside a function are known as \n"
 "    local variables. Before they are used, they must be assigned a value.\n"
@@ -132,12 +140,12 @@ msgid ""
 "    an UnboundLocalError.\n"
 msgstr ""
 
-#: generic_info.py:111
+#: generic_info.py:121
 msgid ""
 "    No information is known about this exception.\n"
 msgstr ""
 
-#: generic_info.py:116
+#: generic_info.py:126
 msgid ""
 "    A ZeroDivisionError occurs when you are attempting to divide\n"
 "    a value by zero:\n"
@@ -174,18 +182,28 @@ msgid ""
 "        and is not aligned vertically with another block of code.\n"
 msgstr ""
 
-#: specific_info.py:63
+#: specific_info.py:60
+msgid ""
+"        In this case, the sequence is a list.\n"
+msgstr ""
+
+#: specific_info.py:62
+msgid ""
+"        In this case, the sequence is a tuple.\n"
+msgstr ""
+
+#: specific_info.py:75
 msgid ""
 "        In your program, the name of the\n"
 "        module that cannot be found is '{mod_name}'.\n"
 msgstr ""
 
-#: specific_info.py:76
+#: specific_info.py:88
 msgid ""
 "        In your program, the unknown name is '{var_name}'.\n"
 msgstr ""
 
-#: specific_info.py:125
+#: specific_info.py:137
 msgid ""
 "        The variable that appears to cause the problem is '{var_name}'.\n"
 "        Try inserting the statement\n"
@@ -193,7 +211,7 @@ msgid ""
 "        as the first line inside your function."
 msgstr ""
 
-#: specific_info.py:153
+#: specific_info.py:166
 msgid ""
 "    My best guess: you were trying\n"
 "    to assign a value to a Python keyword.\n"
@@ -201,7 +219,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: specific_info.py:161
+#: specific_info.py:174
 msgid ""
 "    My best guess: you wrote something like\n"
 "        import X from Y\n"
@@ -210,43 +228,43 @@ msgid ""
 "\n"
 msgstr ""
 
-#: specific_info.py:171
+#: specific_info.py:184
 msgid ""
 "    My best guess: you meant to use Python's 'elif' keyword\n"
 "    but wrote '{name}' instead\n"
 "\n"
 msgstr ""
 
-#: specific_info.py:180
+#: specific_info.py:193
 msgid "a class"
 msgstr ""
 
-#: specific_info.py:181
+#: specific_info.py:194
 msgid ""
 "    My best guess: you wanted to define {class_}\n"
 "    but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: specific_info.py:187
+#: specific_info.py:200
 msgid ""
 "    My best guess: you wrote a '{name}' loop but\n"
 "    forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: specific_info.py:193
+#: specific_info.py:206
 msgid ""
 "    My best guess: you wrote a statement beginning with\n"
 "    '{name}' but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: specific_info.py:200
+#: specific_info.py:213
 msgid "a function or method"
 msgstr ""
 
-#: specific_info.py:201
+#: specific_info.py:214
 msgid ""
 "    My best guess: you tried to define {class_or_function}\n"
 "    and did not use the correct syntax.\n"
@@ -254,7 +272,7 @@ msgid ""
 "        def name ( optional_arguments ):\n"
 msgstr ""
 
-#: specific_info.py:211
+#: specific_info.py:224
 msgid ""
 "    My best guess: you wrote an expression like\n"
 "        {name} = something\n"
@@ -265,7 +283,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: specific_info.py:221
+#: specific_info.py:234
 msgid ""
 "    Currently, we cannot guess the likely cause of this error.\n"
 "\n"

@@ -22,13 +22,12 @@ def get_var_info(line, frame):
         result = ""
         if tok.type == tokenize.NAME:
             if tok.string in loc:
-                result, length_info = format_var_info(tok, loc)
+                result = format_var_info(tok, loc)
             elif tok.string in glob:
-                result, length_info = format_var_info(tok, glob, _global=True)
+                result = format_var_info(tok, glob, _global=True)
             if result:
                 results.append(result)
-                if length_info:
-                    results.append(length_info)
+
     if results:
         results.append("")
     return results
@@ -58,5 +57,5 @@ def format_var_info(tok, _dict, _global=""):
         _global=_global, name=name, value=value
     )
     if length_info:
-        length_info = "    len({name}): {length}".format(name=name, length=length_info)
-    return result, length_info
+        result += "  | len({name}): {length}".format(name=name, length=length_info)
+    return result

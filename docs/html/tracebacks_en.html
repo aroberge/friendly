@@ -45,6 +45,8 @@
 <li><a class="reference internal" href="#indentationerror-2-unexpected-indent">IndentationError - 2: unexpected indent</a></li>
 <li><a class="reference internal" href="#indentationerror-3-unindent-does-not-match">IndentationError - 3: unindent does not match …</a></li>
 <li><a class="reference internal" href="#lookuperror">LookupError</a></li>
+<li><a class="reference internal" href="#indexerror-short-tuple">IndexError - short tuple</a></li>
+<li><a class="reference internal" href="#indexerror-long-list">IndexError - long list</a></li>
 <li><a class="reference internal" href="#modulenotfounderror">ModuleNotFoundError</a></li>
 <li><a class="reference internal" href="#nameerror">NameError</a></li>
 <li><a class="reference internal" href="#taberror">TabError</a></li>
@@ -237,6 +239,58 @@ Execution stopped on line 11 of file &#39;test_lookup_error.py&#39;.
    10:         # it directly here for our example.
 --&gt;11:         raise LookupError
    12:     except Exception:
+</pre></div>
+</div>
+</div>
+<div class="section" id="indexerror-short-tuple">
+<h2>IndexError - short tuple<a class="headerlink" href="#indexerror-short-tuple" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    IndexError: tuple index out of range
+
+An IndexError occurs when you are try to get an item from a list,
+a tuple, or a similar object (sequence), by using an index which
+does not exists; typically, this is because the index you give
+is greater than the length of the sequence.
+
+Likely cause:
+    In this case, the sequence is a tuple.
+
+
+Execution stopped on line 9 of file &#39;test_index_error.py&#39;.
+
+    7:     b = [1, 2, 3]
+    8:     try:
+--&gt; 9:         print(a[3], b[2])
+   10:     except Exception:
+
+a: (1, 2, 3)
+b: [1, 2, 3]
+</pre></div>
+</div>
+</div>
+<div class="section" id="indexerror-long-list">
+<h2>IndexError - long list<a class="headerlink" href="#indexerror-long-list" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    IndexError: list index out of range
+
+An IndexError occurs when you are try to get an item from a list,
+a tuple, or a similar object (sequence), by using an index which
+does not exists; typically, this is because the index you give
+is greater than the length of the sequence.
+
+Likely cause:
+    In this case, the sequence is a list.
+
+
+Execution stopped on line 21 of file &#39;test_index_error.py&#39;.
+
+   19:     b = tuple(range(50))
+   20:     try:
+--&gt;21:         print(a[50], b[0])
+   22:     except Exception:
+
+a: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1... ]  | len(a): 40
+b: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1... )  | len(b): 50
 </pre></div>
 </div>
 </div>
