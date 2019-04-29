@@ -172,7 +172,7 @@ def run_script(source):
 # Public API available through a * import
 # ----------------
 
-__all__ = ["explain", "get_output", "install", "set_lang"]
+__all__ = ["explain", "get_output", "install", "set_lang", "set_level"]
 
 
 def explain(etype, value, tb, redirect=None):

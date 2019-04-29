@@ -10,6 +10,7 @@ from . import generic_info
 from . import specific_info
 from . import utils
 from .my_gettext import current_lang
+from .friendly_var_info import get_var_info
 
 CONTEXT = utils.CONTEXT
 CONSOLE_SOURCE = utils.CONSOLE_SOURCE
@@ -89,30 +90,31 @@ def explain_traceback(etype, value, tb, running_script=False):
     if issubclass(etype, SyntaxError):
         return "\n".join(result)
 
-    # first, get all calls
+    # first, get all calls made
     records = inspect.getinnerframes(tb, CONTEXT)
 
     # 3. Last call made
     if running_script:
+        # Do not show traceback from our own code
         excluded_files = excluded_file_names()
         for record in records[:-1]:
-            # this would show a traceback originating from runpy or from our code
             _frame, filename, linenumber, _func, lines, index = record
             if filename in excluded_files:
                 continue
-            if filename == "<string>":
-                info = cannot_analyze_string()
-            else:
-                info = get_source_info(filename, linenumber, lines, index)
-            result.append(add_source_info(info))
             break
     else:
         _frame, filename, linenumber, _func, lines, index = records[0]
-        if filename == "<string>":
-            info = cannot_analyze_string()
-        else:
-            info = get_source_info(filename, linenumber, lines, index)
-        result.append(add_source_info(info))
+
+    if filename == "<string>":
+        info = cannot_analyze_string()
+    else:
+        info = get_source_info(filename, linenumber, lines, index)
+    result.append(add_source_info(info))
+
+    if "line" in info:
+        res = get_var_info(info["line"], _frame)
+        if res:
+            result.extend(res)
 
     # 4. origin of the exception
     if len(records) > 1:
@@ -122,6 +124,10 @@ def explain_traceback(etype, value, tb, running_script=False):
         else:
             info = get_source_info(filename, linenumber, lines, index)
         result.append(add_source_info(info, last_call=False))
+        if "line" in info:
+            get_var_info(info["line"], _frame)
+        if res:
+            result.extend(res)
 
     return "\n".join(result)
 
@@ -162,14 +168,19 @@ def get_source_info(filename, linenumber, lines, index):
 
     if filename in CONSOLE_SOURCE:
         _filename, source = CONSOLE_SOURCE[filename]
-        source = utils.get_partial_source(filename, linenumber, None)
+        source, line = utils.get_partial_source(filename, linenumber, None)
     elif filename and os.path.abspath(filename):
         filename = os.path.basename(filename)
-        source = utils.highlight_source(linenumber, index, lines)
+        source, line = utils.highlight_source(linenumber, index, lines)
     elif not filename:
         raise FileNotFoundError("Cannot find %s" % filename)
 
-    return {"filename": filename, "source": source, "linenumber": linenumber}
+    return {
+        "filename": filename,
+        "source": source,
+        "linenumber": linenumber,
+        "line": line,
+    }
 
 
 def add_source_info(info, last_call=True):

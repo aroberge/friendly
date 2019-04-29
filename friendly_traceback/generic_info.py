@@ -28,7 +28,7 @@ def indentation_error(etype, value):
     filename = value.filename
     linenumber = value.lineno
     offset = value.offset
-    source = utils.get_partial_source(filename, linenumber, offset)
+    source, _ignore = utils.get_partial_source(filename, linenumber, offset)
     filename = os.path.basename(filename)
     info = _(
         "    Python could not parse the file '{filename}'\n"

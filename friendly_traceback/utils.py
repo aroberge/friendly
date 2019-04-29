@@ -1,8 +1,41 @@
 """utils.py"""
+import tokenize
+
+from io import StringIO
 
 CONTEXT = 4
 CONSOLE_SOURCE = {}
 CONSOLE_NAME = "<Friendly console>"
+
+
+class Token:
+    """Token as generated from tokenize.generate_tokens written here in
+       a more convenient form for our purpose.
+    """
+
+    def __init__(self, token):
+        self.type = token[0]
+        self.string = token[1]
+        self.start_line, self.start_col = token[2]
+        self.end_line, self.end_col = token[3]
+        # ignore last parameter which is the logical line
+
+
+def collect_tokens(line):
+    """Makes a list of tokens on a line, ignoring spaces"""
+    tokens = []
+    try:
+        for tok in tokenize.generate_tokens(StringIO(line).readline):
+            token = Token(tok)
+            if not token.string.strip():  # ignore spaces
+                continue
+            if token.type == tokenize.COMMENT:
+                break
+            tokens.append(token)
+    except Exception as e:
+        return "%s raised while analyzing a SyntaxError" % repr(e)
+
+    return tokens
 
 
 def add_console_source(fake_filename, true_filename_and_source):
@@ -47,6 +80,7 @@ def highlight_source(linenumber, index, lines, offset=None):
         representation in this case.
     """
     new_lines = []
+    problem_line = ""
     nb_digits = len(str(linenumber + index))
     no_mark = "       {:%d}: " % nb_digits
     with_mark = "    -->{:%d}: " % nb_digits
@@ -56,6 +90,7 @@ def highlight_source(linenumber, index, lines, offset=None):
     for line in lines:
         if i == linenumber:
             num = with_mark.format(i)
+            problem_line = line
             if offset is not None:
                 new_lines.append(num + line.rstrip())
                 new_lines.append(offset_mark)
@@ -64,4 +99,4 @@ def highlight_source(linenumber, index, lines, offset=None):
             num = no_mark.format(i)
         new_lines.append(num + line.rstrip())
         i += 1
-    return "\n".join(new_lines)
+    return "\n".join(new_lines), problem_line

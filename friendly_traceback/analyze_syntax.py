@@ -10,8 +10,8 @@ Attempts to find the most likely cause of a SyntaxError.
 
 import keyword
 import tokenize
-from io import StringIO
 
+from .utils import collect_tokens
 
 possible_causes = []
 
@@ -25,19 +25,6 @@ def add_cause(func):
         return func(*args)
 
     return wrapper
-
-
-class Token:
-    """Token as generated from tokenize.generate_tokens written here in
-       a more convenient form for our purpose.
-    """
-
-    def __init__(self, token):
-        self.type = token[0]
-        self.string = token[1]
-        self.start_line, self.start_col = token[2]
-        self.end_line, self.end_col = token[3]
-        # ignore last parameter which is the logical line
 
 
 def find_likely_cause(source, linenumber, message, offset):
@@ -79,23 +66,6 @@ def analyze_last_line(line):
         if cause:
             return cause
     return "No cause found"
-
-
-def collect_tokens(line):
-    """Makes a list of tokens on a line, ignoring spaces"""
-    tokens = []
-    try:
-        for tok in tokenize.generate_tokens(StringIO(line).readline):
-            token = Token(tok)
-            if not token.string.strip():  # ignore spaces
-                continue
-            if token.type == tokenize.COMMENT:
-                break
-            tokens.append(token)
-    except Exception as e:
-        return "%s raised while analyzing a SyntaxError" % repr(e)
-
-    return tokens
 
 
 # ==================

@@ -5,6 +5,7 @@ Change Log
 
     Unless otherwise noted, "with translation" means with French translation.
 
+- Added LookupError, with translation
 
 Version 0.0.4
 -------------

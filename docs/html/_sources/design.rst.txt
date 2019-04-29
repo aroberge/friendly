@@ -298,6 +298,7 @@ The following is an incomplete list of projects or modules to look at:
 - https://github.com/Qix-/better-exceptions
 - As mentioned in Issue8_, Thonny_ already has something
   similar implemented.
+- https://github.com/cknd/stackprinter
 
 
 Reference: known exceptions
@@ -337,7 +338,7 @@ It is very likely that the information below is not up to date.
           +-- EOFError
           +-- ImportError *
           |    +-- ModuleNotFoundError *
-          +-- LookupError
+          +-- LookupError *
           |    +-- IndexError
           |    +-- KeyError
           +-- MemoryError
