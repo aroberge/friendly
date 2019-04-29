@@ -50,6 +50,7 @@
 <li><a class="reference internal" href="#setting-the-verbosity-level">Setting the verbosity level</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#variable-information">Variable information</a></li>
 <li><a class="reference internal" href="#extensibility">Extensibility</a></li>
 <li><a class="reference internal" href="#about-the-likely-cause">About the likely cause</a></li>
 <li><a class="reference internal" href="#additional-configuration">Additional configuration</a></li>
@@ -273,6 +274,23 @@ program, as an option in the calling function.</p>
 the local environment variables (as for the language) or from a global
 <code class="docutils literal notranslate"><span class="pre">.ini</span></code> file.</p>
 </div>
+</div>
+<div class="section" id="variable-information">
+<h2>Variable information<a class="headerlink" href="#variable-information" title="Permalink to this headline">¶</a></h2>
+<p>It is often useful to know the values of named objects (variables, functions,
+etc.) where an exception occurs.
+Various enhanced traceback formatters, such as Python’s
+<a class="reference external" href="https://docs.python.org/3/library/cgitb.html">cgitb</a> module and a few
+others listed near the end of this document, provide such information.
+Whenever it is possible to do so, we provide such information.
+(Note that this was not the case when the screenshots included in
+this document were made.)
+To avoid having too much text displayed, we truncate the string representation
+of such objects if it exceeds a certain value. However, when we do so,
+if the object has a <code class="docutils literal notranslate"><span class="pre">__len__</span></code> method, such as tuple or a list, we
+then show the len of the object as well as its truncated value.
+This information can be useful when dealing with <code class="docutils literal notranslate"><span class="pre">IndexError</span></code>.
+See <a class="reference external" href="https://aroberge.github.io/friendly-traceback/docs/html/tracebacks_en.html#indexerror-long-list">this</a> for a concrete example.</p>
 </div>
 <div class="section" id="extensibility">
 <h2>Extensibility<a class="headerlink" href="#extensibility" title="Permalink to this headline">¶</a></h2>

@@ -215,6 +215,26 @@ If no such option is provided, then it should be set either from
 the local environment variables (as for the language) or from a global
 ``.ini`` file.
 
+
+Variable information
+--------------------
+
+It is often useful to know the values of named objects (variables, functions,
+etc.) where an exception occurs.
+Various enhanced traceback formatters, such as Python's
+`cgitb <https://docs.python.org/3/library/cgitb.html>`_ module and a few
+others listed near the end of this document, provide such information.
+Whenever it is possible to do so, we provide such information.
+(Note that this was not the case when the screenshots included in
+this document were made.)
+To avoid having too much text displayed, we truncate the string representation
+of such objects if it exceeds a certain value. However, when we do so,
+if the object has a ``__len__`` method, such as tuple or a list, we
+then show the len of the object as well as its truncated value.
+This information can be useful when dealing with ``IndexError``.
+See `this <https://aroberge.github.io/friendly-traceback/docs/html/tracebacks_en.html#indexerror-long-list>`_ for a concrete example.
+
+
 Extensibility
 --------------
 

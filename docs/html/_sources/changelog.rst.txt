@@ -5,6 +5,8 @@ Change Log
 
     Unless otherwise noted, "with translation" means with French translation.
 
+- Added value of variables found on lines that are specific to the traceback
+- Added IndexError, with translation
 - Added LookupError, with translation
 
 Version 0.0.4
