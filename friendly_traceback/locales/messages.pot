@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-04-29 13:59-0300\n"
+"POT-Creation-Date: 2019-04-29 15:25-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -87,16 +87,17 @@ msgid ""
 "    a tuple, or a similar object (sequence), by using an index which\n"
 "    does not exists; typically, this is because the index you give\n"
 "    is greater than the length of the sequence.\n"
+"    Reminder: the first item of a sequence is at index 0.\n"
 msgstr ""
 
-#: generic_info.py:60
+#: generic_info.py:61
 msgid ""
 "    LookupError is the base class for the exceptions that are raised\n"
 "    when a key or index used on a mapping or sequence is invalid.\n"
 "    It can also be raised directly by codecs.lookup().\n"
 msgstr ""
 
-#: generic_info.py:69
+#: generic_info.py:70
 msgid ""
 "    A ModuleNotFoundError exception indicates that you\n"
 "    are trying to import a module that cannot be found by Python.\n"
@@ -104,7 +105,7 @@ msgid ""
 "    or because it is not installed on your computer.\n"
 msgstr ""
 
-#: generic_info.py:79
+#: generic_info.py:80
 msgid ""
 "    A NameError exception indicates that a variable or\n"
 "    function name is not known to Python.\n"
@@ -113,12 +114,12 @@ msgid ""
 "    before being defined or given a value.\n"
 msgstr ""
 
-#: generic_info.py:90
+#: generic_info.py:91
 msgid ""
 "    A SyntaxError occurs when Python cannot understand your code.\n"
 msgstr ""
 
-#: generic_info.py:95
+#: generic_info.py:96
 msgid ""
 "    A TabError indicates that you have used both spaces\n"
 "    and tab characters to indent your code.\n"
@@ -128,7 +129,7 @@ msgid ""
 "    Python's recommendation is to always use spaces to indent your code.\n"
 msgstr ""
 
-#: generic_info.py:107
+#: generic_info.py:108
 msgid ""
 "    In Python, variables that are used inside a function are known as \n"
 "    local variables. Before they are used, they must be assigned a value.\n"
@@ -140,12 +141,12 @@ msgid ""
 "    an UnboundLocalError.\n"
 msgstr ""
 
-#: generic_info.py:121
+#: generic_info.py:122
 msgid ""
 "    No information is known about this exception.\n"
 msgstr ""
 
-#: generic_info.py:126
+#: generic_info.py:127
 msgid ""
 "    A ZeroDivisionError occurs when you are attempting to divide\n"
 "    a value by zero:\n"

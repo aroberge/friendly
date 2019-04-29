@@ -186,6 +186,8 @@ IndexError - short tuple
     d'une liste, d'un tuple, ou d'un objet similaire (séquence), à l’aide d’un index qui
     n’existe pas; typiquement, c’est parce que l’index que vous donnez
     est plus grand que la longueur de la séquence.
+    Rappel: le premier élément d'une séquence est à l'index 0.
+
 
     Cause probable : 
         Dans ce cas, la séquence est un tuple.
@@ -215,6 +217,8 @@ IndexError - long list
     d'une liste, d'un tuple, ou d'un objet similaire (séquence), à l’aide d’un index qui
     n’existe pas; typiquement, c’est parce que l’index que vous donnez
     est plus grand que la longueur de la séquence.
+    Rappel: le premier élément d'une séquence est à l'index 0.
+
 
     Cause probable : 
         Dans ce cas, la séquence est une liste.
