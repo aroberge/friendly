@@ -29,6 +29,8 @@ def get_var_info(line, frame):
                 results.append(result)
                 if length_info:
                     results.append(length_info)
+    if results:
+        results.append("")
     return results
 
 
@@ -46,7 +48,7 @@ def format_var_info(tok, _dict, _global=""):
         pass
     if value is not Unknown:
         if len(value) > MAX_LENGTH:
-            value = value[0 : MAX_LENGTH - 10] + " ... " + value[-1]  # noqa
+            value = value[0 : MAX_LENGTH - 10] + "... " + value[-1]  # noqa
             try:
                 length_info = len(obj)
             except TypeError:
@@ -56,7 +58,5 @@ def format_var_info(tok, _dict, _global=""):
         _global=_global, name=name, value=value
     )
     if length_info:
-        length_info = "    => len({name}): {length}".format(
-            name=name, length=length_info
-        )
+        length_info = "    len({name}): {length}".format(name=name, length=length_info)
     return result, length_info

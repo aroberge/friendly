@@ -125,7 +125,7 @@ def explain_traceback(etype, value, tb, running_script=False):
             info = get_source_info(filename, linenumber, lines, index)
         result.append(add_source_info(info, last_call=False))
         if "line" in info:
-            get_var_info(info["line"], _frame)
+            res = get_var_info(info["line"], _frame)
         if res:
             result.extend(res)
 

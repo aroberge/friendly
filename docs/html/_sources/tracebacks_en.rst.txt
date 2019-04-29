@@ -280,7 +280,8 @@ UnboundLocalError
     -->13:         inner()
        14:     except Exception:
 
-    inner: <function test_unbound_local_error.<loca ... >
+    inner: <function test_unbound_local_error.<loca... >
+
 
     Exception raised on line 10 of file 'test_unbound_local_error.py'.
 
@@ -289,7 +290,6 @@ UnboundLocalError
     -->10:         a += 1
        11: 
 
-    inner: <function test_unbound_local_error.<loca ... >
 
 Unknown exception
 -----------------
@@ -311,6 +311,7 @@ Unknown exception
        12:     except Exception:
 
     global MyException: <class 'test_unknown_error.MyException'>
+
 
 ZeroDivisionError - 1
 ---------------------
