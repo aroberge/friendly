@@ -359,7 +359,7 @@ It is very likely that the information below is not up to date.
           +-- ImportError *
           |    +-- ModuleNotFoundError *
           +-- LookupError *
-          |    +-- IndexError
+          |    +-- IndexError *
           |    +-- KeyError
           +-- MemoryError
           +-- NameError  *

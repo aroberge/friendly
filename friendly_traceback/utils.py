@@ -33,7 +33,7 @@ def collect_tokens(line):
                 break
             tokens.append(token)
     except Exception as e:
-        return "%s raised while analyzing a SyntaxError" % repr(e)
+        print("%s raised while tokenizing line" % repr(e))
 
     return tokens
 
@@ -59,7 +59,7 @@ def get_partial_source(filename, linenumber, offset):
     # fmt: off
     return highlight_source(
         linenumber,
-        linenumber-begin-1,
+        linenumber - begin - 1,
         lines[begin: linenumber+1],
         offset=offset
     )

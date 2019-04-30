@@ -14,7 +14,6 @@ from .friendly_var_info import get_var_info
 
 CONTEXT = utils.CONTEXT
 CONSOLE_SOURCE = utils.CONSOLE_SOURCE
-CONSOLE_NAME = utils.CONSOLE_NAME
 
 
 def cannot_analyze_string():
