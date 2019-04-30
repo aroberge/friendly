@@ -15,6 +15,116 @@ from .friendly_var_info import get_var_info
 CONTEXT = utils.CONTEXT
 CONSOLE_SOURCE = utils.CONSOLE_SOURCE
 
+# ====================
+# The following is an example of a formatted traceback, with each
+# part identified by a number enclosed by brackets
+# corresponding to a comment in the function get_traceback_info
+
+# [1]
+# Python exception:
+#     UnboundLocalError: local variable 'a' referenced before assignment
+
+# [2]
+# In Python, variables that are used inside a function are known as
+# local variables. Before they are used, they must be assigned a value.
+# A variable that is used before it is assigned a value is assumed to
+# be defined outside that function; it is known as a 'global'
+# (or sometimes 'nonlocal') variable. You cannot assign a value to such
+# a global variable inside a function without first indicating to
+# Python that this is a global variable, otherwise you will see
+# an UnboundLocalError.
+
+# [3]
+# Likely cause:
+#     The variable that appears to cause the problem is 'a'.
+#     Try inserting the statement
+#         global a
+#     as the first line inside your function.
+#
+# [4]
+# Execution stopped on line 14 of file 'C:\Users...\test_unbound_local_error.py'.
+
+# [5]
+#    12:
+#    13:     try:
+# -->14:         inner()
+#    15:     except Exception:
+
+# [6]
+# inner: <function test_unbound_local_error.<loca... >
+
+# [7]
+# Exception raised on line 11 of file 'C:\Users\...\test_unbound_local_error.py'.
+
+# [8]
+#     9:     def inner():
+#    10:         b = 2
+# -->11:         a = a + b
+#    12:
+
+# [9]
+# b: 2
+
+
+def get_traceback_info(etype, value, tb, running_script=False):
+    """ Gathers the basic information related to a traceback and
+    returns the result in a dict.
+    """
+    info = {}
+    # Note: the numbered comments refer to the example above
+    info["header"] = get_header(etype.__name__, value)  # [1]
+    info["generic"] = get_generic_explanation(etype.__name__, etype, value)  # [2]
+
+    if issubclass(etype, SyntaxError) and value.filename == "<string>":
+        cause = cannot_analyze_string()
+    else:
+        cause = get_likely_cause(etype, value)
+
+    if cause is not None:
+        info["cause"] = cause  # [3]
+
+    if issubclass(etype, SyntaxError):
+        return info
+
+    # Get all calls made
+    records = inspect.getinnerframes(tb, CONTEXT)
+
+    # Last call made
+    if running_script:
+        # Do not show traceback from our own code
+        excluded_files = excluded_file_names()
+        for record in records[:-1]:
+            _frame, filename, linenumber, _func, lines, index = record
+            if filename in excluded_files:
+                continue
+            break
+    else:
+        _frame, filename, linenumber, _func, lines, index = records[0]
+
+    info["last_call header"] = last_call_header(linenumber, filename)  # [4]
+    source_info = get_partial_source(filename, linenumber, lines, index)
+    info["last_call source"] = source_info["source"]  # [5]
+
+    if "line" in source_info and source_info["line"] is not None:
+        result = get_var_info(source_info["line"], _frame)
+        if result:
+            info["last_call variables"] = result  # [6]
+
+    # Origin of the exception
+    if len(records) > 1:
+        _frame, filename, linenumber, _func, lines, index = records[-1]
+        # [7] below
+        info["exception_raised header"] = exception_raised_header(linenumber, filename)
+        source_info = get_partial_source(filename, linenumber, lines, index)
+        info["exception_raised source"] = source_info["source"]  # [8]
+
+        if "line" in source_info and source_info["line"] is not None:
+            result = get_var_info(source_info["line"], _frame)
+            if result:
+                info["exception_raised variables"] = result  # [9]
+
+    return info
+
 
 def cannot_analyze_string():
     _ = current_lang.lang
@@ -34,98 +144,6 @@ def excluded_file_names():
     for file in os.listdir(os.path.dirname(__file__)):
         excluded.append(os.path.join(dirname, file))
     return excluded
-
-
-def get_traceback_info(etype, value, tb, running_script=False):
-    """ Gathers the basic information related to a traceback.
-
-        Rather than a standard explanation, we provide an example with
-        four different parts, which are noted as such in the code.
-
-        # 1. Generic explanation
-        Python exception:
-            NameError: name 'c' is not defined
-
-        A NameError exception indicates that a variable or
-        function name is not known to Python.
-        Most often, this is because there is a spelling mistake.
-        However, sometimes it is because the name is used
-        before being defined or given a value.
-
-        # 2. Likely cause
-        Likely cause:
-            In your program, the unknown name is 'c'.
-
-        # 3. last call made
-        Execution stopped on line 48 of file 'tb_common.py'.
-
-           46:                     mod = __import__(name)
-           47:                     if function is not None:
-        -->48:                         getattr(mod, function)()
-           49:                 except Exception:
-
-        # 4. origin of the exception (could be the same as 3.)
-        Exception raised  on line 8 of file 'raise_name_error.py'.
-
-            6:     # Should raise NameError
-            7:     a = 1
-        --> 8:     b = c
-            9:     d = 3
-
-    """
-    info = {}
-
-    info["header"] = get_header(etype.__name__, value)
-    info["generic"] = get_generic_explanation(etype.__name__, etype, value)
-
-    if issubclass(etype, SyntaxError) and value.filename == "<string>":
-        cause = cannot_analyze_string()
-    else:
-        cause = get_likely_cause(etype, value)
-
-    if cause is not None:
-        info["cause"] = cause
-
-    if issubclass(etype, SyntaxError):
-        return info
-
-    # Get all calls made
-    records = inspect.getinnerframes(tb, CONTEXT)
-
-    # 3. Last call made
-    if running_script:
-        # Do not show traceback from our own code
-        excluded_files = excluded_file_names()
-        for record in records[:-1]:
-            _frame, filename, linenumber, _func, lines, index = record
-            if filename in excluded_files:
-                continue
-            break
-    else:
-        _frame, filename, linenumber, _func, lines, index = records[0]
-
-    info["last_call header"] = last_call_header(linenumber, filename)
-    source_info = get_partial_source(filename, linenumber, lines, index)
-    info["last_call source"] = source_info["source"]
-
-    if "line" in source_info and source_info["line"] is not None:
-        result = get_var_info(source_info["line"], _frame)
-        if result:
-            info["last_call variables"] = result
-
-    # 4. origin of the exception
-    if len(records) > 1:
-        _frame, filename, linenumber, _func, lines, index = records[-1]
-        info["exception_raised header"] = exception_raised_header(linenumber, filename)
-        source_info = get_partial_source(filename, linenumber, lines, index)
-        info["exception_raised source"] = source_info["source"]
-
-        if "line" in source_info and source_info["line"] is not None:
-            result = get_var_info(source_info["line"], _frame)
-            if result:
-                info["exception_raised variables"] = result
-
-    return info
 
 
 def get_header(name, value):

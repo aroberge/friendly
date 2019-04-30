@@ -377,20 +377,23 @@ Likely cause:
     Try inserting the statement
         global a
     as the first line inside your function.
-Execution stopped on line 13 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;.
 
-   11:
-   12:     try:
---&gt;13:         inner()
-   14:     except Exception:
+Execution stopped on line 15 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;.
+
+   13:
+   14:     try:
+--&gt;15:         inner()
+   16:     except Exception:
 inner: &lt;function test_unbound_local_error.&lt;loca... &gt;
 
-Exception raised on line 10 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;.
+Exception raised on line 12 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;.
 
-    8:
-    9:     def inner():
---&gt;10:         a += 1
-   11:
+   10:     def inner():
+   11:         c = 3
+--&gt;12:         a = a + b + c
+   13:
+b: 2
+c: 3
 </pre></div>
 </div>
 </div>
@@ -422,6 +425,7 @@ a value by zero:
 It can also happen if you calculate the remainder of a division
 using the modulo operator &#39;%&#39;
     result = my_variable % 0
+
 Execution stopped on line 7 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_zero_division_error.py&#39;.
 
    5: def test_zero_division_error():
@@ -442,6 +446,7 @@ a value by zero:
 It can also happen if you calculate the remainder of a division
 using the modulo operator &#39;%&#39;
     result = my_variable % 0
+
 Execution stopped on line 17 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_zero_division_error.py&#39;.
 
    15: def test_zero_division_error2():

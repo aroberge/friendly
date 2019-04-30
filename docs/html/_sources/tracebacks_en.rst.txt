@@ -318,20 +318,24 @@ UnboundLocalError
         Try inserting the statement
             global a
         as the first line inside your function.
-    Execution stopped on line 13 of file 'C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py'.
 
-       11: 
-       12:     try:
-    -->13:         inner()
-       14:     except Exception:
+    Execution stopped on line 15 of file 'C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py'.
+
+       13: 
+       14:     try:
+    -->15:         inner()
+       16:     except Exception:
     inner: <function test_unbound_local_error.<loca... >
 
-    Exception raised on line 10 of file 'C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py'.
+    Exception raised on line 12 of file 'C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py'.
 
-        8: 
-        9:     def inner():
-    -->10:         a += 1
-       11: 
+       10:     def inner():
+       11:         c = 3
+    -->12:         a = a + b + c
+       13: 
+    b: 2
+    c: 3
+
 
 Unknown exception
 -----------------
@@ -368,6 +372,7 @@ ZeroDivisionError - 1
     It can also happen if you calculate the remainder of a division
     using the modulo operator '%'
         result = my_variable % 0
+
     Execution stopped on line 7 of file 'C:\Users\andre\github\friendly-traceback\tests\test_zero_division_error.py'.
 
        5: def test_zero_division_error():
@@ -390,6 +395,7 @@ ZeroDivisionError - 2
     It can also happen if you calculate the remainder of a division
     using the modulo operator '%'
         result = my_variable % 0
+
     Execution stopped on line 17 of file 'C:\Users\andre\github\friendly-traceback\tests\test_zero_division_error.py'.
 
        15: def test_zero_division_error2():

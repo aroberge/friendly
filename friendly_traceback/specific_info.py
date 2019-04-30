@@ -138,7 +138,7 @@ def unbound_local_error(etype, value):
         "        The variable that appears to cause the problem is '{var_name}'.\n"
         "        Try inserting the statement\n"
         "            global {var_name}\n"
-        "        as the first line inside your function."
+        "        as the first line inside your function.\n"
     ).format(var_name=str(value).split("'")[1])
 
 

@@ -130,7 +130,7 @@ def zero_division_error(*args):
         "        result = my_variable / 0\n"
         "    It can also happen if you calculate the remainder of a division\n"
         "    using the modulo operator '%'\n"
-        "        result = my_variable % 0"
+        "        result = my_variable % 0\n"
     )
 
 

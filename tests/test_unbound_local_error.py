@@ -5,9 +5,11 @@ import sys
 def test_unbound_local_error():
     """Should raise UnboundLocalError"""
     a = 1
+    b = 2
 
     def inner():
-        a += 1
+        c = 3
+        a = a + b + c
 
     try:
         inner()

@@ -376,24 +376,27 @@ sans d’abord confirmer à python qu’il s’agit d’une variable globale, si
 une exception UnboundLocalError.
 
 Cause probable :
-    La variable qui semble causer le problème est&#39; a &#39;.
-    Essayez d’insérer l’instruction
+    The variable that appears to cause the problem is &#39;a&#39;.
+    Try inserting the statement
         global a
-    comme première ligne à l’intérieur de votre fonction.
-L&#39;exécution s&#39;est arrêtée à la ligne 13 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;
+    as the first line inside your function.
 
-   11:
-   12:     try:
---&gt;13:         inner()
-   14:     except Exception:
+L&#39;exécution s&#39;est arrêtée à la ligne 15 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;
+
+   13:
+   14:     try:
+--&gt;15:         inner()
+   16:     except Exception:
 inner: &lt;function test_unbound_local_error.&lt;loca... &gt;
 
 Exception levée à la ligne du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;.
 
-    8:
-    9:     def inner():
---&gt;10:         a += 1
-   11:
+   10:     def inner():
+   11:         c = 3
+--&gt;12:         a = a + b + c
+   13:
+b: 2
+c: 3
 </pre></div>
 </div>
 </div>
@@ -419,12 +422,13 @@ global MyException: &lt;class &#39;test_unknown_error.MyException&#39;&gt;
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
     ZeroDivisionError: division by zero
 
-Une exception de type ZeroDivisionError se produit lorsque
-vous tentez de diviser une valeur par zéro:
-    résultat = ma_variable / 0
-Ceci peut également se produire si vous calculez le reste d’une division
-à l’aide de l’opérateur modulo &#39;%&#39;
-    résultat = ma_variable % 0
+A ZeroDivisionError occurs when you are attempting to divide
+a value by zero:
+    result = my_variable / 0
+It can also happen if you calculate the remainder of a division
+using the modulo operator &#39;%&#39;
+    result = my_variable % 0
+
 L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_zero_division_error.py&#39;
 
    5: def test_zero_division_error():
@@ -439,12 +443,13 @@ L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;C:\Users\andr
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
     ZeroDivisionError: integer division or modulo by zero
 
-Une exception de type ZeroDivisionError se produit lorsque
-vous tentez de diviser une valeur par zéro:
-    résultat = ma_variable / 0
-Ceci peut également se produire si vous calculez le reste d’une division
-à l’aide de l’opérateur modulo &#39;%&#39;
-    résultat = ma_variable % 0
+A ZeroDivisionError occurs when you are attempting to divide
+a value by zero:
+    result = my_variable / 0
+It can also happen if you calculate the remainder of a division
+using the modulo operator &#39;%&#39;
+    result = my_variable % 0
+
 L&#39;exécution s&#39;est arrêtée à la ligne 17 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_zero_division_error.py&#39;
 
    15: def test_zero_division_error2():
