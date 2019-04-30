@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-29 15:25-0300\n"
-"PO-Revision-Date: 2019-04-29 15:25-0300\n"
+"POT-Creation-Date: 2019-04-30 16:04-0300\n"
+"PO-Revision-Date: 2019-04-30 16:05-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,62 +16,6 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 "X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-#: formatter.py:22
-msgid ""
-"        Unfortunately, no additional information is available:\n"
-"        the content of file '<string>' is not accessible.\n"
-msgstr ""
-"        Malheureusement, aucune information supplémentaire n’est "
-"disponible:\n"
-"        le contenu du fichier '<string>' n’est pas accessible.\n"
-
-#: formatter.py:144
-msgid ""
-"\n"
-"    Python exception: \n"
-"        {name}: {value}\n"
-"\n"
-"{explanation}"
-msgstr ""
-"\n"
-"    Exception Python: \n"
-"        {name}: {value}\n"
-"\n"
-"{explanation}"
-
-#: formatter.py:162 specific_info.py:53
-msgid ""
-"    Likely cause:\n"
-"{cause}"
-msgstr ""
-"    Cause probable : \n"
-"{cause}"
-
-#: formatter.py:189
-msgid ""
-"\n"
-"    Execution stopped on line {linenumber} of file '{filename}'.\n"
-"\n"
-"{source}\n"
-msgstr ""
-"\n"
-"    L'exécution s'est arrêtée à la ligne {linenumber} du fichier "
-"'{filename}'\n"
-"\n"
-"{source}\n"
-
-#: formatter.py:197
-msgid ""
-"\n"
-"    Exception raised on line {linenumber} of file '{filename}'.\n"
-"\n"
-"{source}\n"
-msgstr ""
-"\n"
-"    Exception levée à la ligne du fichier '{filename}'.\n"
-"\n"
-"{source}\n"
 
 #: generic_info.py:9
 msgid ""
@@ -281,6 +225,14 @@ msgstr ""
 "        est moins indentée que la ligne précédente\n"
 "        et n’est pas alignée verticalement avec un autre bloc de code.\n"
 
+#: specific_info.py:53 traceback_info.py:163
+msgid ""
+"    Likely cause:\n"
+"{cause}"
+msgstr ""
+"    Cause probable : \n"
+"{cause}"
+
 #: specific_info.py:60
 msgid "        In this case, the sequence is a list.\n"
 msgstr "        Dans ce cas, la séquence est une liste.\n"
@@ -436,6 +388,33 @@ msgstr ""
 "    un mot mal orthographié, ou des symboles manquants, comme (,), [,],:, "
 "etc.\n"
 "\n"
+
+#: traceback_info.py:21
+msgid ""
+"        Unfortunately, no additional information is available:\n"
+"        the content of file '<string>' is not accessible.\n"
+msgstr ""
+"        Malheureusement, aucune information supplémentaire n’est "
+"disponible:\n"
+"        le contenu du fichier '<string>' n’est pas accessible.\n"
+
+#: traceback_info.py:135
+msgid ""
+"    Python exception: \n"
+"        {name}: {value}\n"
+msgstr ""
+"    Exception Python: \n"
+"        {name}: {value}\n"
+
+#: traceback_info.py:189
+msgid "    Execution stopped on line {linenumber} of file '{filename}'.\n"
+msgstr ""
+"    L'exécution s'est arrêtée à la ligne {linenumber} du fichier "
+"'{filename}'\n"
+
+#: traceback_info.py:196
+msgid "    Exception raised on line {linenumber} of file '{filename}'.\n"
+msgstr "    Exception levée à la ligne du fichier '{filename}'.\n"
 
 #~ msgid ""
 #~ "    A SyntaxError occurs when Python cannot understand your code.\n"

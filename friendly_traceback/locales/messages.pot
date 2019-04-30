@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-04-29 15:25-0300\n"
+"POT-Creation-Date: 2019-04-30 16:04-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,43 +14,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-
-#: formatter.py:22
-msgid ""
-"        Unfortunately, no additional information is available:\n"
-"        the content of file '<string>' is not accessible.\n"
-msgstr ""
-
-#: formatter.py:144
-msgid ""
-"\n"
-"    Python exception: \n"
-"        {name}: {value}\n"
-"\n"
-"{explanation}"
-msgstr ""
-
-#: formatter.py:162 specific_info.py:53
-msgid ""
-"    Likely cause:\n"
-"{cause}"
-msgstr ""
-
-#: formatter.py:189
-msgid ""
-"\n"
-"    Execution stopped on line {linenumber} of file '{filename}'.\n"
-"\n"
-"{source}\n"
-msgstr ""
-
-#: formatter.py:197
-msgid ""
-"\n"
-"    Exception raised on line {linenumber} of file '{filename}'.\n"
-"\n"
-"{source}\n"
-msgstr ""
 
 #: generic_info.py:9
 msgid ""
@@ -183,6 +146,12 @@ msgid ""
 "        and is not aligned vertically with another block of code.\n"
 msgstr ""
 
+#: specific_info.py:53 traceback_info.py:163
+msgid ""
+"    Likely cause:\n"
+"{cause}"
+msgstr ""
+
 #: specific_info.py:60
 msgid ""
 "        In this case, the sequence is a list.\n"
@@ -292,5 +261,27 @@ msgid ""
 "    immediately above to see if you can identify some misspelled\n"
 "    word, or missing symbols, like (, ), [, ], :, etc.\n"
 "\n"
+msgstr ""
+
+#: traceback_info.py:21
+msgid ""
+"        Unfortunately, no additional information is available:\n"
+"        the content of file '<string>' is not accessible.\n"
+msgstr ""
+
+#: traceback_info.py:135
+msgid ""
+"    Python exception: \n"
+"        {name}: {value}\n"
+msgstr ""
+
+#: traceback_info.py:189
+msgid ""
+"    Execution stopped on line {linenumber} of file '{filename}'.\n"
+msgstr ""
+
+#: traceback_info.py:196
+msgid ""
+"    Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 

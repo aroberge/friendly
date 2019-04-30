@@ -121,8 +121,7 @@ qui sont soulevées pour diverses erreurs arithmétiques.
 Il est inhabituel que vous voyiez cette exception;
 normalement, une exception plus spécifique aurait dû être soulevée.
 
-
-L&#39;exécution s&#39;est arrêtée à la ligne 10 du fichier &#39;test_arithmetic_error.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 10 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_arithmetic_error.py&#39;
 
     8:         # Usually, a subclass such as ZeroDivisionError, etc., would
     9:         # likely be raised.
@@ -145,8 +144,7 @@ Cause probable :
     Le module ou le paquet d&#39;où il devait être importé
     est &#39;math&#39;.
 
-
-L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;test_import_error.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_import_error.py&#39;
 
    5: def test_import_error():
    6:     try:
@@ -235,8 +233,7 @@ LookupError est la classe de base pour les exceptions qui sont levées
 lorsqu’une clé ou un index utilisé sur un tableau de correspondance ou une séquence est invalide.
 Elle peut également être levée directement par codecs.lookup().
 
-
-L&#39;exécution s&#39;est arrêtée à la ligne 11 du fichier &#39;test_lookup_error.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 11 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_lookup_error.py&#39;
 
     9:         # other than possibly codecs.lookup(), which is why we raise
    10:         # it directly here for our example.
@@ -260,14 +257,12 @@ Rappel: le premier élément d&#39;une séquence est à l&#39;index 0.
 Cause probable :
     Dans ce cas, la séquence est un tuple.
 
-
-L&#39;exécution s&#39;est arrêtée à la ligne 9 du fichier &#39;test_index_error.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 9 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_index_error.py&#39;
 
     7:     b = [1, 2, 3]
     8:     try:
 --&gt; 9:         print(a[3], b[2])
    10:     except Exception:
-
 a: (1, 2, 3)
 b: [1, 2, 3]
 </pre></div>
@@ -288,14 +283,12 @@ Rappel: le premier élément d&#39;une séquence est à l&#39;index 0.
 Cause probable :
     Dans ce cas, la séquence est une liste.
 
-
-L&#39;exécution s&#39;est arrêtée à la ligne 21 du fichier &#39;test_index_error.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 21 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_index_error.py&#39;
 
    19:     b = tuple(range(50))
    20:     try:
 --&gt;21:         print(a[50], b[0])
    22:     except Exception:
-
 a: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1... ]  | len(a): 40
 b: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1... )  | len(b): 50
 </pre></div>
@@ -314,8 +307,7 @@ ou parce qu’il n’est pas installé sur votre ordinateur.
 Cause probable :
     Dans votre programme, le nom du module inconnu est &#39;does_not_exist&#39;.
 
-
-L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;test_module_not_found_error.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_module_not_found_error.py&#39;
 
    5: def test_module_not_found_error():
    6:     try:
@@ -338,8 +330,7 @@ utilisé avant qu&#39;on ne lui ait associé une valeur.
 Cause probable :
     Dans votre programme, le nom inconnu est &#39;c&#39;.
 
-
-L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;test_name_error.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_name_error.py&#39;
 
    5: def test_name_error():
    6:     try:
@@ -389,18 +380,15 @@ Cause probable :
     Essayez d’insérer l’instruction
         global a
     comme première ligne à l’intérieur de votre fonction.
-
-L&#39;exécution s&#39;est arrêtée à la ligne 13 du fichier &#39;test_unbound_local_error.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 13 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;
 
    11:
    12:     try:
 --&gt;13:         inner()
    14:     except Exception:
-
 inner: &lt;function test_unbound_local_error.&lt;loca... &gt;
 
-
-Exception levée à la ligne du fichier &#39;test_unbound_local_error.py&#39;.
+Exception levée à la ligne du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;.
 
     8:
     9:     def inner():
@@ -416,14 +404,12 @@ Exception levée à la ligne du fichier &#39;test_unbound_local_error.py&#39;.
 
 Aucune information n&#39;est connue au sujet de cette exception.
 
-
-L&#39;exécution s&#39;est arrêtée à la ligne 11 du fichier &#39;test_unknown_error.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 11 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_unknown_error.py&#39;
 
     9: def test_unknown_error():
    10:     try:
 --&gt;11:         raise MyException(&quot;Some informative message&quot;)
    12:     except Exception:
-
 global MyException: &lt;class &#39;test_unknown_error.MyException&#39;&gt;
 </pre></div>
 </div>
@@ -439,8 +425,7 @@ vous tentez de diviser une valeur par zéro:
 Ceci peut également se produire si vous calculez le reste d’une division
 à l’aide de l’opérateur modulo &#39;%&#39;
     résultat = ma_variable % 0
-
-L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;test_zero_division_error.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_zero_division_error.py&#39;
 
    5: def test_zero_division_error():
    6:     try:
@@ -460,8 +445,7 @@ vous tentez de diviser une valeur par zéro:
 Ceci peut également se produire si vous calculez le reste d’une division
 à l’aide de l’opérateur modulo &#39;%&#39;
     résultat = ma_variable % 0
-
-L&#39;exécution s&#39;est arrêtée à la ligne 17 du fichier &#39;test_zero_division_error.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 17 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_zero_division_error.py&#39;
 
    15: def test_zero_division_error2():
    16:     try:

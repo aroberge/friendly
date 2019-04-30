@@ -38,14 +38,12 @@ ArithmeticError
     Il est inhabituel que vous voyiez cette exception;
     normalement, une exception plus spécifique aurait dû être soulevée.
 
-
-    L'exécution s'est arrêtée à la ligne 10 du fichier 'test_arithmetic_error.py'
+    L'exécution s'est arrêtée à la ligne 10 du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_arithmetic_error.py'
 
         8:         # Usually, a subclass such as ZeroDivisionError, etc., would
         9:         # likely be raised.
     -->10:         raise ArithmeticError
        11:     except Exception:
-
 
 ImportError
 -----------
@@ -65,14 +63,12 @@ ImportError
         Le module ou le paquet d'où il devait être importé
         est 'math'.
 
-
-    L'exécution s'est arrêtée à la ligne 7 du fichier 'test_import_error.py'
+    L'exécution s'est arrêtée à la ligne 7 du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_import_error.py'
 
        5: def test_import_error():
        6:     try:
     -->7:         from math import Pi
        8:     except Exception:
-
 
 IndentationError - 1: expected an indented block
 ------------------------------------------------
@@ -164,14 +160,12 @@ LookupError
     lorsqu’une clé ou un index utilisé sur un tableau de correspondance ou une séquence est invalide.
     Elle peut également être levée directement par codecs.lookup().
 
-
-    L'exécution s'est arrêtée à la ligne 11 du fichier 'test_lookup_error.py'
+    L'exécution s'est arrêtée à la ligne 11 du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_lookup_error.py'
 
         9:         # other than possibly codecs.lookup(), which is why we raise
        10:         # it directly here for our example.
     -->11:         raise LookupError
        12:     except Exception:
-
 
 IndexError - short tuple
 ------------------------
@@ -192,14 +186,12 @@ IndexError - short tuple
     Cause probable : 
         Dans ce cas, la séquence est un tuple.
 
-
-    L'exécution s'est arrêtée à la ligne 9 du fichier 'test_index_error.py'
+    L'exécution s'est arrêtée à la ligne 9 du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_index_error.py'
 
         7:     b = [1, 2, 3]
         8:     try:
     --> 9:         print(a[3], b[2])
        10:     except Exception:
-
     a: (1, 2, 3)
     b: [1, 2, 3]
 
@@ -223,14 +215,12 @@ IndexError - long list
     Cause probable : 
         Dans ce cas, la séquence est une liste.
 
-
-    L'exécution s'est arrêtée à la ligne 21 du fichier 'test_index_error.py'
+    L'exécution s'est arrêtée à la ligne 21 du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_index_error.py'
 
        19:     b = tuple(range(50))
        20:     try:
     -->21:         print(a[50], b[0])
        22:     except Exception:
-
     a: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1... ]  | len(a): 40
     b: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1... )  | len(b): 50
 
@@ -252,14 +242,12 @@ ModuleNotFoundError
     Cause probable : 
         Dans votre programme, le nom du module inconnu est 'does_not_exist'.
 
-
-    L'exécution s'est arrêtée à la ligne 7 du fichier 'test_module_not_found_error.py'
+    L'exécution s'est arrêtée à la ligne 7 du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_module_not_found_error.py'
 
        5: def test_module_not_found_error():
        6:     try:
     -->7:         import does_not_exist
        8:     except Exception:
-
 
 NameError
 ---------
@@ -279,14 +267,12 @@ NameError
     Cause probable : 
         Dans votre programme, le nom inconnu est 'c'.
 
-
-    L'exécution s'est arrêtée à la ligne 7 du fichier 'test_name_error.py'
+    L'exécution s'est arrêtée à la ligne 7 du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_name_error.py'
 
        5: def test_name_error():
        6:     try:
     -->7:         b = c
        8:     except Exception:
-
 
 TabError
 --------
@@ -335,24 +321,20 @@ UnboundLocalError
         Essayez d’insérer l’instruction
             global a
         comme première ligne à l’intérieur de votre fonction.
-
-    L'exécution s'est arrêtée à la ligne 13 du fichier 'test_unbound_local_error.py'
+    L'exécution s'est arrêtée à la ligne 13 du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py'
 
        11: 
        12:     try:
     -->13:         inner()
        14:     except Exception:
-
     inner: <function test_unbound_local_error.<loca... >
 
-
-    Exception levée à la ligne du fichier 'test_unbound_local_error.py'.
+    Exception levée à la ligne du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py'.
 
         8: 
         9:     def inner():
     -->10:         a += 1
        11: 
-
 
 Unknown exception
 -----------------
@@ -365,14 +347,12 @@ Unknown exception
 
     Aucune information n'est connue au sujet de cette exception.
 
-
-    L'exécution s'est arrêtée à la ligne 11 du fichier 'test_unknown_error.py'
+    L'exécution s'est arrêtée à la ligne 11 du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_unknown_error.py'
 
         9: def test_unknown_error():
        10:     try:
     -->11:         raise MyException("Some informative message")
        12:     except Exception:
-
     global MyException: <class 'test_unknown_error.MyException'>
 
 
@@ -391,14 +371,12 @@ ZeroDivisionError - 1
     Ceci peut également se produire si vous calculez le reste d’une division 
     à l’aide de l’opérateur modulo '%'
         résultat = ma_variable % 0
-
-    L'exécution s'est arrêtée à la ligne 7 du fichier 'test_zero_division_error.py'
+    L'exécution s'est arrêtée à la ligne 7 du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_zero_division_error.py'
 
        5: def test_zero_division_error():
        6:     try:
     -->7:         1 / 0
        8:     except Exception:
-
 
 ZeroDivisionError - 2
 ---------------------
@@ -415,11 +393,9 @@ ZeroDivisionError - 2
     Ceci peut également se produire si vous calculez le reste d’une division 
     à l’aide de l’opérateur modulo '%'
         résultat = ma_variable % 0
-
-    L'exécution s'est arrêtée à la ligne 17 du fichier 'test_zero_division_error.py'
+    L'exécution s'est arrêtée à la ligne 17 du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_zero_division_error.py'
 
        15: def test_zero_division_error2():
        16:     try:
     -->17:         1 % 0
        18:     except Exception:
-

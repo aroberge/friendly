@@ -121,8 +121,7 @@ that are raised for various arithmetic errors.
 It is unusual that you are seeing this exception;
 normally, a more specific exception should have been raised.
 
-
-Execution stopped on line 10 of file &#39;test_arithmetic_error.py&#39;.
+Execution stopped on line 10 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_arithmetic_error.py&#39;.
 
     8:         # Usually, a subclass such as ZeroDivisionError, etc., would
     9:         # likely be raised.
@@ -145,8 +144,7 @@ Likely cause:
     The module or package where it was
     expected to be found is &#39;math&#39;.
 
-
-Execution stopped on line 7 of file &#39;test_import_error.py&#39;.
+Execution stopped on line 7 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_import_error.py&#39;.
 
    5: def test_import_error():
    6:     try:
@@ -232,8 +230,7 @@ LookupError is the base class for the exceptions that are raised
 when a key or index used on a mapping or sequence is invalid.
 It can also be raised directly by codecs.lookup().
 
-
-Execution stopped on line 11 of file &#39;test_lookup_error.py&#39;.
+Execution stopped on line 11 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_lookup_error.py&#39;.
 
     9:         # other than possibly codecs.lookup(), which is why we raise
    10:         # it directly here for our example.
@@ -256,14 +253,12 @@ Reminder: the first item of a sequence is at index 0.
 Likely cause:
     In this case, the sequence is a tuple.
 
-
-Execution stopped on line 9 of file &#39;test_index_error.py&#39;.
+Execution stopped on line 9 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_index_error.py&#39;.
 
     7:     b = [1, 2, 3]
     8:     try:
 --&gt; 9:         print(a[3], b[2])
    10:     except Exception:
-
 a: (1, 2, 3)
 b: [1, 2, 3]
 </pre></div>
@@ -283,14 +278,12 @@ Reminder: the first item of a sequence is at index 0.
 Likely cause:
     In this case, the sequence is a list.
 
-
-Execution stopped on line 21 of file &#39;test_index_error.py&#39;.
+Execution stopped on line 21 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_index_error.py&#39;.
 
    19:     b = tuple(range(50))
    20:     try:
 --&gt;21:         print(a[50], b[0])
    22:     except Exception:
-
 a: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1... ]  | len(a): 40
 b: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1... )  | len(b): 50
 </pre></div>
@@ -310,8 +303,7 @@ Likely cause:
     In your program, the name of the
     module that cannot be found is &#39;does_not_exist&#39;.
 
-
-Execution stopped on line 7 of file &#39;test_module_not_found_error.py&#39;.
+Execution stopped on line 7 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_module_not_found_error.py&#39;.
 
    5: def test_module_not_found_error():
    6:     try:
@@ -334,8 +326,7 @@ before being defined or given a value.
 Likely cause:
     In your program, the unknown name is &#39;c&#39;.
 
-
-Execution stopped on line 7 of file &#39;test_name_error.py&#39;.
+Execution stopped on line 7 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_name_error.py&#39;.
 
    5: def test_name_error():
    6:     try:
@@ -386,18 +377,15 @@ Likely cause:
     Try inserting the statement
         global a
     as the first line inside your function.
-
-Execution stopped on line 13 of file &#39;test_unbound_local_error.py&#39;.
+Execution stopped on line 13 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;.
 
    11:
    12:     try:
 --&gt;13:         inner()
    14:     except Exception:
-
 inner: &lt;function test_unbound_local_error.&lt;loca... &gt;
 
-
-Exception raised on line 10 of file &#39;test_unbound_local_error.py&#39;.
+Exception raised on line 10 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;.
 
     8:
     9:     def inner():
@@ -413,14 +401,12 @@ Exception raised on line 10 of file &#39;test_unbound_local_error.py&#39;.
 
 No information is known about this exception.
 
-
-Execution stopped on line 11 of file &#39;test_unknown_error.py&#39;.
+Execution stopped on line 11 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_unknown_error.py&#39;.
 
     9: def test_unknown_error():
    10:     try:
 --&gt;11:         raise MyException(&quot;Some informative message&quot;)
    12:     except Exception:
-
 global MyException: &lt;class &#39;test_unknown_error.MyException&#39;&gt;
 </pre></div>
 </div>
@@ -436,8 +422,7 @@ a value by zero:
 It can also happen if you calculate the remainder of a division
 using the modulo operator &#39;%&#39;
     result = my_variable % 0
-
-Execution stopped on line 7 of file &#39;test_zero_division_error.py&#39;.
+Execution stopped on line 7 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_zero_division_error.py&#39;.
 
    5: def test_zero_division_error():
    6:     try:
@@ -457,8 +442,7 @@ a value by zero:
 It can also happen if you calculate the remainder of a division
 using the modulo operator &#39;%&#39;
     result = my_variable % 0
-
-Execution stopped on line 17 of file &#39;test_zero_division_error.py&#39;.
+Execution stopped on line 17 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_zero_division_error.py&#39;.
 
    15: def test_zero_division_error2():
    16:     try:

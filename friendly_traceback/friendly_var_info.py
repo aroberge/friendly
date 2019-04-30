@@ -30,7 +30,7 @@ def get_var_info(line, frame):
 
     if results:
         results.append("")
-    return results
+    return "\n".join(results)
 
 
 def format_var_info(tok, _dict, _global=""):
