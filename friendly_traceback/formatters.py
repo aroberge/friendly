@@ -1,6 +1,9 @@
-"""formatter.py
+"""formatters.py
 
 """
+
+# Currently, we have a single, very basic formatter which simply
+# outputs the information gathered "as is".
 
 
 def format_traceback(info):

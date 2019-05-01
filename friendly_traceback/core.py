@@ -11,7 +11,7 @@ import sys
 import traceback
 
 from .my_gettext import current_lang
-from . import formatter
+from . import formatters
 from . import traceback_info
 
 # ---------------------------------------------
@@ -88,6 +88,7 @@ class _State:
     """
 
     def __init__(self):
+        self.set_formatter()
         self._captured = []
         self.context = 3
         self.write_err = _write_err
@@ -115,7 +116,7 @@ class _State:
             raise KeyboardInterrupt(str(value))
 
         info = traceback_info.get_traceback_info(etype, value, tb, running_script=False)
-        explanation = formatter.format_traceback(info)
+        explanation = self.formatter(info)
         self.write_err(explanation)
 
         if self.level == 9:
@@ -144,6 +145,15 @@ class _State:
             sys.excepthook = self.explain
         else:
             sys.excepthook = sys.__excepthook__
+
+    def set_formatter(self, formatter=None):
+        """Sets the default formatter. If no argument is given, the default
+           formatter is used.
+        """
+        if formatter is None:
+            self.formatter = formatters.format_traceback
+        else:
+            self.formatter = formatter
 
     def install(self, lang=None, redirect=None, level=1):
         """Replaces sys.excepthook by friendly_traceback's own version."""
@@ -176,7 +186,7 @@ def run_script(source):
 # Public API available through a * import
 # ----------------
 
-__all__ = ["explain", "get_output", "install", "set_lang", "set_level"]
+__all__ = ["explain", "get_output", "install", "set_lang", "set_level", "set_formatter"]
 
 
 def explain(etype, value, tb, redirect=None):
@@ -199,6 +209,13 @@ def install(redirect=None):
     Replaces sys.excepthook by friendly_traceback's own version
     """
     state.install(redirect=redirect)
+
+
+def set_formatter(self, formatter=None):
+    """Sets the default formatter. If no argument is given, the default
+       formatter is used.
+    """
+    state.set_formatter(formatter=formatter)
 
 
 def set_lang(lang):
