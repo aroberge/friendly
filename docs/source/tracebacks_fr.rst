@@ -60,8 +60,7 @@ ImportError
 
     Cause probable : 
         L’objet qui n’a pas pu être importé est 'Pi'.
-        Le module ou le paquet d'où il devait être importé
-        est 'math'.
+        Le module ou le paquet d'où il devait être importé est 'math'.
 
     L'exécution s'est arrêtée à la ligne 7 du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_import_error.py'
 
@@ -146,6 +145,30 @@ IndentationError - 3: unindent does not match ...
         Dans ce cas-ci, la ligne indiquée ci-dessus par -->
         est moins indentée que la ligne précédente
         et n’est pas alignée verticalement avec un autre bloc de code.
+
+KeyError
+--------
+
+.. code-block:: none
+
+
+    Exception Python: 
+        KeyError: 'c'
+
+    Une erreur KeyError est levée lorsqu’une valeur n’est pas trouvée
+    en tant que clé dans un dictionnaire (dict) Python.
+
+    Cause probable : 
+        Dans votre programme, le nom de la clé inconnue est 'c'.
+
+    L'exécution s'est arrêtée à la ligne 8 du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_key_error.py'
+
+        6:     d = {'a': 1, 'b': 2}
+        7:     try:
+    --> 8:         d['c']
+        9:     except Exception:
+    d: {'a': 1, 'b': 2}
+
 
 LookupError
 -----------
@@ -236,8 +259,8 @@ ModuleNotFoundError
 
     Une exception ModuleNotFoundError indique que vous
     essayez d’importer un module qui ne peut pas être trouvé par Python.
-    Cela pourrait être parce que vous fait une faute d'orthographe en écrivant le nom du module
-    ou parce qu’il n’est pas installé sur votre ordinateur.
+    Cela pourrait être parce que vous fait une faute d'orthographe
+    écrivant le nom du module, ou parce qu’il n’est pas installé sur votre ordinateur.
 
     Cause probable : 
         Dans votre programme, le nom du module inconnu est 'does_not_exist'.
@@ -283,12 +306,13 @@ TabError
     Exception Python: 
         TabError: inconsistent use of tabs and spaces in indentation (raise_tab_error.py, line 7)
 
-    Un exception de type TabError indique que vous avez utilisé des espaces ainsi que
-    des caractères de tabulation pour indenter votre code.
+    Un exception de type TabError indique que vous avez utilisé des espaces
+    ainsi que des caractères de tabulation pour indenter votre code.
     Cela n’est pas autorisé dans Python.
-    L’indentation de votre code signifie que le bloc de codes est aligné verticalement 
-    en insérant des espaces ou des tabulations au début des lignes.
-    La recommandation de Python est de toujours utiliser des espaces pour indenter votre code.
+    L’indentation de votre code signifie que le bloc de codes est aligné
+    verticalement en insérant des espaces ou des tabulations au début des lignes.
+    La recommandation de Python est de toujours utiliser des espaces
+    pour indenter votre code.
 
     Python peut seulement analyser le fichier 'raise_tab_error.py'
     jusqu'à l'endroit indiqué par --> et ^.
@@ -308,35 +332,37 @@ UnboundLocalError
     Exception Python: 
         UnboundLocalError: local variable 'a' referenced before assignment
 
-    En Python, les variables utilisées à l’intérieur d’une fonction sont appelées variables «locales».
+    En Python, les variables utilisées à l’intérieur d’une fonction sont appelées
+    variables «locales».
     Avant d’utiliser une variable locale, une valeur doit lui être attribuée.
-    Une variable utilisée avant l’attribution d’une valeur est supposée être définie en
-    dehors de cette fonction; elle est connu comme une variable «globale» ('global' ou parfois 'nonlocal').
-    Vous ne pouvez pas assigner une valeur à une telle variable globale à l’intérieur d’une fonction
-    sans d’abord confirmer à python qu’il s’agit d’une variable globale, sinon vous verrez
-    une exception UnboundLocalError.
+    Une variable utilisée avant l’attribution d’une valeur est supposée
+    être définie en dehors de cette fonction;
+    elle est connu comme une variable «globale» ('global' ou parfois 'nonlocal').
+    Vous ne pouvez pas assigner une valeur à une telle variable globale
+    à l’intérieur d’une fonction sans d’abord confirmer à python
+    qu’il s’agit d’une variable globale, sinon vous verrez une exception UnboundLocalError.
 
     Cause probable : 
-        The variable that appears to cause the problem is 'a'.
-        Try inserting the statement
+        La variable qui semble causer le problème est' a '.
+        Essayez d’insérer l’instruction
             global a
-        as the first line inside your function.
+        comme première ligne à l’intérieur de votre fonction.
 
-    L'exécution s'est arrêtée à la ligne 15 du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py'
+    L'exécution s'est arrêtée à la ligne 16 du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py'
 
-       13: 
-       14:     try:
-    -->15:         inner()
-       16:     except Exception:
+       14: 
+       15:     try:
+    -->16:         inner()
+       17:     except Exception:
     inner: <function test_unbound_local_error.<loca... >
 
     Exception levée à la ligne du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py'.
 
-       10:     def inner():
-       11:         c = 3
-    -->12:         a = a + b + c
-       13: 
-    b: 2
+       11:     def inner():
+       12:         c = 3
+    -->13:         a = a + b + c
+       14: 
+    global b: 2
     c: 3
 
 
@@ -369,12 +395,12 @@ ZeroDivisionError - 1
     Exception Python: 
         ZeroDivisionError: division by zero
 
-    A ZeroDivisionError occurs when you are attempting to divide
-    a value by zero:
-        result = my_variable / 0
-    It can also happen if you calculate the remainder of a division
-    using the modulo operator '%'
-        result = my_variable % 0
+    Une exception de type ZeroDivisionError se produit lorsque
+    vous tentez de diviser une valeur par zéro:
+        résultat = ma_variable / 0
+    Ceci peut également se produire si vous calculez le reste d’une division 
+    à l’aide de l’opérateur modulo '%'
+        résultat = ma_variable % 0
 
     L'exécution s'est arrêtée à la ligne 7 du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_zero_division_error.py'
 
@@ -392,12 +418,12 @@ ZeroDivisionError - 2
     Exception Python: 
         ZeroDivisionError: integer division or modulo by zero
 
-    A ZeroDivisionError occurs when you are attempting to divide
-    a value by zero:
-        result = my_variable / 0
-    It can also happen if you calculate the remainder of a division
-    using the modulo operator '%'
-        result = my_variable % 0
+    Une exception de type ZeroDivisionError se produit lorsque
+    vous tentez de diviser une valeur par zéro:
+        résultat = ma_variable / 0
+    Ceci peut également se produire si vous calculez le reste d’une division 
+    à l’aide de l’opérateur modulo '%'
+        résultat = ma_variable % 0
 
     L'exécution s'est arrêtée à la ligne 17 du fichier 'C:\Users\andre\github\friendly-traceback\tests\test_zero_division_error.py'
 

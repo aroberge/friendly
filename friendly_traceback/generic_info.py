@@ -56,6 +56,14 @@ def index_error(*args):
     )
 
 
+def key_error(*args):
+    _ = current_lang.lang
+    return _(
+        "    A KeyError is raised when a value is not found as a\n"
+        "    key in a Python dict.\n"
+    )
+
+
 def lookup_error(*args):
     _ = current_lang.lang
     return _(
@@ -139,6 +147,7 @@ generic = {
     "ImportError": import_error,
     "IndentationError": indentation_error,
     "IndexError": index_error,
+    "KeyError": key_error,
     "LookupError": lookup_error,
     "ModuleNotFoundError": module_not_found_error,
     "NameError": name_error,

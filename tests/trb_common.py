@@ -24,6 +24,7 @@ all_imports = {
     "IndentationError - 1: expected an indented block": "syntax.raise_indentation_error1",
     "IndentationError - 2: unexpected indent": "syntax.raise_indentation_error2",
     "IndentationError - 3: unindent does not match ...": "syntax.raise_indentation_error3",
+    "KeyError": ("test_key_error", "test_key_error"),
     "LookupError": ("test_lookup_error", "test_lookup_error"),
     "IndexError - short tuple": ("test_index_error", "test_index_error1"),
     "IndexError - long list": ("test_index_error", "test_index_error2"),

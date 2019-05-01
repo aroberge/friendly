@@ -1,11 +1,12 @@
 import friendly_traceback
 import sys
 
+b = 2
+
 
 def test_unbound_local_error():
     """Should raise UnboundLocalError"""
     a = 1
-    b = 2
 
     def inner():
         c = 3

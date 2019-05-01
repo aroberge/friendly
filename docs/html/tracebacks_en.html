@@ -44,6 +44,7 @@
 <li><a class="reference internal" href="#indentationerror-1-expected-an-indented-block">IndentationError - 1: expected an indented block</a></li>
 <li><a class="reference internal" href="#indentationerror-2-unexpected-indent">IndentationError - 2: unexpected indent</a></li>
 <li><a class="reference internal" href="#indentationerror-3-unindent-does-not-match">IndentationError - 3: unindent does not match …</a></li>
+<li><a class="reference internal" href="#keyerror">KeyError</a></li>
 <li><a class="reference internal" href="#lookuperror">LookupError</a></li>
 <li><a class="reference internal" href="#indexerror-short-tuple">IndexError - short tuple</a></li>
 <li><a class="reference internal" href="#indexerror-long-list">IndexError - long list</a></li>
@@ -221,6 +222,28 @@ Likely cause:
 </pre></div>
 </div>
 </div>
+<div class="section" id="keyerror">
+<h2>KeyError<a class="headerlink" href="#keyerror" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
+    KeyError: &#39;c&#39;
+
+A KeyError is raised when a value is not found as a
+key in a Python dict.
+
+Likely cause:
+    In your program, the name of the key
+    that cannot be found is &#39;c&#39;.
+
+Execution stopped on line 8 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_key_error.py&#39;.
+
+    6:     d = {&#39;a&#39;: 1, &#39;b&#39;: 2}
+    7:     try:
+--&gt; 8:         d[&#39;c&#39;]
+    9:     except Exception:
+d: {&#39;a&#39;: 1, &#39;b&#39;: 2}
+</pre></div>
+</div>
+</div>
 <div class="section" id="lookuperror">
 <h2>LookupError<a class="headerlink" href="#lookuperror" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Python exception:
@@ -378,21 +401,21 @@ Likely cause:
         global a
     as the first line inside your function.
 
-Execution stopped on line 15 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;.
+Execution stopped on line 16 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;.
 
-   13:
-   14:     try:
---&gt;15:         inner()
-   16:     except Exception:
+   14:
+   15:     try:
+--&gt;16:         inner()
+   17:     except Exception:
 inner: &lt;function test_unbound_local_error.&lt;loca... &gt;
 
-Exception raised on line 12 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;.
+Exception raised on line 13 of file &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;.
 
-   10:     def inner():
-   11:         c = 3
---&gt;12:         a = a + b + c
-   13:
-b: 2
+   11:     def inner():
+   12:         c = 3
+--&gt;13:         a = a + b + c
+   14:
+global b: 2
 c: 3
 </pre></div>
 </div>

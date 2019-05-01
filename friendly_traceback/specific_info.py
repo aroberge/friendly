@@ -13,7 +13,7 @@ from .analyze_syntax import find_likely_cause
 
 def import_error(etype, value):
     _ = current_lang.lang
-    # value is expected to be something like
+    # str(value) is expected to be something like
     #
     #  ImportError: cannot import name 'X' from 'Y' ...
     #
@@ -65,9 +65,22 @@ def index_error(etype, value):
     return this_case
 
 
+def key_error(etype, value):
+    _ = current_lang.lang
+    # str(value) is expected to be something like
+    #
+    # KeyError: 'c'
+    #
+    # By splitting value using ', we can extract the missing key name.
+    return _(
+        "        In your program, the name of the key\n"
+        "        that cannot be found is '{key_name}'.\n"
+    ).format(key_name=str(value).split("'")[1])
+
+
 def module_not_found_error(etype, value):
     _ = current_lang.lang
-    # value is expected to be something like
+    # str(value) is expected to be something like
     #
     # ModuleNotFoundError: No module named 'does_not_exist'
     #
@@ -80,7 +93,7 @@ def module_not_found_error(etype, value):
 
 def name_error(etype, value):
     _ = current_lang.lang
-    # value is expected to be something like
+    # str(value) is expected to be something like
     #
     # NameError: name 'c' is not defined
     #
@@ -129,7 +142,7 @@ def tab_error(etype, value):
 
 def unbound_local_error(etype, value):
     _ = current_lang.lang
-    # value is expected to be something like
+    # str(value) is expected to be something like
     #
     # UnboundLocalError: local variable 'a' referenced before assignment
     #
@@ -150,6 +163,7 @@ get_cause = {
     "ImportError": import_error,
     "IndentationError": indentation_error,
     "IndexError": index_error,
+    "KeyError": key_error,
     "ModuleNotFoundError": module_not_found_error,
     "NameError": name_error,
     "SyntaxError": syntax_error,

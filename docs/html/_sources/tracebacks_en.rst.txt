@@ -144,6 +144,31 @@ IndentationError - 3: unindent does not match ...
         less indented than the preceding one,
         and is not aligned vertically with another block of code.
 
+KeyError
+--------
+
+.. code-block:: none
+
+
+    Python exception: 
+        KeyError: 'c'
+
+    A KeyError is raised when a value is not found as a
+    key in a Python dict.
+
+    Likely cause:
+        In your program, the name of the key
+        that cannot be found is 'c'.
+
+    Execution stopped on line 8 of file 'C:\Users\andre\github\friendly-traceback\tests\test_key_error.py'.
+
+        6:     d = {'a': 1, 'b': 2}
+        7:     try:
+    --> 8:         d['c']
+        9:     except Exception:
+    d: {'a': 1, 'b': 2}
+
+
 LookupError
 -----------
 
@@ -319,21 +344,21 @@ UnboundLocalError
             global a
         as the first line inside your function.
 
-    Execution stopped on line 15 of file 'C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py'.
+    Execution stopped on line 16 of file 'C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py'.
 
-       13: 
-       14:     try:
-    -->15:         inner()
-       16:     except Exception:
+       14: 
+       15:     try:
+    -->16:         inner()
+       17:     except Exception:
     inner: <function test_unbound_local_error.<loca... >
 
-    Exception raised on line 12 of file 'C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py'.
+    Exception raised on line 13 of file 'C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py'.
 
-       10:     def inner():
-       11:         c = 3
-    -->12:         a = a + b + c
-       13: 
-    b: 2
+       11:     def inner():
+       12:         c = 3
+    -->13:         a = a + b + c
+       14: 
+    global b: 2
     c: 3
 
 

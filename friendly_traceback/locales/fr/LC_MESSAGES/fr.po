@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-30 16:04-0300\n"
-"PO-Revision-Date: 2019-04-30 16:05-0300\n"
+"POT-Creation-Date: 2019-05-01 07:06-0300\n"
+"PO-Revision-Date: 2019-05-01 07:16-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -39,7 +39,7 @@ msgstr ""
 "    être importé à partir d’un module ou d’un paquet. Très souvent, c’est\n"
 "    parce que le nom de l’objet n’est pas écrit correctement.\n"
 
-#: generic_info.py:33 specific_info.py:101 specific_info.py:122
+#: generic_info.py:33 specific_info.py:114 specific_info.py:135
 msgid ""
 "    Python could not parse the file '{filename}'\n"
 "    beyond the location indicated below by --> and ^.\n"
@@ -80,6 +80,14 @@ msgstr ""
 
 #: generic_info.py:61
 msgid ""
+"    A KeyError is raised when a value is not found as a\n"
+"    key in a Python dict.\n"
+msgstr ""
+"    Une erreur KeyError est levée lorsqu’une valeur n’est pas trouvée\n"
+"    en tant que clé dans un dictionnaire (dict) Python.\n"
+
+#: generic_info.py:69
+msgid ""
 "    LookupError is the base class for the exceptions that are raised\n"
 "    when a key or index used on a mapping or sequence is invalid.\n"
 "    It can also be raised directly by codecs.lookup().\n"
@@ -89,7 +97,7 @@ msgstr ""
 "une séquence est invalide.\n"
 "    Elle peut également être levée directement par codecs.lookup().\n"
 
-#: generic_info.py:70
+#: generic_info.py:78
 msgid ""
 "    A ModuleNotFoundError exception indicates that you\n"
 "    are trying to import a module that cannot be found by Python.\n"
@@ -98,11 +106,11 @@ msgid ""
 msgstr ""
 "    Une exception ModuleNotFoundError indique que vous\n"
 "    essayez d’importer un module qui ne peut pas être trouvé par Python.\n"
-"    Cela pourrait être parce que vous fait une faute d'orthographe en "
-"écrivant le nom du module\n"
-"    ou parce qu’il n’est pas installé sur votre ordinateur.\n"
+"    Cela pourrait être parce que vous fait une faute d'orthographe\n"
+"    écrivant le nom du module, ou parce qu’il n’est pas installé sur votre "
+"ordinateur.\n"
 
-#: generic_info.py:80
+#: generic_info.py:88
 msgid ""
 "    A NameError exception indicates that a variable or\n"
 "    function name is not known to Python.\n"
@@ -116,13 +124,13 @@ msgstr ""
 "    Cependant, cela peut également indiquer que le nom a été\n"
 "    utilisé avant qu'on ne lui ait associé une valeur.\n"
 
-#: generic_info.py:91
+#: generic_info.py:99
 msgid "    A SyntaxError occurs when Python cannot understand your code.\n"
 msgstr ""
 "    Une exception de type SyntaxError se produit lorsque python ne peut pas "
 "comprendre votre code.\n"
 
-#: generic_info.py:96
+#: generic_info.py:104
 msgid ""
 "    A TabError indicates that you have used both spaces\n"
 "    and tab characters to indent your code.\n"
@@ -131,17 +139,16 @@ msgid ""
 "    by inserting either spaces or tab characters at the beginning of lines.\n"
 "    Python's recommendation is to always use spaces to indent your code.\n"
 msgstr ""
-"    Un exception de type TabError indique que vous avez utilisé des espaces "
-"ainsi que\n"
-"    des caractères de tabulation pour indenter votre code.\n"
+"    Un exception de type TabError indique que vous avez utilisé des espaces\n"
+"    ainsi que des caractères de tabulation pour indenter votre code.\n"
 "    Cela n’est pas autorisé dans Python.\n"
-"    L’indentation de votre code signifie que le bloc de codes est aligné "
-"verticalement \n"
-"    en insérant des espaces ou des tabulations au début des lignes.\n"
-"    La recommandation de Python est de toujours utiliser des espaces pour "
-"indenter votre code.\n"
+"    L’indentation de votre code signifie que le bloc de codes est aligné\n"
+"    verticalement en insérant des espaces ou des tabulations au début des "
+"lignes.\n"
+"    La recommandation de Python est de toujours utiliser des espaces\n"
+"    pour indenter votre code.\n"
 
-#: generic_info.py:108
+#: generic_info.py:116
 msgid ""
 "    In Python, variables that are used inside a function are known as \n"
 "    local variables. Before they are used, they must be assigned a value.\n"
@@ -153,31 +160,31 @@ msgid ""
 "    an UnboundLocalError.\n"
 msgstr ""
 "    En Python, les variables utilisées à l’intérieur d’une fonction sont "
-"appelées variables «locales».\n"
+"appelées\n"
+"    variables «locales».\n"
 "    Avant d’utiliser une variable locale, une valeur doit lui être "
 "attribuée.\n"
-"    Une variable utilisée avant l’attribution d’une valeur est supposée être "
-"définie en\n"
-"    dehors de cette fonction; elle est connu comme une variable "
-"«globale» ('global' ou parfois 'nonlocal').\n"
-"    Vous ne pouvez pas assigner une valeur à une telle variable globale à "
-"l’intérieur d’une fonction\n"
-"    sans d’abord confirmer à python qu’il s’agit d’une variable globale, "
-"sinon vous verrez\n"
-"    une exception UnboundLocalError.\n"
+"    Une variable utilisée avant l’attribution d’une valeur est supposée\n"
+"    être définie en dehors de cette fonction;\n"
+"    elle est connu comme une variable «globale» ('global' ou parfois "
+"'nonlocal').\n"
+"    Vous ne pouvez pas assigner une valeur à une telle variable globale\n"
+"    à l’intérieur d’une fonction sans d’abord confirmer à python\n"
+"    qu’il s’agit d’une variable globale, sinon vous verrez une exception "
+"UnboundLocalError.\n"
 
-#: generic_info.py:122
+#: generic_info.py:130
 msgid "    No information is known about this exception.\n"
 msgstr "    Aucune information n'est connue au sujet de cette exception.\n"
 
-#: generic_info.py:127
+#: generic_info.py:135
 msgid ""
 "    A ZeroDivisionError occurs when you are attempting to divide\n"
 "    a value by zero:\n"
 "        result = my_variable / 0\n"
 "    It can also happen if you calculate the remainder of a division\n"
 "    using the modulo operator '%'\n"
-"        result = my_variable % 0"
+"        result = my_variable % 0\n"
 msgstr ""
 "    Une exception de type ZeroDivisionError se produit lorsque\n"
 "    vous tentez de diviser une valeur par zéro:\n"
@@ -185,7 +192,7 @@ msgstr ""
 "    Ceci peut également se produire si vous calculez le reste d’une "
 "division \n"
 "    à l’aide de l’opérateur modulo '%'\n"
-"        résultat = ma_variable % 0"
+"        résultat = ma_variable % 0\n"
 
 #: specific_info.py:25
 msgid ""
@@ -194,8 +201,7 @@ msgid ""
 "        expected to be found is '{module}'.\n"
 msgstr ""
 "        L’objet qui n’a pas pu être importé est '{name}'.\n"
-"        Le module ou le paquet d'où il devait être importé\n"
-"        est '{module}'.\n"
+"        Le module ou le paquet d'où il devait être importé est '{module}'.\n"
 
 #: specific_info.py:37
 msgid ""
@@ -225,7 +231,7 @@ msgstr ""
 "        est moins indentée que la ligne précédente\n"
 "        et n’est pas alignée verticalement avec un autre bloc de code.\n"
 
-#: specific_info.py:53 traceback_info.py:163
+#: specific_info.py:53 traceback_info.py:181
 msgid ""
 "    Likely cause:\n"
 "{cause}"
@@ -243,28 +249,35 @@ msgstr "        Dans ce cas, la séquence est un tuple.\n"
 
 #: specific_info.py:75
 msgid ""
+"        In your program, the name of the key\n"
+"        that cannot be found is '{key_name}'.\n"
+msgstr ""
+"        Dans votre programme, le nom de la clé inconnue est '{key_name}'.\n"
+
+#: specific_info.py:88
+msgid ""
 "        In your program, the name of the\n"
 "        module that cannot be found is '{mod_name}'.\n"
 msgstr ""
 "        Dans votre programme, le nom du module inconnu est '{mod_name}'.\n"
 
-#: specific_info.py:88
+#: specific_info.py:101
 msgid "        In your program, the unknown name is '{var_name}'.\n"
 msgstr "        Dans votre programme, le nom inconnu est '{var_name}'.\n"
 
-#: specific_info.py:137
+#: specific_info.py:150
 msgid ""
 "        The variable that appears to cause the problem is '{var_name}'.\n"
 "        Try inserting the statement\n"
 "            global {var_name}\n"
-"        as the first line inside your function."
+"        as the first line inside your function.\n"
 msgstr ""
 "        La variable qui semble causer le problème est' {var_name} '.\n"
 "        Essayez d’insérer l’instruction\n"
 "            global {var_name}\n"
-"        comme première ligne à l’intérieur de votre fonction."
+"        comme première ligne à l’intérieur de votre fonction.\n"
 
-#: specific_info.py:166
+#: specific_info.py:180
 msgid ""
 "    My best guess: you were trying\n"
 "    to assign a value to a Python keyword.\n"
@@ -276,7 +289,7 @@ msgstr ""
 "    Ceci n’est pas permis.\n"
 "\n"
 
-#: specific_info.py:174
+#: specific_info.py:188
 msgid ""
 "    My best guess: you wrote something like\n"
 "        import X from Y\n"
@@ -291,7 +304,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: specific_info.py:184
+#: specific_info.py:198
 msgid ""
 "    My best guess: you meant to use Python's 'elif' keyword\n"
 "    but wrote '{name}' instead\n"
@@ -301,11 +314,11 @@ msgstr ""
 "    au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: specific_info.py:193
+#: specific_info.py:207
 msgid "a class"
 msgstr "une classe"
 
-#: specific_info.py:194
+#: specific_info.py:208
 msgid ""
 "    My best guess: you wanted to define {class_}\n"
 "    but forgot to add a colon ':' at the end\n"
@@ -315,7 +328,7 @@ msgstr ""
 "    mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:200
+#: specific_info.py:214
 msgid ""
 "    My best guess: you wrote a '{name}' loop but\n"
 "    forgot to add a colon ':' at the end\n"
@@ -325,7 +338,7 @@ msgstr ""
 "    mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:206
+#: specific_info.py:220
 msgid ""
 "    My best guess: you wrote a statement beginning with\n"
 "    '{name}' but forgot to add a colon ':' at the end\n"
@@ -335,11 +348,11 @@ msgstr ""
 "    '{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: specific_info.py:213
+#: specific_info.py:227
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: specific_info.py:214
+#: specific_info.py:228
 msgid ""
 "    My best guess: you tried to define {class_or_function}\n"
 "    and did not use the correct syntax.\n"
@@ -352,7 +365,7 @@ msgstr ""
 "        def nom ( arguments_optionnels ) :\n"
 "\n"
 
-#: specific_info.py:224
+#: specific_info.py:238
 msgid ""
 "    My best guess: you wrote an expression like\n"
 "        {name} = something\n"
@@ -371,7 +384,7 @@ msgstr ""
 "        variable = {name}\n"
 "\n"
 
-#: specific_info.py:234
+#: specific_info.py:248
 msgid ""
 "    Currently, we cannot guess the likely cause of this error.\n"
 "\n"
@@ -389,7 +402,7 @@ msgstr ""
 "etc.\n"
 "\n"
 
-#: traceback_info.py:21
+#: traceback_info.py:131
 msgid ""
 "        Unfortunately, no additional information is available:\n"
 "        the content of file '<string>' is not accessible.\n"
@@ -398,7 +411,7 @@ msgstr ""
 "disponible:\n"
 "        le contenu du fichier '<string>' n’est pas accessible.\n"
 
-#: traceback_info.py:135
+#: traceback_info.py:153
 msgid ""
 "    Python exception: \n"
 "        {name}: {value}\n"
@@ -406,13 +419,13 @@ msgstr ""
 "    Exception Python: \n"
 "        {name}: {value}\n"
 
-#: traceback_info.py:189
+#: traceback_info.py:207
 msgid "    Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 "    L'exécution s'est arrêtée à la ligne {linenumber} du fichier "
 "'{filename}'\n"
 
-#: traceback_info.py:196
+#: traceback_info.py:214
 msgid "    Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr "    Exception levée à la ligne du fichier '{filename}'.\n"
 

@@ -44,6 +44,7 @@
 <li><a class="reference internal" href="#indentationerror-1-expected-an-indented-block">IndentationError - 1: expected an indented block</a></li>
 <li><a class="reference internal" href="#indentationerror-2-unexpected-indent">IndentationError - 2: unexpected indent</a></li>
 <li><a class="reference internal" href="#indentationerror-3-unindent-does-not-match">IndentationError - 3: unindent does not match …</a></li>
+<li><a class="reference internal" href="#keyerror">KeyError</a></li>
 <li><a class="reference internal" href="#lookuperror">LookupError</a></li>
 <li><a class="reference internal" href="#indexerror-short-tuple">IndexError - short tuple</a></li>
 <li><a class="reference internal" href="#indexerror-long-list">IndexError - long list</a></li>
@@ -141,8 +142,7 @@ parce que le nom de l’objet n’est pas écrit correctement.
 
 Cause probable :
     L’objet qui n’a pas pu être importé est &#39;Pi&#39;.
-    Le module ou le paquet d&#39;où il devait être importé
-    est &#39;math&#39;.
+    Le module ou le paquet d&#39;où il devait être importé est &#39;math&#39;.
 
 L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_import_error.py&#39;
 
@@ -224,6 +224,27 @@ Cause probable :
 </pre></div>
 </div>
 </div>
+<div class="section" id="keyerror">
+<h2>KeyError<a class="headerlink" href="#keyerror" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
+    KeyError: &#39;c&#39;
+
+Une erreur KeyError est levée lorsqu’une valeur n’est pas trouvée
+en tant que clé dans un dictionnaire (dict) Python.
+
+Cause probable :
+    Dans votre programme, le nom de la clé inconnue est &#39;c&#39;.
+
+L&#39;exécution s&#39;est arrêtée à la ligne 8 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_key_error.py&#39;
+
+    6:     d = {&#39;a&#39;: 1, &#39;b&#39;: 2}
+    7:     try:
+--&gt; 8:         d[&#39;c&#39;]
+    9:     except Exception:
+d: {&#39;a&#39;: 1, &#39;b&#39;: 2}
+</pre></div>
+</div>
+</div>
 <div class="section" id="lookuperror">
 <h2>LookupError<a class="headerlink" href="#lookuperror" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
@@ -301,8 +322,8 @@ b: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1... )  | len(b): 50
 
 Une exception ModuleNotFoundError indique que vous
 essayez d’importer un module qui ne peut pas être trouvé par Python.
-Cela pourrait être parce que vous fait une faute d&#39;orthographe en écrivant le nom du module
-ou parce qu’il n’est pas installé sur votre ordinateur.
+Cela pourrait être parce que vous fait une faute d&#39;orthographe
+écrivant le nom du module, ou parce qu’il n’est pas installé sur votre ordinateur.
 
 Cause probable :
     Dans votre programme, le nom du module inconnu est &#39;does_not_exist&#39;.
@@ -344,12 +365,13 @@ L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;C:\Users\andr
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
     TabError: inconsistent use of tabs and spaces in indentation (raise_tab_error.py, line 7)
 
-Un exception de type TabError indique que vous avez utilisé des espaces ainsi que
-des caractères de tabulation pour indenter votre code.
+Un exception de type TabError indique que vous avez utilisé des espaces
+ainsi que des caractères de tabulation pour indenter votre code.
 Cela n’est pas autorisé dans Python.
-L’indentation de votre code signifie que le bloc de codes est aligné verticalement
-en insérant des espaces ou des tabulations au début des lignes.
-La recommandation de Python est de toujours utiliser des espaces pour indenter votre code.
+L’indentation de votre code signifie que le bloc de codes est aligné
+verticalement en insérant des espaces ou des tabulations au début des lignes.
+La recommandation de Python est de toujours utiliser des espaces
+pour indenter votre code.
 
 Python peut seulement analyser le fichier &#39;raise_tab_error.py&#39;
 jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
@@ -367,35 +389,37 @@ jusqu&#39;à l&#39;endroit indiqué par --&gt; et ^.
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
     UnboundLocalError: local variable &#39;a&#39; referenced before assignment
 
-En Python, les variables utilisées à l’intérieur d’une fonction sont appelées variables «locales».
+En Python, les variables utilisées à l’intérieur d’une fonction sont appelées
+variables «locales».
 Avant d’utiliser une variable locale, une valeur doit lui être attribuée.
-Une variable utilisée avant l’attribution d’une valeur est supposée être définie en
-dehors de cette fonction; elle est connu comme une variable «globale» (&#39;global&#39; ou parfois &#39;nonlocal&#39;).
-Vous ne pouvez pas assigner une valeur à une telle variable globale à l’intérieur d’une fonction
-sans d’abord confirmer à python qu’il s’agit d’une variable globale, sinon vous verrez
-une exception UnboundLocalError.
+Une variable utilisée avant l’attribution d’une valeur est supposée
+être définie en dehors de cette fonction;
+elle est connu comme une variable «globale» (&#39;global&#39; ou parfois &#39;nonlocal&#39;).
+Vous ne pouvez pas assigner une valeur à une telle variable globale
+à l’intérieur d’une fonction sans d’abord confirmer à python
+qu’il s’agit d’une variable globale, sinon vous verrez une exception UnboundLocalError.
 
 Cause probable :
-    The variable that appears to cause the problem is &#39;a&#39;.
-    Try inserting the statement
+    La variable qui semble causer le problème est&#39; a &#39;.
+    Essayez d’insérer l’instruction
         global a
-    as the first line inside your function.
+    comme première ligne à l’intérieur de votre fonction.
 
-L&#39;exécution s&#39;est arrêtée à la ligne 15 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;
+L&#39;exécution s&#39;est arrêtée à la ligne 16 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;
 
-   13:
-   14:     try:
---&gt;15:         inner()
-   16:     except Exception:
+   14:
+   15:     try:
+--&gt;16:         inner()
+   17:     except Exception:
 inner: &lt;function test_unbound_local_error.&lt;loca... &gt;
 
 Exception levée à la ligne du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_unbound_local_error.py&#39;.
 
-   10:     def inner():
-   11:         c = 3
---&gt;12:         a = a + b + c
-   13:
-b: 2
+   11:     def inner():
+   12:         c = 3
+--&gt;13:         a = a + b + c
+   14:
+global b: 2
 c: 3
 </pre></div>
 </div>
@@ -422,12 +446,12 @@ global MyException: &lt;class &#39;test_unknown_error.MyException&#39;&gt;
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
     ZeroDivisionError: division by zero
 
-A ZeroDivisionError occurs when you are attempting to divide
-a value by zero:
-    result = my_variable / 0
-It can also happen if you calculate the remainder of a division
-using the modulo operator &#39;%&#39;
-    result = my_variable % 0
+Une exception de type ZeroDivisionError se produit lorsque
+vous tentez de diviser une valeur par zéro:
+    résultat = ma_variable / 0
+Ceci peut également se produire si vous calculez le reste d’une division
+à l’aide de l’opérateur modulo &#39;%&#39;
+    résultat = ma_variable % 0
 
 L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_zero_division_error.py&#39;
 
@@ -443,12 +467,12 @@ L&#39;exécution s&#39;est arrêtée à la ligne 7 du fichier &#39;C:\Users\andr
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Exception Python:
     ZeroDivisionError: integer division or modulo by zero
 
-A ZeroDivisionError occurs when you are attempting to divide
-a value by zero:
-    result = my_variable / 0
-It can also happen if you calculate the remainder of a division
-using the modulo operator &#39;%&#39;
-    result = my_variable % 0
+Une exception de type ZeroDivisionError se produit lorsque
+vous tentez de diviser une valeur par zéro:
+    résultat = ma_variable / 0
+Ceci peut également se produire si vous calculez le reste d’une division
+à l’aide de l’opérateur modulo &#39;%&#39;
+    résultat = ma_variable % 0
 
 L&#39;exécution s&#39;est arrêtée à la ligne 17 du fichier &#39;C:\Users\andre\github\friendly-traceback\tests\test_zero_division_error.py&#39;
 
