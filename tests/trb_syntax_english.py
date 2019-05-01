@@ -17,8 +17,10 @@ import friendly_traceback
 
 # Make it possible to find docs and tests source
 this_dir = os.path.dirname(__file__)
-root_dir = os.path.abspath(os.path.join(this_dir, ".."))
-
+docs_root_dir = os.path.abspath(
+    os.path.join(this_dir, "..", "..", "friendly-traceback-docs")
+)
+assert os.path.isdir(docs_root_dir), "Separate docs repo need to exist"
 # sys.path.insert(0, root_dir)
 
 LANG = "en"
@@ -30,7 +32,9 @@ sys.path.insert(0, this_dir)
 
 import trb_syntax_common  # noqa
 
-target = os.path.normpath(os.path.join(root_dir, f"docs/source/syntax_tracebacks_{LANG}.rst"))
+target = os.path.normpath(
+    os.path.join(docs_root_dir, f"docs/source/syntax_tracebacks_{LANG}.rst")
+)
 
 intro_text = """
 Friendly SyntaxError tracebacks - in English
@@ -56,7 +60,9 @@ Friendly-traceback version: {friendly}
 Python version: {python}
 
 """.format(
-    friendly=friendly_traceback.version.__version__, python=platform.python_version(), name=__file__
+    friendly=friendly_traceback.version.__version__,
+    python=platform.python_version(),
+    name=__file__,
 )
 
 

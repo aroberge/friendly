@@ -3,6 +3,6 @@ python trb_english.py
 python trb_french.py
 python trb_syntax_english.py
 python trb_syntax_french.py
-cd ../docs
+cd ..\..\friendly-traceback-docs\docs
 call make html
-cd ..
+cd ..\..\friendly-traceback
