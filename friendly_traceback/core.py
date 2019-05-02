@@ -12,7 +12,7 @@ import traceback
 
 from .my_gettext import current_lang
 from . import formatters
-from . import traceback_info
+from . import info_traceback
 
 # ---------------------------------------------
 # Note: public API is near the end of this file
@@ -115,7 +115,7 @@ class _State:
         if etype.__name__ == "KeyboardInterrupt":
             raise KeyboardInterrupt(str(value))
 
-        info = traceback_info.get_traceback_info(etype, value, tb, running_script=False)
+        info = info_traceback.get_traceback_info(etype, value, tb, running_script=False)
         explanation = self.formatter(info)
         self.write_err(explanation)
 

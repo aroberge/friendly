@@ -1,4 +1,7 @@
-"""Basic information about Python exceptions"""
+"""info_generic.py
+
+Generic information about Python exceptions.
+"""
 import os
 from .my_gettext import current_lang
 from . import utils

@@ -1,4 +1,4 @@
-"""formatter.py
+"""info_traceback.py
 
 First version - needs to be documented.
 """
@@ -6,11 +6,11 @@ import inspect
 import os
 import runpy
 
-from . import generic_info
-from . import specific_info
+from . import info_generic
+from . import info_specific
 from . import utils
 from .my_gettext import current_lang
-from .friendly_var_info import get_var_info
+from .info_variables import get_var_info
 
 CONTEXT = utils.CONTEXT
 CONSOLE_SOURCE = utils.CONSOLE_SOURCE
@@ -160,10 +160,10 @@ def get_header(name, value):
 def get_generic_explanation(name, etype, value):
     """Provides a generic explanation about a particular exception.
     """
-    if name in generic_info.generic:
-        explanation = generic_info.generic[name](etype, value)
+    if name in info_generic.generic:
+        explanation = info_generic.generic[name](etype, value)
     else:
-        explanation = generic_info.generic["Unknown"]()
+        explanation = info_generic.generic["Unknown"]()
     return explanation
 
 
@@ -172,8 +172,8 @@ def get_likely_cause(etype, value):
        specific to a given exception.
     """
     _ = current_lang.lang
-    if etype.__name__ in specific_info.get_cause:
-        cause = specific_info.get_cause[etype.__name__](etype, value)
+    if etype.__name__ in info_specific.get_cause:
+        cause = info_specific.get_cause[etype.__name__](etype, value)
         if cause is not None:
             if issubclass(etype, SyntaxError):
                 return cause

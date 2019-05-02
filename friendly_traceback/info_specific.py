@@ -1,4 +1,4 @@
-"""specific_info.py
+"""info_specific.py
 
 Attempts to provide some specific information about the cause
 of a given exception.
