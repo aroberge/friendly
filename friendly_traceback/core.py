@@ -116,12 +116,15 @@ class _State:
             raise KeyboardInterrupt(str(value))
 
         info = info_traceback.get_traceback_info(etype, value, tb, running_script=False)
-        explanation = self.formatter(info)
+        # normal Python traceback
+        python_tb = traceback.format_exception(etype, value, tb)
+        info["python_traceback"] = "".join(python_tb)
+        explanation = self.formatter(info, level=self.level)
         self.write_err(explanation)
 
-        if self.level == 9:
-            python_tb = traceback.format_exception(etype, value, tb)
-            self.write_err("\n" + "".join(python_tb) + "\n")
+        # if self.level == 9:
+        #     python_tb = traceback.format_exception(etype, value, tb)
+        #     self.write_err("\n" + "".join(python_tb) + "\n")
 
     def capture(self, txt):
         """Captures the output instead of writing to stderr."""

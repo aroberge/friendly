@@ -149,6 +149,6 @@ def start_console(local_vars=None, show_python=False):
     console = FriendlyConsole(locals=local_vars)
 
     banner = "{} version {}. [Python version: {}]\n".format(
-        utils.CONSOLE_NAME, __version__, platform.python_version()
+        "Friendly Console", __version__, platform.python_version()
     )
     console.interact(banner=banner)

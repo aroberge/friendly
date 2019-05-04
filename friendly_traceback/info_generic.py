@@ -114,6 +114,15 @@ def tab_error(*args):
     )
 
 
+def type_error(*args):
+    _ = current_lang.lang
+    return _(
+        "    A TypeError is usually caused by trying\n"
+        "    to combine two incompatible types of objects,\n"
+        "    or by calling a function with the wrong type of object.\n"
+    )
+
+
 def unbound_local_error(*args):
     _ = current_lang.lang
     return _(
@@ -156,6 +165,7 @@ generic = {
     "NameError": name_error,
     "SyntaxError": syntax_error,
     "TabError": tab_error,
+    "TypeError": type_error,
     "UnboundLocalError": unbound_local_error,
     "Unknown": unknown,
     "ZeroDivisionError": zero_division_error,

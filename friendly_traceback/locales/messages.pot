@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-05-01 07:06-0300\n"
+"POT-Creation-Date: 2019-05-04 08:50-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,7 +15,119 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: generic_info.py:9
+#: analyze_syntax.py:170
+msgid ""
+"    My best guess: you were trying\n"
+"    to assign a value to a Python keyword.\n"
+"    This is not allowed.\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:178
+msgid ""
+"    My best guess: you wrote something like\n"
+"        import X from Y\n"
+"    instead of\n"
+"        from Y import X\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:188
+msgid ""
+"    My best guess: you meant to use Python's 'elif' keyword\n"
+"    but wrote '{name}' instead\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:197
+msgid "a class"
+msgstr ""
+
+#: analyze_syntax.py:198
+msgid ""
+"    My best guess: you wanted to define {class_}\n"
+"    but forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:204
+msgid ""
+"    My best guess: you wrote a '{name}' loop but\n"
+"    forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:210
+msgid ""
+"    My best guess: you wrote a statement beginning with\n"
+"    '{name}' but forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:217
+msgid "a function or method"
+msgstr ""
+
+#: analyze_syntax.py:218
+msgid ""
+"    My best guess: you tried to define {class_or_function}\n"
+"    and did not use the correct syntax.\n"
+"    The correct syntax is:\n"
+"        def name ( optional_arguments ):\n"
+msgstr ""
+
+#: analyze_syntax.py:228
+msgid ""
+"    My best guess: you wrote an expression like\n"
+"        {name} = something\n"
+"    where <{name}>, on the left hand-side of the equal sign, is\n"
+"    an actual number or string (what Python calls a 'literal'),\n"
+"    and not the name of a variable.  Perhaps you meant to write:\n"
+"        something = {name}\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:238
+msgid ""
+"    Currently, we cannot guess the likely cause of this error.\n"
+"\n"
+"    Try to examine closely the line indicated as well as the line\n"
+"    immediately above to see if you can identify some misspelled\n"
+"    word, or missing symbols, like (, ), [, ], :, etc.\n"
+"\n"
+msgstr ""
+
+#: analyze_type_error.py:36
+msgid "a dictionary ('dict')"
+msgstr ""
+
+#: analyze_type_error.py:38
+msgid "an integer ('int')"
+msgstr ""
+
+#: analyze_type_error.py:40
+msgid "a list"
+msgstr ""
+
+#: analyze_type_error.py:42
+msgid "a set"
+msgstr ""
+
+#: analyze_type_error.py:44
+msgid "a string ('str')"
+msgstr ""
+
+#: analyze_type_error.py:46
+msgid "a tuple"
+msgstr ""
+
+#: analyze_type_error.py:62
+msgid ""
+"        You tried to concatenate (add) two different types of objects:\n"
+"        {first} and {second}\n"
+msgstr ""
+
+#: info_generic.py:12
 msgid ""
 "    ArithmeticError is the base class for those built-in exceptions\n"
 "    that are raised for various arithmetic errors.\n"
@@ -23,14 +135,14 @@ msgid ""
 "    normally, a more specific exception should have been raised.\n"
 msgstr ""
 
-#: generic_info.py:19
+#: info_generic.py:22
 msgid ""
 "    This exception indicates that a certain object could not\n"
 "    be imported from a module or package. Most often, this is\n"
 "    because the name of the object is not spelled correctly.\n"
 msgstr ""
 
-#: generic_info.py:33 specific_info.py:114 specific_info.py:135
+#: info_generic.py:36 info_specific.py:115 info_specific.py:136
 msgid ""
 "    Python could not parse the file '{filename}'\n"
 "    beyond the location indicated below by --> and ^.\n"
@@ -38,13 +150,13 @@ msgid ""
 "{source}\n"
 msgstr ""
 
-#: generic_info.py:40
+#: info_generic.py:43
 msgid ""
 "    An IndentationError occurs when a given line of code is\n"
 "    not indented (aligned vertically with other lines) as expected.\n"
 msgstr ""
 
-#: generic_info.py:50
+#: info_generic.py:53
 msgid ""
 "    An IndexError occurs when you are try to get an item from a list,\n"
 "    a tuple, or a similar object (sequence), by using an index which\n"
@@ -53,20 +165,20 @@ msgid ""
 "    Reminder: the first item of a sequence is at index 0.\n"
 msgstr ""
 
-#: generic_info.py:61
+#: info_generic.py:64
 msgid ""
 "    A KeyError is raised when a value is not found as a\n"
 "    key in a Python dict.\n"
 msgstr ""
 
-#: generic_info.py:69
+#: info_generic.py:72
 msgid ""
 "    LookupError is the base class for the exceptions that are raised\n"
 "    when a key or index used on a mapping or sequence is invalid.\n"
 "    It can also be raised directly by codecs.lookup().\n"
 msgstr ""
 
-#: generic_info.py:78
+#: info_generic.py:81
 msgid ""
 "    A ModuleNotFoundError exception indicates that you\n"
 "    are trying to import a module that cannot be found by Python.\n"
@@ -74,7 +186,7 @@ msgid ""
 "    or because it is not installed on your computer.\n"
 msgstr ""
 
-#: generic_info.py:88
+#: info_generic.py:91
 msgid ""
 "    A NameError exception indicates that a variable or\n"
 "    function name is not known to Python.\n"
@@ -83,12 +195,12 @@ msgid ""
 "    before being defined or given a value.\n"
 msgstr ""
 
-#: generic_info.py:99
+#: info_generic.py:102
 msgid ""
 "    A SyntaxError occurs when Python cannot understand your code.\n"
 msgstr ""
 
-#: generic_info.py:104
+#: info_generic.py:107
 msgid ""
 "    A TabError indicates that you have used both spaces\n"
 "    and tab characters to indent your code.\n"
@@ -98,7 +210,14 @@ msgid ""
 "    Python's recommendation is to always use spaces to indent your code.\n"
 msgstr ""
 
-#: generic_info.py:116
+#: info_generic.py:119
+msgid ""
+"    A TypeError is usually caused by trying\n"
+"    to combine two incompatible types of objects,\n"
+"    or by calling a function with the wrong type of object.\n"
+msgstr ""
+
+#: info_generic.py:128
 msgid ""
 "    In Python, variables that are used inside a function are known as \n"
 "    local variables. Before they are used, they must be assigned a value.\n"
@@ -110,12 +229,12 @@ msgid ""
 "    an UnboundLocalError.\n"
 msgstr ""
 
-#: generic_info.py:130
+#: info_generic.py:142
 msgid ""
 "    No information is known about this exception.\n"
 msgstr ""
 
-#: generic_info.py:135
+#: info_generic.py:147
 msgid ""
 "    A ZeroDivisionError occurs when you are attempting to divide\n"
 "    a value by zero:\n"
@@ -125,174 +244,92 @@ msgid ""
 "        result = my_variable % 0\n"
 msgstr ""
 
-#: specific_info.py:25
+#: info_specific.py:26
 msgid ""
 "        The object that could not be imported is '{name}'.\n"
 "        The module or package where it was \n"
 "        expected to be found is '{module}'.\n"
 msgstr ""
 
-#: specific_info.py:37
+#: info_specific.py:38
 msgid ""
 "        In this case, the line identified above\n"
 "        is more indented than expected and \n"
 "        does not match the indentation of the previous line.\n"
 msgstr ""
 
-#: specific_info.py:43
+#: info_specific.py:44
 msgid ""
 "        In this case, the line identified above\n"
 "        was expected to begin a new indented block.\n"
 msgstr ""
 
-#: specific_info.py:48
+#: info_specific.py:49
 msgid ""
 "        In this case, the line identified above is\n"
 "        less indented than the preceding one,\n"
 "        and is not aligned vertically with another block of code.\n"
 msgstr ""
 
-#: specific_info.py:53 traceback_info.py:181
+#: info_specific.py:54 info_traceback.py:181
 msgid ""
 "    Likely cause:\n"
 "{cause}"
 msgstr ""
 
-#: specific_info.py:60
+#: info_specific.py:61
 msgid ""
 "        In this case, the sequence is a list.\n"
 msgstr ""
 
-#: specific_info.py:62
+#: info_specific.py:63
 msgid ""
 "        In this case, the sequence is a tuple.\n"
 msgstr ""
 
-#: specific_info.py:75
+#: info_specific.py:76
 msgid ""
 "        In your program, the name of the key\n"
 "        that cannot be found is '{key_name}'.\n"
 msgstr ""
 
-#: specific_info.py:88
+#: info_specific.py:89
 msgid ""
 "        In your program, the name of the\n"
 "        module that cannot be found is '{mod_name}'.\n"
 msgstr ""
 
-#: specific_info.py:101
+#: info_specific.py:102
 msgid ""
 "        In your program, the unknown name is '{var_name}'.\n"
 msgstr ""
 
-#: specific_info.py:150
+#: info_specific.py:155
 msgid ""
 "        The variable that appears to cause the problem is '{var_name}'.\n"
-"        Try inserting the statement\n"
+"        Perhaps the statement\n"
 "            global {var_name}\n"
-"        as the first line inside your function.\n"
+"        should have been included as the first line inside your function.\n"
 msgstr ""
 
-#: specific_info.py:180
-msgid ""
-"    My best guess: you were trying\n"
-"    to assign a value to a Python keyword.\n"
-"    This is not allowed.\n"
-"\n"
-msgstr ""
-
-#: specific_info.py:188
-msgid ""
-"    My best guess: you wrote something like\n"
-"        import X from Y\n"
-"    instead of\n"
-"        from Y import X\n"
-"\n"
-msgstr ""
-
-#: specific_info.py:198
-msgid ""
-"    My best guess: you meant to use Python's 'elif' keyword\n"
-"    but wrote '{name}' instead\n"
-"\n"
-msgstr ""
-
-#: specific_info.py:207
-msgid "a class"
-msgstr ""
-
-#: specific_info.py:208
-msgid ""
-"    My best guess: you wanted to define {class_}\n"
-"    but forgot to add a colon ':' at the end\n"
-"\n"
-msgstr ""
-
-#: specific_info.py:214
-msgid ""
-"    My best guess: you wrote a '{name}' loop but\n"
-"    forgot to add a colon ':' at the end\n"
-"\n"
-msgstr ""
-
-#: specific_info.py:220
-msgid ""
-"    My best guess: you wrote a statement beginning with\n"
-"    '{name}' but forgot to add a colon ':' at the end\n"
-"\n"
-msgstr ""
-
-#: specific_info.py:227
-msgid "a function or method"
-msgstr ""
-
-#: specific_info.py:228
-msgid ""
-"    My best guess: you tried to define {class_or_function}\n"
-"    and did not use the correct syntax.\n"
-"    The correct syntax is:\n"
-"        def name ( optional_arguments ):\n"
-msgstr ""
-
-#: specific_info.py:238
-msgid ""
-"    My best guess: you wrote an expression like\n"
-"        {name} = something\n"
-"    where <{name}>, on the left hand-side of the equal sign, is\n"
-"    an actual number or string (what Python calls a 'literal'),\n"
-"    and not the name of a variable.  Perhaps you meant to write:\n"
-"        something = {name}\n"
-"\n"
-msgstr ""
-
-#: specific_info.py:248
-msgid ""
-"    Currently, we cannot guess the likely cause of this error.\n"
-"\n"
-"    Try to examine closely the line indicated as well as the line\n"
-"    immediately above to see if you can identify some misspelled\n"
-"    word, or missing symbols, like (, ), [, ], :, etc.\n"
-"\n"
-msgstr ""
-
-#: traceback_info.py:131
+#: info_traceback.py:131
 msgid ""
 "        Unfortunately, no additional information is available:\n"
 "        the content of file '<string>' is not accessible.\n"
 msgstr ""
 
-#: traceback_info.py:153
+#: info_traceback.py:153
 msgid ""
 "    Python exception: \n"
 "        {name}: {value}\n"
 msgstr ""
 
-#: traceback_info.py:207
+#: info_traceback.py:207
 msgid ""
 "    Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: traceback_info.py:214
+#: info_traceback.py:214
 msgid ""
 "    Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr ""

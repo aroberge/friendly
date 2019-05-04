@@ -5,7 +5,6 @@ from io import StringIO
 
 CONTEXT = 4
 CONSOLE_SOURCE = {}
-CONSOLE_NAME = "<Friendly console>"
 
 
 class Token:

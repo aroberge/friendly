@@ -28,9 +28,16 @@ all_imports = {
     "LookupError": ("test_lookup_error", "test_lookup_error"),
     "IndexError - short tuple": ("test_index_error", "test_index_error1"),
     "IndexError - long list": ("test_index_error", "test_index_error2"),
-    "ModuleNotFoundError": ("test_module_not_found_error", "test_module_not_found_error"),
+    "ModuleNotFoundError": (
+        "test_module_not_found_error",
+        "test_module_not_found_error",
+    ),
     "NameError": ("test_name_error", "test_name_error"),
     "TabError": "syntax.raise_tab_error",
+    "TypeError - 1: concatenate two different types": (
+        "test_type_error",
+        "test_type_error1",
+    ),
     "UnboundLocalError": ("test_unbound_local_error", "test_unbound_local_error"),
     "Unknown exception": ("test_unknown_error", "test_unknown_error"),
     "ZeroDivisionError - 1": ("test_zero_division_error", "test_zero_division_error"),

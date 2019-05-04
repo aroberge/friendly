@@ -1,6 +1,6 @@
 """info_specific.py
 
-Attempts to provide some specific information about the cause
+Attempts to provide some specific information about the likely cause
 of a given exception.
 """
 import os
@@ -8,7 +8,8 @@ import os
 
 from . import utils
 from .my_gettext import current_lang
-from .analyze_syntax import find_likely_cause
+from . import analyze_syntax
+from . import analyze_type_error
 
 
 def import_error(etype, value):
@@ -119,8 +120,8 @@ def syntax_error(etype, value):
     ).format(filename=filename, source=partial_source)
 
     source = utils.get_source(filepath)
-    cause = find_likely_cause(source, linenumber, message, offset)
-    this_case = syntax_error_causes(cause)
+    cause = analyze_syntax.find_likely_cause(source, linenumber, message, offset)
+    this_case = analyze_syntax.expand_cause(cause)
 
     return info + this_case
 
@@ -140,6 +141,10 @@ def tab_error(etype, value):
     ).format(filename=filename, source=source)
 
 
+def type_error(etype, value):
+    return analyze_type_error.convert_message(str(value))
+
+
 def unbound_local_error(etype, value):
     _ = current_lang.lang
     # str(value) is expected to be something like
@@ -149,9 +154,9 @@ def unbound_local_error(etype, value):
     # By splitting value using ', we can extract the variable name.
     return _(
         "        The variable that appears to cause the problem is '{var_name}'.\n"
-        "        Try inserting the statement\n"
+        "        Perhaps the statement\n"
         "            global {var_name}\n"
-        "        as the first line inside your function.\n"
+        "        should have been included as the first line inside your function.\n"
     ).format(var_name=str(value).split("'")[1])
 
 
@@ -168,88 +173,7 @@ get_cause = {
     "NameError": name_error,
     "SyntaxError": syntax_error,
     "TabError": tab_error,
+    "TypeError": type_error,
     "UnboundLocalError": unbound_local_error,
     "ZeroDivisionError": zero_division_error,
 }
-
-
-def syntax_error_causes(cause):
-    _ = current_lang.lang
-
-    if cause == "Assigning to Python keyword":
-        return _(
-            "    My best guess: you were trying\n"
-            "    to assign a value to a Python keyword.\n"
-            "    This is not allowed.\n"
-            "\n"
-        )
-
-    if cause == "import X from Y":
-        return _(
-            "    My best guess: you wrote something like\n"
-            "        import X from Y\n"
-            "    instead of\n"
-            "        from Y import X\n"
-            "\n"
-        )
-
-    if cause.startswith("elif not"):
-        cause = cause.replace("elif not ", "")
-        return _(
-            "    My best guess: you meant to use Python's 'elif' keyword\n"
-            "    but wrote '{name}' instead\n"
-            "\n"
-        ).format(name=cause)
-
-    if cause.endswith("missing colon"):
-        name = cause.split(" ")[0]
-        if name == "class":
-            name = _("a class")
-            return _(
-                "    My best guess: you wanted to define {class_}\n"
-                "    but forgot to add a colon ':' at the end\n"
-                "\n"
-            ).format(class_=name)
-        elif name in ["for", "while"]:
-            return _(
-                "    My best guess: you wrote a '{name}' loop but\n"
-                "    forgot to add a colon ':' at the end\n"
-                "\n"
-            ).format(name=name)
-        else:
-            return _(
-                "    My best guess: you wrote a statement beginning with\n"
-                "    '{name}' but forgot to add a colon ':' at the end\n"
-                "\n"
-            ).format(name=name)
-
-    if cause == "malformed def":
-        name = _("a function or method")
-        return _(
-            "    My best guess: you tried to define {class_or_function}\n"
-            "    and did not use the correct syntax.\n"
-            "    The correct syntax is:\n"
-            "        def name ( optional_arguments ):"
-            "\n"
-        ).format(class_or_function=name)
-
-    if cause.startswith("can't assign to literal"):
-        name = cause.replace("can't assign to literal", "").strip()
-        return _(
-            "    My best guess: you wrote an expression like\n"
-            "        {name} = something\n"
-            "    where <{name}>, on the left hand-side of the equal sign, is\n"
-            "    an actual number or string (what Python calls a 'literal'),\n"
-            "    and not the name of a variable.  Perhaps you meant to write:\n"
-            "        something = {name}\n"
-            "\n"
-        ).format(name=name)
-
-    return _(
-        "    Currently, we cannot guess the likely cause of this error.\n"
-        "\n"
-        "    Try to examine closely the line indicated as well as the line\n"
-        "    immediately above to see if you can identify some misspelled\n"
-        "    word, or missing symbols, like (, ), [, ], :, etc.\n"
-        "\n"
-    )

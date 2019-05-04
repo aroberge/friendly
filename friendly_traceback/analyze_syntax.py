@@ -3,14 +3,10 @@
 Attempts to find the most likely cause of a SyntaxError.
 """
 
-# Note: we do not attempt to translate strings here,
-# so that we could more easily write targeted unit tests.
-# However, note that we have not created
-# separate unit tests yet.
-
 import keyword
 import tokenize
 
+from .my_gettext import current_lang
 from .utils import collect_tokens
 
 possible_causes = []
@@ -159,3 +155,91 @@ def malformed_def(tokens):
         return "malformed def"
 
     return False
+
+
+# ======================
+# Proper text conversion
+# ======================
+
+
+def expand_cause(cause):
+    """Returns a written explanation given an abbreviated form"""
+    _ = current_lang.lang
+
+    if cause == "Assigning to Python keyword":
+        return _(
+            "    My best guess: you were trying\n"
+            "    to assign a value to a Python keyword.\n"
+            "    This is not allowed.\n"
+            "\n"
+        )
+
+    if cause == "import X from Y":
+        return _(
+            "    My best guess: you wrote something like\n"
+            "        import X from Y\n"
+            "    instead of\n"
+            "        from Y import X\n"
+            "\n"
+        )
+
+    if cause.startswith("elif not"):
+        cause = cause.replace("elif not ", "")
+        return _(
+            "    My best guess: you meant to use Python's 'elif' keyword\n"
+            "    but wrote '{name}' instead\n"
+            "\n"
+        ).format(name=cause)
+
+    if cause.endswith("missing colon"):
+        name = cause.split(" ")[0]
+        if name == "class":
+            name = _("a class")
+            return _(
+                "    My best guess: you wanted to define {class_}\n"
+                "    but forgot to add a colon ':' at the end\n"
+                "\n"
+            ).format(class_=name)
+        elif name in ["for", "while"]:
+            return _(
+                "    My best guess: you wrote a '{name}' loop but\n"
+                "    forgot to add a colon ':' at the end\n"
+                "\n"
+            ).format(name=name)
+        else:
+            return _(
+                "    My best guess: you wrote a statement beginning with\n"
+                "    '{name}' but forgot to add a colon ':' at the end\n"
+                "\n"
+            ).format(name=name)
+
+    if cause == "malformed def":
+        name = _("a function or method")
+        return _(
+            "    My best guess: you tried to define {class_or_function}\n"
+            "    and did not use the correct syntax.\n"
+            "    The correct syntax is:\n"
+            "        def name ( optional_arguments ):"
+            "\n"
+        ).format(class_or_function=name)
+
+    if cause.startswith("can't assign to literal"):
+        name = cause.replace("can't assign to literal", "").strip()
+        return _(
+            "    My best guess: you wrote an expression like\n"
+            "        {name} = something\n"
+            "    where <{name}>, on the left hand-side of the equal sign, is\n"
+            "    an actual number or string (what Python calls a 'literal'),\n"
+            "    and not the name of a variable.  Perhaps you meant to write:\n"
+            "        something = {name}\n"
+            "\n"
+        ).format(name=name)
+
+    return _(
+        "    Currently, we cannot guess the likely cause of this error.\n"
+        "\n"
+        "    Try to examine closely the line indicated as well as the line\n"
+        "    immediately above to see if you can identify some misspelled\n"
+        "    word, or missing symbols, like (, ), [, ], :, etc.\n"
+        "\n"
+    )
