@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-05-04 08:50-0300\n"
+"POT-Creation-Date: 2019-05-04 16:58-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,6 +90,8 @@ msgstr ""
 #: analyze_syntax.py:238
 msgid ""
 "    Currently, we cannot guess the likely cause of this error.\n"
+"    You might want to report this case to\n"
+"    https://github.com/aroberge/friendly-traceback/issues\n"
 "\n"
 "    Try to examine closely the line indicated as well as the line\n"
 "    immediately above to see if you can identify some misspelled\n"
@@ -97,33 +99,75 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_type_error.py:36
-msgid "a dictionary ('dict')"
-msgstr ""
-
-#: analyze_type_error.py:38
-msgid "an integer ('int')"
+#: analyze_type_error.py:31
+msgid ""
+"        I do not recognize this case. Please report it to\n"
+"        https://github.com/aroberge/friendly-traceback/issues\n"
 msgstr ""
 
 #: analyze_type_error.py:40
-msgid "a list"
+msgid "a complex number"
 msgstr ""
 
 #: analyze_type_error.py:42
-msgid "a set"
+msgid "a dictionary ('dict')"
 msgstr ""
 
 #: analyze_type_error.py:44
-msgid "a string ('str')"
+msgid "a number ('float')"
 msgstr ""
 
 #: analyze_type_error.py:46
+msgid "an integer ('int')"
+msgstr ""
+
+#: analyze_type_error.py:48
+msgid "a list"
+msgstr ""
+
+#: analyze_type_error.py:50
+msgid "a variable equal to None ('NoneType')"
+msgstr ""
+
+#: analyze_type_error.py:52
+msgid "a set"
+msgstr ""
+
+#: analyze_type_error.py:54
+msgid "a string ('str')"
+msgstr ""
+
+#: analyze_type_error.py:56
 msgid "a tuple"
 msgstr ""
 
-#: analyze_type_error.py:62
+#: analyze_type_error.py:72
 msgid ""
 "        You tried to concatenate (add) two different types of objects:\n"
+"        {first} and {second}\n"
+msgstr ""
+
+#: analyze_type_error.py:97
+msgid ""
+"        You tried to add two incompatible types of objects:\n"
+"        {first} and {second}\n"
+msgstr ""
+
+#: analyze_type_error.py:104
+msgid ""
+"        You tried to subtract two incompatible types of objects:\n"
+"        {first} and {second}\n"
+msgstr ""
+
+#: analyze_type_error.py:111
+msgid ""
+"        You tried to multiply two incompatible types of objects:\n"
+"        {first} and {second}\n"
+msgstr ""
+
+#: analyze_type_error.py:118
+msgid ""
+"        You tried to divide two incompatible types of objects:\n"
 "        {first} and {second}\n"
 msgstr ""
 

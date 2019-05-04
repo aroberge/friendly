@@ -237,6 +237,8 @@ def expand_cause(cause):
 
     return _(
         "    Currently, we cannot guess the likely cause of this error.\n"
+        "    You might want to report this case to\n"
+        "    https://github.com/aroberge/friendly-traceback/issues\n"
         "\n"
         "    Try to examine closely the line indicated as well as the line\n"
         "    immediately above to see if you can identify some misspelled\n"

@@ -38,6 +38,22 @@ all_imports = {
         "test_type_error",
         "test_type_error1",
     ),
+    "TypeError - 2: unsupported operand type(s) for +": (
+        "test_type_error",
+        "test_type_error2",
+    ),
+    "TypeError - 3: unsupported operand type(s) for -": (
+        "test_type_error",
+        "test_type_error3",
+    ),
+    "TypeError - 4: unsupported operand type(s) for *": (
+        "test_type_error",
+        "test_type_error4",
+    ),
+    "TypeError - 5: unsupported operand type(s) for /": (
+        "test_type_error",
+        "test_type_error5",
+    ),
     "UnboundLocalError": ("test_unbound_local_error", "test_unbound_local_error"),
     "Unknown exception": ("test_unknown_error", "test_unknown_error"),
     "ZeroDivisionError - 1": ("test_zero_division_error", "test_zero_division_error"),

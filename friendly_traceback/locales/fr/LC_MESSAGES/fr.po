@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-04 08:50-0300\n"
-"PO-Revision-Date: 2019-05-04 08:55-0300\n"
+"POT-Creation-Date: 2019-05-04 16:58-0300\n"
+"PO-Revision-Date: 2019-05-04 17:21-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -127,6 +127,8 @@ msgstr ""
 #: analyze_syntax.py:238
 msgid ""
 "    Currently, we cannot guess the likely cause of this error.\n"
+"    You might want to report this case to\n"
+"    https://github.com/aroberge/friendly-traceback/issues\n"
 "\n"
 "    Try to examine closely the line indicated as well as the line\n"
 "    immediately above to see if you can identify some misspelled\n"
@@ -135,6 +137,8 @@ msgid ""
 msgstr ""
 "    Présentement, nous ne pouvons pas deviner la cause probable de cette "
 "erreur.\n"
+"    Vous pouvez indiquer que c'est le cas au site suivant:\n"
+"    https://github.com/aroberge/friendly-traceback/issues\n"
 "\n"
 "    Essayez d’examiner attentivement la ligne indiquée ainsi que celle\n"
 "    immédiatement au dessus pour voir si vous pouvez identifier\n"
@@ -142,37 +146,87 @@ msgstr ""
 "etc.\n"
 "\n"
 
-#: analyze_type_error.py:36
+#: analyze_type_error.py:31
+msgid ""
+"        I do not recognize this case. Please report it to\n"
+"        https://github.com/aroberge/friendly-traceback/issues\n"
+msgstr ""
+
+#: analyze_type_error.py:40
+msgid "a complex number"
+msgstr "un nombre complexe ('complex')"
+
+#: analyze_type_error.py:42
 msgid "a dictionary ('dict')"
 msgstr "un dictionnaire ('dict')"
 
-#: analyze_type_error.py:38
+#: analyze_type_error.py:44
+msgid "a number ('float')"
+msgstr "un nombre ('float')"
+
+#: analyze_type_error.py:46
 msgid "an integer ('int')"
 msgstr "un entier ('int')"
 
-#: analyze_type_error.py:40
+#: analyze_type_error.py:48
 msgid "a list"
 msgstr "une liste ('list')"
 
-#: analyze_type_error.py:42
+#: analyze_type_error.py:50
+msgid "a variable equal to None ('NoneType')"
+msgstr "une variable de valeur 'None' ('NoteType')"
+
+#: analyze_type_error.py:52
 msgid "a set"
 msgstr "un ensemble ('set')"
 
-#: analyze_type_error.py:44
+#: analyze_type_error.py:54
 msgid "a string ('str')"
 msgstr "une chaîne ('str')"
 
-#: analyze_type_error.py:46
+#: analyze_type_error.py:56
 msgid "a tuple"
 msgstr "un tuple"
 
-#: analyze_type_error.py:62
+#: analyze_type_error.py:72
 msgid ""
 "        You tried to concatenate (add) two different types of objects:\n"
 "        {first} and {second}\n"
 msgstr ""
 "        Vous avez essayé de concaténer (additionner) deux types d’objets "
 "différents:\n"
+"        {first} et {second}\n"
+
+#: analyze_type_error.py:97
+msgid ""
+"        You tried to add two incompatible types of objects:\n"
+"        {first} and {second}\n"
+msgstr ""
+"        Vous avez essayé d’additionner deux types d’objets incompatibles:\n"
+"        {first} et {second}\n"
+
+#: analyze_type_error.py:104
+msgid ""
+"        You tried to subtract two incompatible types of objects:\n"
+"        {first} and {second}\n"
+msgstr ""
+"        Vous avez tenté de soustraire deux types d’objets incompatibles:\n"
+"        {first} et {second}\n"
+
+#: analyze_type_error.py:111
+msgid ""
+"        You tried to multiply two incompatible types of objects:\n"
+"        {first} and {second}\n"
+msgstr ""
+"        Vous avez essayé de multiplier deux types d’objets différents:\n"
+"        {first} et {second}\n"
+
+#: analyze_type_error.py:118
+msgid ""
+"        You tried to divide two incompatible types of objects:\n"
+"        {first} and {second}\n"
+msgstr ""
+"        Vous avez essayé de diviser deux types d’objets différents:\n"
 "        {first} et {second}\n"
 
 #: info_generic.py:12
