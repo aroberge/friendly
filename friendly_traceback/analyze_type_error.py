@@ -93,32 +93,85 @@ def parse_unsupported_operand_type(text):
     cause = None
     if match is not None:
         operator = match.group(1)
-        if operator == "+":
+        if operator in ["+", "+="]:
             cause = _(
                 "        You tried to add two incompatible types of objects:\n"
                 "        {first} and {second}\n"
             ).format(
                 first=convert_type(match.group(2)), second=convert_type(match.group(3))
             )
-        elif operator == "-":
+        elif operator in ["-", "-="]:
             cause = _(
                 "        You tried to subtract two incompatible types of objects:\n"
                 "        {first} and {second}\n"
             ).format(
                 first=convert_type(match.group(2)), second=convert_type(match.group(3))
             )
-        elif operator == "*":
+        elif operator in ["*", "*="]:
             cause = _(
                 "        You tried to multiply two incompatible types of objects:\n"
                 "        {first} and {second}\n"
             ).format(
                 first=convert_type(match.group(2)), second=convert_type(match.group(3))
             )
-        elif operator == "/":
+        elif operator in ["/", "//", "/=", "//="]:
             cause = _(
                 "        You tried to divide two incompatible types of objects:\n"
                 "        {first} and {second}\n"
             ).format(
                 first=convert_type(match.group(2)), second=convert_type(match.group(3))
             )
+        elif operator in ["&", "|", "^"]:
+            cause = _(
+                "        You tried to perform the bitwise operation {operator}\n"
+                "        on two incompatible types of objects:\n"
+                "        {first} and {second}\n"
+            ).format(
+                operator=operator,
+                first=convert_type(match.group(2)),
+                second=convert_type(match.group(3)),
+            )
+        elif operator in [">>", "<<"]:
+            cause = _(
+                "        You tried to perform the bit shifting operation {operator}\n"
+                "        on two incompatible types of objects:\n"
+                "        {first} and {second}\n"
+            ).format(
+                operator=operator,
+                first=convert_type(match.group(2)),
+                second=convert_type(match.group(3)),
+            )
+        elif operator == "** or pow()":
+            cause = _(
+                "        You tried to exponentiate (raise to a power)\n"
+                "        using two incompatible types of objects:\n"
+                "        {first} and {second}\n"
+            ).format(
+                first=convert_type(match.group(2)), second=convert_type(match.group(3))
+            )
     return cause
+
+
+# example: '<' not supported between instances of 'int' and 'str'
+order_comparison_pattern = re.compile(
+    r"[\'\"](.+)[\'\"] not supported between instances of [\'\"](\w+)[\'\"] and [\'\"](\w+)[\'\"]"  # noqa
+)
+
+
+@add_cause
+def parse_order_comparison(text):
+    _ = current_lang.lang
+    match = re.search(order_comparison_pattern, text)
+    if match is not None:
+        cause = _(
+            "        You tried to do an order comparison ({operator})\n"
+            "        between two incompatible types of objects:\n"
+            "        {first} and {second}\n"
+        ).format(
+            operator=match.group(1),
+            first=convert_type(match.group(2)),
+            second=convert_type(match.group(3)),
+        )
+        return cause
+    else:
+        return None

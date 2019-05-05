@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-05-04 16:58-0300\n"
+"POT-Creation-Date: 2019-05-05 08:55-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -168,6 +168,34 @@ msgstr ""
 #: analyze_type_error.py:118
 msgid ""
 "        You tried to divide two incompatible types of objects:\n"
+"        {first} and {second}\n"
+msgstr ""
+
+#: analyze_type_error.py:125
+msgid ""
+"        You tried to perform the bitwise operation {operator}\n"
+"        on two incompatible types of objects:\n"
+"        {first} and {second}\n"
+msgstr ""
+
+#: analyze_type_error.py:135
+msgid ""
+"        You tried to perform the bit shifting operation {operator}\n"
+"        on two incompatible types of objects:\n"
+"        {first} and {second}\n"
+msgstr ""
+
+#: analyze_type_error.py:145
+msgid ""
+"        You tried to exponentiate (raise to a power)\n"
+"        using two incompatible types of objects:\n"
+"        {first} and {second}\n"
+msgstr ""
+
+#: analyze_type_error.py:166
+msgid ""
+"        You tried to do an order comparison ({operator})\n"
+"        between two incompatible types of objects:\n"
 "        {first} and {second}\n"
 msgstr ""
 

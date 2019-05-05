@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-04 16:58-0300\n"
-"PO-Revision-Date: 2019-05-04 17:21-0300\n"
+"POT-Creation-Date: 2019-05-05 08:55-0300\n"
+"PO-Revision-Date: 2019-05-05 09:00-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -182,7 +182,7 @@ msgstr "un ensemble ('set')"
 
 #: analyze_type_error.py:54
 msgid "a string ('str')"
-msgstr "une chaîne ('str')"
+msgstr "une chaîne de caractères ('str')"
 
 #: analyze_type_error.py:56
 msgid "a tuple"
@@ -227,6 +227,47 @@ msgid ""
 "        {first} and {second}\n"
 msgstr ""
 "        Vous avez essayé de diviser deux types d’objets différents:\n"
+"        {first} et {second}\n"
+
+#: analyze_type_error.py:125
+msgid ""
+"        You tried to perform the bitwise operation {operator}\n"
+"        on two incompatible types of objects:\n"
+"        {first} and {second}\n"
+msgstr ""
+"        Vous avez essayé d’effectuer l’opération binaire bit à bit "
+"{operator}\n"
+"        sur deux types d’objets incompatibles:\n"
+"        {first} et {second}\n"
+
+#: analyze_type_error.py:135
+msgid ""
+"        You tried to perform the bit shifting operation {operator}\n"
+"        on two incompatible types of objects:\n"
+"        {first} and {second}\n"
+msgstr ""
+"        Vous avez essayé d’effectuer l’opération de décalage {operator}\n"
+"        sur deux types d’objets incompatibles:\n"
+"        {first} et {second}\n"
+
+#: analyze_type_error.py:145
+msgid ""
+"        You tried to exponentiate (raise to a power)\n"
+"        using two incompatible types of objects:\n"
+"        {first} and {second}\n"
+msgstr ""
+"        Vous avez essayé d'élever à une puissance\n"
+"        en utilisant deux types d’objets incompatibles:\n"
+"        {first} et {second}\n"
+
+#: analyze_type_error.py:166
+msgid ""
+"        You tried to do an order comparison ({operator})\n"
+"        between two incompatible types of objects:\n"
+"        {first} and {second}\n"
+msgstr ""
+"        En utilisant {operator}, vous avez tenté de comparer\n"
+"        deux types d’objets incompatibles:\n"
 "        {first} et {second}\n"
 
 #: info_generic.py:12
