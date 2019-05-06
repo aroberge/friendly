@@ -23,10 +23,8 @@ def make_title(text):
 
 all_imports = {
     "ImportError": ("test_import_error", "test_import_error"),
-    "TypeError - 1: must be str, not int": (
-        "test_type_error",
-        "test_type_error1",
-    ),
+    "TypeError - 1: must be str, not int": ("test_type_error", "test_type_error1"),
+    "TypeError - 1a: must be str, not list": ("test_type_error", "test_type_error1a"),
 }
 
 

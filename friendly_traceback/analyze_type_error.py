@@ -80,17 +80,20 @@ def parse_can_only_concatenate(text):
 
 
 # python 3.6 version: must be str, not int
+# example: can only concatenate str (not "int") to str
+must_be_str_pattern = re.compile(r"must be str, not (\w+)")
 
 
 @add_cause
 def parse_must_be_str(text):
     _ = current_lang.lang
+    match = re.search(must_be_str_pattern, text)
     cause = None
-    if text == "must be str, not int":
+    if match is not None:
         cause = _(
             "        You tried to concatenate (add) two different types of objects:\n"
             "        {first} and {second}\n"
-        ).format(first=convert_type("str"), second=convert_type("int"))
+        ).format(first=convert_type("str"), second=convert_type(match.group(1)))
     return cause
 
 

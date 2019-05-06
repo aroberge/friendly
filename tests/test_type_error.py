@@ -4,15 +4,41 @@ import sys
 
 def test_type_error1():
     try:
-        a = 'a'
+        a = "a"
         one = 1
         result = a + one
     except Exception:
         friendly_traceback.explain(*sys.exc_info(), redirect="capture")
     result = friendly_traceback.get_output()
-    py37 = "TypeError: can only concatenate str" in result
+    py37 = "TypeError: can only concatenate" in result
     py36 = "must be str, not int" in result
     assert py37 or py36
+    return result
+
+
+def test_type_error1a():
+    try:
+        a = "a"
+        a_list = [1, 2, 3]
+        result = a + a_list
+    except Exception:
+        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+    result = friendly_traceback.get_output()
+    py37 = "TypeError: can only concatenate" in result
+    py36 = "must be str, not list" in result
+    assert py37 or py36
+    return result
+
+
+def test_type_error1b():
+    try:
+        a_tuple = (1, 2, 3)
+        a_list = [1, 2, 3]
+        result = a_tuple + a_list
+    except Exception:
+        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "TypeError: can only concatenate" in result
     return result
 
 
@@ -138,7 +164,7 @@ def test_type_error5d():
 
 def test_type_error6():
     try:
-        a = 'a'
+        a = "a"
         b = 2
         result = a & b
     except Exception:
@@ -150,7 +176,7 @@ def test_type_error6():
 
 def test_type_error6a():
     try:
-        a = 'a'
+        a = "a"
         b = 2
         a &= b
     except Exception:
@@ -186,7 +212,7 @@ def test_type_error7a():
 
 def test_type_error8():
     try:
-        a = 'a'
+        a = "a"
         b = 42
         result = a >> b
     except Exception:
@@ -198,7 +224,7 @@ def test_type_error8():
 
 def test_type_error8a():
     try:
-        a = 'a'
+        a = "a"
         b = 42
         a >>= b
     except Exception:
@@ -210,7 +236,7 @@ def test_type_error8a():
 
 def test_type_error9():
     try:
-        a = 'a'
+        a = "a"
         b = 2
         result = a @ b
     except Exception:
@@ -222,7 +248,7 @@ def test_type_error9():
 
 def test_type_error9a():
     try:
-        a = 'a'
+        a = "a"
         b = 2
         a @= b
     except Exception:
@@ -234,7 +260,7 @@ def test_type_error9a():
 
 def test_type_error10():
     try:
-        a = 'a'
+        a = "a"
         b = 42
         b < a
     except Exception:
@@ -245,4 +271,4 @@ def test_type_error10():
 
 
 if __name__ == "__main__":
-    print(test_type_error1())
+    print(test_type_error1a())

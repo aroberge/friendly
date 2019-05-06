@@ -38,6 +38,14 @@ all_imports = {
         "test_type_error",
         "test_type_error1",
     ),
+    "TypeError - 1a: concatenate two different types": (
+        "test_type_error",
+        "test_type_error1a",
+    ),
+    "TypeError - 1b: concatenate two different types": (
+        "test_type_error",
+        "test_type_error1b",
+    ),
     "TypeError - 2: unsupported operand type(s) for +": (
         "test_type_error",
         "test_type_error2",
