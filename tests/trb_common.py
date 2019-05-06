@@ -42,7 +42,7 @@ all_imports = {
         "test_type_error",
         "test_type_error2",
     ),
-    "TypeError - 2a: augmented assignment [more examples possible]": (
+    "TypeError - 2a: unsupported operand type(s) for +=": (
         "test_type_error",
         "test_type_error2a",
     ),
@@ -50,31 +50,67 @@ all_imports = {
         "test_type_error",
         "test_type_error3",
     ),
+    "TypeError - 3a: unsupported operand type(s) for -=": (
+        "test_type_error",
+        "test_type_error3a",
+    ),
     "TypeError - 4: unsupported operand type(s) for *": (
         "test_type_error",
         "test_type_error4",
+    ),
+    "TypeError - 4a: unsupported operand type(s) for ``*=``": (
+        "test_type_error",
+        "test_type_error4a",
     ),
     "TypeError - 5: unsupported operand type(s) for /": (
         "test_type_error",
         "test_type_error5",
     ),
+    "TypeError - 5a: unsupported operand type(s) for /=": (
+        "test_type_error",
+        "test_type_error5a",
+    ),
+    "TypeError - 5b: unsupported operand type(s) for //": (
+        "test_type_error",
+        "test_type_error5b",
+    ),
+    "TypeError - 5c: unsupported operand type(s) for //=": (
+        "test_type_error",
+        "test_type_error5c",
+    ),
     "TypeError - 6: unsupported operand type(s) for &": (
         "test_type_error",
         "test_type_error6",
+    ),
+    "TypeError - 6a: unsupported operand type(s) for &=": (
+        "test_type_error",
+        "test_type_error6a",
     ),
     "TypeError - 7: unsupported operand type(s) for **": (
         "test_type_error",
         "test_type_error7",
     ),
+    "TypeError - 7a: unsupported operand type(s) for ``**=``": (
+        "test_type_error",
+        "test_type_error7a",
+    ),
     "TypeError - 8: unsupported operand type(s) for >>": (
         "test_type_error",
         "test_type_error8",
     ),
-    "TypeError - 9: comparison between incompatible types": (
+    "TypeError - 8a: unsupported operand type(s) for >>=": (
+        "test_type_error",
+        "test_type_error8a",
+    ),
+    "TypeError - 9: unsupported operand type(s) for @": (
         "test_type_error",
         "test_type_error9",
     ),
-    "TypeError - 10: unsupported operand type(s) for @": (
+    "TypeError - 9a: unsupported operand type(s) for @=": (
+        "test_type_error",
+        "test_type_error9a",
+    ),
+    "TypeError - 10: comparison between incompatible types": (
         "test_type_error",
         "test_type_error10",
     ),
