@@ -42,6 +42,10 @@ all_imports = {
         "test_type_error",
         "test_type_error2",
     ),
+    "TypeError - 2a: augmented assignment [more examples possible]": (
+        "test_type_error",
+        "test_type_error2a",
+    ),
     "TypeError - 3: unsupported operand type(s) for -": (
         "test_type_error",
         "test_type_error3",
@@ -69,6 +73,10 @@ all_imports = {
     "TypeError - 9: comparison between incompatible types": (
         "test_type_error",
         "test_type_error9",
+    ),
+    "TypeError - 10: unsupported operand type(s) for @": (
+        "test_type_error",
+        "test_type_error10",
     ),
     "UnboundLocalError": ("test_unbound_local_error", "test_unbound_local_error"),
     "Unknown exception": ("test_unknown_error", "test_unknown_error"),

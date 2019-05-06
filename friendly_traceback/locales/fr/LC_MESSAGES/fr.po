@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-05 08:55-0300\n"
-"PO-Revision-Date: 2019-05-05 09:00-0300\n"
+"POT-Creation-Date: 2019-05-05 21:07-0300\n"
+"PO-Revision-Date: 2019-05-05 21:09-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -151,6 +151,8 @@ msgid ""
 "        I do not recognize this case. Please report it to\n"
 "        https://github.com/aroberge/friendly-traceback/issues\n"
 msgstr ""
+"        Je ne reconnais pas ce cas. Veuillez le signaler à\n"
+"        https://github.com/aroberge/friendly-traceback/issues\n"
 
 #: analyze_type_error.py:40
 msgid "a complex number"
@@ -260,7 +262,21 @@ msgstr ""
 "        en utilisant deux types d’objets incompatibles:\n"
 "        {first} et {second}\n"
 
-#: analyze_type_error.py:166
+#: analyze_type_error.py:153
+msgid ""
+"        You tried to use the operator @\n"
+"        using two incompatible types of objects:\n"
+"        {first} and {second}.\n"
+"        This operator is normally used only\n"
+"        for multiplication of matrices.\n"
+msgstr ""
+"        Vous avez essayé d’utiliser l’opérateur @\n"
+"        à l’aide de deux types d’objets incompatibles:\n"
+"        {first} et {second}.\n"
+"        Cet opérateur est normalement utilisé uniquement\n"
+"        pour la multiplication des matrices.\n"
+
+#: analyze_type_error.py:176
 msgid ""
 "        You tried to do an order comparison ({operator})\n"
 "        between two incompatible types of objects:\n"
@@ -437,10 +453,16 @@ msgstr ""
 "UnboundLocalError.\n"
 
 #: info_generic.py:142
-msgid "    No information is known about this exception.\n"
-msgstr "    Aucune information n'est connue au sujet de cette exception.\n"
+msgid ""
+"    No information is known about this exception.\n"
+"    Please report this example to\n"
+"    https://github.com/aroberge/friendly-traceback/issues\n"
+msgstr ""
+"    Aucune information n’est connue à propos de cette exception.\n"
+"    Veuillez signaler cet exemple à\n"
+"    https://github.com/aroberge/friendly-traceback/issues\n"
 
-#: info_generic.py:147
+#: info_generic.py:151
 msgid ""
 "    A ZeroDivisionError occurs when you are attempting to divide\n"
 "    a value by zero:\n"
@@ -566,6 +588,9 @@ msgstr ""
 #: info_traceback.py:214
 msgid "    Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr "    Exception levée à la ligne du fichier '{filename}'.\n"
+
+#~ msgid "    No information is known about this exception.\n"
+#~ msgstr "    Aucune information n'est connue au sujet de cette exception.\n"
 
 #~ msgid ""
 #~ "    A SyntaxError occurs when Python cannot understand your code.\n"

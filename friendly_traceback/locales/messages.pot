@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-05-05 08:55-0300\n"
+"POT-Creation-Date: 2019-05-05 21:07-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -192,7 +192,16 @@ msgid ""
 "        {first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:166
+#: analyze_type_error.py:153
+msgid ""
+"        You tried to use the operator @\n"
+"        using two incompatible types of objects:\n"
+"        {first} and {second}.\n"
+"        This operator is normally used only\n"
+"        for multiplication of matrices.\n"
+msgstr ""
+
+#: analyze_type_error.py:176
 msgid ""
 "        You tried to do an order comparison ({operator})\n"
 "        between two incompatible types of objects:\n"
@@ -304,9 +313,11 @@ msgstr ""
 #: info_generic.py:142
 msgid ""
 "    No information is known about this exception.\n"
+"    Please report this example to\n"
+"    https://github.com/aroberge/friendly-traceback/issues\n"
 msgstr ""
 
-#: info_generic.py:147
+#: info_generic.py:151
 msgid ""
 "    A ZeroDivisionError occurs when you are attempting to divide\n"
 "    a value by zero:\n"

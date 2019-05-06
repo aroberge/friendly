@@ -139,7 +139,11 @@ def unbound_local_error(*args):
 
 def unknown(*args):
     _ = current_lang.lang
-    return _("    No information is known about this exception.\n")
+    return _(
+        "    No information is known about this exception.\n"
+        "    Please report this example to\n"
+        "    https://github.com/aroberge/friendly-traceback/issues\n"
+    )
 
 
 def zero_division_error(*args):
