@@ -16,18 +16,23 @@ def import_error(etype, value):
     _ = current_lang.lang
     # str(value) is expected to be something like
     #
-    #  ImportError: cannot import name 'X' from 'Y' ...
+    #  ImportError: cannot import name 'X' from 'Y'  | Python 3.7
+    #  ImportError: cannot import name 'X'           | Python 3.6
     #
     # By splitting value using ', we can extract the name and object
     parts = str(value).split("'")
     name = parts[1]
-    module = parts[3]
-
-    return _(
-        "        The object that could not be imported is '{name}'.\n"
-        "        The module or package where it was \n"
-        "        expected to be found is '{module}'.\n"
-    ).format(name=name, module=module)
+    if len(parts) > 3:
+        module = parts[3]
+        return _(
+            "        The object that could not be imported is '{name}'.\n"
+            "        The module or package where it was \n"
+            "        expected to be found is '{module}'.\n"
+        ).format(name=name, module=module)
+    else:
+        return _("        The object that could not be imported is '{name}'.\n").format(
+            name=name
+        )
 
 
 def indentation_error(etype, value):

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-05-05 21:07-0300\n"
+"POT-Creation-Date: 2019-05-06 07:42-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -141,58 +141,58 @@ msgstr ""
 msgid "a tuple"
 msgstr ""
 
-#: analyze_type_error.py:72
+#: analyze_type_error.py:73 analyze_type_error.py:90
 msgid ""
 "        You tried to concatenate (add) two different types of objects:\n"
 "        {first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:97
+#: analyze_type_error.py:111
 msgid ""
 "        You tried to add two incompatible types of objects:\n"
 "        {first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:104
+#: analyze_type_error.py:118
 msgid ""
 "        You tried to subtract two incompatible types of objects:\n"
 "        {first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:111
+#: analyze_type_error.py:125
 msgid ""
 "        You tried to multiply two incompatible types of objects:\n"
 "        {first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:118
+#: analyze_type_error.py:132
 msgid ""
 "        You tried to divide two incompatible types of objects:\n"
 "        {first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:125
+#: analyze_type_error.py:139
 msgid ""
 "        You tried to perform the bitwise operation {operator}\n"
 "        on two incompatible types of objects:\n"
 "        {first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:135
+#: analyze_type_error.py:149
 msgid ""
 "        You tried to perform the bit shifting operation {operator}\n"
 "        on two incompatible types of objects:\n"
 "        {first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:145
+#: analyze_type_error.py:159
 msgid ""
 "        You tried to exponentiate (raise to a power)\n"
 "        using two incompatible types of objects:\n"
 "        {first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:153
+#: analyze_type_error.py:167
 msgid ""
 "        You tried to use the operator @\n"
 "        using two incompatible types of objects:\n"
@@ -201,7 +201,7 @@ msgid ""
 "        for multiplication of matrices.\n"
 msgstr ""
 
-#: analyze_type_error.py:176
+#: analyze_type_error.py:190
 msgid ""
 "        You tried to do an order comparison ({operator})\n"
 "        between two incompatible types of objects:\n"
@@ -223,7 +223,7 @@ msgid ""
 "    because the name of the object is not spelled correctly.\n"
 msgstr ""
 
-#: info_generic.py:36 info_specific.py:115 info_specific.py:136
+#: info_generic.py:36 info_specific.py:120 info_specific.py:141
 msgid ""
 "    Python could not parse the file '{filename}'\n"
 "    beyond the location indicated below by --> and ^.\n"
@@ -327,67 +327,72 @@ msgid ""
 "        result = my_variable % 0\n"
 msgstr ""
 
-#: info_specific.py:26
+#: info_specific.py:27
 msgid ""
 "        The object that could not be imported is '{name}'.\n"
 "        The module or package where it was \n"
 "        expected to be found is '{module}'.\n"
 msgstr ""
 
-#: info_specific.py:38
+#: info_specific.py:33
+msgid ""
+"        The object that could not be imported is '{name}'.\n"
+msgstr ""
+
+#: info_specific.py:43
 msgid ""
 "        In this case, the line identified above\n"
 "        is more indented than expected and \n"
 "        does not match the indentation of the previous line.\n"
 msgstr ""
 
-#: info_specific.py:44
+#: info_specific.py:49
 msgid ""
 "        In this case, the line identified above\n"
 "        was expected to begin a new indented block.\n"
 msgstr ""
 
-#: info_specific.py:49
+#: info_specific.py:54
 msgid ""
 "        In this case, the line identified above is\n"
 "        less indented than the preceding one,\n"
 "        and is not aligned vertically with another block of code.\n"
 msgstr ""
 
-#: info_specific.py:54 info_traceback.py:181
+#: info_specific.py:59 info_traceback.py:181
 msgid ""
 "    Likely cause:\n"
 "{cause}"
 msgstr ""
 
-#: info_specific.py:61
+#: info_specific.py:66
 msgid ""
 "        In this case, the sequence is a list.\n"
 msgstr ""
 
-#: info_specific.py:63
+#: info_specific.py:68
 msgid ""
 "        In this case, the sequence is a tuple.\n"
 msgstr ""
 
-#: info_specific.py:76
+#: info_specific.py:81
 msgid ""
 "        In your program, the name of the key\n"
 "        that cannot be found is '{key_name}'.\n"
 msgstr ""
 
-#: info_specific.py:89
+#: info_specific.py:94
 msgid ""
 "        In your program, the name of the\n"
 "        module that cannot be found is '{mod_name}'.\n"
 msgstr ""
 
-#: info_specific.py:102
+#: info_specific.py:107
 msgid ""
 "        In your program, the unknown name is '{var_name}'.\n"
 msgstr ""
 
-#: info_specific.py:155
+#: info_specific.py:160
 msgid ""
 "        The variable that appears to cause the problem is '{var_name}'.\n"
 "        Perhaps the statement\n"

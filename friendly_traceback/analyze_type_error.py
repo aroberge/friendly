@@ -68,6 +68,7 @@ can_only_concatenate_pattern = re.compile(
 def parse_can_only_concatenate(text):
     _ = current_lang.lang
     match = re.search(can_only_concatenate_pattern, text)
+    cause = None
     if match is not None:
         cause = _(
             "        You tried to concatenate (add) two different types of objects:\n"
@@ -75,9 +76,22 @@ def parse_can_only_concatenate(text):
         ).format(
             first=convert_type(match.group(1)), second=convert_type(match.group(2))
         )
-        return cause
-    else:
-        return None
+    return cause
+
+
+# python 3.6 version: must be str, not int
+
+
+@add_cause
+def parse_must_be_str(text):
+    _ = current_lang.lang
+    cause = None
+    if text == "must be str, not int":
+        cause = _(
+            "        You tried to concatenate (add) two different types of objects:\n"
+            "        {first} and {second}\n"
+        ).format(first=convert_type("str"), second=convert_type("int"))
+    return cause
 
 
 # example: unsupported operand type(s) for +: 'int' and 'str'
