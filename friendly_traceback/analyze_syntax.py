@@ -35,8 +35,11 @@ def find_likely_cause(source, linenumber, message, offset):
 
     # If Python includes a descriptive enough message, we rely
     # on the information that it provides.
-    if message == "can't assign to literal":
-        return assign_to_literal(message, line)
+    if (
+        message == "can't assign to literal"  # Python 3.6, 3.7
+        or message == "cannot assign to literal"  # Python 3.8
+    ):
+        return assign_to_literal(line)
 
     # If not, we guess based on the content of the last line of code
     # Note: we will need to do more than this to catch other types
@@ -44,9 +47,9 @@ def find_likely_cause(source, linenumber, message, offset):
     return analyze_last_line(line)
 
 
-def assign_to_literal(message, line):
+def assign_to_literal(line):
     variable = line.split("=")[0].strip()
-    return message + " %s" % variable
+    return "assign to literal %s" % variable
 
 
 def analyze_last_line(line):
@@ -223,8 +226,8 @@ def expand_cause(cause):
             "\n"
         ).format(class_or_function=name)
 
-    if cause.startswith("can't assign to literal"):
-        name = cause.replace("can't assign to literal", "").strip()
+    if cause.startswith("assign to literal"):
+        name = cause.replace("assign to literal", "").strip()
         return _(
             "    My best guess: you wrote an expression like\n"
             "        {name} = something\n"
