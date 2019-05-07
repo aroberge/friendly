@@ -69,9 +69,7 @@ def format_var_info(tok, _dict, _global=""):
         except TypeError:
             pass
 
-    result = "    {_global}{name}: {value}".format(
-        _global=_global, name=name, value=value
-    )
+    result = f"    {_global}{name}: {value}"
     if length_info:
-        result += "  | len({name}): {length}".format(name=name, length=length_info)
+        result += f"  | len({name}): {length_info}"
     return result

@@ -11,7 +11,24 @@ from .my_gettext import current_lang
 from . import analyze_syntax
 from . import analyze_type_error
 
+get_cause = {}
 
+
+def register(error_name):
+    """Decorator used to record as available an explanation for a given exception"""
+
+    def add_exception(function):
+        get_cause[error_name] = function
+
+        def wrapper(etype, value):
+            return function(etype, value)
+
+        return wrapper
+
+    return add_exception
+
+
+@register("ImportError")
 def import_error(etype, value):
     _ = current_lang.lang
     # str(value) is expected to be something like
@@ -35,6 +52,7 @@ def import_error(etype, value):
         )
 
 
+@register("IndentationError")
 def indentation_error(etype, value):
     _ = current_lang.lang
 
@@ -59,6 +77,7 @@ def indentation_error(etype, value):
     return _("    Likely cause:\n{cause}").format(cause=this_case)
 
 
+@register("IndexError")
 def index_error(etype, value):
     _ = current_lang.lang
     value = str(value)
@@ -71,6 +90,7 @@ def index_error(etype, value):
     return this_case
 
 
+@register("KeyError")
 def key_error(etype, value):
     _ = current_lang.lang
     # str(value) is expected to be something like
@@ -84,6 +104,7 @@ def key_error(etype, value):
     ).format(key_name=str(value).split("'")[1])
 
 
+@register("ModuleNotFoundError")
 def module_not_found_error(etype, value):
     _ = current_lang.lang
     # str(value) is expected to be something like
@@ -97,6 +118,7 @@ def module_not_found_error(etype, value):
     ).format(mod_name=str(value).split("'")[1])
 
 
+@register("NameError")
 def name_error(etype, value):
     _ = current_lang.lang
     # str(value) is expected to be something like
@@ -109,6 +131,7 @@ def name_error(etype, value):
     )
 
 
+@register("SyntaxError")
 def syntax_error(etype, value):
     _ = current_lang.lang
     filepath = value.filename
@@ -131,6 +154,7 @@ def syntax_error(etype, value):
     return info + this_case
 
 
+@register("TabError")
 def tab_error(etype, value):
     _ = current_lang.lang
     filename = value.filename
@@ -146,10 +170,12 @@ def tab_error(etype, value):
     ).format(filename=filename, source=source)
 
 
+@register("TypeError")
 def type_error(etype, value):
     return analyze_type_error.convert_message(str(value))
 
 
+@register("UnboundLocalError")
 def unbound_local_error(etype, value):
     _ = current_lang.lang
     # str(value) is expected to be something like
@@ -165,20 +191,6 @@ def unbound_local_error(etype, value):
     ).format(var_name=str(value).split("'")[1])
 
 
+@register("ZeroDivisionError")
 def zero_division_error(*args):
     return None
-
-
-get_cause = {
-    "ImportError": import_error,
-    "IndentationError": indentation_error,
-    "IndexError": index_error,
-    "KeyError": key_error,
-    "ModuleNotFoundError": module_not_found_error,
-    "NameError": name_error,
-    "SyntaxError": syntax_error,
-    "TabError": tab_error,
-    "TypeError": type_error,
-    "UnboundLocalError": unbound_local_error,
-    "ZeroDivisionError": zero_division_error,
-}

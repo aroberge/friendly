@@ -7,6 +7,24 @@ from .my_gettext import current_lang
 from . import utils
 
 
+generic = {}
+
+
+def register(error_name):
+    """Decorator used to record as available an explanation for a given exception"""
+
+    def add_exception(function):
+        generic[error_name] = function
+
+        def wrapper(etype, value):
+            return function(etype, value)
+
+        return wrapper
+
+    return add_exception
+
+
+@register("ArithmeticError")
 def arithmetic_error(*args):
     _ = current_lang.lang
     return _(
@@ -17,6 +35,7 @@ def arithmetic_error(*args):
     )
 
 
+@register("ImportError")
 def import_error(*args):
     _ = current_lang.lang
     return _(
@@ -26,6 +45,7 @@ def import_error(*args):
     )
 
 
+@register("IndentationError")
 def indentation_error(etype, value):
     _ = current_lang.lang
     filename = value.filename
@@ -48,6 +68,7 @@ def indentation_error(etype, value):
     )
 
 
+@register("IndexError")
 def index_error(*args):
     _ = current_lang.lang
     return _(
@@ -59,6 +80,7 @@ def index_error(*args):
     )
 
 
+@register("KeyError")
 def key_error(*args):
     _ = current_lang.lang
     return _(
@@ -67,6 +89,7 @@ def key_error(*args):
     )
 
 
+@register("LookupError")
 def lookup_error(*args):
     _ = current_lang.lang
     return _(
@@ -76,6 +99,7 @@ def lookup_error(*args):
     )
 
 
+@register("ModuleNotFoundError")
 def module_not_found_error(*args):
     _ = current_lang.lang
     return _(
@@ -86,6 +110,7 @@ def module_not_found_error(*args):
     )
 
 
+@register("NameError")
 def name_error(*args):
     _ = current_lang.lang
     return _(
@@ -97,11 +122,13 @@ def name_error(*args):
     )
 
 
+@register("SyntaxError")
 def syntax_error(*args):
     _ = current_lang.lang
     return _("    A SyntaxError occurs when Python cannot understand your code.\n")
 
 
+@register("TabError")
 def tab_error(*args):
     _ = current_lang.lang
     return _(
@@ -114,6 +141,7 @@ def tab_error(*args):
     )
 
 
+@register("TypeError")
 def type_error(*args):
     _ = current_lang.lang
     return _(
@@ -123,6 +151,7 @@ def type_error(*args):
     )
 
 
+@register("UnboundLocalError")
 def unbound_local_error(*args):
     _ = current_lang.lang
     return _(
@@ -137,6 +166,7 @@ def unbound_local_error(*args):
     )
 
 
+@register("Unknown")
 def unknown(*args):
     _ = current_lang.lang
     return _(
@@ -146,6 +176,7 @@ def unknown(*args):
     )
 
 
+@register("ZeroDivisionError")
 def zero_division_error(*args):
     _ = current_lang.lang
     return _(
@@ -156,21 +187,3 @@ def zero_division_error(*args):
         "    using the modulo operator '%'\n"
         "        result = my_variable % 0\n"
     )
-
-
-generic = {
-    "ArithmeticError": arithmetic_error,
-    "ImportError": import_error,
-    "IndentationError": indentation_error,
-    "IndexError": index_error,
-    "KeyError": key_error,
-    "LookupError": lookup_error,
-    "ModuleNotFoundError": module_not_found_error,
-    "NameError": name_error,
-    "SyntaxError": syntax_error,
-    "TabError": tab_error,
-    "TypeError": type_error,
-    "UnboundLocalError": unbound_local_error,
-    "Unknown": unknown,
-    "ZeroDivisionError": zero_division_error,
-}
