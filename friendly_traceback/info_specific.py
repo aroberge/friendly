@@ -74,7 +74,7 @@ def indentation_error(etype, value):
             "        less indented than the preceding one,\n"
             "        and is not aligned vertically with another block of code.\n"
         )
-    return _("    Likely cause:\n{cause}").format(cause=this_case)
+    return this_case
 
 
 @register("IndexError")
@@ -140,7 +140,7 @@ def syntax_error(etype, value):
     message = value.msg
     partial_source, _ignore = utils.get_partial_source(filepath, linenumber, offset)
     filename = os.path.basename(filepath)
-    info = _(
+    location_information = _(
         "    Python could not parse the file '{filename}'\n"
         "    beyond the location indicated below by --> and ^.\n"
         "\n"
@@ -151,7 +151,7 @@ def syntax_error(etype, value):
     cause = analyze_syntax.find_likely_cause(source, linenumber, message, offset)
     this_case = analyze_syntax.expand_cause(cause)
 
-    return info + this_case
+    return location_information, this_case
 
 
 @register("TabError")

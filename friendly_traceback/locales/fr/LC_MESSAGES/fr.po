@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-06 07:42-0300\n"
-"PO-Revision-Date: 2019-05-06 07:43-0300\n"
+"POT-Creation-Date: 2019-05-07 09:55-0300\n"
+"PO-Revision-Date: 2019-05-07 09:55-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -17,132 +17,131 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: analyze_syntax.py:170
+#: analyze_syntax.py:173
 msgid ""
-"    My best guess: you were trying\n"
-"    to assign a value to a Python keyword.\n"
-"    This is not allowed.\n"
+"      You were trying to assign a value to a Python keyword.\n"
+"      This is not allowed.\n"
 "\n"
 msgstr ""
-"    Ma meilleure hypothèse: vous essayiez d’assigner une valeur à un mot clé "
-"Python.\n"
-"    Ceci n’est pas permis.\n"
+"      Vous essayiez d’assigner une valeur à un mot clé Python.\n"
+"      Ceci n’est pas permis.\n"
 "\n"
 
-#: analyze_syntax.py:178
+#: analyze_syntax.py:180
 msgid ""
-"    My best guess: you wrote something like\n"
-"        import X from Y\n"
-"    instead of\n"
-"        from Y import X\n"
+"      You wrote something like\n"
+"          import X from Y\n"
+"      instead of\n"
+"          from Y import X\n"
 "\n"
 msgstr ""
-"    Ma meilleure hypothèse: vous avez écrit quelque chose comme\n"
-"        import X from Y\n"
-"    au lieu de\n"
-"        from Y import X\n"
+"      Vous avez écrit quelque chose comme\n"
+"          import X from Y\n"
+"      au lieu de\n"
+"          from Y import X\n"
 "\n"
 "\n"
 
-#: analyze_syntax.py:188
+#: analyze_syntax.py:190
 msgid ""
-"    My best guess: you meant to use Python's 'elif' keyword\n"
-"    but wrote '{name}' instead\n"
+"      You meant to use Python's 'elif' keyword\n"
+"      but wrote '{name}' instead\n"
 "\n"
 msgstr ""
-"    Ma meilleure hypothèse: vous avez écrit '{name}'\n"
-"    au lieu d'utiliser le mot-clé 'elif'.\n"
+"      Vous avez écrit '{name}'\n"
+"      au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: analyze_syntax.py:197
+#: analyze_syntax.py:199
 msgid "a class"
 msgstr "une classe"
 
-#: analyze_syntax.py:198
+#: analyze_syntax.py:200
 msgid ""
-"    My best guess: you wanted to define {class_}\n"
-"    but forgot to add a colon ':' at the end\n"
+"      You wanted to define {class_}\n"
+"      but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
-"    Ma meilleure hypothèse: vous vouliez définir {class_},\n"
-"    mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
+"      Vous vouliez définir {class_},\n"
+"      mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:204
+#: analyze_syntax.py:206
 msgid ""
-"    My best guess: you wrote a '{name}' loop but\n"
-"    forgot to add a colon ':' at the end\n"
+"      You wrote a '{name}' loop but\n"
+"      forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
-"    Ma meilleure hypothèse: vous vouliez débuter une boucle '{name}'\n"
-"    mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
+"      Vous vouliez débuter une boucle '{name}'\n"
+"      mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:210
+#: analyze_syntax.py:212
 msgid ""
-"    My best guess: you wrote a statement beginning with\n"
-"    '{name}' but forgot to add a colon ':' at the end\n"
+"      You wrote a statement beginning with\n"
+"      '{name}' but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
-"    Ma meilleure hypothèse: vous avez écrit un énoncé débutant avec\n"
-"    '{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
+"      Vous avez écrit un énoncé débutant avec\n"
+"      '{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:217
+#: analyze_syntax.py:219
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: analyze_syntax.py:218
+#: analyze_syntax.py:220
 msgid ""
-"    My best guess: you tried to define {class_or_function}\n"
-"    and did not use the correct syntax.\n"
-"    The correct syntax is:\n"
-"        def name ( optional_arguments ):\n"
+"      You tried to define {class_or_function}\n"
+"      and did not use the correct syntax.\n"
+"      The correct syntax is:\n"
+"          def name ( optional_arguments ):\n"
 msgstr ""
-"    Ma meilleure hypothèse: vous vouliez définir {class_or_function},\n"
-"    mais vous avez fait des erreurs de syntaxe.\n"
-"    La syntaxe correcte est:\n"
-"        def nom ( arguments_optionnels ) :\n"
+"      Vous vouliez définir {class_or_function},\n"
+"      mais vous avez fait des erreurs de syntaxe.\n"
+"      La syntaxe correcte est:\n"
+"          def nom ( arguments_optionnels ) :\n"
 "\n"
 
-#: analyze_syntax.py:228
+#: analyze_syntax.py:230
 msgid ""
-"    My best guess: you wrote an expression like\n"
-"        {name} = something\n"
-"    where <{name}>, on the left hand-side of the equal sign, is\n"
-"    an actual number or string (what Python calls a 'literal'),\n"
-"    and not the name of a variable.  Perhaps you meant to write:\n"
-"        something = {name}\n"
+"      You wrote an expression like\n"
+"          {name} = something\n"
+"      where <{name}>, on the left hand-side of the equal sign, is\n"
+"      an actual number or string (what Python calls a 'literal'),\n"
+"      and not the name of a variable.  Perhaps you meant to write:\n"
+"          something = {name}\n"
 "\n"
 msgstr ""
-"    Ma meilleure hypothèse: vous avez écrit une expression comme\n"
-"        {name} = variable\n"
-"    où < {name} >, sur le côté gauche du signe égal, est ce que Python\n"
-"    appelle un 'literal', c'est-à dire soit soit une chaîne de caractères ou "
-"un nombre,\n"
-"    et non le nom d’une variable. Peut-être que vous vouliez plutôt écrire:\n"
-"        variable = {name}\n"
+"      Vous avez écrit une expression comme\n"
+"          {name} = variable\n"
+"      où < {name} >, sur le côté gauche du signe égal, est ce que Python\n"
+"      appelle un 'literal', c'est-à dire soit soit une chaîne de caractères "
+"ou un nombre,\n"
+"      et non le nom d’une variable. Peut-être que vous vouliez plutôt "
+"écrire:\n"
+"          variable = {name}\n"
 "\n"
 
-#: analyze_syntax.py:238
+#: analyze_syntax.py:240
 msgid ""
-"    Currently, we cannot guess the likely cause of this error.\n"
-"    You might want to report this case to\n"
-"    https://github.com/aroberge/friendly-traceback/issues\n"
+"      Currently, we cannot guess the likely cause of this error.\n"
+"      You might want to report this case to\n"
+"      https://github.com/aroberge/friendly-traceback/issues\n"
 "\n"
-"    Try to examine closely the line indicated as well as the line\n"
-"    immediately above to see if you can identify some misspelled\n"
-"    word, or missing symbols, like (, ), [, ], :, etc.\n"
+"      Try to examine closely the line indicated as well as the line\n"
+"      immediately above to see if you can identify some misspelled\n"
+"      word, or missing symbols, like (, ), [, ], :, etc.\n"
 "\n"
 msgstr ""
-"    Présentement, nous ne pouvons pas deviner la cause probable de cette "
+"      Présentement, nous ne pouvons pas deviner la cause probable de cette "
 "erreur.\n"
-"    Vous pouvez indiquer que c'est le cas au site suivant:\n"
-"    https://github.com/aroberge/friendly-traceback/issues\n"
+"      Vous pouvez indiquer que c'est le cas au site suivant:\n"
+"      https://github.com/aroberge/friendly-traceback/issues\n"
 "\n"
-"    Essayez d’examiner attentivement la ligne indiquée ainsi que celle\n"
-"    immédiatement au dessus pour voir si vous pouvez identifier\n"
-"    un mot mal orthographié, ou des symboles manquants, comme (,), [,],:, "
+"      Essayez d’examiner attentivement la ligne indiquée ainsi que celle\n"
+"      immédiatement au dessus pour voir si vous pouvez identifier\n"
+"      un mot mal orthographié, ou des symboles manquants, comme (,), [,],:, "
 "etc.\n"
 "\n"
 
@@ -190,7 +189,7 @@ msgstr "une chaîne de caractères ('str')"
 msgid "a tuple"
 msgstr "un tuple"
 
-#: analyze_type_error.py:73 analyze_type_error.py:90
+#: analyze_type_error.py:73 analyze_type_error.py:93
 msgid ""
 "        You tried to concatenate (add) two different types of objects:\n"
 "        {first} and {second}\n"
@@ -199,7 +198,7 @@ msgstr ""
 "différents:\n"
 "        {first} et {second}\n"
 
-#: analyze_type_error.py:111
+#: analyze_type_error.py:114
 msgid ""
 "        You tried to add two incompatible types of objects:\n"
 "        {first} and {second}\n"
@@ -207,7 +206,7 @@ msgstr ""
 "        Vous avez essayé d’additionner deux types d’objets incompatibles:\n"
 "        {first} et {second}\n"
 
-#: analyze_type_error.py:118
+#: analyze_type_error.py:121
 msgid ""
 "        You tried to subtract two incompatible types of objects:\n"
 "        {first} and {second}\n"
@@ -215,7 +214,7 @@ msgstr ""
 "        Vous avez tenté de soustraire deux types d’objets incompatibles:\n"
 "        {first} et {second}\n"
 
-#: analyze_type_error.py:125
+#: analyze_type_error.py:128
 msgid ""
 "        You tried to multiply two incompatible types of objects:\n"
 "        {first} and {second}\n"
@@ -223,7 +222,7 @@ msgstr ""
 "        Vous avez essayé de multiplier deux types d’objets différents:\n"
 "        {first} et {second}\n"
 
-#: analyze_type_error.py:132
+#: analyze_type_error.py:135
 msgid ""
 "        You tried to divide two incompatible types of objects:\n"
 "        {first} and {second}\n"
@@ -231,7 +230,7 @@ msgstr ""
 "        Vous avez essayé de diviser deux types d’objets différents:\n"
 "        {first} et {second}\n"
 
-#: analyze_type_error.py:139
+#: analyze_type_error.py:142
 msgid ""
 "        You tried to perform the bitwise operation {operator}\n"
 "        on two incompatible types of objects:\n"
@@ -242,7 +241,7 @@ msgstr ""
 "        sur deux types d’objets incompatibles:\n"
 "        {first} et {second}\n"
 
-#: analyze_type_error.py:149
+#: analyze_type_error.py:152
 msgid ""
 "        You tried to perform the bit shifting operation {operator}\n"
 "        on two incompatible types of objects:\n"
@@ -252,7 +251,7 @@ msgstr ""
 "        sur deux types d’objets incompatibles:\n"
 "        {first} et {second}\n"
 
-#: analyze_type_error.py:159
+#: analyze_type_error.py:162
 msgid ""
 "        You tried to exponentiate (raise to a power)\n"
 "        using two incompatible types of objects:\n"
@@ -262,21 +261,21 @@ msgstr ""
 "        en utilisant deux types d’objets incompatibles:\n"
 "        {first} et {second}\n"
 
-#: analyze_type_error.py:167
+#: analyze_type_error.py:170
 msgid ""
-"        You tried to use the operator @\n"
+"        You tried to use the operator {operator}\n"
 "        using two incompatible types of objects:\n"
 "        {first} and {second}.\n"
 "        This operator is normally used only\n"
 "        for multiplication of matrices.\n"
 msgstr ""
-"        Vous avez essayé d’utiliser l’opérateur @\n"
+"        Vous avez essayé d’utiliser l’opérateur {operator}\n"
 "        à l’aide de deux types d’objets incompatibles:\n"
 "        {first} et {second}.\n"
 "        Cet opérateur est normalement utilisé uniquement\n"
 "        pour la multiplication des matrices.\n"
 
-#: analyze_type_error.py:190
+#: analyze_type_error.py:195
 msgid ""
 "        You tried to do an order comparison ({operator})\n"
 "        between two incompatible types of objects:\n"
@@ -286,7 +285,7 @@ msgstr ""
 "        deux types d’objets incompatibles:\n"
 "        {first} et {second}\n"
 
-#: info_generic.py:12
+#: info_generic.py:30
 msgid ""
 "    ArithmeticError is the base class for those built-in exceptions\n"
 "    that are raised for various arithmetic errors.\n"
@@ -298,7 +297,7 @@ msgstr ""
 "    Il est inhabituel que vous voyiez cette exception;\n"
 "    normalement, une exception plus spécifique aurait dû être soulevée.\n"
 
-#: info_generic.py:22
+#: info_generic.py:41
 msgid ""
 "    This exception indicates that a certain object could not\n"
 "    be imported from a module or package. Most often, this is\n"
@@ -308,7 +307,7 @@ msgstr ""
 "    être importé à partir d’un module ou d’un paquet. Très souvent, c’est\n"
 "    parce que le nom de l’objet n’est pas écrit correctement.\n"
 
-#: info_generic.py:36 info_specific.py:120 info_specific.py:141
+#: info_generic.py:56 info_specific.py:143 info_specific.py:165
 msgid ""
 "    Python could not parse the file '{filename}'\n"
 "    beyond the location indicated below by --> and ^.\n"
@@ -320,7 +319,7 @@ msgstr ""
 "\n"
 "{source}\n"
 
-#: info_generic.py:43
+#: info_generic.py:63
 msgid ""
 "    An IndentationError occurs when a given line of code is\n"
 "    not indented (aligned vertically with other lines) as expected.\n"
@@ -331,7 +330,7 @@ msgstr ""
 "lignes)\n"
 "    de la façon attendue.\n"
 
-#: info_generic.py:53
+#: info_generic.py:74
 msgid ""
 "    An IndexError occurs when you are try to get an item from a list,\n"
 "    a tuple, or a similar object (sequence), by using an index which\n"
@@ -347,7 +346,7 @@ msgstr ""
 "    Rappel: le premier élément d'une séquence est à l'index 0.\n"
 "\n"
 
-#: info_generic.py:64
+#: info_generic.py:86
 msgid ""
 "    A KeyError is raised when a value is not found as a\n"
 "    key in a Python dict.\n"
@@ -355,7 +354,7 @@ msgstr ""
 "    Une erreur KeyError est levée lorsqu’une valeur n’est pas trouvée\n"
 "    en tant que clé dans un dictionnaire (dict) Python.\n"
 
-#: info_generic.py:72
+#: info_generic.py:95
 msgid ""
 "    LookupError is the base class for the exceptions that are raised\n"
 "    when a key or index used on a mapping or sequence is invalid.\n"
@@ -366,7 +365,7 @@ msgstr ""
 "une séquence est invalide.\n"
 "    Elle peut également être levée directement par codecs.lookup().\n"
 
-#: info_generic.py:81
+#: info_generic.py:105
 msgid ""
 "    A ModuleNotFoundError exception indicates that you\n"
 "    are trying to import a module that cannot be found by Python.\n"
@@ -379,7 +378,7 @@ msgstr ""
 "    écrivant le nom du module, ou parce qu’il n’est pas installé sur votre "
 "ordinateur.\n"
 
-#: info_generic.py:91
+#: info_generic.py:116
 msgid ""
 "    A NameError exception indicates that a variable or\n"
 "    function name is not known to Python.\n"
@@ -393,22 +392,24 @@ msgstr ""
 "    Cependant, cela peut également indiquer que le nom a été\n"
 "    utilisé avant qu'on ne lui ait associé une valeur.\n"
 
-#: info_generic.py:102
+#: info_generic.py:128
 msgid "    A SyntaxError occurs when Python cannot understand your code.\n"
 msgstr ""
 "    Une exception de type SyntaxError se produit lorsque python ne peut pas "
 "comprendre votre code.\n"
 
-#: info_generic.py:107
+#: info_generic.py:134
 msgid ""
 "    A TabError indicates that you have used both spaces\n"
 "    and tab characters to indent your code.\n"
 "    This is not allowed in Python.\n"
 "    Indenting your code means to have block of codes aligned vertically\n"
-"    by inserting either spaces or tab characters at the beginning of lines.\n"
+"    by inserting either spaces or tab characters at the beginning of "
+"lines.\n"
 "    Python's recommendation is to always use spaces to indent your code.\n"
 msgstr ""
-"    Un exception de type TabError indique que vous avez utilisé des espaces\n"
+"    Un exception de type TabError indique que vous avez utilisé des "
+"espaces\n"
 "    ainsi que des caractères de tabulation pour indenter votre code.\n"
 "    Cela n’est pas autorisé dans Python.\n"
 "    L’indentation de votre code signifie que le bloc de codes est aligné\n"
@@ -417,7 +418,7 @@ msgstr ""
 "    La recommandation de Python est de toujours utiliser des espaces\n"
 "    pour indenter votre code.\n"
 
-#: info_generic.py:119
+#: info_generic.py:147
 msgid ""
 "    A TypeError is usually caused by trying\n"
 "    to combine two incompatible types of objects,\n"
@@ -427,7 +428,7 @@ msgstr ""
 "    de combiner deux types d’objets incompatibles,\n"
 "    ou en invoquant une fonction avec le mauvais type d’objet.\n"
 
-#: info_generic.py:128
+#: info_generic.py:157
 msgid ""
 "    In Python, variables that are used inside a function are known as \n"
 "    local variables. Before they are used, they must be assigned a value.\n"
@@ -452,7 +453,7 @@ msgstr ""
 "    qu’il s’agit d’une variable globale, sinon vous verrez une exception "
 "UnboundLocalError.\n"
 
-#: info_generic.py:142
+#: info_generic.py:172
 msgid ""
 "    No information is known about this exception.\n"
 "    Please report this example to\n"
@@ -462,7 +463,7 @@ msgstr ""
 "    Veuillez signaler cet exemple à\n"
 "    https://github.com/aroberge/friendly-traceback/issues\n"
 
-#: info_generic.py:151
+#: info_generic.py:182
 msgid ""
 "    A ZeroDivisionError occurs when you are attempting to divide\n"
 "    a value by zero:\n"
@@ -479,7 +480,7 @@ msgstr ""
 "    à l’aide de l’opérateur modulo '%'\n"
 "        résultat = ma_variable % 0\n"
 
-#: info_specific.py:27
+#: info_specific.py:44
 msgid ""
 "        The object that could not be imported is '{name}'.\n"
 "        The module or package where it was \n"
@@ -488,11 +489,11 @@ msgstr ""
 "        L’objet qui n’a pas pu être importé est '{name}'.\n"
 "        Le module ou le paquet d'où il devait être importé est '{module}'.\n"
 
-#: info_specific.py:33
+#: info_specific.py:50
 msgid "        The object that could not be imported is '{name}'.\n"
 msgstr "        L’objet qui n’a pas pu être importé est' {name} '.\n"
 
-#: info_specific.py:43
+#: info_specific.py:61
 msgid ""
 "        In this case, the line identified above\n"
 "        is more indented than expected and \n"
@@ -502,7 +503,7 @@ msgstr ""
 "        est plus indentée que ce qui était attendu et ne\n"
 "        correspond pas à l'indentation de la ligne précédente.\n"
 
-#: info_specific.py:49
+#: info_specific.py:67
 msgid ""
 "        In this case, the line identified above\n"
 "        was expected to begin a new indented block.\n"
@@ -510,7 +511,7 @@ msgstr ""
 "        Dans ce cas-ci, la ligne indiquée ci-dessus par --> devrait\n"
 "        normalement commencer un nouveau bloc de code indenté.\n"
 
-#: info_specific.py:54
+#: info_specific.py:72
 msgid ""
 "        In this case, the line identified above is\n"
 "        less indented than the preceding one,\n"
@@ -520,41 +521,33 @@ msgstr ""
 "        est moins indentée que la ligne précédente\n"
 "        et n’est pas alignée verticalement avec un autre bloc de code.\n"
 
-#: info_specific.py:59 info_traceback.py:181
-msgid ""
-"    Likely cause:\n"
-"{cause}"
-msgstr ""
-"    Cause probable : \n"
-"{cause}"
-
-#: info_specific.py:66
+#: info_specific.py:85
 msgid "        In this case, the sequence is a list.\n"
 msgstr "        Dans ce cas, la séquence est une liste.\n"
 
-#: info_specific.py:68
+#: info_specific.py:87
 msgid "        In this case, the sequence is a tuple.\n"
 msgstr "        Dans ce cas, la séquence est un tuple.\n"
 
-#: info_specific.py:81
+#: info_specific.py:101
 msgid ""
 "        In your program, the name of the key\n"
 "        that cannot be found is '{key_name}'.\n"
 msgstr ""
 "        Dans votre programme, le nom de la clé inconnue est '{key_name}'.\n"
 
-#: info_specific.py:94
+#: info_specific.py:115
 msgid ""
 "        In your program, the name of the\n"
 "        module that cannot be found is '{mod_name}'.\n"
 msgstr ""
 "        Dans votre programme, le nom du module inconnu est '{mod_name}'.\n"
 
-#: info_specific.py:107
+#: info_specific.py:129
 msgid "        In your program, the unknown name is '{var_name}'.\n"
 msgstr "        Dans votre programme, le nom inconnu est '{var_name}'.\n"
 
-#: info_specific.py:160
+#: info_specific.py:186
 msgid ""
 "        The variable that appears to cause the problem is '{var_name}'.\n"
 "        Perhaps the statement\n"
@@ -566,7 +559,7 @@ msgstr ""
 "            global {var_name}\n"
 "        comme première ligne à l’intérieur de votre fonction.\n"
 
-#: info_traceback.py:131
+#: info_traceback.py:140
 msgid ""
 "        Unfortunately, no additional information is available:\n"
 "        the content of file '<string>' is not accessible.\n"
@@ -575,7 +568,7 @@ msgstr ""
 "disponible:\n"
 "        le contenu du fichier '<string>' n’est pas accessible.\n"
 
-#: info_traceback.py:153
+#: info_traceback.py:162
 msgid ""
 "    Python exception: \n"
 "        {name}: {value}\n"
@@ -583,15 +576,30 @@ msgstr ""
 "    Exception Python: \n"
 "        {name}: {value}\n"
 
-#: info_traceback.py:207
+#: info_traceback.py:189
+msgid "    My best guess:"
+msgstr "    Ma meilleure hypothèse :"
+
+#: info_traceback.py:191
+msgid "    Likely cause:"
+msgstr "    Cause probable :"
+
+#: info_traceback.py:217
 msgid "    Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 "    L'exécution s'est arrêtée à la ligne {linenumber} du fichier "
 "'{filename}'\n"
 
-#: info_traceback.py:214
+#: info_traceback.py:224
 msgid "    Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr "    Exception levée à la ligne du fichier '{filename}'.\n"
+
+#~ msgid ""
+#~ "    Likely cause:\n"
+#~ "{cause}"
+#~ msgstr ""
+#~ "    Cause probable : \n"
+#~ "{cause}"
 
 #~ msgid "    No information is known about this exception.\n"
 #~ msgstr "    Aucune information n'est connue au sujet de cette exception.\n"
@@ -668,6 +676,7 @@ msgstr "    Exception levée à la ligne du fichier '{filename}'.\n"
 #~ "{partial_source}\n"
 #~ msgstr ""
 #~ "\n"
-#~ "    Erreur trouvée dans le fichier '{filename}' à la ligne {linenumber}.\n"
+#~ "    Erreur trouvée dans le fichier '{filename}' à la ligne "
+#~ "{linenumber}.\n"
 #~ "\n"
 #~ "{partial_source}\n"

@@ -5,6 +5,8 @@
 friendly_items = [
     "header",
     "generic",
+    "location information",  # only for SyntaxError and TabError
+    "cause header",
     "cause",
     "last_call header",
     "last_call source",

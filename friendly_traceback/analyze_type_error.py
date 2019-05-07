@@ -138,7 +138,7 @@ def parse_unsupported_operand_type(text):
             ).format(
                 first=convert_type(match.group(2)), second=convert_type(match.group(3))
             )
-        elif operator in ["&", "|", "^"]:
+        elif operator in ["&", "|", "^", "&=", "|", "^="]:
             cause = _(
                 "        You tried to perform the bitwise operation {operator}\n"
                 "        on two incompatible types of objects:\n"
@@ -148,7 +148,7 @@ def parse_unsupported_operand_type(text):
                 first=convert_type(match.group(2)),
                 second=convert_type(match.group(3)),
             )
-        elif operator in [">>", "<<"]:
+        elif operator in [">>", "<<", ">>=", "<<="]:
             cause = _(
                 "        You tried to perform the bit shifting operation {operator}\n"
                 "        on two incompatible types of objects:\n"
@@ -166,15 +166,17 @@ def parse_unsupported_operand_type(text):
             ).format(
                 first=convert_type(match.group(2)), second=convert_type(match.group(3))
             )
-        elif operator == "@":
+        elif operator in ["@", "@="]:
             cause = _(
-                "        You tried to use the operator @\n"
+                "        You tried to use the operator {operator}\n"
                 "        using two incompatible types of objects:\n"
                 "        {first} and {second}.\n"
                 "        This operator is normally used only\n"
                 "        for multiplication of matrices.\n"
             ).format(
-                first=convert_type(match.group(2)), second=convert_type(match.group(3))
+                operator=operator,
+                first=convert_type(match.group(2)),
+                second=convert_type(match.group(3)),
             )
     return cause
 

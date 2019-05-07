@@ -34,8 +34,10 @@ CONSOLE_SOURCE = utils.CONSOLE_SOURCE
 # Python that this is a global variable, otherwise you will see
 # an UnboundLocalError.
 
-# [3]
+# 3a]
 # Likely cause:
+
+# [3]
 #     The variable that appears to cause the problem is 'a'.
 #     Try inserting the statement
 #         global a
@@ -78,10 +80,17 @@ def get_traceback_info(etype, value, tb, running_script=False):
     if issubclass(etype, SyntaxError) and value.filename == "<string>":
         cause = cannot_analyze_string()
     else:
-        cause = get_likely_cause(etype, value)
-
-    if cause is not None:
-        info["cause"] = cause  # [3]
+        header, cause = get_likely_cause(etype, value)
+        if cause is not None:
+            if etype.__name__ == "TabError":
+                info["location information"] = cause
+            elif etype.__name__ == "SyntaxError":
+                info["location information"] = cause[0]
+                info["cause header"] = header
+                info["cause"] = cause[1]
+            else:
+                info["cause header"] = header  # [3a]
+                info["cause"] = cause  # [3]
 
     if issubclass(etype, SyntaxError):
         return info
@@ -172,14 +181,15 @@ def get_likely_cause(etype, value):
        specific to a given exception.
     """
     _ = current_lang.lang
+    header, cause = None, None
     if etype.__name__ in info_specific.get_cause:
         cause = info_specific.get_cause[etype.__name__](etype, value)
         if cause is not None:
-            if issubclass(etype, SyntaxError):
-                return cause
+            if etype.__name__ == "SyntaxError":
+                header = _("    My best guess:")
             else:
-                return _("    Likely cause:\n{cause}").format(cause=cause)
-    return None
+                header = _("    Likely cause:")
+    return header, cause
 
 
 def get_partial_source(filename, linenumber, lines, index):
