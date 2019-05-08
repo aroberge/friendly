@@ -98,10 +98,17 @@ def get_traceback_info(etype, value, tb, running_script=False):
     else:
         if issubclass(etype, SyntaxError):
             process_parsing_error(etype, value, info)
-        header, cause = get_likely_cause(etype, value)
-        if cause is not None:
-            info["cause header"] = header  # [3]
-            info["cause"] = cause  # [3a]
+        if "cause" in friendly:
+            info["cause"] = friendly["cause"]
+            try:
+                info["cause header"] = friendly["cause header"]
+            except KeyError:
+                pass
+        else:
+            header, cause = get_likely_cause(etype, value)
+            if cause is not None:
+                info["cause header"] = header  # [3]
+                info["cause"] = cause  # [3a]
 
     if issubclass(etype, SyntaxError):
         return info
