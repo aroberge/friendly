@@ -31,7 +31,7 @@ friendly_traceback.set_lang(LANG)
 sys.path.insert(0, this_dir)
 
 
-import trb_common36  # noqa
+import trb_common36
 
 target = os.path.normpath(
     os.path.join(docs_root_dir, f"docs/source/tracebacks_{LANG}36.rst")

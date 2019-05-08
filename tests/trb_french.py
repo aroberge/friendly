@@ -31,9 +31,11 @@ friendly_traceback.set_lang(LANG)
 sys.path.insert(0, this_dir)
 
 
-import trb_common  # noqa
+import trb_common
 
-target = os.path.normpath(os.path.join(docs_root_dir, f"docs/source/tracebacks_{LANG}.rst"))
+target = os.path.normpath(
+    os.path.join(docs_root_dir, f"docs/source/tracebacks_{LANG}.rst")
+)
 
 intro_text = """
 Friendly tracebacks - en Français
@@ -60,7 +62,9 @@ Friendly-traceback version: {friendly}
 Python version: {python}
 
 """.format(
-    friendly=friendly_traceback.version.__version__, python=platform.python_version(), name=__file__
+    friendly=friendly_traceback.version.__version__,
+    python=platform.python_version(),
+    name=__file__,
 )
 
 

@@ -229,6 +229,9 @@ def get_partial_source(filename, linenumber, lines, index):
     elif not filename:
         raise FileNotFoundError("Cannot find %s" % filename)
 
+    if not source.endswith("\n"):
+        source += "\n"
+
     return {"source": source, "line": line}
 
 

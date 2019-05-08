@@ -60,7 +60,7 @@ def get_partial_source(filename, linenumber, offset):
     return highlight_source(
         linenumber,
         linenumber - begin - 1,
-        lines[begin: linenumber+1],
+        lines[begin: linenumber + 1],
         offset=offset
     )
     # fmt: on
@@ -116,11 +116,11 @@ def shorten_path(path):
     # However, we ensure that the shortened path retains its cases
     path_lower = path.lower()
     if path_lower.startswith(TESTS):
-        path = "TESTS:" + path[len(TESTS) :]  # noqa
+        path = "TESTS:" + path[len(TESTS) :]
     elif path_lower.startswith(FRIENDLY):
-        path = "FRIENDLY:" + path[len(FRIENDLY) :]  # noqa
+        path = "FRIENDLY:" + path[len(FRIENDLY) :]
     elif path_lower.startswith(PYTHON):
-        path = "PYTHON:" + path[len(PYTHON) :]  # noqa
+        path = "PYTHON:" + path[len(PYTHON) :]
     elif path_lower.startswith(HOME):
-        path = "~" + path[len(HOME) :]  # noqa
+        path = "~" + path[len(HOME) :]
     return path

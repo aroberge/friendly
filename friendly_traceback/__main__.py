@@ -14,7 +14,6 @@ import textwrap
 
 from . import console
 from . import core
-from . import version  # noqa
 
 
 parser = argparse.ArgumentParser(
