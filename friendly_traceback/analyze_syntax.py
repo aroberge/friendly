@@ -171,25 +171,25 @@ def expand_cause(cause):
 
     if cause == "Assigning to Python keyword":
         return _(
-            "      You were trying to assign a value to a Python keyword.\n"
-            "      This is not allowed.\n"
+            "You were trying to assign a value to a Python keyword.\n"
+            "This is not allowed.\n"
             "\n"
         )
 
     if cause == "import X from Y":
         return _(
-            "      You wrote something like\n"
-            "          import X from Y\n"
-            "      instead of\n"
-            "          from Y import X\n"
+            "You wrote something like\n"
+            "    import X from Y\n"
+            "instead of\n"
+            "    from Y import X\n"
             "\n"
         )
 
     if cause.startswith("elif not"):
         cause = cause.replace("elif not ", "")
         return _(
-            "      You meant to use Python's 'elif' keyword\n"
-            "      but wrote '{name}' instead\n"
+            "You meant to use Python's 'elif' keyword\n"
+            "but wrote '{name}' instead\n"
             "\n"
         ).format(name=cause)
 
@@ -198,52 +198,52 @@ def expand_cause(cause):
         if name == "class":
             name = _("a class")
             return _(
-                "      You wanted to define {class_}\n"
-                "      but forgot to add a colon ':' at the end\n"
+                "You wanted to define {class_}\n"
+                "but forgot to add a colon ':' at the end\n"
                 "\n"
             ).format(class_=name)
         elif name in ["for", "while"]:
             return _(
-                "      You wrote a '{name}' loop but\n"
-                "      forgot to add a colon ':' at the end\n"
+                "You wrote a '{name}' loop but\n"
+                "forgot to add a colon ':' at the end\n"
                 "\n"
             ).format(name=name)
         else:
             return _(
-                "      You wrote a statement beginning with\n"
-                "      '{name}' but forgot to add a colon ':' at the end\n"
+                "You wrote a statement beginning with\n"
+                "'{name}' but forgot to add a colon ':' at the end\n"
                 "\n"
             ).format(name=name)
 
     if cause == "malformed def":
         name = _("a function or method")
         return _(
-            "      You tried to define {class_or_function}\n"
-            "      and did not use the correct syntax.\n"
-            "      The correct syntax is:\n"
-            "          def name ( optional_arguments ):"
+            "You tried to define {class_or_function}\n"
+            "and did not use the correct syntax.\n"
+            "The correct syntax is:\n"
+            "    def name ( optional_arguments ):"
             "\n"
         ).format(class_or_function=name)
 
     if cause.startswith("assign to literal"):
         name = cause.replace("assign to literal", "").strip()
         return _(
-            "      You wrote an expression like\n"
-            "          {name} = something\n"
-            "      where <{name}>, on the left hand-side of the equal sign, is\n"
-            "      an actual number or string (what Python calls a 'literal'),\n"
-            "      and not the name of a variable.  Perhaps you meant to write:\n"
-            "          something = {name}\n"
+            "You wrote an expression like\n"
+            "    {name} = something\n"
+            "where <{name}>, on the left hand-side of the equal sign, is\n"
+            "an actual number or string (what Python calls a 'literal'),\n"
+            "and not the name of a variable.  Perhaps you meant to write:\n"
+            "    something = {name}\n"
             "\n"
         ).format(name=name)
 
     return _(
-        "      Currently, we cannot guess the likely cause of this error.\n"
-        "      You might want to report this case to\n"
-        "      https://github.com/aroberge/friendly-traceback/issues\n"
+        "Currently, we cannot guess the likely cause of this error.\n"
+        "You might want to report this case to\n"
+        "https://github.com/aroberge/friendly-traceback/issues\n"
         "\n"
-        "      Try to examine closely the line indicated as well as the line\n"
-        "      immediately above to see if you can identify some misspelled\n"
-        "      word, or missing symbols, like (, ), [, ], :, etc.\n"
+        "Try to examine closely the line indicated as well as the line\n"
+        "immediately above to see if you can identify some misspelled\n"
+        "word, or missing symbols, like (, ), [, ], :, etc.\n"
         "\n"
     )

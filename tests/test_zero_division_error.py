@@ -13,8 +13,9 @@ def test_zero_division_error():
 
 
 def test_zero_division_error2():
+    zero = 0
     try:
-        1 % 0
+        1 % zero
     except Exception:
         friendly_traceback.explain(*sys.exc_info(), redirect="capture")
     result = friendly_traceback.get_output()

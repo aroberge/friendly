@@ -1,0 +1,425 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2019-05-08 06:55-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=cp1252\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+#: analyze_syntax.py:173
+msgid ""
+"You were trying to assign a value to a Python keyword.\n"
+"This is not allowed.\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:180
+msgid ""
+"You wrote something like\n"
+"    import X from Y\n"
+"instead of\n"
+"    from Y import X\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:190
+msgid ""
+"You meant to use Python's 'elif' keyword\n"
+"but wrote '{name}' instead\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:199
+msgid "a class"
+msgstr ""
+
+#: analyze_syntax.py:200
+msgid ""
+"You wanted to define {class_}\n"
+"but forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:206
+msgid ""
+"You wrote a '{name}' loop but\n"
+"forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:212
+msgid ""
+"You wrote a statement beginning with\n"
+"'{name}' but forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:219
+msgid "a function or method"
+msgstr ""
+
+#: analyze_syntax.py:220
+msgid ""
+"You tried to define {class_or_function}\n"
+"and did not use the correct syntax.\n"
+"The correct syntax is:\n"
+"    def name ( optional_arguments ):\n"
+msgstr ""
+
+#: analyze_syntax.py:230
+msgid ""
+"You wrote an expression like\n"
+"    {name} = something\n"
+"where <{name}>, on the left hand-side of the equal sign, is\n"
+"an actual number or string (what Python calls a 'literal'),\n"
+"and not the name of a variable.  Perhaps you meant to write:\n"
+"    something = {name}\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:240
+msgid ""
+"Currently, we cannot guess the likely cause of this error.\n"
+"You might want to report this case to\n"
+"https://github.com/aroberge/friendly-traceback/issues\n"
+"\n"
+"Try to examine closely the line indicated as well as the line\n"
+"immediately above to see if you can identify some misspelled\n"
+"word, or missing symbols, like (, ), [, ], :, etc.\n"
+"\n"
+msgstr ""
+
+#: analyze_type_error.py:31
+msgid ""
+"I do not recognize this case. Please report it to\n"
+"https://github.com/aroberge/friendly-traceback/issues\n"
+msgstr ""
+
+#: analyze_type_error.py:40
+msgid "a complex number"
+msgstr ""
+
+#: analyze_type_error.py:42
+msgid "a dictionary ('dict')"
+msgstr ""
+
+#: analyze_type_error.py:44
+msgid "a number ('float')"
+msgstr ""
+
+#: analyze_type_error.py:46
+msgid "an integer ('int')"
+msgstr ""
+
+#: analyze_type_error.py:48
+msgid "a list"
+msgstr ""
+
+#: analyze_type_error.py:50
+msgid "a variable equal to None ('NoneType')"
+msgstr ""
+
+#: analyze_type_error.py:52
+msgid "a set"
+msgstr ""
+
+#: analyze_type_error.py:54
+msgid "a string ('str')"
+msgstr ""
+
+#: analyze_type_error.py:56
+msgid "a tuple"
+msgstr ""
+
+#: analyze_type_error.py:73 analyze_type_error.py:93
+msgid ""
+"You tried to concatenate (add) two different types of objects:\n"
+"{first} and {second}\n"
+msgstr ""
+
+#: analyze_type_error.py:114
+msgid ""
+"You tried to add two incompatible types of objects:\n"
+"{first} and {second}\n"
+msgstr ""
+
+#: analyze_type_error.py:121
+msgid ""
+"You tried to subtract two incompatible types of objects:\n"
+"{first} and {second}\n"
+msgstr ""
+
+#: analyze_type_error.py:128
+msgid ""
+"You tried to multiply two incompatible types of objects:\n"
+"{first} and {second}\n"
+msgstr ""
+
+#: analyze_type_error.py:135
+msgid ""
+"You tried to divide two incompatible types of objects:\n"
+"{first} and {second}\n"
+msgstr ""
+
+#: analyze_type_error.py:142
+msgid ""
+"You tried to perform the bitwise operation {operator}\n"
+"on two incompatible types of objects:\n"
+"{first} and {second}\n"
+msgstr ""
+
+#: analyze_type_error.py:152
+msgid ""
+"You tried to perform the bit shifting operation {operator}\n"
+"on two incompatible types of objects:\n"
+"{first} and {second}\n"
+msgstr ""
+
+#: analyze_type_error.py:162
+msgid ""
+"You tried to exponentiate (raise to a power)\n"
+"using two incompatible types of objects:\n"
+"{first} and {second}\n"
+msgstr ""
+
+#: analyze_type_error.py:170
+msgid ""
+"You tried to use the operator {operator}\n"
+"using two incompatible types of objects:\n"
+"{first} and {second}.\n"
+"This operator is normally used only\n"
+"for multiplication of matrices.\n"
+msgstr ""
+
+#: analyze_type_error.py:195
+msgid ""
+"You tried to do an order comparison ({operator})\n"
+"between two incompatible types of objects:\n"
+"{first} and {second}\n"
+msgstr ""
+
+#: info_generic.py:30
+msgid ""
+"ArithmeticError is the base class for those built-in exceptions\n"
+"that are raised for various arithmetic errors.\n"
+"It is unusual that you are seeing this exception;\n"
+"normally, a more specific exception should have been raised.\n"
+msgstr ""
+
+#: info_generic.py:41
+msgid ""
+"This exception indicates that a certain object could not\n"
+"be imported from a module or package. Most often, this is\n"
+"because the name of the object is not spelled correctly.\n"
+msgstr ""
+
+#: info_generic.py:56 info_specific.py:143 info_specific.py:165
+msgid ""
+"Python could not parse the file '{filename}'\n"
+"beyond the location indicated below by --> and ^.\n"
+"\n"
+"{source}\n"
+msgstr ""
+
+#: info_generic.py:63
+msgid ""
+"An IndentationError occurs when a given line of code is\n"
+"not indented (aligned vertically with other lines) as expected.\n"
+msgstr ""
+
+#: info_generic.py:74
+msgid ""
+"An IndexError occurs when you are try to get an item from a list,\n"
+"a tuple, or a similar object (sequence), by using an index which\n"
+"does not exists; typically, this is because the index you give\n"
+"is greater than the length of the sequence.\n"
+"Reminder: the first item of a sequence is at index 0.\n"
+msgstr ""
+
+#: info_generic.py:86
+msgid ""
+"A KeyError is raised when a value is not found as a\n"
+"key in a Python dict.\n"
+msgstr ""
+
+#: info_generic.py:95
+msgid ""
+"LookupError is the base class for the exceptions that are raised\n"
+"when a key or index used on a mapping or sequence is invalid.\n"
+"It can also be raised directly by codecs.lookup().\n"
+msgstr ""
+
+#: info_generic.py:105
+msgid ""
+"A ModuleNotFoundError exception indicates that you\n"
+"are trying to import a module that cannot be found by Python.\n"
+"This could be because you misspelled the name of the module\n"
+"or because it is not installed on your computer.\n"
+msgstr ""
+
+#: info_generic.py:116
+msgid ""
+"A NameError exception indicates that a variable or\n"
+"function name is not known to Python.\n"
+"Most often, this is because there is a spelling mistake.\n"
+"However, sometimes it is because the name is used\n"
+"before being defined or given a value.\n"
+msgstr ""
+
+#: info_generic.py:128
+msgid ""
+"A SyntaxError occurs when Python cannot understand your code.\n"
+msgstr ""
+
+#: info_generic.py:134
+msgid ""
+"A TabError indicates that you have used both spaces\n"
+"and tab characters to indent your code.\n"
+"This is not allowed in Python.\n"
+"Indenting your code means to have block of codes aligned vertically\n"
+"by inserting either spaces or tab characters at the beginning of lines.\n"
+"Python's recommendation is to always use spaces to indent your code.\n"
+msgstr ""
+
+#: info_generic.py:147
+msgid ""
+"A TypeError is usually caused by trying\n"
+"to combine two incompatible types of objects,\n"
+"or by calling a function with the wrong type of object.\n"
+msgstr ""
+
+#: info_generic.py:157
+msgid ""
+"In Python, variables that are used inside a function are known as \n"
+"local variables. Before they are used, they must be assigned a value.\n"
+"A variable that is used before it is assigned a value is assumed to\n"
+"be defined outside that function; it is known as a 'global'\n"
+"(or sometimes 'nonlocal') variable. You cannot assign a value to such\n"
+"a global variable inside a function without first indicating to\n"
+"Python that this is a global variable, otherwise you will see\n"
+"an UnboundLocalError.\n"
+msgstr ""
+
+#: info_generic.py:172
+msgid ""
+"No information is known about this exception.\n"
+"Please report this example to\n"
+"https://github.com/aroberge/friendly-traceback/issues\n"
+msgstr ""
+
+#: info_generic.py:182
+msgid ""
+"A ZeroDivisionError occurs when you are attempting to divide\n"
+"a value by zero:\n"
+"    result = my_variable / 0\n"
+"It can also happen if you calculate the remainder of a division\n"
+"using the modulo operator '%'\n"
+"    result = my_variable % 0\n"
+msgstr ""
+
+#: info_specific.py:44
+msgid ""
+"The object that could not be imported is '{name}'.\n"
+"The module or package where it was \n"
+"expected to be found is '{module}'.\n"
+msgstr ""
+
+#: info_specific.py:50
+msgid ""
+"The object that could not be imported is '{name}'.\n"
+msgstr ""
+
+#: info_specific.py:61
+msgid ""
+"In this case, the line identified above\n"
+"is more indented than expected and \n"
+"does not match the indentation of the previous line.\n"
+msgstr ""
+
+#: info_specific.py:67
+msgid ""
+"In this case, the line identified above\n"
+"was expected to begin a new indented block.\n"
+msgstr ""
+
+#: info_specific.py:72
+msgid ""
+"In this case, the line identified above is\n"
+"less indented than the preceding one,\n"
+"and is not aligned vertically with another block of code.\n"
+msgstr ""
+
+#: info_specific.py:85
+msgid ""
+"In this case, the sequence is a list.\n"
+msgstr ""
+
+#: info_specific.py:87
+msgid ""
+"In this case, the sequence is a tuple.\n"
+msgstr ""
+
+#: info_specific.py:101
+msgid ""
+"In your program, the name of the key\n"
+"that cannot be found is '{key_name}'.\n"
+msgstr ""
+
+#: info_specific.py:115
+msgid ""
+"In your program, the name of the\n"
+"module that cannot be found is '{mod_name}'.\n"
+msgstr ""
+
+#: info_specific.py:129
+msgid ""
+"In your program, the unknown name is '{var_name}'.\n"
+msgstr ""
+
+#: info_specific.py:186
+msgid ""
+"The variable that appears to cause the problem is '{var_name}'.\n"
+"Perhaps the statement\n"
+"    global {var_name}\n"
+"should have been included as the first line inside your function.\n"
+msgstr ""
+
+#: info_traceback.py:140
+msgid ""
+"Unfortunately, no additional information is available:\n"
+"the content of file '<string>' is not accessible.\n"
+msgstr ""
+
+#: info_traceback.py:162
+msgid ""
+"Python exception: \n"
+"    {name}: {value}\n"
+msgstr ""
+
+#: info_traceback.py:189
+msgid "My best guess:"
+msgstr ""
+
+#: info_traceback.py:191
+msgid "Likely cause:"
+msgstr ""
+
+#: info_traceback.py:217
+msgid ""
+"Execution stopped on line {linenumber} of file '{filename}'.\n"
+msgstr ""
+
+#: info_traceback.py:224
+msgid ""
+"Exception raised on line {linenumber} of file '{filename}'.\n"
+msgstr ""
+

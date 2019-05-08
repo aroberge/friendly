@@ -29,8 +29,8 @@ def convert_message(message):
         if result is not None:
             return result
     return _(
-        "        I do not recognize this case. Please report it to\n"
-        "        https://github.com/aroberge/friendly-traceback/issues\n"
+        "I do not recognize this case. Please report it to\n"
+        "https://github.com/aroberge/friendly-traceback/issues\n"
     )
 
 
@@ -71,8 +71,8 @@ def parse_can_only_concatenate(text):
     cause = None
     if match is not None:
         cause = _(
-            "        You tried to concatenate (add) two different types of objects:\n"
-            "        {first} and {second}\n"
+            "You tried to concatenate (add) two different types of objects:\n"
+            "{first} and {second}\n"
         ).format(
             first=convert_type(match.group(1)), second=convert_type(match.group(2))
         )
@@ -91,8 +91,8 @@ def parse_must_be_str(text):
     cause = None
     if match is not None:
         cause = _(
-            "        You tried to concatenate (add) two different types of objects:\n"
-            "        {first} and {second}\n"
+            "You tried to concatenate (add) two different types of objects:\n"
+            "{first} and {second}\n"
         ).format(first=convert_type("str"), second=convert_type(match.group(1)))
     return cause
 
@@ -112,37 +112,37 @@ def parse_unsupported_operand_type(text):
         operator = match.group(1)
         if operator in ["+", "+="]:
             cause = _(
-                "        You tried to add two incompatible types of objects:\n"
-                "        {first} and {second}\n"
+                "You tried to add two incompatible types of objects:\n"
+                "{first} and {second}\n"
             ).format(
                 first=convert_type(match.group(2)), second=convert_type(match.group(3))
             )
         elif operator in ["-", "-="]:
             cause = _(
-                "        You tried to subtract two incompatible types of objects:\n"
-                "        {first} and {second}\n"
+                "You tried to subtract two incompatible types of objects:\n"
+                "{first} and {second}\n"
             ).format(
                 first=convert_type(match.group(2)), second=convert_type(match.group(3))
             )
         elif operator in ["*", "*="]:
             cause = _(
-                "        You tried to multiply two incompatible types of objects:\n"
-                "        {first} and {second}\n"
+                "You tried to multiply two incompatible types of objects:\n"
+                "{first} and {second}\n"
             ).format(
                 first=convert_type(match.group(2)), second=convert_type(match.group(3))
             )
         elif operator in ["/", "//", "/=", "//="]:
             cause = _(
-                "        You tried to divide two incompatible types of objects:\n"
-                "        {first} and {second}\n"
+                "You tried to divide two incompatible types of objects:\n"
+                "{first} and {second}\n"
             ).format(
                 first=convert_type(match.group(2)), second=convert_type(match.group(3))
             )
         elif operator in ["&", "|", "^", "&=", "|", "^="]:
             cause = _(
-                "        You tried to perform the bitwise operation {operator}\n"
-                "        on two incompatible types of objects:\n"
-                "        {first} and {second}\n"
+                "You tried to perform the bitwise operation {operator}\n"
+                "on two incompatible types of objects:\n"
+                "{first} and {second}\n"
             ).format(
                 operator=operator,
                 first=convert_type(match.group(2)),
@@ -150,9 +150,9 @@ def parse_unsupported_operand_type(text):
             )
         elif operator in [">>", "<<", ">>=", "<<="]:
             cause = _(
-                "        You tried to perform the bit shifting operation {operator}\n"
-                "        on two incompatible types of objects:\n"
-                "        {first} and {second}\n"
+                "You tried to perform the bit shifting operation {operator}\n"
+                "on two incompatible types of objects:\n"
+                "{first} and {second}\n"
             ).format(
                 operator=operator,
                 first=convert_type(match.group(2)),
@@ -160,19 +160,19 @@ def parse_unsupported_operand_type(text):
             )
         elif operator == "** or pow()":
             cause = _(
-                "        You tried to exponentiate (raise to a power)\n"
-                "        using two incompatible types of objects:\n"
-                "        {first} and {second}\n"
+                "You tried to exponentiate (raise to a power)\n"
+                "using two incompatible types of objects:\n"
+                "{first} and {second}\n"
             ).format(
                 first=convert_type(match.group(2)), second=convert_type(match.group(3))
             )
         elif operator in ["@", "@="]:
             cause = _(
-                "        You tried to use the operator {operator}\n"
-                "        using two incompatible types of objects:\n"
-                "        {first} and {second}.\n"
-                "        This operator is normally used only\n"
-                "        for multiplication of matrices.\n"
+                "You tried to use the operator {operator}\n"
+                "using two incompatible types of objects:\n"
+                "{first} and {second}.\n"
+                "This operator is normally used only\n"
+                "for multiplication of matrices.\n"
             ).format(
                 operator=operator,
                 first=convert_type(match.group(2)),
@@ -193,9 +193,9 @@ def parse_order_comparison(text):
     match = re.search(order_comparison_pattern, text)
     if match is not None:
         cause = _(
-            "        You tried to do an order comparison ({operator})\n"
-            "        between two incompatible types of objects:\n"
-            "        {first} and {second}\n"
+            "You tried to do an order comparison ({operator})\n"
+            "between two incompatible types of objects:\n"
+            "{first} and {second}\n"
         ).format(
             operator=match.group(1),
             first=convert_type(match.group(2)),

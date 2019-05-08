@@ -78,7 +78,7 @@ def get_traceback_info(etype, value, tb, running_script=False):
     info["generic"] = get_generic_explanation(etype.__name__, etype, value)  # [2]
 
     if issubclass(etype, SyntaxError) and value.filename == "<string>":
-        cause = cannot_analyze_string()
+        info["cause"] = cannot_analyze_string()
     else:
         header, cause = get_likely_cause(etype, value)
         if cause is not None:
@@ -138,8 +138,8 @@ def get_traceback_info(etype, value, tb, running_script=False):
 def cannot_analyze_string():
     _ = current_lang.lang
     return _(
-        "        Unfortunately, no additional information is available:\n"
-        "        the content of file '<string>' is not accessible.\n"
+        "Unfortunately, no additional information is available:\n"
+        "the content of file '<string>' is not accessible.\n"
     )
 
 
@@ -160,8 +160,8 @@ def get_header(name, value):
     _ = current_lang.lang
     # fmt: off
     return _(
-        "    Python exception: \n"
-        "        {name}: {value}\n"
+        "Python exception: \n"
+        "    {name}: {value}\n"
     ).format(name=name, value=value)
     # fmt: on
 
@@ -186,9 +186,9 @@ def get_likely_cause(etype, value):
         cause = info_specific.get_cause[etype.__name__](etype, value)
         if cause is not None:
             if etype.__name__ == "SyntaxError":
-                header = _("    My best guess:")
+                header = _("My best guess:")
             else:
-                header = _("    Likely cause:")
+                header = _("Likely cause:")
     return header, cause
 
 
@@ -214,13 +214,13 @@ def get_partial_source(filename, linenumber, lines, index):
 
 def last_call_header(linenumber, filename):
     _ = current_lang.lang
-    return _(
-        "    Execution stopped on line {linenumber} of file '{filename}'.\n"
-    ).format(linenumber=linenumber, filename=filename)
+    return _("Execution stopped on line {linenumber} of file '{filename}'.\n").format(
+        linenumber=linenumber, filename=utils.shorten_path(filename)
+    )
 
 
 def exception_raised_header(linenumber, filename):
     _ = current_lang.lang
-    return _(
-        "    Exception raised on line {linenumber} of file '{filename}'.\n"
-    ).format(linenumber=linenumber, filename=filename)
+    return _("Exception raised on line {linenumber} of file '{filename}'.\n").format(
+        linenumber=linenumber, filename=utils.shorten_path(filename)
+    )

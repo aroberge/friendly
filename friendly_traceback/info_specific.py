@@ -42,12 +42,12 @@ def import_error(etype, value):
     if len(parts) > 3:
         module = parts[3]
         return _(
-            "        The object that could not be imported is '{name}'.\n"
-            "        The module or package where it was \n"
-            "        expected to be found is '{module}'.\n"
+            "The object that could not be imported is '{name}'.\n"
+            "The module or package where it was \n"
+            "expected to be found is '{module}'.\n"
         ).format(name=name, module=module)
     else:
-        return _("        The object that could not be imported is '{name}'.\n").format(
+        return _("The object that could not be imported is '{name}'.\n").format(
             name=name
         )
 
@@ -59,20 +59,20 @@ def indentation_error(etype, value):
     value = str(value)
     if "unexpected indent" in value:
         this_case = _(
-            "        In this case, the line identified above\n"
-            "        is more indented than expected and \n"
-            "        does not match the indentation of the previous line.\n"
+            "In this case, the line identified above\n"
+            "is more indented than expected and \n"
+            "does not match the indentation of the previous line.\n"
         )
     elif "expected an indented block" in value:
         this_case = _(
-            "        In this case, the line identified above\n"
-            "        was expected to begin a new indented block.\n"
+            "In this case, the line identified above\n"
+            "was expected to begin a new indented block.\n"
         )
     else:
         this_case = _(
-            "        In this case, the line identified above is\n"
-            "        less indented than the preceding one,\n"
-            "        and is not aligned vertically with another block of code.\n"
+            "In this case, the line identified above is\n"
+            "less indented than the preceding one,\n"
+            "and is not aligned vertically with another block of code.\n"
         )
     return this_case
 
@@ -82,9 +82,9 @@ def index_error(etype, value):
     _ = current_lang.lang
     value = str(value)
     if "list" in value:
-        this_case = _("        In this case, the sequence is a list.\n")
+        this_case = _("In this case, the sequence is a list.\n")
     elif "tuple" in value:
-        this_case = _("        In this case, the sequence is a tuple.\n")
+        this_case = _("In this case, the sequence is a tuple.\n")
     else:
         this_case = None
     return this_case
@@ -99,8 +99,8 @@ def key_error(etype, value):
     #
     # By splitting value using ', we can extract the missing key name.
     return _(
-        "        In your program, the name of the key\n"
-        "        that cannot be found is '{key_name}'.\n"
+        "In your program, the name of the key\n"
+        "that cannot be found is '{key_name}'.\n"
     ).format(key_name=str(value).split("'")[1])
 
 
@@ -113,8 +113,8 @@ def module_not_found_error(etype, value):
     #
     # By splitting value using ', we can extract the module name.
     return _(
-        "        In your program, the name of the\n"
-        "        module that cannot be found is '{mod_name}'.\n"
+        "In your program, the name of the\n"
+        "module that cannot be found is '{mod_name}'.\n"
     ).format(mod_name=str(value).split("'")[1])
 
 
@@ -126,7 +126,7 @@ def name_error(etype, value):
     # NameError: name 'c' is not defined
     #
     # By splitting value using ', we can extract the variable name.
-    return _("        In your program, the unknown name is '{var_name}'.\n").format(
+    return _("In your program, the unknown name is '{var_name}'.\n").format(
         var_name=str(value).split("'")[1]
     )
 
@@ -141,8 +141,8 @@ def syntax_error(etype, value):
     partial_source, _ignore = utils.get_partial_source(filepath, linenumber, offset)
     filename = os.path.basename(filepath)
     location_information = _(
-        "    Python could not parse the file '{filename}'\n"
-        "    beyond the location indicated below by --> and ^.\n"
+        "Python could not parse the file '{filename}'\n"
+        "beyond the location indicated below by --> and ^.\n"
         "\n"
         "{source}\n"
     ).format(filename=filename, source=partial_source)
@@ -163,8 +163,8 @@ def tab_error(etype, value):
     source, _ignore = utils.get_partial_source(filename, linenumber, offset)
     filename = os.path.basename(filename)
     return _(
-        "    Python could not parse the file '{filename}'\n"
-        "    beyond the location indicated below by --> and ^.\n"
+        "Python could not parse the file '{filename}'\n"
+        "beyond the location indicated below by --> and ^.\n"
         "\n"
         "{source}\n"
     ).format(filename=filename, source=source)
@@ -184,10 +184,10 @@ def unbound_local_error(etype, value):
     #
     # By splitting value using ', we can extract the variable name.
     return _(
-        "        The variable that appears to cause the problem is '{var_name}'.\n"
-        "        Perhaps the statement\n"
-        "            global {var_name}\n"
-        "        should have been included as the first line inside your function.\n"
+        "The variable that appears to cause the problem is '{var_name}'.\n"
+        "Perhaps the statement\n"
+        "    global {var_name}\n"
+        "should have been included as the first line inside your function.\n"
     ).format(var_name=str(value).split("'")[1])
 
 

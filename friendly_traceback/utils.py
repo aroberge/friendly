@@ -1,5 +1,6 @@
 """utils.py"""
 import tokenize
+import os.path
 
 from io import StringIO
 
@@ -99,3 +100,27 @@ def highlight_source(linenumber, index, lines, offset=None):
         new_lines.append(num + line.rstrip())
         i += 1
     return "\n".join(new_lines), problem_line
+
+
+PYTHON = os.path.dirname(tokenize.__file__).lower()
+this_dir = os.path.dirname(__file__)
+FRIENDLY = os.path.abspath(os.path.join(this_dir, "..")).lower()
+TESTS = os.path.join(FRIENDLY, "tests").lower()
+HOME = os.path.expanduser("~").lower()
+
+
+def shorten_path(path):
+    # On windows, the filenames are not case sensitive
+    # and the way Python displays filenames may vary.
+    # To properly compare, we convert everything to lowercase
+    # However, we ensure that the shortened path retains its cases
+    path_lower = path.lower()
+    if path_lower.startswith(TESTS):
+        path = "TESTS:" + path[len(TESTS) :]  # noqa
+    elif path_lower.startswith(FRIENDLY):
+        path = "FRIENDLY:" + path[len(FRIENDLY) :]  # noqa
+    elif path_lower.startswith(PYTHON):
+        path = "PYTHON:" + path[len(PYTHON) :]  # noqa
+    elif path_lower.startswith(HOME):
+        path = "~" + path[len(HOME) :]  # noqa
+    return path

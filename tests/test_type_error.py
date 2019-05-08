@@ -150,7 +150,7 @@ def test_type_error5b():
     return result
 
 
-def test_type_error5d():
+def test_type_error5c():
     try:
         a = {1: 1, 2: 2}
         b = 3.1416
