@@ -22,6 +22,8 @@ CONSOLE_SOURCE = utils.CONSOLE_SOURCE
 
 # [1]
 # Python exception:
+
+# [1a]
 #     UnboundLocalError: local variable 'a' referenced before assignment
 
 # [2]
@@ -34,10 +36,10 @@ CONSOLE_SOURCE = utils.CONSOLE_SOURCE
 # Python that this is a global variable, otherwise you will see
 # an UnboundLocalError.
 
-# 3a]
+# [3]
 # Likely cause:
 
-# [3]
+# [3a]
 #     The variable that appears to cause the problem is 'a'.
 #     Try inserting the statement
 #         global a
@@ -73,24 +75,33 @@ def get_traceback_info(etype, value, tb, running_script=False):
     returns the result in a dict.
     """
     info = {}
+    if hasattr(value, "friendly"):  # for custom exceptions
+        friendly = getattr(value, "friendly")
+    else:
+        friendly = []
+
     # Note: the numbered comments refer to the example above
-    info["header"] = get_header(etype.__name__, value)  # [1]
-    info["generic"] = get_generic_explanation(etype.__name__, etype, value)  # [2]
+    if "header" in friendly:  # [1]
+        info["header"] = friendly["header"]
+    else:
+        info["header"] = get_header()
+
+    info["message"] = get_message(etype.__name__, value)  # [1a]
+
+    if "generic" in friendly:  # [2]
+        info["generic"] = friendly["generic"]
+    else:
+        info["generic"] = get_generic_explanation(etype.__name__, etype, value)
 
     if issubclass(etype, SyntaxError) and value.filename == "<string>":
         info["cause"] = cannot_analyze_string()
     else:
+        if issubclass(etype, SyntaxError):
+            process_parsing_error(etype, value, info)
         header, cause = get_likely_cause(etype, value)
         if cause is not None:
-            if etype.__name__ == "TabError":
-                info["location information"] = cause
-            elif etype.__name__ == "SyntaxError":
-                info["location information"] = cause[0]
-                info["cause header"] = header
-                info["cause"] = cause[1]
-            else:
-                info["cause header"] = header  # [3a]
-                info["cause"] = cause  # [3]
+            info["cause header"] = header  # [3]
+            info["cause"] = cause  # [3a]
 
     if issubclass(etype, SyntaxError):
         return info
@@ -155,15 +166,17 @@ def excluded_file_names():
     return excluded
 
 
-def get_header(name, value):
+def get_header():
     """Provides the header for a standard Python exception"""
     _ = current_lang.lang
-    # fmt: off
-    return _(
-        "Python exception: \n"
-        "    {name}: {value}\n"
-    ).format(name=name, value=value)
-    # fmt: on
+    return _("Python exception:")
+
+
+def get_message(name, value):
+    """Provides the message for a standard Python exception"""
+    if hasattr(value, "msg"):
+        return f"{name}: {value.msg}\n"
+    return f"{name}: {value}\n"
 
 
 def get_generic_explanation(name, etype, value):
@@ -224,3 +237,18 @@ def exception_raised_header(linenumber, filename):
     return _("Exception raised on line {linenumber} of file '{filename}'.\n").format(
         linenumber=linenumber, filename=utils.shorten_path(filename)
     )
+
+
+def process_parsing_error(etype, value, info):
+    _ = current_lang.lang
+    filepath = value.filename
+    linenumber = value.lineno
+    offset = value.offset
+    partial_source, _ignore = utils.get_partial_source(filepath, linenumber, offset)
+
+    info["parsing error"] = _(
+        "Python could not parse the file '{filename}'\n"
+        "beyond the location indicated below by --> and ^.\n"
+    ).format(filename=utils.shorten_path(filepath))
+
+    info["parsing error source"] = f"{partial_source}\n"

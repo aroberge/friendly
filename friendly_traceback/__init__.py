@@ -9,4 +9,4 @@ if not valid_version:
     sys.exit()
 
 from .core import *  # noqa
-from . import invocation  # noqa
+from . import version  # noqa

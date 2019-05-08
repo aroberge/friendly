@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-05-08 06:55-0300\n"
+"POT-Creation-Date: 2019-05-08 11:06-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -222,21 +222,13 @@ msgid ""
 "because the name of the object is not spelled correctly.\n"
 msgstr ""
 
-#: info_generic.py:56 info_specific.py:143 info_specific.py:165
-msgid ""
-"Python could not parse the file '{filename}'\n"
-"beyond the location indicated below by --> and ^.\n"
-"\n"
-"{source}\n"
-msgstr ""
-
-#: info_generic.py:63
+#: info_generic.py:51
 msgid ""
 "An IndentationError occurs when a given line of code is\n"
 "not indented (aligned vertically with other lines) as expected.\n"
 msgstr ""
 
-#: info_generic.py:74
+#: info_generic.py:60
 msgid ""
 "An IndexError occurs when you are try to get an item from a list,\n"
 "a tuple, or a similar object (sequence), by using an index which\n"
@@ -245,20 +237,20 @@ msgid ""
 "Reminder: the first item of a sequence is at index 0.\n"
 msgstr ""
 
-#: info_generic.py:86
+#: info_generic.py:72
 msgid ""
 "A KeyError is raised when a value is not found as a\n"
 "key in a Python dict.\n"
 msgstr ""
 
-#: info_generic.py:95
+#: info_generic.py:81
 msgid ""
 "LookupError is the base class for the exceptions that are raised\n"
 "when a key or index used on a mapping or sequence is invalid.\n"
 "It can also be raised directly by codecs.lookup().\n"
 msgstr ""
 
-#: info_generic.py:105
+#: info_generic.py:91
 msgid ""
 "A ModuleNotFoundError exception indicates that you\n"
 "are trying to import a module that cannot be found by Python.\n"
@@ -266,7 +258,7 @@ msgid ""
 "or because it is not installed on your computer.\n"
 msgstr ""
 
-#: info_generic.py:116
+#: info_generic.py:102
 msgid ""
 "A NameError exception indicates that a variable or\n"
 "function name is not known to Python.\n"
@@ -275,12 +267,12 @@ msgid ""
 "before being defined or given a value.\n"
 msgstr ""
 
-#: info_generic.py:128
+#: info_generic.py:114
 msgid ""
 "A SyntaxError occurs when Python cannot understand your code.\n"
 msgstr ""
 
-#: info_generic.py:134
+#: info_generic.py:120
 msgid ""
 "A TabError indicates that you have used both spaces\n"
 "and tab characters to indent your code.\n"
@@ -290,14 +282,14 @@ msgid ""
 "Python's recommendation is to always use spaces to indent your code.\n"
 msgstr ""
 
-#: info_generic.py:147
+#: info_generic.py:133
 msgid ""
 "A TypeError is usually caused by trying\n"
 "to combine two incompatible types of objects,\n"
 "or by calling a function with the wrong type of object.\n"
 msgstr ""
 
-#: info_generic.py:157
+#: info_generic.py:143
 msgid ""
 "In Python, variables that are used inside a function are known as \n"
 "local variables. Before they are used, they must be assigned a value.\n"
@@ -309,14 +301,14 @@ msgid ""
 "an UnboundLocalError.\n"
 msgstr ""
 
-#: info_generic.py:172
+#: info_generic.py:158
 msgid ""
 "No information is known about this exception.\n"
 "Please report this example to\n"
 "https://github.com/aroberge/friendly-traceback/issues\n"
 msgstr ""
 
-#: info_generic.py:182
+#: info_generic.py:168
 msgid ""
 "A ZeroDivisionError occurs when you are attempting to divide\n"
 "a value by zero:\n"
@@ -385,7 +377,7 @@ msgid ""
 "In your program, the unknown name is '{var_name}'.\n"
 msgstr ""
 
-#: info_specific.py:186
+#: info_specific.py:162
 msgid ""
 "The variable that appears to cause the problem is '{var_name}'.\n"
 "Perhaps the statement\n"
@@ -393,33 +385,37 @@ msgid ""
 "should have been included as the first line inside your function.\n"
 msgstr ""
 
-#: info_traceback.py:140
+#: info_traceback.py:151
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
 msgstr ""
 
-#: info_traceback.py:162
-msgid ""
-"Python exception: \n"
-"    {name}: {value}\n"
+#: info_traceback.py:172
+msgid "Python exception:"
 msgstr ""
 
-#: info_traceback.py:189
+#: info_traceback.py:202
 msgid "My best guess:"
 msgstr ""
 
-#: info_traceback.py:191
+#: info_traceback.py:204
 msgid "Likely cause:"
 msgstr ""
 
-#: info_traceback.py:217
+#: info_traceback.py:230
 msgid ""
 "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: info_traceback.py:224
+#: info_traceback.py:237
 msgid ""
 "Exception raised on line {linenumber} of file '{filename}'.\n"
+msgstr ""
+
+#: info_traceback.py:249
+msgid ""
+"Python could not parse the file '{filename}'\n"
+"beyond the location indicated below by --> and ^.\n"
 msgstr ""
 

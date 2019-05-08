@@ -2,10 +2,7 @@
 
 Generic information about Python exceptions.
 """
-import os
 from .my_gettext import current_lang
-from . import utils
-
 
 generic = {}
 
@@ -48,23 +45,9 @@ def import_error(*args):
 @register("IndentationError")
 def indentation_error(etype, value):
     _ = current_lang.lang
-    filename = value.filename
-    linenumber = value.lineno
-    offset = value.offset
-    source, _ignore = utils.get_partial_source(filename, linenumber, offset)
-    filename = os.path.basename(filename)
-    info = _(
-        "Python could not parse the file '{filename}'\n"
-        "beyond the location indicated below by --> and ^.\n"
-        "\n"
-        "{source}\n"
-    ).format(filename=filename, source=source)
-    return (
-        _(
-            "An IndentationError occurs when a given line of code is\n"
-            "not indented (aligned vertically with other lines) as expected.\n"
-        )
-        + info
+    return _(
+        "An IndentationError occurs when a given line of code is\n"
+        "not indented (aligned vertically with other lines) as expected.\n"
     )
 
 

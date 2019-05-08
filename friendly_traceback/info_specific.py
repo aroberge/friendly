@@ -3,8 +3,6 @@
 Attempts to provide some specific information about the likely cause
 of a given exception.
 """
-import os
-
 
 from . import utils
 from .my_gettext import current_lang
@@ -133,41 +131,16 @@ def name_error(etype, value):
 
 @register("SyntaxError")
 def syntax_error(etype, value):
-    _ = current_lang.lang
     filepath = value.filename
     linenumber = value.lineno
     offset = value.offset
     message = value.msg
     partial_source, _ignore = utils.get_partial_source(filepath, linenumber, offset)
-    filename = os.path.basename(filepath)
-    location_information = _(
-        "Python could not parse the file '{filename}'\n"
-        "beyond the location indicated below by --> and ^.\n"
-        "\n"
-        "{source}\n"
-    ).format(filename=filename, source=partial_source)
-
     source = utils.get_source(filepath)
     cause = analyze_syntax.find_likely_cause(source, linenumber, message, offset)
     this_case = analyze_syntax.expand_cause(cause)
 
-    return location_information, this_case
-
-
-@register("TabError")
-def tab_error(etype, value):
-    _ = current_lang.lang
-    filename = value.filename
-    linenumber = value.lineno
-    offset = value.offset
-    source, _ignore = utils.get_partial_source(filename, linenumber, offset)
-    filename = os.path.basename(filename)
-    return _(
-        "Python could not parse the file '{filename}'\n"
-        "beyond the location indicated below by --> and ^.\n"
-        "\n"
-        "{source}\n"
-    ).format(filename=filename, source=source)
+    return this_case
 
 
 @register("TypeError")

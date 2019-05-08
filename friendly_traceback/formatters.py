@@ -4,18 +4,18 @@
 
 friendly_items = [
     ("header", "indent"),
+    ("message", "double"),
     ("generic", "indent"),
-    ("location header", "indent"),
-    # only for SyntaxError and TabError
-    ("location information", "indent"),
+    ("parsing error", "indent"),  # only for SyntaxError and subclasses
+    ("parsing error source", "none"),  # only for SyntaxError and subclasses
     ("cause header", "indent"),
-    ("cause", "double indent"),
+    ("cause", "double"),
     ("last_call header", "indent"),
-    ("last_call source", "no indent"),
-    ("last_call variables", "no indent"),
+    ("last_call source", "none"),
+    ("last_call variables", "none"),
     ("exception_raised header", "indent"),
-    ("exception_raised source", "no indent"),
-    ("exception_raised variables", "no indent"),
+    ("exception_raised source", "none"),
+    ("exception_raised variables", "none"),
 ]
 
 
@@ -29,7 +29,7 @@ def default(info):
     """Shows all the information processed by Friendly-traceback with
        formatting suitable for REPL.
     """
-    spacing = {"indent": " " * 4, "double indent": " " * 8, "no indent": ""}
+    spacing = {"indent": " " * 4, "double": " " * 8, "none": ""}
     result = [""]
     for item, formatting in friendly_items:
         if item in info:
