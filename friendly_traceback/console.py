@@ -26,7 +26,7 @@ class FriendlyConsole(InteractiveConsole):
         self.fake_filename = None
         self.counter = 0
 
-    def runsource(self, source, filename="<console>", symbol="single"):
+    def runsource(self, source, filename="<input>", symbol="single"):
         """Compile and run some source in the interpreter.
 
         Arguments are as for compile_command().
@@ -52,7 +52,7 @@ class FriendlyConsole(InteractiveConsole):
         """
 
         # Trick adapted from Better-exceptions project
-        self.true_filename_plus_source = (filename, source)
+        self.true_filename_plus_source = ("<console>", source)
         self.filename = self.fake_filename = filename = "<console:%d>" % self.counter
         utils.cache_string_source(self.fake_filename, self.true_filename_plus_source)
         self.counter += 1

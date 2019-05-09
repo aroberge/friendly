@@ -220,7 +220,7 @@ def get_partial_source(filename, linenumber, lines, index):
     """
     if filename in utils.CACHED_STRING_SOURCES:
         true_name, source = utils.CACHED_STRING_SOURCES[filename]
-        source, line = utils.get_partial_source(true_name, linenumber, None)
+        source, line = utils.get_partial_source(filename, linenumber, None)
         filename = true_name
     elif filename == "<string>":  # note: it might have been cached with this name
         source = cannot_analyze_string()
