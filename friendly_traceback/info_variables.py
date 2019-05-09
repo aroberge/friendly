@@ -17,12 +17,17 @@ def get_var_info(line, frame):
     loc = frame.f_locals
     glob = frame.f_globals
     names_info = []
+    names = []
     for tok in tokens:
         if tok.type == tokenize.NAME:
+            name = tok.string
+            if name in names:
+                continue
+            names.append(name)
             result = ""
-            if tok.string in loc:
+            if name in loc:
                 result = format_var_info(tok, loc)
-            elif tok.string in glob:
+            elif name in glob:
                 result = format_var_info(tok, glob, _global=True)
             if result:
                 names_info.append(result)
@@ -61,9 +66,7 @@ def format_var_info(tok, _dict, _global=""):
         # We reduce the length of the repr, indicate this by ..., but we
         # also keep the last character so that the repr of a list still
         # ends with ], that of a tuple still ends with ), etc.
-        # fmt: off
-        value = value[0: MAX_LENGTH-5] + "..." + value[-1]
-        # fmt: on
+        value = value[0 : MAX_LENGTH - 5] + "..." + value[-1]
         try:
             length_info = len(obj)
         except TypeError:
