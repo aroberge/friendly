@@ -12,8 +12,6 @@ from . import utils
 from .my_gettext import current_lang
 from .info_variables import get_var_info
 
-CONTEXT = utils.CONTEXT
-CONSOLE_SOURCE = utils.CONSOLE_SOURCE
 
 # ====================
 # The following is an example of a formatted traceback, with each
@@ -38,35 +36,28 @@ CONSOLE_SOURCE = utils.CONSOLE_SOURCE
 
 # [3]
 # Likely cause:
-
-# [3a]
 #     The variable that appears to cause the problem is 'a'.
 #     Try inserting the statement
 #         global a
 #     as the first line inside your function.
 #
+
 # [4]
 # Execution stopped on line 14 of file 'C:\Users...\test_unbound_local_error.py'.
-
-# [5]
 #    12:
 #    13:     try:
 # -->14:         inner()
 #    15:     except Exception:
-
-# [6]
+#
 # inner: <function test_unbound_local_error.<loca... >
 
-# [7]
+# [5]
 # Exception raised on line 11 of file 'C:\Users\...\test_unbound_local_error.py'.
-
-# [8]
 #     9:     def inner():
 #    10:         b = 2
 # -->11:         a = a + b
 #    12:
-
-# [9]
+#
 # b: 2
 
 
@@ -81,79 +72,57 @@ def get_traceback_info(etype, value, tb, running_script=False):
         friendly = []
 
     # Note: the numbered comments refer to the example above
-    if "header" in friendly:  # [1]
-        info["header"] = friendly["header"]
-    else:
-        info["header"] = get_header()
-
+    set_header(info, friendly)  # [1]
     info["message"] = get_message(etype.__name__, value)  # [1a]
-
-    if "generic" in friendly:  # [2]
-        info["generic"] = friendly["generic"]
-    else:
-        info["generic"] = get_generic_explanation(etype.__name__, etype, value)
-
-    if issubclass(etype, SyntaxError) and value.filename == "<string>":
-        info["cause"] = cannot_analyze_string()
-    else:
-        if issubclass(etype, SyntaxError):
-            process_parsing_error(etype, value, info)
-        if "cause" in friendly:
-            info["cause"] = friendly["cause"]
-            try:
-                info["cause header"] = friendly["cause header"]
-            except KeyError:
-                pass
-        else:
-            header, cause = get_likely_cause(etype, value)
-            if cause is not None:
-                info["cause header"] = header  # [3]
-                info["cause"] = cause  # [3a]
+    set_generic(info, friendly, etype, value)  # [2]
+    set_cause(info, friendly, etype, value)  # [3]
 
     if issubclass(etype, SyntaxError):
         return info
 
     # Get all calls made
-    records = inspect.getinnerframes(tb, CONTEXT)
+    records = inspect.getinnerframes(tb, utils.CONTEXT)
 
     # Last call made
+    frame, filename, linenumber, _func, lines, index = records[0]
     if running_script:
         # Do not show traceback from our own code
         excluded_files = excluded_file_names()
         for record in records[:-1]:
-            _frame, filename, linenumber, _func, lines, index = record
+            frame, filename, linenumber, _func, lines, index = record
             if filename in excluded_files:
                 continue
             break
-    else:
-        _frame, filename, linenumber, _func, lines, index = records[0]
-
-    source_info = get_partial_source(filename, linenumber, lines, index)
-    filename = source_info["filename"]
-    info["last_call header"] = last_call_header(linenumber, filename)  # [4]
-
-    info["last_call source"] = source_info["source"]  # [5]
-
-    if "line" in source_info and source_info["line"] is not None:
-        result = get_var_info(source_info["line"], _frame)
-        if result:
-            info["last_call variables"] = result  # [6]
+        else:
+            return info
+    set_call_info(info, "last_call", filename, linenumber, lines, index, frame)  # [4]
 
     # Origin of the exception
     if len(records) > 1:
-        _frame, filename, linenumber, _func, lines, index = records[-1]
-        # [7] below
-        source_info = get_partial_source(filename, linenumber, lines, index)
-        filename = source_info["filename"]
-        info["exception_raised header"] = exception_raised_header(linenumber, filename)
-        info["exception_raised source"] = source_info["source"]  # [8]
-
-        if "line" in source_info and source_info["line"] is not None:
-            result = get_var_info(source_info["line"], _frame)
-            if result:
-                info["exception_raised variables"] = result  # [9]
+        frame, filename, linenumber, _func, lines, index = records[-1]
+        set_call_info(
+            info, "exception_raised", filename, linenumber, lines, index, frame
+        )  # [5]
 
     return info
+
+
+def set_call_info(info, name, filename, linenumber, lines, index, frame):
+    source_info = get_partial_source(filename, linenumber, lines, index)
+    # If the source was cached, the filename we got was not the correct one
+    # so we ensure that we have the true filename for the display
+    true_filename = source_info["filename"]
+    if name == "last_call":
+        get_header = last_call_header
+    else:
+        get_header = exception_raised_header
+    info["%s header" % name] = get_header(linenumber, true_filename)  # [4]
+    info["%s source" % name] = source_info["source"]  # [5]
+
+    if "line" in source_info and source_info["line"] is not None:
+        var_info = get_var_info(source_info["line"], frame)
+        if var_info:
+            info["%s variables" % name] = var_info  # [6]
 
 
 def cannot_analyze_string():
@@ -176,10 +145,13 @@ def excluded_file_names():
     return excluded
 
 
-def get_header():
-    """Provides the header for a standard Python exception"""
+def set_header(info, friendly):
+    """Sets the header for the exception"""
     _ = current_lang.lang
-    return _("Python exception:")
+    if "header" in friendly:  # [1]
+        info["header"] = friendly["header"]
+    else:
+        info["header"] = _("Python exception:")
 
 
 def get_message(name, value):
@@ -187,6 +159,14 @@ def get_message(name, value):
     if hasattr(value, "msg"):
         return f"{name}: {value.msg}\n"
     return f"{name}: {value}\n"
+
+
+def set_generic(info, friendly, etype, value):
+    """Sets the value of the generic explanation"""
+    if "generic" in friendly:
+        info["generic"] = friendly["generic"]
+    else:
+        info["generic"] = get_generic_explanation(etype.__name__, etype, value)
 
 
 def get_generic_explanation(name, etype, value):
@@ -197,6 +177,24 @@ def get_generic_explanation(name, etype, value):
     else:
         explanation = info_generic.generic["Unknown"]()
     return explanation
+
+
+def set_cause(info, friendly, etype, value):
+    """Sets the cause"""
+    if issubclass(etype, SyntaxError) and value.filename == "<string>":
+        info["cause"] = cannot_analyze_string()
+    else:
+        if issubclass(etype, SyntaxError):
+            process_parsing_error(etype, value, info)
+        if "cause" in friendly:
+            info["cause"] = friendly["cause"]
+            if "cause header" in friendly:
+                info["cause header"] = friendly["cause header"]
+        else:
+            header, cause = get_likely_cause(etype, value)
+            if cause is not None:
+                info["cause header"] = header
+                info["cause"] = cause
 
 
 def get_likely_cause(etype, value):
@@ -220,11 +218,11 @@ def get_partial_source(filename, linenumber, lines, index):
        formatted in a pre-determined way, as well as the content
        of the specific line where the exception occurred.
     """
-    if filename in CONSOLE_SOURCE:
-        _filename, source = CONSOLE_SOURCE[filename]
-        source, line = utils.get_partial_source(filename, linenumber, None)
-        filename = _filename
-    elif filename == "<string>":
+    if filename in utils.CACHED_STRING_SOURCES:
+        true_name, source = utils.CACHED_STRING_SOURCES[filename]
+        source, line = utils.get_partial_source(true_name, linenumber, None)
+        filename = true_name
+    elif filename == "<string>":  # note: it might have been cached with this name
         source = cannot_analyze_string()
         lines = source.split("\n")
         new_lines = []
@@ -233,7 +231,7 @@ def get_partial_source(filename, linenumber, lines, index):
         source = "\n".join(new_lines)
         line = None
     elif filename and os.path.abspath(filename):
-        filename = os.path.basename(filename)
+        # filename = os.path.basename(filename)
         source, line = utils.highlight_source(linenumber, index, lines)
     elif not filename:
         raise FileNotFoundError("Cannot find %s" % filename)

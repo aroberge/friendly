@@ -5,7 +5,7 @@ import os.path
 from io import StringIO
 
 CONTEXT = 4
-CONSOLE_SOURCE = {}
+CACHED_STRING_SOURCES = {}
 
 
 class Token:
@@ -38,13 +38,13 @@ def collect_tokens(line):
     return tokens
 
 
-def add_console_source(fake_filename, true_filename_and_source):
-    CONSOLE_SOURCE[fake_filename] = true_filename_and_source
+def cache_string_source(fake_filename, true_filename_and_source):
+    CACHED_STRING_SOURCES[fake_filename] = true_filename_and_source
 
 
 def get_source(filename):
-    if filename in CONSOLE_SOURCE:
-        _filename, source = CONSOLE_SOURCE[filename]
+    if filename in CACHED_STRING_SOURCES:
+        _filename, source = CACHED_STRING_SOURCES[filename]
         lines = source.split("\n")
     else:
         with open(filename, encoding="utf8") as f:
@@ -116,7 +116,7 @@ def shorten_path(path):
     # However, we ensure that the shortened path retains its cases
     path_lower = path.lower()
     if path_lower.startswith(TESTS):
-        path = "FRIENDLY-TESTS:" + path[len(TESTS) :]
+        path = "TESTS:" + path[len(TESTS) :]
     elif path_lower.startswith(FRIENDLY):
         path = "FRIENDLY:" + path[len(FRIENDLY) :]
     elif path_lower.startswith(PYTHON):

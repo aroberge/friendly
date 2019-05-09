@@ -1,9 +1,6 @@
 """console.py
 
 Adaptation of Python's console found in code.py
-as well as from
-https://github.com/Qix-/better-exceptions/blob/master/better_exceptions/repl.py
-
 """
 
 # The code below could be simplified if we used super().some_method(...)
@@ -53,9 +50,11 @@ class FriendlyConsole(InteractiveConsole):
         line.
 
         """
+
+        # Trick adapted from Better-exceptions project
         self.true_filename_plus_source = (filename, source)
         self.filename = self.fake_filename = filename = "<console:%d>" % self.counter
-        utils.add_console_source(self.fake_filename, self.true_filename_plus_source)
+        utils.cache_string_source(self.fake_filename, self.true_filename_plus_source)
         self.counter += 1
         try:
             code = self.compile(source, filename, symbol)
@@ -87,7 +86,7 @@ class FriendlyConsole(InteractiveConsole):
         caller should be prepared to deal with it.
 
         """
-        utils.add_console_source(self.fake_filename, self.true_filename_plus_source)
+        utils.cache_string_source(self.fake_filename, self.true_filename_plus_source)
         try:
             exec(code, self.locals)
         except SystemExit:
@@ -129,12 +128,12 @@ class FriendlyConsole(InteractiveConsole):
 
         We remove the first stack item because it is our own code.
         """
-        sys.last_type, sys.last_value, last_tb = ei = sys.exc_info()
+        sys.last_type, sys.last_value, last_tb = sys.exc_info()
         sys.last_traceback = last_tb
         try:
-            sys.excepthook(ei[0], ei[1], last_tb.tb_next)
+            sys.excepthook(sys.last_type, sys.last_value, last_tb.tb_next)
         finally:
-            last_tb = ei = None
+            last_tb = None
 
 
 def start_console(local_vars=None, show_python=False):
