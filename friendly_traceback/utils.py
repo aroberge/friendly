@@ -47,7 +47,7 @@ def get_source(filename):
         _filename, source = CONSOLE_SOURCE[filename]
         lines = source.split("\n")
     else:
-        with open(filename) as f:
+        with open(filename, encoding="utf8") as f:
             lines = f.readlines()
     return lines
 
@@ -116,7 +116,7 @@ def shorten_path(path):
     # However, we ensure that the shortened path retains its cases
     path_lower = path.lower()
     if path_lower.startswith(TESTS):
-        path = "TESTS:" + path[len(TESTS) :]
+        path = "FRIENDLY-TESTS:" + path[len(TESTS) :]
     elif path_lower.startswith(FRIENDLY):
         path = "FRIENDLY:" + path[len(FRIENDLY) :]
     elif path_lower.startswith(PYTHON):

@@ -18,6 +18,16 @@ friendly_items = [
     ("exception_raised variables", "none"),
 ]
 
+explain_items = [
+    ("header", "indent"),
+    ("message", "double"),
+    ("generic", "indent"),
+    ("parsing error", "indent"),  # only for SyntaxError and subclasses
+    ("parsing error source", "none"),  # only for SyntaxError and subclasses
+    ("cause header", "indent"),
+    ("cause", "double"),
+]
+
 
 def format_traceback(info, level=1):
     """ Simple text formatter for the traceback."""
@@ -25,13 +35,15 @@ def format_traceback(info, level=1):
     return "\n".join(result)
 
 
-def default(info):
+def default(info, items=None):
     """Shows all the information processed by Friendly-traceback with
        formatting suitable for REPL.
     """
+    if items is None:
+        items = friendly_items
     spacing = {"indent": " " * 4, "double": " " * 8, "none": ""}
     result = [""]
-    for item, formatting in friendly_items:
+    for item, formatting in items:
         if item in info:
             for line in info[item].split("\n"):
                 result.append(spacing[formatting] + line)
@@ -57,7 +69,7 @@ def python_traceback_after(info):
     return result
 
 
-def only_explain(info):
+def only_add_explain(info):
     """Includes the normal Python traceback before adding the generic
        information about a given exception and the likely cause.
     """
@@ -72,9 +84,15 @@ def only_explain(info):
     return result
 
 
+def only_explain(info):
+    result = default(info, items=explain_items)
+    return result
+
+
 choose_formatter = {
     1: default,
     2: python_traceback_before,
-    3: only_explain,
+    3: only_add_explain,
+    4: only_explain,
     9: python_traceback_after,
 }

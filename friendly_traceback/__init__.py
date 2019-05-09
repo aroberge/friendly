@@ -10,3 +10,4 @@ if not valid_version:
 
 from .core import *  # noqa
 from . import version  # noqa
+from .console import FriendlyConsole  # noqa

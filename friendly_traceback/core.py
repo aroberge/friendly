@@ -121,10 +121,9 @@ class _State:
         info["python_traceback"] = "".join(python_tb)
         explanation = self.formatter(info, level=self.level)
         self.write_err(explanation)
-
-        # if self.level == 9:
-        #     python_tb = traceback.format_exception(etype, value, tb)
-        #     self.write_err("\n" + "".join(python_tb) + "\n")
+        # Ensures that we start on a new line for the console
+        if not explanation.endswith("\n"):
+            self.write_err("\n")
 
     def capture(self, txt):
         """Captures the output instead of writing to stderr."""
@@ -189,7 +188,15 @@ def run_script(source):
 # Public API available through a * import
 # ----------------
 
-__all__ = ["explain", "get_output", "install", "set_lang", "set_level", "set_formatter"]
+__all__ = [
+    "explain",
+    "get_output",
+    "install",
+    "set_lang",
+    "set_level",
+    "get_level",
+    "set_formatter",
+]
 
 
 def explain(etype, value, tb, redirect=None):
@@ -240,3 +247,7 @@ def set_level(level):
        Some other values may be available on an experimental basis.
     """
     state.set_level(level)
+
+
+def get_level():
+    return state.level

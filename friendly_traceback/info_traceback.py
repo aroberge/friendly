@@ -128,8 +128,10 @@ def get_traceback_info(etype, value, tb, running_script=False):
     else:
         _frame, filename, linenumber, _func, lines, index = records[0]
 
-    info["last_call header"] = last_call_header(linenumber, filename)  # [4]
     source_info = get_partial_source(filename, linenumber, lines, index)
+    filename = source_info["filename"]
+    info["last_call header"] = last_call_header(linenumber, filename)  # [4]
+
     info["last_call source"] = source_info["source"]  # [5]
 
     if "line" in source_info and source_info["line"] is not None:
@@ -141,8 +143,9 @@ def get_traceback_info(etype, value, tb, running_script=False):
     if len(records) > 1:
         _frame, filename, linenumber, _func, lines, index = records[-1]
         # [7] below
-        info["exception_raised header"] = exception_raised_header(linenumber, filename)
         source_info = get_partial_source(filename, linenumber, lines, index)
+        filename = source_info["filename"]
+        info["exception_raised header"] = exception_raised_header(linenumber, filename)
         info["exception_raised source"] = source_info["source"]  # [8]
 
         if "line" in source_info and source_info["line"] is not None:
@@ -217,12 +220,18 @@ def get_partial_source(filename, linenumber, lines, index):
        formatted in a pre-determined way, as well as the content
        of the specific line where the exception occurred.
     """
-    if filename == "<string>":
-        source = cannot_analyze_string()
-        line = None
-    elif filename in CONSOLE_SOURCE:
+    if filename in CONSOLE_SOURCE:
         _filename, source = CONSOLE_SOURCE[filename]
         source, line = utils.get_partial_source(filename, linenumber, None)
+        filename = _filename
+    elif filename == "<string>":
+        source = cannot_analyze_string()
+        lines = source.split("\n")
+        new_lines = []
+        for _line in lines:
+            new_lines.append("    " + _line)
+        source = "\n".join(new_lines)
+        line = None
     elif filename and os.path.abspath(filename):
         filename = os.path.basename(filename)
         source, line = utils.highlight_source(linenumber, index, lines)
@@ -232,7 +241,7 @@ def get_partial_source(filename, linenumber, lines, index):
     if not source.endswith("\n"):
         source += "\n"
 
-    return {"source": source, "line": line}
+    return {"source": source, "line": line, "filename": filename}
 
 
 def last_call_header(linenumber, filename):
