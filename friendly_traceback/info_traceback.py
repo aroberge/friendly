@@ -116,13 +116,13 @@ def set_call_info(info, name, filename, linenumber, lines, index, frame):
         get_header = last_call_header
     else:
         get_header = exception_raised_header
-    info["%s header" % name] = get_header(linenumber, true_filename)  # [4]
-    info["%s source" % name] = source_info["source"]  # [5]
+    info["%s_header" % name] = get_header(linenumber, true_filename)  # [4]
+    info["%s_source" % name] = source_info["source"]  # [5]
 
     if "line" in source_info and source_info["line"] is not None:
         var_info = get_var_info(source_info["line"], frame)
         if var_info:
-            info["%s variables" % name] = var_info  # [6]
+            info["%s_variables" % name] = var_info  # [6]
 
 
 def cannot_analyze_string():
@@ -188,12 +188,12 @@ def set_cause(info, friendly, etype, value):
             process_parsing_error(etype, value, info)
         if "cause" in friendly:
             info["cause"] = friendly["cause"]
-            if "cause header" in friendly:
-                info["cause header"] = friendly["cause header"]
+            if "cause_header" in friendly:
+                info["cause_header"] = friendly["cause_header"]
         else:
             header, cause = get_likely_cause(etype, value)
             if cause is not None:
-                info["cause header"] = header
+                info["cause_header"] = header
                 info["cause"] = cause
 
 
@@ -263,9 +263,9 @@ def process_parsing_error(etype, value, info):
     offset = value.offset
     partial_source, _ignore = utils.get_partial_source(filepath, linenumber, offset)
 
-    info["parsing error"] = _(
+    info["parsing_error"] = _(
         "Python could not parse the file '{filename}'\n"
         "beyond the location indicated below by --> and ^.\n"
     ).format(filename=utils.shorten_path(filepath))
 
-    info["parsing error source"] = f"{partial_source}\n"
+    info["parsing_error_source"] = f"{partial_source}\n"

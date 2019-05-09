@@ -221,7 +221,7 @@ def install(redirect=None):
     state.install(redirect=redirect)
 
 
-def set_formatter(self, formatter=None):
+def set_formatter(formatter=None):
     """Sets the default formatter. If no argument is given, the default
        formatter is used.
     """

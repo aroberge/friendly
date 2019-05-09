@@ -1,4 +1,3 @@
-# # pylint: disable=C0103
 import subprocess
 
 sessions = [

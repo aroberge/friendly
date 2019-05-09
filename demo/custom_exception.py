@@ -34,7 +34,7 @@ class MyException2(MyBaseException):
     def __init__(self, *args):
         super().__init__(*args)
         self.friendly["generic"] = "Some generic information about this exception.\n"
-        self.friendly["cause header"] = "The cause is:"
+        self.friendly["cause_header"] = "The cause is:"
         self.friendly["cause"] = f"Specific cause: {args[1]}\n"
 
 

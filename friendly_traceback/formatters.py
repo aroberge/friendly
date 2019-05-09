@@ -6,25 +6,25 @@ friendly_items = [
     ("header", "indent"),
     ("message", "double"),
     ("generic", "indent"),
-    ("parsing error", "indent"),  # only for SyntaxError and subclasses
-    ("parsing error source", "none"),  # only for SyntaxError and subclasses
-    ("cause header", "indent"),
+    ("parsing_error", "indent"),  # only for SyntaxError and subclasses
+    ("parsing_error_source", "none"),  # only for SyntaxError and subclasses
+    ("cause_header", "indent"),
     ("cause", "double"),
-    ("last_call header", "indent"),
-    ("last_call source", "none"),
-    ("last_call variables", "none"),
-    ("exception_raised header", "indent"),
-    ("exception_raised source", "none"),
-    ("exception_raised variables", "none"),
+    ("last_call_header", "indent"),
+    ("last_call_source", "none"),
+    ("last_call_variables", "none"),
+    ("exception_raised_header", "indent"),
+    ("exception_raised_source", "none"),
+    ("exception_raised_variables", "none"),
 ]
 
 explain_items = [
     ("header", "indent"),
     ("message", "double"),
     ("generic", "indent"),
-    ("parsing error", "indent"),  # only for SyntaxError and subclasses
-    ("parsing error source", "none"),  # only for SyntaxError and subclasses
-    ("cause header", "indent"),
+    ("parsing_error", "indent"),  # only for SyntaxError and subclasses
+    ("parsing_error_source", "none"),  # only for SyntaxError and subclasses
+    ("cause_header", "indent"),
     ("cause", "double"),
 ]
 
@@ -77,8 +77,8 @@ def only_add_explain(info):
     result.append(info["python_traceback"])
     if "generic" in info:
         result.append("    " + info["generic"])
-    if "cause header" in info:
-        result.append("    " + info["cause header"])
+    if "cause_header" in info:
+        result.append("    " + info["cause_header"])
     if "cause" in info:
         result.append("        " + info["cause"])
     return result
