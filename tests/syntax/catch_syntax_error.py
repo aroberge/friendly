@@ -16,6 +16,7 @@ causes = {
     8: "tried to define a function or method",
     9: "what Python calls a 'literal'",
     10: "import X from Y",
+    11: "EOL while scanning string literal",
 }
 
 

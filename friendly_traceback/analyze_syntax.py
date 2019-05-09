@@ -41,6 +41,9 @@ def find_likely_cause(source, linenumber, message, offset):
     ):
         return assign_to_literal(line)
 
+    if "EOL while scanning string literal" in message:
+        return message
+
     # If not, we guess based on the content of the last line of code
     # Note: we will need to do more than this to catch other types
     # of errors, such as mismatched brackets, etc.
@@ -236,6 +239,12 @@ def expand_cause(cause):
             "    something = {name}\n"
             "\n"
         ).format(name=name)
+
+    if "EOL while scanning string literal" in cause:
+        return _(
+            "You starting writing a string with a single or double quote\n"
+            "but never ended the string with another quote on that line.\n"
+        )
 
     return _(
         "Currently, we cannot guess the likely cause of this error.\n"
