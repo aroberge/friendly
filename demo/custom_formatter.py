@@ -1,6 +1,3 @@
-import sys
-
-
 import friendly_traceback
 
 items = (
@@ -71,7 +68,7 @@ friendly_traceback.set_formatter(formatter=html_formatter)
 try:
     b = a + c  # noqa
 except Exception:
-    friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+    friendly_traceback.explain(redirect="capture")
 
 result = begin_html + friendly_traceback.get_output() + end_html
 

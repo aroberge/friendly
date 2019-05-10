@@ -1,6 +1,5 @@
 # More complex example than needed - used for documentation
 import friendly_traceback
-import sys
 
 b = 2
 
@@ -20,7 +19,7 @@ def test_unbound_local_error():
     try:
         outer()
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "UnboundLocalError: local variable 'a' referenced" in result
     return result

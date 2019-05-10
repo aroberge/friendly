@@ -190,6 +190,7 @@ def run_script(source):
 
 __all__ = [
     "explain",
+    "_explain",
     "get_output",
     "install",
     "set_lang",
@@ -199,7 +200,13 @@ __all__ = [
 ]
 
 
-def explain(etype, value, tb, redirect=None):
+def explain(redirect=None):
+    """Replaces a standard traceback by a friendlier one"""
+    etype, value, tb = sys.exc_info()
+    state.explain(etype, value, tb, redirect=redirect)
+
+
+def _explain(etype, value, tb, redirect=None):
     """Replaces a standard traceback by a friendlier one"""
     state.explain(etype, value, tb, redirect=redirect)
 

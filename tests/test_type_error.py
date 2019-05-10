@@ -1,5 +1,4 @@
 import friendly_traceback
-import sys
 
 
 def test_type_error1():
@@ -8,7 +7,7 @@ def test_type_error1():
         one = 1
         result = a + one
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     py37 = "TypeError: can only concatenate" in result
     py36 = "must be str, not int" in result
@@ -22,7 +21,7 @@ def test_type_error1a():
         a_list = [1, 2, 3]
         result = a + a_list
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     py37 = "TypeError: can only concatenate" in result
     py36 = "must be str, not list" in result
@@ -36,7 +35,7 @@ def test_type_error1b():
         a_list = [1, 2, 3]
         result = a_tuple + a_list
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: can only concatenate" in result
     return result
@@ -48,7 +47,7 @@ def test_type_error2():
         none = None
         result = one + none
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for +:" in result
     return result
@@ -60,7 +59,7 @@ def test_type_error2a():
         two = "two"
         one += two
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for +=:" in result
     return result
@@ -72,7 +71,7 @@ def test_type_error3():
         b = [3, 4]
         result = a - b
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for -:" in result
     return result
@@ -84,7 +83,7 @@ def test_type_error3a():
         b = [3, 4]
         a -= b
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for -=:" in result
     return result
@@ -96,7 +95,7 @@ def test_type_error4():
         b = {2, 3}
         result = a * b
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for *:" in result
     return result
@@ -108,7 +107,7 @@ def test_type_error4a():
         b = {2, 3}
         a *= b
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for *=:" in result
     return result
@@ -120,7 +119,7 @@ def test_type_error5():
         b = 3.1416
         result = a / b
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for /:" in result
     return result
@@ -132,7 +131,7 @@ def test_type_error5a():
         b = 3.1416
         a /= b
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for /=:" in result
     return result
@@ -144,7 +143,7 @@ def test_type_error5b():
         b = 3.1416
         result = a // b
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for //:" in result
     return result
@@ -156,7 +155,7 @@ def test_type_error5c():
         b = 3.1416
         a //= b
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for //=:" in result
     return result
@@ -168,7 +167,7 @@ def test_type_error6():
         b = 2
         result = a & b
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for &:" in result
     return result
@@ -180,7 +179,7 @@ def test_type_error6a():
         b = 2
         a &= b
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for &=:" in result
     return result
@@ -192,7 +191,7 @@ def test_type_error7():
         b = 3.1416
         result = a ** b
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for ** or pow():" in result
     return result
@@ -204,7 +203,7 @@ def test_type_error7a():
         b = 3.1416
         a **= b
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for ** or pow():" in result
     return result
@@ -216,7 +215,7 @@ def test_type_error8():
         b = 42
         result = a >> b
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for >>:" in result
     return result
@@ -228,7 +227,7 @@ def test_type_error8a():
         b = 42
         a >>= b
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for >>=:" in result
     return result
@@ -240,7 +239,7 @@ def test_type_error9():
         b = 2
         result = a @ b
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for @:" in result
     return result
@@ -252,7 +251,7 @@ def test_type_error9a():
         b = 2
         a @= b
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for @=:" in result
     return result
@@ -264,7 +263,7 @@ def test_type_error10():
         b = 42
         b < a
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: '<' not supported between instances of 'int' and 'str'" in result
     return result

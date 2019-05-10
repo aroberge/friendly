@@ -4,7 +4,7 @@ sessions = [
     (
         "python -im friendly_traceback tests.test_name_error --as_main",
         "a = 41 \na+=1\nprint(a)\nd=e\n",
-        ["42", "NameError", "-->7:         b = c"],
+        ["42", "NameError", "-->6:         b = c"],
         ["-->1: d=e", "NameError"],
     )
 ]
@@ -28,9 +28,9 @@ def test_console():
         stdout, stderr = process.communicate(inp)
         process.wait()
         for item in out:
-            assert item in stdout
+            assert item in stdout, item
         for item in err:
-            assert item in stderr
+            assert item in stderr, item
 
 
 if __name__ == "__main__":

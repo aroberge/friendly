@@ -1,5 +1,4 @@
 import friendly_traceback
-import sys
 
 
 def test_indentation_error1():
@@ -9,7 +8,7 @@ def test_indentation_error1():
         except ImportError:
             import raise_indentation_error1  # noqa
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "IndentationError: expected an indented block" in result
     return result
@@ -22,7 +21,7 @@ def test_indentation_error2():
         except ImportError:
             import raise_indentation_error2  # noqa
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "IndentationError: unexpected indent" in result
     return result
@@ -35,7 +34,7 @@ def test_indentation_error3():
         except ImportError:
             import raise_indentation_error3  # noqa
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert (
         "IndentationError: unindent does not match any outer indentation level"

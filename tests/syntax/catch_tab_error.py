@@ -1,6 +1,4 @@
 import friendly_traceback
-import sys
-
 
 def test_tab_error():
     try:
@@ -9,7 +7,7 @@ def test_tab_error():
         except ImportError:
             import raise_tab_error  # noqa
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
 
     result = friendly_traceback.get_output()
     assert "TabError: inconsistent use of tabs and spaces in indentation" in result

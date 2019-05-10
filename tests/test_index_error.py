@@ -1,5 +1,4 @@
 import friendly_traceback
-import sys
 
 
 def test_index_error1():
@@ -8,7 +7,7 @@ def test_index_error1():
     try:
         print(a[3], b[2])
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "IndexError" in result
     return result
@@ -20,7 +19,7 @@ def test_index_error2():
     try:
         print(a[50], b[0])
     except Exception:
-        friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+        friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "IndexError" in result
     return result

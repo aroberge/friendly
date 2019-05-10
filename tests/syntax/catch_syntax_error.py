@@ -1,5 +1,4 @@
 import friendly_traceback
-import sys
 
 friendly_traceback.set_lang("en")
 
@@ -25,7 +24,7 @@ def test_syntax_errors():
         try:
             exec("from . import raise_syntax_error%d" % i)
         except Exception:
-            friendly_traceback.explain(*sys.exc_info(), redirect="capture")
+            friendly_traceback.explain(redirect="capture")
         result = friendly_traceback.get_output()
         assert "SyntaxError" in result, "SyntaxError identified incorrectly"
         assert causes[i] in result, "Cause %s identified incorrectly" % i
