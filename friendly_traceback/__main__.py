@@ -24,6 +24,7 @@ parser = argparse.ArgumentParser(
         Note: the values of the verbosity level described below are:
             0: Normal Python tracebacks
             1: Default - does not need to be specified
+            2: Normal Python tracebacks appear before the friendly display
             9: Normal Python tracebacks appended at the end of the friendly
             display.
 

@@ -1,1 +1,1 @@
-__version__ = "0.0.7a"  # 0.0.7 on pypi
+__version__ = "0.0.8a"

@@ -92,8 +92,8 @@ class _State:
         self._captured = []
         self.context = 3
         self.write_err = _write_err
-        lang = _get_default_lang()
-        self.install_gettext(lang)
+        self.lang = _get_default_lang()
+        self.install_gettext(self.lang)
         self.level = _get_level()
         self.set_level(self.level)
         self.running_script = False
@@ -103,7 +103,9 @@ class _State:
            except for SystemExit and KeyboardInterrupt which
            are re-raised.
         """
-        self.set_redirect(redirect=redirect)
+        if redirect is not None:
+            saved_current_redirect = self.write_err
+            self.set_redirect(redirect=redirect)
 
         if self.level == 0:
             python_tb = traceback.format_exception(etype, value, tb)
@@ -125,6 +127,9 @@ class _State:
         if not explanation.endswith("\n"):
             self.write_err("\n")
 
+        if redirect is not None:
+            self.write_err = saved_current_redirect
+
     def capture(self, txt):
         """Captures the output instead of writing to stderr."""
         self._captured.append(txt)
@@ -142,11 +147,18 @@ class _State:
 
     def set_level(self, level):
         """Sets the "verbosity level" and possibly resets sys.__excepthook__"""
-        self.level = level
-        if level != 0:
-            sys.excepthook = self.explain
-        else:
+        _ = current_lang.lang
+        if level == 0:
             sys.excepthook = sys.__excepthook__
+            self.level = 0
+            return
+
+        if level in formatters.choose_formatter:
+            self.level = level
+        else:
+            print(_("Level {level} not available; using default.").format(level))
+        sys.excepthook = self.explain
+        self.level = level
 
     def set_formatter(self, formatter=None):
         """Sets the default formatter. If no argument is given, the default
@@ -194,9 +206,11 @@ __all__ = [
     "get_output",
     "install",
     "set_lang",
+    "get_lang",
     "set_level",
     "get_level",
     "set_formatter",
+    "set_stream",
 ]
 
 
@@ -221,11 +235,11 @@ def get_output(flush=True):
     return state.get_captured(flush=flush)
 
 
-def install(redirect=None):
+def install(lang=None, redirect=None, level=1):
     """
     Replaces sys.excepthook by friendly_traceback's own version
     """
-    state.install(redirect=redirect)
+    state.install(lang=lang, redirect=redirect, level=level)
 
 
 def set_formatter(formatter=None):
@@ -244,6 +258,10 @@ def set_lang(lang):
     state.install_gettext(lang)
 
 
+def get_lang():
+    return state.lang
+
+
 def set_level(level):
     """Sets the verbosity level to be used.
 
@@ -258,3 +276,8 @@ def set_level(level):
 
 def get_level():
     return state.level
+
+
+def set_stream(stream):
+    """Sets the stream to which the output should be directed"""
+    state.set_redirect(redirected=stream)
