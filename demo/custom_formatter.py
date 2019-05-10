@@ -33,7 +33,7 @@ begin_html = """
 <style>
 h1 {color:red}
 h2 {color:blue}
-pre {color:yellow; background: black}
+pre {color:yellow; background: #321}
 body {width:600px; margin:auto}
 </style>
 </head>
