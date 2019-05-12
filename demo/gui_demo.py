@@ -162,11 +162,12 @@ class App(tk.Frame):
         self.master.title("GUI demo")
         self.add_ui()
         self.python_words = set(keyword.kwlist)
+        friendly_traceback.set_formatter(formatter=self.friendly_formatter)
 
     def add_ui(self):
         """Adds UI elements to the main window"""
         _ = current_lang.lang
-        for r in range(2):
+        for r in range(3):
             self.master.rowconfigure(r, weight=1, minsize=20)
         for c in range(5):
             self.master.columnconfigure(c, weight=1, minsize=40)
@@ -174,16 +175,17 @@ class App(tk.Frame):
         self.source_editor = EditorWidget(self.master, self)
         self.source_editor.grid(row=0, column=0, columnspan=5, sticky="news")
 
-        self.open_btn = tk.Button(self.master, text=_("Open"), command=self.get_source)
-
+        self.open_btn = tk.Button(self.master, command=self.get_source)
         self.open_btn.grid(row=1, column=0, sticky="w")
 
-        tk.Button(
+        self.save_btn = tk.Button(
             self.master, text=_("Save"), command=self.source_editor.save_file
-        ).grid(row=1, column=1, sticky="w")
-        tk.Button(self.master, text=_("Run"), command=self.run).grid(
-            row=1, column=2, sticky="w"
         )
+        self.save_btn.grid(row=1, column=1, sticky="w")
+
+        self.run_btn = tk.Button(self.master, text=_("Run"), command=self.run)
+        self.run_btn.grid(row=1, column=2, sticky="w")
+
         self._choice = tk.StringVar()
         self.lang = ttk.Combobox(
             self.master, textvariable=self._choice, values=["en", "fr"]
@@ -191,17 +193,27 @@ class App(tk.Frame):
         self.lang.grid(row=1, column=3, sticky="w")
         self.lang.current(0)
         self.lang.bind("<<ComboboxSelected>>", self.change_lang)
+        self.set_ui_lang()
+
+        self.friendly_output = EditorWidget(self.master, self)
+        self.friendly_output.grid(row=2, column=0, columnspan=5, sticky="news")
+
+        def do_nothing():
+            pass
+
+        self.friendly_output.colorize = do_nothing
 
     def change_lang(self, event=None):
         lang = self.lang.get()
         friendly_traceback.set_lang(lang)
         current_lang.install(lang)
-        self.change_ui_lang()
+        self.set_ui_lang()
 
-    def change_ui_lang(self):
+    def set_ui_lang(self):
         _ = current_lang.lang
-        print("open = ", _("Open"))
         self.open_btn.config(text=_("Open"))
+        self.save_btn.config(text=_("Save"))
+        self.run_btn.config(text=_("Run"))
 
     def get_source(self, event=None):
         """Opens a file by looking first from the current directory."""
@@ -216,10 +228,17 @@ class App(tk.Frame):
     def run(self, event=None):
         # Since we run this from a Tkinter function, any sys.excepthook
         # will be ignored - hence, we need to catch the tracebacks locally.
+
         try:
             friendly_traceback.run_script(self.filename)
         except Exception:
             friendly_traceback.explain()
+
+    def friendly_formatter(self, info, level=9):
+        text = "\n".join(friendly_traceback.formatters.default(info))
+        self.friendly_output.insert_text(text)
+        self.update_idletasks()
+        return str(info["python_traceback"])
 
 
 def main():

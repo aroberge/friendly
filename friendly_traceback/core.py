@@ -117,7 +117,7 @@ class _State:
         if etype.__name__ == "KeyboardInterrupt":
             raise KeyboardInterrupt(str(value))
 
-        info = info_traceback.get_traceback_info(etype, value, tb, running_script=False)
+        info = info_traceback.get_traceback_info(etype, value, tb)
         # normal Python traceback
         python_tb = traceback.format_exception(etype, value, tb)
         info["python_traceback"] = "".join(python_tb)
@@ -212,6 +212,7 @@ __all__ = [
     "run_script",
     "set_formatter",
     "set_stream",
+    "state",  # use with caution
 ]
 
 

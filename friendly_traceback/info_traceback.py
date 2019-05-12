@@ -61,7 +61,7 @@ from .info_variables import get_var_info
 # b: 2
 
 
-def get_traceback_info(etype, value, tb, running_script=False):
+def get_traceback_info(etype, value, tb):
     """ Gathers the basic information related to a traceback and
     returns the result in a dict.
     """
@@ -82,19 +82,19 @@ def get_traceback_info(etype, value, tb, running_script=False):
 
     # Get all calls made
     records = inspect.getinnerframes(tb, utils.CONTEXT)
+    # Do not show traceback from our own code
+    new_records = []
+    excluded_files = excluded_file_names()
+    for record in records:
+        frame, filename, linenumber, _func, lines, index = record
+        if filename in excluded_files:
+            continue
+        else:
+            new_records.append(record)
 
+    records = new_records
     # Last call made
     frame, filename, linenumber, _func, lines, index = records[0]
-    if running_script:
-        # Do not show traceback from our own code
-        excluded_files = excluded_file_names()
-        for record in records[:-1]:
-            frame, filename, linenumber, _func, lines, index = record
-            if filename in excluded_files:
-                continue
-            break
-        else:
-            return info
     set_call_info(info, "last_call", filename, linenumber, lines, index, frame)  # [4]
 
     # Origin of the exception
