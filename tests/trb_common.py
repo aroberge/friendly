@@ -147,4 +147,4 @@ def create_tracebacks(target, intro_text):
                         result = getattr(mod, function)()
                         write(result)
                 except Exception:
-                    friendly_traceback.explain(*sys.exc_info(), redirect=None)
+                    friendly_traceback.explain()

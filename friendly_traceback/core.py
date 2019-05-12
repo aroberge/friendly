@@ -189,13 +189,6 @@ class _State:
 state = _State()
 
 
-def run_script(source):
-    state.running_script = True
-    mod_dict = runpy.run_module(source, run_name="__main__")
-    state.running_script = False
-    return mod_dict
-
-
 # ----------------
 # Public API available through a * import
 # ----------------
@@ -209,9 +202,17 @@ __all__ = [
     "get_lang",
     "set_level",
     "get_level",
+    "run_script",
     "set_formatter",
     "set_stream",
 ]
+
+
+def run_script(source):
+    state.running_script = True
+    mod_dict = runpy.run_path(source, run_name="__main__")
+    state.running_script = False
+    return mod_dict
 
 
 def explain(redirect=None):
