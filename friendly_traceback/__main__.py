@@ -71,7 +71,7 @@ def main():
     if args.source is not None:
         if sys.flags.interactive:
             if args.as_main:
-                module_dict = core.run_script(args.source)
+                module_dict = core.run_module(args.source)
             else:
                 module = __import__(args.source)
                 module_dict = {}
