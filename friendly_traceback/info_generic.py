@@ -23,7 +23,7 @@ def register(error_name):
 
 @register("ArithmeticError")
 def arithmetic_error(*args):
-    _ = current_lang.lang
+    _ = current_lang.translate
     return _(
         "ArithmeticError is the base class for those built-in exceptions\n"
         "that are raised for various arithmetic errors.\n"
@@ -34,7 +34,7 @@ def arithmetic_error(*args):
 
 @register("ImportError")
 def import_error(*args):
-    _ = current_lang.lang
+    _ = current_lang.translate
     return _(
         "This exception indicates that a certain object could not\n"
         "be imported from a module or package. Most often, this is\n"
@@ -44,7 +44,7 @@ def import_error(*args):
 
 @register("IndentationError")
 def indentation_error(etype, value):
-    _ = current_lang.lang
+    _ = current_lang.translate
     return _(
         "An IndentationError occurs when a given line of code is\n"
         "not indented (aligned vertically with other lines) as expected.\n"
@@ -53,7 +53,7 @@ def indentation_error(etype, value):
 
 @register("IndexError")
 def index_error(*args):
-    _ = current_lang.lang
+    _ = current_lang.translate
     return _(
         "An IndexError occurs when you are try to get an item from a list,\n"
         "a tuple, or a similar object (sequence), by using an index which\n"
@@ -65,7 +65,7 @@ def index_error(*args):
 
 @register("KeyError")
 def key_error(*args):
-    _ = current_lang.lang
+    _ = current_lang.translate
     return _(
         "A KeyError is raised when a value is not found as a\n"
         "key in a Python dict.\n"
@@ -74,7 +74,7 @@ def key_error(*args):
 
 @register("LookupError")
 def lookup_error(*args):
-    _ = current_lang.lang
+    _ = current_lang.translate
     return _(
         "LookupError is the base class for the exceptions that are raised\n"
         "when a key or index used on a mapping or sequence is invalid.\n"
@@ -84,7 +84,7 @@ def lookup_error(*args):
 
 @register("ModuleNotFoundError")
 def module_not_found_error(*args):
-    _ = current_lang.lang
+    _ = current_lang.translate
     return _(
         "A ModuleNotFoundError exception indicates that you\n"
         "are trying to import a module that cannot be found by Python.\n"
@@ -95,7 +95,7 @@ def module_not_found_error(*args):
 
 @register("NameError")
 def name_error(*args):
-    _ = current_lang.lang
+    _ = current_lang.translate
     return _(
         "A NameError exception indicates that a variable or\n"
         "function name is not known to Python.\n"
@@ -107,13 +107,13 @@ def name_error(*args):
 
 @register("SyntaxError")
 def syntax_error(*args):
-    _ = current_lang.lang
+    _ = current_lang.translate
     return _("A SyntaxError occurs when Python cannot understand your code.\n")
 
 
 @register("TabError")
 def tab_error(*args):
-    _ = current_lang.lang
+    _ = current_lang.translate
     return _(
         "A TabError indicates that you have used both spaces\n"
         "and tab characters to indent your code.\n"
@@ -126,7 +126,7 @@ def tab_error(*args):
 
 @register("TypeError")
 def type_error(*args):
-    _ = current_lang.lang
+    _ = current_lang.translate
     return _(
         "A TypeError is usually caused by trying\n"
         "to combine two incompatible types of objects,\n"
@@ -136,7 +136,7 @@ def type_error(*args):
 
 @register("UnboundLocalError")
 def unbound_local_error(*args):
-    _ = current_lang.lang
+    _ = current_lang.translate
     return _(
         "In Python, variables that are used inside a function are known as \n"
         "local variables. Before they are used, they must be assigned a value.\n"
@@ -151,7 +151,7 @@ def unbound_local_error(*args):
 
 @register("Unknown")
 def unknown(*args):
-    _ = current_lang.lang
+    _ = current_lang.translate
     return _(
         "No information is known about this exception.\n"
         "Please report this example to\n"
@@ -161,7 +161,7 @@ def unknown(*args):
 
 @register("ZeroDivisionError")
 def zero_division_error(*args):
-    _ = current_lang.lang
+    _ = current_lang.translate
     return _(
         "A ZeroDivisionError occurs when you are attempting to divide\n"
         "a value by zero:\n"

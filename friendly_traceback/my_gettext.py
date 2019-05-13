@@ -14,9 +14,9 @@ To avoid such problems, we use a custom class that keep track of the language
 preferred for the translation.  Inside any namespace, when we need to
 provide a translation, we define locally _ to be
 
-    _ = current_lang.lang
+    _ = current_lang.translate
 
-where current_lang.lang means gettext.translation().gettext where
+where current_lang.translate means gettext.translation().gettext where
 gettext.translation() is the class-based API for gettext.
 """
 
@@ -27,7 +27,8 @@ import os
 
 class LangState:
     def __init__(self):
-        self.lang = None
+        self.translate = None
+        self.lang = "en"
 
     def install(self, lang=None):
         """Sets the language to be used for translations"""
@@ -58,7 +59,8 @@ class LangState:
                 # the source file will be used if the requested language
                 # is not available.
             )
-        self.lang = _lang.gettext
+        self.lang = lang
+        self.translate = _lang.gettext
 
 
 current_lang = LangState()  # noqa

@@ -138,7 +138,7 @@ def set_call_info(info, name, filename, linenumber, lines, index, frame):
 
 
 def cannot_analyze_string():
-    _ = current_lang.lang
+    _ = current_lang.translate
     return _(
         "Unfortunately, no additional information is available:\n"
         "the content of file '<string>' is not accessible.\n"
@@ -159,7 +159,7 @@ def excluded_file_names():
 
 def set_header(info, friendly):
     """Sets the header for the exception"""
-    _ = current_lang.lang
+    _ = current_lang.translate
     if "header" in friendly:  # [1]
         info["header"] = friendly["header"]
     else:
@@ -213,7 +213,7 @@ def get_likely_cause(etype, value):
     """Gets the likely cause of a given exception based on some information
        specific to a given exception.
     """
-    _ = current_lang.lang
+    _ = current_lang.translate
     header, cause = None, None
     if etype.__name__ in info_specific.get_cause:
         cause = info_specific.get_cause[etype.__name__](etype, value)
@@ -255,21 +255,21 @@ def get_partial_source(filename, linenumber, lines, index):
 
 
 def last_call_header(linenumber, filename):
-    _ = current_lang.lang
+    _ = current_lang.translate
     return _("Execution stopped on line {linenumber} of file '{filename}'.\n").format(
         linenumber=linenumber, filename=utils.shorten_path(filename)
     )
 
 
 def exception_raised_header(linenumber, filename):
-    _ = current_lang.lang
+    _ = current_lang.translate
     return _("Exception raised on line {linenumber} of file '{filename}'.\n").format(
         linenumber=linenumber, filename=utils.shorten_path(filename)
     )
 
 
 def process_parsing_error(etype, value, info):
-    _ = current_lang.lang
+    _ = current_lang.translate
     filepath = value.filename
     linenumber = value.lineno
     offset = value.offset
@@ -290,10 +290,8 @@ def format_simulated_python_traceback(records, etype, value):
         frame, filename, linenumber, _func, lines, index = record
         if not lines:
             continue
-        if len(lines) > 3:  # based on utils.CONTEXT = 4
-            badline = lines[-2]
-        else:
-            badline = lines[-1]
+        source_info = get_partial_source(filename, linenumber, lines, index)
+        badline = source_info["line"]
         result.append(
             '  File "{}", line {}, in {}\n    {}\n'.format(
                 filename, linenumber, _func, badline.strip()
@@ -308,7 +306,9 @@ def format_simulated_python_traceback(records, etype, value):
         lines = utils.get_source(filename)
         result.append('  File "{}", line {}\n'.format(filename, linenumber))
         try:
-            badline = lines[linenumber - 1].strip()
+            _line = lines[linenumber - 1].rstrip()
+            badline = _line.strip()
+            offset = offset - (len(_line) - len(badline))  # removing indent
             result.append("    {}\n".format(badline))
             result.append(" " * (3 + offset) + "^\n")
         except Exception:

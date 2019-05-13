@@ -145,7 +145,7 @@ class _State:
 
     def set_level(self, level):
         """Sets the "verbosity level" and possibly resets sys.__excepthook__"""
-        _ = current_lang.lang
+        _ = current_lang.translate
         if level == 0:
             sys.excepthook = sys.__excepthook__
             self.level = 0

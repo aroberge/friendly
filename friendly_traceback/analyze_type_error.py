@@ -23,7 +23,7 @@ def add_cause(func):
 
 
 def convert_message(message):
-    _ = current_lang.lang
+    _ = current_lang.translate
     for cause in possible_causes:
         result = cause(message)
         if result is not None:
@@ -35,7 +35,7 @@ def convert_message(message):
 
 
 def convert_type(short_form):
-    _ = current_lang.lang
+    _ = current_lang.translate
     if short_form == "complex":
         return _("a complex number")
     elif short_form == "dict":
@@ -66,7 +66,7 @@ can_only_concatenate_pattern = re.compile(
 
 @add_cause
 def parse_can_only_concatenate(text):
-    _ = current_lang.lang
+    _ = current_lang.translate
     match = re.search(can_only_concatenate_pattern, text)
     cause = None
     if match is not None:
@@ -86,7 +86,7 @@ must_be_str_pattern = re.compile(r"must be str, not (\w+)")
 
 @add_cause
 def parse_must_be_str(text):
-    _ = current_lang.lang
+    _ = current_lang.translate
     match = re.search(must_be_str_pattern, text)
     cause = None
     if match is not None:
@@ -105,7 +105,7 @@ unsupported_operand_type_pattern = re.compile(
 
 @add_cause
 def parse_unsupported_operand_type(text):
-    _ = current_lang.lang
+    _ = current_lang.translate
     match = re.search(unsupported_operand_type_pattern, text)
     cause = None
     if match is not None:
@@ -189,7 +189,7 @@ order_comparison_pattern = re.compile(
 
 @add_cause
 def parse_order_comparison(text):
-    _ = current_lang.lang
+    _ = current_lang.translate
     match = re.search(order_comparison_pattern, text)
     if match is not None:
         cause = _(

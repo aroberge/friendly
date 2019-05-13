@@ -28,7 +28,7 @@ def register(error_name):
 
 @register("ImportError")
 def import_error(etype, value):
-    _ = current_lang.lang
+    _ = current_lang.translate
     # str(value) is expected to be something like
     #
     #  ImportError: cannot import name 'X' from 'Y'  | Python 3.7
@@ -52,7 +52,7 @@ def import_error(etype, value):
 
 @register("IndentationError")
 def indentation_error(etype, value):
-    _ = current_lang.lang
+    _ = current_lang.translate
 
     value = str(value)
     if "unexpected indent" in value:
@@ -77,7 +77,7 @@ def indentation_error(etype, value):
 
 @register("IndexError")
 def index_error(etype, value):
-    _ = current_lang.lang
+    _ = current_lang.translate
     value = str(value)
     if "list" in value:
         this_case = _("In this case, the sequence is a list.\n")
@@ -90,7 +90,7 @@ def index_error(etype, value):
 
 @register("KeyError")
 def key_error(etype, value):
-    _ = current_lang.lang
+    _ = current_lang.translate
     # str(value) is expected to be something like
     #
     # KeyError: 'c'
@@ -104,7 +104,7 @@ def key_error(etype, value):
 
 @register("ModuleNotFoundError")
 def module_not_found_error(etype, value):
-    _ = current_lang.lang
+    _ = current_lang.translate
     # str(value) is expected to be something like
     #
     # ModuleNotFoundError: No module named 'does_not_exist'
@@ -118,7 +118,7 @@ def module_not_found_error(etype, value):
 
 @register("NameError")
 def name_error(etype, value):
-    _ = current_lang.lang
+    _ = current_lang.translate
     # str(value) is expected to be something like
     #
     # NameError: name 'c' is not defined
@@ -150,7 +150,7 @@ def type_error(etype, value):
 
 @register("UnboundLocalError")
 def unbound_local_error(etype, value):
-    _ = current_lang.lang
+    _ = current_lang.translate
     # str(value) is expected to be something like
     #
     # UnboundLocalError: local variable 'a' referenced before assignment

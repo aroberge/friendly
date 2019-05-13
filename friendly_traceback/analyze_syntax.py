@@ -170,7 +170,7 @@ def malformed_def(tokens):
 
 def expand_cause(cause):
     """Returns a written explanation given an abbreviated form"""
-    _ = current_lang.lang
+    _ = current_lang.translate
 
     if cause == "Assigning to Python keyword":
         return _(

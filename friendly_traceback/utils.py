@@ -4,9 +4,7 @@ import os.path
 
 from io import StringIO
 
-# if changed from 4, this will affect info_traceback.format_simulated_python_traceback
 CONTEXT = 4
-
 CACHED_STRING_SOURCES = {}
 EXCLUDED_FILE_PATH = []
 dirname = os.path.dirname(__file__)
