@@ -4,8 +4,28 @@ import os.path
 
 from io import StringIO
 
+# if changed from 4, this will affect info_traceback.format_simulated_python_traceback
 CONTEXT = 4
+
 CACHED_STRING_SOURCES = {}
+EXCLUDED_FILE_PATH = []
+dirname = os.path.dirname(__file__)
+for file in os.listdir(os.path.dirname(__file__)):
+    EXCLUDED_FILE_PATH.append(os.path.join(dirname, file))
+
+
+def is_excluded_file(path):
+    """In many places, by default we exclude the files from this project,
+       as well as runpy from the standard Python library, in order to
+       restrict tracebacks to code written by the users.
+    """
+    return path in EXCLUDED_FILE_PATH
+
+
+def add_excluded_path(path):
+    """Adds a path to be excluded from the traceback"""
+    global EXCLUDED_FILE_PATH
+    EXCLUDED_FILE_PATH.append(path)
 
 
 class Token:

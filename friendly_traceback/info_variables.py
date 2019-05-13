@@ -63,6 +63,11 @@ def format_var_info(tok, _dict, _global=""):
         return ""
 
     # Remove irrelevant memory location information from functions, etc.
+    # There are two reasons to do this:
+    # 1. this information is essentially of no value for beginners
+    # 2. Removing this information ensures that consecutive runs of
+    #    script to create tracebacks for the documentation will yield
+    #    exactly the same results. This makes it easier to spot changes/regressions.
     if value.startswith("<") and value.endswith(">") and " at " in value:
         value = value.split(" at ")[0] + ">"
 

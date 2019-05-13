@@ -5,6 +5,7 @@ First version - needs to be documented.
 import inspect
 import os
 import runpy
+import traceback
 
 from . import info_generic
 from . import info_specific
@@ -12,6 +13,8 @@ from . import utils
 from .my_gettext import current_lang
 from .info_variables import get_var_info
 
+
+utils.add_excluded_path(runpy.__file__)
 
 # ====================
 # The following is an example of a formatted traceback, with each
@@ -66,6 +69,11 @@ def get_traceback_info(etype, value, tb):
     returns the result in a dict.
     """
     info = {}
+
+    # normal Python traceback
+    python_tb = traceback.format_exception(etype, value, tb)
+    info["python_traceback"] = "".join(python_tb)
+
     if hasattr(value, "friendly"):  # for custom exceptions
         friendly = getattr(value, "friendly")
     else:
@@ -77,22 +85,26 @@ def get_traceback_info(etype, value, tb):
     set_generic(info, friendly, etype, value)  # [2]
     set_cause(info, friendly, etype, value)  # [3]
 
-    if issubclass(etype, SyntaxError):
-        return info
-
     # Get all calls made
     records = inspect.getinnerframes(tb, utils.CONTEXT)
     # Do not show traceback from our own code
-    new_records = []
-    excluded_files = excluded_file_names()
-    for record in records:
+    records = []
+    for record in inspect.getinnerframes(tb, utils.CONTEXT):
         frame, filename, linenumber, _func, lines, index = record
-        if filename in excluded_files:
+        if utils.is_excluded_file(filename):
             continue
         else:
-            new_records.append(record)
+            records.append(record)
 
-    records = new_records
+    simulated_python_tb = format_simulated_python_traceback(records, etype, value)
+    if simulated_python_tb == python_tb:
+        info["simulated_python_traceback"] = info["python_traceback"]
+    else:
+        info["simulated_python_traceback"] = "Simulated " + "".join(simulated_python_tb)
+
+    if issubclass(etype, SyntaxError):
+        return info
+
     # Last call made
     frame, filename, linenumber, _func, lines, index = records[0]
     set_call_info(info, "last_call", filename, linenumber, lines, index, frame)  # [4]
@@ -269,3 +281,45 @@ def process_parsing_error(etype, value, info):
     ).format(filename=utils.shorten_path(filepath))
 
     info["parsing_error_source"] = f"{partial_source}\n"
+
+
+def format_simulated_python_traceback(records, etype, value):
+    result = ["Traceback (most recent call last):\n"]
+
+    for record in records:
+        frame, filename, linenumber, _func, lines, index = record
+        if not lines:
+            continue
+        if len(lines) > 3:  # based on utils.CONTEXT = 4
+            badline = lines[-2]
+        else:
+            badline = lines[-1]
+        result.append(
+            '  File "{}", line {}, in {}\n    {}\n'.format(
+                filename, linenumber, _func, badline.strip()
+            )
+        )
+
+    if issubclass(etype, SyntaxError):
+        filename = value.filename
+        linenumber = value.lineno
+        offset = value.offset
+        msg = value.msg
+        lines = utils.get_source(filename)
+        result.append('  File "{}", line {}\n'.format(filename, linenumber))
+        try:
+            badline = lines[linenumber - 1].strip()
+            result.append("    {}\n".format(badline))
+            result.append(" " * (3 + offset) + "^\n")
+        except Exception:
+            pass
+        result.append("{}: {}\n".format(etype.__name__, msg))
+        return result
+
+    try:
+        valuestr = str(value)
+    except Exception:
+        valuestr = "unknown"
+
+    result.append("%s: %s\n" % (etype.__name__, valuestr))
+    return result

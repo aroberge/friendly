@@ -55,7 +55,7 @@ def python_traceback_before(info):
        processed by Friendly-traceback.
     """
     result = [""]
-    result.append(info["python_traceback"])
+    result.append(info["simulated_python_traceback"])
     result.extend(default(info))
     return result
 
@@ -65,7 +65,7 @@ def python_traceback_after(info):
        processed by Friendly-traceback.
     """
     result = default(info)
-    result.append(info["python_traceback"])
+    result.append(info["simulated_python_traceback"])
     return result
 
 
@@ -74,7 +74,7 @@ def only_add_explain(info):
        information about a given exception and the likely cause.
     """
     result = [""]
-    result.append(info["python_traceback"])
+    result.append(info["simulated_python_traceback"])
     if "generic" in info:
         result.append("    " + info["generic"])
     if "cause_header" in info:

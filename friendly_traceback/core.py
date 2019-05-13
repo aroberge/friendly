@@ -118,9 +118,6 @@ class _State:
             raise KeyboardInterrupt(str(value))
 
         info = info_traceback.get_traceback_info(etype, value, tb)
-        # normal Python traceback
-        python_tb = traceback.format_exception(etype, value, tb)
-        info["python_traceback"] = "".join(python_tb)
         explanation = self.formatter(info, level=self.level)
         self.write_err(explanation)
         # Ensures that we start on a new line for the console

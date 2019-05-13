@@ -18,6 +18,10 @@ from .core import state
 from .version import __version__
 from . import utils
 
+import codeop
+
+utils.add_excluded_path(codeop.__file__)
+
 
 class FriendlyConsole(InteractiveConsole):
     def __init__(self, locals=None):
@@ -138,7 +142,7 @@ class FriendlyConsole(InteractiveConsole):
 
 def start_console(local_vars=None, show_python=False):
     """Starts a console; modified from code.interact"""
-    console_defaults = {"set_lang": state.install_gettext}
+    console_defaults = {"set_lang": state.install_gettext, "set_level": state.set_level}
 
     if local_vars is None:
         local_vars = console_defaults
