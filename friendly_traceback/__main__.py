@@ -33,7 +33,13 @@ parser = argparse.ArgumentParser(
         """
     ),
 )
-parser.add_argument("source", nargs="?")
+parser.add_argument(
+    "source",
+    nargs="?",
+    help="""Name of the script to be run as though it was the main module
+    run by Python, so that __name__ does equal '__main__'.
+    """,
+)
 
 parser.add_argument(
     "--lang",
@@ -51,10 +57,8 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "--as_main",
-    help="""Runs the program as though it was the main script.
-            In case of problems with the code, it can lead to some difficult
-            to understand tracebacks.
+    "--import_only",
+    help="""import the module instead of running it as a script.
          """,
     action="store_true",
 )
@@ -70,19 +74,19 @@ def main():
 
     if args.source is not None:
         if sys.flags.interactive:
-            if args.as_main:
-                module_dict = core.run_module(args.source)
-            else:
+            if args.import_only:
                 module = __import__(args.source)
                 module_dict = {}
                 for var in dir(module):
                     module_dict[var] = getattr(module, var)
+            else:
+                module_dict = core.run_module(args.source)
             console_dict.update(module_dict)
             console.start_console(local_vars=console_dict)
-        elif args.as_main:
-            core.run_script(args.source)
-        else:
+        elif args.import_only:
             module = __import__(args.source)
+        else:
+            core.run_script(args.source)
     else:
         console.start_console()
 

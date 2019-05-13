@@ -2,7 +2,7 @@ import subprocess
 
 sessions = [
     (
-        "python -im friendly_traceback tests.test_name_error --as_main",
+        "python -im friendly_traceback tests.test_name_error",
         "a = 41 \na+=1\nprint(a)\nd=e\n",
         ["42", "NameError", "-->6:         b = c"],
         ["-->1: d=e", "NameError"],
