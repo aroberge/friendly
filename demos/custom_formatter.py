@@ -18,6 +18,7 @@ items = (
 
 
 def make_empty_dict():
+    """Ensures that all required entries are defined and no KeyError raised"""
     d = {}
     for item in items:
         d[item] = ""

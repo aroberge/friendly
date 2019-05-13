@@ -63,4 +63,4 @@ class LangState:
         self.lang = lang
 
 
-current_lang = LangState()  # noqa
+demo_lang = LangState()  # noqa
