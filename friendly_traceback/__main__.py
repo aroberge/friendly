@@ -14,6 +14,7 @@ import textwrap
 
 from . import console
 from . import core
+from . import version
 
 
 parser = argparse.ArgumentParser(
@@ -58,6 +59,14 @@ parser.add_argument(
 
 parser.add_argument(
     "--import_only",
+    help="""Import the module instead of running it as a script.
+         """,
+    action="store_true",
+)
+
+
+parser.add_argument(
+    "--version",
     help="""import the module instead of running it as a script.
          """,
     action="store_true",
@@ -71,6 +80,8 @@ def main():
         core.set_lang(args.lang)
     if args.level is not None:
         core.set_level(args.level)
+    if args.version:
+        print(f"Friendly-tracebacks version {version.__version__}")
 
     if args.source is not None:
         if sys.flags.interactive:
