@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "tests\test_unbound_local_error.py", line 20, in test_unbound_local_error
-    outer()
-  File "tests\test_unbound_local_error.py", line 13, in outer
-    inner()
-  File "tests\test_unbound_local_error.py", line 12, in inner
-    a = a + b + c
-UnboundLocalError: local variable 'a' referenced before assignment
