@@ -5,26 +5,54 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-12 10:53-0300\n"
-"PO-Revision-Date: 2019-05-12 10:54-0300\n"
+"POT-Creation-Date: 2019-05-12 22:20-0300\n"
+"PO-Revision-Date: 2019-05-12 22:22-0300\n"
+"Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "X-Generator: Poedit 2.2.1\n"
-"Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr\n"
 
-#: gui_demo.py:174 gui_demo.py:197
+#: custom_exception.py:19
+msgid "My CustomException:"
+msgstr "L'exception CustomException :"
+
+#: custom_exception.py:29
+msgid ""
+"Some generic information about this exception.\n"
+"This exception does not include specific information.\n"
+msgstr ""
+"Quelques informations génériques sur cette exception.\n"
+"Cette exception n’inclut pas d’informations spécifiques.\n"
+
+#: custom_exception.py:39
+msgid "Some generic information about this exception.\n"
+msgstr "Quelques informations génériques sur cette exception.\n"
+
+#: custom_exception.py:40
+msgid "The cause is:"
+msgstr "La cause est:"
+
+#: custom_exception.py:41
+msgid "Specific cause: {args}\n"
+msgstr "Cause spécifique: {args}\n"
+
+#: custom_exception.py:48
+msgid "This exception is subclassed from SyntaxError\n"
+msgstr "Cette exception est sous-classée à partir de SyntaxError\n"
+
+#: gui_demo.py:180 gui_demo.py:214
 msgid "Open"
 msgstr "Ouvrir"
 
-#: gui_demo.py:178
+#: gui_demo.py:181 gui_demo.py:215
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: gui_demo.py:181
+#: gui_demo.py:184 gui_demo.py:216
 msgid "Run"
 msgstr "Exécuter"

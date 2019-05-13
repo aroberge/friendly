@@ -144,6 +144,7 @@ class _State:
     def install_gettext(self, lang):
         """Sets the current language for gettext."""
         current_lang.install(lang)
+        self.lang = lang
 
     def set_level(self, level):
         """Sets the "verbosity level" and possibly resets sys.__excepthook__"""

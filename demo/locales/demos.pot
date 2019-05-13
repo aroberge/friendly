@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-05-12 10:54-0300\n"
+"POT-Creation-Date: 2019-05-12 22:20-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,15 +15,44 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: gui_demo.py:174 gui_demo.py:197
+#: custom_exception.py:19
+msgid "My CustomException:"
+msgstr ""
+
+#: custom_exception.py:29
+msgid ""
+"Some generic information about this exception.\n"
+"This exception does not include specific information.\n"
+msgstr ""
+
+#: custom_exception.py:39
+msgid ""
+"Some generic information about this exception.\n"
+msgstr ""
+
+#: custom_exception.py:40
+msgid "The cause is:"
+msgstr ""
+
+#: custom_exception.py:41
+msgid ""
+"Specific cause: {args}\n"
+msgstr ""
+
+#: custom_exception.py:48
+msgid ""
+"This exception is subclassed from SyntaxError\n"
+msgstr ""
+
+#: gui_demo.py:180 gui_demo.py:214
 msgid "Open"
 msgstr ""
 
-#: gui_demo.py:178
+#: gui_demo.py:181 gui_demo.py:215
 msgid "Save"
 msgstr ""
 
-#: gui_demo.py:181
+#: gui_demo.py:184 gui_demo.py:216
 msgid "Run"
 msgstr ""
 
