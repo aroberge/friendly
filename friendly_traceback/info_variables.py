@@ -62,6 +62,10 @@ def format_var_info(tok, _dict, _global=""):
     except Exception:
         return ""
 
+    # Remove irrelevant memory location information from functions, etc.
+    if value.startswith("<") and value.endswith(">") and " at " in value:
+        value = value.split(" at ")[0] + ">"
+
     if len(value) > MAX_LENGTH:  # too much text would be shown
         # We reduce the length of the repr, indicate this by ..., but we
         # also keep the last character so that the repr of a list still
