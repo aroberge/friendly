@@ -75,7 +75,7 @@ class App(_gui.App):
 
         # Making sure the display is updated
         self.update_idletasks()
-        return str(info["simulated_python_traceback"])
+        return "\n".join(info["simulated_python_traceback"])
 
 
 def main():
