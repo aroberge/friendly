@@ -25,9 +25,16 @@ parser = argparse.ArgumentParser(
         Note: the values of the verbosity level described below are:
             0: Normal Python tracebacks
             1: Default - does not need to be specified
-            2: Normal Python tracebacks appear before the friendly display
-            9: Normal Python tracebacks appended at the end of the friendly
-            display.
+            2: Python tracebacks appear before the friendly display
+            3: Python tracebacks appended at the end of the friendly display.
+            4: Python traceback followed by basic explanation
+            5: Only basic explanation
+            9: Python traceback
+
+        The Python traceback for level >= 1 are the simulated version.
+        You can use negative values to show the true Python traceback which
+        will likely include function calls from friendly-traceback itself.
+        Thus level -9 is equivalent to level 0.
 
         Other values may be available, as we try to find the most useful
         settings for beginners.
@@ -59,7 +66,7 @@ parser.add_argument(
 
 parser.add_argument(
     "--import_only",
-    help="""Import the module instead of running it as a script.
+    help="""Imports the module instead of running it as a script.
          """,
     action="store_true",
 )
@@ -67,7 +74,7 @@ parser.add_argument(
 
 parser.add_argument(
     "--version",
-    help="""import the module instead of running it as a script.
+    help="""Displays the current version.
          """,
     action="store_true",
 )
@@ -81,7 +88,13 @@ def main():
     if args.level is not None:
         core.set_level(args.level)
     if args.version:
-        print(f"Friendly-tracebacks version {version.__version__}")
+        print(
+            """----------------------------------------------
+    Friendly-tracebacks version {}
+----------------------------------------------""".format(
+                version.__version__
+            )
+        )
 
     if args.source is not None:
         if sys.flags.interactive:

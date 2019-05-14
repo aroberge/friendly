@@ -32,6 +32,8 @@ that script from Python.
 
 Note that this GUI could likely be significantly improved; it is included
 only as a proof of concept.
+Experienced GUI programmers should feel most welcome to contribute their
+expertise and make this a more user-friendly demonstration.
 
 ## custom_formatter.py
 

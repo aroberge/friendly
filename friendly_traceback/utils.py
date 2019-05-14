@@ -6,10 +6,7 @@ from io import StringIO
 
 CONTEXT = 4
 CACHED_STRING_SOURCES = {}
-EXCLUDED_FILE_PATH = []
-dirname = os.path.dirname(__file__)
-for file in os.listdir(os.path.dirname(__file__)):
-    EXCLUDED_FILE_PATH.append(os.path.join(dirname, file))
+EXCLUDED_FILE_PATH = set([])
 
 
 def is_excluded_file(path):
@@ -21,9 +18,13 @@ def is_excluded_file(path):
 
 
 def add_excluded_path(path):
-    """Adds a path to be excluded from the traceback"""
-    global EXCLUDED_FILE_PATH
-    EXCLUDED_FILE_PATH.append(path)
+    """Adds a path to be excluded from the simulated Python traceback"""
+    EXCLUDED_FILE_PATH.add(path)
+
+
+dirname = os.path.dirname(__file__)
+for file in os.listdir(os.path.dirname(__file__)):
+    add_excluded_path(os.path.join(dirname, file))
 
 
 class Token:

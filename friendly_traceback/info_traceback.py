@@ -72,7 +72,14 @@ def get_traceback_info(etype, value, tb):
 
     # normal Python traceback
     python_tb = traceback.format_exception(etype, value, tb)
-    info["python_traceback"] = "".join(python_tb)
+    # change formatting to conform to our line break notation
+    # Note, some lines in python_tb have embedded \n as well as ending \n
+    # we do not want to remove the embedded ones.
+
+    temp = []
+    for item in python_tb:
+        temp.append(item.rstrip())
+    info["python_traceback"] = python_tb = temp
 
     if hasattr(value, "friendly"):  # for custom exceptions
         friendly = getattr(value, "friendly")
@@ -97,15 +104,27 @@ def get_traceback_info(etype, value, tb):
             records.append(record)
 
     simulated_python_tb = format_simulated_python_traceback(records, etype, value)
-    if simulated_python_tb == python_tb:
-        info["simulated_python_traceback"] = info["python_traceback"]
+
+    str_python_tb = "\n".join(python_tb)
+    str_simulated_python_tb = "\n".join(simulated_python_tb)
+    simulated_no_heading = "\n".join(simulated_python_tb[1:])
+
+    if str_simulated_python_tb == str_python_tb:
+        info["simulated_python_traceback"] = simulated_python_tb
+    elif simulated_no_heading == str_python_tb:
+        # For syntax error in the standard Python console, often there is
+        # no title line "Traceback (most recent call last):"
+        info["simulated_python_traceback"] = simulated_python_tb[1:]
     else:
-        info["simulated_python_traceback"] = "Simulated " + "".join(simulated_python_tb)
+        info["simulated_python_traceback"] = simulated_python_tb
+        info["simulated_python_traceback"][0] = "Simulated " + simulated_python_tb[0]
 
     if issubclass(etype, SyntaxError):
         return info
 
-    # Last call made
+    if not records:
+        return info
+
     frame, filename, linenumber, _func, lines, index = records[0]
     set_call_info(info, "last_call", filename, linenumber, lines, index, frame)  # [4]
 
@@ -284,7 +303,7 @@ def process_parsing_error(etype, value, info):
 
 
 def format_simulated_python_traceback(records, etype, value):
-    result = ["Traceback (most recent call last):\n"]
+    result = ["Traceback (most recent call last):"]
 
     for record in records:
         frame, filename, linenumber, _func, lines, index = record
@@ -293,7 +312,7 @@ def format_simulated_python_traceback(records, etype, value):
         source_info = get_partial_source(filename, linenumber, lines, index)
         badline = source_info["line"]
         result.append(
-            '  File "{}", line {}, in {}\n    {}\n'.format(
+            '  File "{}", line {}, in {}\n    {}'.format(
                 filename, linenumber, _func, badline.strip()
             )
         )
@@ -304,16 +323,16 @@ def format_simulated_python_traceback(records, etype, value):
         offset = value.offset
         msg = value.msg
         lines = utils.get_source(filename)
-        result.append('  File "{}", line {}\n'.format(filename, linenumber))
+        result.append('  File "{}", line {}'.format(filename, linenumber))
         try:
             _line = lines[linenumber - 1].rstrip()
             badline = _line.strip()
             offset = offset - (len(_line) - len(badline))  # removing indent
-            result.append("    {}\n".format(badline))
-            result.append(" " * (3 + offset) + "^\n")
+            result.append("    {}".format(badline))
+            result.append(" " * (3 + offset) + "^")
         except Exception:
             pass
-        result.append("{}: {}\n".format(etype.__name__, msg))
+        result.append("{}: {}".format(etype.__name__, msg))
         return result
 
     try:
@@ -321,5 +340,5 @@ def format_simulated_python_traceback(records, etype, value):
     except Exception:
         valuestr = "unknown"
 
-    result.append("%s: %s\n" % (etype.__name__, valuestr))
+    result.append("%s: %s" % (etype.__name__, valuestr))
     return result

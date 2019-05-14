@@ -108,8 +108,7 @@ class _State:
             self.set_redirect(redirect=redirect)
 
         if self.level == 0:
-            python_tb = traceback.format_exception(etype, value, tb)
-            self.write_err("\n" + "".join(python_tb) + "\n")
+            self.write_err("".join(traceback.format_exception(etype, value, tb)))
             return
 
         if etype.__name__ == "SystemExit":
@@ -151,10 +150,10 @@ class _State:
             self.level = 0
             return
 
-        if level in formatters.choose_formatter:
+        if abs(level) in formatters.choose_formatter:
             self.level = level
         else:
-            print(_("Level {level} not available; using default.").format(level))
+            print(_("Level {level} not available; using default.").format(level=level))
         sys.excepthook = self.explain
         self.level = level
 

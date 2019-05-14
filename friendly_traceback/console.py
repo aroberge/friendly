@@ -20,8 +20,6 @@ from . import utils
 
 import codeop
 
-utils.add_excluded_path(codeop.__file__)
-
 
 class FriendlyConsole(InteractiveConsole):
     def __init__(self, locals=None):
@@ -29,6 +27,7 @@ class FriendlyConsole(InteractiveConsole):
         self.true_filename_plus_source = None
         self.fake_filename = None
         self.counter = 0
+        utils.add_excluded_path(codeop.__file__)
 
     def runsource(self, source, filename="<input>", symbol="single"):
         """Compile and run some source in the interpreter.
