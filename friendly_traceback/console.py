@@ -24,7 +24,7 @@ import codeop
 class FriendlyConsole(InteractiveConsole):
     def __init__(self, locals=None):
         super().__init__(locals=locals)
-        self.true_filename_plus_source = None
+        self.fake_filename_plus_source = None
         self.fake_filename = None
         self.counter = 0
         utils.add_excluded_path(codeop.__file__)
@@ -55,9 +55,9 @@ class FriendlyConsole(InteractiveConsole):
         """
 
         # Trick adapted from Better-exceptions project
-        self.true_filename_plus_source = ("<console>", source)
-        self.filename = self.fake_filename = filename = "<console:%d>" % self.counter
-        utils.cache_string_source(self.fake_filename, self.true_filename_plus_source)
+        self.fake_filename = filename = "<console:%d>" % self.counter
+        self.fake_filename_plus_source = (self.fake_filename, source)
+        utils.cache_string_source(self.fake_filename, self.fake_filename_plus_source)
         self.counter += 1
         try:
             code = self.compile(source, filename, symbol)
@@ -89,7 +89,7 @@ class FriendlyConsole(InteractiveConsole):
         caller should be prepared to deal with it.
 
         """
-        utils.cache_string_source(self.fake_filename, self.true_filename_plus_source)
+        utils.cache_string_source(self.fake_filename, self.fake_filename_plus_source)
         try:
             exec(code, self.locals)
         except SystemExit:

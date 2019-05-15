@@ -55,7 +55,7 @@ def assign_to_literal(line):
     literal = info[0].strip()
     variable = info[1].strip()
 
-    return "assign to literal %s=%s" % (literal, variable)
+    return f"assign to literal {literal}={variable}"
 
 
 def analyze_last_line(line):
@@ -144,7 +144,7 @@ def missing_colon(tokens):
     ]:
         last = tokens[-1]
         if last.string != ":":
-            return "%s missing colon" % name
+            return f"{name} missing colon"
     return False
 
 
