@@ -269,5 +269,49 @@ def test_type_error10():
     return result
 
 
+def test_type_error11():
+    try:
+        a = +"abc"
+        print(a)
+    except Exception:
+        friendly_traceback.explain(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "TypeError: bad operand type for unary +: 'str'" in result
+    return result
+
+
+def test_type_error11a():
+    try:
+        a = - [1, 2, 3]
+        print(a)
+    except Exception:
+        friendly_traceback.explain(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "TypeError: bad operand type for unary -: 'list'" in result
+    return result
+
+
+def test_type_error11b():
+    try:
+        a = ~ (1, 2, 3)
+        print(a)
+    except Exception:
+        friendly_traceback.explain(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "TypeError: bad operand type for unary ~: 'tuple'" in result
+    return result
+
+
+def test_type_error12():
+    a = (1, 2, 3)
+    try:
+        a[0] = 0
+    except Exception:
+        friendly_traceback.explain(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "TypeError: 'tuple' object does not support item assignment" in result
+    return result
+
+
 if __name__ == "__main__":
     print(test_type_error1a())

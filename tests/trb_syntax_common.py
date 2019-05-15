@@ -52,3 +52,6 @@ def create_tracebacks(target, intro_text):
                         write(result)
                 except Exception:
                     friendly_traceback.explain()
+
+
+print("Number of cases in trb_syntax_common.py: ", len(all_imports))

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-09 15:56-0300\n"
-"PO-Revision-Date: 2019-05-09 15:57-0300\n"
+"POT-Creation-Date: 2019-05-15 08:54-0300\n"
+"PO-Revision-Date: 2019-05-15 09:33-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: analyze_syntax.py:176
+#: analyze_syntax.py:179
 msgid ""
 "You were trying to assign a value to a Python keyword.\n"
 "This is not allowed.\n"
@@ -27,7 +27,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: analyze_syntax.py:183
+#: analyze_syntax.py:186
 msgid ""
 "You wrote something like\n"
 "    import X from Y\n"
@@ -42,7 +42,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: analyze_syntax.py:193
+#: analyze_syntax.py:196
 msgid ""
 "You meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
@@ -52,11 +52,11 @@ msgstr ""
 "au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: analyze_syntax.py:202
+#: analyze_syntax.py:205
 msgid "a class"
 msgstr "une classe"
 
-#: analyze_syntax.py:203
+#: analyze_syntax.py:206
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
@@ -66,7 +66,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:209
+#: analyze_syntax.py:212
 msgid ""
 "You wrote a '{name}' loop but\n"
 "forgot to add a colon ':' at the end\n"
@@ -76,7 +76,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:215
+#: analyze_syntax.py:218
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
@@ -86,11 +86,11 @@ msgstr ""
 "'{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:222
+#: analyze_syntax.py:225
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: analyze_syntax.py:223
+#: analyze_syntax.py:226
 msgid ""
 "You tried to define {class_or_function}\n"
 "and did not use the correct syntax.\n"
@@ -103,26 +103,26 @@ msgstr ""
 "    def nom ( arguments_optionnels ) :\n"
 "\n"
 
-#: analyze_syntax.py:233
+#: analyze_syntax.py:238
 msgid ""
 "You wrote an expression like\n"
-"    {name} = something\n"
-"where <{name}>, on the left hand-side of the equal sign, is\n"
+"    {literal} = {name}\n"
+"where <{literal}>, on the left hand-side of the equal sign, is\n"
 "an actual number or string (what Python calls a 'literal'),\n"
-"and not the name of a variable.  Perhaps you meant to write:\n"
-"    something = {name}\n"
+"and not the name of a variable. Perhaps you meant to write:\n"
+"    {name} = {literal}\n"
 "\n"
 msgstr ""
 "Vous avez écrit une expression comme\n"
-"    {name} = variable\n"
-"où < {name} >, sur le côté gauche du signe égal, est ce que Python\n"
+"    {literal} =  {name}\n"
+"où <{literal}>, sur le côté gauche du signe égal, est ce que Python\n"
 "appelle un 'literal', c'est-à dire soit soit une chaîne de caractères ou un "
 "nombre,\n"
 "et non le nom d’une variable. Peut-être que vous vouliez plutôt écrire:\n"
-"    variable = {name}\n"
+"    {name} = {literal}\n"
 "\n"
 
-#: analyze_syntax.py:244
+#: analyze_syntax.py:249
 msgid ""
 "You starting writing a string with a single or double quote\n"
 "but never ended the string with another quote on that line.\n"
@@ -131,7 +131,7 @@ msgstr ""
 "avec un guillemet simple ou double, mais n'avez jamais\n"
 "terminé la chaîne avec un autre guillemet sur cette ligne.\n"
 
-#: analyze_syntax.py:249
+#: analyze_syntax.py:254
 msgid ""
 "Currently, we cannot guess the likely cause of this error.\n"
 "You might want to report this case to\n"
@@ -291,6 +291,32 @@ msgstr ""
 "deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
+#: analyze_type_error.py:220
+msgid ""
+"You tried to use the unary operator '{operator}'\n"
+"with the following type of object: {obj}.\n"
+"This operation is not defined for this type of object.\n"
+msgstr ""
+"Vous avez essayé d’utiliser l’opérateur unaire '{operator}'\n"
+"avec le type d’objet suivant: {obj}.\n"
+"Cette opération n’est pas définie pour ce type d’objet.\n"
+
+#: analyze_type_error.py:241
+msgid ""
+"In Python, some objects are known as immutable:\n"
+"once defined, their value cannot be changed.\n"
+"You tried change part of such an immutable object: {obj},\n"
+"most likely by using an indexing operation.\n"
+msgstr ""
+"Dans Python, certains objets sont connus comme immuables:\n"
+"une fois définis, leur valeur ne peut pas être modifiée.\n"
+"Vous avez essayé de modifier une partie d’un tel objet immuable: {obj},\n"
+"probablement en utilisant une opération d’indexation.\n"
+
+#: core.py:156
+msgid "Level {level} not available; using default."
+msgstr "Niveau {Level} non disponible; la valeur par défaut est utilisée."
+
 #: info_generic.py:27
 msgid ""
 "ArithmeticError is the base class for those built-in exceptions\n"
@@ -337,7 +363,6 @@ msgstr ""
 "n’existe pas; typiquement, c’est parce que l’index que vous donnez\n"
 "est plus grand que la longueur de la séquence.\n"
 "Rappel: le premier élément d'une séquence est à l'index 0.\n"
-"\n"
 
 #: info_generic.py:69
 msgid ""
@@ -413,13 +438,16 @@ msgstr ""
 msgid ""
 "A TypeError is usually caused by trying\n"
 "to combine two incompatible types of objects,\n"
-"or by calling a function with the wrong type of object.\n"
+"by calling a function with the wrong type of object,\n"
+"or by tring to do an operation not allowed on a given type of object.\n"
 msgstr ""
 "Une exception TypeError est généralement causée une tentative\n"
 "de combiner deux types d’objets incompatibles,\n"
-"ou en invoquant une fonction avec le mauvais type d’objet.\n"
+"en invoquant une fonction avec le mauvais type d’objet,\n"
+"ou en tentant d'effectuer une opération non permise sur un type d'objet "
+"donné.\n"
 
-#: info_generic.py:140
+#: info_generic.py:141
 msgid ""
 "In Python, variables that are used inside a function are known as \n"
 "local variables. Before they are used, they must be assigned a value.\n"
@@ -443,7 +471,7 @@ msgstr ""
 "qu’il s’agit d’une variable globale, sinon vous verrez une exception "
 "UnboundLocalError.\n"
 
-#: info_generic.py:155
+#: info_generic.py:156
 msgid ""
 "No information is known about this exception.\n"
 "Please report this example to\n"
@@ -453,7 +481,7 @@ msgstr ""
 "Veuillez signaler cet exemple à\n"
 "https://github.com/aroberge/friendly-traceback/issues\n"
 
-#: info_generic.py:165
+#: info_generic.py:166
 msgid ""
 "A ZeroDivisionError occurs when you are attempting to divide\n"
 "a value by zero:\n"
@@ -546,7 +574,7 @@ msgstr ""
 "    global {var_name}\n"
 "comme première ligne à l’intérieur de votre fonction.\n"
 
-#: info_traceback.py:130
+#: info_traceback.py:161
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
@@ -554,28 +582,28 @@ msgstr ""
 "Malheureusement, aucune information supplémentaire n’est disponible:\n"
 "le contenu du fichier '<string>' n’est pas accessible.\n"
 
-#: info_traceback.py:154
+#: info_traceback.py:185
 msgid "Python exception:"
 msgstr "Exception Python:"
 
-#: info_traceback.py:210
+#: info_traceback.py:241
 msgid "My best guess:"
 msgstr "Ma meilleure hypothèse :"
 
-#: info_traceback.py:212
+#: info_traceback.py:243
 msgid "Likely cause:"
 msgstr "Cause probable :"
 
-#: info_traceback.py:247
+#: info_traceback.py:278
 msgid "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 "L'exécution s'est arrêtée à la ligne {linenumber} du fichier '{filename}'\n"
 
-#: info_traceback.py:254
+#: info_traceback.py:285
 msgid "Exception raised on line {linenumber} of file '{filename}'.\n"
-msgstr "Exception levée à la ligne du fichier '{filename}'.\n"
+msgstr "Exception levée à la ligne {linenumber} du fichier '{filename}'.\n"
 
-#: info_traceback.py:266
+#: info_traceback.py:297
 msgid ""
 "Python could not parse the file '{filename}'\n"
 "beyond the location indicated below by --> and ^.\n"
@@ -665,6 +693,7 @@ msgstr ""
 #~ "{partial_source}\n"
 #~ msgstr ""
 #~ "\n"
-#~ "    Erreur trouvée dans le fichier '{filename}' à la ligne {linenumber}.\n"
+#~ "    Erreur trouvée dans le fichier '{filename}' à la ligne "
+#~ "{linenumber}.\n"
 #~ "\n"
 #~ "{partial_source}\n"

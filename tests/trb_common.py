@@ -122,6 +122,22 @@ all_imports = {
         "test_type_error",
         "test_type_error10",
     ),
+    "TypeError - 11: bad operand type for unary +": (
+        "test_type_error",
+        "test_type_error11",
+    ),
+    "TypeError - 11a: bad operand type for unary -": (
+        "test_type_error",
+        "test_type_error11a",
+    ),
+    "TypeError - 11b: bad operand type for unary ~": (
+        "test_type_error",
+        "test_type_error11b",
+    ),
+    "TypeError - 12: object does not support item assignment": (
+        "test_type_error",
+        "test_type_error12",
+    ),
     "UnboundLocalError": ("test_unbound_local_error", "test_unbound_local_error"),
     "Unknown exception": ("test_unknown_error", "test_unknown_error"),
     "ZeroDivisionError - 1": ("test_zero_division_error", "test_zero_division_error"),
@@ -148,3 +164,6 @@ def create_tracebacks(target, intro_text):
                         write(result)
                 except Exception:
                     friendly_traceback.explain()
+
+
+print("Number of cases in trb_common.py: ", len(all_imports))

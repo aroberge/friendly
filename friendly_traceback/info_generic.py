@@ -130,7 +130,8 @@ def type_error(*args):
     return _(
         "A TypeError is usually caused by trying\n"
         "to combine two incompatible types of objects,\n"
-        "or by calling a function with the wrong type of object.\n"
+        "by calling a function with the wrong type of object,\n"
+        "or by tring to do an operation not allowed on a given type of object.\n"
     )
 
 

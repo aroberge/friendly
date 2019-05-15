@@ -204,3 +204,46 @@ def parse_order_comparison(text):
         return cause
     else:
         return None
+
+
+# example: bad operand type for unary +: 'str'
+bad_unary_pattern = re.compile(
+    r"bad operand type for unary (.+): [\'\"](\w+)[\'\"]"  # noqa
+)
+
+
+@add_cause
+def bad_operand_type_for_unary(text):
+    _ = current_lang.translate
+    match = re.search(bad_unary_pattern, text)
+    if match is not None:
+        cause = _(
+            "You tried to use the unary operator '{operator}'\n"
+            "with the following type of object: {obj}.\n"
+            "This operation is not defined for this type of object.\n"
+        ).format(operator=match.group(1), obj=convert_type(match.group(2)))
+        return cause
+    else:
+        return None
+
+
+# example: 'tuple' object does not support item assignment
+does_not_support_item_asssignment_pattern = re.compile(
+    r"[\'\"](\w+)[\'\"] object does not support item assignment"  # noqa
+)
+
+
+@add_cause
+def does_not_support_item_asssignment(text):
+    _ = current_lang.translate
+    match = re.search(does_not_support_item_asssignment_pattern, text)
+    if match is not None:
+        cause = _(
+            "In Python, some objects are known as immutable:\n"
+            "once defined, their value cannot be changed.\n"
+            "You tried change part of such an immutable object: {obj},\n"
+            "most likely by using an indexing operation.\n"
+        ).format(obj=convert_type(match.group(1)))
+        return cause
+    else:
+        return None

@@ -51,8 +51,11 @@ def find_likely_cause(source, linenumber, message, offset):
 
 
 def assign_to_literal(line):
-    variable = line.split("=")[0].strip()
-    return "assign to literal %s" % variable
+    info = line.split("=")
+    literal = info[0].strip()
+    variable = info[1].strip()
+
+    return "assign to literal %s=%s" % (literal, variable)
 
 
 def analyze_last_line(line):
@@ -229,16 +232,18 @@ def expand_cause(cause):
         ).format(class_or_function=name)
 
     if cause.startswith("assign to literal"):
-        name = cause.replace("assign to literal", "").strip()
+        line = cause.replace("assign to literal", "").strip()
+        line = line.split("=")
+        literal, name = line
         return _(
             "You wrote an expression like\n"
-            "    {name} = something\n"
-            "where <{name}>, on the left hand-side of the equal sign, is\n"
+            "    {literal} = {name}\n"
+            "where <{literal}>, on the left hand-side of the equal sign, is\n"
             "an actual number or string (what Python calls a 'literal'),\n"
-            "and not the name of a variable.  Perhaps you meant to write:\n"
-            "    something = {name}\n"
+            "and not the name of a variable. Perhaps you meant to write:\n"
+            "    {name} = {literal}\n"
             "\n"
-        ).format(name=name)
+        ).format(literal=literal, name=name)
 
     if "EOL while scanning string literal" in cause:
         return _(

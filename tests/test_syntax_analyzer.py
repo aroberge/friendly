@@ -15,8 +15,8 @@ def test_no_false_positive():
 
 
 def test_assign_to_literal():
-    assert assign("1 = a") == "assign to literal 1"
-    assert assign("'a' = a") == "assign to literal 'a'"
+    assert assign("1 = a") == "assign to literal 1=a"
+    assert assign("'a' = a") == "assign to literal 'a'=a"
 
 
 def test_assign_to_keyword():
