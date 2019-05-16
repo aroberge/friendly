@@ -1,3 +1,7 @@
+# see https://github.com/python/cpython/blob/master/Lib/test/test_syntax.py
+# for a list of examples with specific messages that should be
+# included.
+
 import friendly_traceback
 
 friendly_traceback.set_lang("en")
@@ -5,7 +9,7 @@ friendly_traceback.set_lang("en")
 # We use a dict with indices instead of a list to make it easier to
 # figure out quickly which cause correspond to which test case.
 causes = {
-    1: "assign a value to a Python keyword",
+    1: "assign a value to the Python keyword 'def'",
     2: "'if' but forgot to add a colon ':'",
     3: "wrote a 'while' loop but",
     4: "wrote 'else if' instead",
@@ -14,7 +18,7 @@ causes = {
     7: "tried to define a function or method",
     8: "tried to define a function or method",
     9: "what Python calls a 'literal'",
-    10: "import X from Y",
+    10: "from turtle import pen",
     11: "EOL while scanning string literal",
 }
 

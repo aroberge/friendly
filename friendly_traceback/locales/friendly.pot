@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-05-15 08:54-0300\n"
+"POT-Creation-Date: 2019-05-16 12:40-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,67 +15,19 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: analyze_syntax.py:179
+#: analyze_syntax.py:59
 msgid ""
-"You were trying to assign a value to a Python keyword.\n"
-"This is not allowed.\n"
+"Currently, we cannot guess the likely cause of this error.\n"
+"Try to examine closely the line indicated as well as the line\n"
+"immediately above to see if you can identify some misspelled\n"
+"word, or missing symbols, like (, ), [, ], :, etc.\n"
+"\n"
+"You might want to report this case to\n"
+"https://github.com/aroberge/friendly-traceback/issues\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:186
-msgid ""
-"You wrote something like\n"
-"    import X from Y\n"
-"instead of\n"
-"    from Y import X\n"
-"\n"
-msgstr ""
-
-#: analyze_syntax.py:196
-msgid ""
-"You meant to use Python's 'elif' keyword\n"
-"but wrote '{name}' instead\n"
-"\n"
-msgstr ""
-
-#: analyze_syntax.py:205
-msgid "a class"
-msgstr ""
-
-#: analyze_syntax.py:206
-msgid ""
-"You wanted to define {class_}\n"
-"but forgot to add a colon ':' at the end\n"
-"\n"
-msgstr ""
-
-#: analyze_syntax.py:212
-msgid ""
-"You wrote a '{name}' loop but\n"
-"forgot to add a colon ':' at the end\n"
-"\n"
-msgstr ""
-
-#: analyze_syntax.py:218
-msgid ""
-"You wrote a statement beginning with\n"
-"'{name}' but forgot to add a colon ':' at the end\n"
-"\n"
-msgstr ""
-
-#: analyze_syntax.py:225
-msgid "a function or method"
-msgstr ""
-
-#: analyze_syntax.py:226
-msgid ""
-"You tried to define {class_or_function}\n"
-"and did not use the correct syntax.\n"
-"The correct syntax is:\n"
-"    def name ( optional_arguments ):\n"
-msgstr ""
-
-#: analyze_syntax.py:238
+#: analyze_syntax.py:94
 msgid ""
 "You wrote an expression like\n"
 "    {literal} = {name}\n"
@@ -86,22 +38,70 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:249
+#: analyze_syntax.py:109
 msgid ""
 "You starting writing a string with a single or double quote\n"
 "but never ended the string with another quote on that line.\n"
 msgstr ""
 
-#: analyze_syntax.py:254
+#: analyze_syntax.py:163
 msgid ""
-"Currently, we cannot guess the likely cause of this error.\n"
-"You might want to report this case to\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
+"You were trying to assign a value to the Python keyword '{keyword}'.\n"
+"This is not allowed.\n"
 "\n"
-"Try to examine closely the line indicated as well as the line\n"
-"immediately above to see if you can identify some misspelled\n"
-"word, or missing symbols, like (, ), [, ], :, etc.\n"
+msgstr ""
+
+#: analyze_syntax.py:179
+msgid ""
+"You meant to use Python's 'elif' keyword\n"
+"but wrote '{name}' instead\n"
 "\n"
+msgstr ""
+
+#: analyze_syntax.py:198
+msgid ""
+"You wrote something like\n"
+"    import {function} from {module}\n"
+"instead of\n"
+"    from {module} import {function}\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:218
+msgid "a class"
+msgstr ""
+
+#: analyze_syntax.py:219
+msgid ""
+"You wanted to define {class_}\n"
+"but forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:225
+msgid ""
+"You wrote a '{for_while}' loop but\n"
+"forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:231
+msgid ""
+"You wrote a statement beginning with\n"
+"'{name}' but forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:252
+msgid "a function or method"
+msgstr ""
+
+#: analyze_syntax.py:253
+msgid ""
+"You tried to define {class_or_function}\n"
+"and did not use the correct syntax.\n"
+"The correct syntax is:\n"
+"    def name ( optional_arguments ):\n"
 msgstr ""
 
 #: analyze_type_error.py:31
@@ -403,7 +403,7 @@ msgid ""
 "In your program, the unknown name is '{var_name}'.\n"
 msgstr ""
 
-#: info_specific.py:159
+#: info_specific.py:150
 msgid ""
 "The variable that appears to cause the problem is '{var_name}'.\n"
 "Perhaps the statement\n"

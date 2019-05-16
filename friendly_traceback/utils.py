@@ -41,7 +41,7 @@ class Token:
 
 
 def collect_tokens(line):
-    """Makes a list of tokens on a line, ignoring spaces"""
+    """Makes a list of tokens on a line, ignoring spaces and comments"""
     tokens = []
     try:
         for tok in tokenize.generate_tokens(StringIO(line).readline):

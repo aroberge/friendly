@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-15 08:54-0300\n"
-"PO-Revision-Date: 2019-05-15 09:33-0300\n"
+"POT-Creation-Date: 2019-05-16 12:40-0300\n"
+"PO-Revision-Date: 2019-05-16 12:42-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -17,93 +17,28 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: analyze_syntax.py:179
+#: analyze_syntax.py:59
 msgid ""
-"You were trying to assign a value to a Python keyword.\n"
-"This is not allowed.\n"
+"Currently, we cannot guess the likely cause of this error.\n"
+"Try to examine closely the line indicated as well as the line\n"
+"immediately above to see if you can identify some misspelled\n"
+"word, or missing symbols, like (, ), [, ], :, etc.\n"
+"\n"
+"You might want to report this case to\n"
+"https://github.com/aroberge/friendly-traceback/issues\n"
 "\n"
 msgstr ""
-"Vous essayiez d’assigner une valeur à un mot clé Python.\n"
-"Ceci n’est pas permis.\n"
+"Présentement, nous ne pouvons pas deviner la cause probable de cette "
+"erreur.\n"
+"Essayez d’examiner attentivement la ligne indiquée ainsi que celle\n"
+"immédiatement au dessus pour voir si vous pouvez identifier\n"
+"un mot mal orthographié, ou des symboles manquants, comme (,), [,],:, etc.\n"
+"\n"
+"Vous pouvez indiquer que c'est le cas au site suivant:\n"
+"https://github.com/aroberge/friendly-traceback/issues\n"
 "\n"
 
-#: analyze_syntax.py:186
-msgid ""
-"You wrote something like\n"
-"    import X from Y\n"
-"instead of\n"
-"    from Y import X\n"
-"\n"
-msgstr ""
-"Vous avez écrit quelque chose comme\n"
-"    import X from Y\n"
-"au lieu de\n"
-"    from Y import X\n"
-"\n"
-"\n"
-
-#: analyze_syntax.py:196
-msgid ""
-"You meant to use Python's 'elif' keyword\n"
-"but wrote '{name}' instead\n"
-"\n"
-msgstr ""
-"Vous avez écrit '{name}'\n"
-"au lieu d'utiliser le mot-clé 'elif'.\n"
-"\n"
-
-#: analyze_syntax.py:205
-msgid "a class"
-msgstr "une classe"
-
-#: analyze_syntax.py:206
-msgid ""
-"You wanted to define {class_}\n"
-"but forgot to add a colon ':' at the end\n"
-"\n"
-msgstr ""
-"Vous vouliez définir {class_},\n"
-"mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
-"\n"
-
-#: analyze_syntax.py:212
-msgid ""
-"You wrote a '{name}' loop but\n"
-"forgot to add a colon ':' at the end\n"
-"\n"
-msgstr ""
-"Vous vouliez débuter une boucle '{name}'\n"
-"mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
-"\n"
-
-#: analyze_syntax.py:218
-msgid ""
-"You wrote a statement beginning with\n"
-"'{name}' but forgot to add a colon ':' at the end\n"
-"\n"
-msgstr ""
-"Vous avez écrit un énoncé débutant avec\n"
-"'{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
-"\n"
-
-#: analyze_syntax.py:225
-msgid "a function or method"
-msgstr "une fonction ou une méthode"
-
-#: analyze_syntax.py:226
-msgid ""
-"You tried to define {class_or_function}\n"
-"and did not use the correct syntax.\n"
-"The correct syntax is:\n"
-"    def name ( optional_arguments ):\n"
-msgstr ""
-"Vous vouliez définir {class_or_function},\n"
-"mais vous avez fait des erreurs de syntaxe.\n"
-"La syntaxe correcte est:\n"
-"    def nom ( arguments_optionnels ) :\n"
-"\n"
-
-#: analyze_syntax.py:238
+#: analyze_syntax.py:94
 msgid ""
 "You wrote an expression like\n"
 "    {literal} = {name}\n"
@@ -122,7 +57,7 @@ msgstr ""
 "    {name} = {literal}\n"
 "\n"
 
-#: analyze_syntax.py:249
+#: analyze_syntax.py:109
 msgid ""
 "You starting writing a string with a single or double quote\n"
 "but never ended the string with another quote on that line.\n"
@@ -131,25 +66,90 @@ msgstr ""
 "avec un guillemet simple ou double, mais n'avez jamais\n"
 "terminé la chaîne avec un autre guillemet sur cette ligne.\n"
 
-#: analyze_syntax.py:254
+#: analyze_syntax.py:163
 msgid ""
-"Currently, we cannot guess the likely cause of this error.\n"
-"You might want to report this case to\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
-"\n"
-"Try to examine closely the line indicated as well as the line\n"
-"immediately above to see if you can identify some misspelled\n"
-"word, or missing symbols, like (, ), [, ], :, etc.\n"
+"You were trying to assign a value to the Python keyword '{keyword}'.\n"
+"This is not allowed.\n"
 "\n"
 msgstr ""
-"Présentement, nous ne pouvons pas deviner la cause probable de cette "
-"erreur.\n"
-"Vous pouvez indiquer que c'est le cas au site suivant:\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
+"Vous essayiez d’assigner une valeur au mot clé Python '{keyword}'.\n"
+"Ceci n’est pas permis.\n"
 "\n"
-"Essayez d’examiner attentivement la ligne indiquée ainsi que celle\n"
-"immédiatement au dessus pour voir si vous pouvez identifier\n"
-"un mot mal orthographié, ou des symboles manquants, comme (,), [,],:, etc.\n"
+
+#: analyze_syntax.py:179
+msgid ""
+"You meant to use Python's 'elif' keyword\n"
+"but wrote '{name}' instead\n"
+"\n"
+msgstr ""
+"Vous avez écrit '{name}'\n"
+"au lieu d'utiliser le mot-clé 'elif'.\n"
+"\n"
+
+#: analyze_syntax.py:198
+msgid ""
+"You wrote something like\n"
+"    import {function} from {module}\n"
+"instead of\n"
+"    from {module} import {function}\n"
+"\n"
+msgstr ""
+"Vous avez écrit quelque chose comme\n"
+"    import {function} from {module}\n"
+"au lieu de\n"
+"    from {module} import {function}\n"
+"\n"
+"\n"
+
+#: analyze_syntax.py:218
+msgid "a class"
+msgstr "une classe"
+
+#: analyze_syntax.py:219
+msgid ""
+"You wanted to define {class_}\n"
+"but forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+"Vous vouliez définir {class_},\n"
+"mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
+"\n"
+
+#: analyze_syntax.py:225
+msgid ""
+"You wrote a '{for_while}' loop but\n"
+"forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+"Vous vouliez débuter une boucle '{for_while}'\n"
+"mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
+"\n"
+
+#: analyze_syntax.py:231
+msgid ""
+"You wrote a statement beginning with\n"
+"'{name}' but forgot to add a colon ':' at the end\n"
+"\n"
+msgstr ""
+"Vous avez écrit un énoncé débutant avec\n"
+"'{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
+"\n"
+
+#: analyze_syntax.py:252
+msgid "a function or method"
+msgstr "une fonction ou une méthode"
+
+#: analyze_syntax.py:253
+msgid ""
+"You tried to define {class_or_function}\n"
+"and did not use the correct syntax.\n"
+"The correct syntax is:\n"
+"    def name ( optional_arguments ):\n"
+msgstr ""
+"Vous vouliez définir {class_or_function},\n"
+"mais vous avez fait des erreurs de syntaxe.\n"
+"La syntaxe correcte est:\n"
+"    def nom ( arguments_optionnels ) :\n"
 "\n"
 
 #: analyze_type_error.py:31
@@ -562,7 +562,7 @@ msgstr "Dans votre programme, le nom du module inconnu est '{mod_name}'.\n"
 msgid "In your program, the unknown name is '{var_name}'.\n"
 msgstr "Dans votre programme, le nom inconnu est '{var_name}'.\n"
 
-#: info_specific.py:159
+#: info_specific.py:150
 msgid ""
 "The variable that appears to cause the problem is '{var_name}'.\n"
 "Perhaps the statement\n"

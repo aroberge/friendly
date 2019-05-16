@@ -4,7 +4,6 @@ Attempts to provide some specific information about the likely cause
 of a given exception.
 """
 
-from . import utils
 from .my_gettext import current_lang
 from . import analyze_syntax
 from . import analyze_type_error
@@ -131,16 +130,7 @@ def name_error(etype, value):
 
 @register("SyntaxError")
 def syntax_error(etype, value):
-    filepath = value.filename
-    linenumber = value.lineno
-    offset = value.offset
-    message = value.msg
-    partial_source, _ignore = utils.get_partial_source(filepath, linenumber, offset)
-    source = utils.get_source(filepath)
-    cause = analyze_syntax.find_likely_cause(source, linenumber, message, offset)
-    this_case = analyze_syntax.expand_cause(cause)
-
-    return this_case
+    return analyze_syntax.find_likely_cause(etype, value)
 
 
 @register("TypeError")

@@ -1,3 +1,3 @@
 """ Should raise SyntaxError"""
 
-pass = 2
+def = 2
