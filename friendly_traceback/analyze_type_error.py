@@ -8,13 +8,13 @@ import re
 from .my_gettext import current_lang
 
 
-possible_causes = []
+MESSAGES_PARSERS = []
 
 
-def add_cause(func):
-    """A simple decorator that adds a given cause to the list
-       of probable causes."""
-    possible_causes.append(func)
+def add_message_parser(func):
+    """A simple decorator that adds a function to parse a specific message
+       to the list of known parsers."""
+    MESSAGES_PARSERS.append(func)
 
     def wrapper(*args):
         return func(*args)
@@ -24,10 +24,10 @@ def add_cause(func):
 
 def convert_message(message):
     _ = current_lang.translate
-    for cause in possible_causes:
-        result = cause(message)
-        if result is not None:
-            return result
+    for parser in MESSAGES_PARSERS:
+        cause = parser(message)
+        if cause is not None:
+            return cause
     return _(
         "I do not recognize this case. Please report it to\n"
         "https://github.com/aroberge/friendly-traceback/issues\n"
@@ -58,16 +58,14 @@ def convert_type(short_form):
         return short_form
 
 
-# example: can only concatenate str (not "int") to str
-can_only_concatenate_pattern = re.compile(
-    r"can only concatenate (\w+) \(not [\'\"](\w+)[\'\"]\) to (\w+)"
-)
-
-
-@add_cause
-def parse_can_only_concatenate(text):
+@add_message_parser
+def parse_can_only_concatenate(message):
     _ = current_lang.translate
-    match = re.search(can_only_concatenate_pattern, text)
+    # example: can only concatenate str (not "int") to str
+    pattern = re.compile(
+        r"can only concatenate (\w+) \(not [\'\"](\w+)[\'\"]\) to (\w+)"
+    )
+    match = re.search(pattern, message)
     cause = None
     if match is not None:
         cause = _(
@@ -79,15 +77,13 @@ def parse_can_only_concatenate(text):
     return cause
 
 
-# python 3.6 version: must be str, not int
-# example: can only concatenate str (not "int") to str
-must_be_str_pattern = re.compile(r"must be str, not (\w+)")
-
-
-@add_cause
-def parse_must_be_str(text):
+@add_message_parser
+def parse_must_be_str(message):
     _ = current_lang.translate
-    match = re.search(must_be_str_pattern, text)
+    # python 3.6 version: must be str, not int
+    # example: can only concatenate str (not "int") to str
+    pattern = re.compile(r"must be str, not (\w+)")
+    match = re.search(pattern, message)
     cause = None
     if match is not None:
         cause = _(
@@ -97,16 +93,14 @@ def parse_must_be_str(text):
     return cause
 
 
-# example: unsupported operand type(s) for +: 'int' and 'str'
-unsupported_operand_type_pattern = re.compile(
-    r"unsupported operand type\(s\) for (.+): [\'\"](\w+)[\'\"] and [\'\"](\w+)[\'\"]"
-)
-
-
-@add_cause
-def parse_unsupported_operand_type(text):
+@add_message_parser
+def parse_unsupported_operand_type(message):
     _ = current_lang.translate
-    match = re.search(unsupported_operand_type_pattern, text)
+    # example: unsupported operand type(s) for +: 'int' and 'str'
+    pattern = re.compile(
+        r"unsupported operand type\(s\) for (.+): [\'\"](\w+)[\'\"] and [\'\"](\w+)[\'\"]"
+    )
+    match = re.search(pattern, message)
     cause = None
     if match is not None:
         operator = match.group(1)
@@ -181,16 +175,14 @@ def parse_unsupported_operand_type(text):
     return cause
 
 
-# example: '<' not supported between instances of 'int' and 'str'
-order_comparison_pattern = re.compile(
-    r"[\'\"](.+)[\'\"] not supported between instances of [\'\"](\w+)[\'\"] and [\'\"](\w+)[\'\"]"  # noqa
-)
-
-
-@add_cause
-def parse_order_comparison(text):
+@add_message_parser
+def parse_order_comparison(message):
     _ = current_lang.translate
-    match = re.search(order_comparison_pattern, text)
+    # example: '<' not supported between instances of 'int' and 'str'
+    pattern = re.compile(
+        r"[\'\"](.+)[\'\"] not supported between instances of [\'\"](\w+)[\'\"] and [\'\"](\w+)[\'\"]"  # noqa
+    )
+    match = re.search(pattern, message)
     if match is not None:
         cause = _(
             "You tried to do an order comparison ({operator})\n"
@@ -206,16 +198,13 @@ def parse_order_comparison(text):
         return None
 
 
-# example: bad operand type for unary +: 'str'
-bad_unary_pattern = re.compile(
-    r"bad operand type for unary (.+): [\'\"](\w+)[\'\"]"  # noqa
-)
-
-
-@add_cause
-def bad_operand_type_for_unary(text):
+@add_message_parser
+def bad_operand_type_for_unary(message):
     _ = current_lang.translate
-    match = re.search(bad_unary_pattern, text)
+
+    # example: bad operand type for unary +: 'str'
+    pattern = re.compile(r"bad operand type for unary (.+): [\'\"](\w+)[\'\"]")
+    match = re.search(pattern, message)
     if match is not None:
         cause = _(
             "You tried to use the unary operator '{operator}'\n"
@@ -227,16 +216,12 @@ def bad_operand_type_for_unary(text):
         return None
 
 
-# example: 'tuple' object does not support item assignment
-does_not_support_item_asssignment_pattern = re.compile(
-    r"[\'\"](\w+)[\'\"] object does not support item assignment"  # noqa
-)
-
-
-@add_cause
-def does_not_support_item_asssignment(text):
+@add_message_parser
+def does_not_support_item_asssignment(message):
     _ = current_lang.translate
-    match = re.search(does_not_support_item_asssignment_pattern, text)
+    # example: 'tuple' object does not support item assignment
+    pattern = re.compile(r"[\'\"](\w+)[\'\"] object does not support item assignment")
+    match = re.search(pattern, message)
     if match is not None:
         cause = _(
             "In Python, some objects are known as immutable:\n"
