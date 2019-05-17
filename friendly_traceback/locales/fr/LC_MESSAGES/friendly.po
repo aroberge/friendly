@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-16 12:40-0300\n"
-"PO-Revision-Date: 2019-05-16 12:42-0300\n"
+"POT-Creation-Date: 2019-05-16 21:25-0300\n"
+"PO-Revision-Date: 2019-05-16 21:26-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -66,7 +66,16 @@ msgstr ""
 "avec un guillemet simple ou double, mais n'avez jamais\n"
 "terminé la chaîne avec un autre guillemet sur cette ligne.\n"
 
-#: analyze_syntax.py:163
+#: analyze_syntax.py:140
+msgid ""
+"{keyword} is a constant in Python; you cannot assign it a value.\n"
+"\n"
+msgstr ""
+"{keyword} est une constante dans python; vous ne pouvez pas lui assigner "
+"une valeur.\n"
+"\n"
+
+#: analyze_syntax.py:144 analyze_syntax.py:203
 msgid ""
 "You were trying to assign a value to the Python keyword '{keyword}'.\n"
 "This is not allowed.\n"
@@ -76,7 +85,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: analyze_syntax.py:179
+#: analyze_syntax.py:219
 msgid ""
 "You meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
@@ -86,7 +95,7 @@ msgstr ""
 "au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: analyze_syntax.py:198
+#: analyze_syntax.py:238
 msgid ""
 "You wrote something like\n"
 "    import {function} from {module}\n"
@@ -101,11 +110,11 @@ msgstr ""
 "\n"
 "\n"
 
-#: analyze_syntax.py:218
+#: analyze_syntax.py:258
 msgid "a class"
 msgstr "une classe"
 
-#: analyze_syntax.py:219
+#: analyze_syntax.py:259
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
@@ -115,7 +124,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:225
+#: analyze_syntax.py:265
 msgid ""
 "You wrote a '{for_while}' loop but\n"
 "forgot to add a colon ':' at the end\n"
@@ -125,7 +134,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:231
+#: analyze_syntax.py:271
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
@@ -135,11 +144,11 @@ msgstr ""
 "'{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:252
+#: analyze_syntax.py:292
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: analyze_syntax.py:253
+#: analyze_syntax.py:293
 msgid ""
 "You tried to define {class_or_function}\n"
 "and did not use the correct syntax.\n"
@@ -196,7 +205,7 @@ msgstr "une chaîne de caractères ('str')"
 msgid "a tuple"
 msgstr "un tuple"
 
-#: analyze_type_error.py:73 analyze_type_error.py:93
+#: analyze_type_error.py:71 analyze_type_error.py:89
 msgid ""
 "You tried to concatenate (add) two different types of objects:\n"
 "{first} and {second}\n"
@@ -205,7 +214,7 @@ msgstr ""
 "différents:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:114
+#: analyze_type_error.py:108
 msgid ""
 "You tried to add two incompatible types of objects:\n"
 "{first} and {second}\n"
@@ -213,7 +222,7 @@ msgstr ""
 "Vous avez essayé d’additionner deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:121
+#: analyze_type_error.py:115
 msgid ""
 "You tried to subtract two incompatible types of objects:\n"
 "{first} and {second}\n"
@@ -221,7 +230,7 @@ msgstr ""
 "Vous avez tenté de soustraire deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:128
+#: analyze_type_error.py:122
 msgid ""
 "You tried to multiply two incompatible types of objects:\n"
 "{first} and {second}\n"
@@ -229,7 +238,7 @@ msgstr ""
 "Vous avez essayé de multiplier deux types d’objets différents:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:135
+#: analyze_type_error.py:129
 msgid ""
 "You tried to divide two incompatible types of objects:\n"
 "{first} and {second}\n"
@@ -237,7 +246,7 @@ msgstr ""
 "Vous avez essayé de diviser deux types d’objets différents:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:142
+#: analyze_type_error.py:136
 msgid ""
 "You tried to perform the bitwise operation {operator}\n"
 "on two incompatible types of objects:\n"
@@ -247,7 +256,7 @@ msgstr ""
 "sur deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:152
+#: analyze_type_error.py:146
 msgid ""
 "You tried to perform the bit shifting operation {operator}\n"
 "on two incompatible types of objects:\n"
@@ -257,7 +266,7 @@ msgstr ""
 "sur deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:162
+#: analyze_type_error.py:156
 msgid ""
 "You tried to exponentiate (raise to a power)\n"
 "using two incompatible types of objects:\n"
@@ -267,7 +276,7 @@ msgstr ""
 "en utilisant deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:170
+#: analyze_type_error.py:164
 msgid ""
 "You tried to use the operator {operator}\n"
 "using two incompatible types of objects:\n"
@@ -281,7 +290,7 @@ msgstr ""
 "Cet opérateur est normalement utilisé uniquement\n"
 "pour la multiplication des matrices.\n"
 
-#: analyze_type_error.py:195
+#: analyze_type_error.py:187
 msgid ""
 "You tried to do an order comparison ({operator})\n"
 "between two incompatible types of objects:\n"
@@ -291,7 +300,7 @@ msgstr ""
 "deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:220
+#: analyze_type_error.py:209
 msgid ""
 "You tried to use the unary operator '{operator}'\n"
 "with the following type of object: {obj}.\n"
@@ -301,7 +310,7 @@ msgstr ""
 "avec le type d’objet suivant: {obj}.\n"
 "Cette opération n’est pas définie pour ce type d’objet.\n"
 
-#: analyze_type_error.py:241
+#: analyze_type_error.py:226
 msgid ""
 "In Python, some objects are known as immutable:\n"
 "once defined, their value cannot be changed.\n"
@@ -497,7 +506,7 @@ msgstr ""
 "à l’aide de l’opérateur modulo '%'\n"
 "    résultat = ma_variable % 0\n"
 
-#: info_specific.py:42
+#: info_specific.py:41
 msgid ""
 "The object that could not be imported is '{name}'.\n"
 "The module or package where it was \n"
@@ -506,11 +515,11 @@ msgstr ""
 "L’objet qui n’a pas pu être importé est '{name}'.\n"
 "Le module ou le paquet d'où il devait être importé est '{module}'.\n"
 
-#: info_specific.py:48
+#: info_specific.py:47
 msgid "The object that could not be imported is '{name}'.\n"
 msgstr "L’objet qui n’a pas pu être importé est' {name} '.\n"
 
-#: info_specific.py:59
+#: info_specific.py:58
 msgid ""
 "In this case, the line identified above\n"
 "is more indented than expected and \n"
@@ -520,7 +529,7 @@ msgstr ""
 "est plus indentée que ce qui était attendu et ne\n"
 "correspond pas à l'indentation de la ligne précédente.\n"
 
-#: info_specific.py:65
+#: info_specific.py:64
 msgid ""
 "In this case, the line identified above\n"
 "was expected to begin a new indented block.\n"
@@ -528,7 +537,7 @@ msgstr ""
 "Dans ce cas-ci, la ligne indiquée ci-dessus par --> devrait\n"
 "normalement commencer un nouveau bloc de code indenté.\n"
 
-#: info_specific.py:70
+#: info_specific.py:69
 msgid ""
 "In this case, the line identified above is\n"
 "less indented than the preceding one,\n"
@@ -538,31 +547,31 @@ msgstr ""
 "est moins indentée que la ligne précédente\n"
 "et n’est pas alignée verticalement avec un autre bloc de code.\n"
 
-#: info_specific.py:83
+#: info_specific.py:82
 msgid "In this case, the sequence is a list.\n"
 msgstr "Dans ce cas, la séquence est une liste.\n"
 
-#: info_specific.py:85
+#: info_specific.py:84
 msgid "In this case, the sequence is a tuple.\n"
 msgstr "Dans ce cas, la séquence est un tuple.\n"
 
-#: info_specific.py:99
+#: info_specific.py:98
 msgid ""
 "In your program, the name of the key\n"
 "that cannot be found is '{key_name}'.\n"
 msgstr "Dans votre programme, le nom de la clé inconnue est '{key_name}'.\n"
 
-#: info_specific.py:113
+#: info_specific.py:112
 msgid ""
 "In your program, the name of the\n"
 "module that cannot be found is '{mod_name}'.\n"
 msgstr "Dans votre programme, le nom du module inconnu est '{mod_name}'.\n"
 
-#: info_specific.py:127
+#: info_specific.py:126
 msgid "In your program, the unknown name is '{var_name}'.\n"
 msgstr "Dans votre programme, le nom inconnu est '{var_name}'.\n"
 
-#: info_specific.py:150
+#: info_specific.py:149
 msgid ""
 "The variable that appears to cause the problem is '{var_name}'.\n"
 "Perhaps the statement\n"

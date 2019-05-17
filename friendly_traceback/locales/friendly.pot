@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-05-16 12:40-0300\n"
+"POT-Creation-Date: 2019-05-16 21:25-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,21 +44,27 @@ msgid ""
 "but never ended the string with another quote on that line.\n"
 msgstr ""
 
-#: analyze_syntax.py:163
+#: analyze_syntax.py:140
+msgid ""
+"{keyword} is a constant in Python; you cannot assign it a value.\n"
+"\n"
+msgstr ""
+
+#: analyze_syntax.py:144 analyze_syntax.py:203
 msgid ""
 "You were trying to assign a value to the Python keyword '{keyword}'.\n"
 "This is not allowed.\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:179
+#: analyze_syntax.py:219
 msgid ""
 "You meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:198
+#: analyze_syntax.py:238
 msgid ""
 "You wrote something like\n"
 "    import {function} from {module}\n"
@@ -67,36 +73,36 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:218
+#: analyze_syntax.py:258
 msgid "a class"
 msgstr ""
 
-#: analyze_syntax.py:219
+#: analyze_syntax.py:259
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:225
+#: analyze_syntax.py:265
 msgid ""
 "You wrote a '{for_while}' loop but\n"
 "forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:231
+#: analyze_syntax.py:271
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:252
+#: analyze_syntax.py:292
 msgid "a function or method"
 msgstr ""
 
-#: analyze_syntax.py:253
+#: analyze_syntax.py:293
 msgid ""
 "You tried to define {class_or_function}\n"
 "and did not use the correct syntax.\n"
@@ -146,58 +152,58 @@ msgstr ""
 msgid "a tuple"
 msgstr ""
 
-#: analyze_type_error.py:73 analyze_type_error.py:93
+#: analyze_type_error.py:71 analyze_type_error.py:89
 msgid ""
 "You tried to concatenate (add) two different types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:114
+#: analyze_type_error.py:108
 msgid ""
 "You tried to add two incompatible types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:121
+#: analyze_type_error.py:115
 msgid ""
 "You tried to subtract two incompatible types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:128
+#: analyze_type_error.py:122
 msgid ""
 "You tried to multiply two incompatible types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:135
+#: analyze_type_error.py:129
 msgid ""
 "You tried to divide two incompatible types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:142
+#: analyze_type_error.py:136
 msgid ""
 "You tried to perform the bitwise operation {operator}\n"
 "on two incompatible types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:152
+#: analyze_type_error.py:146
 msgid ""
 "You tried to perform the bit shifting operation {operator}\n"
 "on two incompatible types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:162
+#: analyze_type_error.py:156
 msgid ""
 "You tried to exponentiate (raise to a power)\n"
 "using two incompatible types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:170
+#: analyze_type_error.py:164
 msgid ""
 "You tried to use the operator {operator}\n"
 "using two incompatible types of objects:\n"
@@ -206,21 +212,21 @@ msgid ""
 "for multiplication of matrices.\n"
 msgstr ""
 
-#: analyze_type_error.py:195
+#: analyze_type_error.py:187
 msgid ""
 "You tried to do an order comparison ({operator})\n"
 "between two incompatible types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: analyze_type_error.py:220
+#: analyze_type_error.py:209
 msgid ""
 "You tried to use the unary operator '{operator}'\n"
 "with the following type of object: {obj}.\n"
 "This operation is not defined for this type of object.\n"
 msgstr ""
 
-#: analyze_type_error.py:241
+#: analyze_type_error.py:226
 msgid ""
 "In Python, some objects are known as immutable:\n"
 "once defined, their value cannot be changed.\n"
@@ -344,66 +350,66 @@ msgid ""
 "    result = my_variable % 0\n"
 msgstr ""
 
-#: info_specific.py:42
+#: info_specific.py:41
 msgid ""
 "The object that could not be imported is '{name}'.\n"
 "The module or package where it was \n"
 "expected to be found is '{module}'.\n"
 msgstr ""
 
-#: info_specific.py:48
+#: info_specific.py:47
 msgid ""
 "The object that could not be imported is '{name}'.\n"
 msgstr ""
 
-#: info_specific.py:59
+#: info_specific.py:58
 msgid ""
 "In this case, the line identified above\n"
 "is more indented than expected and \n"
 "does not match the indentation of the previous line.\n"
 msgstr ""
 
-#: info_specific.py:65
+#: info_specific.py:64
 msgid ""
 "In this case, the line identified above\n"
 "was expected to begin a new indented block.\n"
 msgstr ""
 
-#: info_specific.py:70
+#: info_specific.py:69
 msgid ""
 "In this case, the line identified above is\n"
 "less indented than the preceding one,\n"
 "and is not aligned vertically with another block of code.\n"
 msgstr ""
 
-#: info_specific.py:83
+#: info_specific.py:82
 msgid ""
 "In this case, the sequence is a list.\n"
 msgstr ""
 
-#: info_specific.py:85
+#: info_specific.py:84
 msgid ""
 "In this case, the sequence is a tuple.\n"
 msgstr ""
 
-#: info_specific.py:99
+#: info_specific.py:98
 msgid ""
 "In your program, the name of the key\n"
 "that cannot be found is '{key_name}'.\n"
 msgstr ""
 
-#: info_specific.py:113
+#: info_specific.py:112
 msgid ""
 "In your program, the name of the\n"
 "module that cannot be found is '{mod_name}'.\n"
 msgstr ""
 
-#: info_specific.py:127
+#: info_specific.py:126
 msgid ""
 "In your program, the unknown name is '{var_name}'.\n"
 msgstr ""
 
-#: info_specific.py:150
+#: info_specific.py:149
 msgid ""
 "The variable that appears to cause the problem is '{var_name}'.\n"
 "Perhaps the statement\n"

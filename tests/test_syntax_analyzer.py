@@ -44,8 +44,15 @@ def test_eol_while_scanning_string_literal():
 
 
 def test_assign_to_keyword():
+    assign = analyze_syntax.assign_to_keyword
+    assert "you cannot assign it a value." in assign(
+        message="can't assign to keyword", line="None = 1"
+    )
+
+
+def test_assign_to_a_keyword():
     last_line = analyze_syntax.analyze_last_line
-    assert "assign a value to the Python keyword 'pass'" in last_line("pass = 1")
+    assert "assign a value to the Python keyword 'def'" in last_line("def = 1")
 
 
 def test_confused_elif():

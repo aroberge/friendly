@@ -3,7 +3,7 @@
 Attempts to find the most likely cause of a SyntaxError.
 """
 
-import keyword
+from keyword import kwlist
 import tokenize
 
 from .my_gettext import current_lang
@@ -112,6 +112,42 @@ def eol_while_scanning_string_literal(message=None, **kwargs):
         )
 
 
+@add_python_message
+def assign_to_keyword(message=None, line=None, **kwargs):
+    _ = current_lang.translate
+    if not (
+        message == "can't assign to keyword"  # Python 3.6, 3.7
+        or message == "assignment to keyword"  # Python 3.6, 3.7
+        or message == "cannot assign to keyword"  # Python 3.8
+        or message == "cannot assign to None"  # Python 3.8
+        or message == "cannot assign to True"  # Python 3.8
+        or message == "cannot assign to False"  # Python 3.8
+        or message == "cannot assign to __debug__"  # Python 3.8
+    ):
+        return None
+
+    tokens = utils.collect_tokens(line)
+    while True:
+        for token in tokens:
+            word = token.string
+            if word in kwlist or word == "__debug__":
+                break
+        else:
+            raise RuntimeError("Fatal Error in analyze_syntax.assign_to_keyword")
+        break
+
+    if word in ["None", "True", "False", "__debug__"]:
+        return _(
+            "{keyword} is a constant in Python; you cannot assign it a value.\n" "\n"
+        ).format(keyword=word)
+    else:
+        return _(
+            "You were trying to assign a value to the Python keyword '{keyword}'.\n"
+            "This is not allowed.\n"
+            "\n"
+        ).format(keyword=word)
+
+
 # ==================
 # End of analysis of messages
 # ==================
@@ -152,13 +188,12 @@ def add_line_analyzer(func):
 @add_line_analyzer
 def assign_to_a_keyword(tokens):
     """Checks to see if line is of the form 'keyword = ...'
+
+    Note: this is different from the above case where we got a useful
+    message. Sometimes, all we get in such examples is "invalid syntax"
     """
     _ = current_lang.translate
-    if (
-        len(tokens) < 2
-        or (tokens[0].string not in keyword.kwlist)
-        or tokens[1].string != "="
-    ):
+    if len(tokens) < 2 or (tokens[0].string not in kwlist) or tokens[1].string != "=":
         return False
 
     return _(

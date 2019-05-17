@@ -20,18 +20,21 @@ causes = {
     9: "what Python calls a 'literal'",
     10: "from turtle import pen",
     11: "EOL while scanning string literal",
+    12: "None is a constant in Python",
+    13: "__debug__ is a constant in Python",
 }
 
 
 def test_syntax_errors():
-    for i in range(1, 11):
+    for i in causes:
+        cause = causes[i]
         try:
             exec("from . import raise_syntax_error%d" % i)
         except Exception:
             friendly_traceback.explain(redirect="capture")
         result = friendly_traceback.get_output()
-        assert "SyntaxError" in result, "SyntaxError identified incorrectly"
-        assert causes[i] in result, "Cause %s identified incorrectly" % i
+        assert "SyntaxError" in result, "SyntaxError identified incorrectly; %d" % i
+        assert cause in result, "Cause %d identified incorrectly" % i
 
 
 if __name__ == "__main__":
