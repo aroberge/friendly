@@ -32,29 +32,9 @@ Here's an example of the sort of thing that is tested.
 Traceback (most recent call last):
 SyntaxError: name 'x' is parameter and global
 
-
-
-
-
->>> None = 1
-Traceback (most recent call last):
-SyntaxError: cannot assign to None
-
->>> True = 1
-Traceback (most recent call last):
-SyntaxError: cannot assign to True
-
 >>> (True := 1)
 Traceback (most recent call last):
 SyntaxError: cannot use named assignment with True
-
->>> obj.__debug__ = 1
-Traceback (most recent call last):
-SyntaxError: cannot assign to __debug__
-
->>> __debug__ = 1
-Traceback (most recent call last):
-SyntaxError: cannot assign to __debug__
 
 >>> (__debug__ := 1)
 Traceback (most recent call last):
@@ -96,22 +76,6 @@ SyntaxError: cannot assign to Ellipsis
 >>> (a, "b", c) = (1, 2, 3)
 Traceback (most recent call last):
 SyntaxError: cannot assign to literal
-
->>> (a, True, c) = (1, 2, 3)
-Traceback (most recent call last):
-SyntaxError: cannot assign to True
-
->>> (a, __debug__, c) = (1, 2, 3)
-Traceback (most recent call last):
-SyntaxError: cannot assign to __debug__
-
->>> (a, *True, c) = (1, 2, 3)
-Traceback (most recent call last):
-SyntaxError: cannot assign to True
-
->>> (a, *__debug__, c) = (1, 2, 3)
-Traceback (most recent call last):
-SyntaxError: cannot assign to __debug__
 
 >>> [a, b, c + 1] = [1, 2, 3]
 Traceback (most recent call last):
@@ -194,12 +158,7 @@ More set_context():
 >>> (x for x in x) += 1
 Traceback (most recent call last):
 SyntaxError: cannot assign to generator expression
->>> None += 1
-Traceback (most recent call last):
-SyntaxError: cannot assign to None
->>> __debug__ += 1
-Traceback (most recent call last):
-SyntaxError: cannot assign to __debug__
+
 >>> f() += 1
 Traceback (most recent call last):
 SyntaxError: cannot assign to function call

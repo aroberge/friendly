@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-05-16 21:25-0300\n"
+"POT-Creation-Date: 2019-05-17 06:48-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,21 +50,21 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:144 analyze_syntax.py:203
+#: analyze_syntax.py:144 analyze_syntax.py:199
 msgid ""
 "You were trying to assign a value to the Python keyword '{keyword}'.\n"
 "This is not allowed.\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:219
+#: analyze_syntax.py:215
 msgid ""
 "You meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:238
+#: analyze_syntax.py:234
 msgid ""
 "You wrote something like\n"
 "    import {function} from {module}\n"
@@ -73,36 +73,36 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:258
+#: analyze_syntax.py:254
 msgid "a class"
 msgstr ""
 
-#: analyze_syntax.py:259
+#: analyze_syntax.py:255
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:265
+#: analyze_syntax.py:261
 msgid ""
 "You wrote a '{for_while}' loop but\n"
 "forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:271
+#: analyze_syntax.py:267
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:292
+#: analyze_syntax.py:288
 msgid "a function or method"
 msgstr ""
 
-#: analyze_syntax.py:293
+#: analyze_syntax.py:289
 msgid ""
 "You tried to define {class_or_function}\n"
 "and did not use the correct syntax.\n"
@@ -300,10 +300,16 @@ msgstr ""
 
 #: info_generic.py:111
 msgid ""
+"An OverflowError is raised when the result of an arithmetic operation\n"
+"is too large to be handled by the computer's processor.\n"
+msgstr ""
+
+#: info_generic.py:120
+msgid ""
 "A SyntaxError occurs when Python cannot understand your code.\n"
 msgstr ""
 
-#: info_generic.py:117
+#: info_generic.py:126
 msgid ""
 "A TabError indicates that you have used both spaces\n"
 "and tab characters to indent your code.\n"
@@ -313,7 +319,7 @@ msgid ""
 "Python's recommendation is to always use spaces to indent your code.\n"
 msgstr ""
 
-#: info_generic.py:130
+#: info_generic.py:139
 msgid ""
 "A TypeError is usually caused by trying\n"
 "to combine two incompatible types of objects,\n"
@@ -321,7 +327,7 @@ msgid ""
 "or by tring to do an operation not allowed on a given type of object.\n"
 msgstr ""
 
-#: info_generic.py:141
+#: info_generic.py:150
 msgid ""
 "In Python, variables that are used inside a function are known as \n"
 "local variables. Before they are used, they must be assigned a value.\n"
@@ -333,14 +339,14 @@ msgid ""
 "an UnboundLocalError.\n"
 msgstr ""
 
-#: info_generic.py:156
+#: info_generic.py:165
 msgid ""
 "No information is known about this exception.\n"
 "Please report this example to\n"
 "https://github.com/aroberge/friendly-traceback/issues\n"
 msgstr ""
 
-#: info_generic.py:166
+#: info_generic.py:175
 msgid ""
 "A ZeroDivisionError occurs when you are attempting to divide\n"
 "a value by zero:\n"
@@ -409,7 +415,7 @@ msgid ""
 "In your program, the unknown name is '{var_name}'.\n"
 msgstr ""
 
-#: info_specific.py:149
+#: info_specific.py:154
 msgid ""
 "The variable that appears to cause the problem is '{var_name}'.\n"
 "Perhaps the statement\n"

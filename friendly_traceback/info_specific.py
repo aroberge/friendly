@@ -128,6 +128,11 @@ def name_error(etype, value):
     )
 
 
+@register("OverflowError")
+def overflow_error(*args):
+    return  # No additional information can be provided
+
+
 @register("SyntaxError")
 def syntax_error(etype, value):
     return analyze_syntax.find_likely_cause(etype, value)

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-16 21:25-0300\n"
-"PO-Revision-Date: 2019-05-16 21:26-0300\n"
+"POT-Creation-Date: 2019-05-17 06:48-0300\n"
+"PO-Revision-Date: 2019-05-17 06:49-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -71,11 +71,11 @@ msgid ""
 "{keyword} is a constant in Python; you cannot assign it a value.\n"
 "\n"
 msgstr ""
-"{keyword} est une constante dans python; vous ne pouvez pas lui assigner "
-"une valeur.\n"
+"{keyword} est une constante dans python; vous ne pouvez pas lui assigner une "
+"valeur.\n"
 "\n"
 
-#: analyze_syntax.py:144 analyze_syntax.py:203
+#: analyze_syntax.py:144 analyze_syntax.py:199
 msgid ""
 "You were trying to assign a value to the Python keyword '{keyword}'.\n"
 "This is not allowed.\n"
@@ -85,7 +85,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: analyze_syntax.py:219
+#: analyze_syntax.py:215
 msgid ""
 "You meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
@@ -95,7 +95,7 @@ msgstr ""
 "au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: analyze_syntax.py:238
+#: analyze_syntax.py:234
 msgid ""
 "You wrote something like\n"
 "    import {function} from {module}\n"
@@ -110,11 +110,11 @@ msgstr ""
 "\n"
 "\n"
 
-#: analyze_syntax.py:258
+#: analyze_syntax.py:254
 msgid "a class"
 msgstr "une classe"
 
-#: analyze_syntax.py:259
+#: analyze_syntax.py:255
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
@@ -124,7 +124,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:265
+#: analyze_syntax.py:261
 msgid ""
 "You wrote a '{for_while}' loop but\n"
 "forgot to add a colon ':' at the end\n"
@@ -134,7 +134,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:271
+#: analyze_syntax.py:267
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
@@ -144,11 +144,11 @@ msgstr ""
 "'{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:292
+#: analyze_syntax.py:288
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: analyze_syntax.py:293
+#: analyze_syntax.py:289
 msgid ""
 "You tried to define {class_or_function}\n"
 "and did not use the correct syntax.\n"
@@ -420,12 +420,21 @@ msgstr ""
 "utilisé avant qu'on ne lui ait associé une valeur.\n"
 
 #: info_generic.py:111
+msgid ""
+"An OverflowError is raised when the result of an arithmetic operation\n"
+"is too large to be handled by the computer's processor.\n"
+msgstr ""
+"Une exception de type OverflowError est levée lorsque le résultat d’une "
+"opération arithmétique\n"
+"est trop grand pour être manipulé par le processeur de l’ordinateur.\n"
+
+#: info_generic.py:120
 msgid "A SyntaxError occurs when Python cannot understand your code.\n"
 msgstr ""
 "Une exception de type SyntaxError se produit lorsque python ne peut pas "
 "comprendre votre code.\n"
 
-#: info_generic.py:117
+#: info_generic.py:126
 msgid ""
 "A TabError indicates that you have used both spaces\n"
 "and tab characters to indent your code.\n"
@@ -443,7 +452,7 @@ msgstr ""
 "La recommandation de Python est de toujours utiliser des espaces\n"
 "pour indenter votre code.\n"
 
-#: info_generic.py:130
+#: info_generic.py:139
 msgid ""
 "A TypeError is usually caused by trying\n"
 "to combine two incompatible types of objects,\n"
@@ -456,7 +465,7 @@ msgstr ""
 "ou en tentant d'effectuer une opération non permise sur un type d'objet "
 "donné.\n"
 
-#: info_generic.py:141
+#: info_generic.py:150
 msgid ""
 "In Python, variables that are used inside a function are known as \n"
 "local variables. Before they are used, they must be assigned a value.\n"
@@ -480,7 +489,7 @@ msgstr ""
 "qu’il s’agit d’une variable globale, sinon vous verrez une exception "
 "UnboundLocalError.\n"
 
-#: info_generic.py:156
+#: info_generic.py:165
 msgid ""
 "No information is known about this exception.\n"
 "Please report this example to\n"
@@ -490,7 +499,7 @@ msgstr ""
 "Veuillez signaler cet exemple à\n"
 "https://github.com/aroberge/friendly-traceback/issues\n"
 
-#: info_generic.py:166
+#: info_generic.py:175
 msgid ""
 "A ZeroDivisionError occurs when you are attempting to divide\n"
 "a value by zero:\n"
@@ -571,7 +580,7 @@ msgstr "Dans votre programme, le nom du module inconnu est '{mod_name}'.\n"
 msgid "In your program, the unknown name is '{var_name}'.\n"
 msgstr "Dans votre programme, le nom inconnu est '{var_name}'.\n"
 
-#: info_specific.py:149
+#: info_specific.py:154
 msgid ""
 "The variable that appears to cause the problem is '{var_name}'.\n"
 "Perhaps the statement\n"
@@ -702,7 +711,6 @@ msgstr ""
 #~ "{partial_source}\n"
 #~ msgstr ""
 #~ "\n"
-#~ "    Erreur trouvée dans le fichier '{filename}' à la ligne "
-#~ "{linenumber}.\n"
+#~ "    Erreur trouvée dans le fichier '{filename}' à la ligne {linenumber}.\n"
 #~ "\n"
 #~ "{partial_source}\n"

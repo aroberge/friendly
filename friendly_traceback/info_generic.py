@@ -105,6 +105,15 @@ def name_error(*args):
     )
 
 
+@register("OverflowError")
+def overflow_error(*args):
+    _ = current_lang.translate
+    return _(
+        "An OverflowError is raised when the result of an arithmetic operation\n"
+        "is too large to be handled by the computer's processor.\n"
+    )
+
+
 @register("SyntaxError")
 def syntax_error(*args):
     _ = current_lang.translate

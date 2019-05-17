@@ -17,7 +17,7 @@ def test_flush():
 
 if __name__ == "__main__":
     result, result2 = test_flush()
-    print("Before flush:\n", "-"*50)
+    print("Before flush:\n", "-" * 50)
     print(result)
-    print("="*50, "\nAfter flush, should have empty string:\n")
+    print("=" * 50, "\nAfter flush, should have empty string:\n")
     print(repr(result2))
