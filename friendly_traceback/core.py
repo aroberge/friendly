@@ -286,4 +286,4 @@ def get_level():
 
 def set_stream(stream):
     """Sets the stream to which the output should be directed"""
-    state.set_redirect(redirected=stream)
+    state.set_redirect(redirect=stream)

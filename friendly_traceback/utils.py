@@ -22,6 +22,11 @@ def add_excluded_path(path):
     EXCLUDED_FILE_PATH.add(path)
 
 
+def get_cache():
+    """for avant_idle"""
+    return CACHED_STRING_SOURCES
+
+
 dirname = os.path.dirname(__file__)
 for file in os.listdir(os.path.dirname(__file__)):
     add_excluded_path(os.path.join(dirname, file))
@@ -98,6 +103,14 @@ def highlight_source(linenumber, index, lines, offset=None):
         which, in this case, points to a missing colon. We use the same
         representation in this case.
     """
+    # The following are left-over diagnostic from the hack to integrate
+    # into Idle; they are harmless tests which could potentially be useful.
+    if lines is None:
+        print("problem in utils.highlight_source: lines is None")
+        return "", ""
+    if index is None:
+        print("problem in utils.highlight_source: index is None")
+        index = 0
     new_lines = []
     problem_line = ""
     nb_digits = len(str(linenumber + index))
