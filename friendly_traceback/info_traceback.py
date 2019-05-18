@@ -140,14 +140,11 @@ def get_traceback_info(etype, value, tb):
 
 def set_call_info(info, name, filename, linenumber, lines, index, frame):
     source_info = get_partial_source(filename, linenumber, lines, index)
-    # If the source was cached, the filename we got was not the correct one
-    # so we ensure that we have the true filename for the display
-    true_filename = source_info["filename"]
     if name == "last_call":
         get_header = last_call_header
     else:
         get_header = exception_raised_header
-    info["%s_header" % name] = get_header(linenumber, true_filename)  # [4]
+    info["%s_header" % name] = get_header(linenumber, filename)  # [4]
     info["%s_source" % name] = source_info["source"]  # [5]
 
     if "line" in source_info and source_info["line"] is not None:
@@ -250,9 +247,10 @@ def get_partial_source(filename, linenumber, lines, index):
        of the specific line where the exception occurred.
     """
     if filename in utils.CACHED_STRING_SOURCES:
-        true_name, source = utils.CACHED_STRING_SOURCES[filename]
         source, line = utils.get_partial_source(filename, linenumber, None)
-        filename = true_name
+        # filename, _ignore = utils.CACHED_STRING_SOURCES[filename]
+        if not source:
+            print("Problem: source of %s is not available" % filename)
     elif filename == "<string>":  # note: it might have been cached with this name
         source = cannot_analyze_string()
         lines = source.split("\n")
@@ -262,15 +260,16 @@ def get_partial_source(filename, linenumber, lines, index):
         source = "\n".join(new_lines)
         line = None
     elif filename and os.path.abspath(filename):
-        # filename = os.path.basename(filename)
         source, line = utils.highlight_source(linenumber, index, lines)
+        if not source:
+            print("Problem: source of %s is not available" % filename)
     elif not filename:
         raise FileNotFoundError("Cannot find %s" % filename)
 
     if not source.endswith("\n"):
         source += "\n"
 
-    return {"source": source, "line": line, "filename": filename}
+    return {"source": source, "line": line}
 
 
 def last_call_header(linenumber, filename):

@@ -62,13 +62,13 @@ def collect_tokens(line):
     return tokens
 
 
-def cache_string_source(fake_filename, true_filename_and_source):
-    CACHED_STRING_SOURCES[fake_filename] = true_filename_and_source
+def cache_string_source(fake_filename, source):
+    CACHED_STRING_SOURCES[fake_filename] = source
 
 
 def get_source(filename):
     if filename in CACHED_STRING_SOURCES:
-        _filename, source = CACHED_STRING_SOURCES[filename]
+        source = CACHED_STRING_SOURCES[filename]
         lines = source.split("\n")
     else:
         with open(filename, encoding="utf8") as f:
@@ -81,13 +81,16 @@ def get_partial_source(filename, linenumber, offset):
 
     begin = max(0, linenumber - CONTEXT)
     # fmt: off
-    return highlight_source(
+    partial_source, bad_line = highlight_source(
         linenumber,
         linenumber - begin - 1,
         lines[begin: linenumber + 1],
         offset=offset
     )
     # fmt: on
+    if not partial_source:
+        print("Problem in utils: source of %s is not available" % filename)
+    return partial_source, bad_line
 
 
 def highlight_source(linenumber, index, lines, offset=None):
@@ -106,7 +109,6 @@ def highlight_source(linenumber, index, lines, offset=None):
     # The following are left-over diagnostic from the hack to integrate
     # into Idle; they are harmless tests which could potentially be useful.
     if lines is None:
-        print("problem in utils.highlight_source: lines is None")
         return "", ""
     if index is None:
         print("problem in utils.highlight_source: index is None")

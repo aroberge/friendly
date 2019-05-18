@@ -53,11 +53,9 @@ class FriendlyConsole(InteractiveConsole):
         line.
 
         """
-
-        # Trick adapted from Better-exceptions project
         self.fake_filename = filename = "<console:%d>" % self.counter
-        self.fake_filename_plus_source = (self.fake_filename, source)
-        utils.cache_string_source(self.fake_filename, self.fake_filename_plus_source)
+        self.source = source
+        utils.cache_string_source(self.fake_filename, self.source)
         self.counter += 1
         try:
             code = self.compile(source, filename, symbol)
@@ -89,7 +87,7 @@ class FriendlyConsole(InteractiveConsole):
         caller should be prepared to deal with it.
 
         """
-        utils.cache_string_source(self.fake_filename, self.fake_filename_plus_source)
+        utils.cache_string_source(self.fake_filename, self.source)
         try:
             exec(code, self.locals)
         except SystemExit:
