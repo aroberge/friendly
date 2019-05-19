@@ -39,7 +39,7 @@ class FriendlyConsole(InteractiveConsole):
 
         1) The input is incorrect; compile_command() raised an
         exception (SyntaxError or OverflowError).  A syntax traceback
-        will be printed by calling the showsyntaxerror() method.
+        will be printed .
 
         2) The input is incomplete, and more input is required;
         compile_command() returned None.  Nothing happens.
@@ -55,14 +55,13 @@ class FriendlyConsole(InteractiveConsole):
 
         """
         self.fake_filename = filename = "<console:%d>" % self.counter
-        self.source = source
-        utils.cache_string_source(self.fake_filename, self.source)
+        utils.cache_string_source(self.fake_filename, source)
         self.counter += 1
         try:
             code = self.compile(source, filename, symbol)
         except (OverflowError, SyntaxError, ValueError):
             # Case 1
-            self.showsyntaxerror(filename)
+            public_api.explain()
             return False
 
         if code is None:
@@ -76,7 +75,7 @@ class FriendlyConsole(InteractiveConsole):
     def runcode(self, code):
         """Execute a code object.
 
-        When an exception occurs, self.showtraceback() is called to
+        When an exception occurs, friendly_traceback.explain() is called to
         display a traceback.  All exceptions are caught except
         SystemExit, which, unlike the case for the original version in the
         standard library, cleanly exists the program. This is done
@@ -86,25 +85,13 @@ class FriendlyConsole(InteractiveConsole):
         A note about KeyboardInterrupt: this exception may occur
         elsewhere in this code, and may not always be caught.  The
         caller should be prepared to deal with it.
-
         """
-        utils.cache_string_source(self.fake_filename, self.source)
         try:
             exec(code, self.locals)
         except SystemExit:
             os._exit(1)
         except Exception:
-            self.showtraceback()
-
-    def showsyntaxerror(self, filename=None):
-        """Display the syntax error that just occurred.
-        """
-        public_api.explain()
-
-    def showtraceback(self):
-        """Display the exception that just occurred.
-        """
-        public_api.explain()
+            public_api.explain()
 
 
 def start_console(local_vars=None, show_python=False):

@@ -293,6 +293,8 @@ def format_simulated_python_traceback(records, etype, value):
         frame, filename, linenumber, _func, lines, index = record
         source_info = get_partial_source(filename, linenumber, lines, index)
         badline = source_info["line"]
+        if badline is None:
+            badline = ""
         result.append(
             '  File "{}", line {}, in {}\n    {}'.format(
                 filename, linenumber, _func, badline.strip()
