@@ -291,8 +291,6 @@ def format_simulated_python_traceback(records, etype, value):
 
     for record in records:
         frame, filename, linenumber, _func, lines, index = record
-        if not lines:
-            continue
         source_info = get_partial_source(filename, linenumber, lines, index)
         badline = source_info["line"]
         result.append(
