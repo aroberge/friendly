@@ -10,12 +10,12 @@ Adaptation of Python's console found in code.py
 
 import os
 import platform
-import sys
 
 from code import InteractiveConsole
 
 from . import public_api
-from .core import state
+
+# from .core import state
 from .version import __version__
 from . import utils
 
@@ -98,49 +98,21 @@ class FriendlyConsole(InteractiveConsole):
 
     def showsyntaxerror(self, filename=None):
         """Display the syntax error that just occurred.
-
-        This doesn't display a stack trace because there isn't one.
-
-        If a filename is given, it is stuffed in the exception instead
-        of what was there before (because Python's parser always uses
-        "<string>" when reading from a string).
         """
-        try:
-            type, value, tb = sys.exc_info()
-            sys.last_type = type
-            sys.last_value = value
-            sys.last_traceback = tb
-            if filename and type is SyntaxError:
-                # Work hard to stuff the correct filename in the exception
-                try:
-                    msg, (dummy_filename, lineno, offset, line) = value.args
-                except ValueError:
-                    # Not the format we expect; leave it alone
-                    pass
-                else:
-                    # Stuff in the right filename
-                    value = SyntaxError(msg, (filename, lineno, offset, line))
-                    sys.last_value = value
-            sys.excepthook(type, value, tb)
-        finally:
-            del tb
+        public_api.explain()
 
     def showtraceback(self):
         """Display the exception that just occurred.
-
-        We remove the first stack item because it is our own code.
         """
-        sys.last_type, sys.last_value, last_tb = sys.exc_info()
-        sys.last_traceback = last_tb
-        try:
-            sys.excepthook(sys.last_type, sys.last_value, last_tb.tb_next)
-        finally:
-            last_tb = None
+        public_api.explain()
 
 
 def start_console(local_vars=None, show_python=False):
     """Starts a console; modified from code.interact"""
-    console_defaults = {"set_lang": state.install_gettext, "set_level": state.set_level}
+    console_defaults = {
+        "set_lang": public_api.set_lang,
+        "set_level": public_api.set_level,
+    }
 
     if local_vars is None:
         local_vars = console_defaults
