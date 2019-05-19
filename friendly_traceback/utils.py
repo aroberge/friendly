@@ -22,6 +22,11 @@ def add_excluded_path(path):
     EXCLUDED_FILE_PATH.add(path)
 
 
+def remove_excluded_path(path):
+    """Reverses the effect of add_excluded_path()"""
+    EXCLUDED_FILE_PATH.discard(path)
+
+
 def get_cache():
     """for avant_idle"""
     return CACHED_STRING_SOURCES

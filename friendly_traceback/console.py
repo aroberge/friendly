@@ -14,6 +14,7 @@ import sys
 
 from code import InteractiveConsole
 
+from . import public_api
 from .core import state
 from .version import __version__
 from . import utils
@@ -27,7 +28,7 @@ class FriendlyConsole(InteractiveConsole):
         self.fake_filename_plus_source = None
         self.fake_filename = None
         self.counter = 0
-        utils.add_excluded_path(codeop.__file__)
+        public_api.exclude_file_from_traceback(codeop.__file__)
 
     def runsource(self, source, filename="<input>", symbol="single"):
         """Compile and run some source in the interpreter.

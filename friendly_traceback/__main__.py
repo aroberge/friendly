@@ -9,12 +9,13 @@ command line. You can find more details by doing::
 
 """
 import argparse
+import runpy
 import sys
 import textwrap
 
 from . import console
-from . import core
 from . import version
+from . import public_api
 
 
 parser = argparse.ArgumentParser(
@@ -81,12 +82,12 @@ parser.add_argument(
 
 
 def main():
-    console_dict = {"set_lang": core.set_lang, "set_level": core.set_level}
+    console_dict = {"set_lang": public_api.set_lang, "set_level": public_api.set_level}
     args = parser.parse_args()
     if args.lang is not None:
-        core.set_lang(args.lang)
+        public_api.set_lang(args.lang)
     if args.level is not None:
-        core.set_level(args.level)
+        public_api.set_level(args.level)
     if args.version:
         print(
             """----------------------------------------------
@@ -104,13 +105,15 @@ def main():
                 for var in dir(module):
                     module_dict[var] = getattr(module, var)
             else:
-                module_dict = core.run_module(args.source)
+                public_api.exclude_file_from_traceback(runpy.__file__)
+                module_dict = runpy.run_module(args.source, run_name="__main__")
             console_dict.update(module_dict)
             console.start_console(local_vars=console_dict)
         elif args.import_only:
             module = __import__(args.source)
         else:
-            core.run_script(args.source)
+            public_api.exclude_file_from_traceback(runpy.__file__)
+            runpy.run_path(args.source, run_name="__main__")
     else:
         console.start_console()
 

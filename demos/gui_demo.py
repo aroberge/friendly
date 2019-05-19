@@ -6,6 +6,7 @@ a suitable approximation) will be printed in that console, whereas the
 formatted "friendly traceback" will appear in a text box.
 
 """
+import runpy
 import tkinter as tk
 
 import _gui
@@ -22,8 +23,7 @@ demo_lang.install()
 # However, we may wish to ensure that this file does not show in
 # the traceback results, so that it looks like tracebacks running from
 # Python instead of from this program.
-
-friendly_traceback.utils.add_excluded_path(__file__)
+friendly_traceback.exclude_file_from_traceback(__file__)
 
 
 class App(_gui.App):
@@ -48,9 +48,16 @@ class App(_gui.App):
         # Since we run this from a Tkinter function, any sys.excepthook
         # will be ignored - hence, we need to catch the tracebacks locally.
         try:
-            friendly_traceback.run_script(self.filename)
+            # If you comment out the following line, the traceback generated
+            # might include information from runpy - something like this
+            # could confuse beginners when they try with their own code as
+            # they would have no idea where runpy was used.
+            friendly_traceback.exclude_file_from_traceback(runpy.__file__)
+            runpy.run_path(self.filename, run_name="__main__")
         except Exception:
             friendly_traceback.explain()
+        finally:
+            friendly_traceback.include_file_in_traceback(runpy.__file__)
 
     def formatter(self, info, level=None):
         """Our custom formatter.

@@ -4,7 +4,6 @@ First version - needs to be documented.
 """
 import inspect
 import os
-import runpy
 import traceback
 
 from . import info_generic
@@ -13,8 +12,6 @@ from . import utils
 from .my_gettext import current_lang
 from .info_variables import get_var_info
 
-
-utils.add_excluded_path(runpy.__file__)
 
 # ====================
 # The following is an example of a formatted traceback, with each
@@ -159,18 +156,6 @@ def cannot_analyze_string():
         "Unfortunately, no additional information is available:\n"
         "the content of file '<string>' is not accessible.\n"
     )
-
-
-def excluded_file_names():
-    """In many places, by default we exclude the files from this project,
-       as well as runpy from the standard Python library, in order to
-       restrict tracebacks to code written by the users.
-    """
-    excluded = [runpy.__file__]
-    dirname = os.path.dirname(__file__)
-    for file in os.listdir(os.path.dirname(__file__)):
-        excluded.append(os.path.join(dirname, file))
-    return excluded
 
 
 def set_header(info, friendly):

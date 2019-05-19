@@ -6,7 +6,6 @@ The central module that controls other aspects of friendly-traceback.
 import configparser
 import locale
 import os
-import runpy
 import sys
 import traceback
 
@@ -102,6 +101,18 @@ class _State:
         """Replaces a standard traceback by a friendlier one,
            except for SystemExit and KeyboardInterrupt which
            are re-raised.
+
+           The values of the required arguments are typically the following:
+
+               etype, value, tb = sys.exc_info()
+
+           By default, the output goes to sys.stderr or to some other stream
+           set to be the default by another API call.  However, if
+              redirect = some_stream
+           is specified, the output goes to that stream, but without changing
+           the global settings.
+
+
         """
         if redirect is not None:
             saved_current_redirect = self.write_err
@@ -159,7 +170,7 @@ class _State:
 
     def set_formatter(self, formatter=None):
         """Sets the default formatter. If no argument is given, the default
-           formatter is used.
+           formatter, based on the value for the level, is used.
         """
         if formatter is None:
             self.formatter = formatters.format_traceback
@@ -184,106 +195,3 @@ class _State:
 
 
 state = _State()
-
-
-def run_module(source):
-    state.running_script = True
-    mod_dict = runpy.run_module(source, run_name="__main__")
-    state.running_script = False
-    return mod_dict
-
-
-# ----------------
-# Public API available through a * import
-# ----------------
-
-__all__ = [
-    "explain",
-    "_explain",
-    "get_output",
-    "install",
-    "set_lang",
-    "get_lang",
-    "set_level",
-    "get_level",
-    "run_script",
-    "set_formatter",
-    "set_stream",
-    "state",  # use with caution
-]
-
-
-def run_script(source):
-    state.running_script = True
-    mod_dict = runpy.run_path(source, run_name="__main__")
-    state.running_script = False
-    return mod_dict
-
-
-def explain(redirect=None):
-    """Replaces a standard traceback by a friendlier one"""
-    etype, value, tb = sys.exc_info()
-    state.explain(etype, value, tb, redirect=redirect)
-
-
-def _explain(etype, value, tb, redirect=None):
-    """Replaces a standard traceback by a friendlier one"""
-    state.explain(etype, value, tb, redirect=redirect)
-
-
-def get_output(flush=True):
-    """Returns the result of captured output as a string which can be
-       written anywhere desired.
-
-       By default, flushes all the captured content.
-       However, this can be overriden if desired.
-    """
-    return state.get_captured(flush=flush)
-
-
-def install(lang=None, redirect=None, level=1):
-    """
-    Replaces sys.excepthook by friendly_traceback's own version
-    """
-    state.install(lang=lang, redirect=redirect, level=level)
-
-
-def set_formatter(formatter=None):
-    """Sets the default formatter. If no argument is given, the default
-       formatter is used.
-    """
-    state.set_formatter(formatter=formatter)
-
-
-def set_lang(lang):
-    """Sets the language to be used by gettext.
-
-       If not translations exist for that language, the original
-       English strings will be used.
-    """
-    state.install_gettext(lang)
-
-
-def get_lang():
-    return state.lang
-
-
-def set_level(level):
-    """Sets the verbosity level to be used.
-
-       0. Normal Python tracebacks - restoring sys.__except_hook
-       1. Default
-       9. "Default" + Python tracebacks at the end.
-
-       Some other values may be available on an experimental basis.
-    """
-    state.set_level(level)
-
-
-def get_level():
-    return state.level
-
-
-def set_stream(stream):
-    """Sets the stream to which the output should be directed"""
-    state.set_redirect(redirect=stream)
