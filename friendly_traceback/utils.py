@@ -4,32 +4,6 @@ import os.path
 
 from io import StringIO
 
-CONTEXT = 4
-EXCLUDED_FILE_PATH = set([])
-
-
-def is_excluded_file(path):
-    """In many places, by default we exclude the files from this project,
-       as well as runpy from the standard Python library, in order to
-       restrict tracebacks to code written by the users.
-    """
-    return path in EXCLUDED_FILE_PATH
-
-
-def add_excluded_path(path):
-    """Adds a path to be excluded from the simulated Python traceback"""
-    EXCLUDED_FILE_PATH.add(path)
-
-
-def remove_excluded_path(path):
-    """Reverses the effect of add_excluded_path()"""
-    EXCLUDED_FILE_PATH.discard(path)
-
-
-dirname = os.path.dirname(__file__)
-for file in os.listdir(os.path.dirname(__file__)):
-    add_excluded_path(os.path.join(dirname, file))
-
 
 class Token:
     """Token as generated from tokenize.generate_tokens written here in

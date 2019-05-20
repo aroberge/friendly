@@ -52,8 +52,8 @@ class FriendlyConsole(InteractiveConsole):
         line.
 
         """
-        self.fake_filename = filename = "<friendly-console:%d>" % self.counter
-        cache.add(self.fake_filename, source)
+        filename = "<friendly-console:%d>" % self.counter
+        cache.add(filename, source)
         self.counter += 1
         try:
             code = self.compile(source, filename, symbol)

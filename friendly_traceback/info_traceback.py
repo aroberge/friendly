@@ -13,6 +13,7 @@ from .my_gettext import current_lang
 from .info_variables import get_var_info
 
 from .source_cache import cache, highlight_source
+from .path_info import is_excluded_file
 
 
 # ====================
@@ -92,12 +93,12 @@ def get_traceback_info(etype, value, tb):
     set_cause(info, friendly, etype, value)  # [3]
 
     # Get all calls made
-    records = inspect.getinnerframes(tb, utils.CONTEXT)
+    records = inspect.getinnerframes(tb, cache.context)
     # Do not show traceback from our own code
     records = []
-    for record in inspect.getinnerframes(tb, utils.CONTEXT):
+    for record in inspect.getinnerframes(tb, cache.context):
         frame, filename, linenumber, _func, lines, index = record
-        if utils.is_excluded_file(filename):
+        if is_excluded_file(filename):
             continue
         else:
             records.append(record)
