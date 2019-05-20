@@ -14,6 +14,6 @@ del _sys
 
 from .public_api import *  # noqa
 
-from .core import *  # noqa
+# from .core import *  # noqa
 from . import version  # noqa
 from .console import FriendlyConsole  # noqa

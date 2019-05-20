@@ -14,18 +14,16 @@ import platform
 from code import InteractiveConsole
 
 from . import public_api
+from .source_cache import cache
 
 # from .core import state
 from .version import __version__
-from . import utils
-
 import codeop
 
 
 class FriendlyConsole(InteractiveConsole):
     def __init__(self, locals=None):
         super().__init__(locals=locals)
-        self.fake_filename_plus_source = None
         self.fake_filename = None
         self.counter = 0
         public_api.exclude_file_from_traceback(codeop.__file__)
@@ -54,8 +52,8 @@ class FriendlyConsole(InteractiveConsole):
         line.
 
         """
-        self.fake_filename = filename = "<console:%d>" % self.counter
-        utils.cache_string_source(self.fake_filename, source)
+        self.fake_filename = filename = "<friendly-console:%d>" % self.counter
+        cache.add(self.fake_filename, source)
         self.counter += 1
         try:
             code = self.compile(source, filename, symbol)
@@ -92,6 +90,19 @@ class FriendlyConsole(InteractiveConsole):
             os._exit(1)
         except Exception:
             public_api.explain()
+
+    # Since we exclude files in this package from being included in the
+    # tracebacks, we do not need to do any special handling to remove
+    # a frame from the tracebacks as is done in Python's
+    # code.InteractiveConsole. Thus, we have no need for the following
+    # two methods, but define them in case subclasses accidently called
+    # them.
+
+    def showsyntaxerror(self, filename=None):
+        public_api.explain()
+
+    def showtraceback(self):
+        public_api.explain()
 
 
 def start_console(local_vars=None, show_python=False):

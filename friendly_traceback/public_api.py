@@ -12,8 +12,10 @@ from functools import wraps
 
 from .core import state
 from . import utils
+from .source_cache import cache, highlight_source
 
-__all__ = []
+
+__all__ = ["cache", "highlight_source"]
 
 
 def make_public(f):

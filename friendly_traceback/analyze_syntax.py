@@ -8,6 +8,7 @@ import tokenize
 
 from .my_gettext import current_lang
 from . import utils
+from .source_cache import cache
 
 PYTHON_MESSAGES = []
 LINE_ANALYZERS = []
@@ -23,8 +24,7 @@ def find_likely_cause(etype, value):
     linenumber = value.lineno
     offset = value.offset
     message = value.msg
-    partial_source, _ignore = utils.get_partial_source(filepath, linenumber, offset)
-    source = utils.get_source(filepath)
+    source = cache.get_source(filepath)
     return _find_likely_cause(source, linenumber, message, offset)
 
 

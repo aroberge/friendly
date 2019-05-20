@@ -5,7 +5,6 @@ import os.path
 from io import StringIO
 
 CONTEXT = 4
-CACHED_STRING_SOURCES = {}
 EXCLUDED_FILE_PATH = set([])
 
 
@@ -25,11 +24,6 @@ def add_excluded_path(path):
 def remove_excluded_path(path):
     """Reverses the effect of add_excluded_path()"""
     EXCLUDED_FILE_PATH.discard(path)
-
-
-def get_cache():
-    """for avant_idle"""
-    return CACHED_STRING_SOURCES
 
 
 dirname = os.path.dirname(__file__)
@@ -65,80 +59,6 @@ def collect_tokens(line):
         print("%s raised while tokenizing line" % repr(e))
 
     return tokens
-
-
-def cache_string_source(fake_filename, source):
-    CACHED_STRING_SOURCES[fake_filename] = source
-
-
-def get_source(filename):
-    if filename in CACHED_STRING_SOURCES:
-        source = CACHED_STRING_SOURCES[filename]
-        lines = source.split("\n")
-    else:
-        with open(filename, encoding="utf8") as f:
-            lines = f.readlines()
-    return lines
-
-
-def get_partial_source(filename, linenumber, offset):
-    lines = get_source(filename)
-
-    begin = max(0, linenumber - CONTEXT)
-    # fmt: off
-    partial_source, bad_line = highlight_source(
-        linenumber,
-        linenumber - begin - 1,
-        lines[begin: linenumber + 1],
-        offset=offset
-    )
-    # fmt: on
-    if not partial_source:
-        print("Problem in utils: source of %s is not available" % filename)
-    return partial_source, bad_line
-
-
-def highlight_source(linenumber, index, lines, offset=None):
-    """Displays a few relevant lines from a file, showing line numbers
-       and identifying a particular line.
-
-       When dealing with a SyntaxError and subclasses, offset is an
-       integer normally used by Python to indicate the position of
-       the error, like:
-
-           if True
-                  ^
-        which, in this case, points to a missing colon. We use the same
-        representation in this case.
-    """
-    # The following are left-over diagnostic from the hack to integrate
-    # into Idle; they are harmless tests which could potentially be useful.
-    if lines is None:
-        return "", ""
-    if index is None:
-        print("problem in utils.highlight_source: index is None")
-        index = 0
-    new_lines = []
-    problem_line = ""
-    nb_digits = len(str(linenumber + index))
-    no_mark = "       {:%d}: " % nb_digits
-    with_mark = "    -->{:%d}: " % nb_digits
-    if offset is not None:
-        offset_mark = " " * (8 + nb_digits + offset) + "^"
-    i = linenumber - index
-    for line in lines:
-        if i == linenumber:
-            num = with_mark.format(i)
-            problem_line = line
-            if offset is not None:
-                new_lines.append(num + line.rstrip())
-                new_lines.append(offset_mark)
-                break
-        else:
-            num = no_mark.format(i)
-        new_lines.append(num + line.rstrip())
-        i += 1
-    return "\n".join(new_lines), problem_line
 
 
 PYTHON = os.path.dirname(tokenize.__file__).lower()

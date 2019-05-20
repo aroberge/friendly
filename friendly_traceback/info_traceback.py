@@ -12,6 +12,8 @@ from . import utils
 from .my_gettext import current_lang
 from .info_variables import get_var_info
 
+from .source_cache import cache, highlight_source
+
 
 # ====================
 # The following is an example of a formatted traceback, with each
@@ -137,6 +139,7 @@ def get_traceback_info(etype, value, tb):
 
 def set_call_info(info, name, filename, linenumber, lines, index, frame):
     source_info = get_partial_source(filename, linenumber, lines, index)
+    filename = cache.get_true_filename(filename)
     if name == "last_call":
         get_header = last_call_header
     else:
@@ -231,11 +234,8 @@ def get_partial_source(filename, linenumber, lines, index):
        formatted in a pre-determined way, as well as the content
        of the specific line where the exception occurred.
     """
-    if filename in utils.CACHED_STRING_SOURCES:
-        source, line = utils.get_partial_source(filename, linenumber, None)
-        # filename, _ignore = utils.CACHED_STRING_SOURCES[filename]
-        if not source:
-            print("Problem: source of %s is not available" % filename)
+    if filename in cache.cache:
+        source, line = cache._get_partial_source(filename, linenumber, None)
     elif filename == "<string>":  # note: it might have been cached with this name
         source = cannot_analyze_string()
         lines = source.split("\n")
@@ -245,7 +245,7 @@ def get_partial_source(filename, linenumber, lines, index):
         source = "\n".join(new_lines)
         line = None
     elif filename and os.path.abspath(filename):
-        source, line = utils.highlight_source(linenumber, index, lines)
+        source, line = highlight_source(linenumber, index, lines)
         if not source:
             print("Problem: source of %s is not available" % filename)
     elif not filename:
@@ -276,7 +276,7 @@ def process_parsing_error(etype, value, info):
     filepath = value.filename
     linenumber = value.lineno
     offset = value.offset
-    partial_source, _ignore = utils.get_partial_source(filepath, linenumber, offset)
+    partial_source, _ignore = cache._get_partial_source(filepath, linenumber, offset)
 
     info["parsing_error"] = _(
         "Python could not parse the file '{filename}'\n"
@@ -306,7 +306,7 @@ def format_simulated_python_traceback(records, etype, value):
         linenumber = value.lineno
         offset = value.offset
         msg = value.msg
-        lines = utils.get_source(filename)
+        lines = cache.get_source(filename)
         result.append('  File "{}", line {}'.format(filename, linenumber))
         try:
             _line = lines[linenumber - 1].rstrip()
