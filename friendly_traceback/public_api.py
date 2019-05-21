@@ -1,10 +1,15 @@
 """public_api.py
 
-This module includes all functions that can be imported by the
-non-recommended
+This module includes all functions that are part of the public API and
+can be directly used
 
-    from friendly-traceback import *
+    import friendly_traceback
+    friendly_traceback.some_function()
 
+instead of
+
+    import friendly_traceback
+    friendly_traceback.some_module.some_function()
 """
 import sys
 
@@ -55,41 +60,6 @@ def explain(redirect=None):
        output is saved and can be later retrieved by get_output().
     """
     etype, value, tb = sys.exc_info()
-    state.explain(etype, value, tb, redirect=redirect)
-
-
-@make_public
-def _explain(etype, value, tb, redirect=None):
-    """Replaces a standard traceback by a friendlier one, giving more
-       information about a given exception than a standard traceback.
-       Note that this excludes SystemExit and KeyboardInterrupt which
-       are re-raised.
-
-       This is similar to the function explain() which should normally be used
-       For explain(), the three arguments are obtained from the sys module
-       as follows:
-
-           etype, value, tb = sys.exc_info()
-
-       In some cases, it might be useful to manually change the content of some
-       of some of these values before further processing.  For example,
-       see Python's module code which sets up an interactive interpreter and
-       does some traceback manipulation to remove its own code.
-       Note however that, if one wishes information from a given module not
-       to appear in a traceback, there are more user-friendly ways to do
-       so.
-       TODO: document this - or remove it altogether if not needed
-
-       For the optional argument redirect:
-            By default, the output goes to sys.stderr or to some other stream
-       set to be the default by another API call.  However, if
-          redirect = some_stream
-       is specified, the output goes to that stream, but without changing
-       the global settings.
-
-       If the string "capture" is given as the value for redirect, the
-       output is saved and can be later retrieved by get_output().
-    """
     state.explain(etype, value, tb, redirect=redirect)
 
 
