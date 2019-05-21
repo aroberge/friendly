@@ -1,12 +1,8 @@
 """console.py
 
-Adaptation of Python's console found in code.py
+Adaptation of Python's console found in code.py so that it can be
+used to show some "friendly" tracebacks.
 """
-
-# The code below could be simplified if we used super().some_method(...)
-# in a few places. However, this would put the onus of anyone wanting
-# to modify this code to also refer to the `code` module in the standard
-# library.
 
 import os
 import platform
@@ -15,18 +11,21 @@ from code import InteractiveConsole
 
 from . import public_api
 from .source_cache import cache
+from .path_info import exclude_file_from_traceback
 
-# from .core import state
 from .version import __version__
-import codeop
 
 
 class FriendlyConsole(InteractiveConsole):
     def __init__(self, locals=None):
+
+        import codeop  # called by Python's code module and would otherwise
+
+        exclude_file_from_traceback(codeop.__file__)  # appear in tracebacks
+
         super().__init__(locals=locals)
         self.fake_filename = None
         self.counter = 0
-        public_api.exclude_file_from_traceback(codeop.__file__)
 
     def runsource(self, source, filename="<input>", symbol="single"):
         """Compile and run some source in the interpreter.
