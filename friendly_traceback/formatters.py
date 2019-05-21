@@ -58,7 +58,7 @@ def python_traceback_before(info, level=2, **kwargs):
     """Includes the Python traceback before all the information
        processed by Friendly-traceback.
     """
-    result = []
+    result = [""]
     if level > 0:
         result.extend(info["simulated_python_traceback"])
     else:
@@ -119,11 +119,50 @@ def only_python_traceback(info, level=9, **kwargs):
         return info["python_traceback"]
 
 
+def no_generic_explanation(info, level=6, **kwargs):
+    """Similar to the default option except that it does not display the
+       generic information about a given exception.
+    """
+    items = friendly_items
+    spacing = {"indent": " " * 4, "double": " " * 8, "none": ""}
+    result = [""]
+    for item, formatting in items:
+        if item == "generic":
+            continue
+        if item in info:
+            for line in info[item].split("\n"):
+                result.append(spacing[formatting] + line)
+    return result
+
+
+def no_generic_explanation_with_traceback(info, level=7, **kwargs):
+    """Similar to the level 2 except that it does not display the
+       generic information about a given exception.
+    """
+    items = friendly_items
+    spacing = {"indent": " " * 4, "double": " " * 8, "none": ""}
+    result = [""]
+    if level > 0:
+        result.extend(info["simulated_python_traceback"])
+    else:
+        result.extend(info["python_traceback"])
+    result.append("")
+    for item, formatting in items:
+        if item == "generic":
+            continue
+        if item in info:
+            for line in info[item].split("\n"):
+                result.append(spacing[formatting] + line)
+    return result
+
+
 choose_formatter = {
     1: default,
     2: python_traceback_before,
     3: python_traceback_after,
     4: only_add_explain,
     5: only_explain,
+    6: no_generic_explanation,
+    7: no_generic_explanation_with_traceback,
     9: only_python_traceback,
 }
