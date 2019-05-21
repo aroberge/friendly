@@ -4,21 +4,31 @@ Used to cache and retrieve source code.
 This is especially useful when a custom REPL is used.
 """
 
+import os.path
+
 
 class Cache:
+    """Class used to store source of files and similar objects"""
+
     def __init__(self):
         self.cache = {}
         self.context = 4
+        self.ages = {}  # only for physical files
 
-    def add(self, filename, source, string=False):
+    def add(self, filename, source):
+        """Adds a source (as a string) corresponding to a filename in the cache.
+
+           The filename can be a true file name, or a fake one, like
+           <console:42>, used for saving an REPL entry.
+
+           If it is a true file, we record the last time it was modified.
+        """
         self.cache[filename] = source
-        if string:
-            self.cache["<string>"] = filename
-        elif "<string>" in self.cache:
-            del self.cache["<string>"]
+        if os.path.isfile(filename):
+            self.ages[filename] = os.path.getmtime(filename)  # modification time
 
     def get_copy(self):
-        """Gets a copy of the cache"""
+        """Gets a copy of the entire cache"""
         # This is used in avant-idle to pass the content of a cache in
         # the main process to a second process where an exception has been
         # raised.
@@ -31,35 +41,64 @@ class Cache:
         # that of another where the actual caching of the source is done.
         self.cache.clear()
         for key in other_cache:
-            if key != "<string>":
-                self.add(key, other_cache[key])
-        else:
-            if "<string>" in other_cache:
-                filename = other_cache["<string>"]
-                self.add(filename, other_cache[filename], string=True)
-
-    def get_true_filename(self, filename):
-        if filename != "<string>" or "<string>" not in self.cache:
-            return filename
-        return self.cache[filename]
+            self.add(key, other_cache[key])
 
     def get_source(self, filename):
-        filename = self.get_true_filename(filename)
-        if filename in self.cache:
+        """Given a filename, returns the corresponding source, either
+           from the cache or from actually opening the file.
+
+           If the filename corresponds to a true file, and the last time
+           it was modified differs from the recorded value, a fresh copy
+           is retrieved.
+
+           The contents is stored a a string and returned as a list of lines.
+           If no source can be found, an empty list is returned.
+        """
+        # The main reason we care about ensuring we have the latest version
+        # of a given file is for the 'avant-idle' project where we could
+        # 'edit and run' multiple times a given file. We need to ensure that
+        # the content shown by the traceback is accurate.
+
+        if os.path.isfile(filename):
+            last_modified = os.path.getmtime(filename)  # modification time
+            if filename not in self.cache:
+                source, lines = self._get_file_source(filename)
+                if source is not None:
+                    self.add(filename, source)
+            elif filename in self.ages and last_modified != self.ages[filename]:
+                # modified; get fresh copy
+                source, lines = self._get_file_source(filename)
+                if source is not None:
+                    self.add(filename, source)
+                else:  # had problems retrieving fresh copy
+                    source = self.cache[filename]
+                    lines = source.split("\n")
+            else:
+                source = self.cache[filename]
+                lines = source.split("\n")
+        elif filename in self.cache:
             source = self.cache[filename]
-            print("source in self.cache = ", source)
             lines = source.split("\n")
-            print("lines = ", lines)
         else:
-            try:
-                with open(filename, encoding="utf8") as f:
-                    lines = f.readlines()
-                    self.cache[filename] = "".join(lines)
-            except Exception:
-                lines = []
+            lines = []
+
         return lines
 
-    def _get_partial_source(self, filename, linenumber, offset):
+    def _get_file_source(self, filename):
+        """Helper function to retrieve a file"""
+        try:
+            with open(filename, encoding="utf8") as f:
+                lines = f.readlines()
+                source = "".join(lines)
+        except Exception:
+            lines = []
+            source = None
+        return source, lines
+
+    def get_formatted_partial_source(self, filename, linenumber, offset):
+        """Formats a few lines around a 'bad line', and returns
+           the formatted source as well as the content of the 'bad line'
+        """
         lines = self.get_source(filename)
         if not lines:
             print("Problem: source of %s is not available" % filename)
@@ -91,13 +130,17 @@ def highlight_source(linenumber, index, lines, offset=None):
         which, in this case, points to a missing colon. We use the same
         representation in this case.
     """
-    # The following are left-over diagnostic from the hack to integrate
+    # The following if statementsare left-over diagnostic from the hack to integrate
     # into Idle; they are harmless tests which could potentially be useful.
     if lines is None:
         return "", ""
     if index is None:
         print("problem in highlight_source(): index is None")
         index = 0
+
+    # The weird index arithmetic below is based on the information returned
+    # by Python's inspect.getinnerframes()
+
     new_lines = []
     problem_line = ""
     nb_digits = len(str(linenumber + index))
