@@ -64,7 +64,7 @@ from .path_info import is_excluded_file
 # b: 2
 
 
-def get_traceback_info(etype, value, tb):
+def get_traceback_info(etype, value, tb, write_err):
     """ Gathers the basic information related to a traceback and
     returns the result in a dict.
     """
@@ -95,13 +95,7 @@ def get_traceback_info(etype, value, tb):
     # Get all calls made
     records = inspect.getinnerframes(tb, cache.context)
     # Do not show traceback from our own code
-    records = []
-    for record in inspect.getinnerframes(tb, cache.context):
-        frame, filename, linenumber, _func, lines, index = record
-        if is_excluded_file(filename):
-            continue
-        else:
-            records.append(record)
+    records = cleanup_tracebacks(records, write_err)
 
     simulated_python_tb = format_simulated_python_traceback(records, etype, value)
 
@@ -334,3 +328,38 @@ def format_simulated_python_traceback(records, etype, value):
 
     result.append("%s: %s" % (etype.__name__, valuestr))
     return result
+
+
+def cleanup_tracebacks(records, write_err):
+    """Remove excluded content from beginning and end of complete tracebacks.
+
+        Tracebacks shown to users should originate in their own code,
+        and normally end there as well.  However, in intermediate calls,
+        they could possibly invoke some code from files which we had
+        decided to exclude.
+    """
+    for begin, record in enumerate(records):
+        frame, filename, linenumber, _func, lines, index = record
+        if is_excluded_file(filename):
+            continue
+        else:
+            break
+
+    records.reverse()
+    for end, record in enumerate(records):
+        frame, filename, linenumber, _func, lines, index = record
+        if is_excluded_file(filename):
+            continue
+        else:
+            break
+
+    records.reverse()
+
+    end = len(records) - end
+    if end == begin:  # The problem is in our own code!
+        # Write in two places to make sure it is noticed!
+        write_err("Internal problem with Friendly-traceback!\n")
+        print("Internal problem with Friendly-traceback")
+        return records
+
+    return records[begin:end]

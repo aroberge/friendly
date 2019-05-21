@@ -127,7 +127,7 @@ class _State:
         if etype.__name__ == "KeyboardInterrupt":
             raise KeyboardInterrupt(str(value))
 
-        info = info_traceback.get_traceback_info(etype, value, tb)
+        info = info_traceback.get_traceback_info(etype, value, tb, self.write_err)
         explanation = self.formatter(info, level=self.level)
         self.write_err(explanation)
         # Ensures that we start on a new line for the console
