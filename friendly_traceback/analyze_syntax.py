@@ -1,6 +1,7 @@
 """analyze_syntax.py
 
-Attempts to find the most likely cause of a SyntaxError.
+Collection of functions useful attempting to determine the
+cause of a SyntaxError and providing a somewhat detailed explanation.
 """
 
 from keyword import kwlist

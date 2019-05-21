@@ -1,6 +1,7 @@
 """analyze_type_error.py
 
-Collection of functions useful in parsing TypeError messages.
+Collection of functions useful in parsing TypeError messages and
+providing a more detailed explanation.
 """
 
 import re

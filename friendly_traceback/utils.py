@@ -1,4 +1,7 @@
-"""utils.py"""
+"""utils.py
+
+A few useful objects which do not naturally fit anywhere else.
+"""
 import tokenize
 import os.path
 

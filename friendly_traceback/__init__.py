@@ -1,4 +1,4 @@
-# note that core.py limits the number of names imported via __all__
+# note that public_api.py limits the number of names imported via __all__
 
 import sys as _sys
 
@@ -11,9 +11,6 @@ if not _valid_version:
 del _valid_version
 del _sys
 
-
 from .public_api import *  # noqa
-
-# from .core import *  # noqa
 from . import version  # noqa
 from .console import FriendlyConsole  # noqa

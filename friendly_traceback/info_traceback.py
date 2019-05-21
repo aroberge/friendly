@@ -1,6 +1,6 @@
 """info_traceback.py
 
-First version - needs to be documented.
+Processes tracebacks to extract all the required information.
 """
 import inspect
 import os
@@ -140,7 +140,6 @@ def get_traceback_info(etype, value, tb):
 
 def set_call_info(info, name, filename, linenumber, lines, index, frame):
     source_info = get_partial_source(filename, linenumber, lines, index)
-    filename = cache.get_true_filename(filename)
     if name == "last_call":
         get_header = last_call_header
     else:
@@ -236,8 +235,14 @@ def get_partial_source(filename, linenumber, lines, index):
        of the specific line where the exception occurred.
     """
     if filename in cache.cache:
-        source, line = cache._get_partial_source(filename, linenumber, None)
-    elif filename == "<string>":  # note: it might have been cached with this name
+        if filename == "<string>":
+            # We should no longer see <string> used as a filename;
+            # if so, it signals a potential problem we should look into.
+            print("Problem: please revise cache to take care of <string> cases.")
+        source, line = cache.get_formatted_partial_source(filename, linenumber, None)
+    elif (
+        filename == "<string>"
+    ):  # note: Something might have been cached with this name
         source = cannot_analyze_string()
         lines = source.split("\n")
         new_lines = []
@@ -277,7 +282,9 @@ def process_parsing_error(etype, value, info):
     filepath = value.filename
     linenumber = value.lineno
     offset = value.offset
-    partial_source, _ignore = cache._get_partial_source(filepath, linenumber, offset)
+    partial_source, _ignore = cache.get_formatted_partial_source(
+        filepath, linenumber, offset
+    )
 
     info["parsing_error"] = _(
         "Python could not parse the file '{filename}'\n"
