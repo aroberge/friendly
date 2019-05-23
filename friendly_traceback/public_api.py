@@ -190,6 +190,12 @@ def clear_traceback():
 
 
 @make_public
+def copy_traceback_info(info):
+    """Copy the traceback info obtained from another source"""
+    state.traceback_info = info
+
+
+@make_public
 def show_traceback_info_again():
     """Shows the traceback info again, on the default stream
 

@@ -108,13 +108,11 @@ class _State:
            changes the verbosity level in a GUI.
         """
         if self.traceback_info is None:
-            explanation = "\n"
-        else:
-            explanation = self.formatter(self.traceback_info, level=self.level)
+            return
+        self.write_err("----------------------------------------------\n")
+        explanation = self.formatter(self.traceback_info, level=self.level)
         self.write_err(explanation)
-        # Ensures that we start on a new line for the console
-        if not explanation.endswith("\n"):
-            self.write_err("\n")
+        self.write_err("\n----------------------------------------------\n")
 
     def explain(self, etype, value, tb, redirect=None):
         """Replaces a standard traceback by a friendlier one,
