@@ -96,6 +96,25 @@ class _State:
         self.level = _get_level()
         self.set_level(self.level)
         self.running_script = False
+        self.traceback_info = None
+
+    def clear_traceback(self):
+        """Removes previous traceback_info"""
+        self.traceback_info = None
+
+    def show_traceback_info_again(self):
+        """If has not been clear, write the traceback info again, using
+           the default stream.  This is intended to be used when a user
+           changes the verbosity level in a GUI.
+        """
+        if self.traceback_info is None:
+            explanation = "\n"
+        else:
+            explanation = self.formatter(self.traceback_info, level=self.level)
+        self.write_err(explanation)
+        # Ensures that we start on a new line for the console
+        if not explanation.endswith("\n"):
+            self.write_err("\n")
 
     def explain(self, etype, value, tb, redirect=None):
         """Replaces a standard traceback by a friendlier one,
@@ -127,8 +146,10 @@ class _State:
         if etype.__name__ == "KeyboardInterrupt":
             raise KeyboardInterrupt(str(value))
 
-        info = info_traceback.get_traceback_info(etype, value, tb, self.write_err)
-        explanation = self.formatter(info, level=self.level)
+        self.traceback_info = info_traceback.get_traceback_info(
+            etype, value, tb, self.write_err
+        )
+        explanation = self.formatter(self.traceback_info, level=self.level)
         self.write_err(explanation)
         # Ensures that we start on a new line for the console
         if not explanation.endswith("\n"):

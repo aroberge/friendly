@@ -51,6 +51,7 @@ class FriendlyConsole(InteractiveConsole):
         line.
 
         """
+        public_api.clear_traceback()
         filename = "<friendly-console:%d>" % self.counter
         cache.add(filename, source)
         self.counter += 1
@@ -90,12 +91,10 @@ class FriendlyConsole(InteractiveConsole):
         except Exception:
             public_api.explain()
 
-    # Since we exclude files in this package from being included in the
-    # tracebacks, we do not need to do any special handling to remove
-    # a frame from the tracebacks as is done in Python's
-    # code.InteractiveConsole. Thus, we have no need for the following
-    # two methods, but define them in case subclasses accidently called
-    # them.
+    # The following two methods are never used in this class. However,
+    # since they are defined in the parent class, we give them a consistent
+    # definition with this subclass, in case derived subclasses accidently
+    # called them.
 
     def showsyntaxerror(self, filename=None):
         public_api.explain()

@@ -181,3 +181,19 @@ def set_stream(stream):
 def get_stream():
     """Returns the value of the current stream used for output."""
     return state.write_err
+
+
+@make_public
+def clear_traceback():
+    """Clears the existing traceback"""
+    state.clear_traceback()
+
+
+@make_public
+def show_traceback_info_again():
+    """Shows the traceback info again, on the default stream
+
+    Intended to use with GUI based program, where the user changes
+    a verbosity level to view the traceback again.
+    """
+    state.show_traceback_info_again()
