@@ -32,8 +32,10 @@ def collect_tokens(line):
             if token.type == tokenize.COMMENT:
                 break
             tokens.append(token)
+    except tokenize.TokenError:
+        return []
     except Exception as e:
-        print("%s raised while tokenizing line" % repr(e))
+        print("%s raised in utils.collect_tokens" % repr(e))
 
     return tokens
 
