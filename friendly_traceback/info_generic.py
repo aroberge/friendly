@@ -144,6 +144,15 @@ def type_error(*args):
     )
 
 
+@register("ValueError")
+def value_error(*args):
+    _ = current_lang.translate
+    return _(
+        "A ValueError indicates that a function or an operation\n"
+        "received an argument of the right type, but an inappropriate value.\n"
+    )
+
+
 @register("UnboundLocalError")
 def unbound_local_error(*args):
     _ = current_lang.translate
