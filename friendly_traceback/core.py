@@ -112,7 +112,7 @@ class _State:
         self.write_err("----------------------------------------------\n")
         explanation = self.formatter(self.traceback_info, level=self.level)
         self.write_err(explanation)
-        self.write_err("\n----------------------------------------------\n")
+        self.write_err("\n----------------------------------------------\n\n")
 
     def explain(self, etype, value, tb, redirect=None):
         """Replaces a standard traceback by a friendlier one,
