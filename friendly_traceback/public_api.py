@@ -31,6 +31,7 @@ __all__ = [
     "is_excluded_file",
     "include_file_in_traceback",
 ]
+# Note: more content is added to __all__ below
 
 
 def make_public(f):

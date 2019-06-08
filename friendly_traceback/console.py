@@ -94,7 +94,8 @@ class FriendlyConsole(InteractiveConsole):
     # The following two methods are never used in this class. However,
     # since they are defined in the parent class, we give them a consistent
     # definition with this subclass, in case derived subclasses accidently
-    # called them.
+    # called them. For example, this can happen if one is incorporating
+    # Friendly-console in a modified version of Python's IDLE.
 
     def showsyntaxerror(self, filename=None):
         public_api.explain()
@@ -117,7 +118,7 @@ def start_console(local_vars=None, show_python=False):
 
     console = FriendlyConsole(locals=local_vars)
 
-    banner = "{} version {}. [Python version: {}]\n".format(
-        "Friendly Console", __version__, platform.python_version()
+    banner = "Friendly Console version {}. [Python version: {}]\n".format(
+        __version__, platform.python_version()
     )
     console.interact(banner=banner)
