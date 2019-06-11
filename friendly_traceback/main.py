@@ -84,6 +84,14 @@ parser.add_argument(
 )
 
 
+parser.add_argument(
+    "--idle",
+    help="""Starts a modified version of Python's Idle.
+         """,
+    action="store_true",
+)
+
+
 def main():
     console_dict = {"set_lang": public_api.set_lang, "set_level": public_api.set_level}
     args = parser.parse_args()
@@ -112,5 +120,14 @@ def main():
         else:
             public_api.exclude_file_from_traceback(runpy.__file__)
             runpy.run_path(args.source, run_name="__main__")
+    elif args.idle:
+        new_args = []
+        for arg in sys.argv:
+            if arg == "--idle":
+                new_args.append("-i")
+            else:
+                new_args.append(arg)
+        sys.argv = new_args
+        from .idle import start  # noqa
     else:
         console.start_console()
