@@ -29,12 +29,12 @@ friendly_traceback.install()
 friendly_traceback.set_lang(LANG)
 
 sys.path.insert(0, this_dir)
-
+py_version = f"{sys.version_info.major}.{sys.version_info.minor}"
 
 import trb_common
 
 target = os.path.normpath(
-    os.path.join(docs_root_dir, f"docs/source/tracebacks_{LANG}.rst")
+    os.path.join(docs_root_dir, f"docs/source/tracebacks_{LANG}_{py_version}.rst")
 )
 
 intro_text = """

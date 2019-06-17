@@ -22,7 +22,9 @@ causes = {
     11: "EOL while scanning string literal",
     12: "None is a constant in Python",
     13: "__debug__ is a constant in Python",
-    14: "The closing parenthesis ')' on"
+    14: "The closing parenthesis ')' on",
+    15: "The opening parenthesis '(' on line",
+    16: "The closing square bracket ']' on line",
 }
 
 

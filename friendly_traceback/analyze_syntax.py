@@ -56,7 +56,7 @@ def _find_likely_cause(source, linenumber, message, offset):
     if cause:
         return cause
 
-    cause = look_for_mismatched_brackets(source)
+    cause = look_for_mismatched_brackets(source, linenumber, offset)
     if cause:
         return cause
 
@@ -152,6 +152,23 @@ def eol_while_scanning_string_literal(message=None, **kwargs):
             "You starting writing a string with a single or double quote\n"
             "but never ended the string with another quote on that line.\n"
         )
+
+
+@add_python_message
+def unmatched_parenthesis(message=None, linenumber=None, **kwargs):
+    _ = current_lang.translate
+    # Python 3.8
+    if message == "unmatched ')'":
+        bracket = name_bracket(")")
+    elif message == "unmatched ']'":
+        bracket = name_bracket("]")
+    elif message == "unmatched '}'":
+        bracket = name_bracket("}")
+    else:
+        return None
+    return _(
+        "The closing {bracket} on line {linenumber}" " does not match anything.\n"
+    ).format(bracket=bracket, linenumber=linenumber)
 
 
 # ==================
@@ -301,7 +318,7 @@ def malformed_def(tokens):
         ).format(class_or_function=name)
 
 
-def look_for_mismatched_brackets(source_lines):
+def look_for_mismatched_brackets(source_lines, max_linenumber, offset):
     _ = current_lang.translate
     source = "\n".join(source_lines)
     brackets = []
@@ -312,6 +329,12 @@ def look_for_mismatched_brackets(source_lines):
             continue
         if token.string not in "()[]}{":
             continue
+        if (
+            token.start_line == max_linenumber
+            and token.start_col >= offset
+            or token.start_line > max_linenumber
+        ):
+            break
         if token.string in "([{":
             brackets.append((token.string, token.start_line))
         elif token.string in ")]}":
@@ -341,7 +364,7 @@ def look_for_mismatched_brackets(source_lines):
                     )
     if brackets:
         bracket, linenumber = brackets.pop()
-        # bracket = name_bracket(bracket)
+        bracket = name_bracket(bracket)
         return _("The opening {bracket} on line {linenumber} is not closed.\n").format(
             bracket=bracket, linenumber=linenumber
         )

@@ -32,6 +32,9 @@ all_imports = {
     "SyntaxError - EOL while scanning string literal": "syntax.raise_syntax_error11",
     "SyntaxError - assignment to keyword (None)": "syntax.raise_syntax_error12",
     "SyntaxError - assignment to keyword (__debug__)": "syntax.raise_syntax_error13",
+    "SyntaxError - unmatched closing parenthesis": "syntax.raise_syntax_error14",
+    "SyntaxError - unclosed parenthesis": "syntax.raise_syntax_error15",
+    "SyntaxError - mismatched brackets": "syntax.raise_syntax_error16",
 }
 
 
