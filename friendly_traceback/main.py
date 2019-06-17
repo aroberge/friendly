@@ -23,6 +23,9 @@ parser = argparse.ArgumentParser(
     description=textwrap.dedent(
         """Friendly-traceback makes Python tracebacks easier to understand.
 
+        If no command line arguments other than -m are specified,
+        Friendly-traceback will start an interactive console.
+
         Note: the values of the verbosity level described below are:
             0: Normal Python tracebacks
             1: Default - does not need to be specified

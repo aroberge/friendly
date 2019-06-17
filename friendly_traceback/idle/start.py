@@ -1,3 +1,7 @@
-import idlelib.pyshell as pyshell
+from . import patch_pyshell  # noqa
 
-pyshell.main()
+try:
+    patch_pyshell.main()
+except Exception as e:
+    print(e)
+    input("ok")

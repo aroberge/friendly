@@ -16,12 +16,17 @@ from .path_info import exclude_file_from_traceback
 from .version import __version__
 
 
+banner = "Friendly Console version {}. [Python version: {}]\n".format(
+    __version__, platform.python_version()
+)
+
+
 class FriendlyConsole(InteractiveConsole):
     def __init__(self, locals=None):
 
-        import codeop  # called by Python's code module and would otherwise
+        import codeop  # called by Python's code module
 
-        exclude_file_from_traceback(codeop.__file__)  # appear in tracebacks
+        exclude_file_from_traceback(codeop.__file__)
 
         super().__init__(locals=locals)
         self.fake_filename = None
@@ -117,8 +122,4 @@ def start_console(local_vars=None, show_python=False):
         local_vars.update(console_defaults)
 
     console = FriendlyConsole(locals=local_vars)
-
-    banner = "Friendly Console version {}. [Python version: {}]\n".format(
-        __version__, platform.python_version()
-    )
     console.interact(banner=banner)
