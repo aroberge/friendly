@@ -22,6 +22,7 @@ causes = {
     11: "EOL while scanning string literal",
     12: "None is a constant in Python",
     13: "__debug__ is a constant in Python",
+    14: "The closing parenthesis ')' on"
 }
 
 
@@ -34,7 +35,7 @@ def test_syntax_errors():
             friendly_traceback.explain(redirect="capture")
         result = friendly_traceback.get_output()
         assert "SyntaxError" in result, "SyntaxError identified incorrectly; %d" % i
-        assert cause in result, "Cause %d identified incorrectly" % i
+        assert cause in result, "Cause %s identified incorrectly" % result
 
 
 if __name__ == "__main__":

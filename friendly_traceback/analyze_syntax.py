@@ -5,6 +5,7 @@ cause of a SyntaxError and providing a somewhat detailed explanation.
 """
 
 from keyword import kwlist
+from io import StringIO
 import tokenize
 
 from .my_gettext import current_lang
@@ -43,7 +44,7 @@ def _find_likely_cause(source, linenumber, message, offset):
     # If Python includes a descriptive enough message, we rely
     # on the information that it provides.
     for case in PYTHON_MESSAGES:
-        cause = case(message=message, line=line)
+        cause = case(message=message, line=line, linenumber=linenumber)
         if cause:
             return cause
 
@@ -52,6 +53,10 @@ def _find_likely_cause(source, linenumber, message, offset):
     # of the error
 
     cause = analyze_last_line(line)
+    if cause:
+        return cause
+
+    cause = look_for_mismatched_brackets(source)
     if cause:
         return cause
 
@@ -79,38 +84,6 @@ def add_python_message(func):
         return func(**kwargs)
 
     return wrapper
-
-
-@add_python_message
-def assign_to_literal(message=None, line=None, **kwargs):
-    _ = current_lang.translate
-    if (
-        message == "can't assign to literal"  # Python 3.6, 3.7
-        or message == "cannot assign to literal"  # Python 3.8
-    ):
-        info = line.split("=")
-        literal = info[0].strip()
-        name = info[1].strip()
-
-        return _(
-            "You wrote an expression like\n"
-            "    {literal} = {name}\n"
-            "where <{literal}>, on the left hand-side of the equal sign, is\n"
-            "an actual number or string (what Python calls a 'literal'),\n"
-            "and not the name of a variable. Perhaps you meant to write:\n"
-            "    {name} = {literal}\n"
-            "\n"
-        ).format(literal=literal, name=name)
-
-
-@add_python_message
-def eol_while_scanning_string_literal(message=None, **kwargs):
-    _ = current_lang.translate
-    if "EOL while scanning string literal" in message:
-        return _(
-            "You starting writing a string with a single or double quote\n"
-            "but never ended the string with another quote on that line.\n"
-        )
 
 
 @add_python_message
@@ -147,6 +120,38 @@ def assign_to_keyword(message=None, line=None, **kwargs):
             "This is not allowed.\n"
             "\n"
         ).format(keyword=word)
+
+
+@add_python_message
+def assign_to_literal(message=None, line=None, **kwargs):
+    _ = current_lang.translate
+    if (
+        message == "can't assign to literal"  # Python 3.6, 3.7
+        or message == "cannot assign to literal"  # Python 3.8
+    ):
+        info = line.split("=")
+        literal = info[0].strip()
+        name = info[1].strip()
+
+        return _(
+            "You wrote an expression like\n"
+            "    {literal} = {name}\n"
+            "where <{literal}>, on the left hand-side of the equal sign, is\n"
+            "an actual number or string (what Python calls a 'literal'),\n"
+            "and not the name of a variable. Perhaps you meant to write:\n"
+            "    {name} = {literal}\n"
+            "\n"
+        ).format(literal=literal, name=name)
+
+
+@add_python_message
+def eol_while_scanning_string_literal(message=None, **kwargs):
+    _ = current_lang.translate
+    if "EOL while scanning string literal" in message:
+        return _(
+            "You starting writing a string with a single or double quote\n"
+            "but never ended the string with another quote on that line.\n"
+        )
 
 
 # ==================
@@ -294,3 +299,69 @@ def malformed_def(tokens):
             "    def name ( optional_arguments ):"
             "\n"
         ).format(class_or_function=name)
+
+
+def look_for_mismatched_brackets(source_lines):
+    _ = current_lang.translate
+    source = "\n".join(source_lines)
+    brackets = []
+    tokens = tokenize.generate_tokens(StringIO(source).readline)
+    for tok in tokens:
+        token = utils.Token(tok)
+        if not token.string:
+            continue
+        if token.string not in "()[]}{":
+            continue
+        if token.string in "([{":
+            brackets.append((token.string, token.start_line))
+        elif token.string in ")]}":
+            if not brackets:
+                bracket = name_bracket(token.string)
+                return _(
+                    "The closing {bracket} on line {linenumber}"
+                    " does not match anything.\n"
+                ).format(bracket=bracket, linenumber=token.start_line)
+            else:
+                open_bracket, open_lineno = brackets.pop()
+                if (
+                    (open_bracket == "(" and token.string != ")")
+                    or (open_bracket == "[" and token.string != "]")
+                    or (open_bracket == "{" and token.string != "}")
+                ):
+                    bracket = name_bracket(token.string)
+                    open_bracket = name_bracket(open_bracket)
+                    return _(
+                        "The closing {bracket} on line {close_lineno} does not match "
+                        "the opening {open_bracket} on line {open_lineno}.\n"
+                    ).format(
+                        bracket=bracket,
+                        close_lineno=token.start_line,
+                        open_bracket=open_bracket,
+                        open_lineno=open_lineno,
+                    )
+    if brackets:
+        bracket, linenumber = brackets.pop()
+        # bracket = name_bracket(bracket)
+        return _("The opening {bracket} on line {linenumber} is not closed.\n").format(
+            bracket=bracket, linenumber=linenumber
+        )
+    else:
+        return False
+
+
+def name_bracket(bracket):
+    _ = current_lang.translate
+    if bracket == "(":
+        return _("parenthesis '('")
+    elif bracket == ")":
+        return _("parenthesis ')'")
+    elif bracket == "[":
+        return _("square bracket '['")
+    elif bracket == "]":
+        return _("square bracket ']'")
+    elif bracket == "{":
+        return _("curly bracket '{'")
+    elif bracket == "}":
+        return _("curly bracket '}'")
+    else:
+        return f"'{bracket}'"  # Should never happen - help for diagnostic
