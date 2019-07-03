@@ -1,3 +1,1 @@
-py -3.7 -m pytest
-py -3.6 -m pytest
-py -3.8 -m pytest
+venv-friendly3.7\scripts\activate & python -m pytest & venv-friendly3.6\scripts\activate & python -m pytest & venv-friendly3.8\scripts\activate & python -m pytest & deactivate

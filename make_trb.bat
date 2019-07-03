@@ -1,12 +1,22 @@
 cd tests
-py -3.7 trb_english.py
-py -3.7 trb_french.py
-py -3.7 trb_syntax_english.py
-py -3.7 trb_syntax_french.py
-py -3.6 trb_english.py
-py -3.6 trb_syntax_english.py
-py -3.8 trb_english.py
-py -3.8 trb_syntax_english.py
+
+call ..\venv-friendly3.7\scripts\activate
+call python trb_english.py
+call python trb_french.py
+call  python trb_syntax_english.py
+call  python trb_syntax_french.py
+call  deactivate
+
+call ..\venv-friendly3.6\scripts\activate
+call  python trb_english.py
+call  python trb_syntax_english.py
+call  deactivate
+
+call ..\venv-friendly3.8\scripts\activate
+call  python trb_english.py
+call  python trb_syntax_english.py
+call  deactivate
+
 cd ..\..\friendly-traceback-docs\docs
 call make html
 cd ..\..\friendly-traceback
