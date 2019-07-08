@@ -109,10 +109,8 @@ class _State:
         """
         if self.traceback_info is None:
             return
-        self.write_err("----------------------------------------------\n")
         explanation = self.formatter(self.traceback_info, level=self.level)
         self.write_err(explanation)
-        self.write_err("\n----------------------------------------------\n\n")
 
     def explain(self, etype, value, tb, redirect=None):
         """Replaces a standard traceback by a friendlier one,
@@ -128,8 +126,6 @@ class _State:
               redirect = some_stream
            is specified, the output goes to that stream, but without changing
            the global settings.
-
-
         """
         if redirect is not None:
             saved_current_redirect = self.write_err
