@@ -25,6 +25,6 @@ setup(
     url="https://github.com/aroberge/friendly-traceback",
     author="André Roberge",
     author_email="Andre.Roberge@gmail.com",
-    packages=find_packages(exclude=["dist", "build", "tools"]),
+    packages=find_packages(exclude=["dist", "build", "tools", "tests", "demos"]),
     zip_safe=False,
 )
