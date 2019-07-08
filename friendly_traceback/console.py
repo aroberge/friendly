@@ -16,21 +16,56 @@ from .path_info import exclude_file_from_traceback
 from .version import __version__
 
 
-banner = "Friendly Console version {}. [Python version: {}]\n".format(
+BANNER = "Friendly Console version {}. [Python version: {}]\n".format(
     __version__, platform.python_version()
 )
 
 
 class FriendlyConsole(InteractiveConsole):
     def __init__(self, locals=None):
-
+        """This class builds upon Python's code.InteractiveConsole
+        so as to provide friendly tracebacks. It keeps track
+        of code fragment executed by treating each of them as
+        an individual source file.
+        """
         import codeop  # called by Python's code module
 
         exclude_file_from_traceback(codeop.__file__)
+        self.fake_filename = "<friendly-console:%d>"
+        self.counter = 1
 
         super().__init__(locals=locals)
-        self.fake_filename = None
-        self.counter = 0
+
+    def push(self, line):
+        """Push a line to the interpreter.
+
+        The line should not have a trailing newline; it may have
+        internal newlines.  The line is appended to a buffer and the
+        interpreter's runsource() method is called with the
+        concatenated contents of the buffer as source.  If this
+        indicates that the command was executed or invalid, the buffer
+        is reset; otherwise, the command is incomplete, and the buffer
+        is left as it was after the line was appended.  The return
+        value is True if more input is required, False if the line was dealt
+        with in some way (this is the same as runsource()).
+        """
+        self.buffer.append(line)
+        source = "\n".join(self.buffer)
+
+        # Each valid code sample is saved with its own fake filename.
+        # They are numbered consecutively to help understanding
+        # the traceback history.
+        # If self.counter was not updated, it means that the previous
+        # code sample was not valid and we reuse the same file name
+        filename = self.fake_filename % self.counter
+        cache.add(filename, source)
+
+        public_api.clear_traceback()
+        more = self.runsource(source, filename)
+        if not more:
+            self.resetbuffer()
+            self.counter += 1
+        return more
 
     def runsource(self, source, filename="<input>", symbol="single"):
         """Compile and run some source in the interpreter.
@@ -54,12 +89,7 @@ class FriendlyConsole(InteractiveConsole):
         an exception is raised).  The return value can be used to
         decide whether to use sys.ps1 or sys.ps2 to prompt the next
         line.
-
         """
-        public_api.clear_traceback()
-        filename = "<friendly-console:%d>" % self.counter
-        cache.add(filename, source)
-        self.counter += 1
         try:
             code = self.compile(source, filename, symbol)
         except (OverflowError, SyntaxError, ValueError):
@@ -96,11 +126,9 @@ class FriendlyConsole(InteractiveConsole):
         except Exception:
             public_api.explain()
 
-    # The following two methods are never used in this class. However,
-    # since they are defined in the parent class, we give them a consistent
-    # definition with this subclass, in case derived subclasses accidently
-    # called them. For example, this can happen if one is incorporating
-    # Friendly-console in a modified version of Python's IDLE.
+    # The following two methods are never used in this class, but they are
+    # defined in the parent class. The following are the equivalent methods
+    # that can be used if an explicit call is desired for some reason.
 
     def showsyntaxerror(self, filename=None):
         public_api.explain()
@@ -109,7 +137,7 @@ class FriendlyConsole(InteractiveConsole):
         public_api.explain()
 
 
-def start_console(local_vars=None, show_python=False):
+def start_console(local_vars=None):
     """Starts a console; modified from code.interact"""
     console_defaults = {
         "set_lang": public_api.set_lang,
@@ -122,4 +150,4 @@ def start_console(local_vars=None, show_python=False):
         local_vars.update(console_defaults)
 
     console = FriendlyConsole(locals=local_vars)
-    console.interact(banner=banner)
+    console.interact(banner=BANNER)
