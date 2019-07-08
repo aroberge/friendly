@@ -13,23 +13,8 @@ additional unit tests.
 
 Currently, the code is only tested on Windows. The repository include
 some batch (`.bat`) files which help to automate some processes, and are described
-in the next section.
+later in this document.
 
-## Existing batch files
-
-1. ae.bat
-
-   Used to activate a virtual environment based on the Python version;
-   Python 3.7 is the default.  Example usage:
-
-        $ ae 3.6
-
-2. make_trb.bat
-
-   Used to create rst traceback files for the documentation. This assumes
-   that a second repository exists and is found at the same directory level.
-   No one but the repository owner should likely worry about this.
-   It requires that Sphinx be installed in the default Python version.
 
 ## Using virtual environments
 
@@ -66,3 +51,36 @@ simply do
     $ python -m pip install -e .
 
 from the root directory of the repository.
+
+## Existing batch files
+
+1. ae.bat
+
+   Used to activate a virtual environment based on the Python version;
+   Python 3.7 is the default.  Example usage:
+
+        $ ae 3.6
+
+2. make_trb.bat
+
+   Used to create rst traceback files for the documentation. This assumes
+   that a second repository exists and is found at the same directory level.
+   No one but the repository owner should likely worry about this.
+   It requires that Sphinx be installed in the default Python version.
+
+3. pypi_upload.bat
+
+   Script to upload to pypi; please ignore.
+
+4. run_tests.bat
+
+   Script to run the tests in all supported Python version, changing
+   virtual environment as needed.
+
+
+## Test coverage
+
+Install pytest-cov and run the following:
+
+     $ python -m pytest --cov=friendly_traceback --cov-report html
+
