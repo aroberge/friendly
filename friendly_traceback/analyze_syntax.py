@@ -323,45 +323,48 @@ def look_for_mismatched_brackets(source_lines, max_linenumber, offset):
     source = "\n".join(source_lines)
     brackets = []
     tokens = tokenize.generate_tokens(StringIO(source).readline)
-    for tok in tokens:
-        token = utils.Token(tok)
-        if not token.string:
-            continue
-        if token.string not in "()[]}{":
-            continue
-        if (
-            token.start_line == max_linenumber
-            and token.start_col >= offset
-            or token.start_line > max_linenumber
-        ):
-            break
-        if token.string in "([{":
-            brackets.append((token.string, token.start_line))
-        elif token.string in ")]}":
-            if not brackets:
-                bracket = name_bracket(token.string)
-                return _(
-                    "The closing {bracket} on line {linenumber}"
-                    " does not match anything.\n"
-                ).format(bracket=bracket, linenumber=token.start_line)
-            else:
-                open_bracket, open_lineno = brackets.pop()
-                if (
-                    (open_bracket == "(" and token.string != ")")
-                    or (open_bracket == "[" and token.string != "]")
-                    or (open_bracket == "{" and token.string != "}")
-                ):
+    try:
+        for tok in tokens:
+            token = utils.Token(tok)
+            if not token.string:
+                continue
+            if token.string not in "()[]}{":
+                continue
+            if (
+                token.start_line == max_linenumber
+                and token.start_col >= offset
+                or token.start_line > max_linenumber
+            ):
+                break
+            if token.string in "([{":
+                brackets.append((token.string, token.start_line))
+            elif token.string in ")]}":
+                if not brackets:
                     bracket = name_bracket(token.string)
-                    open_bracket = name_bracket(open_bracket)
                     return _(
-                        "The closing {bracket} on line {close_lineno} does not match "
-                        "the opening {open_bracket} on line {open_lineno}.\n"
-                    ).format(
-                        bracket=bracket,
-                        close_lineno=token.start_line,
-                        open_bracket=open_bracket,
-                        open_lineno=open_lineno,
-                    )
+                        "The closing {bracket} on line {linenumber}"
+                        " does not match anything.\n"
+                    ).format(bracket=bracket, linenumber=token.start_line)
+                else:
+                    open_bracket, open_lineno = brackets.pop()
+                    if (
+                        (open_bracket == "(" and token.string != ")")
+                        or (open_bracket == "[" and token.string != "]")
+                        or (open_bracket == "{" and token.string != "}")
+                    ):
+                        bracket = name_bracket(token.string)
+                        open_bracket = name_bracket(open_bracket)
+                        return _(
+                            "The closing {bracket} on line {close_lineno} does not match "
+                            "the opening {open_bracket} on line {open_lineno}.\n"
+                        ).format(
+                            bracket=bracket,
+                            close_lineno=token.start_line,
+                            open_bracket=open_bracket,
+                            open_lineno=open_lineno,
+                        )
+    except tokenize.TokenError:
+        pass
     if brackets:
         bracket, linenumber = brackets.pop()
         bracket = name_bracket(bracket)

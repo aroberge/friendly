@@ -25,6 +25,7 @@ causes = {
     14: "The closing parenthesis ')' on",
     15: "The opening parenthesis '(' on line",
     16: "The closing square bracket ']' on line",
+    17: "The opening parenthesis '(' on line"
 }
 
 
