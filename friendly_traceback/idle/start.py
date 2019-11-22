@@ -1,3 +1,6 @@
+import sys
+
+from . import patch_run  # noqa
 from . import patch_pyshell  # noqa
 
 try:
@@ -5,3 +8,7 @@ try:
 except Exception as e:
     print(e)
     input("ok")
+
+for mod in sys.modules:
+    if "run" in mod:
+        print(mod)

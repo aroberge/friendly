@@ -8,7 +8,7 @@ import sys
 import friendly_traceback
 
 from friendly_traceback import set_stream
-from friendly_traceback.console import FriendlyConsole, banner
+from friendly_traceback.console import FriendlyConsole, BANNER
 
 import idlelib.pyshell as pyshell
 
@@ -28,12 +28,12 @@ class MyPyShell(old_PyShell):
             self.close()
             return False
 
-        self.write(banner)  # only change for Friendly-traceback
+        self.write(BANNER)  # only MyPyShell change for Friendly-traceback
         self.text.focus_force()
         self.showprompt()
         import tkinter
 
-        tkinter._default_root = None  # 03Jan04 KBK What's this?
+        tkinter._default_root = None
         return True
 
 
@@ -81,20 +81,20 @@ class MyModifiedInterpreter(FriendlyConsole, old_ModifiedInterpreter):
                 "Traceback (most recent call last):",
                 file=self.tkconsole.stderr,
             )
-            FriendlyConsole.showsyntaxerror(self, filename)
+            friendly_traceback.public_api.explain()
             self.tkconsole.showprompt()
         else:
             self.runcode(code)
 
     def showsyntaxerror(self, filename=None):
         """Override parent method"""
-        FriendlyConsole.showsyntaxerror(self)
+        friendly_traceback.public_api.explain()
         self.tkconsole.resetoutput()
         self.tkconsole.showprompt()
 
     def showtraceback(self):
         "Extend base class method to reset output properly"
-        FriendlyConsole.showtraceback(self)
+        friendly_traceback.public_api.explain()
         self.tkconsole.resetoutput()
         self.tkconsole.showprompt()
 
