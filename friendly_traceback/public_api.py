@@ -22,7 +22,7 @@ from .path_info import (
     is_excluded_file,
     include_file_in_traceback,
 )
-
+from .console import start_console
 
 __all__ = [
     "cache",
@@ -30,6 +30,7 @@ __all__ = [
     "exclude_file_from_traceback",
     "is_excluded_file",
     "include_file_in_traceback",
+    "start_console",
 ]
 # Note: more content is added to __all__ below
 
