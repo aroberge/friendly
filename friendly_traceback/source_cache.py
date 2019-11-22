@@ -97,11 +97,10 @@ class Cache:
 
     def get_formatted_partial_source(self, filename, linenumber, offset):
         """Formats a few lines around a 'bad line', and returns
-           the formatted source as well as the content of the 'bad line'
+           the formatted source as well as the content of the 'bad line'.
         """
         lines = self.get_source(filename)
         if not lines:
-            print("Problem: source of %s is not available" % filename)
             return "", ""
 
         begin = max(0, linenumber - self.context)

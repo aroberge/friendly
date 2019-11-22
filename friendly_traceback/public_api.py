@@ -15,6 +15,7 @@ import sys
 
 from functools import wraps
 
+from . import console
 from .core import state
 from .source_cache import cache, highlight_source
 from .path_info import (
@@ -22,7 +23,7 @@ from .path_info import (
     is_excluded_file,
     include_file_in_traceback,
 )
-from .console import start_console
+
 
 __all__ = [
     "cache",
@@ -30,7 +31,6 @@ __all__ = [
     "exclude_file_from_traceback",
     "is_excluded_file",
     "include_file_in_traceback",
-    "start_console",
 ]
 # Note: more content is added to __all__ below
 
@@ -205,3 +205,10 @@ def show_traceback_info_again():
     a verbosity level to view the traceback again.
     """
     state.show_traceback_info_again()
+
+
+@make_public
+def start_console():
+    """Starts the console."""
+    state.console_running = True
+    console.start_console()

@@ -97,6 +97,7 @@ class _State:
         self.set_level(self.level)
         self.running_script = False
         self.traceback_info = None
+        self.console_running = False
 
     def clear_traceback(self):
         """Removes previous traceback_info"""
