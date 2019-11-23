@@ -10,8 +10,6 @@ import platform
 from code import InteractiveConsole
 
 from . import public_api
-from .source_cache import cache
-from .path_info import exclude_file_from_traceback
 
 from .version import __version__
 
@@ -30,7 +28,7 @@ class FriendlyConsole(InteractiveConsole):
         """
         import codeop  # called by Python's code module
 
-        exclude_file_from_traceback(codeop.__file__)
+        public_api.exclude_file_from_traceback(codeop.__file__)
         self.fake_filename = "<friendly-console:%d>"
         self.counter = 1
 
@@ -58,7 +56,7 @@ class FriendlyConsole(InteractiveConsole):
         # If self.counter was not updated, it means that the previous
         # code sample was not valid and we reuse the same file name
         filename = self.fake_filename % self.counter
-        cache.add(filename, source)
+        public_api.cache.add(filename, source)
 
         public_api.clear_traceback()
         more = self.runsource(source, filename)

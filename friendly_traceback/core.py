@@ -3,6 +3,7 @@
 The exception hook at the heart of Friendly-traceback
 """
 
+import sys
 import traceback
 
 from .session import state
@@ -49,3 +50,22 @@ def explain(etype, value, tb, redirect=None):
 
     if redirect is not None:
         state.write_err = saved_current_redirect
+
+
+def explain_traceback(redirect=None):
+    """Replaces a standard traceback by a friendlier one, giving more
+       information about a given exception than a standard traceback.
+       Note that this excludes SystemExit and KeyboardInterrupt which
+       are re-raised.
+
+       By default, the output goes to sys.stderr or to some other stream
+       set to be the default by another API call.  However, if
+          redirect = some_stream
+       is specified, the output goes to that stream, but without changing
+       the global settings.
+
+       If the string "capture" is given as the value for redirect, the
+       output is saved and can be later retrieved by get_output().
+    """
+    etype, value, tb = sys.exc_info()
+    explain(etype, value, tb, redirect=redirect)

@@ -92,7 +92,6 @@ class _State:
         self.set_level(self.level)
         self.running_script = False
         self.traceback_info = None
-        self.console_running = False
 
     def set_except_hook(self, hook):
         """Sets the custom exception hook to be used."""

@@ -11,11 +11,8 @@ instead of
     import friendly_traceback
     friendly_traceback.some_module.some_function()
 """
-import sys
-
 from functools import wraps
 
-from . import console
 from . import core
 from .session import state
 from .source_cache import cache, highlight_source
@@ -62,8 +59,7 @@ def explain(redirect=None):
        If the string "capture" is given as the value for redirect, the
        output is saved and can be later retrieved by get_output().
     """
-    etype, value, tb = sys.exc_info()
-    core.explain(etype, value, tb, redirect=redirect)
+    core.explain_traceback(redirect=redirect)
 
 
 @make_public
@@ -206,10 +202,3 @@ def show_traceback_info_again():
     a verbosity level to view the traceback again.
     """
     state.show_traceback_info_again()
-
-
-@make_public
-def start_console():
-    """Starts the console."""
-    state.console_running = True
-    console.start_console()
