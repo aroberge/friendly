@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-17 06:48-0300\n"
-"PO-Revision-Date: 2019-05-17 06:49-0300\n"
+"POT-Creation-Date: 2019-11-23 07:36-0400\n"
+"PO-Revision-Date: 2019-11-23 08:06-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -14,10 +14,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.4\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: analyze_syntax.py:59
+#: analyze_syntax.py:68
 msgid ""
 "Currently, we cannot guess the likely cause of this error.\n"
 "Try to examine closely the line indicated as well as the line\n"
@@ -38,7 +38,26 @@ msgstr ""
 "https://github.com/aroberge/friendly-traceback/issues\n"
 "\n"
 
-#: analyze_syntax.py:94
+#: analyze_syntax.py:117
+msgid ""
+"{keyword} is a constant in Python; you cannot assign it a value.\n"
+"\n"
+msgstr ""
+"{keyword} est une constante dans python; vous ne pouvez pas lui assigner une "
+"valeur.\n"
+"\n"
+
+#: analyze_syntax.py:121 analyze_syntax.py:225
+msgid ""
+"You were trying to assign a value to the Python keyword '{keyword}'.\n"
+"This is not allowed.\n"
+"\n"
+msgstr ""
+"Vous essayiez d’assigner une valeur au mot clé Python '{keyword}'.\n"
+"Ceci n’est pas permis.\n"
+"\n"
+
+#: analyze_syntax.py:139
 msgid ""
 "You wrote an expression like\n"
 "    {literal} = {name}\n"
@@ -57,7 +76,7 @@ msgstr ""
 "    {name} = {literal}\n"
 "\n"
 
-#: analyze_syntax.py:109
+#: analyze_syntax.py:154
 msgid ""
 "You starting writing a string with a single or double quote\n"
 "but never ended the string with another quote on that line.\n"
@@ -66,26 +85,13 @@ msgstr ""
 "avec un guillemet simple ou double, mais n'avez jamais\n"
 "terminé la chaîne avec un autre guillemet sur cette ligne.\n"
 
-#: analyze_syntax.py:140
-msgid ""
-"{keyword} is a constant in Python; you cannot assign it a value.\n"
-"\n"
+#: analyze_syntax.py:172 analyze_syntax.py:347
+msgid "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
-"{keyword} est une constante dans python; vous ne pouvez pas lui assigner une "
-"valeur.\n"
-"\n"
+"Le symbole {bracket} à la ligne {linenumber} n'a pas de symbole ouvrant qui "
+"lui correspond.\n"
 
-#: analyze_syntax.py:144 analyze_syntax.py:199
-msgid ""
-"You were trying to assign a value to the Python keyword '{keyword}'.\n"
-"This is not allowed.\n"
-"\n"
-msgstr ""
-"Vous essayiez d’assigner une valeur au mot clé Python '{keyword}'.\n"
-"Ceci n’est pas permis.\n"
-"\n"
-
-#: analyze_syntax.py:215
+#: analyze_syntax.py:241
 msgid ""
 "You meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
@@ -95,7 +101,7 @@ msgstr ""
 "au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: analyze_syntax.py:234
+#: analyze_syntax.py:260
 msgid ""
 "You wrote something like\n"
 "    import {function} from {module}\n"
@@ -110,11 +116,11 @@ msgstr ""
 "\n"
 "\n"
 
-#: analyze_syntax.py:254
+#: analyze_syntax.py:280
 msgid "a class"
 msgstr "une classe"
 
-#: analyze_syntax.py:255
+#: analyze_syntax.py:281
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
@@ -124,7 +130,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:261
+#: analyze_syntax.py:287
 msgid ""
 "You wrote a '{for_while}' loop but\n"
 "forgot to add a colon ':' at the end\n"
@@ -134,7 +140,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:267
+#: analyze_syntax.py:293
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
@@ -144,11 +150,11 @@ msgstr ""
 "'{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:288
+#: analyze_syntax.py:314
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: analyze_syntax.py:289
+#: analyze_syntax.py:315
 msgid ""
 "You tried to define {class_or_function}\n"
 "and did not use the correct syntax.\n"
@@ -161,7 +167,45 @@ msgstr ""
 "    def nom ( arguments_optionnels ):\n"
 "\n"
 
-#: analyze_type_error.py:31
+#: analyze_syntax.py:360
+msgid ""
+"The closing {bracket} on line {close_lineno} does not match the opening "
+"{open_bracket} on line {open_lineno}.\n"
+msgstr ""
+"Le symbole {bracket} à la ligne {close_lineno} ne correspond pas au symbole "
+"{open_bracket} à la ligne {open_lineno}.\n"
+
+#: analyze_syntax.py:374
+msgid "The opening {bracket} on line {linenumber} is not closed.\n"
+msgstr ""
+"Le symbole {bracket} à la ligne {linenumber} n'est pas fermé par le symbole "
+"correspondant.\n"
+
+#: analyze_syntax.py:384
+msgid "parenthesis '('"
+msgstr "parenthèse '('"
+
+#: analyze_syntax.py:386
+msgid "parenthesis ')'"
+msgstr "parenthèse ')'"
+
+#: analyze_syntax.py:388
+msgid "square bracket '['"
+msgstr "crochet '['"
+
+#: analyze_syntax.py:390
+msgid "square bracket ']'"
+msgstr "crochet ']'"
+
+#: analyze_syntax.py:392
+msgid "curly bracket '{'"
+msgstr "accolade '{'"
+
+#: analyze_syntax.py:394
+msgid "curly bracket '}'"
+msgstr "accolade '}'"
+
+#: analyze_type_error.py:32
 msgid ""
 "I do not recognize this case. Please report it to\n"
 "https://github.com/aroberge/friendly-traceback/issues\n"
@@ -169,43 +213,43 @@ msgstr ""
 "Je ne reconnais pas ce cas. Veuillez le signaler à\n"
 "https://github.com/aroberge/friendly-traceback/issues\n"
 
-#: analyze_type_error.py:40
+#: analyze_type_error.py:41
 msgid "a complex number"
 msgstr "un nombre complexe ('complex')"
 
-#: analyze_type_error.py:42
+#: analyze_type_error.py:43
 msgid "a dictionary ('dict')"
 msgstr "un dictionnaire ('dict')"
 
-#: analyze_type_error.py:44
+#: analyze_type_error.py:45
 msgid "a number ('float')"
 msgstr "un nombre ('float')"
 
-#: analyze_type_error.py:46
+#: analyze_type_error.py:47
 msgid "an integer ('int')"
 msgstr "un entier ('int')"
 
-#: analyze_type_error.py:48
+#: analyze_type_error.py:49
 msgid "a list"
 msgstr "une liste ('list')"
 
-#: analyze_type_error.py:50
+#: analyze_type_error.py:51
 msgid "a variable equal to None ('NoneType')"
 msgstr "une variable de valeur 'None' ('NoteType')"
 
-#: analyze_type_error.py:52
+#: analyze_type_error.py:53
 msgid "a set"
 msgstr "un ensemble ('set')"
 
-#: analyze_type_error.py:54
+#: analyze_type_error.py:55
 msgid "a string ('str')"
 msgstr "une chaîne de caractères ('str')"
 
-#: analyze_type_error.py:56
+#: analyze_type_error.py:57
 msgid "a tuple"
 msgstr "un tuple"
 
-#: analyze_type_error.py:71 analyze_type_error.py:89
+#: analyze_type_error.py:72 analyze_type_error.py:90
 msgid ""
 "You tried to concatenate (add) two different types of objects:\n"
 "{first} and {second}\n"
@@ -214,7 +258,7 @@ msgstr ""
 "différents:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:108
+#: analyze_type_error.py:109
 msgid ""
 "You tried to add two incompatible types of objects:\n"
 "{first} and {second}\n"
@@ -222,7 +266,7 @@ msgstr ""
 "Vous avez essayé d’additionner deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:115
+#: analyze_type_error.py:116
 msgid ""
 "You tried to subtract two incompatible types of objects:\n"
 "{first} and {second}\n"
@@ -230,7 +274,7 @@ msgstr ""
 "Vous avez tenté de soustraire deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:122
+#: analyze_type_error.py:123
 msgid ""
 "You tried to multiply two incompatible types of objects:\n"
 "{first} and {second}\n"
@@ -238,7 +282,7 @@ msgstr ""
 "Vous avez essayé de multiplier deux types d’objets différents:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:129
+#: analyze_type_error.py:130
 msgid ""
 "You tried to divide two incompatible types of objects:\n"
 "{first} and {second}\n"
@@ -246,7 +290,7 @@ msgstr ""
 "Vous avez essayé de diviser deux types d’objets différents:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:136
+#: analyze_type_error.py:137
 msgid ""
 "You tried to perform the bitwise operation {operator}\n"
 "on two incompatible types of objects:\n"
@@ -256,7 +300,7 @@ msgstr ""
 "sur deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:146
+#: analyze_type_error.py:147
 msgid ""
 "You tried to perform the bit shifting operation {operator}\n"
 "on two incompatible types of objects:\n"
@@ -266,7 +310,7 @@ msgstr ""
 "sur deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:156
+#: analyze_type_error.py:157
 msgid ""
 "You tried to exponentiate (raise to a power)\n"
 "using two incompatible types of objects:\n"
@@ -276,7 +320,7 @@ msgstr ""
 "en utilisant deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:164
+#: analyze_type_error.py:165
 msgid ""
 "You tried to use the operator {operator}\n"
 "using two incompatible types of objects:\n"
@@ -290,7 +334,7 @@ msgstr ""
 "Cet opérateur est normalement utilisé uniquement\n"
 "pour la multiplication des matrices.\n"
 
-#: analyze_type_error.py:187
+#: analyze_type_error.py:188
 msgid ""
 "You tried to do an order comparison ({operator})\n"
 "between two incompatible types of objects:\n"
@@ -300,7 +344,7 @@ msgstr ""
 "deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: analyze_type_error.py:209
+#: analyze_type_error.py:210
 msgid ""
 "You tried to use the unary operator '{operator}'\n"
 "with the following type of object: {obj}.\n"
@@ -310,7 +354,7 @@ msgstr ""
 "avec le type d’objet suivant: {obj}.\n"
 "Cette opération n’est pas définie pour ce type d’objet.\n"
 
-#: analyze_type_error.py:226
+#: analyze_type_error.py:227
 msgid ""
 "In Python, some objects are known as immutable:\n"
 "once defined, their value cannot be changed.\n"
@@ -321,10 +365,6 @@ msgstr ""
 "une fois définis, leur valeur ne peut pas être modifiée.\n"
 "Vous avez essayé de modifier une partie d’un tel objet immuable: {obj},\n"
 "probablement en utilisant une opération d’indexation.\n"
-
-#: core.py:156
-msgid "Level {level} not available; using default."
-msgstr "Niveau {Level} non disponible; la valeur par défaut est utilisée."
 
 #: info_generic.py:27
 msgid ""
@@ -467,6 +507,14 @@ msgstr ""
 
 #: info_generic.py:150
 msgid ""
+"A ValueError indicates that a function or an operation\n"
+"received an argument of the right type, but an inappropriate value.\n"
+msgstr ""
+"Une exception ValueError indique qu'une fonction ou une opération\n"
+"a reçu un argument du bon type, mais une valeur inappropriée.\n"
+
+#: info_generic.py:159
+msgid ""
 "In Python, variables that are used inside a function are known as \n"
 "local variables. Before they are used, they must be assigned a value.\n"
 "A variable that is used before it is assigned a value is assumed to\n"
@@ -489,7 +537,7 @@ msgstr ""
 "qu’il s’agit d’une variable globale, sinon vous verrez une exception "
 "UnboundLocalError.\n"
 
-#: info_generic.py:165
+#: info_generic.py:174
 msgid ""
 "No information is known about this exception.\n"
 "Please report this example to\n"
@@ -499,7 +547,7 @@ msgstr ""
 "Veuillez signaler cet exemple à\n"
 "https://github.com/aroberge/friendly-traceback/issues\n"
 
-#: info_generic.py:175
+#: info_generic.py:184
 msgid ""
 "A ZeroDivisionError occurs when you are attempting to divide\n"
 "a value by zero:\n"
@@ -592,6 +640,17 @@ msgstr ""
 "    global {var_name}\n"
 "comme première ligne à l’intérieur de votre fonction.\n"
 
+#: info_traceback.py:121
+msgid ""
+"        I suspect that you are using a regular\n"
+"        Python console after importing\n"
+"Friendly-traceback.\n"
+"        Unfortunately, no further processing can be done.\n"
+msgstr ""
+"        Je soupçonne que vous utilisez une\n"
+"        Console Python après avoir importé Friendly-traceback.\n"
+"        Malheureusement, aucune autre information ne peut être fournie.\n"
+
 #: info_traceback.py:161
 msgid ""
 "Unfortunately, no additional information is available:\n"
@@ -600,34 +659,63 @@ msgstr ""
 "Malheureusement, aucune information supplémentaire n’est disponible:\n"
 "le contenu du fichier '<string>' n’est pas accessible.\n"
 
-#: info_traceback.py:185
+#: info_traceback.py:173
+msgid ""
+"Unfortunately, no additional information is available:\n"
+"the content of file '<stdin>' is not accessible.\n"
+"Are you using a regular Python console instead of a Friendly-console?\n"
+msgstr ""
+"Malheureusement, aucune information supplémentaire n’est disponible:\n"
+"le contenu du fichier '<stdin>' n’est pas accessible.\n"
+"Est-ce que vous utilisez une console Python plutôt que la console \"Friendly"
+"\"?\n"
+
+#: info_traceback.py:186
 msgid "Python exception:"
 msgstr "Exception Python:"
 
-#: info_traceback.py:241
+#: info_traceback.py:244
 msgid "My best guess:"
 msgstr "Ma meilleure hypothèse :"
 
-#: info_traceback.py:243
+#: info_traceback.py:246
 msgid "Likely cause:"
 msgstr "Cause probable :"
 
-#: info_traceback.py:278
+#: info_traceback.py:281
+msgid ""
+"        To see the lines of code that cause the problem, \n"
+"        you must use the Friendly Console and not a \n"
+"        regular Python console.\n"
+msgstr ""
+"        Pour voir les lignes de code qui causent le problème, \n"
+"        vous devez utiliser la console 'Friendly' et non pas une \n"
+"        console Python régulière.\n"
+
+#: info_traceback.py:287
+msgid "Problem: source of '{filename}' is not available\n"
+msgstr "Problème : la source de '{filename}' n'est pas disponible.\n"
+
+#: info_traceback.py:299
 msgid "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 "L'exécution s'est arrêtée à la ligne {linenumber} du fichier '{filename}'\n"
 
-#: info_traceback.py:285
+#: info_traceback.py:306
 msgid "Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr "Exception levée à la ligne {linenumber} du fichier '{filename}'.\n"
 
-#: info_traceback.py:297
+#: info_traceback.py:320
 msgid ""
 "Python could not parse the file '{filename}'\n"
 "beyond the location indicated below by --> and ^.\n"
 msgstr ""
 "Python peut seulement analyser le fichier '{filename}'\n"
 "jusqu'à l'endroit indiqué par --> et ^.\n"
+
+#: session.py:144
+msgid "Level {level} not available; using default."
+msgstr "Niveau {Level} non disponible; la valeur par défaut est utilisée."
 
 #~ msgid ""
 #~ "    Likely cause:\n"

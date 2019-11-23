@@ -154,6 +154,9 @@ def set_call_info(info, name, filename, linenumber, lines, index, frame):
 
 
 def cannot_analyze_string():
+    """Typical case: some code is executed using exec(), and the 'filename'
+       is set to <string>.
+    """
     _ = current_lang.translate
     return _(
         "Unfortunately, no additional information is available:\n"
@@ -162,6 +165,10 @@ def cannot_analyze_string():
 
 
 def cannot_analyze_stdin():
+    """Typical case: friendly_traceback is imported in an ordinary Python
+       interpreter (REPL), and the user does not activate the friendly
+       console.
+    """
     _ = current_lang.translate
     return _(
         "Unfortunately, no additional information is available:\n"
@@ -277,7 +284,9 @@ def get_partial_source(filename, linenumber, lines, index):
                     "        regular Python console.\n"
                 )
             else:
-                source = _("Problem: source of %s is not available" % filename)
+                source = _("Problem: source of '{filename}' is not available\n").format(
+                    filename=filename
+                )
     elif not filename:
         raise FileNotFoundError("Cannot find %s" % filename)
 

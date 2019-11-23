@@ -84,3 +84,10 @@ Install pytest-cov and run the following:
 
      $ python -m pytest --cov=friendly_traceback --cov-report html
 
+
+## New translations
+
+If you want to work on a translation, please see the online documentation.
+
+Reminder note to self: the file friendly_traceback/make_pot.bat needs
+to be run to update the catalog.
