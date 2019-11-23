@@ -16,7 +16,8 @@ import sys
 from functools import wraps
 
 from . import console
-from .core import state
+from . import core
+from .session import state
 from .source_cache import cache, highlight_source
 from .path_info import (
     exclude_file_from_traceback,
@@ -62,7 +63,7 @@ def explain(redirect=None):
        output is saved and can be later retrieved by get_output().
     """
     etype, value, tb = sys.exc_info()
-    state.explain(etype, value, tb, redirect=redirect)
+    core.explain(etype, value, tb, redirect=redirect)
 
 
 @make_public
