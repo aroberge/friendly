@@ -93,9 +93,10 @@ class _State:
         self.running_script = False
         self.traceback_info = None
 
-    def set_except_hook(self, hook):
+    def set_exception_hook(self, hook):
         """Sets the custom exception hook to be used."""
         self.except_hook = hook
+        self.set_level(self.level)
 
     def clear_traceback(self):
         """Removes previous traceback_info"""

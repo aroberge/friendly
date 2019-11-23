@@ -15,7 +15,6 @@ from .info_variables import get_var_info
 from .source_cache import cache, highlight_source
 from .path_info import is_excluded_file
 
-
 # ====================
 # The following is an example of a formatted traceback, with each
 # part identified by a number enclosed by brackets
@@ -68,6 +67,8 @@ def get_traceback_info(etype, value, tb, write_err):
     """ Gathers the basic information related to a traceback and
     returns the result in a dict.
     """
+    _ = current_lang.translate
+
     info = {}
 
     # normal Python traceback
@@ -117,6 +118,11 @@ def get_traceback_info(etype, value, tb, write_err):
         return info
 
     if not records:
+        info["cause"] = _(
+            "        I suspect that you are using a regular\n"
+            "        Python console after importing\nFriendly-traceback.\n"
+            "        Unfortunately, no further processing can be done.\n"
+        )
         return info
 
     frame, filename, linenumber, _func, lines, index = records[0]
@@ -152,6 +158,15 @@ def cannot_analyze_string():
     return _(
         "Unfortunately, no additional information is available:\n"
         "the content of file '<string>' is not accessible.\n"
+    )
+
+
+def cannot_analyze_stdin():
+    _ = current_lang.translate
+    return _(
+        "Unfortunately, no additional information is available:\n"
+        "the content of file '<stdin>' is not accessible.\n"
+        "Are you using a regular Python console instead of a Friendly-console?\n"
     )
 
 
@@ -193,6 +208,8 @@ def set_cause(info, friendly, etype, value):
     """Sets the cause"""
     if issubclass(etype, SyntaxError) and value.filename == "<string>":
         info["cause"] = cannot_analyze_string()
+    elif issubclass(etype, SyntaxError) and value.filename == "<stdin>":
+        info["cause"] = cannot_analyze_stdin()
     else:
         if issubclass(etype, SyntaxError):
             process_parsing_error(etype, value, info)
@@ -228,11 +245,16 @@ def get_partial_source(filename, linenumber, lines, index):
        formatted in a pre-determined way, as well as the content
        of the specific line where the exception occurred.
     """
+    _ = current_lang.translate
+
     if filename in cache.cache:
         if filename == "<string>":
             # We should no longer see <string> used as a filename;
             # if so, it signals a potential problem we should look into.
-            print("Problem: please revise cache to take care of <string> cases.")
+            print(
+                "Message to developer:",
+                " please revise cache to take care of <string> cases.",
+            )
         source, line = cache.get_formatted_partial_source(filename, linenumber, None)
     elif (
         filename == "<string>"
@@ -247,7 +269,15 @@ def get_partial_source(filename, linenumber, lines, index):
     elif filename and os.path.abspath(filename):
         source, line = highlight_source(linenumber, index, lines)
         if not source:
-            print("Problem: source of %s is not available" % filename)
+            line = "1"
+            if filename == "<stdin>":
+                source = _(
+                    "        To see the lines of code that cause the problem, \n"
+                    "        you must use the Friendly Console and not a \n"
+                    "        regular Python console.\n"
+                )
+            else:
+                source = _("Problem: source of %s is not available" % filename)
     elif not filename:
         raise FileNotFoundError("Cannot find %s" % filename)
 
@@ -338,6 +368,9 @@ def cleanup_tracebacks(records, write_err):
         they could possibly invoke some code from files which we had
         decided to exclude.
     """
+    if not records:
+        return records  # likely an empty list
+
     for begin, record in enumerate(records):
         frame, filename, linenumber, _func, lines, index = record
         if is_excluded_file(filename):

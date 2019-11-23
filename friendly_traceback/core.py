@@ -69,3 +69,6 @@ def explain_traceback(redirect=None):
     """
     etype, value, tb = sys.exc_info()
     explain(etype, value, tb, redirect=redirect)
+
+
+state.set_exception_hook(explain)

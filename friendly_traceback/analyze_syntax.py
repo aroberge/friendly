@@ -27,6 +27,9 @@ def find_likely_cause(etype, value):
     offset = value.offset
     message = value.msg
     source = cache.get_source(filepath)
+    if not source and filepath == "<stdin>":
+        source = ""
+        linenumber = 1
     return _find_likely_cause(source, linenumber, message, offset)
 
 
