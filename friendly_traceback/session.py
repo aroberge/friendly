@@ -172,4 +172,4 @@ class _State:
             self.write_err = _write_err
 
 
-state = _State()
+session = _State()

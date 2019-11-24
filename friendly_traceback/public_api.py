@@ -1,7 +1,8 @@
 """public_api.py
 
-This module includes all functions that are part of the public API and
-can be directly used
+With the exception of 1) this package version and 2) some Friendly-console
+related classes or functions, this module includes **all** the functions
+that are part of the public API and can be directly used, as in
 
     import friendly_traceback
     friendly_traceback.some_function()
@@ -9,12 +10,12 @@ can be directly used
 instead of
 
     import friendly_traceback
-    friendly_traceback.some_module.some_function()
+    friendly_traceback.some_inner_module.some_function()
 """
 from functools import wraps
 
 from . import core
-from .session import state
+from .session import session
 from .source_cache import cache, highlight_source
 from .path_info import (
     exclude_file_from_traceback,
@@ -79,7 +80,7 @@ def install(lang=None, redirect=None, level=1):
 
         level: verbosity level.  See set_level() for details.
     """
-    state.install(lang=lang, redirect=redirect, level=level)
+    session.install(lang=lang, redirect=redirect, level=level)
 
 
 @make_public
@@ -90,7 +91,7 @@ def get_output(flush=True):
        By default, flushes all the captured content.
        However, this can be overriden if desired.
     """
-    return state.get_captured(flush=flush)
+    return session.get_captured(flush=flush)
 
 
 @make_public
@@ -102,7 +103,7 @@ def set_formatter(formatter=None):
        as well as arbitrary keyword-based arguments - these are currently
        subject to change but include ``level``.
     """
-    state.set_formatter(formatter=formatter)
+    session.set_formatter(formatter=formatter)
 
 
 # =========================================================================
@@ -124,7 +125,7 @@ def set_lang(lang):
        If no translations exist for that language, the original
        English strings will be used.
     """
-    state.install_gettext(lang)
+    session.install_gettext(lang)
 
 
 @make_public
@@ -135,7 +136,7 @@ def get_lang():
        see by the end user: if the translations do not exist for that language,
        the default English strings are used.
     """
-    return state.lang
+    return session.lang
 
 
 @make_public
@@ -158,13 +159,13 @@ def set_level(level):
         Other values may be available, as we try to find the most useful
         settings for beginners.
     """
-    state.set_level(level)
+    session.set_level(level)
 
 
 @make_public
 def get_level():
     """Returns the verbosity level currently used."""
-    return state.level
+    return session.level
 
 
 @make_public
@@ -173,25 +174,25 @@ def set_stream(stream):
 
        If the string "capture" is given as argument, the
        output is saved and can be later retrieved by get_output()."""
-    state.set_redirect(redirect=stream)
+    session.set_redirect(redirect=stream)
 
 
 @make_public
 def get_stream():
     """Returns the value of the current stream used for output."""
-    return state.write_err
+    return session.write_err
 
 
 @make_public
 def clear_traceback():
     """Clears the existing traceback"""
-    state.clear_traceback()
+    session.clear_traceback()
 
 
 @make_public
 def copy_traceback_info(info):
     """Copy the traceback info obtained from another source"""
-    state.traceback_info = info
+    session.traceback_info = info
 
 
 @make_public
@@ -201,4 +202,4 @@ def show_traceback_info_again():
     Intended to use with GUI based program, where the user changes
     a verbosity level to view the traceback again.
     """
-    state.show_traceback_info_again()
+    session.show_traceback_info_again()

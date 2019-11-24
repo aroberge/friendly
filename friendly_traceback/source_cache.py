@@ -4,6 +4,12 @@ Used to cache and retrieve source code.
 This is especially useful when a custom REPL is used.
 """
 
+# Some comments below refer to avant-idle. avant-idle is currently a
+# project (currently unpublished) where we integrated Friendly-traceback
+# and AvantPy into a modified version of Python's IDLE. This was done
+# both to use as a demonstration and also to determine what functionality
+# should be part of a public API.
+
 import os.path
 
 
@@ -117,8 +123,9 @@ cache = Cache()
 
 
 def highlight_source(linenumber, index, lines, offset=None):
-    """Displays a few relevant lines from a file, showing line numbers
-       and identifying a particular line.
+    """Extracts a few relevant lines from a file content given as a list
+       of lines, adding line number information and identifying
+       a particular line.
 
        When dealing with a SyntaxError and subclasses, offset is an
        integer normally used by Python to indicate the position of
@@ -129,8 +136,9 @@ def highlight_source(linenumber, index, lines, offset=None):
         which, in this case, points to a missing colon. We use the same
         representation in this case.
     """
-    # The following if statementsare left-over diagnostic from the hack to integrate
-    # into Idle; they are harmless tests which could potentially be useful.
+    # The following if statements are left-over diagnostic
+    # from the hack to integrate into Idle.
+    # they are harmless tests which could potentially be useful.
     if lines is None:
         return "", ""
     if index is None:
