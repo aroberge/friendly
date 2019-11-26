@@ -18,14 +18,15 @@ causes = {
     7: "tried to define a function or method",
     8: "tried to define a function or method",
     9: "what Python calls a 'literal'",
+    '9a': "what Python calls a 'literal'",
     10: "from turtle import pen",
     11: "EOL while scanning string literal",
     12: "None is a constant in Python",
     13: "__debug__ is a constant in Python",
     14: "The closing parenthesis ')' on",
     15: "The opening parenthesis '(' on line",
+    '15a': "The opening parenthesis '(' on line",
     16: "The closing square bracket ']' on line",
-    17: "The opening parenthesis '(' on line"
 }
 
 
@@ -33,11 +34,11 @@ def test_syntax_errors():
     for i in causes:
         cause = causes[i]
         try:
-            exec("from . import raise_syntax_error%d" % i)
+            exec("from . import raise_syntax_error%s" % i)
         except Exception:
             friendly_traceback.explain(redirect="capture")
         result = friendly_traceback.get_output()
-        assert "SyntaxError" in result, "SyntaxError identified incorrectly; %d" % i
+        assert "SyntaxError" in result, "SyntaxError identified incorrectly; %s" % i
         assert cause in result, "Cause %s identified incorrectly" % result
 
 

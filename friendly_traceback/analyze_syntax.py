@@ -136,15 +136,27 @@ def assign_to_literal(message=None, line=None, **kwargs):
         literal = info[0].strip()
         name = info[1].strip()
 
-        return _(
-            "You wrote an expression like\n"
-            "    {literal} = {name}\n"
-            "where <{literal}>, on the left hand-side of the equal sign, is\n"
-            "an actual number or string (what Python calls a 'literal'),\n"
-            "and not the name of a variable. Perhaps you meant to write:\n"
-            "    {name} = {literal}\n"
-            "\n"
-        ).format(literal=literal, name=name)
+        if name.isidentifier():
+            # fmt: off
+            suggest = _(
+                " Perhaps you meant to write:\n"
+                "    {name} = {literal}\n"
+                "\n"
+            ).format(literal=literal, name=name)
+            # fmt: on
+        else:
+            suggest = "\n\n"
+
+        return (
+            _(
+                "You wrote an expression like\n"
+                "    {literal} = {name}\n"
+                "where <{literal}>, on the left hand-side of the equal sign, is\n"
+                "an actual number or string (what Python calls a 'literal'),\n"
+                "and not the name of a variable."
+            ).format(literal=literal, name=name)
+            + suggest
+        )
 
 
 @add_python_message
@@ -170,7 +182,7 @@ def unmatched_parenthesis(message=None, linenumber=None, **kwargs):
     else:
         return None
     return _(
-        "The closing {bracket} on line {linenumber}" " does not match anything.\n"
+        "The closing {bracket} on line {linenumber} does not match anything.\n"
     ).format(bracket=bracket, linenumber=linenumber)
 
 

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-11-23 07:36-0400\n"
-"PO-Revision-Date: 2019-11-23 08:06-0400\n"
+"POT-Creation-Date: 2019-11-25 21:06-0400\n"
+"PO-Revision-Date: 2019-11-25 21:09-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -47,7 +47,7 @@ msgstr ""
 "valeur.\n"
 "\n"
 
-#: analyze_syntax.py:121 analyze_syntax.py:225
+#: analyze_syntax.py:121 analyze_syntax.py:237
 msgid ""
 "You were trying to assign a value to the Python keyword '{keyword}'.\n"
 "This is not allowed.\n"
@@ -57,26 +57,32 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: analyze_syntax.py:139
+#: analyze_syntax.py:141
+msgid ""
+" Perhaps you meant to write:\n"
+"    {name} = {literal}\n"
+"\n"
+msgstr ""
+"  Peut-être que vous vouliez plutôt écrire :\n"
+"    {name} = {literal}\n"
+"\n"
+
+#: analyze_syntax.py:151
 msgid ""
 "You wrote an expression like\n"
 "    {literal} = {name}\n"
 "where <{literal}>, on the left hand-side of the equal sign, is\n"
 "an actual number or string (what Python calls a 'literal'),\n"
-"and not the name of a variable. Perhaps you meant to write:\n"
-"    {name} = {literal}\n"
-"\n"
+"and not the name of a variable."
 msgstr ""
 "Vous avez écrit une expression comme\n"
 "    {literal} =  {name}\n"
 "où <{literal}>, sur le côté gauche du signe égal, est ce que Python\n"
 "appelle un 'literal', c'est-à-dire soit une chaîne de caractères ou un "
 "nombre,\n"
-"et non le nom d’une variable. Peut-être que vous vouliez plutôt écrire:\n"
-"    {name} = {literal}\n"
-"\n"
+"et non le nom d’une variable."
 
-#: analyze_syntax.py:154
+#: analyze_syntax.py:166
 msgid ""
 "You starting writing a string with a single or double quote\n"
 "but never ended the string with another quote on that line.\n"
@@ -85,13 +91,13 @@ msgstr ""
 "avec un guillemet simple ou double, mais n'avez jamais\n"
 "terminé la chaîne avec un autre guillemet sur cette ligne.\n"
 
-#: analyze_syntax.py:172 analyze_syntax.py:347
+#: analyze_syntax.py:184 analyze_syntax.py:359
 msgid "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'a pas de symbole ouvrant qui "
 "lui correspond.\n"
 
-#: analyze_syntax.py:241
+#: analyze_syntax.py:253
 msgid ""
 "You meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
@@ -101,7 +107,7 @@ msgstr ""
 "au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: analyze_syntax.py:260
+#: analyze_syntax.py:272
 msgid ""
 "You wrote something like\n"
 "    import {function} from {module}\n"
@@ -116,11 +122,11 @@ msgstr ""
 "\n"
 "\n"
 
-#: analyze_syntax.py:280
+#: analyze_syntax.py:292
 msgid "a class"
 msgstr "une classe"
 
-#: analyze_syntax.py:281
+#: analyze_syntax.py:293
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
@@ -130,7 +136,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:287
+#: analyze_syntax.py:299
 msgid ""
 "You wrote a '{for_while}' loop but\n"
 "forgot to add a colon ':' at the end\n"
@@ -140,7 +146,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:293
+#: analyze_syntax.py:305
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
@@ -150,11 +156,11 @@ msgstr ""
 "'{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:314
+#: analyze_syntax.py:326
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: analyze_syntax.py:315
+#: analyze_syntax.py:327
 msgid ""
 "You tried to define {class_or_function}\n"
 "and did not use the correct syntax.\n"
@@ -167,7 +173,7 @@ msgstr ""
 "    def nom ( arguments_optionnels ):\n"
 "\n"
 
-#: analyze_syntax.py:360
+#: analyze_syntax.py:372
 msgid ""
 "The closing {bracket} on line {close_lineno} does not match the opening "
 "{open_bracket} on line {open_lineno}.\n"
@@ -175,33 +181,33 @@ msgstr ""
 "Le symbole {bracket} à la ligne {close_lineno} ne correspond pas au symbole "
 "{open_bracket} à la ligne {open_lineno}.\n"
 
-#: analyze_syntax.py:374
+#: analyze_syntax.py:386
 msgid "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'est pas fermé par le symbole "
 "correspondant.\n"
 
-#: analyze_syntax.py:384
+#: analyze_syntax.py:396
 msgid "parenthesis '('"
 msgstr "parenthèse '('"
 
-#: analyze_syntax.py:386
+#: analyze_syntax.py:398
 msgid "parenthesis ')'"
 msgstr "parenthèse ')'"
 
-#: analyze_syntax.py:388
+#: analyze_syntax.py:400
 msgid "square bracket '['"
 msgstr "crochet '['"
 
-#: analyze_syntax.py:390
+#: analyze_syntax.py:402
 msgid "square bracket ']'"
 msgstr "crochet ']'"
 
-#: analyze_syntax.py:392
+#: analyze_syntax.py:404
 msgid "curly bracket '{'"
 msgstr "accolade '{'"
 
-#: analyze_syntax.py:394
+#: analyze_syntax.py:406
 msgid "curly bracket '}'"
 msgstr "accolade '}'"
 
@@ -365,6 +371,79 @@ msgstr ""
 "une fois définis, leur valeur ne peut pas être modifiée.\n"
 "Vous avez essayé de modifier une partie d’un tel objet immuable: {obj},\n"
 "probablement en utilisant une opération d’indexation.\n"
+
+#: core.py:188
+msgid ""
+"        I suspect that you are using a regular\n"
+"        Python console after importing\n"
+"Friendly-traceback.\n"
+"        Unfortunately, no further processing can be done.\n"
+msgstr ""
+"        Je soupçonne que vous utilisez une\n"
+"        Console Python après avoir importé Friendly-traceback.\n"
+"        Malheureusement, aucune autre information ne peut être fournie.\n"
+
+#: core.py:219
+msgid ""
+"Unfortunately, no additional information is available:\n"
+"the content of file '<stdin>' is not accessible.\n"
+"Are you using a regular Python console instead of a Friendly-console?\n"
+msgstr ""
+"Malheureusement, aucune information supplémentaire n’est disponible:\n"
+"le contenu du fichier '<stdin>' n’est pas accessible.\n"
+"Est-ce que vous utilisez une console Python plutôt que la console \"Friendly"
+"\"?\n"
+
+#: core.py:231
+msgid ""
+"Unfortunately, no additional information is available:\n"
+"the content of file '<string>' is not accessible.\n"
+msgstr ""
+"Malheureusement, aucune information supplémentaire n’est disponible:\n"
+"le contenu du fichier '<string>' n’est pas accessible.\n"
+
+#: core.py:277
+msgid "Exception raised on line {linenumber} of file '{filename}'.\n"
+msgstr "Exception levée à la ligne {linenumber} du fichier '{filename}'.\n"
+
+#: core.py:369
+msgid "My best guess:"
+msgstr "Ma meilleure hypothèse :"
+
+#: core.py:371
+msgid "Likely cause:"
+msgstr "Cause probable :"
+
+#: core.py:413
+msgid ""
+"        To see the lines of code that cause the problem, \n"
+"        you must use the Friendly Console and not a \n"
+"        regular Python console.\n"
+msgstr ""
+"        Pour voir les lignes de code qui causent le problème, \n"
+"        vous devez utiliser la console 'Friendly' et non pas une \n"
+"        console Python régulière.\n"
+
+#: core.py:419
+msgid "Problem: source of '{filename}' is not available\n"
+msgstr "Problème : la source de '{filename}' n'est pas disponible.\n"
+
+#: core.py:433
+msgid "Execution stopped on line {linenumber} of file '{filename}'.\n"
+msgstr ""
+"L'exécution s'est arrêtée à la ligne {linenumber} du fichier '{filename}'\n"
+
+#: core.py:447
+msgid ""
+"Python could not parse the file '{filename}'\n"
+"beyond the location indicated below by --> and ^.\n"
+msgstr ""
+"Python peut seulement analyser le fichier '{filename}'\n"
+"jusqu'à l'endroit indiqué par --> et ^.\n"
+
+#: core.py:532
+msgid "Python exception:"
+msgstr "Exception Python:"
 
 #: info_generic.py:27
 msgid ""
@@ -639,79 +718,6 @@ msgstr ""
 "Il est possible que vous avez oublié d'écrire l’instruction\n"
 "    global {var_name}\n"
 "comme première ligne à l’intérieur de votre fonction.\n"
-
-#: info_traceback.py:121
-msgid ""
-"        I suspect that you are using a regular\n"
-"        Python console after importing\n"
-"Friendly-traceback.\n"
-"        Unfortunately, no further processing can be done.\n"
-msgstr ""
-"        Je soupçonne que vous utilisez une\n"
-"        Console Python après avoir importé Friendly-traceback.\n"
-"        Malheureusement, aucune autre information ne peut être fournie.\n"
-
-#: info_traceback.py:161
-msgid ""
-"Unfortunately, no additional information is available:\n"
-"the content of file '<string>' is not accessible.\n"
-msgstr ""
-"Malheureusement, aucune information supplémentaire n’est disponible:\n"
-"le contenu du fichier '<string>' n’est pas accessible.\n"
-
-#: info_traceback.py:173
-msgid ""
-"Unfortunately, no additional information is available:\n"
-"the content of file '<stdin>' is not accessible.\n"
-"Are you using a regular Python console instead of a Friendly-console?\n"
-msgstr ""
-"Malheureusement, aucune information supplémentaire n’est disponible:\n"
-"le contenu du fichier '<stdin>' n’est pas accessible.\n"
-"Est-ce que vous utilisez une console Python plutôt que la console \"Friendly"
-"\"?\n"
-
-#: info_traceback.py:186
-msgid "Python exception:"
-msgstr "Exception Python:"
-
-#: info_traceback.py:244
-msgid "My best guess:"
-msgstr "Ma meilleure hypothèse :"
-
-#: info_traceback.py:246
-msgid "Likely cause:"
-msgstr "Cause probable :"
-
-#: info_traceback.py:281
-msgid ""
-"        To see the lines of code that cause the problem, \n"
-"        you must use the Friendly Console and not a \n"
-"        regular Python console.\n"
-msgstr ""
-"        Pour voir les lignes de code qui causent le problème, \n"
-"        vous devez utiliser la console 'Friendly' et non pas une \n"
-"        console Python régulière.\n"
-
-#: info_traceback.py:287
-msgid "Problem: source of '{filename}' is not available\n"
-msgstr "Problème : la source de '{filename}' n'est pas disponible.\n"
-
-#: info_traceback.py:299
-msgid "Execution stopped on line {linenumber} of file '{filename}'.\n"
-msgstr ""
-"L'exécution s'est arrêtée à la ligne {linenumber} du fichier '{filename}'\n"
-
-#: info_traceback.py:306
-msgid "Exception raised on line {linenumber} of file '{filename}'.\n"
-msgstr "Exception levée à la ligne {linenumber} du fichier '{filename}'.\n"
-
-#: info_traceback.py:320
-msgid ""
-"Python could not parse the file '{filename}'\n"
-"beyond the location indicated below by --> and ^.\n"
-msgstr ""
-"Python peut seulement analyser le fichier '{filename}'\n"
-"jusqu'à l'endroit indiqué par --> et ^.\n"
 
 #: session.py:144
 msgid "Level {level} not available; using default."

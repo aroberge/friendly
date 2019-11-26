@@ -28,12 +28,14 @@ all_imports = {
     "SyntaxError - malformed def statment - 2": "syntax.raise_syntax_error7",
     "SyntaxError - malformed def statment - 3": "syntax.raise_syntax_error8",
     "SyntaxError - can't assign to literal": "syntax.raise_syntax_error9",
+    "SyntaxError - can't assign to literal - 2": "syntax.raise_syntax_error9a",
     "SyntaxError - import X from Y": "syntax.raise_syntax_error10",
     "SyntaxError - EOL while scanning string literal": "syntax.raise_syntax_error11",
     "SyntaxError - assignment to keyword (None)": "syntax.raise_syntax_error12",
     "SyntaxError - assignment to keyword (__debug__)": "syntax.raise_syntax_error13",
     "SyntaxError - unmatched closing parenthesis": "syntax.raise_syntax_error14",
     "SyntaxError - unclosed parenthesis": "syntax.raise_syntax_error15",
+    "SyntaxError - unclosed parenthesis - 2": "syntax.raise_syntax_error15a",
     "SyntaxError - mismatched brackets": "syntax.raise_syntax_error16",
 }
 
