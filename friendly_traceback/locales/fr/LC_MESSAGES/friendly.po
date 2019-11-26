@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-11-25 21:06-0400\n"
-"PO-Revision-Date: 2019-11-25 21:09-0400\n"
+"POT-Creation-Date: 2019-11-26 06:29-0400\n"
+"PO-Revision-Date: 2019-11-26 06:31-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -47,7 +47,7 @@ msgstr ""
 "valeur.\n"
 "\n"
 
-#: analyze_syntax.py:121 analyze_syntax.py:237
+#: analyze_syntax.py:121 analyze_syntax.py:252
 msgid ""
 "You were trying to assign a value to the Python keyword '{keyword}'.\n"
 "This is not allowed.\n"
@@ -91,13 +91,26 @@ msgstr ""
 "avec un guillemet simple ou double, mais n'avez jamais\n"
 "terminé la chaîne avec un autre guillemet sur cette ligne.\n"
 
-#: analyze_syntax.py:184 analyze_syntax.py:359
+#: analyze_syntax.py:184 analyze_syntax.py:374
 msgid "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'a pas de symbole ouvrant qui "
 "lui correspond.\n"
 
-#: analyze_syntax.py:253
+#: analyze_syntax.py:197
+msgid ""
+"Perhaps you need to type print({message})?\n"
+"\n"
+"In older version of Python, 'print' was a keyword.\n"
+"Now, 'print' is a function; you need to use parentheses to call it.\n"
+msgstr ""
+"Peut-être que vous avez besoin d'écrire print({message}) ?\n"
+"\n"
+"Dans l'ancienne version de Python, «print» était un mot clé.\n"
+"Maintenant, «print» est une fonction; vous devez utiliser des parenthèses "
+"pour l'invoquer.\n"
+
+#: analyze_syntax.py:268
 msgid ""
 "You meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
@@ -107,7 +120,7 @@ msgstr ""
 "au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: analyze_syntax.py:272
+#: analyze_syntax.py:287
 msgid ""
 "You wrote something like\n"
 "    import {function} from {module}\n"
@@ -122,11 +135,11 @@ msgstr ""
 "\n"
 "\n"
 
-#: analyze_syntax.py:292
+#: analyze_syntax.py:307
 msgid "a class"
 msgstr "une classe"
 
-#: analyze_syntax.py:293
+#: analyze_syntax.py:308
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
@@ -136,7 +149,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:299
+#: analyze_syntax.py:314
 msgid ""
 "You wrote a '{for_while}' loop but\n"
 "forgot to add a colon ':' at the end\n"
@@ -146,7 +159,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:305
+#: analyze_syntax.py:320
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
@@ -156,11 +169,11 @@ msgstr ""
 "'{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:326
+#: analyze_syntax.py:341
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: analyze_syntax.py:327
+#: analyze_syntax.py:342
 msgid ""
 "You tried to define {class_or_function}\n"
 "and did not use the correct syntax.\n"
@@ -173,7 +186,7 @@ msgstr ""
 "    def nom ( arguments_optionnels ):\n"
 "\n"
 
-#: analyze_syntax.py:372
+#: analyze_syntax.py:387
 msgid ""
 "The closing {bracket} on line {close_lineno} does not match the opening "
 "{open_bracket} on line {open_lineno}.\n"
@@ -181,33 +194,33 @@ msgstr ""
 "Le symbole {bracket} à la ligne {close_lineno} ne correspond pas au symbole "
 "{open_bracket} à la ligne {open_lineno}.\n"
 
-#: analyze_syntax.py:386
+#: analyze_syntax.py:401
 msgid "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'est pas fermé par le symbole "
 "correspondant.\n"
 
-#: analyze_syntax.py:396
+#: analyze_syntax.py:411
 msgid "parenthesis '('"
 msgstr "parenthèse '('"
 
-#: analyze_syntax.py:398
+#: analyze_syntax.py:413
 msgid "parenthesis ')'"
 msgstr "parenthèse ')'"
 
-#: analyze_syntax.py:400
+#: analyze_syntax.py:415
 msgid "square bracket '['"
 msgstr "crochet '['"
 
-#: analyze_syntax.py:402
+#: analyze_syntax.py:417
 msgid "square bracket ']'"
 msgstr "crochet ']'"
 
-#: analyze_syntax.py:404
+#: analyze_syntax.py:419
 msgid "curly bracket '{'"
 msgstr "accolade '{'"
 
-#: analyze_syntax.py:406
+#: analyze_syntax.py:421
 msgid "curly bracket '}'"
 msgstr "accolade '}'"
 

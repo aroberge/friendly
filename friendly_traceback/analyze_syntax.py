@@ -186,6 +186,21 @@ def unmatched_parenthesis(message=None, linenumber=None, **kwargs):
     ).format(bracket=bracket, linenumber=linenumber)
 
 
+@add_python_message
+def python2_print(message=None, linenumber=None, **kwargs):
+    _ = current_lang.translate
+    if not message.startswith(
+        "Missing parentheses in call to 'print'. Did you mean print("
+    ):
+        return None
+    message = message[59:-2]
+    return _(
+        "Perhaps you need to type print({message})?\n\n"
+        "In older version of Python, 'print' was a keyword.\n"
+        "Now, 'print' is a function; you need to use parentheses to call it.\n"
+    ).format(message=message)
+
+
 # ==================
 # End of analysis of messages
 # ==================

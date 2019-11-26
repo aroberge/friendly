@@ -27,6 +27,7 @@ causes = {
     15: "The opening parenthesis '(' on line",
     '15a': "The opening parenthesis '(' on line",
     16: "The closing square bracket ']' on line",
+    17: "Missing parentheses in call to 'print'",
 }
 
 
