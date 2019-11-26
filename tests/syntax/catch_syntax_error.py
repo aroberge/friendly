@@ -27,7 +27,8 @@ causes = {
     15: "The opening parenthesis '(' on line",
     '15a': "The opening parenthesis '(' on line",
     16: "The closing square bracket ']' on line",
-    17: "Missing parentheses in call to 'print'",
+    17: "In older version of Python, 'print' was a keyword",
+    18: "You tried to use the Python keyword",
 }
 
 

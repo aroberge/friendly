@@ -38,6 +38,7 @@ all_imports = {
     "SyntaxError - unclosed parenthesis - 2": "syntax.raise_syntax_error15a",
     "SyntaxError - mismatched brackets": "syntax.raise_syntax_error16",
     "SyntaxError - print is a function": "syntax.raise_syntax_error17",
+    "SyntaxError - Python keyword as function name": "syntax.raise_syntax_error18",
 }
 
 

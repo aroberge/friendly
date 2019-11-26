@@ -346,6 +346,11 @@ def malformed_def(tokens):
             "    def name ( optional_arguments ):"
             "\n"
         ).format(class_or_function=name)
+    fn_name = tokens[1].string
+    if fn_name in kwlist:
+        return _(
+            "You tried to use the Python keyword '{kwd}' as a function name.\n"
+        ).format(kwd=fn_name)
 
 
 def look_for_mismatched_brackets(source_lines, max_linenumber, offset):

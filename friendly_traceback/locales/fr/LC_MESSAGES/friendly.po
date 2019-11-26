@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-11-26 06:29-0400\n"
-"PO-Revision-Date: 2019-11-26 06:31-0400\n"
+"POT-Creation-Date: 2019-11-26 10:11-0400\n"
+"PO-Revision-Date: 2019-11-26 10:13-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -91,7 +91,7 @@ msgstr ""
 "avec un guillemet simple ou double, mais n'avez jamais\n"
 "terminé la chaîne avec un autre guillemet sur cette ligne.\n"
 
-#: analyze_syntax.py:184 analyze_syntax.py:374
+#: analyze_syntax.py:184 analyze_syntax.py:379
 msgid "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'a pas de symbole ouvrant qui "
@@ -186,7 +186,14 @@ msgstr ""
 "    def nom ( arguments_optionnels ):\n"
 "\n"
 
-#: analyze_syntax.py:387
+#: analyze_syntax.py:351
+msgid "You tried to use the Python keyword '{kwd}' as a function name.\n"
+msgstr ""
+"Vous avez tenté d'utiliser le mot clé Python '{kwd}' comme nom de fonction.\n"
+"Ceci n’est pas permis.\n"
+"\n"
+
+#: analyze_syntax.py:392
 msgid ""
 "The closing {bracket} on line {close_lineno} does not match the opening "
 "{open_bracket} on line {open_lineno}.\n"
@@ -194,33 +201,33 @@ msgstr ""
 "Le symbole {bracket} à la ligne {close_lineno} ne correspond pas au symbole "
 "{open_bracket} à la ligne {open_lineno}.\n"
 
-#: analyze_syntax.py:401
+#: analyze_syntax.py:406
 msgid "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'est pas fermé par le symbole "
 "correspondant.\n"
 
-#: analyze_syntax.py:411
+#: analyze_syntax.py:416
 msgid "parenthesis '('"
 msgstr "parenthèse '('"
 
-#: analyze_syntax.py:413
+#: analyze_syntax.py:418
 msgid "parenthesis ')'"
 msgstr "parenthèse ')'"
 
-#: analyze_syntax.py:415
+#: analyze_syntax.py:420
 msgid "square bracket '['"
 msgstr "crochet '['"
 
-#: analyze_syntax.py:417
+#: analyze_syntax.py:422
 msgid "square bracket ']'"
 msgstr "crochet ']'"
 
-#: analyze_syntax.py:419
+#: analyze_syntax.py:424
 msgid "curly bracket '{'"
 msgstr "accolade '{'"
 
-#: analyze_syntax.py:421
+#: analyze_syntax.py:426
 msgid "curly bracket '}'"
 msgstr "accolade '}'"
 
