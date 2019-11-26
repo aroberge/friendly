@@ -1,6 +1,6 @@
 """core.py
 
-The exception hook at the heart of Friendly-traceback.
+The exception hook at the heart of Friendly-traceback
 """
 
 import inspect
@@ -19,52 +19,7 @@ from .source_cache import cache, highlight_source
 from .path_info import is_excluded_file
 
 
-def exception_hook(etype, value, tb, redirect=None):
-    """Replaces a standard traceback by a friendlier one,
-       except for SystemExit and KeyboardInterrupt which
-       are re-raised.
-
-       The values of the required arguments are typically the following:
-
-           etype, value, tb = sys.exc_info()
-
-       By default, the output goes to sys.stderr or to some other stream
-       set to be the default by another API call.  However, if
-          redirect = some_stream
-       is specified, the output goes to that stream, but without changing
-       the global settings.
-
-       If the string "capture" is given as the value for redirect, the
-       output is saved and can be later retrieved by get_output().
-    """
-    # get_output() refers to a function in the public API
-
-    if etype.__name__ == "SystemExit":
-        raise SystemExit(str(value))
-    if etype.__name__ == "KeyboardInterrupt":
-        raise KeyboardInterrupt(str(value))
-
-    if redirect is not None:
-        saved_current_redirect = session.write_err
-        session.set_redirect(redirect=redirect)
-
-    if session.level == 0:
-        session.write_err("".join(traceback.format_exception(etype, value, tb)))
-        if redirect is not None:
-            session.set_redirect(redirect=saved_current_redirect)
-        return
-
-    session.traceback_info = info = get_traceback_info(
-        etype, value, tb, session.write_err
-    )
-    explanation = session.formatter(info, level=session.level)
-    session.write_err(explanation)
-    # Ensures that we start on a new line for the console
-    if not explanation.endswith("\n"):
-        session.write_err("\n")
-
-    if redirect is not None:
-        session.set_redirect(redirect=saved_current_redirect)
+# The following is the function called `explain` in public_api.py
 
 
 def explain_traceback(redirect=None):
@@ -86,6 +41,54 @@ def explain_traceback(redirect=None):
 
     etype, value, tb = sys.exc_info()
     exception_hook(etype, value, tb, redirect=redirect)
+
+
+def exception_hook(etype, value, tb, redirect=None):
+    """Replaces a standard traceback by a friendlier one,
+       except for SystemExit and KeyboardInterrupt which
+       are re-raised.
+
+       The values of the required arguments are typically the following:
+
+           etype, value, tb = sys.exc_info()
+
+       By default, the output goes to sys.stderr or to some other stream
+       set to be the default by another API call.  However, if
+          redirect = some_stream
+       is specified, the output goes to that stream for this call,
+       but the session settings is restored afterwards.
+
+       If the string "capture" is given as the value for redirect, the
+       output is saved and can be later retrieved by get_output().
+    """
+    # get_output() refers to a function in the public API
+
+    if etype.__name__ == "SystemExit":
+        raise SystemExit(str(value))
+    if etype.__name__ == "KeyboardInterrupt":
+        raise KeyboardInterrupt(str(value))
+
+    if redirect is not None:
+        saved_current_redirect = session.write_err
+        session.set_redirect(redirect=redirect)
+
+    if session.level == 0:  # Normal Python traceback
+        session.write_err("".join(traceback.format_exception(etype, value, tb)))
+        if redirect is not None:
+            session.set_redirect(redirect=saved_current_redirect)
+        return
+
+    session.traceback_info = info = get_traceback_info(
+        etype, value, tb, session.write_err
+    )
+    explanation = session.formatter(info, level=session.level)
+    session.write_err(explanation)
+    # Ensures that we start on a new line; essential for the console
+    if not explanation.endswith("\n"):
+        session.write_err("\n")
+
+    if redirect is not None:
+        session.set_redirect(redirect=saved_current_redirect)
 
 
 session.set_exception_hook(exception_hook)
@@ -281,7 +284,7 @@ def format_simulated_python_traceback(records, etype, value, python_tb):
         included as part of the information shown to the user.
         This function does the required formatting.
     """
-    simulated_python_tb = _format_simulated_python_traceback(records, etype, value)
+    simulated_python_tb = _get_traceback_information(records, etype, value)
 
     str_python_tb = "\n".join(python_tb)
     str_simulated_python_tb = "\n".join(simulated_python_tb)
@@ -299,8 +302,8 @@ def format_simulated_python_traceback(records, etype, value, python_tb):
     return result
 
 
-def _format_simulated_python_traceback(records, etype, value):
-    """ Creates a formatted traceback from the information available.
+def _get_traceback_information(records, etype, value):
+    """ Gets the traceback information in a predefined format.
     """
     result = ["Traceback (most recent call last):"]
 
