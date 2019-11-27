@@ -160,6 +160,26 @@ def assign_to_literal(message=None, line=None, **kwargs):
 
 
 @add_python_message
+def break_outside_loop(message=None, **kwargs):
+    _ = current_lang.translate
+    if "'break' outside loop" in message:
+        return _(
+            "The Python keyword 'break' can only be used "
+            "inside a for loop or inside a while loop.\n"
+        )
+
+
+@add_python_message
+def continue_outside_loop(message=None, **kwargs):
+    _ = current_lang.translate
+    if "'continue' not properly in loop" in message:
+        return _(
+            "The Python keyword 'continue' can only be used "
+            "inside a for loop or inside a while loop.\n"
+        )
+
+
+@add_python_message
 def eol_while_scanning_string_literal(message=None, **kwargs):
     _ = current_lang.translate
     if "EOL while scanning string literal" in message:
@@ -291,6 +311,29 @@ def import_from(tokens):
             "    from {module} import {function}\n"
             "\n"
         ).format(module=module, function=function)
+
+
+@add_line_analyzer
+def misplaced_quote(tokens):
+    """This looks for a misplaced quote, something like
+       message = 'don't'
+
+    The clue we are looking for is a STRING token ('don')
+    followed by a NAME token (t).
+    """
+    _ = current_lang.translate
+    if len(tokens) < 2:
+        return
+    prev = tokens[0]
+    for token in tokens:
+        if prev.type == tokenize.STRING and token.type == tokenize.NAME:
+            return _(
+                "There appears to be a Python identifier (variable name)\n"
+                "immediately following a string.\n"
+                "I suspect that you were trying to use a quote inside a string\n"
+                "that was enclosed in quotes of the same kind.\n"
+            )
+        prev = token
 
 
 @add_line_analyzer

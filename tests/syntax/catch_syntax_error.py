@@ -29,6 +29,9 @@ causes = {
     16: "The closing square bracket ']' on line",
     17: "In older version of Python, 'print' was a keyword",
     18: "You tried to use the Python keyword",
+    19: "The Python keyword 'break' can only be used",
+    20: "The Python keyword 'continue' can only be used",
+    21: "quote inside a string",
 }
 
 

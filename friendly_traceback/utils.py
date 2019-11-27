@@ -20,6 +20,9 @@ class Token:
         self.end_line, self.end_col = token[3]
         # ignore last parameter which is the logical line
 
+    def __repr__(self):
+        return f"type: {self.type}, string: {self.string}"
+
 
 def collect_tokens(line):
     """Makes a list of tokens on a line, ignoring spaces and comments"""

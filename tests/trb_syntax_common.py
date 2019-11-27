@@ -39,6 +39,9 @@ all_imports = {
     "SyntaxError - mismatched brackets": "syntax.raise_syntax_error16",
     "SyntaxError - print is a function": "syntax.raise_syntax_error17",
     "SyntaxError - Python keyword as function name": "syntax.raise_syntax_error18",
+    "SyntaxError - break outside loop": "syntax.raise_syntax_error19",
+    "SyntaxError - continue outside loop": "syntax.raise_syntax_error20",
+    "SyntaxError - quote inside a string": "syntax.raise_syntax_error21",
 }
 
 

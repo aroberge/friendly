@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-11-26 10:11-0400\n"
+"POT-Creation-Date: 2019-11-26 21:32-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:121 analyze_syntax.py:252
+#: analyze_syntax.py:121 analyze_syntax.py:272
 msgid ""
 "You were trying to assign a value to the Python keyword '{keyword}'.\n"
 "This is not allowed.\n"
@@ -58,16 +58,26 @@ msgstr ""
 
 #: analyze_syntax.py:166
 msgid ""
+"The Python keyword 'break' can only be used inside a for loop or inside a while loop.\n"
+msgstr ""
+
+#: analyze_syntax.py:176
+msgid ""
+"The Python keyword 'continue' can only be used inside a for loop or inside a while loop.\n"
+msgstr ""
+
+#: analyze_syntax.py:186
+msgid ""
 "You starting writing a string with a single or double quote\n"
 "but never ended the string with another quote on that line.\n"
 msgstr ""
 
-#: analyze_syntax.py:184 analyze_syntax.py:379
+#: analyze_syntax.py:204 analyze_syntax.py:422
 msgid ""
 "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 
-#: analyze_syntax.py:197
+#: analyze_syntax.py:217
 msgid ""
 "Perhaps you need to type print({message})?\n"
 "\n"
@@ -75,14 +85,14 @@ msgid ""
 "Now, 'print' is a function; you need to use parentheses to call it.\n"
 msgstr ""
 
-#: analyze_syntax.py:268
+#: analyze_syntax.py:288
 msgid ""
 "You meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:287
+#: analyze_syntax.py:307
 msgid ""
 "You wrote something like\n"
 "    import {function} from {module}\n"
@@ -91,36 +101,44 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:307
+#: analyze_syntax.py:330
+msgid ""
+"There appears to be a Python identifier (variable name)\n"
+"immediately following a string.\n"
+"I suspect that you were trying to use a quote inside a string\n"
+"that was enclosed in quotes of the same kind.\n"
+msgstr ""
+
+#: analyze_syntax.py:350
 msgid "a class"
 msgstr ""
 
-#: analyze_syntax.py:308
+#: analyze_syntax.py:351
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:314
+#: analyze_syntax.py:357
 msgid ""
 "You wrote a '{for_while}' loop but\n"
 "forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:320
+#: analyze_syntax.py:363
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:341
+#: analyze_syntax.py:384
 msgid "a function or method"
 msgstr ""
 
-#: analyze_syntax.py:342
+#: analyze_syntax.py:385
 msgid ""
 "You tried to define {class_or_function}\n"
 "and did not use the correct syntax.\n"
@@ -128,42 +146,42 @@ msgid ""
 "    def name ( optional_arguments ):\n"
 msgstr ""
 
-#: analyze_syntax.py:351
+#: analyze_syntax.py:394
 msgid ""
 "You tried to use the Python keyword '{kwd}' as a function name.\n"
 msgstr ""
 
-#: analyze_syntax.py:392
+#: analyze_syntax.py:435
 msgid ""
 "The closing {bracket} on line {close_lineno} does not match the opening {open_bracket} on line {open_lineno}.\n"
 msgstr ""
 
-#: analyze_syntax.py:406
+#: analyze_syntax.py:449
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 
-#: analyze_syntax.py:416
+#: analyze_syntax.py:459
 msgid "parenthesis '('"
 msgstr ""
 
-#: analyze_syntax.py:418
+#: analyze_syntax.py:461
 msgid "parenthesis ')'"
 msgstr ""
 
-#: analyze_syntax.py:420
+#: analyze_syntax.py:463
 msgid "square bracket '['"
 msgstr ""
 
-#: analyze_syntax.py:422
+#: analyze_syntax.py:465
 msgid "square bracket ']'"
 msgstr ""
 
-#: analyze_syntax.py:424
+#: analyze_syntax.py:467
 msgid "curly bracket '{'"
 msgstr ""
 
-#: analyze_syntax.py:426
+#: analyze_syntax.py:469
 msgid "curly bracket '}'"
 msgstr ""
 
