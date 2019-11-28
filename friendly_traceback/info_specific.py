@@ -25,6 +25,20 @@ def register(error_name):
     return add_exception
 
 
+@register("FileNotFoundError")
+def file_not_found_error(etype, value):
+    _ = current_lang.translate
+    # str(value) is expected to be something like
+    #
+    # fileNotFoundError: No module named 'does_not_exist'
+    #
+    # By splitting value using ', we can extract the module name.
+    return _(
+        "In your program, the name of the\n"
+        "file that cannot be found is '{filename}'.\n"
+    ).format(filename=str(value).split("'")[1])
+
+
 @register("ImportError")
 def import_error(etype, value):
     _ = current_lang.translate

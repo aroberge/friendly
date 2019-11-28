@@ -32,6 +32,16 @@ def arithmetic_error(*args):
     )
 
 
+@register("FileNotFoundError")
+def file_not_found_error(*args):
+    _ = current_lang.translate
+    return _(
+        "A FileNotFoundError exception indicates that you\n"
+        "are trying to open a file that cannot be found by Python.\n"
+        "This could be because you misspelled the name of the file.\n"
+    )
+
+
 @register("ImportError")
 def import_error(*args):
     _ = current_lang.translate
