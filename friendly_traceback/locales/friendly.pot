@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-11-26 21:32-0400\n"
+"POT-Creation-Date: 2019-11-27 09:55-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,7 +72,7 @@ msgid ""
 "but never ended the string with another quote on that line.\n"
 msgstr ""
 
-#: analyze_syntax.py:204 analyze_syntax.py:422
+#: analyze_syntax.py:204 analyze_syntax.py:445
 msgid ""
 "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
@@ -151,37 +151,56 @@ msgid ""
 "You tried to use the Python keyword '{kwd}' as a function name.\n"
 msgstr ""
 
-#: analyze_syntax.py:435
+#: analyze_syntax.py:454
 msgid ""
 "The closing {bracket} on line {close_lineno} does not match the opening {open_bracket} on line {open_lineno}.\n"
 msgstr ""
 
-#: analyze_syntax.py:449
+#: analyze_syntax.py:470
+msgid ""
+"You likely forgot a comma between items in a tuple, \n"
+"or between function arguments, \n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+
+#: analyze_syntax.py:476
+msgid ""
+"You likely forgot a comma between items in a list\n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+
+#: analyze_syntax.py:481
+msgid ""
+"You likely forgot a comma between items in a set or dict.\n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+
+#: analyze_syntax.py:487
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 
-#: analyze_syntax.py:459
+#: analyze_syntax.py:505
 msgid "parenthesis '('"
 msgstr ""
 
-#: analyze_syntax.py:461
+#: analyze_syntax.py:507
 msgid "parenthesis ')'"
 msgstr ""
 
-#: analyze_syntax.py:463
+#: analyze_syntax.py:509
 msgid "square bracket '['"
 msgstr ""
 
-#: analyze_syntax.py:465
+#: analyze_syntax.py:511
 msgid "square bracket ']'"
 msgstr ""
 
-#: analyze_syntax.py:467
+#: analyze_syntax.py:513
 msgid "curly bracket '{'"
 msgstr ""
 
-#: analyze_syntax.py:469
+#: analyze_syntax.py:515
 msgid "curly bracket '}'"
 msgstr ""
 

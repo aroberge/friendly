@@ -45,7 +45,11 @@ def _find_likely_cause(source, linenumber, message, offset):
     line = offending_line.rstrip()
 
     # If Python includes a descriptive enough message, we rely
-    # on the information that it provides.
+    # on the information that it provides. We know that sometimes
+    # this will yield to the wrong diagnostic but one of our objectives
+    # is to explain in simpler language what Python means when it
+    # raises a particular exception.
+
     for case in PYTHON_MESSAGES:
         cause = case(message=message, line=line, linenumber=linenumber)
         if cause:
@@ -58,6 +62,10 @@ def _find_likely_cause(source, linenumber, message, offset):
     cause = analyze_last_line(line)
     if cause:
         return cause
+
+    # Failing that, we look for another type of common mistake. Note that
+    # while we look for missing or mismatched brackets, such as (],
+    # we also can sometimes identify missing commas during this step.
 
     cause = look_for_mismatched_brackets(source, linenumber, offset)
     if cause:
@@ -263,7 +271,7 @@ def assign_to_a_keyword(tokens):
     """Checks to see if line is of the form 'keyword = ...'
 
     Note: this is different from the above case where we got a useful
-    message. Sometimes, all we get in such examples is "invalid syntax"
+    message. Sometimes, all we get in such examples is "invalid syntax".
     """
     _ = current_lang.translate
     if len(tokens) < 2 or (tokens[0].string not in kwlist) or tokens[1].string != "=":
@@ -397,9 +405,17 @@ def malformed_def(tokens):
 
 
 def look_for_mismatched_brackets(source_lines, max_linenumber, offset):
+    """We have a few cases to consider:
+
+        1. mismatched brackets
+        2. missing closing bracket
+        3. missing comma between items.
+    """
     _ = current_lang.translate
     source = "\n".join(source_lines)
     brackets = []
+    beyond_brackets = []
+    end_bracket = None
     tokens = tokenize.generate_tokens(StringIO(source).readline)
     try:
         for tok in tokens:
@@ -413,7 +429,22 @@ def look_for_mismatched_brackets(source_lines, max_linenumber, offset):
                 and token.start_col >= offset
                 or token.start_line > max_linenumber
             ):
-                break
+                # We are beyond the location flagged by Python;
+                # Perhaps we are simply missing a comma between items.
+                # If so, we should be able to find a closing bracket.
+                if token.string in "([{":
+                    beyond_brackets.append(token.string)
+                elif token.string in ")]}":
+                    if len(beyond_brackets) % 2 == 0:
+                        end_bracket = token.string
+                        break
+                    else:
+                        end_bracket = None
+                        open_bracket = beyond_brackets.pop()
+                        if not matching_brackets(open_bracket, token.string):
+                            break
+                continue
+
             if token.string in "([{":
                 brackets.append((token.string, token.start_line))
             elif token.string in ")]}":
@@ -425,11 +456,7 @@ def look_for_mismatched_brackets(source_lines, max_linenumber, offset):
                     ).format(bracket=bracket, linenumber=token.start_line)
                 else:
                     open_bracket, open_lineno = brackets.pop()
-                    if (
-                        (open_bracket == "(" and token.string != ")")
-                        or (open_bracket == "[" and token.string != "]")
-                        or (open_bracket == "{" and token.string != "}")
-                    ):
+                    if not matching_brackets(open_bracket, token.string):
                         bracket = name_bracket(token.string)
                         open_bracket = name_bracket(open_bracket)
                         return _(
@@ -445,12 +472,39 @@ def look_for_mismatched_brackets(source_lines, max_linenumber, offset):
         pass
     if brackets:
         bracket, linenumber = brackets.pop()
+        if end_bracket is not None:
+            if matching_brackets(bracket, end_bracket):
+                if bracket == "(":
+                    return _(
+                        "You likely forgot a comma between items in a tuple, \n"
+                        "or between function arguments, \n"
+                        "before the position indicated by --> and ^.\n"
+                    )
+                elif bracket == "[":
+                    return _(
+                        "You likely forgot a comma between items in a list\n"
+                        "before the position indicated by --> and ^.\n"
+                    )
+                else:
+                    return _(
+                        "You likely forgot a comma between items in a set or dict.\n"
+                        "before the position indicated by --> and ^.\n"
+                    )
+
         bracket = name_bracket(bracket)
         return _("The opening {bracket} on line {linenumber} is not closed.\n").format(
             bracket=bracket, linenumber=linenumber
         )
     else:
         return False
+
+
+def matching_brackets(bra, ket):
+    return (
+        (bra == "(" and ket == ")")
+        or (bra == "[" and ket == "]")
+        or (bra == "{" and ket == "}")
+    )
 
 
 def name_bracket(bracket):
@@ -467,5 +521,5 @@ def name_bracket(bracket):
         return _("curly bracket '{'")
     elif bracket == "}":
         return _("curly bracket '}'")
-    else:
-        return f"'{bracket}'"  # Should never happen - help for diagnostic
+    else:  # Should never happen - help for diagnostic
+        return f"Problem in analyze_syntax.py: '{bracket}'"

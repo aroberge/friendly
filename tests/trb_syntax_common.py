@@ -42,6 +42,11 @@ all_imports = {
     "SyntaxError - break outside loop": "syntax.raise_syntax_error19",
     "SyntaxError - continue outside loop": "syntax.raise_syntax_error20",
     "SyntaxError - quote inside a string": "syntax.raise_syntax_error21",
+    "SyntaxError - missing comma in a dict": "syntax.raise_syntax_error22",
+    "SyntaxError - missing comma in a set": "syntax.raise_syntax_error23",
+    "SyntaxError - missing comma in a list": "syntax.raise_syntax_error24",
+    "SyntaxError - missing comma in a tuple": "syntax.raise_syntax_error25",
+    "SyntaxError - missing comma between function args": "syntax.raise_syntax_error26",
 }
 
 
