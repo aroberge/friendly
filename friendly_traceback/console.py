@@ -141,6 +141,7 @@ def start_console(local_vars=None):
         "set_lang": public_api.set_lang,
         "set_level": public_api.set_level,
     }
+    public_api.install()
 
     if local_vars is None:
         local_vars = console_defaults

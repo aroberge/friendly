@@ -86,6 +86,7 @@ class _State:
         self.context = 3
         self.write_err = _write_err
         self.except_hook = None
+        self.installed = False
         self.lang = _get_default_lang()
         self.install_gettext(self.lang)
         self.level = _get_level()
@@ -155,12 +156,18 @@ class _State:
         else:
             self.formatter = formatter
 
-    def install(self, lang=None, redirect=None, level=1):
+    def install(self, lang=None, redirect=None, level=1, hook=None):
         """Replaces sys.excepthook by friendly_traceback's own version."""
+        if self.installed:
+            return
+        self.installed = True
+
         if lang is not None:
             self.install_gettext(lang)
         self.set_redirect(redirect=redirect)
         self.set_level(level=level)
+        if hook is not None:
+            self.set_exception_hook(hook)
 
     def set_redirect(self, redirect=None):
         """Sets where the output is redirected."""

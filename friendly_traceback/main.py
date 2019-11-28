@@ -98,6 +98,8 @@ def main():
         print(f"Friendly-traceback version {version.__version__}")
         sys.exit()
 
+    public_api.install()
+
     if args.source is not None:
         if sys.flags.interactive:
             if args.import_only:

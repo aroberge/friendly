@@ -79,8 +79,11 @@ def install(lang=None, redirect=None, level=1):
                   The default is sys.stderr
 
         level: verbosity level.  See set_level() for details.
+
+        hook: exception_hook - if one wants to experiment using
+              a different one.
     """
-    session.install(lang=lang, redirect=redirect, level=level)
+    session.install(lang=lang, redirect=redirect, level=level, hook=core.exception_hook)
 
 
 @make_public
