@@ -21,7 +21,8 @@ def exclude_file_from_traceback(full_path):
 
 dirname = os.path.dirname(__file__)
 for file in os.listdir(os.path.dirname(__file__)):
-    exclude_file_from_traceback(os.path.join(dirname, file))
+    if file.endswith(".py"):
+        exclude_file_from_traceback(os.path.join(dirname, file))
 
 
 def is_excluded_file(full_path):
