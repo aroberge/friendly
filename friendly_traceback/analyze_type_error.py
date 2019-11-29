@@ -233,3 +233,40 @@ def does_not_support_item_asssignment(message):
         return cause
     else:
         return None
+
+
+@add_message_parser
+def incorrect_nb_positional_arguments(message):
+    _ = current_lang.translate
+    # example: my_function() takes 0 positional arguments but 1 was given
+    pattern = re.compile(r"(.*) takes (\d+) positional arguments but (\d+) was given")
+    match = re.search(pattern, message)
+
+    if match is not None:
+        cause = _(
+            "You apparently have called the function '{fn_name}' with\n"
+            "{nb_given} positional argument while it requires {nb_required}\n"
+            "such positional arguments.\n"
+        ).format(
+            fn_name=match.group(1), nb_given=match.group(3), nb_required=match.group(2)
+        )
+        return cause
+    else:
+        return None
+
+
+@add_message_parser
+def missing_positional_arguments(message):
+    _ = current_lang.translate
+    # example: my_function() missing 1 required positional argument
+    pattern = re.compile(r"(.*) missing (\d+) required positional argument")
+    match = re.search(pattern, message)
+
+    if match is not None:
+        cause = _(
+            "You apparently have called the function '{fn_name}' with\n"
+            "fewer positional arguments than it requires ({nb_required} missing).\n"
+        ).format(fn_name=match.group(1), nb_required=match.group(2))
+        return cause
+    else:
+        return None

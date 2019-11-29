@@ -90,6 +90,20 @@ def test_malformed_def():
     assert "tried to define a function or method" in last_line("def :")
 
 
+def test_missing_comma():
+    check = analyze_syntax.look_for_mismatched_brackets
+    assert "forgot a comma" in check(["a =[1, 2 3, 4]"], 1, 10)
+    assert "forgot a comma" in check(["a =(1, 2 3, 4)"], 1, 10)
+    assert "forgot a comma" in check(["def fn(a b):", "pass"], 1, 10)
+
+
+def test_mismatched_brackets():
+    check = analyze_syntax.look_for_mismatched_brackets
+    assert "The opening" in check(["a =[1, 2, 3, 4)"], 1, 10)
+    assert "The opening" in check(["a =(1, 2 "], 1, 8)
+    assert "The closing" in check(["a =1, 2)"], 1, 8)
+
+
 if __name__ == "__main__":
     test_assign_to_keyword()
     test_confused_elif()

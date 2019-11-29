@@ -313,5 +313,29 @@ def test_type_error12():
     return result
 
 
+def test_type_error13():
+    def fn(*, b=1):
+        pass
+    try:
+        fn(1)
+    except Exception:
+        friendly_traceback.explain(redirect="capture")
+        result = friendly_traceback.get_output()
+        assert "TypeError: fn() takes 0 positional arguments but 1 was given" in result
+        return result
+
+
+def test_type_error14():
+    def fn(a, b, c):
+        pass
+    try:
+        fn(1)
+    except Exception:
+        friendly_traceback.explain(redirect="capture")
+        result = friendly_traceback.get_output()
+        assert "TypeError: fn() missing 2 required positional argument" in result
+        return result
+
+
 if __name__ == "__main__":
     print(test_type_error1a())
