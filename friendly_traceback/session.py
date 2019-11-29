@@ -3,9 +3,6 @@
 Keeps tabs of all settings.
 """
 
-import configparser
-import locale
-import os
 import sys
 
 from .my_gettext import current_lang
@@ -15,64 +12,6 @@ from . import formatters
 def _write_err(text):
     """Default writer"""
     sys.stderr.write(text)
-
-
-def _get_default_lang():
-    """Determines the default language to be used for translations.
-
-    The default language to be used for translations is determined
-    in order of priority by:
-        1. The latest explicit call to Friendly-traceback, either as a flag
-           from the command line, or as an argument to a function or method.
-        2. The environment value set by the a user in a given console.
-           For windows, the value is set with ``set FriendlyLang=some_value``
-           and is stored in all uppercase
-        3. A value set in a .ini file in the user's home directory.
-        4. A value determined by the locale - e.g. default language for the OS
-    """
-    lang, _ignore = locale.getdefaultlocale()  # lowest priority
-
-    loc = os.path.join(os.path.expanduser("~"), "friendly.ini")
-    if os.path.isfile(loc):
-        config = configparser.ConfigParser()
-        config.read(loc)
-        if "friendly" in config:
-            if "lang" in config["friendly"]:
-                lang = config["friendly"]["lang"]
-
-    if "FRIENDLYLANG" in os.environ:
-        lang = os.environ["FRIENDLYLANG"]
-
-    return lang
-
-
-def _get_level():
-    """Determines the default verbosity level.
-
-    The verbosity level to be used by Friendly-traceback is determined
-    in order of priority by:
-        1. The latest **explicit** call to Friendly-traceback as a flag
-           from the command line, or by a call to the set_level() function.
-        2. The environment value set by the a user in a given console.
-           For windows, the value is set with ``set FriendlyLevel=some_value``
-           and is stored in all uppercase.
-        3. A value set in a .ini file in the user's home directory.
-        4. A default value of 1
-    """
-    level = 1
-
-    loc = os.path.join(os.path.expanduser("~"), "friendly.ini")
-    if os.path.isfile(loc):
-        config = configparser.ConfigParser()
-        config.read(loc)
-        if "friendly" in config:
-            if "level" in config["friendly"]:
-                level = config["friendly"]["level"]
-
-    if "FRIENDLYLEVEL" in os.environ:
-        level = os.environ["FRIENDLYLEVEL"]
-
-    return level
 
 
 class _State:
@@ -87,9 +26,9 @@ class _State:
         self.write_err = _write_err
         self.except_hook = None
         self.installed = False
-        self.lang = _get_default_lang()
+        self.lang = "en"
         self.install_gettext(self.lang)
-        self.level = _get_level()
+        self.level = 1
         self.set_level(self.level)
         self.running_script = False
         self.traceback_info = None
