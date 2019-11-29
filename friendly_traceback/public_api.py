@@ -15,7 +15,6 @@ instead of
 from functools import wraps
 
 from . import core
-from .my_gettext import current_lang
 from .session import session
 from .source_cache import cache, highlight_source
 from .path_info import (
@@ -87,30 +86,12 @@ def install(lang=None, redirect=None, level=1):
 
 
 @make_public
-def check_syntax(*, source=None, filename="Fake filename", path=None, level=1):
-    _ = current_lang.translate
-
-    if path is not None:
-        try:
-            with open(path, encoding="utf8") as f:
-                source = f.read()
-                filename = path
-        except Exception:
-            set_level(level)
-            explain()
-            set_level(0)
-            return
-
-    cache.add(filename, source)
-    try:
-        compile(source, filename, "exec")
-    except Exception:
-        set_level(level)
-        explain()
-        set_level(0)
-        return
-
-    print(_("No syntax problem found!"))
+def check_syntax(
+    *, source=None, filename="Fake filename", path=None, level=None, lang=None
+):
+    core.check_syntax(
+        source=source, filename=filename, path=path, level=level, lang=lang
+    )
 
 
 @make_public

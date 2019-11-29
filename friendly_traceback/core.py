@@ -94,6 +94,65 @@ def exception_hook(etype, value, tb, redirect=None):
 session.set_exception_hook(exception_hook)
 
 
+def check_syntax(
+    *, source=None, filename="Fake filename", path=None, level=None, lang=None
+):
+    _ = current_lang.translate
+
+    saved_lang = None
+    if lang is not None:
+        saved_lang = session.get_lang()
+        if saved_lang != lang:
+            session.set_lang(lang)
+        else:
+            saved_lang = None
+
+    if session.installed:
+        saved_level = session.get_level()
+    else:
+        saved_level = 0  # normal Python traceback
+
+    if path is not None:
+        try:
+            with open(path, encoding="utf8") as f:
+                source = f.read()
+                filename = path
+        except Exception:
+            # Do not show the Python traceback which would include
+            #  the call to open() in the traceback
+            if level is None:
+                session.set_level(5)
+            else:
+                session.set_level(level)
+            explain_traceback()
+            session.set_level(saved_level)
+            return
+        finally:
+            _reset_lang(saved_lang)
+
+    cache.add(filename, source)
+    try:
+        compile(source, filename, "exec")
+    except Exception:
+        if level is None:
+            session.set_level(1)  # our default
+        else:
+            session.set_level(level)
+        explain_traceback()
+        session.set_level(saved_level)
+        return
+    finally:
+        _reset_lang(saved_lang)
+
+    print(_("No syntax problem found!"))
+    _reset_lang(saved_lang)
+
+
+def _reset_lang(saved_lang):
+    if saved_lang is not None:
+        session.set_lang(saved_lang)
+
+
 # ====================
 # The following is an example of a formatted traceback, with each
 # part identified by a number enclosed by brackets
