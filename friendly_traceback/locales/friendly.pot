@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-11-27 09:55-0400\n"
+"POT-Creation-Date: 2019-11-29 15:55-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: analyze_syntax.py:68
+#: analyze_syntax.py:76
 msgid ""
 "Currently, we cannot guess the likely cause of this error.\n"
 "Try to examine closely the line indicated as well as the line\n"
@@ -27,27 +27,27 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:117
+#: analyze_syntax.py:125
 msgid ""
 "{keyword} is a constant in Python; you cannot assign it a value.\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:121 analyze_syntax.py:272
+#: analyze_syntax.py:129 analyze_syntax.py:280
 msgid ""
 "You were trying to assign a value to the Python keyword '{keyword}'.\n"
 "This is not allowed.\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:141
+#: analyze_syntax.py:149
 msgid ""
 " Perhaps you meant to write:\n"
 "    {name} = {literal}\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:151
+#: analyze_syntax.py:159
 msgid ""
 "You wrote an expression like\n"
 "    {literal} = {name}\n"
@@ -56,28 +56,28 @@ msgid ""
 "and not the name of a variable."
 msgstr ""
 
-#: analyze_syntax.py:166
+#: analyze_syntax.py:174
 msgid ""
 "The Python keyword 'break' can only be used inside a for loop or inside a while loop.\n"
 msgstr ""
 
-#: analyze_syntax.py:176
+#: analyze_syntax.py:184
 msgid ""
 "The Python keyword 'continue' can only be used inside a for loop or inside a while loop.\n"
 msgstr ""
 
-#: analyze_syntax.py:186
+#: analyze_syntax.py:194
 msgid ""
 "You starting writing a string with a single or double quote\n"
 "but never ended the string with another quote on that line.\n"
 msgstr ""
 
-#: analyze_syntax.py:204 analyze_syntax.py:445
+#: analyze_syntax.py:212 analyze_syntax.py:453
 msgid ""
 "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 
-#: analyze_syntax.py:217
+#: analyze_syntax.py:225
 msgid ""
 "Perhaps you need to type print({message})?\n"
 "\n"
@@ -85,14 +85,14 @@ msgid ""
 "Now, 'print' is a function; you need to use parentheses to call it.\n"
 msgstr ""
 
-#: analyze_syntax.py:288
+#: analyze_syntax.py:296
 msgid ""
 "You meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:307
+#: analyze_syntax.py:315
 msgid ""
 "You wrote something like\n"
 "    import {function} from {module}\n"
@@ -101,7 +101,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:330
+#: analyze_syntax.py:338
 msgid ""
 "There appears to be a Python identifier (variable name)\n"
 "immediately following a string.\n"
@@ -109,36 +109,36 @@ msgid ""
 "that was enclosed in quotes of the same kind.\n"
 msgstr ""
 
-#: analyze_syntax.py:350
+#: analyze_syntax.py:358
 msgid "a class"
 msgstr ""
 
-#: analyze_syntax.py:351
+#: analyze_syntax.py:359
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:357
+#: analyze_syntax.py:365
 msgid ""
 "You wrote a '{for_while}' loop but\n"
 "forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:363
+#: analyze_syntax.py:371
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:384
+#: analyze_syntax.py:392
 msgid "a function or method"
 msgstr ""
 
-#: analyze_syntax.py:385
+#: analyze_syntax.py:393
 msgid ""
 "You tried to define {class_or_function}\n"
 "and did not use the correct syntax.\n"
@@ -146,61 +146,61 @@ msgid ""
 "    def name ( optional_arguments ):\n"
 msgstr ""
 
-#: analyze_syntax.py:394
+#: analyze_syntax.py:402
 msgid ""
 "You tried to use the Python keyword '{kwd}' as a function name.\n"
 msgstr ""
 
-#: analyze_syntax.py:454
+#: analyze_syntax.py:462
 msgid ""
 "The closing {bracket} on line {close_lineno} does not match the opening {open_bracket} on line {open_lineno}.\n"
 msgstr ""
 
-#: analyze_syntax.py:470
+#: analyze_syntax.py:478
 msgid ""
 "You likely forgot a comma between items in a tuple, \n"
 "or between function arguments, \n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: analyze_syntax.py:476
+#: analyze_syntax.py:484
 msgid ""
 "You likely forgot a comma between items in a list\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: analyze_syntax.py:481
+#: analyze_syntax.py:489
 msgid ""
 "You likely forgot a comma between items in a set or dict.\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: analyze_syntax.py:487
+#: analyze_syntax.py:495
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 
-#: analyze_syntax.py:505
+#: analyze_syntax.py:513
 msgid "parenthesis '('"
 msgstr ""
 
-#: analyze_syntax.py:507
+#: analyze_syntax.py:515
 msgid "parenthesis ')'"
 msgstr ""
 
-#: analyze_syntax.py:509
+#: analyze_syntax.py:517
 msgid "square bracket '['"
 msgstr ""
 
-#: analyze_syntax.py:511
+#: analyze_syntax.py:519
 msgid "square bracket ']'"
 msgstr ""
 
-#: analyze_syntax.py:513
+#: analyze_syntax.py:521
 msgid "curly bracket '{'"
 msgstr ""
 
-#: analyze_syntax.py:515
+#: analyze_syntax.py:523
 msgid "curly bracket '}'"
 msgstr ""
 
@@ -328,7 +328,24 @@ msgid ""
 "most likely by using an indexing operation.\n"
 msgstr ""
 
-#: core.py:188
+#: analyze_type_error.py:246
+msgid ""
+"You apparently have called the function '{fn_name}' with\n"
+"{nb_given} positional argument while it requires {nb_required}\n"
+"such positional arguments.\n"
+msgstr ""
+
+#: analyze_type_error.py:266
+msgid ""
+"You apparently have called the function '{fn_name}' with\n"
+"fewer positional arguments than it requires ({nb_required} missing).\n"
+msgstr ""
+
+#: core.py:147
+msgid "No syntax problem found!"
+msgstr ""
+
+#: core.py:247
 msgid ""
 "        I suspect that you are using a regular\n"
 "        Python console after importing\n"
@@ -336,56 +353,56 @@ msgid ""
 "        Unfortunately, no further processing can be done.\n"
 msgstr ""
 
-#: core.py:219
+#: core.py:278
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
 "Are you using a regular Python console instead of a Friendly-console?\n"
 msgstr ""
 
-#: core.py:231
+#: core.py:290
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
 msgstr ""
 
-#: core.py:277
+#: core.py:336
 msgid ""
 "Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: core.py:369
+#: core.py:428
 msgid "My best guess:"
 msgstr ""
 
-#: core.py:371
+#: core.py:430
 msgid "Likely cause:"
 msgstr ""
 
-#: core.py:413
+#: core.py:472
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
 "        regular Python console.\n"
 msgstr ""
 
-#: core.py:419
+#: core.py:478
 msgid ""
 "Problem: source of '{filename}' is not available\n"
 msgstr ""
 
-#: core.py:433
+#: core.py:492
 msgid ""
 "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: core.py:447
+#: core.py:506
 msgid ""
 "Python could not parse the file '{filename}'\n"
 "beyond the location indicated below by --> and ^.\n"
 msgstr ""
 
-#: core.py:532
+#: core.py:591
 msgid "Python exception:"
 msgstr ""
 
@@ -399,18 +416,25 @@ msgstr ""
 
 #: info_generic.py:38
 msgid ""
+"A FileNotFoundError exception indicates that you\n"
+"are trying to open a file that cannot be found by Python.\n"
+"This could be because you misspelled the name of the file.\n"
+msgstr ""
+
+#: info_generic.py:48
+msgid ""
 "This exception indicates that a certain object could not\n"
 "be imported from a module or package. Most often, this is\n"
 "because the name of the object is not spelled correctly.\n"
 msgstr ""
 
-#: info_generic.py:48
+#: info_generic.py:58
 msgid ""
 "An IndentationError occurs when a given line of code is\n"
 "not indented (aligned vertically with other lines) as expected.\n"
 msgstr ""
 
-#: info_generic.py:57
+#: info_generic.py:67
 msgid ""
 "An IndexError occurs when you are try to get an item from a list,\n"
 "a tuple, or a similar object (sequence), by using an index which\n"
@@ -419,20 +443,20 @@ msgid ""
 "Reminder: the first item of a sequence is at index 0.\n"
 msgstr ""
 
-#: info_generic.py:69
+#: info_generic.py:79
 msgid ""
 "A KeyError is raised when a value is not found as a\n"
 "key in a Python dict.\n"
 msgstr ""
 
-#: info_generic.py:78
+#: info_generic.py:88
 msgid ""
 "LookupError is the base class for the exceptions that are raised\n"
 "when a key or index used on a mapping or sequence is invalid.\n"
 "It can also be raised directly by codecs.lookup().\n"
 msgstr ""
 
-#: info_generic.py:88
+#: info_generic.py:98
 msgid ""
 "A ModuleNotFoundError exception indicates that you\n"
 "are trying to import a module that cannot be found by Python.\n"
@@ -440,7 +464,7 @@ msgid ""
 "or because it is not installed on your computer.\n"
 msgstr ""
 
-#: info_generic.py:99
+#: info_generic.py:109
 msgid ""
 "A NameError exception indicates that a variable or\n"
 "function name is not known to Python.\n"
@@ -449,18 +473,18 @@ msgid ""
 "before being defined or given a value.\n"
 msgstr ""
 
-#: info_generic.py:111
+#: info_generic.py:121
 msgid ""
 "An OverflowError is raised when the result of an arithmetic operation\n"
 "is too large to be handled by the computer's processor.\n"
 msgstr ""
 
-#: info_generic.py:120
+#: info_generic.py:130
 msgid ""
 "A SyntaxError occurs when Python cannot understand your code.\n"
 msgstr ""
 
-#: info_generic.py:126
+#: info_generic.py:136
 msgid ""
 "A TabError indicates that you have used both spaces\n"
 "and tab characters to indent your code.\n"
@@ -470,7 +494,7 @@ msgid ""
 "Python's recommendation is to always use spaces to indent your code.\n"
 msgstr ""
 
-#: info_generic.py:139
+#: info_generic.py:149
 msgid ""
 "A TypeError is usually caused by trying\n"
 "to combine two incompatible types of objects,\n"
@@ -478,13 +502,13 @@ msgid ""
 "or by tring to do an operation not allowed on a given type of object.\n"
 msgstr ""
 
-#: info_generic.py:150
+#: info_generic.py:160
 msgid ""
 "A ValueError indicates that a function or an operation\n"
 "received an argument of the right type, but an inappropriate value.\n"
 msgstr ""
 
-#: info_generic.py:159
+#: info_generic.py:169
 msgid ""
 "In Python, variables that are used inside a function are known as \n"
 "local variables. Before they are used, they must be assigned a value.\n"
@@ -496,14 +520,14 @@ msgid ""
 "an UnboundLocalError.\n"
 msgstr ""
 
-#: info_generic.py:174
+#: info_generic.py:184
 msgid ""
 "No information is known about this exception.\n"
 "Please report this example to\n"
 "https://github.com/aroberge/friendly-traceback/issues\n"
 msgstr ""
 
-#: info_generic.py:184
+#: info_generic.py:194
 msgid ""
 "A ZeroDivisionError occurs when you are attempting to divide\n"
 "a value by zero:\n"
@@ -513,66 +537,72 @@ msgid ""
 "    result = my_variable % 0\n"
 msgstr ""
 
-#: info_specific.py:41
+#: info_specific.py:36
+msgid ""
+"In your program, the name of the\n"
+"file that cannot be found is '{filename}'.\n"
+msgstr ""
+
+#: info_specific.py:55
 msgid ""
 "The object that could not be imported is '{name}'.\n"
 "The module or package where it was \n"
 "expected to be found is '{module}'.\n"
 msgstr ""
 
-#: info_specific.py:47
+#: info_specific.py:61
 msgid ""
 "The object that could not be imported is '{name}'.\n"
 msgstr ""
 
-#: info_specific.py:58
+#: info_specific.py:72
 msgid ""
 "In this case, the line identified above\n"
 "is more indented than expected and \n"
 "does not match the indentation of the previous line.\n"
 msgstr ""
 
-#: info_specific.py:64
+#: info_specific.py:78
 msgid ""
 "In this case, the line identified above\n"
 "was expected to begin a new indented block.\n"
 msgstr ""
 
-#: info_specific.py:69
+#: info_specific.py:83
 msgid ""
 "In this case, the line identified above is\n"
 "less indented than the preceding one,\n"
 "and is not aligned vertically with another block of code.\n"
 msgstr ""
 
-#: info_specific.py:82
+#: info_specific.py:96
 msgid ""
 "In this case, the sequence is a list.\n"
 msgstr ""
 
-#: info_specific.py:84
+#: info_specific.py:98
 msgid ""
 "In this case, the sequence is a tuple.\n"
 msgstr ""
 
-#: info_specific.py:98
+#: info_specific.py:112
 msgid ""
 "In your program, the name of the key\n"
 "that cannot be found is '{key_name}'.\n"
 msgstr ""
 
-#: info_specific.py:112
+#: info_specific.py:126
 msgid ""
 "In your program, the name of the\n"
 "module that cannot be found is '{mod_name}'.\n"
 msgstr ""
 
-#: info_specific.py:126
+#: info_specific.py:140
 msgid ""
 "In your program, the unknown name is '{var_name}'.\n"
 msgstr ""
 
-#: info_specific.py:154
+#: info_specific.py:168
 msgid ""
 "The variable that appears to cause the problem is '{var_name}'.\n"
 "Perhaps the statement\n"
@@ -580,7 +610,7 @@ msgid ""
 "should have been included as the first line inside your function.\n"
 msgstr ""
 
-#: session.py:144
+#: session.py:84
 msgid "Level {level} not available; using default."
 msgstr ""
 
