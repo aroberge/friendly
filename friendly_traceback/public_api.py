@@ -2,12 +2,12 @@
 
 With the exception of 1) this package version and 2) some Friendly-console
 related classes or functions, this module includes **all** the functions
-that are part of the public API and can be directly used, as in
+that are part of the public API and can be directly used, as in::
 
     import friendly_traceback
     friendly_traceback.some_function()
 
-instead of
+instead of::
 
     import friendly_traceback
     friendly_traceback.some_inner_module.some_function()
@@ -15,6 +15,8 @@ instead of
 from functools import wraps
 
 from . import core
+
+from .core import check_syntax
 from .session import session
 from .source_cache import cache, highlight_source
 from .path_info import (
@@ -25,6 +27,7 @@ from .path_info import (
 
 __all__ = [
     "cache",
+    "check_syntax",
     "highlight_source",
     "exclude_file_from_traceback",
     "is_excluded_file",
@@ -47,17 +50,19 @@ def make_public(f):
 def explain(redirect=None):
     """Replaces a standard traceback by a friendlier one, giving more
        information about a given exception than a standard traceback.
-       Note that this excludes SystemExit and KeyboardInterrupt which
-       are re-raised.
+       Note that this excludes ``SystemExit`` and ``KeyboardInterrupt``
+       which are re-raised.
 
-       By default, the output goes to sys.stderr or to some other stream
-       set to be the default by another API call.  However, if
+       By default, the output goes to ``sys.stderr`` or to some other stream
+       set to be the default by another API call. However, if::
+
           redirect = some_stream
+
        is specified, the output goes to that stream, but without changing
        the global settings.
 
-       If the string "capture" is given as the value for redirect, the
-       output is saved and can be later retrieved by get_output().
+       If the string ``"capture"`` is given as the value for ``redirect``, the
+       output is saved and can be later retrieved by ``get_output()``.
     """
     core.explain_traceback(redirect=redirect)
 
@@ -65,9 +70,9 @@ def explain(redirect=None):
 @make_public
 def install(lang=None, redirect=None, level=1):
     """
-    Replaces sys.excepthook by friendly_traceback's own version.
+    Replaces ``sys.excepthook`` by friendly_traceback's own version.
     Intercepts, and provides an explanation for all Python exceptions except
-    for SystemExist and KeyboardInterrupt.
+    for ``SystemExist`` and ``KeyboardInterrupt``.
 
     The optional arguments are:
 
@@ -82,16 +87,13 @@ def install(lang=None, redirect=None, level=1):
         hook: exception_hook - if one wants to experiment using
               a different one.
     """
-    session.install(lang=lang, redirect=redirect, level=level, hook=core.exception_hook)
+    session.install(lang=lang, redirect=redirect, level=level)
 
 
 @make_public
-def check_syntax(
-    *, source=None, filename="Fake filename", path=None, level=None, lang=None
-):
-    core.check_syntax(
-        source=source, filename=filename, path=path, level=level, lang=lang
-    )
+def uninstall():
+    """Resets sys.excepthook to Python's default"""
+    session.uninstall()
 
 
 @make_public
@@ -183,8 +185,8 @@ def get_level():
 def set_stream(stream):
     """Sets the stream to which the output should be directed.
 
-       If the string "capture" is given as argument, the
-       output is saved and can be later retrieved by get_output()."""
+       If the string ``"capture"`` is given as argument, the
+       output is saved and can be later retrieved by ``get_output()``."""
     session.set_redirect(redirect=stream)
 
 
@@ -196,21 +198,21 @@ def get_stream():
 
 @make_public
 def clear_traceback():
-    """Clears the existing traceback"""
+    """Clears the existing traceback."""
     session.clear_traceback()
 
 
 @make_public
 def copy_traceback_info(info):
-    """Copy the traceback info obtained from another source"""
+    """Copy the traceback info obtained from another source."""
     session.traceback_info = info
 
 
 @make_public
 def show_traceback_info_again():
-    """Shows the traceback info again, on the default stream
+    """Shows the traceback info again, on the default stream.
 
-    Intended to use with GUI based program, where the user changes
+    Primarily intended to use with GUI based program, where the user changes
     a verbosity level to view the traceback again.
     """
     session.show_traceback_info_again()

@@ -124,15 +124,16 @@ cache = Cache()
 
 def highlight_source(linenumber, index, lines, offset=None):
     """Extracts a few relevant lines from a file content given as a list
-       of lines, adding line number information and identifying
-       a particular line.
+        of lines, adding line number information and identifying
+        a particular line.
 
-       When dealing with a SyntaxError and subclasses, offset is an
-       integer normally used by Python to indicate the position of
-       the error, like:
+        When dealing with a ``SyntaxError`` or its subclasses, offset is an
+        integer normally used by Python to indicate the position of
+        the error with a ``^``, like::
 
-           if True
+            if True
                   ^
+
         which, in this case, points to a missing colon. We use the same
         representation in this case.
     """

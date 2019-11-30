@@ -43,6 +43,11 @@ A custom formatter which creates an html file from a given exception.
 
 Provides translation support for the demos
 
+## hello.py
+
+A simple file used in a few places in the documentation for
+friendly-traceback itself.
+
 ## `_gui.py`
 
 Various GUI elements that do not depend on either `demo_gettext.py` or

@@ -25,18 +25,27 @@ class _State:
         self.context = 3
         self.write_err = _write_err
         self.except_hook = None
+        self._default_except_hook = None
         self.installed = False
-        self.lang = "en"
-        self.install_gettext(self.lang)
-        self.level = 1
-        self.set_level(self.level)
         self.running_script = False
         self.traceback_info = None
+        self.set_defaults()
 
-    def set_exception_hook(self, hook):
+    def set_defaults(self):
+        """Sets some defaults for various values"""
+        self.level = self._default_level = 1
+        self.lang = "en"
+        self.install_gettext(self.lang)
+
+    def set_exception_hook(self, hook=None, _default=None):
         """Sets the custom exception hook to be used."""
-        self.except_hook = hook
-        self.set_level(self.level)
+        if _default is not None:  # sets by core.py
+            self._default_except_hook = _default
+            self.except_hook = _default
+        elif hook is not None:  # user defined
+            self.except_hook = hook
+        else:  # used to reset
+            self.except_hook = self._default_except_hook
 
     def clear_traceback(self):
         """Removes previous traceback_info"""
@@ -47,7 +56,8 @@ class _State:
            the default stream.
 
            This is intended to be used when a user changes the verbosity
-           level in a GUI.
+           level and wishes to see a traceback reexplained without having
+           to execute the code again.
         """
         if self.traceback_info is None:
             return
@@ -73,18 +83,23 @@ class _State:
     def set_level(self, level):
         """Sets the "verbosity level" and possibly resets sys.__excepthook__"""
         _ = current_lang.translate
-        if level == 0:
-            sys.excepthook = sys.__excepthook__
-            self.level = 0
+        if self.level == level:
             return
 
-        if abs(level) in formatters.choose_formatter:
+        if level == 0:
+            self.uninstall()
+            return
+
+        if (
+            self.formatter == formatters.format_traceback
+            and abs(level) in formatters.choose_formatter
+        ):
             self.level = level
         else:
-            print(_("Level {level} not available; using default.").format(level=level))
-        if self.except_hook is not None:
-            sys.excepthook = self.except_hook
-        self.level = level
+            self.write_err(
+                _("Level {level} not available; using default.").format(level=level)
+            )
+            self.level = self._default_level
 
     def set_formatter(self, formatter=None):
         """Sets the default formatter. If no argument is given, the default
@@ -95,18 +110,21 @@ class _State:
         else:
             self.formatter = formatter
 
-    def install(self, lang=None, redirect=None, level=1, hook=None):
+    def install(self, lang=None, redirect=None, level=1):
         """Replaces sys.excepthook by friendly_traceback's own version."""
-        if self.installed:
-            return
         self.installed = True
 
         if lang is not None:
             self.install_gettext(lang)
         self.set_redirect(redirect=redirect)
         self.set_level(level=level)
-        if hook is not None:
-            self.set_exception_hook(hook)
+        sys.excepthook = self.except_hook
+
+    def uninstall(self):
+        """Resets sys.excepthook to the Python default"""
+        self.installed = False
+        sys.excepthook = sys.__excepthook__
+        self.level = 0
 
     def set_redirect(self, redirect=None):
         """Sets where the output is redirected."""

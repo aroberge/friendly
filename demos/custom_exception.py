@@ -20,9 +20,7 @@ try:
         # Only required for exceptions that are translated like is
         # the case for this custom example
         lang = friendly_traceback.get_lang()
-        if lang != demo_lang.lang:
-            demo_lang.install(lang=lang)
-            print("Set lang to", lang)
+        demo_lang.install(lang=lang)
 
 
 except Exception:

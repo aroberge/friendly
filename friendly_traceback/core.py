@@ -91,21 +91,38 @@ def exception_hook(etype, value, tb, redirect=None):
         session.set_redirect(redirect=saved_current_redirect)
 
 
-session.set_exception_hook(exception_hook)
+session.set_exception_hook(_default=exception_hook)
 
 
 def check_syntax(
     *, source=None, filename="Fake filename", path=None, level=None, lang=None
 ):
+    """This uses Python's ``compile()`` builtin which does some analysis of
+       the its code argument and will raise an exception if it identifies
+       some syntax errors, but also some less common "overflow" and "value"
+       errors.
+
+       It can either be used on a file, using the ``path`` argument, or
+       on some code passed as a string, using the ``source`` argument.
+       For the latter case, one can also specify a corresponding ``filename``:
+       this could be useful if this function is invoked from a GUI-based
+       editor.
+
+       Note that the ``path`` argument, if provided, takes precedence
+       over the ``source`` argument.
+
+       Two additional named arguments, ``level`` and ``lang``, can be
+       provided to temporarily set the values to be used during this function
+       call. The original values are restored at the end.
+
+       If friendly-traceback exception hook has not been set up prior
+       to calling check_syntax, it will only be used for the duration
+       of this function call.
+
+    """
     _ = current_lang.translate
 
-    saved_lang = None
-    if lang is not None:
-        saved_lang = session.get_lang()
-        if saved_lang != lang:
-            session.set_lang(lang)
-        else:
-            saved_lang = None
+    saved_lang = _temp_set_lang(lang)
 
     if session.installed:
         saved_level = session.get_level()
@@ -125,10 +142,9 @@ def check_syntax(
             else:
                 session.set_level(level)
             explain_traceback()
-            session.set_level(saved_level)
             return
         finally:
-            _reset_lang(saved_lang)
+            _reset_check_syntax(saved_lang, saved_level)
 
     cache.add(filename, source)
     try:
@@ -139,16 +155,33 @@ def check_syntax(
         else:
             session.set_level(level)
         explain_traceback()
-        session.set_level(saved_level)
         return
     finally:
-        _reset_lang(saved_lang)
+        _reset_check_syntax(saved_lang, saved_level)
 
     print(_("No syntax problem found!"))
-    _reset_lang(saved_lang)
 
 
-def _reset_lang(saved_lang):
+def _temp_set_lang(lang):
+    """If lang is not none, temporarily set session.lang to the provided
+       value. Keep track of the original lang setting and return it.
+
+       A value of None for saved_lang indicates that no resetting will
+       be required.
+       """
+    saved_lang = None
+    if lang is not None:
+        saved_lang = session.get_lang()
+        if saved_lang != lang:
+            session.set_lang(lang)
+        else:
+            saved_lang = None
+    return saved_lang
+
+
+def _reset_check_syntax(saved_lang, saved_level):
+    """Resets both level and lang to their original values"""
+    session.set_level(saved_level)
     if saved_lang is not None:
         session.set_lang(saved_lang)
 
@@ -489,6 +522,7 @@ def get_partial_source(filename, linenumber, lines, index):
 
 def last_call_header(linenumber, filename):
     _ = current_lang.translate
+
     return _("Execution stopped on line {linenumber} of file '{filename}'.\n").format(
         linenumber=linenumber, filename=utils.shorten_path(filename)
     )
