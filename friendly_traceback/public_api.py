@@ -16,7 +16,7 @@ from functools import wraps
 
 from . import core
 
-from .core import check_syntax
+from .core import check_syntax, run_code
 from .session import session
 from .source_cache import cache, highlight_source
 from .path_info import (
@@ -28,6 +28,7 @@ from .path_info import (
 __all__ = [
     "cache",
     "check_syntax",
+    "run_code",
     "highlight_source",
     "exclude_file_from_traceback",
     "is_excluded_file",
@@ -154,7 +155,7 @@ def get_lang():
 
 @make_public
 def set_level(level):
-    """Sets the verbosity level to be used. The values are as follows:
+    """Sets the verbosity level to be used. The values are as follows::
 
             0: Normal Python tracebacks
             1: Default - does not need to be specified

@@ -119,6 +119,9 @@ def check_syntax(
        to calling check_syntax, it will only be used for the duration
        of this function call.
 
+       Returns a tuple containing a code object and a filename if no exception
+       has been raised, False otherwise.
+
     """
     _ = current_lang.translate
 
@@ -142,24 +145,78 @@ def check_syntax(
             else:
                 session.set_level(level)
             explain_traceback()
-            return
+            return False
         finally:
-            _reset_check_syntax(saved_lang, saved_level)
+            _reset(saved_lang, saved_level)
 
     cache.add(filename, source)
     try:
-        compile(source, filename, "exec")
+        code = compile(source, filename, "exec")
     except Exception:
         if level is None:
             session.set_level(1)  # our default
         else:
             session.set_level(level)
         explain_traceback()
-        return
+        return False
     finally:
-        _reset_check_syntax(saved_lang, saved_level)
+        _reset(saved_lang, saved_level)
 
-    print(_("No syntax problem found!"))
+    return code, filename
+
+
+def run_code(
+    *, source=None, filename="Fake filename", path=None, level=None, lang=None
+):
+    """This uses check_syntax to see if the code is valid and, if so,
+       executes it into an empty dict as globals. If no exception is
+       raised, this dict is returned. If an exception is raised, False
+       is returned.
+
+       It can either be used on a file, using the ``path`` argument, or
+       on some code passed as a string, using the ``source`` argument.
+       For the latter case, one can also specify a corresponding ``filename``:
+       this could be useful if this function is invoked from a GUI-based
+       editor.
+
+       Note that the ``path`` argument, if provided, takes precedence
+       over the ``source`` argument.
+
+       Two additional named arguments, ``level`` and ``lang``, can be
+       provided to temporarily set the values to be used during this function
+       call. The original values are restored at the end.
+
+       If friendly-traceback exception hook has not been set up prior
+       to calling check_syntax, it will only be used for the duration
+       of this function call.
+    """
+    result = check_syntax(
+        source=source, filename=filename, path=path, level=level, lang=lang
+    )
+    if not result:
+        return False
+
+    my_globals = {}
+    code = result[0]
+
+    saved_lang = _temp_set_lang(lang)
+    if session.installed:
+        saved_level = session.get_level()
+    else:
+        saved_level = 0  # normal Python traceback
+
+    try:
+        exec(code, my_globals)
+    except Exception:
+        if level is None:
+            session.set_level(1)  # our default
+        else:
+            session.set_level(level)
+        explain_traceback()
+        return False
+    finally:
+        _reset(saved_lang, saved_level)
+    return my_globals
 
 
 def _temp_set_lang(lang):
@@ -179,7 +236,7 @@ def _temp_set_lang(lang):
     return saved_lang
 
 
-def _reset_check_syntax(saved_lang, saved_level):
+def _reset(saved_lang, saved_level):
     """Resets both level and lang to their original values"""
     session.set_level(saved_level)
     if saved_lang is not None:
