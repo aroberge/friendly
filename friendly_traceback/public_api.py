@@ -162,9 +162,12 @@ def set_level(level):
             3: Python tracebacks appended at the end of the friendly display.
             4: Python traceback followed by basic explanation
             5: Only basic explanation
+            6: No generic explanation
+            7: Python tracebacks appear before the friendly display but
+               no generic explanation is included.
             9: Python traceback
 
-        The Python traceback for level >= 1 are the simulated version.
+        The Python tracebacks for level >= 1 are the simulated version.
         You can use negative values to show the true Python traceback which
         will likely include function calls from friendly-traceback itself.
         Thus level -9 is equivalent to level 0.
