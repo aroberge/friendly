@@ -476,18 +476,21 @@ def look_for_mismatched_brackets(source_lines, max_linenumber, offset):
             if matching_brackets(bracket, end_bracket):
                 if bracket == "(":
                     return _(
-                        "You likely forgot a comma between items in a tuple, \n"
+                        "It is possible that you "
+                        "forgot a comma between items in a tuple, \n"
                         "or between function arguments, \n"
                         "before the position indicated by --> and ^.\n"
                     )
                 elif bracket == "[":
                     return _(
-                        "You likely forgot a comma between items in a list\n"
+                        "It is possible that you "
+                        "forgot a comma between items in a list\n"
                         "before the position indicated by --> and ^.\n"
                     )
                 else:
                     return _(
-                        "You likely forgot a comma between items in a set or dict.\n"
+                        "It is possible that you "
+                        "forgot a comma between items in a set or dict.\n"
                         "before the position indicated by --> and ^.\n"
                     )
 

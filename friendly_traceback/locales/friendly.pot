@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-11-29 15:55-0400\n"
+"POT-Creation-Date: 2019-11-30 08:36-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -158,49 +158,49 @@ msgstr ""
 
 #: analyze_syntax.py:478
 msgid ""
-"You likely forgot a comma between items in a tuple, \n"
+"It is possible that you forgot a comma between items in a tuple, \n"
 "or between function arguments, \n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: analyze_syntax.py:484
+#: analyze_syntax.py:485
 msgid ""
-"You likely forgot a comma between items in a list\n"
+"It is possible that you forgot a comma between items in a list\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: analyze_syntax.py:489
+#: analyze_syntax.py:491
 msgid ""
-"You likely forgot a comma between items in a set or dict.\n"
+"It is possible that you forgot a comma between items in a set or dict.\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: analyze_syntax.py:495
+#: analyze_syntax.py:498
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 
-#: analyze_syntax.py:513
+#: analyze_syntax.py:516
 msgid "parenthesis '('"
 msgstr ""
 
-#: analyze_syntax.py:515
+#: analyze_syntax.py:518
 msgid "parenthesis ')'"
 msgstr ""
 
-#: analyze_syntax.py:517
+#: analyze_syntax.py:520
 msgid "square bracket '['"
 msgstr ""
 
-#: analyze_syntax.py:519
+#: analyze_syntax.py:522
 msgid "square bracket ']'"
 msgstr ""
 
-#: analyze_syntax.py:521
+#: analyze_syntax.py:524
 msgid "curly bracket '{'"
 msgstr ""
 
-#: analyze_syntax.py:523
+#: analyze_syntax.py:526
 msgid "curly bracket '}'"
 msgstr ""
 
@@ -341,11 +341,11 @@ msgid ""
 "fewer positional arguments than it requires ({nb_required} missing).\n"
 msgstr ""
 
-#: core.py:147
+#: core.py:162
 msgid "No syntax problem found!"
 msgstr ""
 
-#: core.py:247
+#: core.py:280
 msgid ""
 "        I suspect that you are using a regular\n"
 "        Python console after importing\n"
@@ -353,56 +353,56 @@ msgid ""
 "        Unfortunately, no further processing can be done.\n"
 msgstr ""
 
-#: core.py:278
+#: core.py:311
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
 "Are you using a regular Python console instead of a Friendly-console?\n"
 msgstr ""
 
-#: core.py:290
+#: core.py:323
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
 msgstr ""
 
-#: core.py:336
+#: core.py:369
 msgid ""
 "Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: core.py:428
+#: core.py:461
 msgid "My best guess:"
 msgstr ""
 
-#: core.py:430
+#: core.py:463
 msgid "Likely cause:"
 msgstr ""
 
-#: core.py:472
+#: core.py:505
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
 "        regular Python console.\n"
 msgstr ""
 
-#: core.py:478
+#: core.py:511
 msgid ""
 "Problem: source of '{filename}' is not available\n"
 msgstr ""
 
-#: core.py:492
+#: core.py:526
 msgid ""
 "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: core.py:506
+#: core.py:540
 msgid ""
 "Python could not parse the file '{filename}'\n"
 "beyond the location indicated below by --> and ^.\n"
 msgstr ""
 
-#: core.py:591
+#: core.py:625
 msgid "Python exception:"
 msgstr ""
 
@@ -610,7 +610,7 @@ msgid ""
 "should have been included as the first line inside your function.\n"
 msgstr ""
 
-#: session.py:84
+#: session.py:103
 msgid "Level {level} not available; using default."
 msgstr ""
 

@@ -32,11 +32,11 @@ causes = {
     19: "The Python keyword 'break' can only be used",
     20: "The Python keyword 'continue' can only be used",
     21: "quote inside a string",
-    22: "likely forgot a comma",
-    23: "likely forgot a comma",
-    24: "likely forgot a comma",
-    25: "likely forgot a comma",
-    26: "likely forgot a comma",
+    22: "forgot a comma",
+    23: "forgot a comma",
+    24: "forgot a comma",
+    25: "forgot a comma",
+    26: "forgot a comma",
 }
 
 
