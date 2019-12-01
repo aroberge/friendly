@@ -125,12 +125,13 @@ def check_syntax(
     """
     _ = current_lang.translate
 
-    saved_lang = _temp_set_lang(lang)
+    saved_except_hook, saved_lang, saved_level = _save_settings()
+    # saved_lang = _temp_set_lang(lang)
 
-    if session.installed:
-        saved_level = session.level
-    else:
-        saved_level = 0  # normal Python traceback
+    # if session.installed:
+    #     saved_level = session.level
+    # else:
+    #     saved_level = 0  # normal Python traceback
 
     if path is not None:
         try:
@@ -147,7 +148,7 @@ def check_syntax(
             explain_traceback()
             return False
         finally:
-            _reset(saved_lang, saved_level)
+            _reset(saved_except_hook, saved_lang, saved_level)
 
     cache.add(filename, source)
     try:
@@ -160,7 +161,7 @@ def check_syntax(
         explain_traceback()
         return False
     finally:
-        _reset(saved_lang, saved_level)
+        _reset(saved_except_hook, saved_lang, saved_level)
 
     return code, filename
 
@@ -196,14 +197,10 @@ def run_code(
     if not result:
         return False
 
+    saved_except_hook, saved_lang, saved_level = _save_settings()
+
     my_globals = {}
     code = result[0]
-
-    saved_lang = _temp_set_lang(lang)
-    if session.installed:
-        saved_level = session.level
-    else:
-        saved_level = 0  # normal Python traceback
 
     try:
         exec(code, my_globals)
@@ -215,7 +212,8 @@ def run_code(
         explain_traceback()
         return False
     finally:
-        _reset(saved_lang, saved_level)
+        _reset(saved_except_hook, saved_lang, saved_level)
+
     return my_globals
 
 
@@ -236,11 +234,22 @@ def _temp_set_lang(lang):
     return saved_lang
 
 
-def _reset(saved_lang, saved_level):
+def _save_settings():
+    current_except_hook = sys.excepthook
+    current_lang = session.lang
+    current_level = session.level
+
+    return current_except_hook, current_lang, current_level
+
+
+def _reset(saved_except_hook, saved_lang, saved_level):
     """Resets both level and lang to their original values"""
-    session.set_level(saved_level)
     if saved_lang is not None:
-        session.set_lang(saved_lang)
+        session.install_gettext(saved_lang)
+    session.set_level(saved_level)
+    # set_level(0) restores sys.excepthook to sys.__excepthook__
+    # which might not be what is wanted. So, we reset sys.excepthook last
+    sys.excepthook = saved_except_hook
 
 
 # ====================
