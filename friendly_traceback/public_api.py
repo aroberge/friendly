@@ -98,6 +98,12 @@ def uninstall():
 
 
 @make_public
+def is_installed():
+    """Returns True if Friendly-traceback is installed, False otherwise"""
+    return session.installed
+
+
+@make_public
 def get_output(flush=True):
     """Returns the result of captured output as a string which can be
        written anywhere desired.

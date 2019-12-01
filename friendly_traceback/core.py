@@ -128,7 +128,7 @@ def check_syntax(
     saved_lang = _temp_set_lang(lang)
 
     if session.installed:
-        saved_level = session.get_level()
+        saved_level = session.level
     else:
         saved_level = 0  # normal Python traceback
 
@@ -201,7 +201,7 @@ def run_code(
 
     saved_lang = _temp_set_lang(lang)
     if session.installed:
-        saved_level = session.get_level()
+        saved_level = session.level
     else:
         saved_level = 0  # normal Python traceback
 
