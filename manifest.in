@@ -1,0 +1,2 @@
+recursive-include friendly_traceback/locales *.*
+

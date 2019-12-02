@@ -27,7 +27,7 @@ setup(
     author="André Roberge",
     author_email="Andre.Roberge@gmail.com",
     packages=find_packages(exclude=["dist", "build", "tools", "tests", "demos"]),
-    package_data={"gettext": ["friendly_traceback/locales/*"]},
+    package_data={"": ["friendly_traceback/locales/*"]},
     include_package_data=True,
     zip_safe=False,
 )
