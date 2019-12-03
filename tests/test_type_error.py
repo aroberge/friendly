@@ -337,5 +337,25 @@ def test_type_error14():
         return result
 
 
+def test_type_error15():
+    try:
+        _ = (1, 2)(3, 4)
+    except Exception:
+        friendly_traceback.explain(redirect="capture")
+        result = friendly_traceback.get_output()
+        assert "TypeError: 'tuple' object is not callable" in result
+        return result
+
+
+def test_type_error15a():
+    try:
+        _ = [1, 2](3, 4)
+    except Exception:
+        friendly_traceback.explain(redirect="capture")
+        result = friendly_traceback.get_output()
+        assert "TypeError: 'list' object is not callable" in result
+        return result
+
+
 if __name__ == "__main__":
     print(test_type_error1a())

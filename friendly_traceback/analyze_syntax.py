@@ -109,7 +109,7 @@ def assign_to_keyword(message=None, line=None, **kwargs):
         or message == "cannot assign to False"  # Python 3.8
         or message == "cannot assign to __debug__"  # Python 3.8
     ):
-        return None
+        return
 
     tokens = utils.collect_tokens(line)
     while True:
@@ -244,7 +244,7 @@ def unmatched_parenthesis(message=None, linenumber=None, **kwargs):
     elif message == "unmatched '}'":
         bracket = name_bracket("}")
     else:
-        return None
+        return
     return _(
         "The closing {bracket} on line {linenumber} does not match anything.\n"
     ).format(bracket=bracket, linenumber=linenumber)
@@ -290,7 +290,7 @@ def python2_print(message=None, **kwargs):
     if not message.startswith(
         "Missing parentheses in call to 'print'. Did you mean print("
     ):
-        return None
+        return
     message = message[59:-2]
     return _(
         "Perhaps you need to type print({message})?\n\n"
@@ -310,13 +310,13 @@ def analyze_last_line(line):
     tokens = utils.collect_tokens(line)  # tokens do not include spaces nor comments
 
     if not tokens:
-        return None
+        return
 
     for analyzer in LINE_ANALYZERS:
         cause = analyzer(tokens)
         if cause:
             return cause
-    return None
+    return
 
 
 def add_line_analyzer(func):
@@ -420,7 +420,7 @@ def missing_colon(tokens):
     _ = current_lang.translate
 
     if tokens[-1].string == ":":
-        return None
+        return
 
     name = tokens[0].string
 

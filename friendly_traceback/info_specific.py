@@ -175,4 +175,4 @@ def unbound_local_error(etype, value):
 
 @register("ZeroDivisionError")
 def zero_division_error(*args):
-    return None
+    return

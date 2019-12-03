@@ -196,7 +196,7 @@ def parse_order_comparison(message):
         )
         return cause
     else:
-        return None
+        return
 
 
 @add_message_parser
@@ -214,7 +214,7 @@ def bad_operand_type_for_unary(message):
         ).format(operator=match.group(1), obj=convert_type(match.group(2)))
         return cause
     else:
-        return None
+        return
 
 
 @add_message_parser
@@ -232,7 +232,7 @@ def does_not_support_item_asssignment(message):
         ).format(obj=convert_type(match.group(1)))
         return cause
     else:
-        return None
+        return
 
 
 @add_message_parser
@@ -252,7 +252,7 @@ def incorrect_nb_positional_arguments(message):
         )
         return cause
     else:
-        return None
+        return
 
 
 @add_message_parser
@@ -269,4 +269,20 @@ def missing_positional_arguments(message):
         ).format(fn_name=match.group(1), nb_required=match.group(2))
         return cause
     else:
-        return None
+        return
+
+
+@add_message_parser
+def x_is_not_callable(message):
+    _ = current_lang.translate
+    pattern = re.compile(r"'(.*)' object is not callable")
+    match = re.search(pattern, message)
+    if match is not None:
+        return _(
+            "I suspect that you had an object of this type, <{obj}>,\n"
+            "followed by what looked like a tuple, '(...)',\n"
+            "which Python took as an indication of a function call.\n"
+            "Perhaps you had a missing comma before the tuple.\n"
+        ).format(obj=convert_type(match.group(1)))
+    else:
+        return
