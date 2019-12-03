@@ -37,6 +37,7 @@ all_imports = {
     "SyntaxError - unclosed parenthesis": "syntax.raise_syntax_error15",
     "SyntaxError - unclosed parenthesis - 2": "syntax.raise_syntax_error15a",
     "SyntaxError - mismatched brackets": "syntax.raise_syntax_error16",
+    "SyntaxError - mismatched brackets - 2": "syntax.raise_syntax_error16a",
     "SyntaxError - print is a function": "syntax.raise_syntax_error17",
     "SyntaxError - Python keyword as function name": "syntax.raise_syntax_error18",
     "SyntaxError - break outside loop": "syntax.raise_syntax_error19",
@@ -52,6 +53,9 @@ all_imports = {
     "SyntaxError - used equal sign instead of colon": "syntax.raise_syntax_error29",
     "SyntaxError - non-default argument follows default argument": "syntax.raise_syntax_error30",
     "SyntaxError - positional argument follows keyword argument": "syntax.raise_syntax_error31",
+    "SyntaxError - f-string: unterminated string": "syntax.raise_syntax_error32",
+    "SyntaxError - unclosed bracket": "syntax.raise_syntax_error33",
+    "SyntaxError - unexpected EOF while parsing": "syntax.raise_syntax_error34",
 }
 
 

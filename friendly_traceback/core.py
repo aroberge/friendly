@@ -602,11 +602,20 @@ def process_parsing_error(etype, value, info):
     partial_source, _ignore = cache.get_formatted_partial_source(
         filepath, linenumber, offset
     )
-
-    info["parsing_error"] = _(
-        "Python could not parse the file '{filename}'\n"
-        "beyond the location indicated below by --> and ^.\n"
-    ).format(filename=utils.shorten_path(filepath))
+    if "-->" in partial_source:
+        info["parsing_error"] = _(
+            "Python could not parse the file '{filename}'\n"
+            "beyond the location indicated below by --> and ^.\n"
+        ).format(filename=utils.shorten_path(filepath))
+    elif "unexpected EOF while parsing" in repr(value):
+        info["parsing_error"] = _(
+            "Python could not parse the file '{filename}'.\n"
+            "It reached the end of the file and expected more content.\n"
+        ).format(filename=utils.shorten_path(filepath))
+    else:
+        info["parsing_error"] = _(
+            "Python could not parse the file '{filename}' for an unspecified reason.\n"
+        ).format(filename=utils.shorten_path(filepath))
 
     info["parsing_error_source"] = f"{partial_source}\n"
 

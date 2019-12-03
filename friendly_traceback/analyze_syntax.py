@@ -223,6 +223,17 @@ def eol_while_scanning_string_literal(message=None, **kwargs):
 
 
 @add_python_message
+def unterminated_f_string(message=None, **kwargs):
+    _ = current_lang.translate
+    if "f-string: unterminated string" in message:
+        return _(
+            "Inside an f-string, which is a string prefixed by the letter f, \n"
+            "you have another string, which starts with either a\n"
+            "single quote (') or double quote (\"), without a matching closing one.\n"
+        )
+
+
+@add_python_message
 def unmatched_parenthesis(message=None, linenumber=None, **kwargs):
     _ = current_lang.translate
     # Python 3.8
@@ -240,7 +251,7 @@ def unmatched_parenthesis(message=None, linenumber=None, **kwargs):
 
 
 @add_python_message
-def position_argument_follows_keyword_arg(message=None, linenumber=None, **kwargs):
+def position_argument_follows_keyword_arg(message=None, **kwargs):
     _ = current_lang.translate
     if "positional argument follows keyword argument" not in message:
         return
@@ -257,7 +268,7 @@ def position_argument_follows_keyword_arg(message=None, linenumber=None, **kwarg
 
 
 @add_python_message
-def non_default_arg_follows_default_arg(message=None, linenumber=None, **kwargs):
+def non_default_arg_follows_default_arg(message=None, **kwargs):
     _ = current_lang.translate
     if "non-default argument follows default argument" not in message:
         return
@@ -274,7 +285,7 @@ def non_default_arg_follows_default_arg(message=None, linenumber=None, **kwargs)
 
 
 @add_python_message
-def python2_print(message=None, linenumber=None, **kwargs):
+def python2_print(message=None, **kwargs):
     _ = current_lang.translate
     if not message.startswith(
         "Missing parentheses in call to 'print'. Did you mean print("
@@ -539,23 +550,37 @@ def look_for_missing_bracket(source_lines, max_linenumber, offset):
             elif token.string in ")]}":
                 if not brackets:
                     bracket = name_bracket(token.string)
-                    return _(
-                        "The closing {bracket} on line {linenumber}"
-                        " does not match anything.\n"
-                    ).format(bracket=bracket, linenumber=token.start_line)
+                    _lineno = token.start_line
+                    _source = f"\n    {_lineno}: {source_lines[_lineno-1]}\n\n"
+                    return (
+                        _(
+                            "The closing {bracket} on line {linenumber}"
+                            " does not match anything.\n"
+                        ).format(bracket=bracket, linenumber=token.start_line)
+                        + _source
+                    )
                 else:
                     open_bracket, open_lineno = brackets.pop()
                     if not matching_brackets(open_bracket, token.string):
                         bracket = name_bracket(token.string)
                         open_bracket = name_bracket(open_bracket)
-                        return _(
-                            "The closing {bracket} on line {close_lineno} does not match "
-                            "the opening {open_bracket} on line {open_lineno}.\n"
-                        ).format(
-                            bracket=bracket,
-                            close_lineno=token.start_line,
-                            open_bracket=open_bracket,
-                            open_lineno=open_lineno,
+                        _source = (
+                            f"\n    {open_lineno}: {source_lines[open_lineno-1]}\n"
+                        )
+                        if open_lineno != token.start_line:
+                            _lineno = token.start_line
+                            _source += f"\n    {_lineno}: {source_lines[_lineno-1]}\n"
+                        return (
+                            _(
+                                "The closing {bracket} on line {close_lineno} does not match "
+                                "the opening {open_bracket} on line {open_lineno}.\n"
+                            ).format(
+                                bracket=bracket,
+                                close_lineno=token.start_line,
+                                open_bracket=open_bracket,
+                                open_lineno=open_lineno,
+                            )
+                            + _source
                         )
     except tokenize.TokenError:
         pass
@@ -585,8 +610,12 @@ def look_for_missing_bracket(source_lines, max_linenumber, offset):
                     )
 
         bracket = name_bracket(bracket)
-        return _("The opening {bracket} on line {linenumber} is not closed.\n").format(
-            bracket=bracket, linenumber=linenumber
+        _source = f"\n    {linenumber}: {source_lines[linenumber-1]}\n\n"
+        return (
+            _("The opening {bracket} on line {linenumber} is not closed.\n").format(
+                bracket=bracket, linenumber=linenumber
+            )
+            + _source
         )
     else:
         return False

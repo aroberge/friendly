@@ -27,6 +27,7 @@ causes = {
     15: "The opening parenthesis '(' on line",
     '15a': "The opening parenthesis '(' on line",
     16: "The closing square bracket ']' on line",
+    '16a': "The closing square bracket ']' on line",
     17: "In older version of Python, 'print' was a keyword",
     18: "You tried to use the Python keyword",
     19: "The Python keyword 'break' can only be used",
@@ -42,6 +43,9 @@ causes = {
     29: "used an equal sign '=' instead of a colon ':'",
     30: "define functions with only positional arguments",
     31: "call functions with only positional arguments",
+    32: "a string prefixed by the letter f,",
+    33: "The opening square bracket '['",
+    34: "The opening square bracket '['"
 }
 
 
