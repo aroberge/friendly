@@ -91,17 +91,24 @@ def test_malformed_def():
 
 
 def test_missing_comma():
-    check = analyze_syntax.look_for_mismatched_brackets
+    check = analyze_syntax.look_for_missing_bracket
     assert "forgot a comma" in check(["a =[1, 2 3, 4]"], 1, 10)
     assert "forgot a comma" in check(["a =(1, 2 3, 4)"], 1, 10)
     assert "forgot a comma" in check(["def fn(a b):", "pass"], 1, 10)
 
 
 def test_mismatched_brackets():
-    check = analyze_syntax.look_for_mismatched_brackets
+    check = analyze_syntax.look_for_missing_bracket
     assert "The opening" in check(["a =[1, 2, 3, 4)"], 1, 10)
     assert "The opening" in check(["a =(1, 2 "], 1, 8)
     assert "The closing" in check(["a =1, 2)"], 1, 8)
+
+
+def test_equal_sign_instead_of_colon():
+    check = analyze_syntax.look_for_missing_bracket
+    assert "used an equal sign '=' instead of a colon ':'" in check(
+        ["a = {'a' = 1}"], 1, 10
+    )
 
 
 if __name__ == "__main__":

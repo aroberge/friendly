@@ -47,6 +47,11 @@ all_imports = {
     "SyntaxError - missing comma in a list": "syntax.raise_syntax_error24",
     "SyntaxError - missing comma in a tuple": "syntax.raise_syntax_error25",
     "SyntaxError - missing comma between function args": "syntax.raise_syntax_error26",
+    "SyntaxError - can't assign to function call - 1": "syntax.raise_syntax_error27",
+    "SyntaxError - can't assign to function call - 2": "syntax.raise_syntax_error28",
+    "SyntaxError - used equal sign instead of colon": "syntax.raise_syntax_error29",
+    "SyntaxError - non-default argument follows default argument": "syntax.raise_syntax_error30",
+    "SyntaxError - positional argument follows keyword argument": "syntax.raise_syntax_error31",
 }
 
 

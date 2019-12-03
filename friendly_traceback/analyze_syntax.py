@@ -65,9 +65,9 @@ def _find_likely_cause(source, linenumber, message, offset):
 
     # Failing that, we look for another type of common mistake. Note that
     # while we look for missing or mismatched brackets, such as (],
-    # we also can sometimes identify missing commas during this step.
+    # we also can sometimes identify other problems during this step.
 
-    cause = look_for_mismatched_brackets(source, linenumber, offset)
+    cause = look_for_missing_bracket(source, linenumber, offset)
     if cause:
         return cause
 
@@ -131,6 +131,31 @@ def assign_to_keyword(message=None, line=None, **kwargs):
             "This is not allowed.\n"
             "\n"
         ).format(keyword=word)
+
+
+@add_python_message
+def assign_to_function_call(message=None, line=None, **kwargs):
+    _ = current_lang.translate
+    if (
+        message == "can't assign to function call"  # Python 3.6, 3.7
+        or message == "cannot assign to function call"  # Python 3.8
+    ):
+        if line.count("=") > 1:
+            # we have something like  fn(a=1) = 2
+            # or fn(a) = 1 = 2, etc.  Since there could be too many
+            # combinations, we use some generic names
+            fn_call = _("my_function(...)")
+            value = _("some value")
+        else:
+            info = line.split("=")
+            fn_call = info[0].strip()
+            value = info[1].strip()
+        return _(
+            "You wrote an expression like\n"
+            "    {fn_call} = {value}\n"
+            "where {fn_call}, on the left hand-side of the equal sign, is\n"
+            "a function call and not the name of a variable."
+        ).format(fn_call=fn_call, value=value)
 
 
 @add_python_message
@@ -212,6 +237,40 @@ def unmatched_parenthesis(message=None, linenumber=None, **kwargs):
     return _(
         "The closing {bracket} on line {linenumber} does not match anything.\n"
     ).format(bracket=bracket, linenumber=linenumber)
+
+
+@add_python_message
+def position_argument_follows_keyword_arg(message=None, linenumber=None, **kwargs):
+    _ = current_lang.translate
+    if "positional argument follows keyword argument" not in message:
+        return
+    return _(
+        "In Python, you can call functions with only positional arguments\n\n"
+        "    test(1, 2, 3)\n\n"
+        "or only keyword arguments\n\n"
+        "    test(a=1, b=2, c=3)\n\n"
+        "or a combination of the two\n\n"
+        "    test(1, 2, c=3)\n\n"
+        "but with the keyword arguments appearing after all the positional ones.\n"
+        "According to Python, you used positional arguments after keyword ones.\n"
+    )
+
+
+@add_python_message
+def non_default_arg_follows_default_arg(message=None, linenumber=None, **kwargs):
+    _ = current_lang.translate
+    if "non-default argument follows default argument" not in message:
+        return
+    return _(
+        "In Python, you can define functions with only positional arguments\n\n"
+        "    def test(a, b, c): ...\n\n"
+        "or only keyword arguments\n\n"
+        "    def test(a=1, b=2, c=3): ...\n\n"
+        "or a combination of the two\n\n"
+        "    def test(a, b, c=3): ...\n\n"
+        "but with the keyword arguments appearing after all the positional ones.\n"
+        "According to Python, you used positional arguments after keyword ones.\n"
+    )
 
 
 @add_python_message
@@ -404,12 +463,26 @@ def malformed_def(tokens):
         ).format(kwd=fn_name)
 
 
-def look_for_mismatched_brackets(source_lines, max_linenumber, offset):
-    """We have a few cases to consider:
+def look_for_missing_bracket(source_lines, max_linenumber, offset):
+    """This function was initially looking for missing or mismatched brackets
+        but it has expanded to include other cases.  By brackets here, we mean
+        any one of: ()[]{}.
+
+        We have a few cases to consider:
 
         1. mismatched brackets
         2. missing closing bracket
         3. missing comma between items.
+        4. using = instead of : in a dict
+
+        The last two cases will often result in an error being flagged at
+        a given location such that the code up to that point would have
+        an unclosed bracket.  For example, case 4 could be:
+
+            ages = {'Alice' = 22, ...
+                            ^
+
+        and we would have an unclosed {.
     """
     _ = current_lang.translate
     source = "\n".join(source_lines)
@@ -417,12 +490,14 @@ def look_for_mismatched_brackets(source_lines, max_linenumber, offset):
     beyond_brackets = []
     end_bracket = None
     tokens = tokenize.generate_tokens(StringIO(source).readline)
+    token = None
+    last_token = None
     try:
         for tok in tokens:
+            if token is not None:
+                last_token = token.string
             token = utils.Token(tok)
             if not token.string:
-                continue
-            if token.string not in "()[]}{":
                 continue
             if (
                 token.start_line == max_linenumber
@@ -430,6 +505,17 @@ def look_for_mismatched_brackets(source_lines, max_linenumber, offset):
                 or token.start_line > max_linenumber
             ):
                 # We are beyond the location flagged by Python;
+                if last_token == "=" and brackets:
+                    _open_bracket, _start_line = brackets.pop()
+                    if _open_bracket == "{":
+                        return _(
+                            "It is possible that "
+                            "you used an equal sign '=' instead of a colon ':'\n"
+                            "to assign values to keys in a dict\n"
+                            "before or at the position indicated by --> and ^.\n"
+                        )
+                    else:
+                        brackets.append((_open_bracket, _start_line))
                 # Perhaps we are simply missing a comma between items.
                 # If so, we should be able to find a closing bracket.
                 if token.string in "([{":
@@ -445,6 +531,9 @@ def look_for_mismatched_brackets(source_lines, max_linenumber, offset):
                             break
                 continue
 
+            # We are not beyond the location flagged by Python
+            if token.string not in "()[]}{":
+                continue
             if token.string in "([{":
                 brackets.append((token.string, token.start_line))
             elif token.string in ")]}":
@@ -470,6 +559,7 @@ def look_for_mismatched_brackets(source_lines, max_linenumber, offset):
                         )
     except tokenize.TokenError:
         pass
+
     if brackets:
         bracket, linenumber = brackets.pop()
         if end_bracket is not None:
@@ -490,7 +580,7 @@ def look_for_mismatched_brackets(source_lines, max_linenumber, offset):
                 else:
                     return _(
                         "It is possible that you "
-                        "forgot a comma between items in a set or dict.\n"
+                        "forgot a comma between items in a set or dict\n"
                         "before the position indicated by --> and ^.\n"
                     )
 
