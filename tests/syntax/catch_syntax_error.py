@@ -38,14 +38,15 @@ causes = {
     24: "forgot a comma",
     25: "forgot a comma",
     26: "forgot a comma",
-    27: "function call and not the name of a variable",
+    27: "function call and is not simply the name of a variable",
     28: "function call and not the name of a variable",
     29: "used an equal sign '=' instead of a colon ':'",
     30: "define functions with only positional arguments",
     31: "call functions with only positional arguments",
     32: "a string prefixed by the letter f,",
     33: "The opening square bracket '['",
-    34: "The opening square bracket '['"
+    34: "The opening square bracket '['",
+    35: "is a variable defined outside a function.",
 }
 
 

@@ -55,13 +55,28 @@ def _find_likely_cause(source, linenumber, message, offset):
         if cause:
             return cause
 
+    if message == "invalid syntax":
+        notice = _(
+            "Important: Python did not give us much information regarding\n"
+            "the cause of the error. We make an effort below to guess what\n"
+            "went wrong, but we might guess incorrectly.\n\n"
+        )
+    else:
+        notice = _(
+            "Important: Python gave us the following informative message\n"
+            "about the possible cause of the error:\n\n"
+            "    {message}\n\n"
+            "However, we do not recognize this information and we have\n"
+            "to guess what went wrong, but we might guess incorrectly.\n\n"
+        ).format(message=message)
+
     # If not cause has been identified, we look at a single line
     # where the error has been found by Python, and try to find the source
     # of the error
 
     cause = analyze_last_line(line)
     if cause:
-        return cause
+        return notice + cause
 
     # Failing that, we look for another type of common mistake. Note that
     # while we look for missing or mismatched brackets, such as (],
@@ -69,10 +84,11 @@ def _find_likely_cause(source, linenumber, message, offset):
 
     cause = look_for_missing_bracket(source, linenumber, offset)
     if cause:
-        return cause
+        return notice + cause
 
     # Eventually, we might add another step that looks at the entire code
     # For now, we just stop here
+
     return _(
         "Currently, we cannot guess the likely cause of this error.\n"
         "Try to examine closely the line indicated as well as the line\n"
@@ -98,7 +114,7 @@ def add_python_message(func):
 
 
 @add_python_message
-def assign_to_keyword(message=None, line=None, **kwargs):
+def assign_to_keyword(message=None, line="", **kwargs):
     _ = current_lang.translate
     if not (
         message == "can't assign to keyword"  # Python 3.6, 3.7
@@ -134,7 +150,7 @@ def assign_to_keyword(message=None, line=None, **kwargs):
 
 
 @add_python_message
-def assign_to_function_call(message=None, line=None, **kwargs):
+def assign_to_function_call(message=None, line="", **kwargs):
     _ = current_lang.translate
     if (
         message == "can't assign to function call"  # Python 3.6, 3.7
@@ -146,20 +162,26 @@ def assign_to_function_call(message=None, line=None, **kwargs):
             # combinations, we use some generic names
             fn_call = _("my_function(...)")
             value = _("some value")
-        else:
-            info = line.split("=")
-            fn_call = info[0].strip()
-            value = info[1].strip()
+            return _(
+                "You wrote an expression like\n"
+                "    {fn_call} = {value}\n"
+                "where {fn_call}, on the left hand-side of the equal sign, is\n"
+                "a function call and not the name of a variable.\n"
+            ).format(fn_call=fn_call, value=value)
+
+        info = line.split("=")
+        fn_call = info[0].strip()
+        value = info[1].strip()
         return _(
-            "You wrote an expression like\n"
+            "You wrote the expression\n"
             "    {fn_call} = {value}\n"
-            "where {fn_call}, on the left hand-side of the equal sign, is\n"
-            "a function call and not the name of a variable."
+            "where {fn_call}, on the left hand-side of the equal sign, either is\n"
+            "or includes a function call and is not simply the name of a variable.\n"
         ).format(fn_call=fn_call, value=value)
 
 
 @add_python_message
-def assign_to_literal(message=None, line=None, **kwargs):
+def assign_to_literal(message=None, line="", **kwargs):
     _ = current_lang.translate
     if (
         message == "can't assign to literal"  # Python 3.6, 3.7
@@ -178,14 +200,14 @@ def assign_to_literal(message=None, line=None, **kwargs):
             ).format(literal=literal, name=name)
             # fmt: on
         else:
-            suggest = "\n\n"
+            suggest = "\n"
 
         return (
             _(
                 "You wrote an expression like\n"
                 "    {literal} = {name}\n"
                 "where <{literal}>, on the left hand-side of the equal sign, is\n"
-                "an actual number or string (what Python calls a 'literal'),\n"
+                "or includes an actual number or string (what Python calls a 'literal'),\n"
                 "and not the name of a variable."
             ).format(literal=literal, name=name)
             + suggest
@@ -231,6 +253,26 @@ def unterminated_f_string(message=None, **kwargs):
             "you have another string, which starts with either a\n"
             "single quote (') or double quote (\"), without a matching closing one.\n"
         )
+
+
+@add_python_message
+def name_is_parameter_and_global(message=None, line="", **kwargs):
+    # something like: name 'x' is parameter and global
+    _ = current_lang.translate
+    if "is parameter and global" in message:
+        name = message.split("'")[1]
+        if name in line and "global" in line:
+            newline = line
+        else:
+            newline = f"global {name}"
+        return _(
+            "You are including the statement\n\n"
+            "    {newline}\n\n"
+            "indicating that '{name}' is a variable defined outside a function.\n"
+            "You are also using the same '{name}' as an argument for that\n"
+            "function, thus indicating that it should be variable known only\n"
+            "inside that function, which is the contrary of what 'global' implied.\n"
+        ).format(newline=newline, name=name)
 
 
 @add_python_message

@@ -56,6 +56,7 @@ all_imports = {
     "SyntaxError - f-string: unterminated string": "syntax.raise_syntax_error32",
     "SyntaxError - unclosed bracket": "syntax.raise_syntax_error33",
     "SyntaxError - unexpected EOF while parsing": "syntax.raise_syntax_error34",
+    "SyntaxError - name is parameter and global": "syntax.raise_syntax_error35",
 }
 
 
