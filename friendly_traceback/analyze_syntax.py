@@ -6,6 +6,7 @@ cause of a SyntaxError and providing a somewhat detailed explanation.
 
 from keyword import kwlist
 from io import StringIO
+import sys
 import tokenize
 
 from .my_gettext import current_lang
@@ -376,6 +377,27 @@ def add_line_analyzer(func):
 # IMPORTANT: causes are looked at in the same order as they appear below.
 # Changing the order can yield incorrect results
 # ==================
+
+
+@add_line_analyzer
+def detect_walrus(tokens):
+    """Detecting if code uses named assignment operator := with an
+       older version of Python.
+    """
+    _ = current_lang.translate
+    if sys.version_info >= (3, 8):
+        return False
+
+    found_colon = False
+    for token in tokens:
+        if found_colon and token.string == "=":
+            return _(
+                "You appear to be using the operator :=, sometimes called\n"
+                "the walrus operator. This operator requires the use of\n"
+                "Python 3.8 or newer. You are using version {version}.\n"
+            ).format(version=sys.version_info)
+
+        found_colon = token.string == ":"
 
 
 @add_line_analyzer

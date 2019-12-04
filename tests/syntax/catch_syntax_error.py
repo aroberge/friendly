@@ -1,6 +1,4 @@
-# see https://github.com/python/cpython/blob/master/Lib/test/test_syntax.py
-# for a list of examples with specific messages that should be
-# included.
+import sys
 
 import friendly_traceback
 
@@ -48,6 +46,9 @@ causes = {
     34: "The opening square bracket '['",
     35: "is a variable defined outside a function.",
 }
+
+if sys.version_info < (3, 8):
+    causes["_walrus"] = "walrus operator"
 
 
 def test_syntax_errors():
