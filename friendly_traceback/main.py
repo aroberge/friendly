@@ -16,6 +16,7 @@ import textwrap
 from . import console
 from . import version
 from . import public_api
+from . import utils
 
 
 parser = argparse.ArgumentParser(
@@ -86,10 +87,19 @@ parser.add_argument(
     action="store_true",
 )
 
+parser.add_argument(
+    "--dev",
+    help="""Adds some extra functions in the console, useful for development.
+         """,
+    action="store_true",
+)
+
 
 def main():
     console_dict = {"set_lang": public_api.set_lang, "set_level": public_api.set_level}
     args = parser.parse_args()
+    if args.dev is not None:
+        console_dict["tokenize"] = utils._tokenize
     if args.lang is not None:
         public_api.set_lang(args.lang)
     if args.level is not None:
@@ -118,4 +128,4 @@ def main():
             public_api.exclude_file_from_traceback(runpy.__file__)
             runpy.run_path(args.source, run_name="__main__")
     else:
-        console.start_console()
+        console.start_console(local_vars=console_dict)

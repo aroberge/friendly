@@ -2,6 +2,7 @@
 
 A few useful objects which do not naturally fit anywhere else.
 """
+import token as token_module
 import tokenize
 import os.path
 
@@ -16,12 +17,17 @@ class Token:
     def __init__(self, token):
         self.type = token[0]
         self.string = token[1]
-        self.start_line, self.start_col = token[2]
-        self.end_line, self.end_col = token[3]
+        self.start = self.start_line, self.start_col = token[2]
+        self.end = self.end_line, self.end_col = token[3]
         # ignore last parameter which is the logical line
 
     def __repr__(self):
-        return f"type: {self.type}, string: {self.string}"
+        return "{type:<10}{string:<25} {start:^10} {end:^10}".format(
+            type=token_module.tok_name[self.type],
+            string=self.string,
+            start=str(self.start),
+            end=str(self.end),
+        )
 
 
 def collect_tokens(line):
@@ -65,3 +71,21 @@ def shorten_path(path):
     elif path_lower.startswith(HOME):
         path = "~" + path[len(HOME) :]
     return path
+
+
+def _tokenize(source):
+    """Prints tokens found in source, excluding spaces and comments.
+
+       This is occasionally useful to use at the console during development.
+    """
+    lines = source.split("\n")
+    print(
+        "{type:<10}{string:<25} {start:^12} {end:^12}".format(
+            type="Type", string="String", start="Start", end="End"
+        )
+    )
+    print("-" * 60)
+    for line in lines:
+        tokens = collect_tokens(line)
+        for token in tokens:
+            print(token)
