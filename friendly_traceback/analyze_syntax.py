@@ -27,14 +27,14 @@ def find_likely_cause(etype, value):
     linenumber = value.lineno
     offset = value.offset
     message = value.msg
-    source = cache.get_source(filepath)
-    if not source and filepath == "<stdin>":
-        source = ""
+    source_lines = cache.get_source(filepath)
+    if not source_lines and filepath == "<stdin>":
+        source_lines = [""]
         linenumber = 1
-    return _find_likely_cause(source, linenumber, message, offset)
+    return _find_likely_cause(source_lines, linenumber, message, offset)
 
 
-def _find_likely_cause(source, linenumber, message, offset):
+def _find_likely_cause(source_lines, linenumber, message, offset):
     """Given some source code as a list of lines, a linenumber
        (starting at 1) indicating where a SyntaxError was detected,
        a message (which follows SyntaxError:) and an offset,
@@ -42,7 +42,7 @@ def _find_likely_cause(source, linenumber, message, offset):
     """
     _ = current_lang.translate
 
-    offending_line = source[linenumber - 1]
+    offending_line = source_lines[linenumber - 1]
     line = offending_line.rstrip()
 
     # If Python includes a descriptive enough message, we rely
@@ -83,7 +83,7 @@ def _find_likely_cause(source, linenumber, message, offset):
     # while we look for missing or mismatched brackets, such as (],
     # we also can sometimes identify other problems during this step.
 
-    cause = look_for_missing_bracket(source, linenumber, offset)
+    cause = look_for_missing_bracket(source_lines, linenumber, offset)
     if cause:
         return notice + cause
 
@@ -476,7 +476,7 @@ def keyword_as_attribute(tokens):
 @add_line_analyzer
 def misplaced_quote(tokens):
     """This looks for a misplaced quote, something like
-       message = 'don't'
+       info = 'don't' ...
 
     The clue we are looking for is a STRING token ('don')
     followed by a NAME token (t).
@@ -630,6 +630,9 @@ def look_for_missing_bracket(source_lines, max_linenumber, offset):
             if token.string in "([{":
                 brackets.append((token.string, token.start_line))
             elif token.string in ")]}":
+                # In some of the cases below, we include the offending lines at the
+                # bottom of the error message as they might not be shown in the
+                # partial source included in the traceback.
                 if not brackets:
                     bracket = name_bracket(token.string)
                     _lineno = token.start_line
