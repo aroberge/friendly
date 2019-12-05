@@ -58,6 +58,7 @@ all_imports = {
     "SyntaxError - unexpected EOF while parsing": "syntax.raise_syntax_error34",
     "SyntaxError - name is parameter and global": "syntax.raise_syntax_error35",
     "SyntaxError - keyword as attribute": "syntax.raise_syntax_error36",
+    "SyntaxError - content passed continuation line character": "syntax.raise_syntax_error37",
 }
 
 if sys.version_info < (3, 8):

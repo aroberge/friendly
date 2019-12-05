@@ -46,6 +46,8 @@ causes = {
     34: "The opening square bracket '['",
     35: "is a variable defined outside a function.",
     36: "keyword pass as an attribute",
+    37: "using the continuation character",
+    38: "not a valid variable name in Python",
 }
 
 if sys.version_info < (3, 8):
@@ -61,7 +63,7 @@ def test_syntax_errors():
             friendly_traceback.explain(redirect="capture")
         result = friendly_traceback.get_output()
         assert "SyntaxError" in result, "SyntaxError identified incorrectly; %s" % i
-        assert cause in result, "Cause %s identified incorrectly" % result
+        assert cause in result, "\nExpected: %s\nGot: %s" % (cause, result)
 
 
 if __name__ == "__main__":

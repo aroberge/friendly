@@ -115,7 +115,7 @@ def add_python_message(func):
 
 
 @add_python_message
-def assign_to_keyword(message=None, line="", **kwargs):
+def assign_to_keyword(message="", line="", **kwargs):
     _ = current_lang.translate
     if not (
         message == "can't assign to keyword"  # Python 3.6, 3.7
@@ -151,7 +151,7 @@ def assign_to_keyword(message=None, line="", **kwargs):
 
 
 @add_python_message
-def assign_to_function_call(message=None, line="", **kwargs):
+def assign_to_function_call(message="", line="", **kwargs):
     _ = current_lang.translate
     if (
         message == "can't assign to function call"  # Python 3.6, 3.7
@@ -182,7 +182,7 @@ def assign_to_function_call(message=None, line="", **kwargs):
 
 
 @add_python_message
-def assign_to_literal(message=None, line="", **kwargs):
+def assign_to_literal(message="", line="", **kwargs):
     _ = current_lang.translate
     if (
         message == "can't assign to literal"  # Python 3.6, 3.7
@@ -216,7 +216,7 @@ def assign_to_literal(message=None, line="", **kwargs):
 
 
 @add_python_message
-def break_outside_loop(message=None, **kwargs):
+def break_outside_loop(message="", **kwargs):
     _ = current_lang.translate
     if "'break' outside loop" in message:
         return _(
@@ -226,7 +226,7 @@ def break_outside_loop(message=None, **kwargs):
 
 
 @add_python_message
-def continue_outside_loop(message=None, **kwargs):
+def continue_outside_loop(message="", **kwargs):
     _ = current_lang.translate
     if "'continue' not properly in loop" in message:
         return _(
@@ -236,7 +236,7 @@ def continue_outside_loop(message=None, **kwargs):
 
 
 @add_python_message
-def eol_while_scanning_string_literal(message=None, **kwargs):
+def eol_while_scanning_string_literal(message="", **kwargs):
     _ = current_lang.translate
     if "EOL while scanning string literal" in message:
         return _(
@@ -246,7 +246,37 @@ def eol_while_scanning_string_literal(message=None, **kwargs):
 
 
 @add_python_message
-def unterminated_f_string(message=None, **kwargs):
+def expression_cannot_contain_assignment(message="", **kwargs):
+    _ = current_lang.translate
+    if "expression cannot contain assignment, perhaps you meant" in message:
+        return _(
+            "One of the following two possibilities could be the cause:\n"
+            "1. You meant to do a comparison with == and wrote = instead.\n"
+            "2. You called a function with a named argument:\n\n"
+            "       a_function(invalid=something)\n\n"
+            "where 'invalid' is not a valid variable name in Python\n"
+            "either because it starts with a number, or is a string,\n"
+            "or contain a period, etc.\n"
+            "\n"
+        )
+
+
+@add_python_message
+def keyword_cannot_be_expression(message="", **kwargs):
+    _ = current_lang.translate
+    if "keyword can't be an expression" in message:
+        return _(
+            "You likely called a function with a named argument:\n\n"
+            "   a_function(invalid=something)\n\n"
+            "where 'invalid' is not a valid variable name in Python\n"
+            "either because it starts with a number, or is a string,\n"
+            "or contain a period, etc.\n"
+            "\n"
+        )
+
+
+@add_python_message
+def unterminated_f_string(message="", **kwargs):
     _ = current_lang.translate
     if "f-string: unterminated string" in message:
         return _(
@@ -257,7 +287,7 @@ def unterminated_f_string(message=None, **kwargs):
 
 
 @add_python_message
-def name_is_parameter_and_global(message=None, line="", **kwargs):
+def name_is_parameter_and_global(message="", line="", **kwargs):
     # something like: name 'x' is parameter and global
     _ = current_lang.translate
     if "is parameter and global" in message:
@@ -277,7 +307,19 @@ def name_is_parameter_and_global(message=None, line="", **kwargs):
 
 
 @add_python_message
-def unmatched_parenthesis(message=None, linenumber=None, **kwargs):
+def unexpected_character_after_continuation(message="", **kwargs):
+    _ = current_lang.translate
+    if "unexpected character after line continuation character" in message:
+        return _(
+            "You are using the continuation character '\\' outside of a string,\n"
+            "and it is followed by some other character(s).\n"
+            "I am guessing that you forgot to enclose some content in a string.\n"
+            "\n"
+        )
+
+
+@add_python_message
+def unmatched_parenthesis(message="", linenumber=None, **kwargs):
     _ = current_lang.translate
     # Python 3.8
     if message == "unmatched ')'":
@@ -294,7 +336,7 @@ def unmatched_parenthesis(message=None, linenumber=None, **kwargs):
 
 
 @add_python_message
-def position_argument_follows_keyword_arg(message=None, **kwargs):
+def position_argument_follows_keyword_arg(message="", **kwargs):
     _ = current_lang.translate
     if "positional argument follows keyword argument" not in message:
         return
@@ -311,7 +353,7 @@ def position_argument_follows_keyword_arg(message=None, **kwargs):
 
 
 @add_python_message
-def non_default_arg_follows_default_arg(message=None, **kwargs):
+def non_default_arg_follows_default_arg(message="", **kwargs):
     _ = current_lang.translate
     if "non-default argument follows default argument" not in message:
         return
@@ -328,7 +370,7 @@ def non_default_arg_follows_default_arg(message=None, **kwargs):
 
 
 @add_python_message
-def python2_print(message=None, **kwargs):
+def python2_print(message="", **kwargs):
     _ = current_lang.translate
     if not message.startswith(
         "Missing parentheses in call to 'print'. Did you mean print("
