@@ -45,6 +45,7 @@ causes = {
     33: "The opening square bracket '['",
     34: "The opening square bracket '['",
     35: "is a variable defined outside a function.",
+    36: "keyword pass as an attribute",
 }
 
 if sys.version_info < (3, 8):

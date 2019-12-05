@@ -57,7 +57,13 @@ all_imports = {
     "SyntaxError - unclosed bracket": "syntax.raise_syntax_error33",
     "SyntaxError - unexpected EOF while parsing": "syntax.raise_syntax_error34",
     "SyntaxError - name is parameter and global": "syntax.raise_syntax_error35",
+    "SyntaxError - keyword as attribute": "syntax.raise_syntax_error36",
 }
+
+if sys.version_info < (3, 8):
+    all_imports[
+        "Walrus operator does not exist - yet"
+    ] = "syntax.raise_syntax_error_walrus"
 
 
 def create_tracebacks(target, intro_text):

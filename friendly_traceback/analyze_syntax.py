@@ -58,17 +58,17 @@ def _find_likely_cause(source, linenumber, message, offset):
 
     if message == "invalid syntax":
         notice = _(
-            "Important: Python did not give us much information regarding\n"
-            "the cause of the error. We make an effort below to guess what\n"
-            "went wrong, but we might guess incorrectly.\n\n"
+            "Python did not give us much information regarding\n"
+            "the cause of the error. I make an effort below to guess what\n"
+            "went wrong, but I might guess incorrectly.\n\n"
         )
     else:
         notice = _(
-            "Important: Python gave us the following informative message\n"
+            "Python gave us the following informative message\n"
             "about the possible cause of the error:\n\n"
             "    {message}\n\n"
-            "However, we do not recognize this information and we have\n"
-            "to guess what went wrong, but we might guess incorrectly.\n\n"
+            "However, I do not recognize this information and I have\n"
+            "to guess what went wrong, but I might guess incorrectly.\n\n"
         ).format(message=message)
 
     # If not cause has been identified, we look at a single line
@@ -91,7 +91,7 @@ def _find_likely_cause(source, linenumber, message, offset):
     # For now, we just stop here
 
     return _(
-        "Currently, we cannot guess the likely cause of this error.\n"
+        "Currently, I cannot guess the likely cause of this error.\n"
         "Try to examine closely the line indicated as well as the line\n"
         "immediately above to see if you can identify some misspelled\n"
         "word, or missing symbols, like (, ), [, ], :, etc.\n"
@@ -395,7 +395,7 @@ def detect_walrus(tokens):
                 "You appear to be using the operator :=, sometimes called\n"
                 "the walrus operator. This operator requires the use of\n"
                 "Python 3.8 or newer. You are using version {version}.\n"
-            ).format(version=sys.version_info)
+            ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
 
         found_colon = token.string == ":"
 
@@ -453,6 +453,24 @@ def import_from(tokens):
             "    from {module} import {function}\n"
             "\n"
         ).format(module=module, function=function)
+
+
+@add_line_analyzer
+def keyword_as_attribute(tokens):
+    """Will identify something like  obj.True ..."""
+    _ = current_lang.translate
+    prev_word = None
+    for token in tokens:
+        word = token.string
+        if prev_word == ".":
+            if word in kwlist:
+                return _(
+                    "You cannot use the Python keyword {word} as an attribute.\n\n"
+                ).format(word=word)
+            elif word == "__debug__":
+                return _("You cannot use the constant __debug__ as an attribute.\n\n")
+        else:
+            prev_word = word
 
 
 @add_line_analyzer

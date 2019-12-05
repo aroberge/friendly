@@ -11,10 +11,11 @@ def test_no_false_positive():
     # They should never have raised a Syntax error, and thus
     # we should not be able to find a likely cause of a problem.
     find = analyze_syntax._find_likely_cause
-    no_cause = "we cannot guess the likely cause of this error"
+    no_cause = "I cannot guess the likely cause of this error"
 
     # _find_likely_cause(source, linenumber, message, offset)
     assert no_cause in find(["def test(arg1, arg2):"], 1, "irrelevant", 1)
+    assert no_cause in find(["def test(arg1, arg2=None):"], 1, "irrelevant", 1)
     assert no_cause in find(["for i in range(3):"], 1, "irrelevant", 1)
     assert no_cause in find(["while True:"], 1, "irrelevant", 1)
     assert no_cause in find(["pass"], 1, "irrelevant", 1)
