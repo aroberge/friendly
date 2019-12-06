@@ -1,7 +1,4 @@
-"""Should raise SyntaxError: invalid syntax for Python < 3.8
-   otherwise, SyntaxError: unmatched ')'
-"""
-a = (1,
-    2,
-    3, 4,))
-b = 3
+"""Should raise SyntaxError: cannot assign to __debug__ in Py 3.8
+   and assignment to keyword before."""
+
+__debug__ = 1

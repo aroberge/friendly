@@ -2,5 +2,5 @@
 """
 
 
-def f(**None):
+def f(None=1):
     pass

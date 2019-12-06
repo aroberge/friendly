@@ -1,6 +1,4 @@
-"""Should raise SyntaxError: name 'x' is parameter and global
+"""Should raise SyntaxError: f-string: unterminated string
 """
 
-
-def f(x):
-    global x
+print(f"Bob is {age['Bob]} years old.")

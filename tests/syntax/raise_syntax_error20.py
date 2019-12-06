@@ -1,4 +1,2 @@
-"""Should raise SyntaxError: 'continue' outside loop"""
-
-if True:
-    continue
+"""Should raise SyntaxError: Missing parentheses in call to 'print' ..."""
+print 'hello'

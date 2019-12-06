@@ -1,5 +1,7 @@
-"""Should raise
-SyntaxError: unexpected character after line continuation character
+"""Should raise SyntaxError: unexpected EOF while parsing
 """
 
-print(\t)
+def foo():
+    return [1, 2, 3,
+
+print(foo())

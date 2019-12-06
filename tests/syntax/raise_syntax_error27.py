@@ -1,6 +1,3 @@
-"""Should raise SyntaxError: can't assign to function call
+"""Should raise SyntaxError: invalid syntax"""
 
-Python 3.8: SyntaxError: cannot assign to function call
-"""
-
-len('a') = 3
+a = [1, 2  3]

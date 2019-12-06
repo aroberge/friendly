@@ -1,5 +1,6 @@
-"""Should raise SyntaxError: positional argument follows keyword argument
+"""Should raise SyntaxError: can't assign to function call
+
+Python 3.8: SyntaxError: cannot assign to function call
 """
 
-
-test(a=1, b)
+func(a, b=3) = 4

@@ -1,6 +1,4 @@
-"""Should raise SyntaxError: invalid syntax"""
+"""Should raise SyntaxError: 'break' outside loop"""
 
-a = {'a': 1,
-     'b': 2
-     'c': 3,
-     }
+if True:
+    break

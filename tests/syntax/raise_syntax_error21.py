@@ -1,3 +1,4 @@
 """Should raise SyntaxError: invalid syntax"""
 
-message = 'don't'
+def pass():
+    print("keyword as function name!")

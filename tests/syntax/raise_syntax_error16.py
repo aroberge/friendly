@@ -1,2 +1,4 @@
 """Should raise SyntaxError: invalid syntax"""
-x = (1, 2, 3]
+x = int('1'
+if x == 1:
+    print('yes')

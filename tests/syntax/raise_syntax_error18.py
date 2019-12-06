@@ -1,4 +1,2 @@
 """Should raise SyntaxError: invalid syntax"""
-
-def pass():
-    print("keyword as function name!")
+x = (1, 2, 3]

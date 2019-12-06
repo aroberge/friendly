@@ -1,3 +1,4 @@
-"""Should raise SyntaxError: invalid syntax"""
+"""Should raise SyntaxError: 'continue' outside loop"""
 
-a = {1, 2  3}
+if True:
+    continue

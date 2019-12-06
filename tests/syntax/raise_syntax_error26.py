@@ -1,5 +1,3 @@
 """Should raise SyntaxError: invalid syntax"""
 
-
-def a(b, c d):
-    pass
+a = {1, 2  3}

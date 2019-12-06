@@ -1,7 +1,6 @@
-"""Should raise SyntaxError: f-string: invalid syntax
+"""Should raise SyntaxError: non-default argument follows default argument
 """
 
-def foo():
-    return [1, 2, 3
 
-print(foo())
+def test(a=1, b):
+    return a + b

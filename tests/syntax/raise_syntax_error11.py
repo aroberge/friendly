@@ -1,3 +1,3 @@
-"""Should raise SyntaxError: EOL while scanning string literal"""
+"""Should raise SyntaxError: invalid syntax"""
 
-alphabet = 'abc
+import pen from turtle

@@ -1,6 +1,12 @@
-"""Should raise SyntaxError: invalid character in identifier
+"""Should raise SyntaxError: invalid syntax
 """
 
-# Robot-face character below
 
-🤖 = 'Reeborg'
+class A:
+    pass
+
+
+a = A()
+
+a.x = 1
+a.pass = 2

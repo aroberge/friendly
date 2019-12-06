@@ -1,12 +1,7 @@
-"""Should raise SyntaxError: invalid syntax
+"""Should raise SyntaxError: f-string: invalid syntax
 """
 
+def foo():
+    return [1, 2, 3
 
-class A:
-    pass
-
-
-a = A()
-
-a.x = 1
-a.pass = 2
+print(foo())

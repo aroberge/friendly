@@ -1,6 +1,5 @@
-"""Should raise SyntaxError: invalid syntax
+"""Should raise
+SyntaxError: unexpected character after line continuation character
 """
 
-
-def f(None=1):
-    pass
+print(\t)

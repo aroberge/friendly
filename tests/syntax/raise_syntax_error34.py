@@ -1,7 +1,5 @@
-"""Should raise SyntaxError: unexpected EOF while parsing
+"""Should raise SyntaxError: positional argument follows keyword argument
 """
 
-def foo():
-    return [1, 2, 3,
 
-print(foo())
+test(a=1, b)

@@ -1,4 +1,5 @@
-"""Should raise SyntaxError: invalid syntax
-"""
+"""Should raise SyntaxError: invalid syntax"""
 
-ages = {'Alice'=22, 'Bob'=24}
+
+def a(b, c d):
+    pass

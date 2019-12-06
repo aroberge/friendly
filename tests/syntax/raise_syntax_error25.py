@@ -1,3 +1,6 @@
 """Should raise SyntaxError: invalid syntax"""
 
-a = (1, 2  3)
+a = {'a': 1,
+     'b': 2
+     'c': 3,
+     }

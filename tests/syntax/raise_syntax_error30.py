@@ -1,6 +1,6 @@
-"""Should raise SyntaxError: non-default argument follows default argument
+"""Should raise SyntaxError: can't assign to function call
+
+Python 3.8: SyntaxError: cannot assign to function call
 """
 
-
-def test(a=1, b):
-    return a + b
+len('a') = 3

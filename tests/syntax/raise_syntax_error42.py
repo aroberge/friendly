@@ -1,6 +1,6 @@
-"""Should raise SyntaxError: invalid syntax
+"""Should raise SyntaxError: invalid character in identifier
 """
 
+# Robot-face character below
 
-def f(*None):
-    pass
+🤖 = 'Reeborg'

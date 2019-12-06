@@ -1,3 +1,3 @@
-"""Should raise SyntaxError: invalid syntax"""
+"""Should raise SyntaxError: can't assign to literal"""
 
-import pen from turtle
+1 = 2

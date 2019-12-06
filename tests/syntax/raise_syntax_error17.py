@@ -1,2 +1,3 @@
-"""Should raise SyntaxError: Missing parentheses in call to 'print' ..."""
-print 'hello'
+"""Should raise SyntaxError: invalid syntax"""
+a = (b+c
+d = a*a
