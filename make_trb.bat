@@ -13,8 +13,8 @@ call  python trb_syntax_english.py
 call  deactivate
 
 call ..\venv-friendly3.8\scripts\activate
-call  python trb_english.py -W ignore
-call  python trb_syntax_english.py -W ignore
+call  python -W ignore trb_english.py
+call  python -W ignore trb_syntax_english.py
 call  deactivate
 
 cd ..\..\friendly-traceback-docs\docs

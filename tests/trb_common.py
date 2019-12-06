@@ -2,6 +2,7 @@
    create files in the same format.
 
 """
+import os
 import sys
 from contextlib import redirect_stderr
 
@@ -164,6 +165,9 @@ all_imports = {
     "ZeroDivisionError - 1": ("test_zero_division_error", "test_zero_division_error"),
     "ZeroDivisionError - 2": ("test_zero_division_error", "test_zero_division_error2"),
 }
+
+cur_dir = os.getcwd()
+sys.path.append(os.path.join(cur_dir, "except"))
 
 
 def create_tracebacks(target, intro_text):

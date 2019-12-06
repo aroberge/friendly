@@ -270,7 +270,7 @@ def keyword_cannot_be_expression(message="", **kwargs):
             "   a_function(invalid=something)\n\n"
             "where 'invalid' is not a valid variable name in Python\n"
             "either because it starts with a number, or is a string,\n"
-            "or contain a period, etc.\n"
+            "or contains a period, etc.\n"
             "\n"
         )
 
