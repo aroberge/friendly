@@ -59,6 +59,7 @@ all_imports = {
     "SyntaxError - name is parameter and global": "syntax.raise_syntax_error35",
     "SyntaxError - keyword as attribute": "syntax.raise_syntax_error36",
     "SyntaxError - content passed continuation line character": "syntax.raise_syntax_error37",
+    "SyntaxError - keyword can't be an expression": "syntax.raise_syntax_error38",
 }
 
 if sys.version_info < (3, 8):

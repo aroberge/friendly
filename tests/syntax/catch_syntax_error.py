@@ -47,7 +47,8 @@ causes = {
     35: "is a variable defined outside a function.",
     36: "keyword pass as an attribute",
     37: "using the continuation character",
-    38: "not a valid variable name in Python",
+    38: "where 'invalid' is not a valid variable name in Python",
+    39: "as part of a variable name in Python",
 }
 
 if sys.version_info < (3, 8):

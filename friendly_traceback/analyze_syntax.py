@@ -256,7 +256,7 @@ def expression_cannot_contain_assignment(message="", **kwargs):
             "       a_function(invalid=something)\n\n"
             "where 'invalid' is not a valid variable name in Python\n"
             "either because it starts with a number, or is a string,\n"
-            "or contain a period, etc.\n"
+            "or contains a period, etc.\n"
             "\n"
         )
 
@@ -271,6 +271,18 @@ def keyword_cannot_be_expression(message="", **kwargs):
             "where 'invalid' is not a valid variable name in Python\n"
             "either because it starts with a number, or is a string,\n"
             "or contain a period, etc.\n"
+            "\n"
+        )
+
+
+@add_python_message
+def invalid_character_in_identifier(message="", **kwargs):
+    _ = current_lang.translate
+    if "invalid character in identifier" in message:
+        return _(
+            "You likely used some unicode character that is not allowed\n"
+            "as part of a variable name in Python.\n"
+            "This includes many emojis.\n"
             "\n"
         )
 

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-12-05 07:12-0400\n"
-"PO-Revision-Date: 2019-12-05 07:16-0400\n"
+"POT-Creation-Date: 2019-12-05 21:07-0400\n"
+"PO-Revision-Date: 2019-12-05 21:12-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -79,7 +79,7 @@ msgstr ""
 "valeur.\n"
 "\n"
 
-#: analyze_syntax.py:146 analyze_syntax.py:414
+#: analyze_syntax.py:146 analyze_syntax.py:468
 msgid ""
 "You were trying to assign a value to the Python keyword '{keyword}'.\n"
 "This is not allowed.\n"
@@ -174,6 +174,63 @@ msgstr ""
 
 #: analyze_syntax.py:252
 msgid ""
+"One of the following two possibilities could be the cause:\n"
+"1. You meant to do a comparison with == and wrote = instead.\n"
+"2. You called a function with a named argument:\n"
+"\n"
+"       a_function(invalid=something)\n"
+"\n"
+"where 'invalid' is not a valid variable name in Python\n"
+"either because it starts with a number, or is a string,\n"
+"or contains a period, etc.\n"
+"\n"
+msgstr ""
+"L'une des deux possibilités suivantes pourrait être la cause:\n"
+"1. Vous vouliez faire une comparaison avec == et vous avez écrit = à sa "
+"place.\n"
+"2. Vous avez appelé une fonction avec un argument nommé:\n"
+"\n"
+"        une_fonction (invalide=quelque_chose)\n"
+"\n"
+"où «invalide» n'est pas un nom de variable valide dans Python\n"
+"soit parce qu'il commence par un nombre, soit qu'il est une chaîne,\n"
+"ou contient un point, etc.\n"
+"\n"
+
+#: analyze_syntax.py:268
+msgid ""
+"You likely called a function with a named argument:\n"
+"\n"
+"   a_function(invalid=something)\n"
+"\n"
+"where 'invalid' is not a valid variable name in Python\n"
+"either because it starts with a number, or is a string,\n"
+"or contain a period, etc.\n"
+"\n"
+msgstr ""
+"Vous avez probablement appelé une fonction avec un argument nommé:\n"
+"\n"
+"    une_fonction (invalide=quelque_chose)\n"
+"\n"
+"où «invalide» n'est pas un nom de variable valide dans Python\n"
+"soit parce qu'il commence par un nombre, soit est une chaîne,\n"
+"ou contenir un point, etc.\n"
+"\n"
+
+#: analyze_syntax.py:282
+msgid ""
+"You likely used some unicode character that is not allowed\n"
+"as part of a variable name in Python.\n"
+"This includes many emojis.\n"
+"\n"
+msgstr ""
+"Vous avez probablement utilisé un caractère unicode qui n'est pas autorisé\n"
+"dans le nom d'une variable dans Python.\n"
+"Cela comprend de nombreux emojis.\n"
+"\n"
+
+#: analyze_syntax.py:294
+msgid ""
 "Inside an f-string, which is a string prefixed by the letter f, \n"
 "you have another string, which starts with either a\n"
 "single quote (') or double quote (\"), without a matching closing one.\n"
@@ -185,7 +242,7 @@ msgstr ""
 "ou des guillemets (\"), mais n'est pas terminé par un autre caractère "
 "semblable.\n"
 
-#: analyze_syntax.py:269
+#: analyze_syntax.py:311
 msgid ""
 "You are including the statement\n"
 "\n"
@@ -206,13 +263,27 @@ msgstr ""
 "à l'intérieur de cette fonction, ce qui est le contraire de ce que «global» "
 "sous-entendait.\n"
 
-#: analyze_syntax.py:291 analyze_syntax.py:640
+#: analyze_syntax.py:325
+msgid ""
+"You are using the continuation character '\\' outside of a string,\n"
+"and it is followed by some other character(s).\n"
+"I am guessing that you forgot to enclose some content in a string.\n"
+"\n"
+msgstr ""
+"Vous utilisez le caractère de continuation '\\' en dehors d'une chaîne de "
+"caractères,\n"
+"et il est suivi par au moins un autre caractère.\n"
+"Je suppose que vous avez oublié de terminer la chaîne par un guillemet\n"
+"ou un apostrophe.\n"
+"\n"
+
+#: analyze_syntax.py:345 analyze_syntax.py:695
 msgid "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'a pas de symbole ouvrant qui "
 "lui correspond.\n"
 
-#: analyze_syntax.py:301
+#: analyze_syntax.py:355
 msgid ""
 "In Python, you can call functions with only positional arguments\n"
 "\n"
@@ -247,7 +318,7 @@ msgstr ""
 "Selon Python, vous avez utilisé des arguments positionnels après des "
 "arguments nommés.\n"
 
-#: analyze_syntax.py:318
+#: analyze_syntax.py:372
 msgid ""
 "In Python, you can define functions with only positional arguments\n"
 "\n"
@@ -284,7 +355,7 @@ msgstr ""
 "Selon Python, vous avez utilisé des arguments positionnels après des "
 "arguments nommés.\n"
 
-#: analyze_syntax.py:338
+#: analyze_syntax.py:392
 msgid ""
 "Perhaps you need to type print({message})?\n"
 "\n"
@@ -297,7 +368,7 @@ msgstr ""
 "Maintenant, «print» est une fonction; vous devez utiliser des parenthèses "
 "pour l'invoquer.\n"
 
-#: analyze_syntax.py:394
+#: analyze_syntax.py:448
 msgid ""
 "You appear to be using the operator :=, sometimes called\n"
 "the walrus operator. This operator requires the use of\n"
@@ -309,7 +380,7 @@ msgstr ""
 "{version}.\n"
 "\n"
 
-#: analyze_syntax.py:430
+#: analyze_syntax.py:484
 msgid ""
 "You meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
@@ -319,7 +390,7 @@ msgstr ""
 "au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: analyze_syntax.py:449
+#: analyze_syntax.py:503
 msgid ""
 "You wrote something like\n"
 "    import {function} from {module}\n"
@@ -334,7 +405,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: analyze_syntax.py:467
+#: analyze_syntax.py:521
 msgid ""
 "You cannot use the Python keyword {word} as an attribute.\n"
 "\n"
@@ -343,7 +414,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: analyze_syntax.py:471
+#: analyze_syntax.py:525
 msgid ""
 "You cannot use the constant __debug__ as an attribute.\n"
 "\n"
@@ -351,7 +422,7 @@ msgstr ""
 "Vous ne pouvez pas utiliser la constante __debug__ comme attribut.\n"
 "\n"
 
-#: analyze_syntax.py:492
+#: analyze_syntax.py:544
 msgid ""
 "There appears to be a Python identifier (variable name)\n"
 "immediately following a string.\n"
@@ -363,11 +434,11 @@ msgstr ""
 "Je soupçonne que vous essayiez d'utiliser un apostrophe ou un guillemet\n"
 "à l'intérieur d'une chaîne qui était délimitée par ces mêmes caractères.\n"
 
-#: analyze_syntax.py:512
+#: analyze_syntax.py:564
 msgid "a class"
 msgstr "une classe"
 
-#: analyze_syntax.py:513
+#: analyze_syntax.py:565
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
@@ -377,7 +448,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:519
+#: analyze_syntax.py:571
 msgid ""
 "You wrote a '{for_while}' loop but\n"
 "forgot to add a colon ':' at the end\n"
@@ -387,7 +458,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:525
+#: analyze_syntax.py:577
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
@@ -397,11 +468,11 @@ msgstr ""
 "'{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:546
+#: analyze_syntax.py:598
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: analyze_syntax.py:547
+#: analyze_syntax.py:599
 msgid ""
 "You tried to define {class_or_function}\n"
 "and did not use the correct syntax.\n"
@@ -414,14 +485,14 @@ msgstr ""
 "    def nom ( arguments_optionnels ):\n"
 "\n"
 
-#: analyze_syntax.py:556
+#: analyze_syntax.py:608
 msgid "You tried to use the Python keyword '{kwd}' as a function name.\n"
 msgstr ""
 "Vous avez tenté d'utiliser le mot clé Python '{kwd}' comme nom de fonction.\n"
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: analyze_syntax.py:606
+#: analyze_syntax.py:658
 msgid ""
 "It is possible that you used an equal sign '=' instead of a colon ':'\n"
 "to assign values to keys in a dict\n"
@@ -432,7 +503,7 @@ msgstr ""
 "pour attribuer des valeurs à une clé d'un dictionnaire\n"
 "avant ou exactement à la position indiquée par --> et ^.\n"
 
-#: analyze_syntax.py:658
+#: analyze_syntax.py:713
 msgid ""
 "The closing {bracket} on line {close_lineno} does not match the opening "
 "{open_bracket} on line {open_lineno}.\n"
@@ -440,7 +511,7 @@ msgstr ""
 "Le symbole {bracket} à la ligne {close_lineno} ne correspond pas au symbole "
 "{open_bracket} à la ligne {open_lineno}.\n"
 
-#: analyze_syntax.py:677
+#: analyze_syntax.py:732
 msgid ""
 "It is possible that you forgot a comma between items in a tuple, \n"
 "or between function arguments, \n"
@@ -451,7 +522,7 @@ msgstr ""
 "ou entre les arguments d'une fonction, avant la position indiquée par --> et "
 "^.\n"
 
-#: analyze_syntax.py:684
+#: analyze_syntax.py:739
 msgid ""
 "It is possible that you forgot a comma between items in a list\n"
 "before the position indicated by --> and ^.\n"
@@ -460,7 +531,7 @@ msgstr ""
 "liste\n"
 "avant la position indiquée par --> et ^.\n"
 
-#: analyze_syntax.py:690
+#: analyze_syntax.py:745
 msgid ""
 "It is possible that you forgot a comma between items in a set or dict\n"
 "before the position indicated by --> and ^.\n"
@@ -469,33 +540,33 @@ msgstr ""
 "ensemble (set)\n"
 "ou un dict avant la position indiquée par --> et ^.\n"
 
-#: analyze_syntax.py:699
+#: analyze_syntax.py:754
 msgid "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'est pas fermé par le symbole "
 "correspondant.\n"
 
-#: analyze_syntax.py:719
+#: analyze_syntax.py:774
 msgid "parenthesis '('"
 msgstr "parenthèse '('"
 
-#: analyze_syntax.py:721
+#: analyze_syntax.py:776
 msgid "parenthesis ')'"
 msgstr "parenthèse ')'"
 
-#: analyze_syntax.py:723
+#: analyze_syntax.py:778
 msgid "square bracket '['"
 msgstr "crochet '['"
 
-#: analyze_syntax.py:725
+#: analyze_syntax.py:780
 msgid "square bracket ']'"
 msgstr "crochet ']'"
 
-#: analyze_syntax.py:727
+#: analyze_syntax.py:782
 msgid "curly bracket '{'"
 msgstr "accolade '{'"
 
-#: analyze_syntax.py:729
+#: analyze_syntax.py:784
 msgid "curly bracket '}'"
 msgstr "accolade '}'"
 
