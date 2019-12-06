@@ -66,6 +66,10 @@ def test_no_false_positive():
 
     assert no_cause in find(["def test(arg1, arg2):"])
     assert no_cause in find(["def test(arg1, arg2=None):"])
+    assert no_cause in find(["def test(arg1=(None, 1)):"])
+    assert no_cause in find(["def test(arg1=(1, None)):"])
+    assert no_cause in find(["def test(arg1=[1, None]):"])
+    assert no_cause in find(["def test(arg1={1, None}):"])
     assert no_cause in find(["for i in range(3):"])
     assert no_cause in find(["while True:"])
     assert no_cause in find(["pass"])

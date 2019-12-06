@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-12-05 21:07-0400\n"
+"POT-Creation-Date: 2019-12-05 22:32-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -177,7 +177,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:345 analyze_syntax.py:695
+#: analyze_syntax.py:345 analyze_syntax.py:744
 msgid ""
 "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
@@ -311,63 +311,69 @@ msgid ""
 "You tried to use the Python keyword '{kwd}' as a function name.\n"
 msgstr ""
 
-#: analyze_syntax.py:658
+#: analyze_syntax.py:655
+msgid ""
+"I am guessing that you tried to use the Python keyword\n"
+"{kwd} as an argument in the definition of a function.\n"
+msgstr ""
+
+#: analyze_syntax.py:707
 msgid ""
 "It is possible that you used an equal sign '=' instead of a colon ':'\n"
 "to assign values to keys in a dict\n"
 "before or at the position indicated by --> and ^.\n"
 msgstr ""
 
-#: analyze_syntax.py:713
+#: analyze_syntax.py:762
 msgid ""
 "The closing {bracket} on line {close_lineno} does not match the opening {open_bracket} on line {open_lineno}.\n"
 msgstr ""
 
-#: analyze_syntax.py:732
+#: analyze_syntax.py:781
 msgid ""
 "It is possible that you forgot a comma between items in a tuple, \n"
 "or between function arguments, \n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: analyze_syntax.py:739
+#: analyze_syntax.py:788
 msgid ""
 "It is possible that you forgot a comma between items in a list\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: analyze_syntax.py:745
+#: analyze_syntax.py:794
 msgid ""
 "It is possible that you forgot a comma between items in a set or dict\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: analyze_syntax.py:754
+#: analyze_syntax.py:803
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 
-#: analyze_syntax.py:774
+#: analyze_syntax.py:823
 msgid "parenthesis '('"
 msgstr ""
 
-#: analyze_syntax.py:776
+#: analyze_syntax.py:825
 msgid "parenthesis ')'"
 msgstr ""
 
-#: analyze_syntax.py:778
+#: analyze_syntax.py:827
 msgid "square bracket '['"
 msgstr ""
 
-#: analyze_syntax.py:780
+#: analyze_syntax.py:829
 msgid "square bracket ']'"
 msgstr ""
 
-#: analyze_syntax.py:782
+#: analyze_syntax.py:831
 msgid "curly bracket '{'"
 msgstr ""
 
-#: analyze_syntax.py:784
+#: analyze_syntax.py:833
 msgid "curly bracket '}'"
 msgstr ""
 

@@ -609,6 +609,55 @@ def malformed_def(tokens):
             "You tried to use the Python keyword '{kwd}' as a function name.\n"
         ).format(kwd=fn_name)
 
+    # Lets look at the possibility that a keyword might have been used
+    # as an argument or keyword argument. The following test is admiteddly
+    # crude and imperfect, but it is the last one we do.
+
+    prev_token_str = None
+    parens = 0
+    brackets = 0
+    curly = 0
+    for index, tok in enumerate(tokens):
+        # Note, we know that a SyntaxError: invalid syntax occurred.
+        # So, while some cases of the following might be ok, we assume here that
+        # they might have caused the error. They might include things like:
+        # def test(None ...)  or
+        # def test(*None ...) or
+        # def test(**None ...) or
+        # def test(a, None ...)
+        #       but not
+        # def test(a=None ...) nor
+        # def test(a=(None,...)) nor
+        # def test(a = [1, None])
+        char = tok.string
+        if char == "(":
+            parens += 1
+        elif char == ")":
+            parens -= 1
+        if char == "[":
+            brackets += 1
+        elif char == "]":
+            brackets -= 1
+        if char == "{":
+            curly += 1
+        elif char == "}":
+            curly -= 1
+
+        elif char in kwlist and (
+            (prev_token_str == "(" and index == 3)  # first argument
+            or (
+                parens % 2 == 1
+                and brackets % 2 == 0
+                and curly % 2 == 0
+                and prev_token_str in [",", "*", "**"]
+            )
+        ):
+            return _(
+                "I am guessing that you tried to use the Python keyword\n"
+                "{kwd} as an argument in the definition of a function.\n"
+            ).format(kwd=char)
+        prev_token_str = char
+
 
 def look_for_missing_bracket(source_lines, max_linenumber, offset):
     """This function was initially looking for missing or mismatched brackets

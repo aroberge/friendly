@@ -60,6 +60,11 @@ all_imports = {
     "SyntaxError - keyword as attribute": "syntax.raise_syntax_error36",
     "SyntaxError - content passed continuation line character": "syntax.raise_syntax_error37",
     "SyntaxError - keyword can't be an expression": "syntax.raise_syntax_error38",
+    "SyntaxError - invalid character in identifier": "syntax.raise_syntax_error39",
+    "SyntaxError - keyword cannot be argument in def - 1": "syntax.raise_syntax_error40",
+    "SyntaxError - keyword cannot be argument in def - 2": "syntax.raise_syntax_error41",
+    "SyntaxError - keyword cannot be argument in def - 3": "syntax.raise_syntax_error42",
+    "SyntaxError - keyword cannot be argument in def - 4": "syntax.raise_syntax_error43",
 }
 
 if sys.version_info < (3, 8):

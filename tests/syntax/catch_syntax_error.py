@@ -49,6 +49,10 @@ causes = {
     37: "using the continuation character",
     38: "where 'invalid' is not a valid variable name in Python",
     39: "as part of a variable name in Python",
+    40: "as an argument in the definition of a function",
+    41: "as an argument in the definition of a function",
+    42: "as an argument in the definition of a function",
+    43: "as an argument in the definition of a function",
 }
 
 if sys.version_info < (3, 8):
