@@ -322,13 +322,13 @@ def mismatched_parenthesis(
         response = _(
             "Python tells us that the closing '{closing}' does not match "
             "the opening '{opening}' on line {lineno}.\n\n"
-            "I will attempt to be give a bit more information.\n"
+            "I will attempt to be give a bit more information.\n\n"
         ).format(closing=closing, opening=opening, lineno=lineno)
     else:
         response = _(
             "Python tells us that the closing '{closing}' does not match "
             "the opening '{opening}'.\n\n"
-            "I will attempt to be give a bit more information.\n"
+            "I will attempt to be give a bit more information.\n\n"
         ).format(closing=closing, opening=opening)
 
     response += look_for_missing_bracket(source_lines, linenumber, offset)
@@ -377,6 +377,24 @@ def unexpected_character_after_continuation(message="", **kwargs):
             "I am guessing that you forgot to enclose some content in a string.\n"
             "\n"
         )
+
+
+@add_python_message
+def unexpected_eof_while_parsing(
+    message="", source_lines=None, linenumber=None, offset=None, **kwargs
+):
+    # unexpected EOF while parsing
+    _ = current_lang.translate
+    if "unexpected EOF while parsing" not in message:
+        return
+    response = _(
+        "Python tells us that the it reached the end of the file\n"
+        "and expected more content.\n\n"
+        "I will attempt to be give a bit more information.\n\n"
+    )
+
+    response += look_for_missing_bracket(source_lines, linenumber, offset)
+    return response
 
 
 @add_python_message
@@ -646,7 +664,7 @@ def malformed_def(tokens):
     ):
         name = _("a function or method")
         return _(
-            "You tried to define {class_or_function}\n"
+            "You tried to define {class_or_function} "
             "and did not use the correct syntax.\n"
             "The correct syntax is:\n"
             "    def name ( optional_arguments ):"
