@@ -6,6 +6,7 @@ cause of a SyntaxError and providing a somewhat detailed explanation.
 
 from keyword import kwlist
 from io import StringIO
+import re
 import sys
 import tokenize
 
@@ -52,7 +53,13 @@ def _find_likely_cause(source_lines, linenumber, message, offset):
     # raises a particular exception.
 
     for case in PYTHON_MESSAGES:
-        cause = case(message=message, line=line, linenumber=linenumber)
+        cause = case(
+            message=message,
+            line=line,
+            linenumber=linenumber,
+            source_lines=source_lines,
+            offset=offset,
+        )
         if cause:
             return cause
 
@@ -284,6 +291,49 @@ def invalid_character_in_identifier(message="", **kwargs):
             "This includes many emojis.\n"
             "\n"
         )
+
+
+@add_python_message
+def mismatched_parenthesis(
+    message="", source_lines=None, linenumber=None, offset=None, **kwargs
+):
+    # Python 3.8; something like:
+    # closing parenthesis ']' does not match opening parenthesis '(' on line
+    _ = current_lang.translate
+    pattern1 = re.compile(
+        r"closing parenthesis '(.)' does not match opening parenthesis '(.)' on line (\d+)"
+    )
+    match = re.search(pattern1, message)
+    if match is None:
+        lineno = None
+        pattern2 = re.compile(
+            r"closing parenthesis '(.)' does not match opening parenthesis '(.)'"
+        )
+        match = re.search(pattern2, message)
+        if match is None:
+            return
+    else:
+        lineno = match.group(3)
+
+    opening = match.group(2)
+    closing = match.group(1)
+
+    if lineno is not None:
+        response = _(
+            "Python tells us that the closing '{closing}' does not match "
+            "the opening '{opening}' on line {lineno}.\n\n"
+            "I will attempt to be give a bit more information.\n"
+        ).format(closing=closing, opening=opening, lineno=lineno)
+    else:
+        response = _(
+            "Python tells us that the closing '{closing}' does not match "
+            "the opening '{opening}'.\n\n"
+            "I will attempt to be give a bit more information.\n"
+        ).format(closing=closing, opening=opening)
+
+    response += look_for_missing_bracket(source_lines, linenumber, offset)
+
+    return response
 
 
 @add_python_message
