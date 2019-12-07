@@ -12,6 +12,7 @@ def test_lookup_error():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "LookupError" in result
+    assert "LookupError is the base class for" in result
     return result
 
 

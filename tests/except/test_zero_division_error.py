@@ -8,6 +8,7 @@ def test_zero_division_error():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "ZeroDivisionError: division by zero" in result
+    assert "A ZeroDivisionError occurs when" in result
     return result
 
 
@@ -19,6 +20,7 @@ def test_zero_division_error2():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "ZeroDivisionError: integer division or modulo by zero" in result
+    assert "A ZeroDivisionError occurs when" in result
     return result
 
 

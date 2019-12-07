@@ -7,7 +7,11 @@ def test_file_not_found_error():
     except Exception:
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
-    assert "FileNotFoundError" in result
+    assert (
+        "FileNotFoundError: [Errno 2] No such file or directory: 'does_not_exist'"
+        in result
+    )
+    assert "that cannot be found is 'does_not_exist'." in result
     return result
 
 

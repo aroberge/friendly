@@ -8,7 +8,8 @@ def test_key_error():
     except Exception:
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
-    assert "KeyError" in result
+    assert "KeyError: 'c'" in result
+    assert "that cannot be found is 'c'." in result
     return result
 
 

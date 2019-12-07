@@ -12,6 +12,7 @@ def test_unknown_error():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "Some informative message" in result
+    assert "Please report this example" in result
     return result
 
 

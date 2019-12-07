@@ -7,7 +7,8 @@ def test_import_error():
     except Exception:
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
-    assert "ImportError" in result
+    assert "ImportError: cannot import name 'Pi'" in result
+    assert "The object that could not be imported is 'Pi'." in result
     return result
 
 

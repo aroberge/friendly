@@ -1,5 +1,6 @@
 import friendly_traceback
 
+
 def test_arithmetic_error():
     try:
         # I am not aware of any way in which this error is raised directly
@@ -10,6 +11,7 @@ def test_arithmetic_error():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "ArithmeticError" in result
+    assert "ArithmeticError is the base class" in result
     return result
 
 

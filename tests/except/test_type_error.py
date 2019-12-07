@@ -12,6 +12,7 @@ def test_type_error1():
     py37 = "TypeError: can only concatenate" in result
     py36 = "must be str, not int" in result
     assert py37 or py36
+    assert "a string ('str') and an integer ('int')" in result
     return result
 
 
@@ -26,6 +27,7 @@ def test_type_error1a():
     py37 = "TypeError: can only concatenate" in result
     py36 = "must be str, not list" in result
     assert py37 or py36
+    assert "a string ('str') and a list" in result
     return result
 
 
@@ -38,6 +40,7 @@ def test_type_error1b():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: can only concatenate" in result
+    assert "a tuple and a list" in result
     return result
 
 
@@ -50,6 +53,7 @@ def test_type_error2():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for +:" in result
+    assert "an integer ('int') and a variable equal to None ('NoneType')" in result
     return result
 
 
@@ -62,6 +66,7 @@ def test_type_error2a():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for +=:" in result
+    assert "an integer ('int') and a string ('str')" in result
     return result
 
 
@@ -74,6 +79,7 @@ def test_type_error3():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for -:" in result
+    assert "a tuple and a list" in result
     return result
 
 
@@ -81,11 +87,12 @@ def test_type_error3a():
     try:
         a = (1, 2)
         b = [3, 4]
-        a -= b
+        b -= a
     except Exception:
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for -=:" in result
+    assert "a list and a tuple" in result
     return result
 
 
@@ -98,6 +105,7 @@ def test_type_error4():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for *:" in result
+    assert "a complex number and a set" in result
     return result
 
 
@@ -105,11 +113,12 @@ def test_type_error4a():
     try:
         a = 1j
         b = {2, 3}
-        a *= b
+        b *= a
     except Exception:
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for *=:" in result
+    assert "a set and a complex number" in result
     return result
 
 
@@ -122,6 +131,7 @@ def test_type_error5():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for /:" in result
+    assert "a dictionary ('dict') and a number ('float')" in result
     return result
 
 
@@ -129,23 +139,25 @@ def test_type_error5a():
     try:
         a = {1: 1, 2: 2}
         b = 3.1416
-        a /= b
+        b /= a
     except Exception:
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for /=:" in result
+    assert "a number ('float') and a dictionary ('dict')" in result
     return result
 
 
 def test_type_error5b():
     try:
         a = {1: 1, 2: 2}
-        b = 3.1416
+        b = 1
         result = a // b
     except Exception:
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for //:" in result
+    assert "a dictionary ('dict') and an integer ('int')" in result
     return result
 
 
@@ -153,11 +165,12 @@ def test_type_error5c():
     try:
         a = {1: 1, 2: 2}
         b = 3.1416
-        a //= b
+        b //= a
     except Exception:
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for //=:" in result
+    assert "an integer ('int') and a dictionary ('dict')"
     return result
 
 
@@ -170,6 +183,7 @@ def test_type_error6():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for &:" in result
+    assert "a string ('str') and an integer ('int')" in result
     return result
 
 
@@ -177,11 +191,12 @@ def test_type_error6a():
     try:
         a = "a"
         b = 2
-        a &= b
+        b &= a
     except Exception:
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for &=:" in result
+    assert "an integer ('int') and a string ('str')" in result
     return result
 
 
@@ -194,6 +209,7 @@ def test_type_error7():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for ** or pow():" in result
+    assert "You tried to exponentiate (raise to a power)" in result
     return result
 
 
@@ -206,6 +222,7 @@ def test_type_error7a():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for ** or pow():" in result
+    assert "You tried to exponentiate (raise to a power)" in result
     return result
 
 
@@ -218,6 +235,7 @@ def test_type_error8():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for >>:" in result
+    assert "You tried to perform the bit shifting operation >>" in result
     return result
 
 
@@ -230,6 +248,7 @@ def test_type_error8a():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for >>=:" in result
+    assert "You tried to perform the bit shifting operation >>" in result
     return result
 
 
@@ -242,6 +261,7 @@ def test_type_error9():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for @:" in result
+    assert "You tried to use the operator @" in result
     return result
 
 
@@ -254,6 +274,7 @@ def test_type_error9a():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for @=:" in result
+    assert "You tried to use the operator @" in result
     return result
 
 
@@ -266,6 +287,7 @@ def test_type_error10():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: '<' not supported between instances of 'int' and 'str'" in result
+    assert "You tried to do an order comparison (<)" in result
     return result
 
 
@@ -277,6 +299,7 @@ def test_type_error11():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: bad operand type for unary +: 'str'" in result
+    assert "You tried to use the unary operator '+'" in result
     return result
 
 
@@ -288,6 +311,7 @@ def test_type_error11a():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: bad operand type for unary -: 'list'" in result
+    assert "You tried to use the unary operator '-'" in result
     return result
 
 
@@ -299,6 +323,7 @@ def test_type_error11b():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: bad operand type for unary ~: 'tuple'" in result
+    assert "You tried to use the unary operator '~'" in result
     return result
 
 
@@ -310,6 +335,7 @@ def test_type_error12():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: 'tuple' object does not support item assignment" in result
+    assert "In Python, some objects are known as immutable:" in result
     return result
 
 
@@ -322,6 +348,7 @@ def test_type_error13():
         friendly_traceback.explain(redirect="capture")
         result = friendly_traceback.get_output()
         assert "TypeError: fn() takes 0 positional arguments but 1 was given" in result
+        assert "1 positional argument while it requires 0" in result
         return result
 
 
@@ -334,6 +361,7 @@ def test_type_error14():
         friendly_traceback.explain(redirect="capture")
         result = friendly_traceback.get_output()
         assert "TypeError: fn() missing 2 required positional argument" in result
+        assert "fewer positional arguments than it requires (2 missing)." in result
         return result
 
 
@@ -344,6 +372,7 @@ def test_type_error15():
         friendly_traceback.explain(redirect="capture")
         result = friendly_traceback.get_output()
         assert "TypeError: 'tuple' object is not callable" in result
+        assert "I suspect that you had an object of this type, <a tuple>," in result
         return result
 
 
@@ -354,6 +383,7 @@ def test_type_error15a():
         friendly_traceback.explain(redirect="capture")
         result = friendly_traceback.get_output()
         assert "TypeError: 'list' object is not callable" in result
+        assert "I suspect that you had an object of this type, <a list>," in result
         return result
 
 
