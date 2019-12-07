@@ -701,7 +701,7 @@ def look_for_missing_bracket(source_lines, max_linenumber, offset):
             ):
                 # We are beyond the location flagged by Python;
                 if last_token == "=" and brackets:
-                    _open_bracket, _start_line = brackets.pop()
+                    _open_bracket, _start_line, _start_col = brackets.pop()
                     if _open_bracket == "{":
                         return _(
                             "It is possible that "
@@ -710,7 +710,7 @@ def look_for_missing_bracket(source_lines, max_linenumber, offset):
                             "before or at the position indicated by --> and ^.\n"
                         )
                     else:
-                        brackets.append((_open_bracket, _start_line))
+                        brackets.append((_open_bracket, _start_line, _start_col))
                 # Perhaps we are simply missing a comma between items.
                 # If so, we should be able to find a closing bracket.
                 if token.string in "([{":
@@ -730,7 +730,7 @@ def look_for_missing_bracket(source_lines, max_linenumber, offset):
             if token.string not in "()[]}{":
                 continue
             if token.string in "([{":
-                brackets.append((token.string, token.start_line))
+                brackets.append((token.string, token.start_line, token.start_col))
             elif token.string in ")]}":
                 # In some of the cases below, we include the offending lines at the
                 # bottom of the error message as they might not be shown in the
@@ -738,7 +738,9 @@ def look_for_missing_bracket(source_lines, max_linenumber, offset):
                 if not brackets:
                     bracket = name_bracket(token.string)
                     _lineno = token.start_line
-                    _source = f"\n    {_lineno}: {source_lines[_lineno-1]}\n\n"
+                    _source = f"\n    {_lineno}: {source_lines[_lineno-1]}\n"
+                    shift = len(str(_lineno)) + token.start_col + 6
+                    _source += " " * shift + "^\n"
                     return (
                         _(
                             "The closing {bracket} on line {linenumber}"
@@ -747,16 +749,24 @@ def look_for_missing_bracket(source_lines, max_linenumber, offset):
                         + _source
                     )
                 else:
-                    open_bracket, open_lineno = brackets.pop()
+                    open_bracket, open_lineno, open_col = brackets.pop()
                     if not matching_brackets(open_bracket, token.string):
                         bracket = name_bracket(token.string)
                         open_bracket = name_bracket(open_bracket)
                         _source = (
                             f"\n    {open_lineno}: {source_lines[open_lineno-1]}\n"
                         )
-                        if open_lineno != token.start_line:
+                        shift = len(str(open_lineno)) + open_col + 6
+                        if open_lineno == token.start_line:
+                            _source += " " * shift + "^"
+                            shift = token.start_col - open_col - 1
+                            _source += " " * shift + "^\n"
+                        else:
+                            _source += " " * shift + "^\n"
                             _lineno = token.start_line
-                            _source += f"\n    {_lineno}: {source_lines[_lineno-1]}\n"
+                            _source += f"    {_lineno}: {source_lines[_lineno-1]}\n"
+                            shift = len(str(_lineno)) + token.start_col + 6
+                            _source += " " * shift + "^\n"
                         return (
                             _(
                                 "The closing {bracket} on line {close_lineno} does not match "
@@ -773,7 +783,7 @@ def look_for_missing_bracket(source_lines, max_linenumber, offset):
         pass
 
     if brackets:
-        bracket, linenumber = brackets.pop()
+        bracket, linenumber, start_col = brackets.pop()
         if end_bracket is not None:
             if matching_brackets(bracket, end_bracket):
                 if bracket == "(":
@@ -797,7 +807,9 @@ def look_for_missing_bracket(source_lines, max_linenumber, offset):
                     )
 
         bracket = name_bracket(bracket)
-        _source = f"\n    {linenumber}: {source_lines[linenumber-1]}\n\n"
+        _source = f"\n    {linenumber}: {source_lines[linenumber-1]}\n"
+        shift = len(str(linenumber)) + start_col + 6
+        _source += " " * shift + "^\n"
         return (
             _("The opening {bracket} on line {linenumber} is not closed.\n").format(
                 bracket=bracket, linenumber=linenumber
