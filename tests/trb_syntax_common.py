@@ -2,6 +2,7 @@
    create files in the same format.
 
 """
+import os
 import sys
 from contextlib import redirect_stderr
 
@@ -19,58 +20,65 @@ def make_title(text):
 
 
 all_imports = {
-    "SyntaxError - Assign to keyword": "syntax.raise_syntax_error1",
-    "SyntaxError - Missing colon 1": "syntax.raise_syntax_error2",
-    "SyntaxError - Missing colon 2": "syntax.raise_syntax_error3",
-    "SyntaxError - elif, not else if": "syntax.raise_syntax_error4",
-    "SyntaxError - elif, not elseif": "syntax.raise_syntax_error5",
-    "SyntaxError - malformed def statment - 1": "syntax.raise_syntax_error6",
-    "SyntaxError - malformed def statment - 2": "syntax.raise_syntax_error7",
-    "SyntaxError - malformed def statment - 3": "syntax.raise_syntax_error8",
-    "SyntaxError - can't assign to literal": "syntax.raise_syntax_error9",
-    "SyntaxError - can't assign to literal - 2": "syntax.raise_syntax_error10",
-    "SyntaxError - import X from Y": "syntax.raise_syntax_error11",
-    "SyntaxError - EOL while scanning string literal": "syntax.raise_syntax_error12",
-    "SyntaxError - assignment to keyword (None)": "syntax.raise_syntax_error13",
-    "SyntaxError - assignment to keyword (__debug__)": "syntax.raise_syntax_error14",
-    "SyntaxError - unmatched closing parenthesis": "syntax.raise_syntax_error15",
-    "SyntaxError - unclosed parenthesis": "syntax.raise_syntax_error16",
-    "SyntaxError - unclosed parenthesis - 2": "syntax.raise_syntax_error17",
-    "SyntaxError - mismatched brackets": "syntax.raise_syntax_error18",
-    "SyntaxError - mismatched brackets - 2": "syntax.raise_syntax_error19",
-    "SyntaxError - print is a function": "syntax.raise_syntax_error20",
-    "SyntaxError - Python keyword as function name": "syntax.raise_syntax_error21",
-    "SyntaxError - break outside loop": "syntax.raise_syntax_error22",
-    "SyntaxError - continue outside loop": "syntax.raise_syntax_error23",
-    "SyntaxError - quote inside a string": "syntax.raise_syntax_error24",
-    "SyntaxError - missing comma in a dict": "syntax.raise_syntax_error25",
-    "SyntaxError - missing comma in a set": "syntax.raise_syntax_error26",
-    "SyntaxError - missing comma in a list": "syntax.raise_syntax_error27",
-    "SyntaxError - missing comma in a tuple": "syntax.raise_syntax_error28",
-    "SyntaxError - missing comma between function args": "syntax.raise_syntax_error29",
-    "SyntaxError - can't assign to function call - 1": "syntax.raise_syntax_error30",
-    "SyntaxError - can't assign to function call - 2": "syntax.raise_syntax_error31",
-    "SyntaxError - used equal sign instead of colon": "syntax.raise_syntax_error32",
-    "SyntaxError - non-default argument follows default argument": "syntax.raise_syntax_error33",
-    "SyntaxError - positional argument follows keyword argument": "syntax.raise_syntax_error34",
-    "SyntaxError - f-string: unterminated string": "syntax.raise_syntax_error35",
-    "SyntaxError - unclosed bracket": "syntax.raise_syntax_error36",
-    "SyntaxError - unexpected EOF while parsing": "syntax.raise_syntax_error37",
-    "SyntaxError - name is parameter and global": "syntax.raise_syntax_error38",
-    "SyntaxError - keyword as attribute": "syntax.raise_syntax_error39",
-    "SyntaxError - content passed continuation line character": "syntax.raise_syntax_error40",
-    "SyntaxError - keyword can't be an expression": "syntax.raise_syntax_error41",
-    "SyntaxError - invalid character in identifier": "syntax.raise_syntax_error42",
-    "SyntaxError - keyword cannot be argument in def - 1": "syntax.raise_syntax_error43",
-    "SyntaxError - keyword cannot be argument in def - 2": "syntax.raise_syntax_error44",
-    "SyntaxError - keyword cannot be argument in def - 3": "syntax.raise_syntax_error45",
-    "SyntaxError - keyword cannot be argument in def - 4": "syntax.raise_syntax_error46",
+    "IndentationError - 1: expected an indented block": "raise_indentation_error1",
+    "IndentationError - 2: unexpected indent": "raise_indentation_error2",
+    "IndentationError - 3: unindent does not match ...": "raise_indentation_error3",
+    "TabError": "raise_tab_error",
+    "SyntaxError - Assign to keyword": "raise_syntax_error1",
+    "SyntaxError - Missing colon 1": "raise_syntax_error2",
+    "SyntaxError - Missing colon 2": "raise_syntax_error3",
+    "SyntaxError - elif, not else if": "raise_syntax_error4",
+    "SyntaxError - elif, not elseif": "raise_syntax_error5",
+    "SyntaxError - malformed def statment - 1": "raise_syntax_error6",
+    "SyntaxError - malformed def statment - 2": "raise_syntax_error7",
+    "SyntaxError - malformed def statment - 3": "raise_syntax_error8",
+    "SyntaxError - can't assign to literal": "raise_syntax_error9",
+    "SyntaxError - can't assign to literal - 2": "raise_syntax_error10",
+    "SyntaxError - import X from Y": "raise_syntax_error11",
+    "SyntaxError - EOL while scanning string literal": "raise_syntax_error12",
+    "SyntaxError - assignment to keyword (None)": "raise_syntax_error13",
+    "SyntaxError - assignment to keyword (__debug__)": "raise_syntax_error14",
+    "SyntaxError - unmatched closing parenthesis": "raise_syntax_error15",
+    "SyntaxError - unclosed parenthesis": "raise_syntax_error16",
+    "SyntaxError - unclosed parenthesis - 2": "raise_syntax_error17",
+    "SyntaxError - mismatched brackets": "raise_syntax_error18",
+    "SyntaxError - mismatched brackets - 2": "raise_syntax_error19",
+    "SyntaxError - print is a function": "raise_syntax_error20",
+    "SyntaxError - Python keyword as function name": "raise_syntax_error21",
+    "SyntaxError - break outside loop": "raise_syntax_error22",
+    "SyntaxError - continue outside loop": "raise_syntax_error23",
+    "SyntaxError - quote inside a string": "raise_syntax_error24",
+    "SyntaxError - missing comma in a dict": "raise_syntax_error25",
+    "SyntaxError - missing comma in a set": "raise_syntax_error26",
+    "SyntaxError - missing comma in a list": "raise_syntax_error27",
+    "SyntaxError - missing comma in a tuple": "raise_syntax_error28",
+    "SyntaxError - missing comma between function args": "raise_syntax_error29",
+    "SyntaxError - can't assign to function call - 1": "raise_syntax_error30",
+    "SyntaxError - can't assign to function call - 2": "raise_syntax_error31",
+    "SyntaxError - used equal sign instead of colon": "raise_syntax_error32",
+    "SyntaxError - non-default argument follows default argument": "raise_syntax_error33",
+    "SyntaxError - positional argument follows keyword argument": "raise_syntax_error34",
+    "SyntaxError - f-string: unterminated string": "raise_syntax_error35",
+    "SyntaxError - unclosed bracket": "raise_syntax_error36",
+    "SyntaxError - unexpected EOF while parsing": "raise_syntax_error37",
+    "SyntaxError - name is parameter and global": "raise_syntax_error38",
+    "SyntaxError - keyword as attribute": "raise_syntax_error39",
+    "SyntaxError - content passed continuation line character": "raise_syntax_error40",
+    "SyntaxError - keyword can't be an expression": "raise_syntax_error41",
+    "SyntaxError - invalid character in identifier": "raise_syntax_error42",
+    "SyntaxError - keyword cannot be argument in def - 1": "raise_syntax_error43",
+    "SyntaxError - keyword cannot be argument in def - 2": "raise_syntax_error44",
+    "SyntaxError - keyword cannot be argument in def - 3": "raise_syntax_error45",
+    "SyntaxError - keyword cannot be argument in def - 4": "raise_syntax_error46",
 }
 
 if sys.version_info < (3, 8):
     all_imports[
         "Walrus operator does not exist - yet"
-    ] = "syntax.raise_syntax_error_walrus"
+    ] = "raise_syntax_error_walrus"
+
+cur_dir = os.getcwd()
+sys.path.append(os.path.join(cur_dir, "syntax"))
 
 
 def create_tracebacks(target, intro_text):

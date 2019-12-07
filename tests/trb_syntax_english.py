@@ -42,7 +42,7 @@ Friendly SyntaxError tracebacks - in English
 
 Friendly-traceback aims to provide friendlier feedback when an exception
 is raised than what is done by Python.
-This file contains only examples of SyntaxError.
+This file contains only examples of SyntaxError and its sub-classes.
 Ideally, an example of each case handled by friendly-traceback
 should be included here.
 

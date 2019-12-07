@@ -19,6 +19,15 @@ def make_title(text):
     write(".. code-block:: none\n")
 
 
+# The format of each item of the dict below is:
+# ExceptionClass - optional heading:  (file, test_function)
+#
+# When a given exception class has more than one cases,
+# the optional heading part hast to be added since each dict item must have
+# a unique key. It can also be helpful to quickly identify if a particular
+# case is included.
+
+
 all_imports = {
     "ArithmeticError": ("test_arithmetic_error", "test_arithmetic_error"),
     "FileNotFoundError": (
@@ -26,9 +35,7 @@ all_imports = {
         "test_file_not_found_error",
     ),
     "ImportError": ("test_import_error", "test_import_error"),
-    "IndentationError - 1: expected an indented block": "syntax.raise_indentation_error1",
-    "IndentationError - 2: unexpected indent": "syntax.raise_indentation_error2",
-    "IndentationError - 3: unindent does not match ...": "syntax.raise_indentation_error3",
+
     "KeyError": ("test_key_error", "test_key_error"),
     "LookupError": ("test_lookup_error", "test_lookup_error"),
     "IndexError - short tuple": ("test_index_error", "test_index_error1"),
@@ -39,7 +46,6 @@ all_imports = {
     ),
     "NameError": ("test_name_error", "test_name_error"),
     "OverflowError": ("test_overflow_error", "test_overflow_error"),
-    "TabError": "syntax.raise_tab_error",
     "TypeError - 1: concatenate two different types": (
         "test_type_error",
         "test_type_error1",
@@ -177,10 +183,7 @@ def create_tracebacks(target, intro_text):
 
             for title in all_imports:
                 function = None
-                if isinstance(all_imports[title], tuple):
-                    name, function = all_imports[title]
-                else:
-                    name = all_imports[title]
+                name, function = all_imports[title]
                 make_title(title)
                 try:
                     mod = __import__(name)
