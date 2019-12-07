@@ -58,9 +58,8 @@ def _find_likely_cause(source_lines, linenumber, message, offset):
 
     if message == "invalid syntax":
         notice = _(
-            "Python did not give us much information regarding\n"
-            "the cause of the error. I make an effort below to guess what\n"
-            "went wrong, but I might guess incorrectly.\n\n"
+            "I make an effort below to guess what caused the problem\n"
+            "but I might guess incorrectly.\n\n"
         )
     else:
         notice = _(
@@ -68,7 +67,7 @@ def _find_likely_cause(source_lines, linenumber, message, offset):
             "about the possible cause of the error:\n\n"
             "    {message}\n\n"
             "However, I do not recognize this information and I have\n"
-            "to guess what went wrong, but I might guess incorrectly.\n\n"
+            "to guess what caused the problem, but I might be wrong.\n\n"
         ).format(message=message)
 
     # If not cause has been identified, we look at a single line

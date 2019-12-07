@@ -523,10 +523,11 @@ def get_likely_cause(etype, value):
     if etype.__name__ in info_specific.get_cause:
         cause = info_specific.get_cause[etype.__name__](etype, value)
         if cause is not None:
-            if etype.__name__ == "SyntaxError":
-                header = _("My best guess:")
+            message = get_message(etype.__name__, value)
+            if etype.__name__ == "SyntaxError" and "invalid syntax" in message:
+                header = _("I don't have enough information from Python:")
             else:
-                header = _("Likely cause:")
+                header = _("Likely cause based on the information given by Python:")
     return header, cause
 
 
