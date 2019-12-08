@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-12-07 20:32-0400\n"
-"PO-Revision-Date: 2019-12-07 20:37-0400\n"
+"POT-Creation-Date: 2019-12-08 16:31-0400\n"
+"PO-Revision-Date: 2019-12-08 16:31-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -884,29 +884,37 @@ msgstr ""
 
 #: core.py:607
 msgid ""
-"Python could not parse the file '{filename}'\n"
+"Python could not understand the code in the file\n"
+"'{filename}'\n"
 "beyond the location indicated below by --> and ^.\n"
 msgstr ""
-"Python peut seulement analyser le fichier '{filename}'\n"
+"Python peut seulement comprendre le code du fichier\n"
+"'{filename}'\n"
 "jusqu'à l'endroit indiqué par --> et ^.\n"
 
-#: core.py:612
+#: core.py:613
 msgid ""
-"Python could not parse the file '{filename}'.\n"
+"Python could not understand the code the file\n"
+"'{filename}'.\n"
 "It reached the end of the file and expected more content.\n"
 msgstr ""
-"Python ne peut pas analyser correctement le fichier '{filename}'.\n"
+"Python ne peut pas comprendre le code du fichier\n"
+"'{filename}'.\n"
 "La fin du fichier a été atteinte et Python s'attendait à voir plus de code.\n"
 "\n"
 
-#: core.py:617
+#: core.py:619
 msgid ""
-"Python could not parse the file '{filename}' for an unspecified reason.\n"
+"Python could not understand the code the file\n"
+"'{filename}'\n"
+"for an unspecified reason.\n"
 msgstr ""
-"Python ne peut pas analyser le fichier '{filename}' pour une raison non "
-"spécifiée.\n"
+"Python ne peut pas comprendre le code du fichier\n"
+"'{filename}'\n"
+"pour une raison non spécifiée.\n"
+"\n"
 
-#: core.py:701
+#: core.py:705
 msgid "Python exception:"
 msgstr "Exception Python:"
 

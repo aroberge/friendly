@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-12-07 20:32-0400\n"
+"POT-Creation-Date: 2019-12-08 16:31-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -606,22 +606,26 @@ msgstr ""
 
 #: core.py:607
 msgid ""
-"Python could not parse the file '{filename}'\n"
+"Python could not understand the code in the file\n"
+"'{filename}'\n"
 "beyond the location indicated below by --> and ^.\n"
 msgstr ""
 
-#: core.py:612
+#: core.py:613
 msgid ""
-"Python could not parse the file '{filename}'.\n"
+"Python could not understand the code the file\n"
+"'{filename}'.\n"
 "It reached the end of the file and expected more content.\n"
 msgstr ""
 
-#: core.py:617
+#: core.py:619
 msgid ""
-"Python could not parse the file '{filename}' for an unspecified reason.\n"
+"Python could not understand the code the file\n"
+"'{filename}'\n"
+"for an unspecified reason.\n"
 msgstr ""
 
-#: core.py:701
+#: core.py:705
 msgid "Python exception:"
 msgstr ""
 

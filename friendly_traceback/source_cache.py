@@ -162,10 +162,10 @@ def highlight_source(linenumber, index, lines, offset=None):
         if i == linenumber:
             num = with_mark.format(i)
             problem_line = line
+            new_lines.append(num + line.rstrip())
             if offset is not None:
-                new_lines.append(num + line.rstrip())
                 new_lines.append(offset_mark)
-                break
+            break
         else:
             num = no_mark.format(i)
         new_lines.append(num + line.rstrip())

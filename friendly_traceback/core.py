@@ -605,17 +605,21 @@ def process_parsing_error(etype, value, info):
     )
     if "-->" in partial_source:
         info["parsing_error"] = _(
-            "Python could not parse the file '{filename}'\n"
+            "Python could not understand the code in the file\n"
+            "'{filename}'\n"
             "beyond the location indicated below by --> and ^.\n"
         ).format(filename=utils.shorten_path(filepath))
     elif "unexpected EOF while parsing" in repr(value):
         info["parsing_error"] = _(
-            "Python could not parse the file '{filename}'.\n"
+            "Python could not understand the code the file\n"
+            "'{filename}'.\n"
             "It reached the end of the file and expected more content.\n"
         ).format(filename=utils.shorten_path(filepath))
     else:
         info["parsing_error"] = _(
-            "Python could not parse the file '{filename}' for an unspecified reason.\n"
+            "Python could not understand the code the file\n"
+            "'{filename}'\n"
+            "for an unspecified reason.\n"
         ).format(filename=utils.shorten_path(filepath))
 
     info["parsing_error_source"] = f"{partial_source}\n"
