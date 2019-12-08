@@ -6,7 +6,7 @@ info_36 = data_3_6.info
 info_37 = data_3_7.info
 info_38 = data_3_8.info
 
-print("<pre>")
+print("<div>")
 files = set([])
 
 
@@ -15,18 +15,24 @@ def print_different(filename, in_36, in_37, in_38):
     # one version to the next.
     if in_36 != in_37:
         if filename not in files:
-            print("=" * 50)
+            print("<div class='filename-header'>")
             files.add(filename)
-            print(filename, "\n", "-" * 50, sep="")
+            print(filename)
+            print("</div>")
+        print("<pre class='highlight friendly-small-pre'>")
         print("3.6:\n", in_36, sep="")
         print("3.7:\n", in_37, sep="")
+        print("</pre>")
     if in_37 != in_38:
         if filename not in files:
-            print("=" * 50)
+            print("<div class='filename-header'>")
             files.add(filename)
-            print(filename, "\n", "-" * 50, sep="")
+            print(filename)
+            print("</div>")
+        print("<pre class='highlight friendly-small-pre'>")
         print("3.7:\n", in_37, sep="")
         print("3.8:\n", in_38, sep="")
+        print("</pre>")
 
 
 for filename in info_36:
@@ -35,9 +41,9 @@ for filename in info_36:
         data_37 = info_37[filename]
         data_38 = info_38[filename]
     except KeyError:
-        print("=" * 50)
+        print("<div class='filename-header'>")
         print("entry does not exist in one data file for ", filename)
-        print("=" * 50)
+        print("</div>")
         continue
 
     print_different(
@@ -53,4 +59,4 @@ for filename in info_36:
     # )
     print_different(filename, data_36["cause"], data_37["cause"], data_38["cause"])
 
-print("</pre>")
+print("</div>")
