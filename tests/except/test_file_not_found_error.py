@@ -11,7 +11,8 @@ def test_file_not_found_error():
         "FileNotFoundError: [Errno 2] No such file or directory: 'does_not_exist'"
         in result
     )
-    assert "that cannot be found is 'does_not_exist'." in result
+    if friendly_traceback.get_lang() == 'en':
+        assert "that cannot be found is 'does_not_exist'." in result
     return result
 
 

@@ -8,7 +8,8 @@ def test_overflow_error():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "OverflowError: (34, 'Result too large')" in result
-    assert "OverflowError is raised when the result" in result
+    if friendly_traceback.get_lang() == 'en':
+        assert "OverflowError is raised when the result" in result
     return result
 
 

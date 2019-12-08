@@ -58,7 +58,7 @@ causes = {
     "raise_syntax_error44": "as an argument in the definition of a function",
     "raise_syntax_error45": "as an argument in the definition of a function",
     "raise_syntax_error46": "as an argument in the definition of a function",
-    "raise_syntax_error47": "intead of deleting the function's name",
+    "raise_syntax_error47": "instead of deleting the function's name",
 }
 
 if sys.version_info < (3, 8):

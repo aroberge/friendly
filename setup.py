@@ -28,6 +28,7 @@ setup(
     author_email="Andre.Roberge@gmail.com",
     packages=find_packages(exclude=["dist", "build", "tools", "tests", "demos"]),
     package_data={"": ["friendly_traceback/locales/*"]},
+    python_requires=">=3.6",
     include_package_data=True,
     zip_safe=False,
 )
