@@ -242,6 +242,32 @@ def continue_outside_loop(message="", **kwargs):
 
 
 @add_python_message
+def delete_function_call(message="", line=None, **kwargs):
+    _ = current_lang.translate
+    if (
+        message == "can't delete function call"  # Python 3.6, 3.7
+        or message == "cannot delete function call"  # Python 3.8
+    ):
+        tokens = utils.collect_tokens(line)
+        if (
+            tokens[0].string == "del"
+            and tokens[1].type == tokenize.NAME
+            and tokens[2].string == "("
+            and tokens[-1].string == ")"
+        ):
+            correct = "del {name}".format(name=tokens[1].string)
+        else:
+            line = "del function()"
+            correct = "del function"
+        return _(
+            "You attempted to delete a function call\n"
+            "    {line}\n"
+            "instead of deleting the function's name\n"
+            "    {correct}\n"
+        ).format(line=line, correct=correct)
+
+
+@add_python_message
 def eol_while_scanning_string_literal(message="", **kwargs):
     _ = current_lang.translate
     if "EOL while scanning string literal" in message:

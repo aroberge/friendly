@@ -70,6 +70,7 @@ all_imports = {
     "SyntaxError - keyword cannot be argument in def - 2": "raise_syntax_error44",
     "SyntaxError - keyword cannot be argument in def - 3": "raise_syntax_error45",
     "SyntaxError - keyword cannot be argument in def - 4": "raise_syntax_error46",
+    "SyntaxError - delete function call": "raise_syntax_error47",
 }
 
 if sys.version_info < (3, 8):

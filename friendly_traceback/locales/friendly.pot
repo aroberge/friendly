@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-12-06 23:03-0400\n"
+"POT-Creation-Date: 2019-12-07 20:32-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,7 +52,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:152 analyze_syntax.py:535
+#: analyze_syntax.py:152 analyze_syntax.py:561
 msgid ""
 "You were trying to assign a value to the Python keyword '{keyword}'.\n"
 "This is not allowed.\n"
@@ -109,13 +109,21 @@ msgid ""
 "The Python keyword 'continue' can only be used inside a for loop or inside a while loop.\n"
 msgstr ""
 
-#: analyze_syntax.py:248
+#: analyze_syntax.py:262
+msgid ""
+"You attempted to delete a function call\n"
+"    {line}\n"
+"instead of deleting the function's name\n"
+"    {correct}\n"
+msgstr ""
+
+#: analyze_syntax.py:274
 msgid ""
 "You starting writing a string with a single or double quote\n"
 "but never ended the string with another quote on that line.\n"
 msgstr ""
 
-#: analyze_syntax.py:258
+#: analyze_syntax.py:284
 msgid ""
 "One of the following two possibilities could be the cause:\n"
 "1. You meant to do a comparison with == and wrote = instead.\n"
@@ -129,7 +137,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:274
+#: analyze_syntax.py:300
 msgid ""
 "You likely called a function with a named argument:\n"
 "\n"
@@ -141,7 +149,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:288
+#: analyze_syntax.py:314
 msgid ""
 "You likely used some unicode character that is not allowed\n"
 "as part of a variable name in Python.\n"
@@ -149,7 +157,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:322
+#: analyze_syntax.py:348
 msgid ""
 "Python tells us that the closing '{closing}' does not match the opening '{opening}' on line {lineno}.\n"
 "\n"
@@ -157,7 +165,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:328
+#: analyze_syntax.py:354
 msgid ""
 "Python tells us that the closing '{closing}' does not match the opening '{opening}'.\n"
 "\n"
@@ -165,14 +173,14 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:343
+#: analyze_syntax.py:369
 msgid ""
 "Inside an f-string, which is a string prefixed by the letter f, \n"
 "you have another string, which starts with either a\n"
 "single quote (') or double quote (\"), without a matching closing one.\n"
 msgstr ""
 
-#: analyze_syntax.py:360
+#: analyze_syntax.py:386
 msgid ""
 "You are including the statement\n"
 "\n"
@@ -184,7 +192,7 @@ msgid ""
 "inside that function, which is the contrary of what 'global' implied.\n"
 msgstr ""
 
-#: analyze_syntax.py:374
+#: analyze_syntax.py:400
 msgid ""
 "You are using the continuation character '\\' outside of a string,\n"
 "and it is followed by some other character(s).\n"
@@ -192,7 +200,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:390
+#: analyze_syntax.py:416
 msgid ""
 "Python tells us that the it reached the end of the file\n"
 "and expected more content.\n"
@@ -201,12 +209,12 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:412 analyze_syntax.py:813
+#: analyze_syntax.py:438 analyze_syntax.py:839
 msgid ""
 "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 
-#: analyze_syntax.py:422
+#: analyze_syntax.py:448
 msgid ""
 "In Python, you can call functions with only positional arguments\n"
 "\n"
@@ -224,7 +232,7 @@ msgid ""
 "According to Python, you used positional arguments after keyword ones.\n"
 msgstr ""
 
-#: analyze_syntax.py:439
+#: analyze_syntax.py:465
 msgid ""
 "In Python, you can define functions with only positional arguments\n"
 "\n"
@@ -242,7 +250,7 @@ msgid ""
 "According to Python, you used positional arguments after keyword ones.\n"
 msgstr ""
 
-#: analyze_syntax.py:459
+#: analyze_syntax.py:485
 msgid ""
 "Perhaps you need to type print({message})?\n"
 "\n"
@@ -250,21 +258,21 @@ msgid ""
 "Now, 'print' is a function; you need to use parentheses to call it.\n"
 msgstr ""
 
-#: analyze_syntax.py:515
+#: analyze_syntax.py:541
 msgid ""
 "You appear to be using the operator :=, sometimes called\n"
 "the walrus operator. This operator requires the use of\n"
 "Python 3.8 or newer. You are using version {version}.\n"
 msgstr ""
 
-#: analyze_syntax.py:551
+#: analyze_syntax.py:577
 msgid ""
 "You meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:570
+#: analyze_syntax.py:596
 msgid ""
 "You wrote something like\n"
 "    import {function} from {module}\n"
@@ -273,19 +281,19 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:588
+#: analyze_syntax.py:614
 msgid ""
 "You cannot use the Python keyword {word} as an attribute.\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:592
+#: analyze_syntax.py:618
 msgid ""
 "You cannot use the constant __debug__ as an attribute.\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:611
+#: analyze_syntax.py:637
 msgid ""
 "There appears to be a Python identifier (variable name)\n"
 "immediately following a string.\n"
@@ -293,110 +301,110 @@ msgid ""
 "that was enclosed in quotes of the same kind.\n"
 msgstr ""
 
-#: analyze_syntax.py:631
+#: analyze_syntax.py:657
 msgid "a class"
 msgstr ""
 
-#: analyze_syntax.py:632
+#: analyze_syntax.py:658
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:638
+#: analyze_syntax.py:664
 msgid ""
 "You wrote a '{for_while}' loop but\n"
 "forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:644
+#: analyze_syntax.py:670
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:665
+#: analyze_syntax.py:691
 msgid "a function or method"
 msgstr ""
 
-#: analyze_syntax.py:666
+#: analyze_syntax.py:692
 msgid ""
 "You tried to define {class_or_function} and did not use the correct syntax.\n"
 "The correct syntax is:\n"
 "    def name ( optional_arguments ):\n"
 msgstr ""
 
-#: analyze_syntax.py:675
+#: analyze_syntax.py:701
 msgid ""
 "You tried to use the Python keyword '{kwd}' as a function name.\n"
 msgstr ""
 
-#: analyze_syntax.py:722
+#: analyze_syntax.py:748
 msgid ""
 "I am guessing that you tried to use the Python keyword\n"
 "{kwd} as an argument in the definition of a function.\n"
 msgstr ""
 
-#: analyze_syntax.py:774
+#: analyze_syntax.py:800
 msgid ""
 "It is possible that you used an equal sign '=' instead of a colon ':'\n"
 "to assign values to keys in a dict\n"
 "before or at the position indicated by --> and ^.\n"
 msgstr ""
 
-#: analyze_syntax.py:839
+#: analyze_syntax.py:865
 msgid ""
 "The closing {bracket} on line {close_lineno} does not match the opening {open_bracket} on line {open_lineno}.\n"
 msgstr ""
 
-#: analyze_syntax.py:858
+#: analyze_syntax.py:884
 msgid ""
 "It is possible that you forgot a comma between items in a tuple, \n"
 "or between function arguments, \n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: analyze_syntax.py:865
+#: analyze_syntax.py:891
 msgid ""
 "It is possible that you forgot a comma between items in a list\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: analyze_syntax.py:871
+#: analyze_syntax.py:897
 msgid ""
 "It is possible that you forgot a comma between items in a set or dict\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: analyze_syntax.py:882
+#: analyze_syntax.py:908
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 
-#: analyze_syntax.py:902
+#: analyze_syntax.py:928
 msgid "parenthesis '('"
 msgstr ""
 
-#: analyze_syntax.py:904
+#: analyze_syntax.py:930
 msgid "parenthesis ')'"
 msgstr ""
 
-#: analyze_syntax.py:906
+#: analyze_syntax.py:932
 msgid "square bracket '['"
 msgstr ""
 
-#: analyze_syntax.py:908
+#: analyze_syntax.py:934
 msgid "square bracket ']'"
 msgstr ""
 
-#: analyze_syntax.py:910
+#: analyze_syntax.py:936
 msgid "curly bracket '{'"
 msgstr ""
 
-#: analyze_syntax.py:912
+#: analyze_syntax.py:938
 msgid "curly bracket '}'"
 msgstr ""
 
