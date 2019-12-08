@@ -25,6 +25,7 @@ from .path_info import (
     include_file_in_traceback,
 )
 
+__version__ = "0.0.20a"
 __all__ = [
     "cache",
     "check_syntax",
@@ -33,6 +34,7 @@ __all__ = [
     "exclude_file_from_traceback",
     "is_excluded_file",
     "include_file_in_traceback",
+    "__version__",
 ]
 # Note: more content is added to __all__ below
 

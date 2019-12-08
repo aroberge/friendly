@@ -6,16 +6,12 @@ used to show some "friendly" tracebacks.
 
 import os
 import platform
-
 from code import InteractiveConsole
 
 from . import public_api
 
-from .version import __version__
-
-
 BANNER = "Friendly Console version {}. [Python version: {}]\n".format(
-    __version__, platform.python_version()
+    public_api.__version__, platform.python_version()
 )
 
 

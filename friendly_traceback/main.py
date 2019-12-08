@@ -14,7 +14,6 @@ import sys
 import textwrap
 
 from . import console
-from . import version
 from . import public_api
 from . import utils
 
@@ -105,7 +104,7 @@ def main():
     if args.level is not None:
         public_api.set_level(args.level)
     if args.version:
-        print(f"Friendly-traceback version {version.__version__}")
+        print(f"Friendly-traceback version {public_api.__version__}")
         sys.exit()
 
     public_api.install()

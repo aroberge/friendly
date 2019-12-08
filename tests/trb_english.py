@@ -62,7 +62,7 @@ Friendly-traceback version: {friendly}
 Python version: {python}
 
 """.format(
-    friendly=friendly_traceback.version.__version__,
+    friendly=friendly_traceback.__version__,
     python=platform.python_version(),
     name=__file__,
 )

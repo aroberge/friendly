@@ -1,15 +1,13 @@
 # pylint: skip-file
 from setuptools import setup, find_packages
-from friendly_traceback import version
-
-version_ = version.__version__
+from friendly_traceback import __version__
 
 with open("README.md", encoding="utf8") as f:
     README = f.read()
 
 setup(
     name="friendly-traceback",
-    version=version_,
+    version=__version__,
     description="Friendlier tracebacks in any language.",
     long_description=README,
     long_description_content_type="text/markdown",

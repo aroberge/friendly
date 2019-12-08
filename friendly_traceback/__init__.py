@@ -12,5 +12,4 @@ del _valid_version
 del _sys
 
 from .public_api import *  # noqa
-from . import version  # noqa
 from .console import FriendlyConsole, start_console  # noqa

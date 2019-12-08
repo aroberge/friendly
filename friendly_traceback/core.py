@@ -286,7 +286,6 @@ def _reset(saved_except_hook, saved_lang, saved_level):
 #    12:
 #    13:     try:
 # -->14:         inner()
-#    15:     except Exception:
 #
 # inner: <function test_unbound_local_error.<loca... >
 
@@ -295,7 +294,6 @@ def _reset(saved_except_hook, saved_lang, saved_level):
 #     9:     def inner():
 #    10:         b = 2
 # -->11:         a = a + b
-#    12:
 #
 # [6]
 # b: 2
@@ -633,7 +631,6 @@ def set_call_info(info, name, filename, linenumber, lines, index, frame):
            12:
            13:     try:
         -->14:         inner()
-           15:     except Exception:
 
         inner: <function test_unbound_local_error.<loca... >
 
@@ -642,7 +639,6 @@ def set_call_info(info, name, filename, linenumber, lines, index, frame):
             9:     def inner():
            10:         b = 2
         -->11:         a = a + b
-           12:
 
         [6]
         b = 2
