@@ -15,6 +15,7 @@ instead of::
 from functools import wraps
 
 from . import core
+from . import utils
 
 from .core import check_syntax, run_code
 from .session import session
@@ -126,6 +127,15 @@ def set_formatter(formatter=None):
        subject to change but include ``level``.
     """
     session.set_formatter(formatter=formatter)
+
+
+@make_public
+def _tokenize(source):
+    """Prints tokens found in source, excluding spaces and comments.
+
+       This is occasionally useful to use at the console during development.
+    """
+    return utils._tokenize(source)
 
 
 # =========================================================================
