@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-12-08 16:31-0400\n"
-"PO-Revision-Date: 2019-12-08 16:31-0400\n"
+"POT-Creation-Date: 2019-12-09 17:33-0400\n"
+"PO-Revision-Date: 2019-12-09 17:35-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -77,7 +77,7 @@ msgstr ""
 "valeur.\n"
 "\n"
 
-#: analyze_syntax.py:152 analyze_syntax.py:561
+#: analyze_syntax.py:152 analyze_syntax.py:609
 msgid ""
 "You were trying to assign a value to the Python keyword '{keyword}'.\n"
 "This is not allowed.\n"
@@ -301,7 +301,39 @@ msgstr ""
 "à l'intérieur de cette fonction, ce qui est le contraire de ce que «global» "
 "sous-entendait.\n"
 
-#: analyze_syntax.py:400
+#: analyze_syntax.py:402
+msgid ""
+"You assigned a value to the variable '{name}'\n"
+"before declaring it as a global variable.\n"
+msgstr ""
+"Vous avez attribué une valeur à la variable  '{name}'\n"
+"avant de la déclarer comme une variable globale.\n"
+
+#: analyze_syntax.py:414
+msgid ""
+"You used the variable '{name}'\n"
+"before declaring it as a global variable.\n"
+msgstr ""
+"Vous avez utilisé la variable '{name}'\n"
+"avant de la déclarer comme une variable globale.\n"
+
+#: analyze_syntax.py:426
+msgid ""
+"You assigned a value to the variable '{name}'\n"
+"before declaring it as a nonlocal variable.\n"
+msgstr ""
+"Vous avez attribué une valeur à la variable '{name}'\n"
+"avant de la déclarer comme variable non locale.\n"
+
+#: analyze_syntax.py:438
+msgid ""
+"You used the variable '{name}'\n"
+"before declaring it as a nonlocal variable.\n"
+msgstr ""
+"Vous avez utilisé la variable '{name}'\n"
+"avant de la déclarer comme variable non locale.\n"
+
+#: analyze_syntax.py:448
 msgid ""
 "You are using the continuation character '\\' outside of a string,\n"
 "and it is followed by some other character(s).\n"
@@ -315,7 +347,7 @@ msgstr ""
 "ou un apostrophe.\n"
 "\n"
 
-#: analyze_syntax.py:416
+#: analyze_syntax.py:464
 msgid ""
 "Python tells us that the it reached the end of the file\n"
 "and expected more content.\n"
@@ -329,13 +361,13 @@ msgstr ""
 "Je vais essayer de donner un peu plus d'informations.\n"
 "\n"
 
-#: analyze_syntax.py:438 analyze_syntax.py:839
+#: analyze_syntax.py:486 analyze_syntax.py:887
 msgid "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'a pas de symbole ouvrant qui "
 "lui correspond.\n"
 
-#: analyze_syntax.py:448
+#: analyze_syntax.py:496
 msgid ""
 "In Python, you can call functions with only positional arguments\n"
 "\n"
@@ -370,7 +402,7 @@ msgstr ""
 "Selon Python, vous avez utilisé des arguments positionnels après des "
 "arguments nommés.\n"
 
-#: analyze_syntax.py:465
+#: analyze_syntax.py:513
 msgid ""
 "In Python, you can define functions with only positional arguments\n"
 "\n"
@@ -407,7 +439,7 @@ msgstr ""
 "Selon Python, vous avez utilisé des arguments positionnels après des "
 "arguments nommés.\n"
 
-#: analyze_syntax.py:485
+#: analyze_syntax.py:533
 msgid ""
 "Perhaps you need to type print({message})?\n"
 "\n"
@@ -420,7 +452,7 @@ msgstr ""
 "Maintenant, «print» est une fonction; vous devez utiliser des parenthèses "
 "pour l'invoquer.\n"
 
-#: analyze_syntax.py:541
+#: analyze_syntax.py:589
 msgid ""
 "You appear to be using the operator :=, sometimes called\n"
 "the walrus operator. This operator requires the use of\n"
@@ -432,7 +464,7 @@ msgstr ""
 "{version}.\n"
 "\n"
 
-#: analyze_syntax.py:577
+#: analyze_syntax.py:625
 msgid ""
 "You meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
@@ -442,7 +474,7 @@ msgstr ""
 "au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: analyze_syntax.py:596
+#: analyze_syntax.py:644
 msgid ""
 "You wrote something like\n"
 "    import {function} from {module}\n"
@@ -457,7 +489,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: analyze_syntax.py:614
+#: analyze_syntax.py:662
 msgid ""
 "You cannot use the Python keyword {word} as an attribute.\n"
 "\n"
@@ -466,7 +498,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: analyze_syntax.py:618
+#: analyze_syntax.py:666
 msgid ""
 "You cannot use the constant __debug__ as an attribute.\n"
 "\n"
@@ -474,7 +506,7 @@ msgstr ""
 "Vous ne pouvez pas utiliser la constante __debug__ comme attribut.\n"
 "\n"
 
-#: analyze_syntax.py:637
+#: analyze_syntax.py:685
 msgid ""
 "There appears to be a Python identifier (variable name)\n"
 "immediately following a string.\n"
@@ -486,11 +518,11 @@ msgstr ""
 "Je soupçonne que vous essayiez d'utiliser un apostrophe ou un guillemet\n"
 "à l'intérieur d'une chaîne qui était délimitée par ces mêmes caractères.\n"
 
-#: analyze_syntax.py:657
+#: analyze_syntax.py:705
 msgid "a class"
 msgstr "une classe"
 
-#: analyze_syntax.py:658
+#: analyze_syntax.py:706
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
@@ -500,7 +532,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:664
+#: analyze_syntax.py:712
 msgid ""
 "You wrote a '{for_while}' loop but\n"
 "forgot to add a colon ':' at the end\n"
@@ -510,7 +542,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:670
+#: analyze_syntax.py:718
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
@@ -520,11 +552,11 @@ msgstr ""
 "'{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: analyze_syntax.py:691
+#: analyze_syntax.py:739
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: analyze_syntax.py:692
+#: analyze_syntax.py:740
 msgid ""
 "You tried to define {class_or_function} and did not use the correct syntax.\n"
 "The correct syntax is:\n"
@@ -536,14 +568,14 @@ msgstr ""
 "    def nom ( arguments_optionnels ):\n"
 "\n"
 
-#: analyze_syntax.py:701
+#: analyze_syntax.py:749
 msgid "You tried to use the Python keyword '{kwd}' as a function name.\n"
 msgstr ""
 "Vous avez tenté d'utiliser le mot clé Python '{kwd}' comme nom de fonction.\n"
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: analyze_syntax.py:748
+#: analyze_syntax.py:796
 msgid ""
 "I am guessing that you tried to use the Python keyword\n"
 "{kwd} as an argument in the definition of a function.\n"
@@ -553,7 +585,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: analyze_syntax.py:800
+#: analyze_syntax.py:848
 msgid ""
 "It is possible that you used an equal sign '=' instead of a colon ':'\n"
 "to assign values to keys in a dict\n"
@@ -564,7 +596,7 @@ msgstr ""
 "pour attribuer des valeurs à une clé d'un dictionnaire\n"
 "avant ou exactement à la position indiquée par --> et ^.\n"
 
-#: analyze_syntax.py:865
+#: analyze_syntax.py:913
 msgid ""
 "The closing {bracket} on line {close_lineno} does not match the opening "
 "{open_bracket} on line {open_lineno}.\n"
@@ -572,7 +604,7 @@ msgstr ""
 "Le symbole {bracket} à la ligne {close_lineno} ne correspond pas au symbole "
 "{open_bracket} à la ligne {open_lineno}.\n"
 
-#: analyze_syntax.py:884
+#: analyze_syntax.py:932
 msgid ""
 "It is possible that you forgot a comma between items in a tuple, \n"
 "or between function arguments, \n"
@@ -583,7 +615,7 @@ msgstr ""
 "ou entre les arguments d'une fonction, avant la position indiquée par --> et "
 "^.\n"
 
-#: analyze_syntax.py:891
+#: analyze_syntax.py:939
 msgid ""
 "It is possible that you forgot a comma between items in a list\n"
 "before the position indicated by --> and ^.\n"
@@ -592,7 +624,7 @@ msgstr ""
 "liste\n"
 "avant la position indiquée par --> et ^.\n"
 
-#: analyze_syntax.py:897
+#: analyze_syntax.py:945
 msgid ""
 "It is possible that you forgot a comma between items in a set or dict\n"
 "before the position indicated by --> and ^.\n"
@@ -601,33 +633,33 @@ msgstr ""
 "ensemble (set)\n"
 "ou un dict avant la position indiquée par --> et ^.\n"
 
-#: analyze_syntax.py:908
+#: analyze_syntax.py:956
 msgid "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'est pas fermé par le symbole "
 "correspondant.\n"
 
-#: analyze_syntax.py:928
+#: analyze_syntax.py:976
 msgid "parenthesis '('"
 msgstr "parenthèse '('"
 
-#: analyze_syntax.py:930
+#: analyze_syntax.py:978
 msgid "parenthesis ')'"
 msgstr "parenthèse ')'"
 
-#: analyze_syntax.py:932
+#: analyze_syntax.py:980
 msgid "square bracket '['"
 msgstr "crochet '['"
 
-#: analyze_syntax.py:934
+#: analyze_syntax.py:982
 msgid "square bracket ']'"
 msgstr "crochet ']'"
 
-#: analyze_syntax.py:936
+#: analyze_syntax.py:984
 msgid "curly bracket '{'"
 msgstr "accolade '{'"
 
-#: analyze_syntax.py:938
+#: analyze_syntax.py:986
 msgid "curly bracket '}'"
 msgstr "accolade '}'"
 
@@ -821,7 +853,7 @@ msgstr ""
 "que Python a pris comme indiquant une invocation de fonction.\n"
 "Il est possible que vous ayez oublié d'écrire une virgule avant le tuple.\n"
 
-#: core.py:346
+#: core.py:344
 msgid ""
 "        I suspect that you are using a regular\n"
 "        Python console after importing\n"
@@ -832,7 +864,7 @@ msgstr ""
 "        Console Python après avoir importé Friendly-traceback.\n"
 "        Malheureusement, aucune autre information ne peut être fournie.\n"
 
-#: core.py:377
+#: core.py:375
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -843,7 +875,7 @@ msgstr ""
 "Est-ce que vous utilisez une console Python plutôt que la console \"Friendly"
 "\"?\n"
 
-#: core.py:389
+#: core.py:387
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
@@ -851,19 +883,19 @@ msgstr ""
 "Malheureusement, aucune information supplémentaire n’est disponible:\n"
 "le contenu du fichier '<string>' n’est pas accessible.\n"
 
-#: core.py:435
+#: core.py:433
 msgid "Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr "Exception levée à la ligne {linenumber} du fichier '{filename}'.\n"
 
-#: core.py:528
+#: core.py:526
 msgid "I don't have enough information from Python:"
 msgstr "Je n'ai pas assez d'informations de Python:"
 
-#: core.py:530
+#: core.py:528
 msgid "Likely cause based on the information given by Python:"
 msgstr "Cause probable basée sur les informations données par Python :"
 
-#: core.py:572
+#: core.py:570
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
@@ -873,16 +905,16 @@ msgstr ""
 "        vous devez utiliser la console 'Friendly' et non pas une \n"
 "        console Python régulière.\n"
 
-#: core.py:578
+#: core.py:576
 msgid "Problem: source of '{filename}' is not available\n"
 msgstr "Problème : la source de '{filename}' n'est pas disponible.\n"
 
-#: core.py:593
+#: core.py:591
 msgid "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 "L'exécution s'est arrêtée à la ligne {linenumber} du fichier '{filename}'\n"
 
-#: core.py:607
+#: core.py:605
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -892,7 +924,7 @@ msgstr ""
 "'{filename}'\n"
 "jusqu'à l'endroit indiqué par --> et ^.\n"
 
-#: core.py:613
+#: core.py:611
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
@@ -903,7 +935,7 @@ msgstr ""
 "La fin du fichier a été atteinte et Python s'attendait à voir plus de code.\n"
 "\n"
 
-#: core.py:619
+#: core.py:617
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'\n"
@@ -914,7 +946,7 @@ msgstr ""
 "pour une raison non spécifiée.\n"
 "\n"
 
-#: core.py:705
+#: core.py:701
 msgid "Python exception:"
 msgstr "Exception Python:"
 

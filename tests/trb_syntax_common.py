@@ -71,6 +71,10 @@ all_imports = {
     "SyntaxError - keyword cannot be argument in def - 3": "raise_syntax_error45",
     "SyntaxError - keyword cannot be argument in def - 4": "raise_syntax_error46",
     "SyntaxError - delete function call": "raise_syntax_error47",
+    "SyntaxError - assigned prior to global declaration": "raise_syntax_error48",
+    "SyntaxError - used prior to global declaration": "raise_syntax_error49",
+    "SyntaxError - assigned prior to nonlocal declaration": "raise_syntax_error5-",
+    "SyntaxError - used prior to nonlocal declaration": "raise_syntax_error51",
 }
 
 if sys.version_info < (3, 8):

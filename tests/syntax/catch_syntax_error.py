@@ -59,6 +59,10 @@ causes = {
     "raise_syntax_error45": "as an argument in the definition of a function",
     "raise_syntax_error46": "as an argument in the definition of a function",
     "raise_syntax_error47": "instead of deleting the function's name",
+    "raise_syntax_error48": "before declaring it as a global variable.",
+    "raise_syntax_error49": "You used the variable 'r'",
+    "raise_syntax_error50": "before declaring it as a nonlocal variable.",
+    "raise_syntax_error51": "You assigned a value to the variable 's'",
 }
 
 if sys.version_info < (3, 8):

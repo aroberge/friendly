@@ -129,11 +129,15 @@ def set_formatter(formatter=None):
     session.set_formatter(formatter=formatter)
 
 
-@make_public
 def _tokenize(source):
     """Prints tokens found in source, excluding spaces and comments.
 
        This is occasionally useful to use at the console during development.
+
+       It is not part of the * import, and is really meant to be used
+       only by developers. It has been added in this public_api.py module
+       in order to give us more flexibility to change other modules
+       (such as utils.py) if needed.
     """
     return utils._tokenize(source)
 

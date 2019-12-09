@@ -394,6 +394,54 @@ def name_is_parameter_and_global(message="", line="", **kwargs):
 
 
 @add_python_message
+def name_assigned_to_prior_global(message="", **kwargs):
+    # something like: name 'p' is assigned to before global declaration
+    _ = current_lang.translate
+    if "is assigned to before global declaration" in message:
+        name = message.split("'")[1]
+        return _(
+            "You assigned a value to the variable '{name}'\n"
+            "before declaring it as a global variable.\n"
+        ).format(name=name)
+
+
+@add_python_message
+def name_used_prior_global(message="", **kwargs):
+    # something like: name 'p' is used prior to global declaration
+    _ = current_lang.translate
+    if "is used prior to global declaration" in message:
+        name = message.split("'")[1]
+        return _(
+            "You used the variable '{name}'\n"
+            "before declaring it as a global variable.\n"
+        ).format(name=name)
+
+
+@add_python_message
+def name_assigned_to_prior_nonlocal(message="", **kwargs):
+    # something like: name 'p' is assigned to before global declaration
+    _ = current_lang.translate
+    if "is assigned to before nonlocal declaration" in message:
+        name = message.split("'")[1]
+        return _(
+            "You assigned a value to the variable '{name}'\n"
+            "before declaring it as a nonlocal variable.\n"
+        ).format(name=name)
+
+
+@add_python_message
+def name_used_prior_nonlocal(message="", **kwargs):
+    # something like: name 'q' is used prior to nonlocal declaration
+    _ = current_lang.translate
+    if "is used prior to nonlocal declaration" in message:
+        name = message.split("'")[1]
+        return _(
+            "You used the variable '{name}'\n"
+            "before declaring it as a nonlocal variable.\n"
+        ).format(name=name)
+
+
+@add_python_message
 def unexpected_character_after_continuation(message="", **kwargs):
     _ = current_lang.translate
     if "unexpected character after line continuation character" in message:
