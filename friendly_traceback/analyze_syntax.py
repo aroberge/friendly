@@ -82,7 +82,7 @@ def _find_likely_cause(source_lines, linenumber, message, offset):
     # while we look for missing or mismatched brackets, such as (],
     # we also can sometimes identify other problems during this step.
 
-    cause = bracket_analyzer.look_for_missing_bracket(source_lines, linenumber, offset)
+    cause = bracket_analyzer.look_for_problem(source_lines, linenumber, offset)
     if cause:
         return notice + cause
 

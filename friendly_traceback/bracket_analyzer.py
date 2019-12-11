@@ -1,8 +1,110 @@
+"""This module look for various errors connected with parenthesis, (),
+square brackets, [], and curly brackets, {}.
+
+The type of errors it can look for are:
+
+    1. mismatched brackets
+    2. missing closing bracket
+    3. missing comma between items.
+    4. using = instead of : in a dict
+
+
+It started with a single function, which grew as it tried to figure out
+the cause of the SyntaxError in a single pass through the source code.
+While this might be more "efficient", it made the logic a lot more
+difficult to understand.
+
+In the interest of simplicity, extensibility and maintainability,
+we now have multiple functions, some of which have almost identical
+chunks of code.
+"""
+
 import tokenize
 from io import StringIO
 
 from .my_gettext import current_lang
 from . import utils
+from .friendly_exception import FriendlyException
+
+
+def look_for_problem(source_lines, max_linenumber, offset):
+    cause = look_for_mismatched_brackets(source_lines, max_linenumber, offset)
+    if cause:
+        return cause
+    cause = look_for_missing_bracket(source_lines, max_linenumber, offset)
+    if cause:
+        return cause
+
+
+def look_for_mismatched_brackets(source_lines, max_linenumber, offset):
+    _ = current_lang.translate
+    source = "\n".join(source_lines)
+    brackets = []
+    tokens = tokenize.generate_tokens(StringIO(source).readline)
+    try:
+        for tok in tokens:
+            token = utils.Token(tok)
+            if (
+                token.start_line == max_linenumber
+                and token.start_col > offset
+                or token.start_line > max_linenumber
+            ):
+                return
+
+            if token.string not in "()[]}{":
+                continue
+            if token.string in "([{":
+                brackets.append((token.string, token.start_line, token.start_col))
+            elif token.string in ")]}":
+                # In some of the cases below, we include the offending lines at the
+                # bottom of the error message as they might not be shown in the
+                # partial source included in the traceback.
+                if not brackets:
+                    bracket = name_bracket(token.string)
+                    _lineno = token.start_line
+                    _source = f"\n    {_lineno}: {source_lines[_lineno-1]}\n"
+                    shift = len(str(_lineno)) + token.start_col + 6
+                    _source += " " * shift + "^\n"
+                    return (
+                        _(
+                            "The closing {bracket} on line {linenumber}"
+                            " does not match anything.\n"
+                        ).format(bracket=bracket, linenumber=token.start_line)
+                        + _source
+                    )
+                else:
+                    open_bracket, open_lineno, open_col = brackets.pop()
+                    if not matching_brackets(open_bracket, token.string):
+                        bracket = name_bracket(token.string)
+                        open_bracket = name_bracket(open_bracket)
+                        _source = (
+                            f"\n    {open_lineno}: {source_lines[open_lineno-1]}\n"
+                        )
+                        shift = len(str(open_lineno)) + open_col + 6
+                        if open_lineno == token.start_line:
+                            _source += " " * shift + "^"
+                            shift = token.start_col - open_col - 1
+                            _source += " " * shift + "^\n"
+                        else:
+                            _source += " " * shift + "^\n"
+                            _lineno = token.start_line
+                            _source += f"    {_lineno}: {source_lines[_lineno-1]}\n"
+                            shift = len(str(_lineno)) + token.start_col + 6
+                            _source += " " * shift + "^\n"
+                        return (
+                            _(
+                                "The closing {bracket} on line {close_lineno} does not match "
+                                "the opening {open_bracket} on line {open_lineno}.\n"
+                            ).format(
+                                bracket=bracket,
+                                close_lineno=token.start_line,
+                                open_bracket=open_bracket,
+                                open_lineno=open_lineno,
+                            )
+                            + _source
+                        )
+    except tokenize.TokenError:
+        return
 
 
 def look_for_missing_bracket(source_lines, max_linenumber, offset):
@@ -83,48 +185,12 @@ def look_for_missing_bracket(source_lines, max_linenumber, offset):
                 # bottom of the error message as they might not be shown in the
                 # partial source included in the traceback.
                 if not brackets:
-                    bracket = name_bracket(token.string)
-                    _lineno = token.start_line
-                    _source = f"\n    {_lineno}: {source_lines[_lineno-1]}\n"
-                    shift = len(str(_lineno)) + token.start_col + 6
-                    _source += " " * shift + "^\n"
-                    return (
-                        _(
-                            "The closing {bracket} on line {linenumber}"
-                            " does not match anything.\n"
-                        ).format(bracket=bracket, linenumber=token.start_line)
-                        + _source
-                    )
+                    raise FriendlyException("bracket_analyzer.look_for_missing_bracket")
                 else:
                     open_bracket, open_lineno, open_col = brackets.pop()
                     if not matching_brackets(open_bracket, token.string):
-                        bracket = name_bracket(token.string)
-                        open_bracket = name_bracket(open_bracket)
-                        _source = (
-                            f"\n    {open_lineno}: {source_lines[open_lineno-1]}\n"
-                        )
-                        shift = len(str(open_lineno)) + open_col + 6
-                        if open_lineno == token.start_line:
-                            _source += " " * shift + "^"
-                            shift = token.start_col - open_col - 1
-                            _source += " " * shift + "^\n"
-                        else:
-                            _source += " " * shift + "^\n"
-                            _lineno = token.start_line
-                            _source += f"    {_lineno}: {source_lines[_lineno-1]}\n"
-                            shift = len(str(_lineno)) + token.start_col + 6
-                            _source += " " * shift + "^\n"
-                        return (
-                            _(
-                                "The closing {bracket} on line {close_lineno} does not match "
-                                "the opening {open_bracket} on line {open_lineno}.\n"
-                            ).format(
-                                bracket=bracket,
-                                close_lineno=token.start_line,
-                                open_bracket=open_bracket,
-                                open_lineno=open_lineno,
-                            )
-                            + _source
+                        raise FriendlyException(
+                            "bracket_analyzer.look_for_missing_bracket"
                         )
     except tokenize.TokenError:
         pass
@@ -190,4 +256,4 @@ def name_bracket(bracket):
     elif bracket == "}":
         return _("curly bracket '}'")
     else:  # Should never happen - help for diagnostic
-        return f"Problem in analyze_syntax.py: '{bracket}'"
+        raise FriendlyException("bracket_analyzer.name_bracket")

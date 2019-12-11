@@ -10,6 +10,7 @@ import tokenize
 from .my_gettext import current_lang
 from . import utils
 from . import bracket_analyzer
+from .friendly_exception import FriendlyException
 
 
 MESSAGE_ANALYZERS = []
@@ -61,7 +62,7 @@ def assign_to_keyword(message="", line="", **kwargs):
             if word in kwlist or word == "__debug__":
                 break
         else:
-            raise RuntimeError("Fatal Error in analyze_syntax.assign_to_keyword")
+            raise FriendlyException("analyze_syntax.assign_to_keyword")
         break
 
     if word in ["None", "True", "False", "__debug__"]:
@@ -266,20 +267,24 @@ def mismatched_parenthesis(
 
     if lineno is not None:
         response = _(
-            "Python tells us that the closing '{closing}' does not match "
-            "the opening '{opening}' on line {lineno}.\n\n"
-            "I will attempt to be give a bit more information.\n\n"
+            "Python tells us that the closing '{closing}' on the last line shown\n"
+            "does not match the opening '{opening}' on line {lineno}.\n\n"
         ).format(closing=closing, opening=opening, lineno=lineno)
     else:
         response = _(
-            "Python tells us that the closing '{closing}' does not match "
-            "the opening '{opening}'.\n\n"
-            "I will attempt to be give a bit more information.\n\n"
+            "Python tells us that the closing '{closing}' on the last line shown\n"
+            "does not match the opening '{opening}'.\n\n"
         ).format(closing=closing, opening=opening)
 
-    response += bracket_analyzer.look_for_missing_bracket(
+    additional_response = bracket_analyzer.look_for_mismatched_brackets(
         source_lines, linenumber, offset
     )
+
+    if additional_response:
+        response += (
+            _("I will attempt to be give a bit more information.\n\n")
+            + additional_response
+        )
 
     return response
 

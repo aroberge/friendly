@@ -17,6 +17,7 @@ from .info_variables import get_var_info
 
 from .source_cache import cache, highlight_source
 from .path_info import is_excluded_file
+from .friendly_exception import FriendlyException
 
 
 # The following is the function called `explain` in public_api.py
@@ -78,10 +79,15 @@ def exception_hook(etype, value, tb, redirect=None):
             session.set_redirect(redirect=saved_current_redirect)
         return
 
-    session.traceback_info = info = get_traceback_info(
-        etype, value, tb, session.write_err
-    )
-    explanation = session.formatter(info, level=session.level)
+    try:
+        session.traceback_info = info = get_traceback_info(
+            etype, value, tb, session.write_err
+        )
+        explanation = session.formatter(info, level=session.level)
+    except FriendlyException as e:
+        session.write_err(e)
+        return
+
     session.write_err(explanation)
     # Ensures that we start on a new line; essential for the console
     if not explanation.endswith("\n"):
@@ -304,6 +310,10 @@ def get_traceback_info(etype, value, tb, write_err):
     returns the result in a dict.
     """
     _ = current_lang.translate
+
+    if issubclass(etype, FriendlyException):
+        write_err(str(value))
+        return {}
 
     info = {}
 
