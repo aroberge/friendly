@@ -149,7 +149,7 @@ def overflow_error(*args):
 
 @register("SyntaxError")
 def syntax_error(etype, value):
-    return analyze_syntax.find_likely_cause(etype, value)
+    return analyze_syntax.find_likely_cause(value)
 
 
 @register("TypeError")
