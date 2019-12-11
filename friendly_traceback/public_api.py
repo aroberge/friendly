@@ -129,8 +129,9 @@ def set_formatter(formatter=None):
     session.set_formatter(formatter=formatter)
 
 
-def _tokenize(source):
-    """Prints tokens found in source, excluding spaces and comments.
+def make_token_table(source):
+    """Prints tokens found in source, excluding spaces and comments
+       formatted in a table.
 
        This is occasionally useful to use at the console during development.
 
@@ -139,7 +140,7 @@ def _tokenize(source):
        in order to give us more flexibility to change other modules
        (such as utils.py) if needed.
     """
-    return utils._tokenize(source)
+    return utils.make_token_table(source)
 
 
 # =========================================================================

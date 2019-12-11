@@ -96,7 +96,7 @@ def main():
     console_dict = {"set_lang": public_api.set_lang, "set_level": public_api.set_level}
     args = parser.parse_args()
     if args.dev is not None:
-        console_dict["tokenize"] = public_api._tokenize
+        console_dict["tokenize"] = public_api.make_token_table
     if args.lang is not None:
         public_api.set_lang(args.lang)
     if args.level is not None:

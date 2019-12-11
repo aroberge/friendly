@@ -7,7 +7,7 @@ cause of a SyntaxError and providing a somewhat detailed explanation.
 
 from .my_gettext import current_lang
 from .source_cache import cache
-from . import bracket_analyzer
+from . import source_analyzer
 from . import line_analyzer
 from . import message_analyzer
 
@@ -82,7 +82,7 @@ def _find_likely_cause(source_lines, linenumber, message, offset):
     # while we look for missing or mismatched brackets, such as (],
     # we also can sometimes identify other problems during this step.
 
-    cause = bracket_analyzer.look_for_problem(source_lines, linenumber, offset)
+    cause = source_analyzer.scan_source(source_lines, linenumber, offset)
     if cause:
         return notice + cause
 

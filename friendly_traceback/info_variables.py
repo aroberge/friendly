@@ -13,7 +13,7 @@ def get_var_info(line, frame):
     """Given a line of code and a frame object, it obtains the
        value (repr) of the names found in either the local or global scope.
     """
-    tokens = utils.collect_tokens(line)
+    tokens = utils.tokenize_source(line)
     loc = frame.f_locals
     glob = frame.f_globals
     names_info = []

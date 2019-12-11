@@ -9,7 +9,7 @@ import tokenize
 
 from .my_gettext import current_lang
 from . import utils
-from . import bracket_analyzer
+from . import source_analyzer
 from .friendly_exception import FriendlyException
 
 
@@ -55,7 +55,7 @@ def assign_to_keyword(message="", line="", **kwargs):
     ):
         return
 
-    tokens = utils.collect_tokens(line)
+    tokens = utils.tokenize_source(line)
     while True:
         for token in tokens:
             word = token.string
@@ -169,7 +169,7 @@ def delete_function_call(message="", line=None, **kwargs):
         message == "can't delete function call"  # Python 3.6, 3.7
         or message == "cannot delete function call"  # Python 3.8
     ):
-        tokens = utils.collect_tokens(line)
+        tokens = utils.tokenize_source(line)
         if (
             tokens[0].string == "del"
             and tokens[1].type == tokenize.NAME
@@ -276,8 +276,8 @@ def mismatched_parenthesis(
             "does not match the opening '{opening}'.\n\n"
         ).format(closing=closing, opening=opening)
 
-    additional_response = bracket_analyzer.look_for_mismatched_brackets(
-        source_lines, linenumber, offset
+    additional_response = source_analyzer.look_for_mismatched_brackets(
+        source_lines=source_lines, max_linenumber=linenumber, offset=offset
     )
 
     if additional_response:
@@ -394,8 +394,8 @@ def unexpected_eof_while_parsing(
         "I will attempt to be give a bit more information.\n\n"
     )
 
-    response += bracket_analyzer.look_for_missing_bracket(
-        source_lines, linenumber, offset
+    response += source_analyzer.look_for_missing_bracket(
+        source_lines=source_lines, max_linenumber=linenumber, offset=offset
     )
     return response
 
@@ -405,11 +405,11 @@ def unmatched_parenthesis(message="", linenumber=None, **kwargs):
     _ = current_lang.translate
     # Python 3.8
     if message == "unmatched ')'":
-        bracket = bracket_analyzer.name_bracket(")")
+        bracket = source_analyzer.name_bracket(")")
     elif message == "unmatched ']'":
-        bracket = bracket_analyzer.name_bracket("]")
+        bracket = source_analyzer.name_bracket("]")
     elif message == "unmatched '}'":
-        bracket = bracket_analyzer.name_bracket("}")
+        bracket = source_analyzer.name_bracket("}")
     else:
         return
     return _(

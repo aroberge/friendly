@@ -8,6 +8,11 @@ import os.path
 
 from io import StringIO
 
+from .friendly_exception import FriendlyException
+
+
+_token_format = "{type:<10}{string:<25} {start:^12} {end:^12}"
+
 
 class Token:
     """Token as generated from tokenize.generate_tokens written here in
@@ -22,7 +27,7 @@ class Token:
         # ignore last parameter which is the logical line
 
     def __repr__(self):
-        return "{type:<10}{string:<25} {start:^10} {end:^10}".format(
+        return _token_format.format(
             type=token_module.tok_name[self.type],
             string=self.string,
             start=str(self.start),
@@ -30,11 +35,11 @@ class Token:
         )
 
 
-def collect_tokens(line):
-    """Makes a list of tokens on a line, ignoring spaces and comments"""
+def tokenize_source(source):
+    """Makes a list of tokens from a source (str), ignoring spaces and comments."""
     tokens = []
     try:
-        for tok in tokenize.generate_tokens(StringIO(line).readline):
+        for tok in tokenize.generate_tokens(StringIO(source).readline):
             token = Token(tok)
             if not token.string.strip():  # ignore spaces
                 continue
@@ -42,11 +47,19 @@ def collect_tokens(line):
                 break
             tokens.append(token)
     except tokenize.TokenError:
-        return []
+        return tokens
     except Exception as e:
-        print("%s raised in utils.collect_tokens" % repr(e))
+        raise FriendlyException("%s --> utils.tokenize_source" % repr(e))
 
     return tokens
+
+
+def tokenize_source_lines(source_lines):
+    """Makes a list of tokens from a source (list of lines),
+       ignoring spaces and comments.
+    """
+    source = "\n".join(source_lines)
+    return tokenize_source(source)
 
 
 PYTHON = os.path.dirname(tokenize.__file__).lower()
@@ -73,19 +86,15 @@ def shorten_path(path):
     return path
 
 
-def _tokenize(source):
+def make_token_table(source):
     """Prints tokens found in source, excluding spaces and comments.
 
        This is occasionally useful to use at the console during development.
     """
     lines = source.split("\n")
-    print(
-        "{type:<10}{string:<25} {start:^12} {end:^12}".format(
-            type="Type", string="String", start="Start", end="End"
-        )
-    )
+    print(_token_format.format(type="Type", string="String", start="Start", end="End"))
     print("-" * 60)
     for line in lines:
-        tokens = collect_tokens(line)
+        tokens = tokenize_source(line)
         for token in tokens:
             print(token)
