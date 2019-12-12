@@ -11,7 +11,7 @@ from io import StringIO
 from .friendly_exception import FriendlyException
 
 
-_token_format = "{type:<10}{string:<25} {start:^12} {end:^12}"
+_token_format = "{type:<10}{string:<25} {start:^12} {end:^12} {line:^12}"
 
 
 class Token:
@@ -24,7 +24,9 @@ class Token:
         self.string = token[1]
         self.start = self.start_line, self.start_col = token[2]
         self.end = self.end_line, self.end_col = token[3]
-        # ignore last parameter which is the logical line
+        self.line = token[4]
+        if self.line and self.line[-1] == "\n":
+            self.line = self.line[:-1]
 
     def __repr__(self):
         return _token_format.format(
@@ -32,6 +34,7 @@ class Token:
             string=self.string,
             start=str(self.start),
             end=str(self.end),
+            line=str(self.line),
         )
 
 
@@ -91,10 +94,12 @@ def make_token_table(source):
 
        This is occasionally useful to use at the console during development.
     """
-    lines = source.split("\n")
-    print(_token_format.format(type="Type", string="String", start="Start", end="End"))
-    print("-" * 60)
-    for line in lines:
-        tokens = tokenize_source(line)
-        for token in tokens:
-            print(token)
+    print(
+        _token_format.format(
+            type="Type", string="String", start="Start", end="End", line="last"
+        )
+    )
+    print("-" * 73)
+    tokens = tokenize_source(source)
+    for token in tokens:
+        print(token)

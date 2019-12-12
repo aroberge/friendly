@@ -192,6 +192,10 @@ def missing_colon(tokens):
 
 @add_line_analyzer
 def malformed_def(tokens):
+    # Remember: this line was flagged as containing an error.
+    # TODO: change this around, so that we check for brackets first
+    # before trying to figure out if there is a problem with
+    # a missing colon.
     # need at least five tokens: def name ( ) :
     _ = current_lang.translate
     if tokens[0].string != "def":
@@ -243,11 +247,11 @@ def malformed_def(tokens):
             parens += 1
         elif char == ")":
             parens -= 1
-        if char == "[":
+        elif char == "[":
             brackets += 1
         elif char == "]":
             brackets -= 1
-        if char == "{":
+        elif char == "{":
             curly += 1
         elif char == "}":
             curly -= 1
