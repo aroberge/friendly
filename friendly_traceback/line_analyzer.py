@@ -1,3 +1,7 @@
+"""This module contains functions that are used to
+   analyze a single line of code which has been identified
+   as containing a syntax error with the message "invalid syntax".
+"""
 from keyword import kwlist
 import sys
 import tokenize
@@ -5,9 +9,61 @@ import tokenize
 
 from .my_gettext import current_lang
 from . import utils
+from .friendly_exception import FriendlyException
+
+
+def count_char(tokens, char):
+    """Counts how many times a given character appears in a list of tokens"""
+    nb = 0
+    for token in tokens:
+        if token.string == char:
+            nb += 1
+    return nb
+
+
+def is_potential_statement(tokens):
+    """This helper function tests the list of tokens
+       (usually corresponding to a single line of code)
+       and returns True if the corresponding line of code could possibly be a
+       complete Python statement as described below.
+
+       A complete Python statement would have brackets,
+       including (), [], and {}, matched in pairs,
+       and would not end with the continuation character \\
+    """
+    line = tokens[0].line
+
+    # All tokens passed should come from the same line of code
+    if tokens[-1].line != line:
+        raise FriendlyException("line_analyzer.is_potential_statement")
+
+    if line.endswith("\\"):
+        return False
+
+    return (
+        (count_char(tokens, "(") == count_char(tokens, ")"))
+        and (count_char(tokens, "[") == count_char(tokens, "]"))
+        and (count_char(tokens, "{") == count_char(tokens, "}"))
+    )
 
 
 LINE_ANALYZERS = []
+
+
+def add_line_analyzer(func):
+    """A simple decorator that adds a function to the list
+       of all functions that analyze a single line of code."""
+    LINE_ANALYZERS.append(func)
+
+    def wrapper(tokens):
+        return func(tokens)
+
+    return wrapper
+
+
+# ========================================================
+# Main calling function
+# ========================================================
 
 
 def analyze_last_line(line):
@@ -23,17 +79,6 @@ def analyze_last_line(line):
         if cause:
             return cause
     return
-
-
-def add_line_analyzer(func):
-    """A simple decorator that adds a function to the list
-       of all functions that analyze a single line of code."""
-    LINE_ANALYZERS.append(func)
-
-    def wrapper(line):
-        return func(line)
-
-    return wrapper
 
 
 # ==================
@@ -66,9 +111,6 @@ def detect_walrus(tokens):
 @add_line_analyzer
 def assign_to_a_keyword(tokens):
     """Checks to see if line is of the form 'keyword = ...'
-
-    Note: this is different from the above case where we got a useful
-    message. Sometimes, all we get in such examples is "invalid syntax".
     """
     _ = current_lang.translate
     if len(tokens) < 2 or (tokens[0].string not in kwlist) or tokens[1].string != "=":
@@ -161,10 +203,13 @@ def misplaced_quote(tokens):
 
 @add_line_analyzer
 def missing_colon(tokens):
-    """look for missing colon at the end of a line of code"""
+    """look for missing colon at the end of statement"""
     _ = current_lang.translate
 
     if tokens[-1].string == ":":
+        return
+
+    if not is_potential_statement(tokens):
         return
 
     name = tokens[0].string
@@ -192,15 +237,16 @@ def missing_colon(tokens):
 
 @add_line_analyzer
 def malformed_def(tokens):
-    # Remember: this line was flagged as containing an error.
-    # TODO: change this around, so that we check for brackets first
-    # before trying to figure out if there is a problem with
-    # a missing colon.
-    # need at least five tokens: def name ( ) :
+    """Looks for problems with defining a function, assuming that
+       the information passed looks like a complete statement"""
     _ = current_lang.translate
     if tokens[0].string != "def":
         return False
 
+    if not is_potential_statement(tokens):
+        return
+
+    # need at least five tokens: def name ( ) :
     if (
         len(tokens) < 5
         or tokens[1].type != tokenize.NAME

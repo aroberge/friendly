@@ -78,9 +78,7 @@ all_imports = {
 }
 
 if sys.version_info < (3, 8):
-    all_imports[
-        "Walrus operator does not exist - yet"
-    ] = "raise_syntax_error_walrus"
+    all_imports["Walrus operator does not exist - yet"] = "raise_syntax_error_walrus"
 
 cur_dir = os.getcwd()
 sys.path.append(os.path.join(cur_dir, "syntax"))

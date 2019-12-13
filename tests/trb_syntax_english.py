@@ -33,7 +33,9 @@ py_version = f"{sys.version_info.major}.{sys.version_info.minor}"
 import trb_syntax_common
 
 target = os.path.normpath(
-    os.path.join(docs_root_dir, f"docs/source/syntax_tracebacks_{LANG}_{py_version}.rst")
+    os.path.join(
+        docs_root_dir, f"docs/source/syntax_tracebacks_{LANG}_{py_version}.rst"
+    )
 )
 
 intro_text = """

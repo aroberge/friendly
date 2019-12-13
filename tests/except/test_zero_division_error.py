@@ -8,7 +8,7 @@ def test_zero_division_error():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "ZeroDivisionError: division by zero" in result
-    if friendly_traceback.get_lang() == 'en':
+    if friendly_traceback.get_lang() == "en":
         assert "A ZeroDivisionError occurs when" in result
     return result
 
@@ -21,12 +21,12 @@ def test_zero_division_error2():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "ZeroDivisionError: integer division or modulo by zero" in result
-    if friendly_traceback.get_lang() == 'en':
+    if friendly_traceback.get_lang() == "en":
         assert "A ZeroDivisionError occurs when" in result
     return result
 
 
 if __name__ == "__main__":
     print(test_zero_division_error())
-    print("-"*60)
+    print("-" * 60)
     print(test_zero_division_error2())

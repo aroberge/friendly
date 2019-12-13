@@ -67,6 +67,6 @@ def test_check_syntax():
     friendly.set_level(original_level)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_check_syntax()
     print("Success!")

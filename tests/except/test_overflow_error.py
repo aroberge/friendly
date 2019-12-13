@@ -3,12 +3,12 @@ import friendly_traceback
 
 def test_overflow_error():
     try:
-        2. ** 1600
+        2.0 ** 1600
     except Exception:
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "OverflowError: (34, 'Result too large')" in result
-    if friendly_traceback.get_lang() == 'en':
+    if friendly_traceback.get_lang() == "en":
         assert "OverflowError is raised when the result" in result
     return result
 

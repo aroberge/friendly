@@ -78,6 +78,10 @@ def _find_likely_cause(source_lines, linenumber, message, offset):
     if cause:
         return notice + cause
 
+    # TODO: check to see if the offset correponds to the first token
+    # of a line; if so, the error might be found by looking at the
+    # previous line.
+
     # Failing that, we look for another type of common mistake. Note that
     # while we look for missing or mismatched brackets, such as (],
     # we also can sometimes identify other problems during this step.
