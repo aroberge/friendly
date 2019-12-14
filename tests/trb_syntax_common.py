@@ -78,6 +78,10 @@ all_imports = {
     "SyntaxError - used prior to global declaration": "raise_syntax_error49",
     "SyntaxError - assigned prior to nonlocal declaration": "raise_syntax_error5-",
     "SyntaxError - used prior to nonlocal declaration": "raise_syntax_error51",
+    "SyntaxError - named assignment with Python constant": "raise_syntax_error55",
+    "SyntaxError - assignment to operator": "raise_syntax_error56",
+    "SyntaxError - using the backquote character": "raise_syntax_error57",
+    "SyntaxError - assign to generator expression": "raise_syntax_error58",
 }
 
 if sys.version_info < (3, 8):

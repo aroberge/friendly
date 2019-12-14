@@ -66,10 +66,15 @@ causes = {
     "raise_syntax_error52": "is or includes an actual object of type 'set'",
     "raise_syntax_error53": "is or includes an actual object of type 'dict'",
     "raise_syntax_error54": "is or includes an actual object",
+    "raise_syntax_error55": "True is a constant in Python",
+    "raise_syntax_error56": "only used to assign a value to a variable",
+    "raise_syntax_error57": "Use the function repr(x) instead of `x`.",
+    "raise_syntax_error58": "generator expression instead of the name of a variable",
 }
 
 if sys.version_info < (3, 8):
     causes["raise_syntax_error_walrus"] = "walrus operator"
+    causes["raise_syntax_error55"] = "walrus operator"
 
 
 def test_syntax_errors():

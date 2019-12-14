@@ -109,6 +109,21 @@ def detect_walrus(tokens):
 
 
 @add_line_analyzer
+def detect_backquote(tokens):
+    """Detecting if the error is due to using `x` which was allowed
+       in Python 2.
+    """
+    _ = current_lang.translate
+    for token in tokens:
+        if token.string == "`":
+            return _(
+                "You are using the backquote character `.\n"
+                "This was allowed in Python 2 but is no longer allowed.\n"
+                "Use the function repr(x) instead of `x`."
+            )
+
+
+@add_line_analyzer
 def assign_to_a_keyword(tokens):
     """Checks to see if line is of the form 'keyword = ...'
     """

@@ -54,6 +54,10 @@ def assign_to_keyword(message="", line="", **kwargs):
         or message == "cannot assign to __debug__"  # Python 3.8
         or message == "can't assign to Ellipsis"  # Python 3.6, 3.7
         or message == "cannot assign to Ellipsis"  # Python 3.8
+        or message == "cannot use named assignment with True"  # Python 3.8
+        or message == "cannot use named assignment with False"  # Python 3.8
+        or message == "cannot use named assignment with None"  # Python 3.8
+        or message == "cannot use named assignment with Ellipsis"  # Python 3.8
     ):
         return
 
@@ -98,7 +102,7 @@ def assign_to_function_call(message="", line="", **kwargs):
             return _(
                 "You wrote an expression like\n"
                 "    {fn_call} = {value}\n"
-                "where {fn_call}, on the left hand-side of the equal sign, is\n"
+                "where {fn_call}, on the left-hand side of the equal sign, is\n"
                 "a function call and not the name of a variable.\n"
             ).format(fn_call=fn_call, value=value)
 
@@ -108,9 +112,22 @@ def assign_to_function_call(message="", line="", **kwargs):
         return _(
             "You wrote the expression\n"
             "    {fn_call} = {value}\n"
-            "where {fn_call}, on the left hand-side of the equal sign, either is\n"
+            "where {fn_call}, on the left-hand side of the equal sign, either is\n"
             "or includes a function call and is not simply the name of a variable.\n"
         ).format(fn_call=fn_call, value=value)
+
+
+@add_python_message
+def assign_to_generator_expression(message="", **kwargs):
+    _ = current_lang.translate
+    if (
+        message == "can't assign to generator expression"  # Python 3.6, 3.7
+        or message == "cannot assign to generator expression"  # Python 3.8
+    ):
+        return _(
+            "On the left-hand side of an equal sign, you have a\n"
+            "generator expression instead of the name of a variable.\n"
+        )
 
 
 def what_kind_of_literal(literal):
@@ -186,11 +203,25 @@ def assign_to_literal(message="", line="", **kwargs):
             _(
                 "You wrote an expression like\n"
                 "    {literal} = {name}\n"
-                "where <{literal}>, on the left hand-side of the equal sign,\n"
+                "where <{literal}>, on the left-hand side of the equal sign,\n"
                 "is or includes an actual object {of_type}\n"
                 "and is not simply the name of a variable."
             ).format(literal=literal, name=name, of_type=of_type)
             + suggest
+        )
+
+
+@add_python_message
+def assign_to_operator(message="", **kwargs):
+    _ = current_lang.translate
+    if (
+        message == "can't assign to operator"  # Python 3.6, 3.7
+        or message == "cannot assign to operator"  # Python 3.8
+    ):
+        return _(
+            "You wrote an expression that includes some mathematical operations\n"
+            "on the left-hand side of the equal sign which should be\n"
+            "only used to assign a value to a variable."
         )
 
 

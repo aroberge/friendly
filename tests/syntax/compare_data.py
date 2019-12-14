@@ -13,6 +13,7 @@ files = set([])
 def print_different(filename, in_36, in_37, in_38):
     # Just tracking changes going forward in time, from
     # one version to the next.
+    printed_37 = False
     if in_36 != in_37:
         if filename not in files:
             print("<div class='filename-header'>")
@@ -22,6 +23,7 @@ def print_different(filename, in_36, in_37, in_38):
         print("<pre class='highlight friendly-small-pre'>")
         print("3.6:\n", in_36, sep="")
         print("3.7:\n", in_37, sep="")
+        printed_37 = True
         print("</pre>")
     if in_37 != in_38:
         if filename not in files:
@@ -30,7 +32,8 @@ def print_different(filename, in_36, in_37, in_38):
             print(filename)
             print("</div>")
         print("<pre class='highlight friendly-small-pre'>")
-        print("3.7:\n", in_37, sep="")
+        if not printed_37:
+            print("3.7:\n", in_37, sep="")
         print("3.8:\n", in_38, sep="")
         print("</pre>")
 
