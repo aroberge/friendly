@@ -82,6 +82,7 @@ all_imports = {
     "SyntaxError - assignment to operator": "raise_syntax_error56",
     "SyntaxError - using the backquote character": "raise_syntax_error57",
     "SyntaxError - assign to generator expression": "raise_syntax_error58",
+    "SyntaxError - assign to conditional expression": "raise_syntax_error59",
 }
 
 if sys.version_info < (3, 8):

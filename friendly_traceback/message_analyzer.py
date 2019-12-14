@@ -87,6 +87,21 @@ def assign_to_keyword(message="", line="", **kwargs):
 
 
 @add_python_message
+def assign_to_conditional_expression(message="", **kwargs):
+    _ = current_lang.translate
+    if (
+        message == "can't assign to conditional expression"  # Python 3.6, 3.7
+        or message == "cannot assign to conditional expression"  # Python 3.8
+    ):
+        return _(
+            "On the left-hand side of an equal sign, you have a\n"
+            "conditional expression instead of the name of a variable.\n"
+            "A conditional expression has the following form:\n\n"
+            "    variable = object if condition else other_object"
+        )
+
+
+@add_python_message
 def assign_to_function_call(message="", line="", **kwargs):
     _ = current_lang.translate
     if (

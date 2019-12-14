@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-12-14 15:41-0400\n"
-"PO-Revision-Date: 2019-12-14 15:43-0400\n"
+"POT-Creation-Date: 2019-12-14 16:02-0400\n"
+"PO-Revision-Date: 2019-12-14 16:04-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -818,15 +818,29 @@ msgstr ""
 "valeur.\n"
 "\n"
 
-#: message_analyzer.py:100
+#: message_analyzer.py:96
+msgid ""
+"On the left-hand side of an equal sign, you have a\n"
+"conditional expression instead of the name of a variable.\n"
+"A conditional expression has the following form:\n"
+"\n"
+"    variable = object if condition else other_object"
+msgstr ""
+"Du côté gauche d'un signe d'égalité, vous avez une\n"
+"expression conditionnelle au lieu du nom d'une variable.\n"
+"Une expression conditionnelle doit avoir la forme suivante:\n"
+"\n"
+"    variable = objet si condition else autre_objet"
+
+#: message_analyzer.py:115
 msgid "my_function(...)"
 msgstr "ma_fonction(…)"
 
-#: message_analyzer.py:101
+#: message_analyzer.py:116
 msgid "some value"
 msgstr "une certaine valeur"
 
-#: message_analyzer.py:102
+#: message_analyzer.py:117
 msgid ""
 "You wrote an expression like\n"
 "    {fn_call} = {value}\n"
@@ -838,7 +852,7 @@ msgstr ""
 "où {fn_call}, du côté gauche du signe d'égalité\n"
 "est une fonction et non le nom d’une variable.\n"
 
-#: message_analyzer.py:112
+#: message_analyzer.py:127
 msgid ""
 "You wrote the expression\n"
 "    {fn_call} = {value}\n"
@@ -851,7 +865,7 @@ msgstr ""
 "d'une fonction, ou inclus une telle invocation,\n"
 "et n'est pas simplement le nom d'une variable.\n"
 
-#: message_analyzer.py:127
+#: message_analyzer.py:142
 msgid ""
 "On the left-hand side of an equal sign, you have a\n"
 "generator expression instead of the name of a variable.\n"
@@ -859,43 +873,43 @@ msgstr ""
 "Du côté gauche d'un signe d'égalité, vous avez une\n"
 "expression génératrice au lieu du nom d'une variable.\n"
 
-#: message_analyzer.py:142
+#: message_analyzer.py:157
 msgid "of type 'int'"
 msgstr "de type 'int'"
 
-#: message_analyzer.py:144
+#: message_analyzer.py:159
 msgid "of type 'str'"
 msgstr "de type 'str'"
 
-#: message_analyzer.py:146
+#: message_analyzer.py:161
 msgid "of type 'float'"
 msgstr "de type 'float'"
 
-#: message_analyzer.py:148
+#: message_analyzer.py:163
 msgid "of type 'complex'"
 msgstr "de type 'complex'"
 
-#: message_analyzer.py:150
+#: message_analyzer.py:165
 msgid "of type 'dict'"
 msgstr "de type 'dict'"
 
-#: message_analyzer.py:152
+#: message_analyzer.py:167
 msgid "of type 'tuple'"
 msgstr "de type 'tuple'"
 
-#: message_analyzer.py:154
+#: message_analyzer.py:169
 msgid "of type 'list'"
 msgstr "de type 'list'"
 
-#: message_analyzer.py:156
+#: message_analyzer.py:171
 msgid "of type 'set'"
 msgstr "de type 'set'"
 
-#: message_analyzer.py:176
+#: message_analyzer.py:191
 msgid "variable_name"
 msgstr "nom_de_variable"
 
-#: message_analyzer.py:180
+#: message_analyzer.py:195
 msgid ""
 " Perhaps you meant to write:\n"
 "    {name} = {literal}\n"
@@ -905,7 +919,7 @@ msgstr ""
 "    {name} = {literal}\n"
 "\n"
 
-#: message_analyzer.py:203
+#: message_analyzer.py:218
 msgid ""
 "You wrote an expression like\n"
 "    {literal} = {name}\n"
@@ -919,7 +933,7 @@ msgstr ""
 "est ou inclut un objet {of_type}\n"
 "et n'est pas simplement le nom d'une variable."
 
-#: message_analyzer.py:221
+#: message_analyzer.py:236
 msgid ""
 "You wrote an expression that includes some mathematical operations\n"
 "on the left-hand side of the equal sign which should be\n"
@@ -929,7 +943,7 @@ msgstr ""
 "du côté gauche du signe d'égalité; ceci devrait être\n"
 "utilisé uniquement pour attribuer une valeur à une variable."
 
-#: message_analyzer.py:232
+#: message_analyzer.py:247
 msgid ""
 "The Python keyword 'break' can only be used inside a for loop or inside a "
 "while loop.\n"
@@ -937,7 +951,7 @@ msgstr ""
 "Le mot-clé Python 'break' ne peut être utilisé qu'à l'intérieur d'une boucle "
 "'for' ou à l'intérieur d'une boucle 'while'.\n"
 
-#: message_analyzer.py:242
+#: message_analyzer.py:257
 msgid ""
 "The Python keyword 'continue' can only be used inside a for loop or inside a "
 "while loop.\n"
@@ -945,7 +959,7 @@ msgstr ""
 "Le mot-clé Python 'continue' ne peut être utilisé qu'à l'intérieur d'une "
 "boucle 'for' ou à l'intérieur d'une boucle 'while'.\n"
 
-#: message_analyzer.py:266
+#: message_analyzer.py:281
 msgid ""
 "You attempted to delete a function call\n"
 "    {line}\n"
@@ -957,7 +971,7 @@ msgstr ""
 "au lieu de supprimer le nom de la fonction\n"
 "    {correct}\n"
 
-#: message_analyzer.py:278
+#: message_analyzer.py:293
 msgid ""
 "You starting writing a string with a single or double quote\n"
 "but never ended the string with another quote on that line.\n"
@@ -966,7 +980,7 @@ msgstr ""
 "avec un guillemet simple ou double, mais n'avez jamais\n"
 "terminé la chaîne avec un autre guillemet sur cette ligne.\n"
 
-#: message_analyzer.py:288
+#: message_analyzer.py:303
 msgid ""
 "One of the following two possibilities could be the cause:\n"
 "1. You meant to do a comparison with == and wrote = instead.\n"
@@ -991,7 +1005,7 @@ msgstr ""
 "ou contient un point, etc.\n"
 "\n"
 
-#: message_analyzer.py:304
+#: message_analyzer.py:319
 msgid ""
 "You likely called a function with a named argument:\n"
 "\n"
@@ -1011,7 +1025,7 @@ msgstr ""
 "ou contenir un point, etc.\n"
 "\n"
 
-#: message_analyzer.py:318
+#: message_analyzer.py:333
 msgid ""
 "You likely used some unicode character that is not allowed\n"
 "as part of a variable name in Python.\n"
@@ -1023,7 +1037,7 @@ msgstr ""
 "Cela comprend de nombreux emojis.\n"
 "\n"
 
-#: message_analyzer.py:352
+#: message_analyzer.py:367
 msgid ""
 "Python tells us that the closing '{closing}' on the last line shown\n"
 "does not match the opening '{opening}' on line {lineno}.\n"
@@ -1035,7 +1049,7 @@ msgstr ""
 "{lineno}.\n"
 "\n"
 
-#: message_analyzer.py:357
+#: message_analyzer.py:372
 msgid ""
 "Python tells us that the closing '{closing}' on the last line shown\n"
 "does not match the opening '{opening}'.\n"
@@ -1045,7 +1059,7 @@ msgstr ""
 "à la parenthèse de gauche ''{opening}'.\n"
 "\n"
 
-#: message_analyzer.py:368
+#: message_analyzer.py:383
 msgid ""
 "I will attempt to be give a bit more information.\n"
 "\n"
@@ -1054,7 +1068,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: message_analyzer.py:379
+#: message_analyzer.py:394
 msgid ""
 "Inside an f-string, which is a string prefixed by the letter f, \n"
 "you have another string, which starts with either a\n"
@@ -1067,7 +1081,7 @@ msgstr ""
 "ou des guillemets (\"), mais n'est pas terminé par un autre caractère "
 "semblable.\n"
 
-#: message_analyzer.py:396
+#: message_analyzer.py:411
 msgid ""
 "You are including the statement\n"
 "\n"
@@ -1088,7 +1102,7 @@ msgstr ""
 "à l'intérieur de cette fonction, ce qui est le contraire de ce que «global» "
 "sous-entendait.\n"
 
-#: message_analyzer.py:412
+#: message_analyzer.py:427
 msgid ""
 "You assigned a value to the variable '{name}'\n"
 "before declaring it as a global variable.\n"
@@ -1096,7 +1110,7 @@ msgstr ""
 "Vous avez attribué une valeur à la variable  '{name}'\n"
 "avant de la déclarer comme une variable globale.\n"
 
-#: message_analyzer.py:424
+#: message_analyzer.py:439
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a global variable.\n"
@@ -1104,7 +1118,7 @@ msgstr ""
 "Vous avez utilisé la variable '{name}'\n"
 "avant de la déclarer comme une variable globale.\n"
 
-#: message_analyzer.py:436
+#: message_analyzer.py:451
 msgid ""
 "You assigned a value to the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
@@ -1112,7 +1126,7 @@ msgstr ""
 "Vous avez attribué une valeur à la variable '{name}'\n"
 "avant de la déclarer comme variable non locale.\n"
 
-#: message_analyzer.py:448
+#: message_analyzer.py:463
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
@@ -1120,7 +1134,7 @@ msgstr ""
 "Vous avez utilisé la variable '{name}'\n"
 "avant de la déclarer comme variable non locale.\n"
 
-#: message_analyzer.py:458
+#: message_analyzer.py:473
 msgid ""
 "You are using the continuation character '\\' outside of a string,\n"
 "and it is followed by some other character(s).\n"
@@ -1134,7 +1148,7 @@ msgstr ""
 "ou un apostrophe.\n"
 "\n"
 
-#: message_analyzer.py:474
+#: message_analyzer.py:489
 msgid ""
 "Python tells us that the it reached the end of the file\n"
 "and expected more content.\n"
@@ -1148,13 +1162,13 @@ msgstr ""
 "Je vais essayer de donner un peu plus d'informations.\n"
 "\n"
 
-#: message_analyzer.py:498 source_analyzer.py:84
+#: message_analyzer.py:513 source_analyzer.py:84
 msgid "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'a pas de symbole ouvrant qui "
 "lui correspond.\n"
 
-#: message_analyzer.py:508
+#: message_analyzer.py:523
 msgid ""
 "In Python, you can call functions with only positional arguments\n"
 "\n"
@@ -1189,7 +1203,7 @@ msgstr ""
 "Selon Python, vous avez utilisé des arguments positionnels après des "
 "arguments nommés.\n"
 
-#: message_analyzer.py:525
+#: message_analyzer.py:540
 msgid ""
 "In Python, you can define functions with only positional arguments\n"
 "\n"
@@ -1226,7 +1240,7 @@ msgstr ""
 "Selon Python, vous avez utilisé des arguments positionnels après des "
 "arguments nommés.\n"
 
-#: message_analyzer.py:545
+#: message_analyzer.py:560
 msgid ""
 "Perhaps you need to type print({message})?\n"
 "\n"
