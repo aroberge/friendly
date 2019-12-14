@@ -20,8 +20,8 @@ causes = {
     "raise_syntax_error6": "tried to define a function or method",
     "raise_syntax_error7": "tried to define a function or method",
     "raise_syntax_error8": "tried to define a function or method",
-    "raise_syntax_error9": "what Python calls a 'literal'",
-    "raise_syntax_error10": "what Python calls a 'literal'",
+    "raise_syntax_error9": "is or includes an actual object of type 'int'",
+    "raise_syntax_error10": "is or includes an actual object of type 'int'",
     "raise_syntax_error11": "from turtle import pen",
     "raise_syntax_error12": "EOL while scanning string literal",
     "raise_syntax_error13": "None is a constant in Python",
@@ -63,6 +63,9 @@ causes = {
     "raise_syntax_error49": "You used the variable 'r'",
     "raise_syntax_error50": "before declaring it as a nonlocal variable.",
     "raise_syntax_error51": "You assigned a value to the variable 's'",
+    "raise_syntax_error52": "is or includes an actual object of type 'set'",
+    "raise_syntax_error53": "is or includes an actual object of type 'dict'",
+    "raise_syntax_error54": "is or includes an actual object",
 }
 
 if sys.version_info < (3, 8):

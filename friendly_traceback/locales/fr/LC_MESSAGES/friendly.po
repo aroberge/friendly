@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-12-11 06:57-0400\n"
-"PO-Revision-Date: 2019-12-11 07:00-0400\n"
+"POT-Creation-Date: 2019-12-14 07:48-0400\n"
+"PO-Revision-Date: 2019-12-14 07:49-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -48,7 +48,7 @@ msgstr ""
 "a mal tourné, mais nous pourrions deviner incorrectement.\n"
 "\n"
 
-#: analyze_syntax.py:92
+#: analyze_syntax.py:96
 msgid ""
 "Currently, I cannot guess the likely cause of this error.\n"
 "Try to examine closely the line indicated as well as the line\n"
@@ -257,90 +257,6 @@ msgstr ""
 "suivi de ce qui ressemblait à un tuple, '(...) ',\n"
 "que Python a pris comme indiquant une invocation de fonction.\n"
 "Il est possible que vous ayez oublié d'écrire une virgule avant le tuple.\n"
-
-#: bracket_analyzer.py:69 message_analyzer.py:415
-msgid "The closing {bracket} on line {linenumber} does not match anything.\n"
-msgstr ""
-"Le symbole {bracket} à la ligne {linenumber} n'a pas de symbole ouvrant qui "
-"lui correspond.\n"
-
-#: bracket_analyzer.py:95
-msgid ""
-"The closing {bracket} on line {close_lineno} does not match the opening "
-"{open_bracket} on line {open_lineno}.\n"
-msgstr ""
-"Le symbole {bracket} à la ligne {close_lineno} ne correspond pas au symbole "
-"{open_bracket} à la ligne {open_lineno}.\n"
-
-#: bracket_analyzer.py:155
-msgid ""
-"It is possible that you used an equal sign '=' instead of a colon ':'\n"
-"to assign values to keys in a dict\n"
-"before or at the position indicated by --> and ^.\n"
-msgstr ""
-"Il est possible que vous ayez utilisé un signe d'égalité (=) au lieu de deux "
-"points (:)\n"
-"pour attribuer des valeurs à une clé d'un dictionnaire\n"
-"avant ou exactement à la position indiquée par --> et ^.\n"
-
-#: bracket_analyzer.py:201
-msgid ""
-"It is possible that you forgot a comma between items in a tuple, \n"
-"or between function arguments, \n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-"Il est possible que vous ayez oublié une virgule entre les éléments d'un "
-"tuple,\n"
-"ou entre les arguments d'une fonction, avant la position indiquée par --> et "
-"^.\n"
-
-#: bracket_analyzer.py:208
-msgid ""
-"It is possible that you forgot a comma between items in a list\n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-"Il est possible que vous ayez oublié une virgule entre les éléments d'une "
-"liste\n"
-"avant la position indiquée par --> et ^.\n"
-
-#: bracket_analyzer.py:214
-msgid ""
-"It is possible that you forgot a comma between items in a set or dict\n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-"Il est possible que vous ayez oublié une virgule entre les éléments d'un "
-"ensemble (set)\n"
-"ou un dict avant la position indiquée par --> et ^.\n"
-
-#: bracket_analyzer.py:225
-msgid "The opening {bracket} on line {linenumber} is not closed.\n"
-msgstr ""
-"Le symbole {bracket} à la ligne {linenumber} n'est pas fermé par le symbole "
-"correspondant.\n"
-
-#: bracket_analyzer.py:245
-msgid "parenthesis '('"
-msgstr "parenthèse '('"
-
-#: bracket_analyzer.py:247
-msgid "parenthesis ')'"
-msgstr "parenthèse ')'"
-
-#: bracket_analyzer.py:249
-msgid "square bracket '['"
-msgstr "crochet '['"
-
-#: bracket_analyzer.py:251
-msgid "square bracket ']'"
-msgstr "crochet ']'"
-
-#: bracket_analyzer.py:253
-msgid "curly bracket '{'"
-msgstr "accolade '{'"
-
-#: bracket_analyzer.py:255
-msgid "curly bracket '}'"
-msgstr "accolade '}'"
 
 #: core.py:354
 msgid ""
@@ -740,7 +656,7 @@ msgstr ""
 "    global {var_name}\n"
 "comme première ligne à l’intérieur de votre fonction.\n"
 
-#: line_analyzer.py:57
+#: line_analyzer.py:102
 msgid ""
 "You appear to be using the operator :=, sometimes called\n"
 "the walrus operator. This operator requires the use of\n"
@@ -752,7 +668,7 @@ msgstr ""
 "{version}.\n"
 "\n"
 
-#: line_analyzer.py:77 message_analyzer.py:73
+#: line_analyzer.py:119 message_analyzer.py:73
 msgid ""
 "You were trying to assign a value to the Python keyword '{keyword}'.\n"
 "This is not allowed.\n"
@@ -762,7 +678,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: line_analyzer.py:93
+#: line_analyzer.py:135
 msgid ""
 "You meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
@@ -772,7 +688,7 @@ msgstr ""
 "au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: line_analyzer.py:112
+#: line_analyzer.py:154
 msgid ""
 "You wrote something like\n"
 "    import {function} from {module}\n"
@@ -787,7 +703,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: line_analyzer.py:130
+#: line_analyzer.py:172
 msgid ""
 "You cannot use the Python keyword {word} as an attribute.\n"
 "\n"
@@ -796,7 +712,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: line_analyzer.py:134
+#: line_analyzer.py:176
 msgid ""
 "You cannot use the constant __debug__ as an attribute.\n"
 "\n"
@@ -804,7 +720,7 @@ msgstr ""
 "Vous ne pouvez pas utiliser la constante __debug__ comme attribut.\n"
 "\n"
 
-#: line_analyzer.py:153
+#: line_analyzer.py:195
 msgid ""
 "There appears to be a Python identifier (variable name)\n"
 "immediately following a string.\n"
@@ -816,11 +732,11 @@ msgstr ""
 "Je soupçonne que vous essayiez d'utiliser un apostrophe ou un guillemet\n"
 "à l'intérieur d'une chaîne qui était délimitée par ces mêmes caractères.\n"
 
-#: line_analyzer.py:173
+#: line_analyzer.py:218
 msgid "a class"
 msgstr "une classe"
 
-#: line_analyzer.py:174
+#: line_analyzer.py:219
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
@@ -830,7 +746,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: line_analyzer.py:180
+#: line_analyzer.py:225
 msgid ""
 "You wrote a '{for_while}' loop but\n"
 "forgot to add a colon ':' at the end\n"
@@ -840,7 +756,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: line_analyzer.py:186
+#: line_analyzer.py:231
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
@@ -850,11 +766,11 @@ msgstr ""
 "'{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: line_analyzer.py:207
+#: line_analyzer.py:257
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: line_analyzer.py:208
+#: line_analyzer.py:258
 msgid ""
 "You tried to define {class_or_function} and did not use the correct syntax.\n"
 "The correct syntax is:\n"
@@ -866,14 +782,14 @@ msgstr ""
 "    def nom ( arguments_optionnels ):\n"
 "\n"
 
-#: line_analyzer.py:217
+#: line_analyzer.py:267
 msgid "You tried to use the Python keyword '{kwd}' as a function name.\n"
 msgstr ""
 "Vous avez tenté d'utiliser le mot clé Python '{kwd}' comme nom de fonction.\n"
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: line_analyzer.py:264
+#: line_analyzer.py:314
 msgid ""
 "I am guessing that you tried to use the Python keyword\n"
 "{kwd} as an argument in the definition of a function.\n"
@@ -925,7 +841,43 @@ msgstr ""
 "d'une fonction, ou inclus une telle invocation,\n"
 "et n'est pas simplement le nom d'une variable.\n"
 
+#: message_analyzer.py:120
+msgid "of type 'int'"
+msgstr "de type 'int'"
+
+#: message_analyzer.py:122
+msgid "of type 'str'"
+msgstr "de type 'str'"
+
 #: message_analyzer.py:124
+msgid "of type 'float'"
+msgstr "de type 'float'"
+
+#: message_analyzer.py:126
+msgid "of type 'complex'"
+msgstr "de type 'complex'"
+
+#: message_analyzer.py:128
+msgid "of type 'dict'"
+msgstr "de type 'dict'"
+
+#: message_analyzer.py:130
+msgid "of type 'tuple'"
+msgstr "de type 'tuple'"
+
+#: message_analyzer.py:132
+msgid "of type 'list'"
+msgstr "de type 'list'"
+
+#: message_analyzer.py:134
+msgid "of type 'set'"
+msgstr "de type 'set'"
+
+#: message_analyzer.py:154
+msgid "variable_name"
+msgstr "nom_de_variable"
+
+#: message_analyzer.py:158
 msgid ""
 " Perhaps you meant to write:\n"
 "    {name} = {literal}\n"
@@ -935,22 +887,21 @@ msgstr ""
 "    {name} = {literal}\n"
 "\n"
 
-#: message_analyzer.py:134
+#: message_analyzer.py:181
 msgid ""
 "You wrote an expression like\n"
 "    {literal} = {name}\n"
-"where <{literal}>, on the left hand-side of the equal sign, is\n"
-"or includes an actual number or string (what Python calls a 'literal'),\n"
-"and not the name of a variable."
+"where <{literal}>, on the left hand-side of the equal sign,\n"
+"is or includes an actual object {of_type}\n"
+"and is not simply the name of a variable."
 msgstr ""
 "Vous avez écrit une expression comme\n"
-"    {literal} =  {name}\n"
-"où <{literal}>, sur le côté gauche du signe égal, est soit ce que Python\n"
-"appelle un 'literal', c'est-à-dire soit une chaîne de caractères ou un "
-"nombre,\n"
-"ou soit inclus un tel 'literal', et n'est pas un simple nom d’une variable."
+"    {literal} = {name}\n"
+"où <{literal}>, sur le côté gauche du signe d'égalité\n"
+"est ou inclut un objet {of_type}\n"
+"et n'est pas simplement le nom d'une variable."
 
-#: message_analyzer.py:149
+#: message_analyzer.py:196
 msgid ""
 "The Python keyword 'break' can only be used inside a for loop or inside a "
 "while loop.\n"
@@ -958,7 +909,7 @@ msgstr ""
 "Le mot-clé Python 'break' ne peut être utilisé qu'à l'intérieur d'une boucle "
 "'for' ou à l'intérieur d'une boucle 'while'.\n"
 
-#: message_analyzer.py:159
+#: message_analyzer.py:206
 msgid ""
 "The Python keyword 'continue' can only be used inside a for loop or inside a "
 "while loop.\n"
@@ -966,7 +917,7 @@ msgstr ""
 "Le mot-clé Python 'continue' ne peut être utilisé qu'à l'intérieur d'une "
 "boucle 'for' ou à l'intérieur d'une boucle 'while'.\n"
 
-#: message_analyzer.py:183
+#: message_analyzer.py:230
 msgid ""
 "You attempted to delete a function call\n"
 "    {line}\n"
@@ -978,7 +929,7 @@ msgstr ""
 "au lieu de supprimer le nom de la fonction\n"
 "    {correct}\n"
 
-#: message_analyzer.py:195
+#: message_analyzer.py:242
 msgid ""
 "You starting writing a string with a single or double quote\n"
 "but never ended the string with another quote on that line.\n"
@@ -987,7 +938,7 @@ msgstr ""
 "avec un guillemet simple ou double, mais n'avez jamais\n"
 "terminé la chaîne avec un autre guillemet sur cette ligne.\n"
 
-#: message_analyzer.py:205
+#: message_analyzer.py:252
 msgid ""
 "One of the following two possibilities could be the cause:\n"
 "1. You meant to do a comparison with == and wrote = instead.\n"
@@ -1012,7 +963,7 @@ msgstr ""
 "ou contient un point, etc.\n"
 "\n"
 
-#: message_analyzer.py:221
+#: message_analyzer.py:268
 msgid ""
 "You likely called a function with a named argument:\n"
 "\n"
@@ -1032,7 +983,7 @@ msgstr ""
 "ou contenir un point, etc.\n"
 "\n"
 
-#: message_analyzer.py:235
+#: message_analyzer.py:282
 msgid ""
 "You likely used some unicode character that is not allowed\n"
 "as part of a variable name in Python.\n"
@@ -1044,18 +995,19 @@ msgstr ""
 "Cela comprend de nombreux emojis.\n"
 "\n"
 
-#: message_analyzer.py:269
+#: message_analyzer.py:316
 msgid ""
 "Python tells us that the closing '{closing}' on the last line shown\n"
 "does not match the opening '{opening}' on line {lineno}.\n"
 "\n"
 msgstr ""
-"Python nous dit que la parenthèse de droite '{closing}' ne correspond pas\n"
-"à la parenthèse de gauche ''{opening}' sur la ligne {lineno}.\n"
-"\n"
+"Python nous dit que la parenthèse de droite '{closing}' sur la dernière "
+"ligne\n"
+"ne correspond pas à la parenthèse de gauche ''{opening}' sur la ligne "
+"{lineno}.\n"
 "\n"
 
-#: message_analyzer.py:274
+#: message_analyzer.py:321
 msgid ""
 "Python tells us that the closing '{closing}' on the last line shown\n"
 "does not match the opening '{opening}'.\n"
@@ -1065,7 +1017,7 @@ msgstr ""
 "à la parenthèse de gauche ''{opening}'.\n"
 "\n"
 
-#: message_analyzer.py:285
+#: message_analyzer.py:332
 msgid ""
 "I will attempt to be give a bit more information.\n"
 "\n"
@@ -1074,7 +1026,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: message_analyzer.py:296
+#: message_analyzer.py:343
 msgid ""
 "Inside an f-string, which is a string prefixed by the letter f, \n"
 "you have another string, which starts with either a\n"
@@ -1087,7 +1039,7 @@ msgstr ""
 "ou des guillemets (\"), mais n'est pas terminé par un autre caractère "
 "semblable.\n"
 
-#: message_analyzer.py:313
+#: message_analyzer.py:360
 msgid ""
 "You are including the statement\n"
 "\n"
@@ -1108,7 +1060,7 @@ msgstr ""
 "à l'intérieur de cette fonction, ce qui est le contraire de ce que «global» "
 "sous-entendait.\n"
 
-#: message_analyzer.py:329
+#: message_analyzer.py:376
 msgid ""
 "You assigned a value to the variable '{name}'\n"
 "before declaring it as a global variable.\n"
@@ -1116,7 +1068,7 @@ msgstr ""
 "Vous avez attribué une valeur à la variable  '{name}'\n"
 "avant de la déclarer comme une variable globale.\n"
 
-#: message_analyzer.py:341
+#: message_analyzer.py:388
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a global variable.\n"
@@ -1124,7 +1076,7 @@ msgstr ""
 "Vous avez utilisé la variable '{name}'\n"
 "avant de la déclarer comme une variable globale.\n"
 
-#: message_analyzer.py:353
+#: message_analyzer.py:400
 msgid ""
 "You assigned a value to the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
@@ -1132,7 +1084,7 @@ msgstr ""
 "Vous avez attribué une valeur à la variable '{name}'\n"
 "avant de la déclarer comme variable non locale.\n"
 
-#: message_analyzer.py:365
+#: message_analyzer.py:412
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
@@ -1140,7 +1092,7 @@ msgstr ""
 "Vous avez utilisé la variable '{name}'\n"
 "avant de la déclarer comme variable non locale.\n"
 
-#: message_analyzer.py:375
+#: message_analyzer.py:422
 msgid ""
 "You are using the continuation character '\\' outside of a string,\n"
 "and it is followed by some other character(s).\n"
@@ -1154,7 +1106,7 @@ msgstr ""
 "ou un apostrophe.\n"
 "\n"
 
-#: message_analyzer.py:391
+#: message_analyzer.py:438
 msgid ""
 "Python tells us that the it reached the end of the file\n"
 "and expected more content.\n"
@@ -1168,7 +1120,13 @@ msgstr ""
 "Je vais essayer de donner un peu plus d'informations.\n"
 "\n"
 
-#: message_analyzer.py:425
+#: message_analyzer.py:462 source_analyzer.py:84
+msgid "The closing {bracket} on line {linenumber} does not match anything.\n"
+msgstr ""
+"Le symbole {bracket} à la ligne {linenumber} n'a pas de symbole ouvrant qui "
+"lui correspond.\n"
+
+#: message_analyzer.py:472
 msgid ""
 "In Python, you can call functions with only positional arguments\n"
 "\n"
@@ -1203,7 +1161,7 @@ msgstr ""
 "Selon Python, vous avez utilisé des arguments positionnels après des "
 "arguments nommés.\n"
 
-#: message_analyzer.py:442
+#: message_analyzer.py:489
 msgid ""
 "In Python, you can define functions with only positional arguments\n"
 "\n"
@@ -1240,7 +1198,7 @@ msgstr ""
 "Selon Python, vous avez utilisé des arguments positionnels après des "
 "arguments nommés.\n"
 
-#: message_analyzer.py:462
+#: message_analyzer.py:509
 msgid ""
 "Perhaps you need to type print({message})?\n"
 "\n"
@@ -1256,6 +1214,84 @@ msgstr ""
 #: session.py:103
 msgid "Level {level} not available; using default."
 msgstr "Niveau {Level} non disponible; la valeur par défaut est utilisée."
+
+#: source_analyzer.py:108
+msgid ""
+"The closing {bracket} on line {close_lineno} does not match the opening "
+"{open_bracket} on line {open_lineno}.\n"
+msgstr ""
+"Le symbole {bracket} à la ligne {close_lineno} ne correspond pas au symbole "
+"{open_bracket} à la ligne {open_lineno}.\n"
+
+#: source_analyzer.py:170
+msgid ""
+"It is possible that you used an equal sign '=' instead of a colon ':'\n"
+"to assign values to keys in a dict\n"
+"before or at the position indicated by --> and ^.\n"
+msgstr ""
+"Il est possible que vous ayez utilisé un signe d'égalité (=) au lieu de deux "
+"points (:)\n"
+"pour attribuer des valeurs à une clé d'un dictionnaire\n"
+"avant ou exactement à la position indiquée par --> et ^.\n"
+
+#: source_analyzer.py:214
+msgid ""
+"It is possible that you forgot a comma between items in a tuple, \n"
+"or between function arguments, \n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+"Il est possible que vous ayez oublié une virgule entre les éléments d'un "
+"tuple,\n"
+"ou entre les arguments d'une fonction, avant la position indiquée par --> et "
+"^.\n"
+
+#: source_analyzer.py:221
+msgid ""
+"It is possible that you forgot a comma between items in a list\n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+"Il est possible que vous ayez oublié une virgule entre les éléments d'une "
+"liste\n"
+"avant la position indiquée par --> et ^.\n"
+
+#: source_analyzer.py:227
+msgid ""
+"It is possible that you forgot a comma between items in a set or dict\n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+"Il est possible que vous ayez oublié une virgule entre les éléments d'un "
+"ensemble (set)\n"
+"ou un dict avant la position indiquée par --> et ^.\n"
+
+#: source_analyzer.py:238
+msgid "The opening {bracket} on line {linenumber} is not closed.\n"
+msgstr ""
+"Le symbole {bracket} à la ligne {linenumber} n'est pas fermé par le symbole "
+"correspondant.\n"
+
+#: source_analyzer.py:258
+msgid "parenthesis '('"
+msgstr "parenthèse '('"
+
+#: source_analyzer.py:260
+msgid "parenthesis ')'"
+msgstr "parenthèse ')'"
+
+#: source_analyzer.py:262
+msgid "square bracket '['"
+msgstr "crochet '['"
+
+#: source_analyzer.py:264
+msgid "square bracket ']'"
+msgstr "crochet ']'"
+
+#: source_analyzer.py:266
+msgid "curly bracket '{'"
+msgstr "accolade '{'"
+
+#: source_analyzer.py:268
+msgid "curly bracket '}'"
+msgstr "accolade '}'"
 
 #~ msgid "My best guess:"
 #~ msgstr "Ma meilleure hypothèse :"

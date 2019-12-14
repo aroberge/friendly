@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-12-11 06:57-0400\n"
+"POT-Creation-Date: 2019-12-14 07:48-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,7 +34,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: analyze_syntax.py:92
+#: analyze_syntax.py:96
 msgid ""
 "Currently, I cannot guess the likely cause of this error.\n"
 "Try to examine closely the line indicated as well as the line\n"
@@ -189,71 +189,6 @@ msgid ""
 "followed by what looked like a tuple, '(...)',\n"
 "which Python took as an indication of a function call.\n"
 "Perhaps you had a missing comma before the tuple.\n"
-msgstr ""
-
-#: bracket_analyzer.py:69 message_analyzer.py:415
-msgid ""
-"The closing {bracket} on line {linenumber} does not match anything.\n"
-msgstr ""
-
-#: bracket_analyzer.py:95
-msgid ""
-"The closing {bracket} on line {close_lineno} does not match the opening {open_bracket} on line {open_lineno}.\n"
-msgstr ""
-
-#: bracket_analyzer.py:155
-msgid ""
-"It is possible that you used an equal sign '=' instead of a colon ':'\n"
-"to assign values to keys in a dict\n"
-"before or at the position indicated by --> and ^.\n"
-msgstr ""
-
-#: bracket_analyzer.py:201
-msgid ""
-"It is possible that you forgot a comma between items in a tuple, \n"
-"or between function arguments, \n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-
-#: bracket_analyzer.py:208
-msgid ""
-"It is possible that you forgot a comma between items in a list\n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-
-#: bracket_analyzer.py:214
-msgid ""
-"It is possible that you forgot a comma between items in a set or dict\n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-
-#: bracket_analyzer.py:225
-msgid ""
-"The opening {bracket} on line {linenumber} is not closed.\n"
-msgstr ""
-
-#: bracket_analyzer.py:245
-msgid "parenthesis '('"
-msgstr ""
-
-#: bracket_analyzer.py:247
-msgid "parenthesis ')'"
-msgstr ""
-
-#: bracket_analyzer.py:249
-msgid "square bracket '['"
-msgstr ""
-
-#: bracket_analyzer.py:251
-msgid "square bracket ']'"
-msgstr ""
-
-#: bracket_analyzer.py:253
-msgid "curly bracket '{'"
-msgstr ""
-
-#: bracket_analyzer.py:255
-msgid "curly bracket '}'"
 msgstr ""
 
 #: core.py:354
@@ -543,28 +478,28 @@ msgid ""
 "should have been included as the first line inside your function.\n"
 msgstr ""
 
-#: line_analyzer.py:57
+#: line_analyzer.py:102
 msgid ""
 "You appear to be using the operator :=, sometimes called\n"
 "the walrus operator. This operator requires the use of\n"
 "Python 3.8 or newer. You are using version {version}.\n"
 msgstr ""
 
-#: line_analyzer.py:77 message_analyzer.py:73
+#: line_analyzer.py:119 message_analyzer.py:73
 msgid ""
 "You were trying to assign a value to the Python keyword '{keyword}'.\n"
 "This is not allowed.\n"
 "\n"
 msgstr ""
 
-#: line_analyzer.py:93
+#: line_analyzer.py:135
 msgid ""
 "You meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
 "\n"
 msgstr ""
 
-#: line_analyzer.py:112
+#: line_analyzer.py:154
 msgid ""
 "You wrote something like\n"
 "    import {function} from {module}\n"
@@ -573,19 +508,19 @@ msgid ""
 "\n"
 msgstr ""
 
-#: line_analyzer.py:130
+#: line_analyzer.py:172
 msgid ""
 "You cannot use the Python keyword {word} as an attribute.\n"
 "\n"
 msgstr ""
 
-#: line_analyzer.py:134
+#: line_analyzer.py:176
 msgid ""
 "You cannot use the constant __debug__ as an attribute.\n"
 "\n"
 msgstr ""
 
-#: line_analyzer.py:153
+#: line_analyzer.py:195
 msgid ""
 "There appears to be a Python identifier (variable name)\n"
 "immediately following a string.\n"
@@ -593,48 +528,48 @@ msgid ""
 "that was enclosed in quotes of the same kind.\n"
 msgstr ""
 
-#: line_analyzer.py:173
+#: line_analyzer.py:218
 msgid "a class"
 msgstr ""
 
-#: line_analyzer.py:174
+#: line_analyzer.py:219
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: line_analyzer.py:180
+#: line_analyzer.py:225
 msgid ""
 "You wrote a '{for_while}' loop but\n"
 "forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: line_analyzer.py:186
+#: line_analyzer.py:231
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: line_analyzer.py:207
+#: line_analyzer.py:257
 msgid "a function or method"
 msgstr ""
 
-#: line_analyzer.py:208
+#: line_analyzer.py:258
 msgid ""
 "You tried to define {class_or_function} and did not use the correct syntax.\n"
 "The correct syntax is:\n"
 "    def name ( optional_arguments ):\n"
 msgstr ""
 
-#: line_analyzer.py:217
+#: line_analyzer.py:267
 msgid ""
 "You tried to use the Python keyword '{kwd}' as a function name.\n"
 msgstr ""
 
-#: line_analyzer.py:264
+#: line_analyzer.py:314
 msgid ""
 "I am guessing that you tried to use the Python keyword\n"
 "{kwd} as an argument in the definition of a function.\n"
@@ -670,33 +605,69 @@ msgid ""
 "or includes a function call and is not simply the name of a variable.\n"
 msgstr ""
 
+#: message_analyzer.py:120
+msgid "of type 'int'"
+msgstr ""
+
+#: message_analyzer.py:122
+msgid "of type 'str'"
+msgstr ""
+
 #: message_analyzer.py:124
+msgid "of type 'float'"
+msgstr ""
+
+#: message_analyzer.py:126
+msgid "of type 'complex'"
+msgstr ""
+
+#: message_analyzer.py:128
+msgid "of type 'dict'"
+msgstr ""
+
+#: message_analyzer.py:130
+msgid "of type 'tuple'"
+msgstr ""
+
+#: message_analyzer.py:132
+msgid "of type 'list'"
+msgstr ""
+
+#: message_analyzer.py:134
+msgid "of type 'set'"
+msgstr ""
+
+#: message_analyzer.py:154
+msgid "variable_name"
+msgstr ""
+
+#: message_analyzer.py:158
 msgid ""
 " Perhaps you meant to write:\n"
 "    {name} = {literal}\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:134
+#: message_analyzer.py:181
 msgid ""
 "You wrote an expression like\n"
 "    {literal} = {name}\n"
-"where <{literal}>, on the left hand-side of the equal sign, is\n"
-"or includes an actual number or string (what Python calls a 'literal'),\n"
-"and not the name of a variable."
+"where <{literal}>, on the left hand-side of the equal sign,\n"
+"is or includes an actual object {of_type}\n"
+"and is not simply the name of a variable."
 msgstr ""
 
-#: message_analyzer.py:149
+#: message_analyzer.py:196
 msgid ""
 "The Python keyword 'break' can only be used inside a for loop or inside a while loop.\n"
 msgstr ""
 
-#: message_analyzer.py:159
+#: message_analyzer.py:206
 msgid ""
 "The Python keyword 'continue' can only be used inside a for loop or inside a while loop.\n"
 msgstr ""
 
-#: message_analyzer.py:183
+#: message_analyzer.py:230
 msgid ""
 "You attempted to delete a function call\n"
 "    {line}\n"
@@ -704,13 +675,13 @@ msgid ""
 "    {correct}\n"
 msgstr ""
 
-#: message_analyzer.py:195
+#: message_analyzer.py:242
 msgid ""
 "You starting writing a string with a single or double quote\n"
 "but never ended the string with another quote on that line.\n"
 msgstr ""
 
-#: message_analyzer.py:205
+#: message_analyzer.py:252
 msgid ""
 "One of the following two possibilities could be the cause:\n"
 "1. You meant to do a comparison with == and wrote = instead.\n"
@@ -724,7 +695,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:221
+#: message_analyzer.py:268
 msgid ""
 "You likely called a function with a named argument:\n"
 "\n"
@@ -736,7 +707,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:235
+#: message_analyzer.py:282
 msgid ""
 "You likely used some unicode character that is not allowed\n"
 "as part of a variable name in Python.\n"
@@ -744,34 +715,34 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:269
+#: message_analyzer.py:316
 msgid ""
 "Python tells us that the closing '{closing}' on the last line shown\n"
 "does not match the opening '{opening}' on line {lineno}.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:274
+#: message_analyzer.py:321
 msgid ""
 "Python tells us that the closing '{closing}' on the last line shown\n"
 "does not match the opening '{opening}'.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:285
+#: message_analyzer.py:332
 msgid ""
 "I will attempt to be give a bit more information.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:296
+#: message_analyzer.py:343
 msgid ""
 "Inside an f-string, which is a string prefixed by the letter f, \n"
 "you have another string, which starts with either a\n"
 "single quote (') or double quote (\"), without a matching closing one.\n"
 msgstr ""
 
-#: message_analyzer.py:313
+#: message_analyzer.py:360
 msgid ""
 "You are including the statement\n"
 "\n"
@@ -783,31 +754,31 @@ msgid ""
 "inside that function, which is the contrary of what 'global' implied.\n"
 msgstr ""
 
-#: message_analyzer.py:329
+#: message_analyzer.py:376
 msgid ""
 "You assigned a value to the variable '{name}'\n"
 "before declaring it as a global variable.\n"
 msgstr ""
 
-#: message_analyzer.py:341
+#: message_analyzer.py:388
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a global variable.\n"
 msgstr ""
 
-#: message_analyzer.py:353
+#: message_analyzer.py:400
 msgid ""
 "You assigned a value to the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
 msgstr ""
 
-#: message_analyzer.py:365
+#: message_analyzer.py:412
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
 msgstr ""
 
-#: message_analyzer.py:375
+#: message_analyzer.py:422
 msgid ""
 "You are using the continuation character '\\' outside of a string,\n"
 "and it is followed by some other character(s).\n"
@@ -815,7 +786,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:391
+#: message_analyzer.py:438
 msgid ""
 "Python tells us that the it reached the end of the file\n"
 "and expected more content.\n"
@@ -824,7 +795,12 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:425
+#: message_analyzer.py:462 source_analyzer.py:84
+msgid ""
+"The closing {bracket} on line {linenumber} does not match anything.\n"
+msgstr ""
+
+#: message_analyzer.py:472
 msgid ""
 "In Python, you can call functions with only positional arguments\n"
 "\n"
@@ -842,7 +818,7 @@ msgid ""
 "According to Python, you used positional arguments after keyword ones.\n"
 msgstr ""
 
-#: message_analyzer.py:442
+#: message_analyzer.py:489
 msgid ""
 "In Python, you can define functions with only positional arguments\n"
 "\n"
@@ -860,7 +836,7 @@ msgid ""
 "According to Python, you used positional arguments after keyword ones.\n"
 msgstr ""
 
-#: message_analyzer.py:462
+#: message_analyzer.py:509
 msgid ""
 "Perhaps you need to type print({message})?\n"
 "\n"
@@ -870,5 +846,65 @@ msgstr ""
 
 #: session.py:103
 msgid "Level {level} not available; using default."
+msgstr ""
+
+#: source_analyzer.py:108
+msgid ""
+"The closing {bracket} on line {close_lineno} does not match the opening {open_bracket} on line {open_lineno}.\n"
+msgstr ""
+
+#: source_analyzer.py:170
+msgid ""
+"It is possible that you used an equal sign '=' instead of a colon ':'\n"
+"to assign values to keys in a dict\n"
+"before or at the position indicated by --> and ^.\n"
+msgstr ""
+
+#: source_analyzer.py:214
+msgid ""
+"It is possible that you forgot a comma between items in a tuple, \n"
+"or between function arguments, \n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+
+#: source_analyzer.py:221
+msgid ""
+"It is possible that you forgot a comma between items in a list\n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+
+#: source_analyzer.py:227
+msgid ""
+"It is possible that you forgot a comma between items in a set or dict\n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+
+#: source_analyzer.py:238
+msgid ""
+"The opening {bracket} on line {linenumber} is not closed.\n"
+msgstr ""
+
+#: source_analyzer.py:258
+msgid "parenthesis '('"
+msgstr ""
+
+#: source_analyzer.py:260
+msgid "parenthesis ')'"
+msgstr ""
+
+#: source_analyzer.py:262
+msgid "square bracket '['"
+msgstr ""
+
+#: source_analyzer.py:264
+msgid "square bracket ']'"
+msgstr ""
+
+#: source_analyzer.py:266
+msgid "curly bracket '{'"
+msgstr ""
+
+#: source_analyzer.py:268
+msgid "curly bracket '}'"
 msgstr ""
 

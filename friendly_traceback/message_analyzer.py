@@ -52,20 +52,25 @@ def assign_to_keyword(message="", line="", **kwargs):
         or message == "cannot assign to True"  # Python 3.8
         or message == "cannot assign to False"  # Python 3.8
         or message == "cannot assign to __debug__"  # Python 3.8
+        or message == "can't assign to Ellipsis"  # Python 3.6, 3.7
+        or message == "cannot assign to Ellipsis"  # Python 3.8
     ):
         return
 
-    tokens = utils.tokenize_source(line)
-    while True:
-        for token in tokens:
-            word = token.string
-            if word in kwlist or word == "__debug__":
-                break
-        else:
-            raise FriendlyException("analyze_syntax.assign_to_keyword")
-        break
+    if "Ellipsis" in message:
+        word = "Ellipsis (...)"
+    else:
+        tokens = utils.tokenize_source(line)
+        while True:
+            for token in tokens:
+                word = token.string
+                if word in kwlist or word == "__debug__":
+                    break
+            else:
+                raise FriendlyException("analyze_syntax.assign_to_keyword")
+            break
 
-    if word in ["None", "True", "False", "__debug__"]:
+    if word in ["None", "True", "False", "__debug__", "Ellipsis (...)"]:
         return _(
             "{keyword} is a constant in Python; you cannot assign it a value.\n" "\n"
         ).format(keyword=word)
@@ -108,18 +113,52 @@ def assign_to_function_call(message="", line="", **kwargs):
         ).format(fn_call=fn_call, value=value)
 
 
+def what_kind_of_literal(literal):
+    _ = current_lang.translate
+
+    try:
+        a = eval(literal)
+    except Exception:
+        return None
+
+    if isinstance(a, int):
+        return _("of type 'int'")
+    elif isinstance(a, str):
+        return _("of type 'str'")
+    elif isinstance(a, float):
+        return _("of type 'float'")
+    elif isinstance(a, complex):
+        return _("of type 'complex'")
+    elif isinstance(a, dict):
+        return _("of type 'dict'")
+    elif isinstance(a, tuple):
+        return _("of type 'tuple'")
+    elif isinstance(a, list):
+        return _("of type 'list'")
+    elif isinstance(a, set):
+        return _("of type 'set'")
+    else:
+        return None
+
+
 @add_python_message
 def assign_to_literal(message="", line="", **kwargs):
     _ = current_lang.translate
     if (
         message == "can't assign to literal"  # Python 3.6, 3.7
         or message == "cannot assign to literal"  # Python 3.8
+        or message == "cannot assign to set display"  # Python 3.8
+        or message == "cannot assign to dict display"  # Python 3.8
     ):
         info = line.split("=")
-        literal = info[0].strip()
-        name = info[1].strip()
+        if len(info) == 2:
+            literal = info[0].strip()
+            name = info[1].strip()
+        else:
+            literal = None
+            name = _("variable_name")
 
-        if name.isidentifier():
+        if len(info) == 2 and name.isidentifier():
             # fmt: off
             suggest = _(
                 " Perhaps you meant to write:\n"
@@ -130,14 +169,27 @@ def assign_to_literal(message="", line="", **kwargs):
         else:
             suggest = "\n"
 
+        # Impose the right type when we know it.
+        if message == "cannot assign to set display":
+            of_type = what_kind_of_literal("{1}")
+        elif message == "cannot assign to dict display":
+            of_type = what_kind_of_literal("{1:2}")
+        else:
+            of_type = what_kind_of_literal(literal)
+        if of_type is None:
+            of_type = ""
+
+        if literal is None:
+            literal = "..."
+
         return (
             _(
                 "You wrote an expression like\n"
                 "    {literal} = {name}\n"
-                "where <{literal}>, on the left hand-side of the equal sign, is\n"
-                "or includes an actual number or string (what Python calls a 'literal'),\n"
-                "and not the name of a variable."
-            ).format(literal=literal, name=name)
+                "where <{literal}>, on the left hand-side of the equal sign,\n"
+                "is or includes an actual object {of_type}\n"
+                "and is not simply the name of a variable."
+            ).format(literal=literal, name=name, of_type=of_type)
             + suggest
         )
 

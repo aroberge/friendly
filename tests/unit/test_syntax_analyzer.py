@@ -92,7 +92,7 @@ def test_no_false_positive():
 
 def test_assign_to_literal():
     # two different messages possible, depending on Python version
-    literal = "what Python calls a 'literal'"
+    literal = "is or includes an actual object"
 
     case_1 = find(["1=a"], message="can't assign to literal")
     assert literal in case_1
