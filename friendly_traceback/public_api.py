@@ -13,11 +13,12 @@ instead of::
     friendly_traceback.some_inner_module.some_function()
 """
 from functools import wraps
+import runpy
 
 from . import core
 from . import utils
 
-from .core import check_syntax, run_code
+from .core import check_syntax, exec_code
 from .session import session
 from .source_cache import cache, highlight_source
 from .path_info import (
@@ -26,11 +27,11 @@ from .path_info import (
     include_file_in_traceback,
 )
 
-__version__ = "0.0.20a"
+__version__ = "0.0.21"
 __all__ = [
     "cache",
     "check_syntax",
-    "run_code",
+    "exec_code",
     "highlight_source",
     "exclude_file_from_traceback",
     "is_excluded_file",
@@ -243,3 +244,12 @@ def show_traceback_info_again():
     a verbosity level to view the traceback again.
     """
     session.show_traceback_info_again()
+
+
+@make_public
+def run_program(name, friendly_name="", lang=None):
+    """Experimental code to make program run with Mu"""
+    exclude_file_from_traceback(friendly_name)
+    exclude_file_from_traceback("runpy.py")
+    install(lang=lang)
+    return runpy.run_module("test_mu", run_name="__main__")

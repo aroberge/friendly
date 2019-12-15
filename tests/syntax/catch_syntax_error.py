@@ -71,6 +71,7 @@ causes = {
     "raise_syntax_error57": "Use the function repr(x) instead of `x`.",
     "raise_syntax_error58": "generator expression instead of the name of a variable",
     "raise_syntax_error59": "variable = object if condition else other_object",
+    "raise_syntax_error60": "You used 'x' as a parameter for a function",
 }
 
 if sys.version_info < (3, 8):

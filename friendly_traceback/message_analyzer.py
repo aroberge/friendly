@@ -455,6 +455,18 @@ def name_assigned_to_prior_nonlocal(message="", **kwargs):
 
 
 @add_python_message
+def name_is_parameter_and_nonlocal(message="", **kwargs):
+    _ = current_lang.translate
+    if "is parameter and nonlocal" in message:
+        name = message.split("'")[1]
+        return _(
+            "You used '{name}' as a parameter for a function\n"
+            "before declaring it also as a nonlocal variable:\n"
+            "'{name}' cannot be both at the same time.\n"
+        ).format(name=name)
+
+
+@add_python_message
 def name_used_prior_nonlocal(message="", **kwargs):
     # something like: name 'q' is used prior to nonlocal declaration
     _ = current_lang.translate

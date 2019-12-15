@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-12-14 16:02-0400\n"
-"PO-Revision-Date: 2019-12-14 16:04-0400\n"
+"POT-Creation-Date: 2019-12-14 18:13-0400\n"
+"PO-Revision-Date: 2019-12-14 18:17-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1126,7 +1126,17 @@ msgstr ""
 "Vous avez attribué une valeur à la variable '{name}'\n"
 "avant de la déclarer comme variable non locale.\n"
 
-#: message_analyzer.py:463
+#: message_analyzer.py:462
+msgid ""
+"You used '{name}' as a parameter for a function\n"
+"before declaring it also as a nonlocal variable:\n"
+"'{name}' cannot be both at the same time.\n"
+msgstr ""
+"Vous avez utilisé '{name}' comme paramètre pour une fonction\n"
+"avant de la déclarer également comme une variable non locale :\n"
+"'{name}' ne peut pas être les deux en même temps.\n"
+
+#: message_analyzer.py:475
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
@@ -1134,7 +1144,7 @@ msgstr ""
 "Vous avez utilisé la variable '{name}'\n"
 "avant de la déclarer comme variable non locale.\n"
 
-#: message_analyzer.py:473
+#: message_analyzer.py:485
 msgid ""
 "You are using the continuation character '\\' outside of a string,\n"
 "and it is followed by some other character(s).\n"
@@ -1148,7 +1158,7 @@ msgstr ""
 "ou un apostrophe.\n"
 "\n"
 
-#: message_analyzer.py:489
+#: message_analyzer.py:501
 msgid ""
 "Python tells us that the it reached the end of the file\n"
 "and expected more content.\n"
@@ -1162,13 +1172,13 @@ msgstr ""
 "Je vais essayer de donner un peu plus d'informations.\n"
 "\n"
 
-#: message_analyzer.py:513 source_analyzer.py:84
+#: message_analyzer.py:525 source_analyzer.py:84
 msgid "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'a pas de symbole ouvrant qui "
 "lui correspond.\n"
 
-#: message_analyzer.py:523
+#: message_analyzer.py:535
 msgid ""
 "In Python, you can call functions with only positional arguments\n"
 "\n"
@@ -1203,7 +1213,7 @@ msgstr ""
 "Selon Python, vous avez utilisé des arguments positionnels après des "
 "arguments nommés.\n"
 
-#: message_analyzer.py:540
+#: message_analyzer.py:552
 msgid ""
 "In Python, you can define functions with only positional arguments\n"
 "\n"
@@ -1240,7 +1250,7 @@ msgstr ""
 "Selon Python, vous avez utilisé des arguments positionnels après des "
 "arguments nommés.\n"
 
-#: message_analyzer.py:560
+#: message_analyzer.py:572
 msgid ""
 "Perhaps you need to type print({message})?\n"
 "\n"

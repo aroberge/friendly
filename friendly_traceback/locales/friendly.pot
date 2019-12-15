@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-12-14 16:02-0400\n"
+"POT-Creation-Date: 2019-12-14 18:13-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -801,13 +801,20 @@ msgid ""
 "before declaring it as a nonlocal variable.\n"
 msgstr ""
 
-#: message_analyzer.py:463
+#: message_analyzer.py:462
+msgid ""
+"You used '{name}' as a parameter for a function\n"
+"before declaring it also as a nonlocal variable:\n"
+"'{name}' cannot be both at the same time.\n"
+msgstr ""
+
+#: message_analyzer.py:475
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
 msgstr ""
 
-#: message_analyzer.py:473
+#: message_analyzer.py:485
 msgid ""
 "You are using the continuation character '\\' outside of a string,\n"
 "and it is followed by some other character(s).\n"
@@ -815,7 +822,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:489
+#: message_analyzer.py:501
 msgid ""
 "Python tells us that the it reached the end of the file\n"
 "and expected more content.\n"
@@ -824,12 +831,12 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:513 source_analyzer.py:84
+#: message_analyzer.py:525 source_analyzer.py:84
 msgid ""
 "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 
-#: message_analyzer.py:523
+#: message_analyzer.py:535
 msgid ""
 "In Python, you can call functions with only positional arguments\n"
 "\n"
@@ -847,7 +854,7 @@ msgid ""
 "According to Python, you used positional arguments after keyword ones.\n"
 msgstr ""
 
-#: message_analyzer.py:540
+#: message_analyzer.py:552
 msgid ""
 "In Python, you can define functions with only positional arguments\n"
 "\n"
@@ -865,7 +872,7 @@ msgid ""
 "According to Python, you used positional arguments after keyword ones.\n"
 msgstr ""
 
-#: message_analyzer.py:560
+#: message_analyzer.py:572
 msgid ""
 "Perhaps you need to type print({message})?\n"
 "\n"

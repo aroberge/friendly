@@ -172,7 +172,7 @@ def check_syntax(
     return code, filename
 
 
-def run_code(
+def exec_code(
     *, source=None, filename="Fake filename", path=None, level=None, lang=None
 ):
     """This uses check_syntax to see if the code is valid and, if so,
