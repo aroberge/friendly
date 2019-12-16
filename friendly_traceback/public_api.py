@@ -14,7 +14,6 @@ instead of::
 """
 from functools import wraps
 import runpy
-import inspect
 
 from . import core
 from . import utils
@@ -28,7 +27,7 @@ from .path_info import (
     include_file_in_traceback,
 )
 
-__version__ = "0.0.22"
+__version__ = "0.0.25"
 __all__ = [
     "cache",
     "check_syntax",
@@ -248,11 +247,9 @@ def show_traceback_info_again():
 
 
 @make_public
-def run_program(name, lang=None):
+def run_program(name, exclude="", lang=None):
     """Experimental code to make program run with Mu"""
-    frame = inspect.stack()[2]  # see https://stackoverflow.com/a/1095621/558799
-    mod = inspect.get_module(frame[0])
-    exclude_file_from_traceback(mod.__name__)
+    exclude_file_from_traceback(exclude)
     exclude_file_from_traceback("runpy.py")
     install(lang=lang)
-    return runpy.run_module("test_mu", run_name="__main__")
+    return runpy.run_module(name, run_name="__main__")
