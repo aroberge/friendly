@@ -10,7 +10,14 @@ that are part of the public API and can be directly used, as in::
 instead of::
 
     import friendly_traceback
-    friendly_traceback.some_inner_module.some_function()
+    friendly_traceback.public_api.some_function()
+
+
+Note that this excludes a few modules that are used to install
+friendly-traceback upon importing it, such as::
+
+    from friendly_traceback import explanations
+    from friendly_traceback import explications  # French version
 """
 from functools import wraps
 import runpy
@@ -18,7 +25,7 @@ import runpy
 from . import core
 from . import utils
 
-from .core import check_syntax, exec_code
+from .core import advanced_check_syntax, check_syntax, exec_code
 from .session import session
 from .source_cache import cache, highlight_source
 from .path_info import (
@@ -27,8 +34,9 @@ from .path_info import (
     include_file_in_traceback,
 )
 
-__version__ = "0.0.25"
+__version__ = "0.0.27"
 __all__ = [
+    "advanced_check_syntax",
     "cache",
     "check_syntax",
     "exec_code",

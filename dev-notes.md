@@ -26,9 +26,13 @@ of the existing batch files.
 
         $ py -3.7 -m venv ./venv-friendly3.7
 
-2. Activate the virtual environment
+2. Activate the virtual environment; on Windows you can use
 
         $ ae 3.7
+
+    Otherwise, you can presumably do something like:
+
+        $ venv-friendly3.7/scripts/activate
 
 3. Install the required dependencies for formatting, linting and testing
 

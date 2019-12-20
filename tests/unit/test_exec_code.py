@@ -55,13 +55,22 @@ def test_exec_code():
 
     # When friendly-traceback is "installed", a call to exec_code
     # leaves its level unchanged.
-    friendly.install()
+    friendly.install(redirect="capture")
 
     friendly.set_level(3)
     friendly.exec_code(source=bad_code_syntax)
     assert friendly.get_level() == 3
     friendly.exec_code(source=bad_code_syntax, level=4)
     assert friendly.get_level() == 3
+
+    # A call to exec_code, with a language specified as an argument
+    # should leave the previous language unchanged.
+
+    friendly.set_lang("en")
+    assert not friendly.exec_code(source=bad_code_exec, lang="fr")
+    result = friendly.get_output()
+    assert "Exception Python" in result  # French heading
+    assert friendly.get_lang() == "en"
 
     # Clean up and restore for other tests
     friendly.get_output()

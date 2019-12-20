@@ -100,15 +100,19 @@ def exception_hook(etype, value, tb, redirect=None):
 session.set_exception_hook(_default=exception_hook)
 
 
-def check_syntax(
+def advanced_check_syntax(
     *, source=None, filename="Fake filename", path=None, level=None, lang=None
 ):
     """This uses Python's ``compile()`` builtin which does some analysis of
-       the its code argument and will raise an exception if it identifies
+       its code argument and will raise an exception if it identifies
        some syntax errors, but also some less common "overflow" and "value"
        errors.
 
-       It can either be used on a file, using the ``path`` argument, or
+       Compared with ``check_syntax()``, the prefix ``advanced_`` simply refers
+       to the greater number of arguments, which are specified as
+       keywords-only arguments.
+
+       This function can either be used on a file, using the ``path`` argument, or
        on some code passed as a string, using the ``source`` argument.
        For the latter case, one can also specify a corresponding ``filename``:
        this could be useful if this function is invoked from a GUI-based
@@ -131,13 +135,8 @@ def check_syntax(
     """
     _ = current_lang.translate
 
-    saved_except_hook, saved_lang, saved_level = _save_settings()
-    # saved_lang = _temp_set_lang(lang)
-
-    # if session.installed:
-    #     saved_level = session.level
-    # else:
-    #     saved_level = 0  # normal Python traceback
+    saved_except_hook, saved_level = _save_settings()
+    saved_lang = _temp_set_lang(lang)
 
     if path is not None:
         try:
@@ -172,6 +171,23 @@ def check_syntax(
     return code, filename
 
 
+def check_syntax(filename, lang=None):
+    """Given a filename (relative or absolute path), this function calls the
+       more keyword-based advanced_check_syntax(),
+       and will raise an exception if it identifies
+       some syntax errors, but also some less common "overflow" and "value"
+       errors.  advanced_check_syntax() provides a more flexibility
+
+       If friendly-traceback exception hook has not been set up prior
+       to calling check_syntax, it will only be used for the duration
+       of this function call.
+
+       Returns a tuple containing a code object and a filename if no exception
+       has been raised, False otherwise.
+       """
+    return advanced_check_syntax(path=filename, lang=lang)
+
+
 def exec_code(
     *, source=None, filename="Fake filename", path=None, level=None, lang=None
 ):
@@ -197,13 +213,14 @@ def exec_code(
        to calling check_syntax, it will only be used for the duration
        of this function call.
     """
-    result = check_syntax(
+    result = advanced_check_syntax(
         source=source, filename=filename, path=path, level=level, lang=lang
     )
     if not result:
         return False
 
-    saved_except_hook, saved_lang, saved_level = _save_settings()
+    saved_except_hook, saved_level = _save_settings()
+    saved_lang = _temp_set_lang(lang)
 
     my_globals = {}
     code = result[0]
@@ -232,9 +249,9 @@ def _temp_set_lang(lang):
        """
     saved_lang = None
     if lang is not None:
-        saved_lang = session.get_lang()
+        saved_lang = session.lang
         if saved_lang != lang:
-            session.set_lang(lang)
+            session.install_gettext(lang)
         else:
             saved_lang = None
     return saved_lang
@@ -242,10 +259,9 @@ def _temp_set_lang(lang):
 
 def _save_settings():
     current_except_hook = sys.excepthook
-    current_lang = session.lang
     current_level = session.level
 
-    return current_except_hook, current_lang, current_level
+    return current_except_hook, current_level
 
 
 def _reset(saved_except_hook, saved_lang, saved_level):

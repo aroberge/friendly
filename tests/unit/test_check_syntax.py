@@ -22,7 +22,7 @@ def test_check_syntax():
 
     # When a SyntaxError is raised, check_syntax returns False
 
-    assert not friendly.check_syntax(source=bad_code_syntax)
+    assert not friendly.advanced_check_syntax(source=bad_code_syntax)
     result = friendly.get_output()  # content is flushed
     assert "Python exception" in result
     assert "SyntaxError" in result
@@ -31,8 +31,8 @@ def test_check_syntax():
 
     # When no SyntaxError is raised, check_syntax returns a tuple
     # containing a code object and a file name
-    assert friendly.check_syntax(source=bad_code_exec)
-    assert friendly.check_syntax(source=good_code)
+    assert friendly.advanced_check_syntax(source=bad_code_exec)
+    assert friendly.advanced_check_syntax(source=good_code)
     assert not friendly.get_output()  # no new exceptions recorded
 
     try:
@@ -44,19 +44,19 @@ def test_check_syntax():
     # will end with level set to 0, which corresponds to normal Python
     # tracebacks
     friendly.uninstall()
-    friendly.check_syntax(source=bad_code_syntax)
+    friendly.advanced_check_syntax(source=bad_code_syntax)
     assert friendly.get_level() == 0
-    friendly.check_syntax(source=bad_code_syntax, level=4)
+    friendly.advanced_check_syntax(source=bad_code_syntax, level=4)
     assert friendly.get_level() == 0
 
     # When friendly-traceback is "installed", a call to check_syntax
     # leaves its level unchanged.
-    friendly.install()
+    friendly.install(redirect="capture")
 
     friendly.set_level(3)
-    friendly.check_syntax(source=bad_code_syntax)
+    friendly.advanced_check_syntax(source=bad_code_syntax)
     assert friendly.get_level() == 3
-    friendly.check_syntax(source=bad_code_syntax, level=4)
+    friendly.advanced_check_syntax(source=bad_code_syntax, level=4)
     assert friendly.get_level() == 3
 
     # Clean up and restore for other tests
