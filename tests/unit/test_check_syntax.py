@@ -59,6 +59,15 @@ def test_check_syntax():
     friendly.advanced_check_syntax(source=bad_code_syntax, level=4)
     assert friendly.get_level() == 3
 
+    # A call to advanced_code_syntax, with a language specified as an argument
+    # should leave the previous language unchanged.
+
+    friendly.set_lang("en")
+    assert not friendly.advanced_check_syntax(source=bad_code_syntax, lang="fr")
+    result = friendly.get_output()
+    assert "Exception Python" in result  # French heading
+    assert friendly.get_lang() == "en"
+
     # Clean up and restore for other tests
     friendly.get_output()
     friendly.set_stream(None)

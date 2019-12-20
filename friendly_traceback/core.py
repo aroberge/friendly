@@ -151,9 +151,8 @@ def advanced_check_syntax(
             else:
                 session.set_level(level)
             explain_traceback()
-            return False
-        finally:
             _reset(saved_except_hook, saved_lang, saved_level)
+            return False
 
     cache.add(filename, source)
     try:
@@ -164,10 +163,10 @@ def advanced_check_syntax(
         else:
             session.set_level(level)
         explain_traceback()
-        return False
-    finally:
         _reset(saved_except_hook, saved_lang, saved_level)
+        return False
 
+    _reset(saved_except_hook, saved_lang, saved_level)
     return code, filename
 
 
@@ -182,10 +181,12 @@ def check_syntax(filename, lang=None):
        to calling check_syntax, it will only be used for the duration
        of this function call.
 
-       Returns a tuple containing a code object and a filename if no exception
-       has been raised, False otherwise.
+       Returns False if problems have been found, None otherwise.
        """
-    return advanced_check_syntax(path=filename, lang=lang)
+    if advanced_check_syntax(path=filename, lang=lang):
+        return None
+    else:
+        return False
 
 
 def exec_code(
@@ -233,10 +234,10 @@ def exec_code(
         else:
             session.set_level(level)
         explain_traceback()
-        return False
-    finally:
         _reset(saved_except_hook, saved_lang, saved_level)
+        return False
 
+    _reset(saved_except_hook, saved_lang, saved_level)
     return my_globals
 
 
