@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-12-14 18:13-0400\n"
-"PO-Revision-Date: 2019-12-14 18:17-0400\n"
+"POT-Creation-Date: 2019-12-25 09:44-0400\n"
+"PO-Revision-Date: 2019-12-25 09:45-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -258,18 +258,17 @@ msgstr ""
 "que Python a pris comme indiquant une invocation de fonction.\n"
 "Il est possible que vous ayez oublié d'écrire une virgule avant le tuple.\n"
 
-#: core.py:354
+#: core.py:375
 msgid ""
-"        I suspect that you are using a regular\n"
-"        Python console after importing\n"
-"Friendly-traceback.\n"
-"        Unfortunately, no further processing can be done.\n"
+"I suspect that you are using a regular\n"
+"Python console after importing Friendly-traceback.\n"
+"Unfortunately, no further processing can be done.\n"
 msgstr ""
-"        Je soupçonne que vous utilisez une\n"
-"        Console Python après avoir importé Friendly-traceback.\n"
-"        Malheureusement, aucune autre information ne peut être fournie.\n"
+"Je soupçonne que vous utilisez une\n"
+"console Python après avoir importé Friendly-traceback.\n"
+"Malheureusement, aucune autre information ne peut être fournie.\n"
 
-#: core.py:385
+#: core.py:406
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -280,7 +279,7 @@ msgstr ""
 "Est-ce que vous utilisez une console Python plutôt que la console \"Friendly"
 "\"?\n"
 
-#: core.py:397
+#: core.py:418
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
@@ -288,19 +287,19 @@ msgstr ""
 "Malheureusement, aucune information supplémentaire n’est disponible:\n"
 "le contenu du fichier '<string>' n’est pas accessible.\n"
 
-#: core.py:443
+#: core.py:464
 msgid "Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr "Exception levée à la ligne {linenumber} du fichier '{filename}'.\n"
 
-#: core.py:536
+#: core.py:557
 msgid "I don't have enough information from Python:"
 msgstr "Je n'ai pas assez d'informations de Python:"
 
-#: core.py:538
+#: core.py:559
 msgid "Likely cause based on the information given by Python:"
 msgstr "Cause probable basée sur les informations données par Python :"
 
-#: core.py:580
+#: core.py:601
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
@@ -310,16 +309,16 @@ msgstr ""
 "        vous devez utiliser la console 'Friendly' et non pas une \n"
 "        console Python régulière.\n"
 
-#: core.py:586
+#: core.py:607
 msgid "Problem: source of '{filename}' is not available\n"
 msgstr "Problème : la source de '{filename}' n'est pas disponible.\n"
 
-#: core.py:601
+#: core.py:622
 msgid "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 "L'exécution s'est arrêtée à la ligne {linenumber} du fichier '{filename}'\n"
 
-#: core.py:615
+#: core.py:636
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -329,7 +328,7 @@ msgstr ""
 "'{filename}'\n"
 "jusqu'à l'endroit indiqué par --> et ^.\n"
 
-#: core.py:621
+#: core.py:642
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
@@ -340,7 +339,7 @@ msgstr ""
 "La fin du fichier a été atteinte et Python s'attendait à voir plus de code.\n"
 "\n"
 
-#: core.py:627
+#: core.py:648
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'\n"
@@ -351,7 +350,7 @@ msgstr ""
 "pour une raison non spécifiée.\n"
 "\n"
 
-#: core.py:711
+#: core.py:732
 msgid "Python exception:"
 msgstr "Exception Python:"
 

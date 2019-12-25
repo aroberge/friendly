@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-12-14 18:13-0400\n"
+"POT-Creation-Date: 2019-12-25 09:44-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -191,79 +191,78 @@ msgid ""
 "Perhaps you had a missing comma before the tuple.\n"
 msgstr ""
 
-#: core.py:354
+#: core.py:375
 msgid ""
-"        I suspect that you are using a regular\n"
-"        Python console after importing\n"
-"Friendly-traceback.\n"
-"        Unfortunately, no further processing can be done.\n"
+"I suspect that you are using a regular\n"
+"Python console after importing Friendly-traceback.\n"
+"Unfortunately, no further processing can be done.\n"
 msgstr ""
 
-#: core.py:385
+#: core.py:406
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
 "Are you using a regular Python console instead of a Friendly-console?\n"
 msgstr ""
 
-#: core.py:397
+#: core.py:418
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
 msgstr ""
 
-#: core.py:443
+#: core.py:464
 msgid ""
 "Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: core.py:536
+#: core.py:557
 msgid "I don't have enough information from Python:"
 msgstr ""
 
-#: core.py:538
+#: core.py:559
 msgid "Likely cause based on the information given by Python:"
 msgstr ""
 
-#: core.py:580
+#: core.py:601
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
 "        regular Python console.\n"
 msgstr ""
 
-#: core.py:586
+#: core.py:607
 msgid ""
 "Problem: source of '{filename}' is not available\n"
 msgstr ""
 
-#: core.py:601
+#: core.py:622
 msgid ""
 "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: core.py:615
+#: core.py:636
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "beyond the location indicated below by --> and ^.\n"
 msgstr ""
 
-#: core.py:621
+#: core.py:642
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
 "It reached the end of the file and expected more content.\n"
 msgstr ""
 
-#: core.py:627
+#: core.py:648
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'\n"
 "for an unspecified reason.\n"
 msgstr ""
 
-#: core.py:711
+#: core.py:732
 msgid "Python exception:"
 msgstr ""
 

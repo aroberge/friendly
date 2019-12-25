@@ -368,10 +368,14 @@ def get_traceback_info(etype, value, tb, write_err):
         return info
 
     if not records:
+        if issubclass(etype, FileNotFoundError):
+            set_cause(info, friendly, etype, value)
+        return info
+
         info["cause"] = _(
-            "        I suspect that you are using a regular\n"
-            "        Python console after importing\nFriendly-traceback.\n"
-            "        Unfortunately, no further processing can be done.\n"
+            "I suspect that you are using a regular\n"
+            "Python console after importing Friendly-traceback.\n"
+            "Unfortunately, no further processing can be done.\n"
         )
         return info
 
