@@ -241,6 +241,17 @@ def assign_to_operator(message="", **kwargs):
 
 
 @add_python_message
+def both_nonlocal_and_global(message="", line=None, **kwargs):
+    _ = current_lang.translate
+    if "is nonlocal and global" in message:
+        name = message.split("'")[1]
+        return _(
+            "You declared '{name}' as being both a global and nonlocal variable.\n"
+            "A variable can be global, or nonlocal, but not both at the same time.\n"
+        ).format(name=name)
+
+
+@add_python_message
 def break_outside_loop(message="", **kwargs):
     _ = current_lang.translate
     if "'break' outside loop" in message:
@@ -475,6 +486,17 @@ def name_used_prior_nonlocal(message="", **kwargs):
         return _(
             "You used the variable '{name}'\n"
             "before declaring it as a nonlocal variable.\n"
+        ).format(name=name)
+
+
+@add_python_message
+def no_binding_for_nonlocal(message="", line=None, **kwargs):
+    _ = current_lang.translate
+    if "no binding for nonlocal" in message:
+        name = message.split("'")[1]
+        return _(
+            "You declared the variable '{name}' as being a\n"
+            "nonlocal variable but it cannot be found.\n"
         ).format(name=name)
 
 
