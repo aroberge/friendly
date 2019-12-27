@@ -84,6 +84,9 @@ all_imports = {
     "SyntaxError - assign to generator expression": "raise_syntax_error58",
     "SyntaxError - assign to conditional expression": "raise_syntax_error59",
     "SyntaxError - name is parameter and nonlocal": "raise_syntax_error60",
+    "SyntaxError - name is global and nonlocal": "raise_syntax_error61",
+    "SyntaxError - nonlocal variable not found": "raise_syntax_error62",
+    "SyntaxError - nonlocal variable not found at module level": "raise_syntax_error63",
 }
 
 if sys.version_info < (3, 8):

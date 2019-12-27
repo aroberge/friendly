@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-12-25 09:44-0400\n"
-"PO-Revision-Date: 2019-12-25 09:45-0400\n"
+"POT-Creation-Date: 2019-12-27 11:50-0400\n"
+"PO-Revision-Date: 2019-12-27 11:54-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -942,7 +942,16 @@ msgstr ""
 "du côté gauche du signe d'égalité; ceci devrait être\n"
 "utilisé uniquement pour attribuer une valeur à une variable."
 
-#: message_analyzer.py:247
+#: message_analyzer.py:248
+msgid ""
+"You declared '{name}' as being both a global and nonlocal variable.\n"
+"A variable can be global, or nonlocal, but not both at the same time.\n"
+msgstr ""
+"Vous avez utilisé '{name}' comme étant une variable non locale et globale.\n"
+"Une variable peut être d'un seul type à la fois: soit globale, soit non "
+"locale, ou soit locale.\n"
+
+#: message_analyzer.py:258
 msgid ""
 "The Python keyword 'break' can only be used inside a for loop or inside a "
 "while loop.\n"
@@ -950,7 +959,7 @@ msgstr ""
 "Le mot-clé Python 'break' ne peut être utilisé qu'à l'intérieur d'une boucle "
 "'for' ou à l'intérieur d'une boucle 'while'.\n"
 
-#: message_analyzer.py:257
+#: message_analyzer.py:268
 msgid ""
 "The Python keyword 'continue' can only be used inside a for loop or inside a "
 "while loop.\n"
@@ -958,7 +967,7 @@ msgstr ""
 "Le mot-clé Python 'continue' ne peut être utilisé qu'à l'intérieur d'une "
 "boucle 'for' ou à l'intérieur d'une boucle 'while'.\n"
 
-#: message_analyzer.py:281
+#: message_analyzer.py:292
 msgid ""
 "You attempted to delete a function call\n"
 "    {line}\n"
@@ -970,7 +979,7 @@ msgstr ""
 "au lieu de supprimer le nom de la fonction\n"
 "    {correct}\n"
 
-#: message_analyzer.py:293
+#: message_analyzer.py:304
 msgid ""
 "You starting writing a string with a single or double quote\n"
 "but never ended the string with another quote on that line.\n"
@@ -979,7 +988,7 @@ msgstr ""
 "avec un guillemet simple ou double, mais n'avez jamais\n"
 "terminé la chaîne avec un autre guillemet sur cette ligne.\n"
 
-#: message_analyzer.py:303
+#: message_analyzer.py:314
 msgid ""
 "One of the following two possibilities could be the cause:\n"
 "1. You meant to do a comparison with == and wrote = instead.\n"
@@ -1004,7 +1013,7 @@ msgstr ""
 "ou contient un point, etc.\n"
 "\n"
 
-#: message_analyzer.py:319
+#: message_analyzer.py:330
 msgid ""
 "You likely called a function with a named argument:\n"
 "\n"
@@ -1024,7 +1033,7 @@ msgstr ""
 "ou contenir un point, etc.\n"
 "\n"
 
-#: message_analyzer.py:333
+#: message_analyzer.py:344
 msgid ""
 "You likely used some unicode character that is not allowed\n"
 "as part of a variable name in Python.\n"
@@ -1036,7 +1045,7 @@ msgstr ""
 "Cela comprend de nombreux emojis.\n"
 "\n"
 
-#: message_analyzer.py:367
+#: message_analyzer.py:378
 msgid ""
 "Python tells us that the closing '{closing}' on the last line shown\n"
 "does not match the opening '{opening}' on line {lineno}.\n"
@@ -1048,7 +1057,7 @@ msgstr ""
 "{lineno}.\n"
 "\n"
 
-#: message_analyzer.py:372
+#: message_analyzer.py:383
 msgid ""
 "Python tells us that the closing '{closing}' on the last line shown\n"
 "does not match the opening '{opening}'.\n"
@@ -1058,7 +1067,7 @@ msgstr ""
 "à la parenthèse de gauche ''{opening}'.\n"
 "\n"
 
-#: message_analyzer.py:383
+#: message_analyzer.py:394
 msgid ""
 "I will attempt to be give a bit more information.\n"
 "\n"
@@ -1067,7 +1076,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: message_analyzer.py:394
+#: message_analyzer.py:405
 msgid ""
 "Inside an f-string, which is a string prefixed by the letter f, \n"
 "you have another string, which starts with either a\n"
@@ -1080,7 +1089,7 @@ msgstr ""
 "ou des guillemets (\"), mais n'est pas terminé par un autre caractère "
 "semblable.\n"
 
-#: message_analyzer.py:411
+#: message_analyzer.py:422
 msgid ""
 "You are including the statement\n"
 "\n"
@@ -1101,7 +1110,7 @@ msgstr ""
 "à l'intérieur de cette fonction, ce qui est le contraire de ce que «global» "
 "sous-entendait.\n"
 
-#: message_analyzer.py:427
+#: message_analyzer.py:438
 msgid ""
 "You assigned a value to the variable '{name}'\n"
 "before declaring it as a global variable.\n"
@@ -1109,7 +1118,7 @@ msgstr ""
 "Vous avez attribué une valeur à la variable  '{name}'\n"
 "avant de la déclarer comme une variable globale.\n"
 
-#: message_analyzer.py:439
+#: message_analyzer.py:450
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a global variable.\n"
@@ -1117,7 +1126,7 @@ msgstr ""
 "Vous avez utilisé la variable '{name}'\n"
 "avant de la déclarer comme une variable globale.\n"
 
-#: message_analyzer.py:451
+#: message_analyzer.py:462
 msgid ""
 "You assigned a value to the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
@@ -1125,7 +1134,7 @@ msgstr ""
 "Vous avez attribué une valeur à la variable '{name}'\n"
 "avant de la déclarer comme variable non locale.\n"
 
-#: message_analyzer.py:462
+#: message_analyzer.py:473
 msgid ""
 "You used '{name}' as a parameter for a function\n"
 "before declaring it also as a nonlocal variable:\n"
@@ -1135,7 +1144,7 @@ msgstr ""
 "avant de la déclarer également comme une variable non locale :\n"
 "'{name}' ne peut pas être les deux en même temps.\n"
 
-#: message_analyzer.py:475
+#: message_analyzer.py:486
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
@@ -1143,7 +1152,26 @@ msgstr ""
 "Vous avez utilisé la variable '{name}'\n"
 "avant de la déclarer comme variable non locale.\n"
 
-#: message_analyzer.py:485
+#: message_analyzer.py:496
+msgid ""
+"You used the nonlocal keyword at a module level.\n"
+"The nonlocal keyword refers to a variable inside a function\n"
+"given a value outside that function."
+msgstr ""
+"Vous avez utilisé le mot clé nonlocal au niveau d'un module.\n"
+"Le mot clé nonlocal fait référence à une variable à l'intérieur d'une "
+"fonction\n"
+"qui a une valeur attribuée à l'extérieur de cette fonction."
+
+#: message_analyzer.py:508
+msgid ""
+"You declared the variable '{name}' as being a\n"
+"nonlocal variable but it cannot be found.\n"
+msgstr ""
+"Vous avez déclaré la variable '{name}' comme non locale\n"
+"mais elle n'existe pas ailleurs.\n"
+
+#: message_analyzer.py:518
 msgid ""
 "You are using the continuation character '\\' outside of a string,\n"
 "and it is followed by some other character(s).\n"
@@ -1157,7 +1185,7 @@ msgstr ""
 "ou un apostrophe.\n"
 "\n"
 
-#: message_analyzer.py:501
+#: message_analyzer.py:534
 msgid ""
 "Python tells us that the it reached the end of the file\n"
 "and expected more content.\n"
@@ -1171,13 +1199,13 @@ msgstr ""
 "Je vais essayer de donner un peu plus d'informations.\n"
 "\n"
 
-#: message_analyzer.py:525 source_analyzer.py:84
+#: message_analyzer.py:558 source_analyzer.py:84
 msgid "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'a pas de symbole ouvrant qui "
 "lui correspond.\n"
 
-#: message_analyzer.py:535
+#: message_analyzer.py:568
 msgid ""
 "In Python, you can call functions with only positional arguments\n"
 "\n"
@@ -1212,7 +1240,7 @@ msgstr ""
 "Selon Python, vous avez utilisé des arguments positionnels après des "
 "arguments nommés.\n"
 
-#: message_analyzer.py:552
+#: message_analyzer.py:585
 msgid ""
 "In Python, you can define functions with only positional arguments\n"
 "\n"
@@ -1249,7 +1277,7 @@ msgstr ""
 "Selon Python, vous avez utilisé des arguments positionnels après des "
 "arguments nommés.\n"
 
-#: message_analyzer.py:572
+#: message_analyzer.py:605
 msgid ""
 "Perhaps you need to type print({message})?\n"
 "\n"

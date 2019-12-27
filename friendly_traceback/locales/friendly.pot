@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-12-25 09:44-0400\n"
+"POT-Creation-Date: 2019-12-27 11:50-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -685,17 +685,23 @@ msgid ""
 "only used to assign a value to a variable."
 msgstr ""
 
-#: message_analyzer.py:247
+#: message_analyzer.py:248
+msgid ""
+"You declared '{name}' as being both a global and nonlocal variable.\n"
+"A variable can be global, or nonlocal, but not both at the same time.\n"
+msgstr ""
+
+#: message_analyzer.py:258
 msgid ""
 "The Python keyword 'break' can only be used inside a for loop or inside a while loop.\n"
 msgstr ""
 
-#: message_analyzer.py:257
+#: message_analyzer.py:268
 msgid ""
 "The Python keyword 'continue' can only be used inside a for loop or inside a while loop.\n"
 msgstr ""
 
-#: message_analyzer.py:281
+#: message_analyzer.py:292
 msgid ""
 "You attempted to delete a function call\n"
 "    {line}\n"
@@ -703,13 +709,13 @@ msgid ""
 "    {correct}\n"
 msgstr ""
 
-#: message_analyzer.py:293
+#: message_analyzer.py:304
 msgid ""
 "You starting writing a string with a single or double quote\n"
 "but never ended the string with another quote on that line.\n"
 msgstr ""
 
-#: message_analyzer.py:303
+#: message_analyzer.py:314
 msgid ""
 "One of the following two possibilities could be the cause:\n"
 "1. You meant to do a comparison with == and wrote = instead.\n"
@@ -723,7 +729,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:319
+#: message_analyzer.py:330
 msgid ""
 "You likely called a function with a named argument:\n"
 "\n"
@@ -735,7 +741,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:333
+#: message_analyzer.py:344
 msgid ""
 "You likely used some unicode character that is not allowed\n"
 "as part of a variable name in Python.\n"
@@ -743,34 +749,34 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:367
+#: message_analyzer.py:378
 msgid ""
 "Python tells us that the closing '{closing}' on the last line shown\n"
 "does not match the opening '{opening}' on line {lineno}.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:372
+#: message_analyzer.py:383
 msgid ""
 "Python tells us that the closing '{closing}' on the last line shown\n"
 "does not match the opening '{opening}'.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:383
+#: message_analyzer.py:394
 msgid ""
 "I will attempt to be give a bit more information.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:394
+#: message_analyzer.py:405
 msgid ""
 "Inside an f-string, which is a string prefixed by the letter f, \n"
 "you have another string, which starts with either a\n"
 "single quote (') or double quote (\"), without a matching closing one.\n"
 msgstr ""
 
-#: message_analyzer.py:411
+#: message_analyzer.py:422
 msgid ""
 "You are including the statement\n"
 "\n"
@@ -782,38 +788,51 @@ msgid ""
 "inside that function, which is the contrary of what 'global' implied.\n"
 msgstr ""
 
-#: message_analyzer.py:427
+#: message_analyzer.py:438
 msgid ""
 "You assigned a value to the variable '{name}'\n"
 "before declaring it as a global variable.\n"
 msgstr ""
 
-#: message_analyzer.py:439
+#: message_analyzer.py:450
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a global variable.\n"
 msgstr ""
 
-#: message_analyzer.py:451
+#: message_analyzer.py:462
 msgid ""
 "You assigned a value to the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
 msgstr ""
 
-#: message_analyzer.py:462
+#: message_analyzer.py:473
 msgid ""
 "You used '{name}' as a parameter for a function\n"
 "before declaring it also as a nonlocal variable:\n"
 "'{name}' cannot be both at the same time.\n"
 msgstr ""
 
-#: message_analyzer.py:475
+#: message_analyzer.py:486
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
 msgstr ""
 
-#: message_analyzer.py:485
+#: message_analyzer.py:496
+msgid ""
+"You used the nonlocal keyword at a module level.\n"
+"The nonlocal keyword refers to a variable inside a function\n"
+"given a value outside that function."
+msgstr ""
+
+#: message_analyzer.py:508
+msgid ""
+"You declared the variable '{name}' as being a\n"
+"nonlocal variable but it cannot be found.\n"
+msgstr ""
+
+#: message_analyzer.py:518
 msgid ""
 "You are using the continuation character '\\' outside of a string,\n"
 "and it is followed by some other character(s).\n"
@@ -821,7 +840,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:501
+#: message_analyzer.py:534
 msgid ""
 "Python tells us that the it reached the end of the file\n"
 "and expected more content.\n"
@@ -830,12 +849,12 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:525 source_analyzer.py:84
+#: message_analyzer.py:558 source_analyzer.py:84
 msgid ""
 "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 
-#: message_analyzer.py:535
+#: message_analyzer.py:568
 msgid ""
 "In Python, you can call functions with only positional arguments\n"
 "\n"
@@ -853,7 +872,7 @@ msgid ""
 "According to Python, you used positional arguments after keyword ones.\n"
 msgstr ""
 
-#: message_analyzer.py:552
+#: message_analyzer.py:585
 msgid ""
 "In Python, you can define functions with only positional arguments\n"
 "\n"
@@ -871,7 +890,7 @@ msgid ""
 "According to Python, you used positional arguments after keyword ones.\n"
 msgstr ""
 
-#: message_analyzer.py:572
+#: message_analyzer.py:605
 msgid ""
 "Perhaps you need to type print({message})?\n"
 "\n"

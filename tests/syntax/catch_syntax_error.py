@@ -74,6 +74,7 @@ causes = {
     "raise_syntax_error60": "You used 'x' as a parameter for a function",
     "raise_syntax_error61": "You declared 'xy' as being both a global and nonlocal",
     "raise_syntax_error62": "nonlocal variable but it cannot be found.",
+    "raise_syntax_error63": "You used the nonlocal keyword at a module level",
 }
 
 if sys.version_info < (3, 8):

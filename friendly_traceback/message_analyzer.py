@@ -490,6 +490,17 @@ def name_used_prior_nonlocal(message="", **kwargs):
 
 
 @add_python_message
+def nonlocal_at_module_level(message="", **kwargs):
+    _ = current_lang.translate
+    if "nonlocal declaration not allowed at module level" in message:
+        return _(
+            "You used the nonlocal keyword at a module level.\n"
+            "The nonlocal keyword refers to a variable inside a function\n"
+            "given a value outside that function."
+        )
+
+
+@add_python_message
 def no_binding_for_nonlocal(message="", line=None, **kwargs):
     _ = current_lang.translate
     if "no binding for nonlocal" in message:
