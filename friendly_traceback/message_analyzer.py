@@ -298,6 +298,19 @@ def delete_function_call(message="", line=None, **kwargs):
 
 
 @add_python_message
+def duplicate_argument_in_function_definition(message="", line=None, **kwargs):
+    _ = current_lang.translate
+    if "duplicate argument" in message and "function definition" in message:
+        name = message.split("'")[1]
+        return _(
+            "You have defined a function repeating the keyword argument\n"
+            "    '{name}'\n"
+            "twice; each keyword argument should appear only once"
+            " in a function definition.\n"
+        ).format(name=name)
+
+
+@add_python_message
 def eol_while_scanning_string_literal(message="", **kwargs):
     _ = current_lang.translate
     if "EOL while scanning string literal" in message:
@@ -320,6 +333,16 @@ def expression_cannot_contain_assignment(message="", **kwargs):
             "either because it starts with a number, or is a string,\n"
             "or contains a period, etc.\n"
             "\n"
+        )
+
+
+@add_python_message
+def keyword_argument_repeated(message="", **kwargs):
+    _ = current_lang.translate
+    if "keyword argument repeated" in message:
+        return _(
+            "You have called a function repeating the same keyword argument.\n"
+            "Each keyword argument should appear only once in a function call.\n"
         )
 
 

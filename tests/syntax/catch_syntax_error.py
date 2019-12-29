@@ -75,6 +75,8 @@ causes = {
     "raise_syntax_error61": "You declared 'xy' as being both a global and nonlocal",
     "raise_syntax_error62": "nonlocal variable but it cannot be found.",
     "raise_syntax_error63": "You used the nonlocal keyword at a module level",
+    "raise_syntax_error64": "keyword argument should appear only once in a function definition",
+    "raise_syntax_error65": "keyword argument should appear only once in a function call",
 }
 
 if sys.version_info < (3, 8):

@@ -87,6 +87,8 @@ all_imports = {
     "SyntaxError - name is global and nonlocal": "raise_syntax_error61",
     "SyntaxError - nonlocal variable not found": "raise_syntax_error62",
     "SyntaxError - nonlocal variable not found at module level": "raise_syntax_error63",
+    "SyntaxError - keyword arg only once in function definition": "raise_syntax_error64",
+    "SyntaxError - keyword arg only once in function call": "raise_syntax_error65",
 }
 
 if sys.version_info < (3, 8):
