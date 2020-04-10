@@ -14,11 +14,7 @@ from .friendly_exception import FriendlyException
 
 def count_char(tokens, char):
     """Counts how many times a given character appears in a list of tokens"""
-    nb = 0
-    for token in tokens:
-        if token.string == char:
-            nb += 1
-    return nb
+    return sum(1 for token in tokens if token.string == char)
 
 
 def is_potential_statement(tokens):

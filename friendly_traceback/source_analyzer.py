@@ -118,6 +118,7 @@ def look_for_mismatched_brackets(
                     )
 
 
+# TODO: refactor this
 def look_for_missing_bracket(
     *, source_tokens=None, source_lines=None, max_linenumber=None, offset=None
 ):
