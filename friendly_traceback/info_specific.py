@@ -25,6 +25,18 @@ def register(error_name):
     return add_exception
 
 
+@register("AttributeError")
+def attribute_error(etype, value):
+    # str(value) is expected to be something like
+    #
+    # "AttributeError: type object 'A' has no attribute 'x'"
+    _ = current_lang.translate
+    parts = str(value).split("'")
+    return _(
+        "In your program, the object is '{obj}' and the attribute is '{attr}'.\n"
+    ).format(obj=parts[1], attr=parts[3])
+
+
 @register("FileNotFoundError")
 def file_not_found_error(etype, value):
     _ = current_lang.translate

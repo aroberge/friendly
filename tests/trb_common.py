@@ -30,6 +30,7 @@ def make_title(text):
 
 all_imports = {
     "ArithmeticError": ("test_arithmetic_error", "test_arithmetic_error"),
+    "AttributeError": ("test_attribute_error", "test_attribute_error"),
     "FileNotFoundError": ("test_file_not_found_error", "test_file_not_found_error"),
     "ImportError": ("test_import_error", "test_import_error"),
     "KeyError": ("test_key_error", "test_key_error"),
