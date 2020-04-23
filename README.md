@@ -20,7 +20,3 @@ We completely support the
 Contributors to this project, including those filing or commenting on an issue,
 are expected to do the same.
 
-
-## Note about the documentation
-
-See [Issue #11](https://github.com/aroberge/friendly-traceback/issues/11).
