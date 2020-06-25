@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-04-10 16:39-0300\n"
-"PO-Revision-Date: 2020-04-10 16:45-0300\n"
-"Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
+"POT-Creation-Date: 2020-06-25 22:37+0200\n"
+"PO-Revision-Date: 2020-06-25 22:41+0200\n"
+"Last-Translator: Julien Palard <julien@palard.fr>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -1104,7 +1104,7 @@ msgstr ""
 "à la parenthèse de gauche ''{opening}'.\n"
 "\n"
 
-#: message_analyzer.py:417
+#: message_analyzer.py:417 message_analyzer.py:568
 msgid ""
 "I will attempt to be give a bit more information.\n"
 "\n"
@@ -1227,22 +1227,18 @@ msgid ""
 "Python tells us that the it reached the end of the file\n"
 "and expected more content.\n"
 "\n"
-"I will attempt to be give a bit more information.\n"
-"\n"
 msgstr ""
 "Python nous dit que le il a atteint la fin du fichier\n"
 "et s'attendait à plus de contenu.\n"
 "\n"
-"Je vais essayer de donner un peu plus d'informations.\n"
-"\n"
 
-#: message_analyzer.py:581 source_analyzer.py:84
+#: message_analyzer.py:587 source_analyzer.py:84
 msgid "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'a pas de symbole ouvrant qui "
 "lui correspond.\n"
 
-#: message_analyzer.py:591
+#: message_analyzer.py:597
 msgid ""
 "In Python, you can call functions with only positional arguments\n"
 "\n"
@@ -1277,7 +1273,7 @@ msgstr ""
 "Selon Python, vous avez utilisé des arguments positionnels après des "
 "arguments nommés.\n"
 
-#: message_analyzer.py:608
+#: message_analyzer.py:614
 msgid ""
 "In Python, you can define functions with only positional arguments\n"
 "\n"
@@ -1314,7 +1310,7 @@ msgstr ""
 "Selon Python, vous avez utilisé des arguments positionnels après des "
 "arguments nommés.\n"
 
-#: message_analyzer.py:628
+#: message_analyzer.py:634
 msgid ""
 "Perhaps you need to type print({message})?\n"
 "\n"

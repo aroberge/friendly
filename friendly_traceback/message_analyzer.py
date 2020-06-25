@@ -557,12 +557,18 @@ def unexpected_eof_while_parsing(
     response = _(
         "Python tells us that the it reached the end of the file\n"
         "and expected more content.\n\n"
-        "I will attempt to be give a bit more information.\n\n"
     )
 
-    response += source_analyzer.look_for_missing_bracket(
+    additional_response = source_analyzer.look_for_missing_bracket(
         source_lines=source_lines, max_linenumber=linenumber, offset=offset
     )
+
+    if additional_response:
+        response += (
+            _("I will attempt to be give a bit more information.\n\n")
+            + additional_response
+        )
+
     return response
 
 
