@@ -555,7 +555,7 @@ def unexpected_eof_while_parsing(
     if "unexpected EOF while parsing" not in message:
         return
     response = _(
-        "Python tells us that the it reached the end of the file\n"
+        "Python tells us that it reached the end of the file\n"
         "and expected more content.\n\n"
     )
 

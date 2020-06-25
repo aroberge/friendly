@@ -89,6 +89,7 @@ all_imports = {
     "SyntaxError - nonlocal variable not found at module level": "raise_syntax_error63",
     "SyntaxError - keyword arg only once in function definition": "raise_syntax_error64",
     "SyntaxError - keyword arg only once in function call": "raise_syntax_error65",
+    "SyntaxError - SyntaxError - unexpected EOF while parsing 2": "raise_syntax_error66",
 }
 
 if sys.version_info < (3, 8):
