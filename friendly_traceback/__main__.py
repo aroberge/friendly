@@ -9,6 +9,7 @@ command line. You can find more details by doing::
 
 """
 import argparse
+from importlib import import_module
 import runpy
 import sys
 import textwrap
@@ -91,6 +92,31 @@ parser.add_argument(
     action="store_true",
 )
 
+parser.add_argument(
+    "--formatter",
+    help="""Specify a formatter function, as a dotted path.
+Example: --formatter friendly_traceback.formatters.markdown
+""")
+
+
+def import_function(dotted_path: str) -> type:
+    """Import a function from a module, given its dotted path.
+    """
+    try:
+        module_path, function_name = dotted_path.rsplit(".", 1)
+    except ValueError as err:
+        raise ImportError("%s doesn't look like a module path" % dotted_path) from err
+
+    module = import_module(module_path)
+
+    try:
+        return getattr(module, function_name)
+    except AttributeError as err:
+        raise ImportError(
+            'Module "%s" does not define a "%s" function'
+            % (module_path, function_name)
+        ) from err
+
 
 def main():
     console_dict = {"set_lang": public_api.set_lang, "set_level": public_api.set_level}
@@ -106,6 +132,9 @@ def main():
         sys.exit()
 
     public_api.install()
+
+    if args.formatter:
+        public_api.set_formatter(import_function(args.formatter))
 
     if args.source is not None:
         if sys.flags.interactive:
