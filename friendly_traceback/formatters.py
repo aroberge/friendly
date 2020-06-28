@@ -156,6 +156,29 @@ def no_generic_explanation_with_traceback(info, level=7, **kwargs):
     return result
 
 
+def markdown(info, level):
+    result = []
+    friendly_items = [
+        ("header", "# ", ""),
+        ("message", "", ""),
+        ("parsing_error", "", ""),
+        ("parsing_error_source", "```\n", "```"),
+        ("cause_header", "## ", ""),
+        ("cause", "", ""),
+        ("last_call_header", "## ", ""),
+        ("last_call_source", "```\n", "```"),
+        ("last_call_variables", "Variables:\n```\n", "```"),
+        ("exception_raised_header", "## ", ""),
+        ("exception_raised_source", "```\n", "```"),
+        ("exception_raised_variables", "Variables:\n```\n", "```"),
+       ]
+
+    for item, prefix, suffix in friendly_items:
+        if item in info:
+            result.append(prefix + info[item] + suffix)
+    return "\n\n".join(result)
+
+
 choose_formatter = {
     1: default,
     2: python_traceback_before,
