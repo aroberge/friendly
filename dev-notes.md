@@ -7,6 +7,8 @@ We use [black](https://github.com/python/black) for formatting and
 [flake8](http://flake8.pycqa.org/en/latest/) for linting.
 We also use [pytest](https://docs.pytest.org/en/latest/) for testing.
 
+You can use `tox -p auto` to run black, flake8, and pytest in parallel.
+
 Before submitting code, you should ensure that it conforms to the
 formatting requirements and that all tests pass. Feel free to include
 additional unit tests.

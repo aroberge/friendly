@@ -1,5 +1,7 @@
 import sys
 
+import pytest
+
 import friendly_traceback
 
 friendly_traceback.set_lang("en")
@@ -77,43 +79,37 @@ causes = {
     "raise_syntax_error63": "You used the nonlocal keyword at a module level",
     "raise_syntax_error64": "keyword argument should appear only once in a function definition",
     "raise_syntax_error65": "keyword argument should appear only once in a function call",
-    "raise_syntax_error66": "It reached the end of the file and expected more content.",
+    "raise_syntax_error66": "it reached the end of the file and expected more content.",
 }
 
 if sys.version_info < (3, 8):
     causes["raise_syntax_error_walrus"] = "walrus operator"
     causes["raise_syntax_error55"] = "walrus operator"
+if sys.version_info >= (3, 9):
+    causes["raise_syntax_error66"] = "expected an indented block"
 
 
-def test_syntax_errors():
-    count = 0
-    for filename in causes:
-        cause = causes[filename]
+@pytest.mark.parametrize("filename", causes.keys())
+def test_syntax_errors(filename):
+    cause = causes[filename]
+    try:
         try:
-            try:
-                exec("from . import %s" % filename)  # for pytest
-            except ImportError:
-                exec("import %s" % filename)
-        except Exception:
-            friendly_traceback.explain(redirect="capture")
-        result = friendly_traceback.get_output()
+            exec("from . import %s" % filename)  # for pytest
+        except ImportError:
+            exec("import %s" % filename)
+    except Exception:
+        friendly_traceback.explain(redirect="capture")
+    result = friendly_traceback.get_output()
 
-        if "syntax" in filename:
-            assert "SyntaxError" in result, (
-                "SyntaxError identified incorrectly; %s" % filename
-            )
-        elif "indentation" in filename:
-            assert "IndentationError" in result, (
-                "IndentationError identified incorrectly; %s" % filename
-            )
-        else:
-            assert "TabError" in result, (
-                "TabError identified incorrectly; %s" % filename
-            )
-        assert cause in result, "\nExpected: %s\nGot: %s" % (cause, result)
-        count += 1
-    return count
-
-
-if __name__ == "__main__":
-    print("%s tests run successfully" % test_syntax_errors())
+    if "syntax" in filename:
+        assert "SyntaxError" in result, (
+            "SyntaxError identified incorrectly; %s" % filename
+        )
+    elif "indentation" in filename:
+        assert "IndentationError" in result, (
+            "IndentationError identified incorrectly; %s" % filename
+        )
+    else:
+        assert "TabError" in result, "TabError identified incorrectly; %s" % filename
+    unwrapped_result = " ".join(result.split())
+    assert cause in unwrapped_result, "\nExpected to see: %s\nIn: %s" % (cause, result)
