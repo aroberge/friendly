@@ -171,7 +171,7 @@ def markdown(info, level):
         ("exception_raised_header", "## ", ""),
         ("exception_raised_source", "```\n", "```"),
         ("exception_raised_variables", "Variables:\n```\n", "```"),
-       ]
+    ]
 
     for item, prefix, suffix in friendly_items:
         if item in info:

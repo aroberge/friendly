@@ -96,7 +96,8 @@ parser.add_argument(
     "--formatter",
     help="""Specify a formatter function, as a dotted path.
 Example: --formatter friendly_traceback.formatters.markdown
-""")
+""",
+)
 
 
 def import_function(dotted_path: str) -> type:
@@ -113,8 +114,7 @@ def import_function(dotted_path: str) -> type:
         return getattr(module, function_name)
     except AttributeError as err:
         raise ImportError(
-            'Module "%s" does not define a "%s" function'
-            % (module_path, function_name)
+            'Module "%s" does not define a "%s" function' % (module_path, function_name)
         ) from err
 
 

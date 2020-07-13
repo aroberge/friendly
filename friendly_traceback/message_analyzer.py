@@ -58,6 +58,10 @@ def assign_to_keyword(message="", line="", **kwargs):
         or message == "cannot use named assignment with False"  # Python 3.8
         or message == "cannot use named assignment with None"  # Python 3.8
         or message == "cannot use named assignment with Ellipsis"  # Python 3.8
+        or message == "cannot use assignment expressions with True"  # Python 3.8
+        or message == "cannot use assignment expressions with False"  # Python 3.8
+        or message == "cannot use assignment expressions with None"  # Python 3.8
+        or message == "cannot use assignment expressions with Ellipsis"  # Python 3.8
     ):
         return
 
@@ -363,7 +367,7 @@ def keyword_cannot_be_expression(message="", **kwargs):
 @add_python_message
 def invalid_character_in_identifier(message="", **kwargs):
     _ = current_lang.translate
-    if "invalid character in identifier" in message:
+    if "invalid character" in message:
         return _(
             "You likely used some unicode character that is not allowed\n"
             "as part of a variable name in Python.\n"

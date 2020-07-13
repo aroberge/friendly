@@ -1,4 +1,5 @@
 black
 pytest
+pytest-cov
 flake8
 pre-commit
