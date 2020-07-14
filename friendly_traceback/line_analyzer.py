@@ -327,3 +327,15 @@ def malformed_def(tokens):
                 "{kwd} as an argument in the definition of a function.\n"
             ).format(kwd=char)
         prev_token_str = char
+
+
+@add_line_analyzer
+def print_as_statement(tokens):
+    _ = current_lang.translate
+    if tokens[0].string != "print":
+        return False
+    if len(tokens) == 1 or tokens[1].string != "(":
+        return _(
+            "In older version of Python, 'print' was a keyword.\n"
+            "Now, 'print' is a function; you need to use parentheses to call it.\n"
+        )
