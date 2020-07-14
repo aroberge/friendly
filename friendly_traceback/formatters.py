@@ -157,6 +157,7 @@ def no_generic_explanation_with_traceback(info, level=7, **kwargs):
 
 
 def markdown(info, level):
+    """Traceback formatted with full information but with markdown syntax."""
     result = []
     friendly_items = [
         ("header", "# ", ""),
