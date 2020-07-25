@@ -56,6 +56,13 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "args",
+    nargs="*",
+    help="""Arguments to give to the script specified by source.
+         """,
+)
+
+parser.add_argument(
     "--lang",
     help="""This sets the language used by Friendly-tracebacks.
             Usually this is a two-letter code such as 'fr' for French.
@@ -152,6 +159,7 @@ def main():
             module = __import__(args.source)
         else:
             public_api.exclude_file_from_traceback(runpy.__file__)
+            sys.argv = ["", *args.args]
             runpy.run_path(args.source, run_name="__main__")
     else:
         console.start_console(local_vars=console_dict)
