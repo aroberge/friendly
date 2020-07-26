@@ -13,7 +13,7 @@ def test_type_error1():
     py36 = "must be str, not int" in result
     assert py37 or py36
     if friendly_traceback.get_lang() == "en":
-        assert "a string ('str') and an integer ('int')" in result
+        assert "a string (`str`) and an integer (`int`)" in result
     return result
 
 
@@ -29,7 +29,7 @@ def test_type_error1a():
     py36 = "must be str, not list" in result
     assert py37 or py36
     if friendly_traceback.get_lang() == "en":
-        assert "a string ('str') and a list" in result
+        assert "a string (`str`) and a `list`" in result
     return result
 
 
@@ -43,7 +43,7 @@ def test_type_error1b():
     result = friendly_traceback.get_output()
     assert "TypeError: can only concatenate" in result
     if friendly_traceback.get_lang() == "en":
-        assert "a tuple and a list" in result
+        assert "a `tuple` and a `list`" in result
     return result
 
 
@@ -57,7 +57,7 @@ def test_type_error2():
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for +:" in result
     if friendly_traceback.get_lang() == "en":
-        assert "an integer ('int') and a variable equal to None ('NoneType')" in result
+        assert "an integer (`int`) and a variable equal to None (`NoneType`)" in result
     return result
 
 
@@ -71,7 +71,7 @@ def test_type_error2a():
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for +=:" in result
     if friendly_traceback.get_lang() == "en":
-        assert "an integer ('int') and a string ('str')" in result
+        assert "an integer (`int`) and a string (`str`)" in result
     return result
 
 
@@ -85,7 +85,7 @@ def test_type_error3():
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for -:" in result
     if friendly_traceback.get_lang() == "en":
-        assert "a tuple and a list" in result
+        assert "a `tuple` and a `list`" in result
     return result
 
 
@@ -99,7 +99,7 @@ def test_type_error3a():
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for -=:" in result
     if friendly_traceback.get_lang() == "en":
-        assert "a list and a tuple" in result
+        assert "a `list` and a `tuple`" in result
     return result
 
 
@@ -113,7 +113,7 @@ def test_type_error4():
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for *:" in result
     if friendly_traceback.get_lang() == "en":
-        assert "a complex number and a set" in result
+        assert "a complex number and a `set`" in result
     return result
 
 
@@ -127,7 +127,7 @@ def test_type_error4a():
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for *=:" in result
     if friendly_traceback.get_lang() == "en":
-        assert "a set and a complex number" in result
+        assert "a `set` and a complex number" in result
     return result
 
 
@@ -141,7 +141,7 @@ def test_type_error5():
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for /:" in result
     if friendly_traceback.get_lang() == "en":
-        assert "a dictionary ('dict') and a number ('float')" in result
+        assert "a dictionary (`dict`) and a number (`float`)" in result
     return result
 
 
@@ -155,7 +155,7 @@ def test_type_error5a():
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for /=:" in result
     if friendly_traceback.get_lang() == "en":
-        assert "a number ('float') and a dictionary ('dict')" in result
+        assert "a number (`float`) and a dictionary (`dict`)" in result
     return result
 
 
@@ -169,7 +169,7 @@ def test_type_error5b():
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for //:" in result
     if friendly_traceback.get_lang() == "en":
-        assert "a dictionary ('dict') and an integer ('int')" in result
+        assert "a dictionary (`dict`) and an integer (`int`)" in result
     return result
 
 
@@ -183,7 +183,7 @@ def test_type_error5c():
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for //=:" in result
     if friendly_traceback.get_lang() == "en":
-        assert "an integer ('int') and a dictionary ('dict')"
+        assert "an integer (`int`) and a dictionary (`dict`)"
     return result
 
 
@@ -197,7 +197,7 @@ def test_type_error6():
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for &:" in result
     if friendly_traceback.get_lang() == "en":
-        assert "a string ('str') and an integer ('int')" in result
+        assert "a string (`str`) and an integer (`int`)" in result
     return result
 
 
@@ -211,7 +211,7 @@ def test_type_error6a():
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for &=:" in result
     if friendly_traceback.get_lang() == "en":
-        assert "an integer ('int') and a string ('str')" in result
+        assert "an integer (`int`) and a string (`str`)" in result
     return result
 
 
@@ -403,7 +403,7 @@ def test_type_error15():
     result = friendly_traceback.get_output()
     assert "TypeError: 'tuple' object is not callable" in result
     if friendly_traceback.get_lang() == "en":
-        assert "I suspect that you had an object of this type, <a tuple>," in result
+        assert "I suspect that you had an object of this type, a `tuple`," in result
     return result
 
 
@@ -415,7 +415,7 @@ def test_type_error15a():
     result = friendly_traceback.get_output()
     assert "TypeError: 'list' object is not callable" in result
     if friendly_traceback.get_lang() == "en":
-        assert "I suspect that you had an object of this type, <a list>," in result
+        assert "I suspect that you had an object of this type, a `list`," in result
     return result
 
 
