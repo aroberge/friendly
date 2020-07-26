@@ -84,6 +84,19 @@ def analyze_last_line(line):
 
 
 @add_line_analyzer
+def copy_pasted_code(tokens):
+    """Detecting code that starts with a Python prompt"""
+    _ = current_lang.translate
+    if len(tokens) < 2:
+        return False
+    if tokens[0].string == ">>" and tokens[1].string == ">":
+        return _(
+            "It looks like you copy-pasted code from an interactive interpreter.\n"
+            "The Python prompt, '>>>', should not be included in your code.\n"
+        )
+
+
+@add_line_analyzer
 def detect_walrus(tokens):
     """Detecting if code uses named assignment operator := with an
        older version of Python.

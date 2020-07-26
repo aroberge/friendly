@@ -81,6 +81,7 @@ causes = {
     "raise_syntax_error65": "keyword argument should appear only once in a function call",
     "raise_syntax_error66": "it reached the end of the file and expected more content.",
     "raise_syntax_error67": "In older version of Python, 'print' was a keyword",
+    "raise_syntax_error68": "copy-pasted code from an interactive interpreter",
 
 }
 

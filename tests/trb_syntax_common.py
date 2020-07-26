@@ -91,6 +91,7 @@ all_imports = {
     "SyntaxError - keyword arg only once in function call": "raise_syntax_error65",
     "SyntaxError - SyntaxError - unexpected EOF while parsing 2": "raise_syntax_error66",
     "SyntaxError - SyntaxError - print is a function 2": "raise_syntax_error67",
+    "SyntaxError - SyntaxError - copy/paste from interpreter": "raise_syntax_error68",
 }
 
 if sys.version_info < (3, 8):

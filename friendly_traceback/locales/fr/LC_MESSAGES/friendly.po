@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-07-26 06:50-0300\n"
-"PO-Revision-Date: 2020-07-26 06:54-0300\n"
+"POT-Creation-Date: 2020-07-26 07:35-0300\n"
+"PO-Revision-Date: 2020-07-26 07:36-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -672,7 +672,15 @@ msgstr ""
 "    global {var_name}\n"
 "comme première ligne à l’intérieur de votre fonction.\n"
 
-#: line_analyzer.py:98
+#: line_analyzer.py:93
+msgid ""
+"It looks like you copy-pasted code from an interactive interpreter.\n"
+"The Python prompt, '>>>', should not be included in your code.\n"
+msgstr ""
+"On dirait que vous avez copié-collé le code d’un interprète interactif.\n"
+"L’invite Python, ''>>>'', ne doit pas être incluse dans votre code.\n"
+
+#: line_analyzer.py:111
 msgid ""
 "You appear to be using the operator :=, sometimes called\n"
 "the walrus operator. This operator requires the use of\n"
@@ -684,7 +692,7 @@ msgstr ""
 "{version}.\n"
 "\n"
 
-#: line_analyzer.py:115
+#: line_analyzer.py:128
 msgid ""
 "You are using the backquote character `.\n"
 "This was allowed in Python 2 but is no longer allowed.\n"
@@ -694,7 +702,7 @@ msgstr ""
 "Ceci était permis dans Python 2 mais ne l'est plus maintenant.\n"
 "Utilisez la fonction repr(x) au lieu de `x`."
 
-#: line_analyzer.py:130 message_analyzer.py:86
+#: line_analyzer.py:143 message_analyzer.py:86
 msgid ""
 "You were trying to assign a value to the Python keyword '{keyword}'.\n"
 "This is not allowed.\n"
@@ -704,7 +712,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: line_analyzer.py:146
+#: line_analyzer.py:159
 msgid ""
 "You meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
@@ -714,7 +722,7 @@ msgstr ""
 "au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: line_analyzer.py:165
+#: line_analyzer.py:178
 msgid ""
 "You wrote something like\n"
 "    import {function} from {module}\n"
@@ -729,7 +737,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: line_analyzer.py:183
+#: line_analyzer.py:196
 msgid ""
 "You cannot use the Python keyword {word} as an attribute.\n"
 "\n"
@@ -738,7 +746,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: line_analyzer.py:187
+#: line_analyzer.py:200
 msgid ""
 "You cannot use the constant __debug__ as an attribute.\n"
 "\n"
@@ -746,7 +754,7 @@ msgstr ""
 "Vous ne pouvez pas utiliser la constante __debug__ comme attribut.\n"
 "\n"
 
-#: line_analyzer.py:206
+#: line_analyzer.py:219
 msgid ""
 "There appears to be a Python identifier (variable name)\n"
 "immediately following a string.\n"
@@ -758,11 +766,11 @@ msgstr ""
 "Je soupçonne que vous essayiez d'utiliser un apostrophe ou un guillemet\n"
 "à l'intérieur d'une chaîne qui était délimitée par ces mêmes caractères.\n"
 
-#: line_analyzer.py:229
+#: line_analyzer.py:242
 msgid "a class"
 msgstr "une classe"
 
-#: line_analyzer.py:230
+#: line_analyzer.py:243
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
@@ -772,7 +780,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: line_analyzer.py:236
+#: line_analyzer.py:249
 msgid ""
 "You wrote a '{for_while}' loop but\n"
 "forgot to add a colon ':' at the end\n"
@@ -782,7 +790,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: line_analyzer.py:242
+#: line_analyzer.py:255
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
@@ -792,11 +800,11 @@ msgstr ""
 "'{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: line_analyzer.py:268
+#: line_analyzer.py:281
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: line_analyzer.py:269
+#: line_analyzer.py:282
 msgid ""
 "You tried to define {class_or_function} and did not use the correct syntax.\n"
 "The correct syntax is:\n"
@@ -808,14 +816,14 @@ msgstr ""
 "    def nom ( arguments_optionnels ):\n"
 "\n"
 
-#: line_analyzer.py:278
+#: line_analyzer.py:291
 msgid "You tried to use the Python keyword '{kwd}' as a function name.\n"
 msgstr ""
 "Vous avez tenté d'utiliser le mot clé Python '{kwd}' comme nom de fonction.\n"
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: line_analyzer.py:325
+#: line_analyzer.py:338
 msgid ""
 "I am guessing that you tried to use the Python keyword\n"
 "{kwd} as an argument in the definition of a function.\n"
@@ -825,7 +833,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: line_analyzer.py:338
+#: line_analyzer.py:351
 msgid ""
 "In older version of Python, 'print' was a keyword.\n"
 "Now, 'print' is a function; you need to use parentheses to call it.\n"
