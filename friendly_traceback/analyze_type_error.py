@@ -40,21 +40,21 @@ def convert_type(short_form):
     if short_form == "complex":
         return _("a complex number")
     elif short_form == "dict":
-        return _("a dictionary ('dict')")
+        return _("a dictionary (`dict`)")
     elif short_form == "float":
-        return _("a number ('float')")
+        return _("a number (`float`)")
     elif short_form == "int":
-        return _("an integer ('int')")
+        return _("an integer (`int`)")
     elif short_form == "list":
-        return _("a list")
+        return _("a `list`")
     elif short_form == "NoneType":
-        return _("a variable equal to None ('NoneType')")
+        return _("a variable equal to None (`NoneType`)")
     elif short_form == "set":
-        return _("a set")
+        return _("a `set`")
     elif short_form == "str":
-        return _("a string ('str')")
+        return _("a string (`str`)")
     elif short_form == "tuple":
-        return _("a tuple")
+        return _("a `tuple`")
     else:
         return short_form
 
@@ -279,7 +279,7 @@ def x_is_not_callable(message):
     match = re.search(pattern, message)
     if match is not None:
         return _(
-            "I suspect that you had an object of this type, <{obj}>,\n"
+            "I suspect that you had an object of this type, {obj},\n"
             "followed by what looked like a tuple, '(...)',\n"
             "which Python took as an indication of a function call.\n"
             "Perhaps you had a missing comma before the tuple.\n"

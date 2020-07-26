@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-07-14 11:24-0300\n"
+"POT-Creation-Date: 2020-07-26 07:00-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,35 +57,35 @@ msgid "a complex number"
 msgstr ""
 
 #: analyze_type_error.py:43
-msgid "a dictionary ('dict')"
+msgid "a dictionary (`dict`)"
 msgstr ""
 
 #: analyze_type_error.py:45
-msgid "a number ('float')"
+msgid "a number (`float`)"
 msgstr ""
 
 #: analyze_type_error.py:47
-msgid "an integer ('int')"
+msgid "an integer (`int`)"
 msgstr ""
 
 #: analyze_type_error.py:49
-msgid "a list"
+msgid "a `list`"
 msgstr ""
 
 #: analyze_type_error.py:51
-msgid "a variable equal to None ('NoneType')"
+msgid "a variable equal to None (`NoneType`)"
 msgstr ""
 
 #: analyze_type_error.py:53
-msgid "a set"
+msgid "a `set`"
 msgstr ""
 
 #: analyze_type_error.py:55
-msgid "a string ('str')"
+msgid "a string (`str`)"
 msgstr ""
 
 #: analyze_type_error.py:57
-msgid "a tuple"
+msgid "a `tuple`"
 msgstr ""
 
 #: analyze_type_error.py:72 analyze_type_error.py:90
@@ -185,7 +185,7 @@ msgstr ""
 
 #: analyze_type_error.py:281
 msgid ""
-"I suspect that you had an object of this type, <{obj}>,\n"
+"I suspect that you had an object of this type, {obj},\n"
 "followed by what looked like a tuple, '(...)',\n"
 "which Python took as an indication of a function call.\n"
 "Perhaps you had a missing comma before the tuple.\n"

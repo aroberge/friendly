@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-07-14 11:24-0300\n"
-"PO-Revision-Date: 2020-07-14 11:27-0300\n"
+"POT-Creation-Date: 2020-07-26 06:50-0300\n"
+"PO-Revision-Date: 2020-07-26 06:54-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -81,35 +81,35 @@ msgid "a complex number"
 msgstr "un nombre complexe ('complex')"
 
 #: analyze_type_error.py:43
-msgid "a dictionary ('dict')"
+msgid "a dictionary (`dict`)"
 msgstr "un dictionnaire ('dict')"
 
 #: analyze_type_error.py:45
-msgid "a number ('float')"
+msgid "a number (`float`)"
 msgstr "un nombre ('float')"
 
 #: analyze_type_error.py:47
-msgid "an integer ('int')"
+msgid "an integer (`int`)"
 msgstr "un entier ('int')"
 
 #: analyze_type_error.py:49
-msgid "a list"
+msgid "a `list`"
 msgstr "une liste ('list')"
 
 #: analyze_type_error.py:51
-msgid "a variable equal to None ('NoneType')"
-msgstr "une variable de valeur 'None' ('NoteType')"
+msgid "a variable equal to None (`NoneType`)"
+msgstr "une variable de valeur None ('NoneType')"
 
 #: analyze_type_error.py:53
-msgid "a set"
+msgid "a `set`"
 msgstr "un ensemble ('set')"
 
 #: analyze_type_error.py:55
-msgid "a string ('str')"
+msgid "a string (`str`)"
 msgstr "une chaîne de caractères ('str')"
 
 #: analyze_type_error.py:57
-msgid "a tuple"
+msgid "a `tuple`"
 msgstr "un tuple"
 
 #: analyze_type_error.py:72 analyze_type_error.py:90
@@ -248,12 +248,12 @@ msgstr ""
 
 #: analyze_type_error.py:281
 msgid ""
-"I suspect that you had an object of this type, <{obj}>,\n"
+"I suspect that you had an object of this type, {obj},\n"
 "followed by what looked like a tuple, '(...)',\n"
 "which Python took as an indication of a function call.\n"
 "Perhaps you had a missing comma before the tuple.\n"
 msgstr ""
-"Je soupçonne que vous aviez un objet du type <{obj}>,\n"
+"Je soupçonne que vous aviez un objet du type « {obj} »,\n"
 "suivi de ce qui ressemblait à un tuple, '(...) ',\n"
 "que Python a pris comme indiquant une invocation de fonction.\n"
 "Il est possible que vous ayez oublié d'écrire une virgule avant le tuple.\n"
@@ -1413,6 +1413,9 @@ msgstr "accolade '{'"
 #: source_analyzer.py:269
 msgid "curly bracket '}'"
 msgstr "accolade '}'"
+
+#~ msgid "a set"
+#~ msgstr "un ensemble ('set')"
 
 #~ msgid "My best guess:"
 #~ msgstr "Ma meilleure hypothèse :"
