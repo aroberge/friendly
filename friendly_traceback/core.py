@@ -449,13 +449,6 @@ def cleanup_tracebacks(records, write_err):
 
     records.reverse()
 
-    end = len(records) - end
-    if end == begin:  # The problem is in our own code!
-        # Write in two places to make sure it is noticed!
-        write_err("Internal problem with Friendly-traceback!\n")
-        print("Internal problem with Friendly-traceback")
-        return records
-
     return records[begin:end]
 
 
