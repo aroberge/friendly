@@ -449,6 +449,10 @@ def cleanup_tracebacks(records, write_err):
 
     records.reverse()
 
+    end = len(records) - end
+    if end == begin:  # Single source of error
+        return records
+
     return records[begin:end]
 
 
