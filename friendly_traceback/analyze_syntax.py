@@ -74,7 +74,7 @@ def _find_likely_cause(source_lines, linenumber, message, offset):
     # where the error has been found by Python, and try to find the source
     # of the error
 
-    cause = line_analyzer.analyze_last_line(line)
+    cause = line_analyzer.analyze_last_line(line, offset=offset)
     if cause:
         return notice + cause
 

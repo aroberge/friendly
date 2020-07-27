@@ -51,8 +51,8 @@ def add_line_analyzer(func):
        of all functions that analyze a single line of code."""
     LINE_ANALYZERS.append(func)
 
-    def wrapper(tokens):
-        return func(tokens)
+    def wrapper(tokens, offset=None):
+        return func(tokens, offset=offset)
 
     return wrapper
 
@@ -62,7 +62,7 @@ def add_line_analyzer(func):
 # ========================================================
 
 
-def analyze_last_line(line):
+def analyze_last_line(line, offset=None):
     """Analyzes the last line of code as identified by Python as that
        on which the error occurred."""
     tokens = utils.tokenize_source(line)  # tokens do not include spaces nor comments
@@ -71,7 +71,7 @@ def analyze_last_line(line):
         return
 
     for analyzer in LINE_ANALYZERS:
-        cause = analyzer(tokens)
+        cause = analyzer(tokens, offset=offset)
         if cause:
             return cause
     return
@@ -84,7 +84,7 @@ def analyze_last_line(line):
 
 
 @add_line_analyzer
-def copy_pasted_code(tokens):
+def copy_pasted_code(tokens, **kwargs):
     """Detecting code that starts with a Python prompt"""
     _ = current_lang.translate
     if len(tokens) < 2:
@@ -97,7 +97,7 @@ def copy_pasted_code(tokens):
 
 
 @add_line_analyzer
-def detect_walrus(tokens):
+def detect_walrus(tokens, **kwargs):
     """Detecting if code uses named assignment operator := with an
        older version of Python.
     """
@@ -149,7 +149,7 @@ def assign_to_a_keyword(tokens, **kwargs):
 
 
 @add_line_analyzer
-def confused_elif(tokens):
+def confused_elif(tokens, **kwargs):
     _ = current_lang.translate
     name = None
     if tokens[0].string == "elseif":
@@ -165,7 +165,7 @@ def confused_elif(tokens):
 
 
 @add_line_analyzer
-def import_from(tokens):
+def import_from(tokens, **kwargs):
     _ = current_lang.translate
     if len(tokens) < 4:
         return
@@ -186,7 +186,7 @@ def import_from(tokens):
 
 
 @add_line_analyzer
-def keyword_as_attribute(tokens):
+def keyword_as_attribute(tokens, **kwargs):
     """Will identify something like  obj.True ..."""
     _ = current_lang.translate
     prev_word = None
@@ -204,7 +204,7 @@ def keyword_as_attribute(tokens):
 
 
 @add_line_analyzer
-def misplaced_quote(tokens):
+def misplaced_quote(tokens, **kwargs):
     """This looks for a misplaced quote, something like
        info = 'don't' ...
 
@@ -227,7 +227,7 @@ def misplaced_quote(tokens):
 
 
 @add_line_analyzer
-def missing_colon(tokens):
+def missing_colon(tokens, **kwargs):
     """look for missing colon at the end of statement"""
     _ = current_lang.translate
 
@@ -261,7 +261,7 @@ def missing_colon(tokens):
 
 
 @add_line_analyzer
-def malformed_def(tokens):
+def malformed_def(tokens, **kwargs):
     """Looks for problems with defining a function, assuming that
        the information passed looks like a complete statement"""
     _ = current_lang.translate
@@ -344,7 +344,7 @@ def malformed_def(tokens):
 
 
 @add_line_analyzer
-def print_as_statement(tokens):
+def print_as_statement(tokens, **kwargs):
     _ = current_lang.translate
     if tokens[0].string != "print":
         return False
