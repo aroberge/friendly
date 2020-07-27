@@ -4,6 +4,7 @@ The exception hook at the heart of Friendly-traceback
 """
 
 import inspect
+from itertools import dropwhile
 import os
 import sys
 import traceback
@@ -429,31 +430,11 @@ def cleanup_tracebacks(records, write_err):
         they could possibly invoke some code from files which we had
         decided to exclude.
     """
-    if not records:
-        return records  # likely an empty list
-
-    for begin, record in enumerate(records):
-        frame, filename, linenumber, _func, lines, index = record
-        if is_excluded_file(filename):
-            continue
-        else:
-            break
-
+    records = list(dropwhile(lambda record: is_excluded_file(record.filename), records))
     records.reverse()
-    for end, record in enumerate(records):
-        frame, filename, linenumber, _func, lines, index = record
-        if is_excluded_file(filename):
-            continue
-        else:
-            break
-
+    records = list(dropwhile(lambda record: is_excluded_file(record.filename), records))
     records.reverse()
-
-    end = len(records) - end
-    if end == begin:  # Single source of error
-        return records
-
-    return records[begin:end]
+    return records
 
 
 def exception_raised_header(linenumber, filename):
