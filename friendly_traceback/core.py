@@ -369,10 +369,10 @@ def get_traceback_info(etype, value, tb, write_err):
         return info
 
     if not records:
-        if issubclass(etype, FileNotFoundError):
-            set_cause(info, friendly, etype, value)
-        return info
+        if issubclass(etype, (FileNotFoundError, ImportError)):
+            return info
 
+        # I don't know if this can still happen.
         info["cause"] = _(
             "I suspect that you are using a regular\n"
             "Python console after importing Friendly-traceback.\n"
