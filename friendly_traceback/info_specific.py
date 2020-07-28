@@ -4,9 +4,12 @@ Attempts to provide some specific information about the likely cause
 of a given exception.
 """
 
+import sys
+
 from .my_gettext import current_lang
 from . import analyze_syntax
 from . import analyze_type_error
+from .utils import edit_distance
 
 get_cause = {}
 
@@ -31,10 +34,37 @@ def attribute_error(etype, value):
     #
     # "AttributeError: type object 'A' has no attribute 'x'"
     _ = current_lang.translate
-    parts = str(value).split("'")
+    message = str(value)
+    ignore, obj, ignore, attribute, ignore = message.split("'")
+    if message.startswith("module "):
+        cause_identified = attribute_error_in_module(message, obj, attribute)
+        if cause_identified:
+            return cause_identified
     return _(
         "In your program, the object is '{obj}' and the attribute is '{attr}'.\n"
-    ).format(obj=parts[1], attr=parts[3])
+    ).format(obj=obj, attr=attribute)
+
+
+def attribute_error_in_module(message, module, attribute):
+    """Attempts to find if a module attribute might have been misspelled"""
+    _ = current_lang.translate
+    try:
+        mod = sys.modules[module]
+    except Exception:
+        return False
+    misspelled = edit_distance(attribute, dir(mod))
+    if not misspelled:
+        return False
+
+    if len(misspelled) == 1:
+        return _("Perhaps you meant to write '{correct}' instead of '{typo}'\n").format(
+            correct=misspelled[0], typo=attribute
+        )
+    else:
+        return _(
+            "Instead of writing {typo}, perhaps you meant one of the following:\n"
+            "{candidates}\n"
+        ).format(candidates=misspelled, typo=attribute)
 
 
 @register("FileNotFoundError")
