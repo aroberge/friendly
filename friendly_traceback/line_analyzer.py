@@ -409,3 +409,17 @@ def dot_followed_by_bracket(tokens, offset=None):
         return _("You cannot have a dot '.' followed by {bracket}.\n").format(
             bracket=bad_token.string
         )
+
+
+@add_line_analyzer
+def raise_single_exception(tokens, offset=None):
+    _ = current_lang.translate
+    if tokens[0].string != "raise":
+        return False
+    bad_token, ignore = find_offending_token(tokens, offset)
+    if bad_token is None:
+        return False
+    if bad_token.string == ",":
+        return _(
+            "It looks like you are trying to raise an exception using Python 2 syntax.\n"
+        )

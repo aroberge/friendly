@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-07-28 16:22-0300\n"
+"POT-Creation-Date: 2020-07-28 19:12-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -631,6 +631,11 @@ msgstr ""
 #: line_analyzer.py:409
 msgid ""
 "You cannot have a dot '.' followed by {bracket}.\n"
+msgstr ""
+
+#: line_analyzer.py:423
+msgid ""
+"It looks like you are trying to raise an exception using Python 2 syntax.\n"
 msgstr ""
 
 #: message_analyzer.py:83

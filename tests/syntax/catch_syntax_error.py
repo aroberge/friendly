@@ -86,6 +86,7 @@ causes = {
     "raise_syntax_error70": "pip is a command that needs to run in a terminal",
     "raise_syntax_error71": "dot '.' followed by (",
     "raise_syntax_error72": "expression that has an f-string",
+    "raise_syntax_error73": "trying to raise an exception using Python 2 syntax.",
 }
 
 if sys.version_info < (3, 8):

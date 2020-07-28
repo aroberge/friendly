@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-07-28 16:22-0300\n"
-"PO-Revision-Date: 2020-07-28 16:24-0300\n"
+"POT-Creation-Date: 2020-07-28 19:12-0300\n"
+"PO-Revision-Date: 2020-07-28 19:14-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -878,6 +878,13 @@ msgstr ""
 #: line_analyzer.py:409
 msgid "You cannot have a dot '.' followed by {bracket}.\n"
 msgstr "Vous ne pouvez pas avoir un point '.' suivi de {bracket}.\n"
+
+#: line_analyzer.py:423
+msgid ""
+"It looks like you are trying to raise an exception using Python 2 syntax.\n"
+msgstr ""
+"Je crois que vous essayez de lever une exception en utilisant la syntaxe de "
+"Python 2.\n"
 
 #: message_analyzer.py:83
 msgid ""
