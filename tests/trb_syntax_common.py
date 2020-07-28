@@ -95,6 +95,7 @@ all_imports = {
     "SyntaxError - Using pip from interpreter": "raise_syntax_error69",
     "SyntaxError - Using pip from interpreter 2": "raise_syntax_error70",
     "SyntaxError - dot followed by parenthesis": "raise_syntax_error71",
+    "SyntaxError - cannot assign to f-string": "raise_syntax_error72",
 }
 
 if sys.version_info < (3, 8):

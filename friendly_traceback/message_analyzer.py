@@ -5,6 +5,7 @@ return relevant information to users.
 """
 from keyword import kwlist
 import re
+import sys
 import tokenize
 
 from .my_gettext import current_lang
@@ -178,6 +179,18 @@ def what_kind_of_literal(literal):
 
 
 @add_python_message
+def assign_to_f_expression(message="", line="", **kwargs):
+    _ = current_lang.translate
+    if message == "cannot assign to f-string expression":
+        return _(
+            "You wrote an expression that has an f-string\n"
+            "on the left-hand side of the equal sign.\n"
+            "An f-string should only appear on the right-hand"
+            "side of the equal sign.\n"
+        )
+
+
+@add_python_message
 def assign_to_literal(message="", line="", **kwargs):
     _ = current_lang.translate
     if (
@@ -190,6 +203,15 @@ def assign_to_literal(message="", line="", **kwargs):
         if len(info) == 2:
             literal = info[0].strip()
             name = info[1].strip()
+            if sys.version_info < (3, 8) and (
+                literal.startswith("f'{") or literal.startswith('f"{')
+            ):
+                return _(
+                    "You wrote an expression that has an f-string\n"
+                    "on the left-hand side of the equal sign.\n"
+                    "An f-string should only appear on the right-hand"
+                    "side of the equal sign\n."
+                )
         else:
             literal = None
             name = _("variable_name")
