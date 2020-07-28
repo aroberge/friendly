@@ -63,6 +63,10 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "--color", "--colour", help="""Not implemented yet.""", action="store_true"
+)
+
+parser.add_argument(
     "--lang",
     help="""This sets the language used by Friendly-tracebacks.
             Usually this is a two-letter code such as 'fr' for French.
