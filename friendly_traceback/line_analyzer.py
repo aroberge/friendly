@@ -396,3 +396,16 @@ def calling_pip(tokens, **kwargs):
     for tok in tokens:
         if tok.string == "pip":
             return message
+
+
+@add_line_analyzer
+def dot_followed_by_bracket(tokens, offset=None):
+    _ = current_lang.translate
+    bad_token, index = find_offending_token(tokens, offset)
+    if bad_token is None or index == 0:
+        return False
+    prev_token = tokens[index - 1]
+    if bad_token.string in ["(", ")", "[", "]", "{", "}"] and prev_token.string == ".":
+        return _("You cannot have a dot '.' followed by {bracket}.\n").format(
+            bracket=bad_token.string
+        )

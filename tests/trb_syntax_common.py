@@ -89,11 +89,12 @@ all_imports = {
     "SyntaxError - nonlocal variable not found at module level": "raise_syntax_error63",
     "SyntaxError - keyword arg only once in function definition": "raise_syntax_error64",
     "SyntaxError - keyword arg only once in function call": "raise_syntax_error65",
-    "SyntaxError - SyntaxError - unexpected EOF while parsing 2": "raise_syntax_error66",
-    "SyntaxError - SyntaxError - print is a function 2": "raise_syntax_error67",
-    "SyntaxError - SyntaxError - copy/paste from interpreter": "raise_syntax_error68",
-    "SyntaxError - SyntaxError - Using pip from interpreter": "raise_syntax_error69",
-    "SyntaxError - SyntaxError - Using pip from interpreter 2": "raise_syntax_error70",
+    "SyntaxError - unexpected EOF while parsing 2": "raise_syntax_error66",
+    "SyntaxError - print is a function 2": "raise_syntax_error67",
+    "SyntaxError - copy/paste from interpreter": "raise_syntax_error68",
+    "SyntaxError - Using pip from interpreter": "raise_syntax_error69",
+    "SyntaxError - Using pip from interpreter 2": "raise_syntax_error70",
+    "SyntaxError - dot followed by parenthesis": "raise_syntax_error71",
 }
 
 if sys.version_info < (3, 8):

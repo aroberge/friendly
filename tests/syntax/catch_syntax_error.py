@@ -84,7 +84,7 @@ causes = {
     "raise_syntax_error68": "copy-pasted code from an interactive interpreter",
     "raise_syntax_error69": "pip is a command that needs to run in a terminal",
     "raise_syntax_error70": "pip is a command that needs to run in a terminal",
-
+    "raise_syntax_error71": "dot '.' followed by (",
 }
 
 if sys.version_info < (3, 8):
