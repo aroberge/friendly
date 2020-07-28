@@ -85,9 +85,9 @@ def test_no_false_positive():
 
     walrus_test = ["a := 1"]
     if sys.version_info >= (3, 8):
-        assert no_cause in find(walrus_test)
+        assert no_cause in find(walrus_test, offset=3)
     else:
-        assert "walrus operator" in find(walrus_test)
+        assert "walrus operator" in find(walrus_test, offset=3)
 
 
 def test_assign_to_literal():

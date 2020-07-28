@@ -17,6 +17,25 @@ def count_char(tokens, char):
     return sum(1 for token in tokens if token.string == char)
 
 
+def find_offending_token(tokens, offset):
+    """Based on the offset provided by Python in the traceback, we find
+       the token that was flagged as being in error.
+    """
+    # Note that the offset provided by Python starts at 1 instead of 0
+    offset -= 1  # shift for proper comparison
+    for index, tok in enumerate(tokens):
+        if tok.start_col == offset:
+            return tok, index
+
+    print(
+        """Problem in friendly_traceback.line_analyzer.find_offending_token().
+             Please report this case.
+             https://github.com/aroberge/friendly-traceback/issues
+          """
+    )
+    return None, None
+
+
 def is_potential_statement(tokens):
     """This helper function tests the list of tokens
        (usually corresponding to a single line of code)
@@ -97,7 +116,7 @@ def copy_pasted_code(tokens, **kwargs):
 
 
 @add_line_analyzer
-def detect_walrus(tokens, **kwargs):
+def detect_walrus(tokens, offset=None):
     """Detecting if code uses named assignment operator := with an
        older version of Python.
     """
@@ -105,32 +124,43 @@ def detect_walrus(tokens, **kwargs):
     if sys.version_info >= (3, 8):
         return False
 
-    found_colon = False
-    for token in tokens:
-        if found_colon and token.string == "=":
-            return _(
-                "You appear to be using the operator :=, sometimes called\n"
-                "the walrus operator. This operator requires the use of\n"
-                "Python 3.8 or newer. You are using version {version}.\n"
-            ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
+    bad_token, index = find_offending_token(tokens, offset)
+    print("bad_token = ", bad_token)
+    if bad_token is None or bad_token.string != ":":
+        return False
 
-        found_colon = token.string == ":"
+    try:
+        next_token = tokens[index + 1]
+    except IndexError:
+        return False
+
+    if next_token.string != "=":
+        return False
+
+    return _(
+        "You appear to be using the operator :=, sometimes called\n"
+        "the walrus operator. This operator requires the use of\n"
+        "Python 3.8 or newer. You are using version {version}.\n"
+    ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
 
 
 @add_line_analyzer
-def detect_backquote(tokens, **kwargs):
+def detect_backquote(tokens, offset=None):
     """Detecting if the error is due to using `x` which was allowed
        in Python 2.
     """
     _ = current_lang.translate
-    for token in tokens:
-        if token.string == "`":
-            return _(
-                "You are using the backquote character `.\n"
-                "Either you meant to write a single quote, ', "
-                "or copied Python 2 code;\n"
-                "in this latter case, use the function repr(x) instead of `x`."
-            )
+    bad_token, ignore = find_offending_token(tokens, offset)
+    if bad_token is None:
+        return False
+    # the token that gets flagged as problematic is the one after ""
+    if bad_token.string == "`":
+        return _(
+            "You are using the backquote character `.\n"
+            "Either you meant to write a single quote, ', "
+            "or copied Python 2 code;\n"
+            "in this latter case, use the function repr(x) instead of `x`."
+        )
 
 
 @add_line_analyzer
@@ -158,7 +188,7 @@ def confused_elif(tokens, **kwargs):
         name = "else if"
     if name:
         return _(
-            "You meant to use Python's 'elif' keyword\n"
+            "You likely meant to use Python's 'elif' keyword\n"
             "but wrote '{name}' instead\n"
             "\n"
         ).format(name=name)
