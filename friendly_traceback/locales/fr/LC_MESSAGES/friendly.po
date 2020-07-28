@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-07-28 11:54-0300\n"
-"PO-Revision-Date: 2020-07-28 11:57-0300\n"
+"POT-Creation-Date: 2020-07-28 14:24-0300\n"
+"PO-Revision-Date: 2020-07-28 14:25-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -588,17 +588,17 @@ msgstr ""
 "à l’aide de l’opérateur modulo '%'\n"
 "    résultat = ma_variable % 0\n"
 
-#: info_specific.py:41
+#: info_specific.py:43
 msgid "In your program, the object is '{obj}' and the attribute is '{attr}'.\n"
 msgstr ""
 "Dans votre programme, l’objet est '{obj}' et l’attribut est '{attr}'.\n"
 
-#: info_specific.py:58
+#: info_specific.py:60
 msgid "Perhaps you meant to write '{correct}' instead of '{typo}'\n"
 msgstr ""
 "Peut-être que vous vouliez plutôt écrire : '{correct}' au lieu de '{typo}'.\n"
 
-#: info_specific.py:62
+#: info_specific.py:64
 msgid ""
 "Instead of writing {typo}, perhaps you meant one of the following:\n"
 "{candidates}\n"
@@ -607,13 +607,17 @@ msgstr ""
 "attributs suivants :\n"
 "{candidates}\n"
 
-#: info_specific.py:76
+#: info_specific.py:78
 msgid ""
 "In your program, the name of the\n"
 "file that cannot be found is '{filename}'.\n"
 msgstr "Dans votre programme, le nom du fichier inconnu est '{filename}'.\n"
 
-#: info_specific.py:95
+#: info_specific.py:99
+msgid "The name of the module that could not be imported is '{name}'\n"
+msgstr "Le nom du module qui n’a pas pu être importé est '{name}'.\n"
+
+#: info_specific.py:107
 msgid ""
 "The object that could not be imported is '{name}'.\n"
 "The module or package where it was \n"
@@ -622,11 +626,11 @@ msgstr ""
 "L’objet qui n’a pas pu être importé est '{name}'.\n"
 "Le module ou le paquet d'où il devait être importé est '{module}'.\n"
 
-#: info_specific.py:101
+#: info_specific.py:113
 msgid "The object that could not be imported is '{name}'.\n"
 msgstr "L’objet qui n’a pas pu être importé est' {name} '.\n"
 
-#: info_specific.py:112
+#: info_specific.py:124
 msgid ""
 "In this case, the line identified above\n"
 "is more indented than expected and \n"
@@ -636,7 +640,7 @@ msgstr ""
 "est plus indentée que ce qui était attendu et ne\n"
 "correspond pas à l'indentation de la ligne précédente.\n"
 
-#: info_specific.py:118
+#: info_specific.py:130
 msgid ""
 "In this case, the line identified above\n"
 "was expected to begin a new indented block.\n"
@@ -644,7 +648,7 @@ msgstr ""
 "Dans ce cas-ci, la ligne indiquée ci-dessus par --> devrait\n"
 "normalement commencer un nouveau bloc de code indenté.\n"
 
-#: info_specific.py:123
+#: info_specific.py:135
 msgid ""
 "In this case, the line identified above is\n"
 "less indented than the preceding one,\n"
@@ -654,31 +658,31 @@ msgstr ""
 "est moins indentée que la ligne précédente\n"
 "et n’est pas alignée verticalement avec un autre bloc de code.\n"
 
-#: info_specific.py:136
+#: info_specific.py:148
 msgid "In this case, the sequence is a list.\n"
 msgstr "Dans ce cas, la séquence est une liste.\n"
 
-#: info_specific.py:138
+#: info_specific.py:150
 msgid "In this case, the sequence is a tuple.\n"
 msgstr "Dans ce cas, la séquence est un tuple.\n"
 
-#: info_specific.py:152
+#: info_specific.py:164
 msgid ""
 "In your program, the name of the key\n"
 "that cannot be found is '{key_name}'.\n"
 msgstr "Dans votre programme, le nom de la clé inconnue est '{key_name}'.\n"
 
-#: info_specific.py:166
+#: info_specific.py:178
 msgid ""
 "In your program, the name of the\n"
 "module that cannot be found is '{mod_name}'.\n"
 msgstr "Dans votre programme, le nom du module inconnu est '{mod_name}'.\n"
 
-#: info_specific.py:180
+#: info_specific.py:192
 msgid "In your program, the unknown name is '{var_name}'.\n"
 msgstr "Dans votre programme, le nom inconnu est '{var_name}'.\n"
 
-#: info_specific.py:208
+#: info_specific.py:220
 msgid ""
 "The variable that appears to cause the problem is '{var_name}'.\n"
 "Perhaps the statement\n"

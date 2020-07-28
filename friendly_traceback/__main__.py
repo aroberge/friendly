@@ -148,6 +148,7 @@ def main():
         public_api.set_formatter(import_function(args.formatter))
 
     if args.source is not None:
+        public_api.exclude_file_from_traceback(runpy.__file__)
         if sys.flags.interactive:
             if args.import_only:
                 module = __import__(args.source)
@@ -155,14 +156,12 @@ def main():
                 for var in dir(module):
                     module_dict[var] = getattr(module, var)
             else:
-                public_api.exclude_file_from_traceback(runpy.__file__)
                 module_dict = runpy.run_module(args.source, run_name="__main__")
             console_dict.update(module_dict)
             console.start_console(local_vars=console_dict)
         elif args.import_only:
             module = __import__(args.source)
         else:
-            public_api.exclude_file_from_traceback(runpy.__file__)
             sys.argv = ["", *args.args]
             runpy.run_path(args.source, run_name="__main__")
     else:
