@@ -92,6 +92,8 @@ all_imports = {
     "SyntaxError - SyntaxError - unexpected EOF while parsing 2": "raise_syntax_error66",
     "SyntaxError - SyntaxError - print is a function 2": "raise_syntax_error67",
     "SyntaxError - SyntaxError - copy/paste from interpreter": "raise_syntax_error68",
+    "SyntaxError - SyntaxError - Using pip from interpreter": "raise_syntax_error69",
+    "SyntaxError - SyntaxError - Using pip from interpreter 2": "raise_syntax_error70",
 }
 
 if sys.version_info < (3, 8):

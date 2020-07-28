@@ -26,13 +26,6 @@ def find_offending_token(tokens, offset):
     for index, tok in enumerate(tokens):
         if tok.start_col == offset:
             return tok, index
-
-    print(
-        """Problem in friendly_traceback.line_analyzer.find_offending_token().
-             Please report this case.
-             https://github.com/aroberge/friendly-traceback/issues
-          """
-    )
     return None, None
 
 
@@ -125,7 +118,6 @@ def detect_walrus(tokens, offset=None):
         return False
 
     bad_token, index = find_offending_token(tokens, offset)
-    print("bad_token = ", bad_token)
     if bad_token is None or bad_token.string != ":":
         return False
 
@@ -383,3 +375,24 @@ def print_as_statement(tokens, **kwargs):
             "In older version of Python, 'print' was a keyword.\n"
             "Now, 'print' is a function; you need to use parentheses to call it.\n"
         )
+
+
+@add_line_analyzer
+def calling_pip(tokens, **kwargs):
+    _ = current_lang.translate
+    first = tokens[0].string
+    if first not in ["pip", "python"]:
+        return False
+
+    message = _(
+        "It looks as if you are attempting to use pip to install a module.\n"
+        "pip is a command that needs to run in a terminal,\n"
+        "not from a Python interpreter.\n"
+    )
+
+    if first == "pip":
+        return message
+
+    for tok in tokens:
+        if tok.string == "pip":
+            return message

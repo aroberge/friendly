@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-07-27 15:53-0300\n"
-"PO-Revision-Date: 2020-07-27 15:56-0300\n"
+"POT-Creation-Date: 2020-07-28 08:56-0300\n"
+"PO-Revision-Date: 2020-07-28 08:58-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -258,7 +258,7 @@ msgstr ""
 "que Python a pris comme indiquant une invocation de fonction.\n"
 "Il est possible que vous ayez oublié d'écrire une virgule avant le tuple.\n"
 
-#: core.py:375
+#: core.py:376
 msgid ""
 "I suspect that you are using a regular\n"
 "Python console after importing Friendly-traceback.\n"
@@ -268,7 +268,7 @@ msgstr ""
 "console Python après avoir importé Friendly-traceback.\n"
 "Malheureusement, aucune autre information ne peut être fournie.\n"
 
-#: core.py:406
+#: core.py:407
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -279,7 +279,7 @@ msgstr ""
 "Est-ce que vous utilisez une console Python plutôt que la console \"Friendly"
 "\"?\n"
 
-#: core.py:418
+#: core.py:419
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
@@ -287,19 +287,19 @@ msgstr ""
 "Malheureusement, aucune information supplémentaire n’est disponible:\n"
 "le contenu du fichier '<string>' n’est pas accessible.\n"
 
-#: core.py:461
+#: core.py:442
 msgid "Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr "Exception levée à la ligne {linenumber} du fichier '{filename}'.\n"
 
-#: core.py:554
+#: core.py:535
 msgid "I don't have enough information from Python:"
 msgstr "Je n'ai pas assez d'informations de Python:"
 
-#: core.py:556
+#: core.py:537
 msgid "Likely cause based on the information given by Python:"
 msgstr "Cause probable basée sur les informations données par Python :"
 
-#: core.py:598
+#: core.py:579
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
@@ -309,16 +309,16 @@ msgstr ""
 "        vous devez utiliser la console 'Friendly' et non pas une \n"
 "        console Python régulière.\n"
 
-#: core.py:604
+#: core.py:585
 msgid "Problem: source of '{filename}' is not available\n"
 msgstr "Problème : la source de '{filename}' n'est pas disponible.\n"
 
-#: core.py:619
+#: core.py:600
 msgid "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 "L'exécution s'est arrêtée à la ligne {linenumber} du fichier '{filename}'\n"
 
-#: core.py:633
+#: core.py:614
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -328,7 +328,7 @@ msgstr ""
 "'{filename}'\n"
 "jusqu'à l'endroit indiqué par --> et ^.\n"
 
-#: core.py:639
+#: core.py:620
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
@@ -339,7 +339,7 @@ msgstr ""
 "La fin du fichier a été atteinte et Python s'attendait à voir plus de code.\n"
 "\n"
 
-#: core.py:645
+#: core.py:626
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'\n"
@@ -350,7 +350,7 @@ msgstr ""
 "pour une raison non spécifiée.\n"
 "\n"
 
-#: core.py:729
+#: core.py:710
 msgid "Python exception:"
 msgstr "Exception Python:"
 
@@ -672,7 +672,7 @@ msgstr ""
 "    global {var_name}\n"
 "comme première ligne à l’intérieur de votre fonction.\n"
 
-#: line_analyzer.py:93
+#: line_analyzer.py:112
 msgid ""
 "It looks like you copy-pasted code from an interactive interpreter.\n"
 "The Python prompt, '>>>', should not be included in your code.\n"
@@ -680,7 +680,7 @@ msgstr ""
 "On dirait que vous avez copié-collé le code d’un interprète interactif.\n"
 "L’invite Python, ''>>>'', ne doit pas être incluse dans votre code.\n"
 
-#: line_analyzer.py:111
+#: line_analyzer.py:140
 msgid ""
 "You appear to be using the operator :=, sometimes called\n"
 "the walrus operator. This operator requires the use of\n"
@@ -692,7 +692,7 @@ msgstr ""
 "{version}.\n"
 "\n"
 
-#: line_analyzer.py:128
+#: line_analyzer.py:158
 msgid ""
 "You are using the backquote character `.\n"
 "Either you meant to write a single quote, ', or copied Python 2 code;\n"
@@ -703,7 +703,7 @@ msgstr ""
 "ou que vous avez copié du code de Python 2;\n"
 "dans ce dernier cas, utilisez la fonction repr(x) au lieu de `x`."
 
-#: line_analyzer.py:144 message_analyzer.py:86
+#: line_analyzer.py:174 message_analyzer.py:86
 msgid ""
 "You were trying to assign a value to the Python keyword '{keyword}'.\n"
 "This is not allowed.\n"
@@ -713,9 +713,9 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: line_analyzer.py:160
+#: line_analyzer.py:190
 msgid ""
-"You meant to use Python's 'elif' keyword\n"
+"You likely meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
 "\n"
 msgstr ""
@@ -723,7 +723,7 @@ msgstr ""
 "au lieu d'utiliser le mot-clé 'elif'.\n"
 "\n"
 
-#: line_analyzer.py:179
+#: line_analyzer.py:209
 msgid ""
 "You wrote something like\n"
 "    import {function} from {module}\n"
@@ -738,7 +738,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: line_analyzer.py:197
+#: line_analyzer.py:227
 msgid ""
 "You cannot use the Python keyword {word} as an attribute.\n"
 "\n"
@@ -747,7 +747,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: line_analyzer.py:201
+#: line_analyzer.py:231
 msgid ""
 "You cannot use the constant __debug__ as an attribute.\n"
 "\n"
@@ -755,7 +755,7 @@ msgstr ""
 "Vous ne pouvez pas utiliser la constante __debug__ comme attribut.\n"
 "\n"
 
-#: line_analyzer.py:220
+#: line_analyzer.py:250
 msgid ""
 "There appears to be a Python identifier (variable name)\n"
 "immediately following a string.\n"
@@ -767,11 +767,11 @@ msgstr ""
 "Je soupçonne que vous essayiez d'utiliser un apostrophe ou un guillemet\n"
 "à l'intérieur d'une chaîne qui était délimitée par ces mêmes caractères.\n"
 
-#: line_analyzer.py:243
+#: line_analyzer.py:273
 msgid "a class"
 msgstr "une classe"
 
-#: line_analyzer.py:244
+#: line_analyzer.py:274
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
@@ -781,7 +781,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: line_analyzer.py:250
+#: line_analyzer.py:280
 msgid ""
 "You wrote a '{for_while}' loop but\n"
 "forgot to add a colon ':' at the end\n"
@@ -791,7 +791,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: line_analyzer.py:256
+#: line_analyzer.py:286
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
@@ -801,11 +801,11 @@ msgstr ""
 "'{name}' mais vous avez oublié d’ajouter deux points ':' à la fin.\n"
 "\n"
 
-#: line_analyzer.py:282
+#: line_analyzer.py:312
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: line_analyzer.py:283
+#: line_analyzer.py:313
 msgid ""
 "You tried to define {class_or_function} and did not use the correct syntax.\n"
 "The correct syntax is:\n"
@@ -817,14 +817,14 @@ msgstr ""
 "    def nom ( arguments_optionnels ):\n"
 "\n"
 
-#: line_analyzer.py:292
+#: line_analyzer.py:322
 msgid "You tried to use the Python keyword '{kwd}' as a function name.\n"
 msgstr ""
 "Vous avez tenté d'utiliser le mot clé Python '{kwd}' comme nom de fonction.\n"
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: line_analyzer.py:339
+#: line_analyzer.py:369
 msgid ""
 "I am guessing that you tried to use the Python keyword\n"
 "{kwd} as an argument in the definition of a function.\n"
@@ -834,7 +834,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: line_analyzer.py:352
+#: line_analyzer.py:382
 msgid ""
 "In older version of Python, 'print' was a keyword.\n"
 "Now, 'print' is a function; you need to use parentheses to call it.\n"
@@ -842,6 +842,16 @@ msgstr ""
 "Dans l'ancienne version de Python, «print» était un mot clé.\n"
 "Maintenant, «print» est une fonction; vous devez utiliser des parenthèses "
 "pour l'invoquer.\n"
+
+#: line_analyzer.py:394
+msgid ""
+"It looks as if you are attempting to use pip to install a module.\n"
+"pip is a command that needs to run in a terminal,\n"
+"not from a Python interpreter.\n"
+msgstr ""
+"Il semble que vous essayez d’utiliser pip pour installer un module.\n"
+"pip est une commande qui doit être invoquée dans un terminal,\n"
+"pas dans un interprète Python.\n"
 
 #: message_analyzer.py:82
 msgid ""

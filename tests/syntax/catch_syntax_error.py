@@ -82,6 +82,8 @@ causes = {
     "raise_syntax_error66": "it reached the end of the file and expected more content.",
     "raise_syntax_error67": "In older version of Python, 'print' was a keyword",
     "raise_syntax_error68": "copy-pasted code from an interactive interpreter",
+    "raise_syntax_error69": "pip is a command that needs to run in a terminal",
+    "raise_syntax_error70": "pip is a command that needs to run in a terminal",
 
 }
 
