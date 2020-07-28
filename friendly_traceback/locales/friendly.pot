@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-07-28 08:56-0300\n"
+"POT-Creation-Date: 2020-07-28 09:47-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -217,52 +217,52 @@ msgid ""
 msgstr ""
 
 #: core.py:535
-msgid "I don't have enough information from Python:"
+msgid "Python's error message (invalid syntax) cannot be used to identify the problem:"
 msgstr ""
 
-#: core.py:537
+#: core.py:540
 msgid "Likely cause based on the information given by Python:"
 msgstr ""
 
-#: core.py:579
+#: core.py:582
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
 "        regular Python console.\n"
 msgstr ""
 
-#: core.py:585
+#: core.py:588
 msgid ""
 "Problem: source of '{filename}' is not available\n"
 msgstr ""
 
-#: core.py:600
+#: core.py:603
 msgid ""
 "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: core.py:614
+#: core.py:617
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "beyond the location indicated below by --> and ^.\n"
 msgstr ""
 
-#: core.py:620
+#: core.py:623
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
 "It reached the end of the file and expected more content.\n"
 msgstr ""
 
-#: core.py:626
+#: core.py:629
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'\n"
 "for an unspecified reason.\n"
 msgstr ""
 
-#: core.py:710
+#: core.py:713
 msgid "Python exception:"
 msgstr ""
 
@@ -489,41 +489,41 @@ msgid ""
 "should have been included as the first line inside your function.\n"
 msgstr ""
 
-#: line_analyzer.py:112
+#: line_analyzer.py:105
 msgid ""
 "It looks like you copy-pasted code from an interactive interpreter.\n"
 "The Python prompt, '>>>', should not be included in your code.\n"
 msgstr ""
 
-#: line_analyzer.py:140
+#: line_analyzer.py:132
 msgid ""
 "You appear to be using the operator :=, sometimes called\n"
 "the walrus operator. This operator requires the use of\n"
 "Python 3.8 or newer. You are using version {version}.\n"
 msgstr ""
 
-#: line_analyzer.py:158
+#: line_analyzer.py:150
 msgid ""
 "You are using the backquote character `.\n"
 "Either you meant to write a single quote, ', or copied Python 2 code;\n"
 "in this latter case, use the function repr(x) instead of `x`."
 msgstr ""
 
-#: line_analyzer.py:174 message_analyzer.py:86
+#: line_analyzer.py:166 message_analyzer.py:86
 msgid ""
 "You were trying to assign a value to the Python keyword '{keyword}'.\n"
 "This is not allowed.\n"
 "\n"
 msgstr ""
 
-#: line_analyzer.py:190
+#: line_analyzer.py:182
 msgid ""
 "You likely meant to use Python's 'elif' keyword\n"
 "but wrote '{name}' instead\n"
 "\n"
 msgstr ""
 
-#: line_analyzer.py:209
+#: line_analyzer.py:201
 msgid ""
 "You wrote something like\n"
 "    import {function} from {module}\n"
@@ -532,19 +532,19 @@ msgid ""
 "\n"
 msgstr ""
 
-#: line_analyzer.py:227
+#: line_analyzer.py:219
 msgid ""
 "You cannot use the Python keyword {word} as an attribute.\n"
 "\n"
 msgstr ""
 
-#: line_analyzer.py:231
+#: line_analyzer.py:223
 msgid ""
 "You cannot use the constant __debug__ as an attribute.\n"
 "\n"
 msgstr ""
 
-#: line_analyzer.py:250
+#: line_analyzer.py:242
 msgid ""
 "There appears to be a Python identifier (variable name)\n"
 "immediately following a string.\n"
@@ -552,60 +552,60 @@ msgid ""
 "that was enclosed in quotes of the same kind.\n"
 msgstr ""
 
-#: line_analyzer.py:273
+#: line_analyzer.py:265
 msgid "a class"
 msgstr ""
 
-#: line_analyzer.py:274
+#: line_analyzer.py:266
 msgid ""
 "You wanted to define {class_}\n"
 "but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: line_analyzer.py:280
+#: line_analyzer.py:272
 msgid ""
 "You wrote a '{for_while}' loop but\n"
 "forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: line_analyzer.py:286
+#: line_analyzer.py:278
 msgid ""
 "You wrote a statement beginning with\n"
 "'{name}' but forgot to add a colon ':' at the end\n"
 "\n"
 msgstr ""
 
-#: line_analyzer.py:312
+#: line_analyzer.py:304
 msgid "a function or method"
 msgstr ""
 
-#: line_analyzer.py:313
+#: line_analyzer.py:305
 msgid ""
 "You tried to define {class_or_function} and did not use the correct syntax.\n"
 "The correct syntax is:\n"
 "    def name ( optional_arguments ):\n"
 msgstr ""
 
-#: line_analyzer.py:322
+#: line_analyzer.py:314
 msgid ""
 "You tried to use the Python keyword '{kwd}' as a function name.\n"
 msgstr ""
 
-#: line_analyzer.py:369
+#: line_analyzer.py:361
 msgid ""
 "I am guessing that you tried to use the Python keyword\n"
 "{kwd} as an argument in the definition of a function.\n"
 msgstr ""
 
-#: line_analyzer.py:382
+#: line_analyzer.py:374
 msgid ""
 "In older version of Python, 'print' was a keyword.\n"
 "Now, 'print' is a function; you need to use parentheses to call it.\n"
 msgstr ""
 
-#: line_analyzer.py:394
+#: line_analyzer.py:387
 msgid ""
 "It looks as if you are attempting to use pip to install a module.\n"
 "pip is a command that needs to run in a terminal,\n"

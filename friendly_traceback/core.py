@@ -532,7 +532,10 @@ def get_likely_cause(etype, value):
         if cause is not None:
             message = get_message(etype.__name__, value)
             if etype.__name__ == "SyntaxError" and "invalid syntax" in message:
-                header = _("I don't have enough information from Python:")
+                header = _(
+                    "Python's error message (invalid syntax) "
+                    "cannot be used to identify the problem:"
+                )
             else:
                 header = _("Likely cause based on the information given by Python:")
     return header, cause
