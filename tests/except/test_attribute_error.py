@@ -26,10 +26,11 @@ def test_misspelled_module_attribute():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "AttributeError: module 'string' has no attribute 'ascii_lowecase'" in result
-    assert (
-        "Perhaps you meant to write 'ascii_lowercase' instead of 'ascii_lowecase'"
-        in result
-    )
+    if friendly_traceback.get_lang() == "en":
+        assert (
+            "Perhaps you meant to write 'ascii_lowercase' instead of 'ascii_lowecase'"
+            in result
+        )
     return result
 
 
@@ -44,9 +45,10 @@ def test_misspelled_module_attribute_2():
     assert (
         "AttributeError: module 'math' has no attribute 'cost'"
     ) in result
-    assert (
-        "Instead of writing cost, perhaps you meant one of the following:\n" in result
-    )
+    if friendly_traceback.get_lang() == "en":
+        assert (
+            "Instead of writing cost, perhaps you meant one of the following:\n" in result
+        )
     assert "['cos', 'cosh']" in result
     return result
 
