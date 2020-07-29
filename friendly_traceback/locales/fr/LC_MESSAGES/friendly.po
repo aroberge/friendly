@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-07-28 21:23-0300\n"
-"PO-Revision-Date: 2020-07-28 21:27-0300\n"
+"POT-Creation-Date: 2020-07-28 21:51-0300\n"
+"PO-Revision-Date: 2020-07-28 21:52-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -229,7 +229,12 @@ msgstr ""
 "Vous avez essayé de modifier une partie d’un tel objet immuable: {obj},\n"
 "probablement en utilisant une opération d’indexation.\n"
 
-#: analyze_type_error.py:246
+#: analyze_type_error.py:242
+msgid "In Python 3, exceptions must be derived from BaseException.\n"
+msgstr ""
+"Dans Python 3, les exceptions doivent être dérivées de BaseException.\n"
+
+#: analyze_type_error.py:253
 msgid ""
 "You apparently have called the function '{fn_name}' with\n"
 "{nb_given} positional argument while it requires {nb_required}\n"
@@ -238,7 +243,7 @@ msgstr ""
 "Vous avez apparemment invoqué la fonction '{fn_name}' avec\n"
 "{nb_given} arguments positionnels alors qu'elle en requiert {nb_required}.\n"
 
-#: analyze_type_error.py:266
+#: analyze_type_error.py:273
 msgid ""
 "You apparently have called the function '{fn_name}' with\n"
 "fewer positional arguments than it requires ({nb_required} missing).\n"
@@ -246,7 +251,7 @@ msgstr ""
 "Vous avez apparemment invoqué la fonction '{fn_name}' avec\n"
 "moins d'arguments positionnels qu'il n'en faut ({nb_required} manquent).\n"
 
-#: analyze_type_error.py:281
+#: analyze_type_error.py:288
 msgid ""
 "I suspect that you had an object of this type, {obj},\n"
 "followed by what looked like a tuple, '(...)',\n"

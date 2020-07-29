@@ -97,6 +97,7 @@ all_imports = {
     "SyntaxError - dot followed by parenthesis": "raise_syntax_error71",
     "SyntaxError - cannot assign to f-string": "raise_syntax_error72",
     "SyntaxError - raising multiple exceptions": "raise_syntax_error73",
+    "SyntaxError - parenthesis around generator expression": "raise_syntax_error74",
 }
 
 if sys.version_info < (3, 8):

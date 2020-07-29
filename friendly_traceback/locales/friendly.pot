@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-07-28 21:23-0300\n"
+"POT-Creation-Date: 2020-07-28 21:51-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -170,20 +170,25 @@ msgid ""
 "most likely by using an indexing operation.\n"
 msgstr ""
 
-#: analyze_type_error.py:246
+#: analyze_type_error.py:242
+msgid ""
+"In Python 3, exceptions must be derived from BaseException.\n"
+msgstr ""
+
+#: analyze_type_error.py:253
 msgid ""
 "You apparently have called the function '{fn_name}' with\n"
 "{nb_given} positional argument while it requires {nb_required}\n"
 "such positional arguments.\n"
 msgstr ""
 
-#: analyze_type_error.py:266
+#: analyze_type_error.py:273
 msgid ""
 "You apparently have called the function '{fn_name}' with\n"
 "fewer positional arguments than it requires ({nb_required} missing).\n"
 msgstr ""
 
-#: analyze_type_error.py:281
+#: analyze_type_error.py:288
 msgid ""
 "I suspect that you had an object of this type, {obj},\n"
 "followed by what looked like a tuple, '(...)',\n"

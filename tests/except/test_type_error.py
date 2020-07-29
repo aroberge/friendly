@@ -419,5 +419,17 @@ def test_type_error15a():
     return result
 
 
+def test_type_error16():
+    try:
+        raise "exception"
+    except Exception:
+        friendly_traceback.explain(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "TypeError: exceptions must derive from BaseException" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "In Python 3, exceptions must be derived from BaseException." in result
+    return result
+
+
 if __name__ == "__main__":
     print(test_type_error1a())

@@ -236,6 +236,13 @@ def does_not_support_item_asssignment(message):
 
 
 @add_message_parser
+def exception_derived_from_BaseException(message):
+    _ = current_lang.translate
+    if "exceptions must derive from BaseException" in message:
+        return _("In Python 3, exceptions must be derived from BaseException.\n")
+
+
+@add_message_parser
 def incorrect_nb_positional_arguments(message):
     _ = current_lang.translate
     # example: my_function() takes 0 positional arguments but 1 was given

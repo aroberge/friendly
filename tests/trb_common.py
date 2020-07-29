@@ -171,6 +171,10 @@ all_imports = {
         "test_type_error",
         "test_type_error15a",
     ),
+    "TypeError - 16: exception derived from BaseException": (
+        "test_type_error",
+        "test_type_error16",
+    ),
     "UnboundLocalError": ("test_unbound_local_error", "test_unbound_local_error"),
     "Unknown exception": ("test_unknown_error", "test_unknown_error"),
     "ZeroDivisionError - 1": ("test_zero_division_error", "test_zero_division_error"),
