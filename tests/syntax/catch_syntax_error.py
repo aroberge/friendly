@@ -87,6 +87,7 @@ causes = {
     "raise_syntax_error71": "dot '.' followed by (",
     "raise_syntax_error72": "expression that has an f-string",
     "raise_syntax_error73": "trying to raise an exception using Python 2 syntax.",
+    "raise_syntax_error74": "must add parentheses enclosing",
 }
 
 if sys.version_info < (3, 8):

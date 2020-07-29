@@ -363,6 +363,17 @@ def expression_cannot_contain_assignment(message="", **kwargs):
 
 
 @add_python_message
+def generator_expression_must_be_parenthesized(message="", **kwargs):
+    _ = current_lang.translate
+    if "Generator expression must be parenthesized" in message:
+        return _(
+            "You are using a generator expression, something of the form\n"
+            "    x for x in thing\n"
+            "You must add parentheses enclosing that expression.\n"
+        )
+
+
+@add_python_message
 def keyword_argument_repeated(message="", **kwargs):
     _ = current_lang.translate
     if "keyword argument repeated" in message:

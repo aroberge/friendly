@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-07-28 19:12-0300\n"
+"POT-Creation-Date: 2020-07-28 21:23-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -810,11 +810,18 @@ msgstr ""
 
 #: message_analyzer.py:369
 msgid ""
+"You are using a generator expression, something of the form\n"
+"    x for x in thing\n"
+"You must add parentheses enclosing that expression.\n"
+msgstr ""
+
+#: message_analyzer.py:380
+msgid ""
 "You have called a function repeating the same keyword argument.\n"
 "Each keyword argument should appear only once in a function call.\n"
 msgstr ""
 
-#: message_analyzer.py:379
+#: message_analyzer.py:390
 msgid ""
 "You likely called a function with a named argument:\n"
 "\n"
@@ -826,7 +833,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:393
+#: message_analyzer.py:404
 msgid ""
 "You likely used some unicode character that is not allowed\n"
 "as part of a variable name in Python.\n"
@@ -834,34 +841,34 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:427
+#: message_analyzer.py:438
 msgid ""
 "Python tells us that the closing '{closing}' on the last line shown\n"
 "does not match the opening '{opening}' on line {lineno}.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:432
+#: message_analyzer.py:443
 msgid ""
 "Python tells us that the closing '{closing}' on the last line shown\n"
 "does not match the opening '{opening}'.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:443 message_analyzer.py:594
+#: message_analyzer.py:454 message_analyzer.py:605
 msgid ""
 "I will attempt to be give a bit more information.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:454
+#: message_analyzer.py:465
 msgid ""
 "Inside an f-string, which is a string prefixed by the letter f, \n"
 "you have another string, which starts with either a\n"
 "single quote (') or double quote (\"), without a matching closing one.\n"
 msgstr ""
 
-#: message_analyzer.py:471
+#: message_analyzer.py:482
 msgid ""
 "You are including the statement\n"
 "\n"
@@ -873,51 +880,51 @@ msgid ""
 "inside that function, which is the contrary of what 'global' implied.\n"
 msgstr ""
 
-#: message_analyzer.py:487
+#: message_analyzer.py:498
 msgid ""
 "You assigned a value to the variable '{name}'\n"
 "before declaring it as a global variable.\n"
 msgstr ""
 
-#: message_analyzer.py:499
+#: message_analyzer.py:510
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a global variable.\n"
 msgstr ""
 
-#: message_analyzer.py:511
+#: message_analyzer.py:522
 msgid ""
 "You assigned a value to the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
 msgstr ""
 
-#: message_analyzer.py:522
+#: message_analyzer.py:533
 msgid ""
 "You used '{name}' as a parameter for a function\n"
 "before declaring it also as a nonlocal variable:\n"
 "'{name}' cannot be both at the same time.\n"
 msgstr ""
 
-#: message_analyzer.py:535
+#: message_analyzer.py:546
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
 msgstr ""
 
-#: message_analyzer.py:545
+#: message_analyzer.py:556
 msgid ""
 "You used the nonlocal keyword at a module level.\n"
 "The nonlocal keyword refers to a variable inside a function\n"
 "given a value outside that function."
 msgstr ""
 
-#: message_analyzer.py:557
+#: message_analyzer.py:568
 msgid ""
 "You declared the variable '{name}' as being a\n"
 "nonlocal variable but it cannot be found.\n"
 msgstr ""
 
-#: message_analyzer.py:567
+#: message_analyzer.py:578
 msgid ""
 "You are using the continuation character '\\' outside of a string,\n"
 "and it is followed by some other character(s).\n"
@@ -925,19 +932,19 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:583
+#: message_analyzer.py:594
 msgid ""
 "Python tells us that it reached the end of the file\n"
 "and expected more content.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:613 source_analyzer.py:84
+#: message_analyzer.py:624 source_analyzer.py:84
 msgid ""
 "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 
-#: message_analyzer.py:623
+#: message_analyzer.py:634
 msgid ""
 "In Python, you can call functions with only positional arguments\n"
 "\n"
@@ -955,7 +962,7 @@ msgid ""
 "According to Python, you used positional arguments after keyword ones.\n"
 msgstr ""
 
-#: message_analyzer.py:640
+#: message_analyzer.py:651
 msgid ""
 "In Python, you can define functions with only positional arguments\n"
 "\n"
@@ -973,7 +980,7 @@ msgid ""
 "According to Python, you used positional arguments after keyword ones.\n"
 msgstr ""
 
-#: message_analyzer.py:660
+#: message_analyzer.py:671
 msgid ""
 "Perhaps you need to type print({message})?\n"
 "\n"
