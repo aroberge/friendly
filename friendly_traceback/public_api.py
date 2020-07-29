@@ -25,7 +25,7 @@ import runpy
 from . import core
 from . import utils
 
-from .core import advanced_check_syntax, check_syntax, exec_code
+from .third_party_api import advanced_check_syntax, check_syntax, exec_code
 from .session import session
 from .source_cache import cache, highlight_source
 from .path_info import (
@@ -34,7 +34,7 @@ from .path_info import (
     include_file_in_traceback,
 )
 
-__version__ = "0.0.31a"
+__version__ = "0.0.32a"
 __all__ = [
     "advanced_check_syntax",
     "cache",
