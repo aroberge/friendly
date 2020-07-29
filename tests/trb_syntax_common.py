@@ -98,6 +98,7 @@ all_imports = {
     "SyntaxError - cannot assign to f-string": "raise_syntax_error72",
     "SyntaxError - raising multiple exceptions": "raise_syntax_error73",
     "SyntaxError - parenthesis around generator expression": "raise_syntax_error74",
+    "SyntaxError - invalid character (bad quote)": "raise_syntax_error75",
 }
 
 if sys.version_info < (3, 8):

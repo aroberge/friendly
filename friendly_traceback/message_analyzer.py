@@ -16,6 +16,33 @@ from .friendly_exception import FriendlyException
 
 MESSAGE_ANALYZERS = []
 
+# The following has been taken from https://unicode-table.com/en/sets/quotation-marks/
+bad_quotation_marks = [
+    "«",
+    "»",
+    "‹",
+    "›",
+    "„",
+    "“",
+    "‟",
+    "”",
+    "’",
+    "❝",
+    "❞",
+    "❮",
+    "❯",
+    "⹂",
+    "〝",
+    "〞",
+    "＂",
+    "‚",
+    "‘",
+    "‛",
+    "❛",
+    "❜",
+    "❟",
+]
+
 
 def analyze_message(message="", line="", linenumber=0, source_lines=None, offset=0):
     for case in MESSAGE_ANALYZERS:
@@ -398,9 +425,41 @@ def keyword_cannot_be_expression(message="", **kwargs):
 
 
 @add_python_message
-def invalid_character_in_identifier(message="", **kwargs):
+def invalid_character_in_identifier(message="", line="", **kwargs):
     _ = current_lang.translate
+    copy_paste = _("Did you use copy-paste?\n")
     if "invalid character" in message:
+        if sys.version_info >= (3, 9):
+            if "'" in message:
+                parts = message.split("'")
+                bad_character = parts[1]
+                result = _(
+                    "Python indicates that you used the unicode character"
+                    " {bad_character}\n"
+                    "which is not allowed.\n"
+                ).format(bad_character=bad_character)
+                if bad_character in bad_quotation_marks:
+                    return (
+                        copy_paste
+                        + result
+                        + _(
+                            "I suspect that you used a fancy unicode quotation mark\n"
+                            "instead of a normal single or double quote for a string."
+                            "\n"
+                        )
+                    )
+                else:
+                    return result
+
+        for quote in bad_quotation_marks:
+            if quote in line:
+                return copy_paste + _(
+                    "Python indicates that you used some unicode characters not allowed\n"
+                    "as part of a variable name; this includes many emojis.\n"
+                    "However, I suspect that you used a fancy unicode quotation mark\n"
+                    "instead of a normal single or double quote for a string."
+                    "\n"
+                )
         return _(
             "You likely used some unicode character that is not allowed\n"
             "as part of a variable name in Python.\n"

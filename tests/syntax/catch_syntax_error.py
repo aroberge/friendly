@@ -55,7 +55,7 @@ causes = {
     "raise_syntax_error39": "keyword pass as an attribute",
     "raise_syntax_error40": "using the continuation character",
     "raise_syntax_error41": "where 'invalid' is not a valid variable name in Python",
-    "raise_syntax_error42": "as part of a variable name in Python",
+    "raise_syntax_error42": "unicode character",
     "raise_syntax_error43": "as an argument in the definition of a function",
     "raise_syntax_error44": "as an argument in the definition of a function",
     "raise_syntax_error45": "as an argument in the definition of a function",
@@ -88,6 +88,7 @@ causes = {
     "raise_syntax_error72": "expression that has an f-string",
     "raise_syntax_error73": "trying to raise an exception using Python 2 syntax.",
     "raise_syntax_error74": "must add parentheses enclosing",
+    "raise_syntax_error75": "fancy unicode quotation mark",
 }
 
 if sys.version_info < (3, 8):
