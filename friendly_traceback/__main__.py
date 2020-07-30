@@ -10,42 +10,51 @@ command line. You can find more details by doing::
 """
 import argparse
 from importlib import import_module
+import platform
 import runpy
 import sys
-import textwrap
 
 from . import console
 from . import public_api
 
+versions = "Friendly-traceback version {}. [Python version: {}]\n".format(
+    public_api.__version__, platform.python_version()
+)
+
 parser = argparse.ArgumentParser(
     formatter_class=argparse.RawDescriptionHelpFormatter,
-    description=textwrap.dedent(
+    description=(
         """Friendly-traceback makes Python tracebacks easier to understand.
 
-        If no command line arguments other than -m are specified,
-        Friendly-traceback will start an interactive console.
+    {versions}
 
-        Note: the values of the verbosity level described below are:
-            0: Normal Python tracebacks
-            1: Default - does not need to be specified. It does NOT include
-               the standard Python traceback.
-            2: Python tracebacks appear before the friendly display
-            3: Python tracebacks appended at the end of the friendly display.
-            4: Python traceback followed by basic explanation
-            5: Only basic explanation
-            6: No generic explanation
-            7: Python tracebacks appear before the friendly display but
-               no generic explanation is included.
-            9: Python traceback
+    If no command line arguments other than -m are specified,
+    Friendly-traceback will start an interactive console.
 
-        The Python traceback for level > 1 are the simulated version.
-        You can use negative values to show the true Python traceback which
-        will likely include function calls from friendly-traceback itself.
-        Thus level -9 is equivalent to level 0.
+    Note: the values of the verbosity level described below are:
+        0: Normal Python tracebacks
+        1: Default - does not need to be specified.
+           The output does NOT include the standard Python traceback.
+        2: Python tracebacks appear before the friendly display
+        3: Python tracebacks appended at the end of the friendly display.
+        4: Python traceback followed by basic explanation
+        5: Only basic explanation
+        6: No generic explanation
+        7: Python tracebacks appear before the friendly display but
+           no generic explanation is included.
+        9: Python traceback only
 
-        Other values may be available, as we try to find the most useful
-        settings for beginners.
-        """
+    The Python traceback for level > 1 is the simulated version, which
+    excludes calls from friendly-traceback itself.
+    You can use negative values to show the true Python traceback which
+    will likely include function calls from friendly-traceback itself.
+    Thus level -9 is equivalent to level 0.
+
+    Other values may be available, as we try to find the most useful
+    settings for beginners.
+        """.format(
+            versions=versions
+        )
     ),
 )
 parser.add_argument(
