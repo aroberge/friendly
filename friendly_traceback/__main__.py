@@ -38,7 +38,7 @@ parser = argparse.ArgumentParser(
                no generic explanation is included.
             9: Python traceback
 
-        The Python traceback for level >= 1 are the simulated version.
+        The Python traceback for level > 1 are the simulated version.
         You can use negative values to show the true Python traceback which
         will likely include function calls from friendly-traceback itself.
         Thus level -9 is equivalent to level 0.
