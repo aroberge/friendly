@@ -162,6 +162,7 @@ def markdown(info, level):
     friendly_items = [
         ("header", "# ", ""),
         ("message", "", ""),
+        ("generic", "", ""),
         ("parsing_error", "", ""),
         ("parsing_error_source", "```\n", "```"),
         ("cause_header", "## ", ""),
