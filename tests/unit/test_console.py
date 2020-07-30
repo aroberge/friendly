@@ -3,9 +3,9 @@ import subprocess
 sessions = [
     (
         ["python", "-im", "friendly_traceback", "tests.except.test_name_error"],
-        "a = 41 \na+=1\nprint(a)\nd=e\n",
-        ["42", "NameError", "-->6:         b = c"],
-        ["-->1: d=e", "NameError"],
+        "a = 41 \na+=1\nprint(a)\nd=f\n",
+        ["42", "NameError", "-->6:         cost"],
+        ["-->1: d=f", "NameError"],
     )
 ]
 
@@ -27,6 +27,8 @@ def test_console():
         # of these tests: if stdout is not as expected, we have a problem.
         stdout, stderr = process.communicate(inp)
         process.wait()
+        print("stdout = ", stdout)
+        print("stderr = ", stderr)
         for item in out:
             assert item in stdout, item
         for item in err:

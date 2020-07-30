@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-07-28 22:53-0300\n"
+"POT-Creation-Date: 2020-07-29 21:25-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -196,78 +196,108 @@ msgid ""
 "Perhaps you had a missing comma before the tuple.\n"
 msgstr ""
 
-#: core.py:376
+#: core.py:201
 msgid ""
 "I suspect that you are using a regular\n"
 "Python console after importing Friendly-traceback.\n"
 "Unfortunately, no further processing can be done.\n"
 msgstr ""
 
-#: core.py:407
+#: core.py:232
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
 "Are you using a regular Python console instead of a Friendly-console?\n"
 msgstr ""
 
-#: core.py:419
+#: core.py:244
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
 msgstr ""
 
-#: core.py:442
+#: core.py:267
 msgid ""
 "Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: core.py:535
+#: core.py:360
 msgid "Python's error message (invalid syntax) cannot be used to identify the problem:"
 msgstr ""
 
-#: core.py:540
+#: core.py:365
 msgid "Likely cause based on the information given by Python:"
 msgstr ""
 
-#: core.py:582
+#: core.py:407
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
 "        regular Python console.\n"
 msgstr ""
 
-#: core.py:588
+#: core.py:413
 msgid ""
 "Problem: source of '{filename}' is not available\n"
 msgstr ""
 
-#: core.py:603
+#: core.py:428
 msgid ""
 "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: core.py:617
+#: core.py:442
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "beyond the location indicated below by --> and ^.\n"
 msgstr ""
 
-#: core.py:623
+#: core.py:448
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
 "It reached the end of the file and expected more content.\n"
 msgstr ""
 
-#: core.py:629
+#: core.py:454
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'\n"
 "for an unspecified reason.\n"
 msgstr ""
 
-#: core.py:713
+#: core.py:520
+msgid ""
+"\n"
+"    Perhaps you meant to write the following:"
+msgstr ""
+
+#: core.py:522 core.py:530
+msgid ""
+"\n"
+"        Local variable: "
+msgstr ""
+
+#: core.py:524 core.py:532
+msgid ""
+"\n"
+"        Global variable: "
+msgstr ""
+
+#: core.py:526 core.py:534
+msgid ""
+"\n"
+"        Python builtins: "
+msgstr ""
+
+#: core.py:528
+msgid ""
+"\n"
+"    Perhaps you meant to write one of the following:"
+msgstr ""
+
+#: core.py:579
 msgid "Python exception:"
 msgstr ""
 
@@ -849,13 +879,13 @@ msgid ""
 "which is not allowed.\n"
 msgstr ""
 
-#: message_analyzer.py:442
+#: message_analyzer.py:445
 msgid ""
 "I suspect that you used a fancy unicode quotation mark\n"
 "instead of a normal single or double quote for a string.\n"
 msgstr ""
 
-#: message_analyzer.py:452
+#: message_analyzer.py:456
 msgid ""
 "Python indicates that you used some unicode characters not allowed\n"
 "as part of a variable name; this includes many emojis.\n"
@@ -863,7 +893,7 @@ msgid ""
 "instead of a normal single or double quote for a string.\n"
 msgstr ""
 
-#: message_analyzer.py:459
+#: message_analyzer.py:463
 msgid ""
 "You likely used some unicode character that is not allowed\n"
 "as part of a variable name in Python.\n"
@@ -871,34 +901,34 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:493
+#: message_analyzer.py:497
 msgid ""
 "Python tells us that the closing '{closing}' on the last line shown\n"
 "does not match the opening '{opening}' on line {lineno}.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:498
+#: message_analyzer.py:502
 msgid ""
 "Python tells us that the closing '{closing}' on the last line shown\n"
 "does not match the opening '{opening}'.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:509 message_analyzer.py:660
+#: message_analyzer.py:513 message_analyzer.py:664
 msgid ""
 "I will attempt to be give a bit more information.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:520
+#: message_analyzer.py:524
 msgid ""
 "Inside an f-string, which is a string prefixed by the letter f, \n"
 "you have another string, which starts with either a\n"
 "single quote (') or double quote (\"), without a matching closing one.\n"
 msgstr ""
 
-#: message_analyzer.py:537
+#: message_analyzer.py:541
 msgid ""
 "You are including the statement\n"
 "\n"
@@ -910,51 +940,51 @@ msgid ""
 "inside that function, which is the contrary of what 'global' implied.\n"
 msgstr ""
 
-#: message_analyzer.py:553
+#: message_analyzer.py:557
 msgid ""
 "You assigned a value to the variable '{name}'\n"
 "before declaring it as a global variable.\n"
 msgstr ""
 
-#: message_analyzer.py:565
+#: message_analyzer.py:569
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a global variable.\n"
 msgstr ""
 
-#: message_analyzer.py:577
+#: message_analyzer.py:581
 msgid ""
 "You assigned a value to the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
 msgstr ""
 
-#: message_analyzer.py:588
+#: message_analyzer.py:592
 msgid ""
 "You used '{name}' as a parameter for a function\n"
 "before declaring it also as a nonlocal variable:\n"
 "'{name}' cannot be both at the same time.\n"
 msgstr ""
 
-#: message_analyzer.py:601
+#: message_analyzer.py:605
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
 msgstr ""
 
-#: message_analyzer.py:611
+#: message_analyzer.py:615
 msgid ""
 "You used the nonlocal keyword at a module level.\n"
 "The nonlocal keyword refers to a variable inside a function\n"
 "given a value outside that function."
 msgstr ""
 
-#: message_analyzer.py:623
+#: message_analyzer.py:627
 msgid ""
 "You declared the variable '{name}' as being a\n"
 "nonlocal variable but it cannot be found.\n"
 msgstr ""
 
-#: message_analyzer.py:633
+#: message_analyzer.py:637
 msgid ""
 "You are using the continuation character '\\' outside of a string,\n"
 "and it is followed by some other character(s).\n"
@@ -962,19 +992,19 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:649
+#: message_analyzer.py:653
 msgid ""
 "Python tells us that it reached the end of the file\n"
 "and expected more content.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:679 source_analyzer.py:84
+#: message_analyzer.py:683 source_analyzer.py:84
 msgid ""
 "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 
-#: message_analyzer.py:689
+#: message_analyzer.py:693
 msgid ""
 "In Python, you can call functions with only positional arguments\n"
 "\n"
@@ -992,7 +1022,7 @@ msgid ""
 "According to Python, you used positional arguments after keyword ones.\n"
 msgstr ""
 
-#: message_analyzer.py:706
+#: message_analyzer.py:710
 msgid ""
 "In Python, you can define functions with only positional arguments\n"
 "\n"
@@ -1010,7 +1040,7 @@ msgid ""
 "According to Python, you used positional arguments after keyword ones.\n"
 msgstr ""
 
-#: message_analyzer.py:726
+#: message_analyzer.py:730
 msgid ""
 "Perhaps you need to type print({message})?\n"
 "\n"

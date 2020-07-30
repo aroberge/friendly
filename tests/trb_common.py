@@ -50,6 +50,7 @@ all_imports = {
         "test_module_not_found_error",
     ),
     "NameError": ("test_name_error", "test_name_error"),
+    "NameError - 2": ("test_name_error", "test_name_error2"),
     "OverflowError": ("test_overflow_error", "test_overflow_error"),
     "TypeError - 1: concatenate two different types": (
         "test_type_error",

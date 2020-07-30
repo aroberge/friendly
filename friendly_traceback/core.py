@@ -2,7 +2,7 @@
 
 The exception hook at the heart of Friendly-traceback
 """
-
+import builtins
 import inspect
 from itertools import dropwhile
 import os
@@ -489,9 +489,50 @@ def set_call_info(info, name, filename, linenumber, lines, index, frame):
     info["%s_source" % name] = source_info["source"]  # [5]
 
     if "line" in source_info and source_info["line"] is not None:
-        var_info = get_var_info(source_info["line"], frame)
-        if var_info:
-            info["%s_variables" % name] = var_info  # [6]
+        if "NameError" in info["message"]:  # Special case; looking for typos
+            _parts = info["cause"].split("'")
+            try:
+                unknown_name = _parts[1]
+                info["%s_source" % name] += get_similar_var_names(unknown_name, frame)
+            except IndexError:
+                pass
+        else:
+            var_info = get_var_info(source_info["line"], frame)
+            if var_info:
+                info["%s_variables" % name] = var_info  # [6]
+
+
+def get_similar_var_names(name, frame):
+    """To be used with NameError; currently work in progress"""
+    _ = current_lang.translate
+    similar = {}
+    similar["locals"] = utils.edit_distance(name, frame.f_locals)
+    _globals = utils.edit_distance(name, frame.f_globals)
+    similar["globals"] = [var for var in _globals if var not in similar["locals"]]
+    similar["builtins"] = utils.edit_distance(name, dir(builtins))
+
+    nb_similar_names = (
+        len(similar["locals"]) + len(similar["globals"]) + len(similar["builtins"])
+    )
+    if nb_similar_names == 0:
+        return ""
+    elif nb_similar_names == 1:
+        message = _("\n    Perhaps you meant to write the following:")
+        if similar["locals"]:
+            message += _("\n        Local variable: ") + similar["locals"][0]
+        elif similar["globals"]:
+            message += _("\n        Global variable: ") + similar["globals"][0]
+        else:
+            message += _("\n        Python builtins: ") + similar["builtins"][0]
+    else:
+        message = _("\n    Perhaps you meant to write one of the following:")
+        if similar["locals"]:
+            message += _("\n        Local variable: ") + str(similar["locals"])[1:-1]
+        if similar["globals"]:
+            message += _("\n        Global variable: ") + str(similar["globals"])[1:-1]
+        if similar["builtins"]:
+            message += _("\n        Python builtins: ") + str(similar["builtins"])[1:-1]
+    return message
 
 
 def set_cause(info, friendly, etype, value):
