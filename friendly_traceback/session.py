@@ -113,8 +113,13 @@ class _State:
         else:
             self.formatter = formatter
 
-    def install(self, lang=None, redirect=None, level=1):
+    def install(self, lang=None, redirect=None, level=None):
         """Replaces sys.excepthook by friendly_traceback's own version."""
+        if level is None:
+            if not self.installed:
+                level = 1
+            else:
+                level = self.level
         self.installed = True
 
         if lang is not None:

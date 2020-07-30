@@ -27,7 +27,8 @@ parser = argparse.ArgumentParser(
 
         Note: the values of the verbosity level described below are:
             0: Normal Python tracebacks
-            1: Default - does not need to be specified
+            1: Default - does not need to be specified. It does NOT include
+               the standard Python traceback.
             2: Python tracebacks appear before the friendly display
             3: Python tracebacks appended at the end of the friendly display.
             4: Python traceback followed by basic explanation
@@ -68,6 +69,7 @@ parser.add_argument(
 
 parser.add_argument(
     "--lang",
+    default="en",
     help="""This sets the language used by Friendly-tracebacks.
             Usually this is a two-letter code such as 'fr' for French.
          """,
@@ -76,6 +78,7 @@ parser.add_argument(
 parser.add_argument(
     "--level",
     type=int,
+    default=1,
     help="""This sets the "verbosity" level, that is the amount of information
             provided.
          """,
@@ -134,15 +137,11 @@ def main():
     args = parser.parse_args()
     if args.dev:
         console_dict["tokenize"] = public_api.make_token_table
-    if args.lang:
-        public_api.set_lang(args.lang)
-    if args.level is not None:
-        public_api.set_level(args.level)
     if args.version:
         print(f"Friendly-traceback version {public_api.__version__}")
         sys.exit()
 
-    public_api.install()
+    public_api.install(lang=args.lang, level=args.level)
 
     if args.formatter:
         public_api.set_formatter(import_function(args.formatter))

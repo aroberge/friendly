@@ -34,7 +34,7 @@ from .path_info import (
     include_file_in_traceback,
 )
 
-__version__ = "0.0.32a"
+__version__ = "0.0.33a"
 __all__ = [
     "advanced_check_syntax",
     "cache",
@@ -81,7 +81,7 @@ def explain(redirect=None):
 
 
 @make_public
-def install(lang=None, redirect=None, level=1):
+def install(lang=None, redirect=None, level=None):
     """
     Replaces ``sys.excepthook`` by friendly_traceback's own version.
     Intercepts, and provides an explanation for all Python exceptions except
