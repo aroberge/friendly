@@ -136,6 +136,7 @@ def start_console(local_vars=None):
     console_defaults = {
         "set_lang": public_api.set_lang,
         "set_level": public_api.set_level,
+        "set_verbosity": public_api.set_verbosity,
     }
     public_api.install()
 
