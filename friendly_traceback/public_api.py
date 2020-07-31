@@ -212,7 +212,35 @@ def set_level(level):
 
 
 @make_public
+def set_verbosity(level):
+    """Sets the verbosity level to be used. The values are as follows::
+
+            0: Normal Python tracebacks
+            1: Default - does not need to be specified. The normal Python
+               traceback is not included in the output.
+            2: Python tracebacks appear before the friendly display
+            3: Python tracebacks appended at the end of the friendly display.
+            4: Python traceback followed by basic explanation only
+            5: Only basic explanation
+            6: No generic explanation
+            7: Python tracebacks appear before the friendly display but
+               no generic explanation is included.
+            9: Python traceback
+
+        Other values may be available, as we try to find the most useful
+        settings for beginners.
+    """
+    session.set_level(level)
+
+
+@make_public
 def get_level():
+    """Returns the verbosity level currently used."""
+    return session.level
+
+
+@make_public
+def get_verbosity():
     """Returns the verbosity level currently used."""
     return session.level
 
