@@ -34,7 +34,7 @@ from .path_info import (
     include_file_in_traceback,
 )
 
-__version__ = "0.0.33a"
+__version__ = "0.0.34a"
 __all__ = [
     "advanced_check_syntax",
     "cache",
