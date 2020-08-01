@@ -187,7 +187,9 @@ def get_lang():
 
 @make_public
 def set_level(level):
-    """Sets the verbosity level to be used. The values are as follows::
+    """Deprecated; use set_verbosity() instead.
+
+    Sets the verbosity level to be used. The values are as follows::
 
             0: Normal Python tracebacks
             1: Default - does not need to be specified

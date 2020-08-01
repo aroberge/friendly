@@ -85,7 +85,11 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "--level",
+    "--level", type=int, default=1, help="Deprecated. Use --verbosity instead."
+)
+
+parser.add_argument(
+    "--verbosity",
     type=int,
     default=1,
     help="""This sets the "verbosity" level, that is the amount of information
@@ -142,7 +146,10 @@ def import_function(dotted_path: str) -> type:
 
 
 def main():
-    console_dict = {"set_lang": public_api.set_lang, "set_level": public_api.set_level}
+    console_dict = {
+        "set_lang": public_api.set_lang,
+        "set_verbosity": public_api.set_verbosity,
+    }
     args = parser.parse_args()
     if args.dev:
         console_dict["tokenize"] = public_api.make_token_table
@@ -150,7 +157,11 @@ def main():
         print(f"Friendly-traceback version {public_api.__version__}")
         sys.exit()
 
-    public_api.install(lang=args.lang, level=args.level)
+    # args.level will eventually be removed
+    verbosity = args.level
+    if args.verbosity:
+        verbosity = args.verbosity
+    public_api.install(lang=args.lang, level=verbosity)
 
     if args.formatter:
         public_api.set_formatter(import_function(args.formatter))

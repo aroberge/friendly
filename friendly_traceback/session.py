@@ -80,10 +80,12 @@ class _State:
         current_lang.install(lang)
         self.lang = lang
 
-    def set_level(self, level=None):
+    def set_level(self, level=None, verbosity=None):
         """Sets the "verbosity level" and possibly resets sys.__excepthook__"""
         _ = current_lang.translate
-        if level is None:
+        if verbosity is not None:
+            level = verbosity
+        elif level is None:
             level = self._default_level
 
         if level == 0:
