@@ -54,7 +54,7 @@ class FriendlyConsole(InteractiveConsole):
         filename = self.fake_filename % self.counter
         public_api.cache.add(filename, source)
 
-        public_api.clear_traceback()
+        # public_api.clear_traceback() # prevents show_again() from working
         more = self.runsource(source, filename)
         if not more:
             self.resetbuffer()
@@ -134,9 +134,11 @@ class FriendlyConsole(InteractiveConsole):
 def start_console(local_vars=None):
     """Starts a console; modified from code.interact"""
     console_defaults = {
+        "get_lang": public_api.get_lang,
         "set_lang": public_api.set_lang,
-        "set_level": public_api.set_level,
+        "get_verbosity": public_api.get_verbosity,
         "set_verbosity": public_api.set_verbosity,
+        "show_again": public_api.show_again,
     }
     public_api.install()
 

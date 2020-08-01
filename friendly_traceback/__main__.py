@@ -146,13 +146,16 @@ def import_function(dotted_path: str) -> type:
 
 
 def main():
-    console_dict = {
+    console_defaults = {
+        "get_lang": public_api.get_lang,
         "set_lang": public_api.set_lang,
+        "get_verbosity": public_api.get_verbosity,
         "set_verbosity": public_api.set_verbosity,
+        "show_again": public_api.show_again,
     }
     args = parser.parse_args()
     if args.dev:
-        console_dict["tokenize"] = public_api.make_token_table
+        console_defaults["tokenize"] = public_api.make_token_table
     if args.version:
         print(f"Friendly-traceback version {public_api.__version__}")
         sys.exit()
@@ -176,15 +179,15 @@ def main():
                     module_dict[var] = getattr(module, var)
             else:
                 module_dict = runpy.run_module(args.source, run_name="__main__")
-            console_dict.update(module_dict)
-            console.start_console(local_vars=console_dict)
+            console_defaults.update(module_dict)
+            console.start_console(local_vars=console_defaults)
         elif args.import_only:
             module = __import__(args.source)
         else:
             sys.argv = ["", *args.args]
             runpy.run_path(args.source, run_name="__main__")
     else:
-        console.start_console(local_vars=console_dict)
+        console.start_console(local_vars=console_defaults)
 
 
 main()

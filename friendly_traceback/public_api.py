@@ -237,7 +237,9 @@ def set_verbosity(level):
 
 @make_public
 def get_level():
-    """Returns the verbosity level currently used."""
+    """Deprecated: use get_verbosity instead
+
+       Returns the verbosity level currently used."""
     return session.level
 
 
@@ -275,10 +277,10 @@ def copy_traceback_info(info):
 
 
 @make_public
-def show_traceback_info_again():
+def show_again():
     """Shows the traceback info again, on the default stream.
 
-    Primarily intended to use with GUI based program, where the user changes
+    Primarily intended to be used when the user changes
     a verbosity level to view the traceback again.
     """
     session.show_traceback_info_again()
