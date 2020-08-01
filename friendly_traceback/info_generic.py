@@ -134,6 +134,17 @@ def overflow_error(*args):
     )
 
 
+@register("RecursionError")
+def recursion_error(*args):
+    _ = current_lang.translate
+    return _(
+        "A RecursionError is raised when a function calls itself,\n"
+        "directly or indirectly, too many times.\n"
+        "It almost always indicates that you made an error in your code\n"
+        "and that your program would never stop.\n"
+    )
+
+
 @register("SyntaxError")
 def syntax_error(*args):
     _ = current_lang.translate

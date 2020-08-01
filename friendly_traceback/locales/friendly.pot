@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-07-29 21:25-0300\n"
+"POT-Creation-Date: 2020-08-01 08:12-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -388,12 +388,20 @@ msgid ""
 "is too large to be handled by the computer's processor.\n"
 msgstr ""
 
-#: info_generic.py:140
+#: info_generic.py:141
+msgid ""
+"A RecursionError is raised when a function calls itself,\n"
+"directly or indirectly, too many times.\n"
+"It almost always indicates that you made an error in your code\n"
+"and that your program would never stop.\n"
+msgstr ""
+
+#: info_generic.py:152
 msgid ""
 "A SyntaxError occurs when Python cannot understand your code.\n"
 msgstr ""
 
-#: info_generic.py:146
+#: info_generic.py:158
 msgid ""
 "A TabError indicates that you have used both spaces\n"
 "and tab characters to indent your code.\n"
@@ -403,7 +411,7 @@ msgid ""
 "Python's recommendation is to always use spaces to indent your code.\n"
 msgstr ""
 
-#: info_generic.py:159
+#: info_generic.py:171
 msgid ""
 "A TypeError is usually caused by trying\n"
 "to combine two incompatible types of objects,\n"
@@ -411,13 +419,13 @@ msgid ""
 "or by tring to do an operation not allowed on a given type of object.\n"
 msgstr ""
 
-#: info_generic.py:170
+#: info_generic.py:182
 msgid ""
 "A ValueError indicates that a function or an operation\n"
 "received an argument of the right type, but an inappropriate value.\n"
 msgstr ""
 
-#: info_generic.py:179
+#: info_generic.py:191
 msgid ""
 "In Python, variables that are used inside a function are known as \n"
 "local variables. Before they are used, they must be assigned a value.\n"
@@ -429,14 +437,14 @@ msgid ""
 "an UnboundLocalError.\n"
 msgstr ""
 
-#: info_generic.py:194
+#: info_generic.py:206
 msgid ""
 "No information is known about this exception.\n"
 "Please report this example to\n"
 "https://github.com/aroberge/friendly-traceback/issues\n"
 msgstr ""
 
-#: info_generic.py:204
+#: info_generic.py:216
 msgid ""
 "A ZeroDivisionError occurs when you are attempting to divide\n"
 "a value by zero:\n"
