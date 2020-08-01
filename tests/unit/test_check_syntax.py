@@ -16,7 +16,7 @@ def test_check_syntax():
     good_code = "c = 1"
 
     friendly.set_stream("capture")
-    original_level = friendly.get_level()
+    original_verbosity = friendly.get_verbosity()
     installed = friendly.is_installed()
     # ----- end of set-up
 
@@ -41,23 +41,23 @@ def test_check_syntax():
         assert not friendly.get_output()
 
     # When friendly-traceback is not installed, a call to check_syntax
-    # will end with level set to 0, which corresponds to normal Python
+    # will end with verbosity set to 0, which corresponds to normal Python
     # tracebacks
     friendly.uninstall()
     friendly.advanced_check_syntax(source=bad_code_syntax)
-    assert friendly.get_level() == 0
-    friendly.advanced_check_syntax(source=bad_code_syntax, level=4)
-    assert friendly.get_level() == 0
+    assert friendly.get_verbosity() == 0
+    friendly.advanced_check_syntax(source=bad_code_syntax, verbosity=4)
+    assert friendly.get_verbosity() == 0
 
     # When friendly-traceback is "installed", a call to check_syntax
-    # leaves its level unchanged.
+    # leaves its verbosity unchanged.
     friendly.install(redirect="capture")
 
-    friendly.set_level(3)
+    friendly.set_verbosity(3)
     friendly.advanced_check_syntax(source=bad_code_syntax)
-    assert friendly.get_level() == 3
-    friendly.advanced_check_syntax(source=bad_code_syntax, level=4)
-    assert friendly.get_level() == 3
+    assert friendly.get_verbosity() == 3
+    friendly.advanced_check_syntax(source=bad_code_syntax, verbosity=4)
+    assert friendly.get_verbosity() == 3
 
     # A call to advanced_code_syntax, with a language specified as an argument
     # should leave the previous language unchanged.
@@ -73,7 +73,7 @@ def test_check_syntax():
     friendly.set_stream(None)
     if installed:
         friendly.uninstall()
-    friendly.set_level(original_level)
+    friendly.set_verbosity(original_verbosity)
 
 
 if __name__ == "__main__":

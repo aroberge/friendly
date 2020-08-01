@@ -16,7 +16,7 @@ from .session import session
 
 
 def advanced_check_syntax(
-    *, source=None, filename="Fake filename", path=None, level=None, lang=None
+    *, source=None, filename="Fake filename", path=None, verbosity=None, lang=None
 ):
     """This uses Python's ``compile()`` builtin which does some analysis of
        its code argument and will raise an exception if it identifies
@@ -36,7 +36,7 @@ def advanced_check_syntax(
        Note that the ``path`` argument, if provided, takes precedence
        over the ``source`` argument.
 
-       Two additional named arguments, ``level`` and ``lang``, can be
+       Two additional named arguments, ``verbosity`` and ``lang``, can be
        provided to temporarily set the values to be used during this function
        call. The original values are restored at the end.
 
@@ -50,7 +50,7 @@ def advanced_check_syntax(
     """
     _ = current_lang.translate
 
-    saved_except_hook, saved_level = _save_settings()
+    saved_except_hook, saved_verbosity = _save_settings()
     saved_lang = _temp_set_lang(lang)
 
     if path is not None:
@@ -61,27 +61,27 @@ def advanced_check_syntax(
         except Exception:
             # Do not show the Python traceback which would include
             #  the call to open() in the traceback
-            if level is None:
-                session.set_level(5)
+            if verbosity is None:
+                session.set_verbosity(5)
             else:
-                session.set_level(level)
+                session.set_verbosity(verbosity)
             explain_traceback()
-            _reset(saved_except_hook, saved_lang, saved_level)
+            _reset(saved_except_hook, saved_lang, saved_verbosity)
             return False
 
     cache.add(filename, source)
     try:
         code = compile(source, filename, "exec")
     except Exception:
-        if level is None:
-            session.set_level(1)  # our default
+        if verbosity is None:
+            session.set_verbosity(1)  # our default
         else:
-            session.set_level(level)
+            session.set_verbosity(verbosity)
         explain_traceback()
-        _reset(saved_except_hook, saved_lang, saved_level)
+        _reset(saved_except_hook, saved_lang, saved_verbosity)
         return False
 
-    _reset(saved_except_hook, saved_lang, saved_level)
+    _reset(saved_except_hook, saved_lang, saved_verbosity)
     return code, filename
 
 
@@ -105,7 +105,7 @@ def check_syntax(filename, lang=None):
 
 
 def exec_code(
-    *, source=None, filename="Fake filename", path=None, level=None, lang=None
+    *, source=None, filename="Fake filename", path=None, verbosity=None, lang=None
 ):
     """This uses check_syntax to see if the code is valid and, if so,
        executes it into an empty dict as globals. If no exception is
@@ -121,7 +121,7 @@ def exec_code(
        Note that the ``path`` argument, if provided, takes precedence
        over the ``source`` argument.
 
-       Two additional named arguments, ``level`` and ``lang``, can be
+       Two additional named arguments, ``verbosity`` and ``lang``, can be
        provided to temporarily set the values to be used during this function
        call. The original values are restored at the end.
 
@@ -130,12 +130,12 @@ def exec_code(
        of this function call.
     """
     result = advanced_check_syntax(
-        source=source, filename=filename, path=path, level=level, lang=lang
+        source=source, filename=filename, path=path, verbosity=verbosity, lang=lang
     )
     if not result:
         return False
 
-    saved_except_hook, saved_level = _save_settings()
+    saved_except_hook, saved_verbosity = _save_settings()
     saved_lang = _temp_set_lang(lang)
 
     my_globals = {}
@@ -144,15 +144,15 @@ def exec_code(
     try:
         exec(code, my_globals)
     except Exception:
-        if level is None:
-            session.set_level(1)  # our default
+        if verbosity is None:
+            session.set_verbosity(1)  # our default
         else:
-            session.set_level(level)
+            session.set_verbosity(verbosity)
         explain_traceback()
-        _reset(saved_except_hook, saved_lang, saved_level)
+        _reset(saved_except_hook, saved_lang, saved_verbosity)
         return False
 
-    _reset(saved_except_hook, saved_lang, saved_level)
+    _reset(saved_except_hook, saved_lang, saved_verbosity)
     return my_globals
 
 
@@ -175,16 +175,16 @@ def _temp_set_lang(lang):
 
 def _save_settings():
     current_except_hook = sys.excepthook
-    current_level = session.level
+    current_verbosity = session.level
 
-    return current_except_hook, current_level
+    return current_except_hook, current_verbosity
 
 
-def _reset(saved_except_hook, saved_lang, saved_level):
-    """Resets both level and lang to their original values"""
+def _reset(saved_except_hook, saved_lang, saved_verbosity):
+    """Resets both verbosity and lang to their original values"""
     if saved_lang is not None:
         session.install_gettext(saved_lang)
-    session.set_level(saved_level)
-    # set_level(0) restores sys.excepthook to sys.__excepthook__
+    session.set_verbosity(saved_verbosity)
+    # set_verbosity(0) restores sys.excepthook to sys.__excepthook__
     # which might not be what is wanted. So, we reset sys.excepthook last
     sys.excepthook = saved_except_hook

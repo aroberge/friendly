@@ -106,6 +106,8 @@ class _State:
             )
             self.level = self._default_level
 
+    set_verbosity = set_level
+
     def set_formatter(self, formatter=None):
         """Sets the default formatter. If no argument is given, the default
            formatter, based on the value for the level, is used.
