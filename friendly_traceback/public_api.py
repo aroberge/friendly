@@ -25,7 +25,8 @@ import runpy
 from . import core
 from . import utils
 
-from .third_party_api import advanced_check_syntax, check_syntax, exec_code
+from .editors_helper import advanced_check_syntax, check_syntax, exec_code
+from . import editors_helper
 from .session import session
 from .source_cache import cache, highlight_source
 from .path_info import (
@@ -284,6 +285,12 @@ def show_again():
     a verbosity level to view the traceback again.
     """
     session.show_traceback_info_again()
+
+
+@make_public
+def run(filename, lang=None):
+    """First draft"""
+    editors_helper.run(filename, lang=lang)
 
 
 @make_public
