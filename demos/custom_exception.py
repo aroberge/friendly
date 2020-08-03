@@ -96,7 +96,7 @@ class MyException3(MyBaseException, SyntaxError):
         self.friendly["generic"] = _("This exception is subclassed from SyntaxError\n")
         self.filename = os.path.abspath(__file__)
         self.offset = 25
-        self.lineno = 101  # this line is flagged artificially!
+        self.lineno = 99  # this line is flagged artificially!
         # Normally, we could never predict where a SyntaxError would arise...
 
 
