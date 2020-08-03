@@ -85,11 +85,8 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "--level", type=int, default=1, help="Deprecated. Use --verbosity instead."
-)
-
-parser.add_argument(
     "--verbosity",
+    "--level",
     type=int,
     default=1,
     help="""This sets the "verbosity" level, that is the amount of information
@@ -160,11 +157,10 @@ def main():
         print(f"Friendly-traceback version {public_api.__version__}")
         sys.exit()
 
-    # args.level will eventually be removed
-    verbosity = args.level
-    if args.verbosity:
-        verbosity = args.verbosity
-    public_api.install(lang=args.lang, level=verbosity)
+    if args.color:
+        print("Color support has not yet been added.")
+
+    public_api.install(lang=args.lang, level=args.verbosity)
 
     if args.formatter:
         public_api.set_formatter(import_function(args.formatter))
