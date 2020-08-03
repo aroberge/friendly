@@ -152,14 +152,8 @@ def run(filename, lang=None, verbosity=1):
 
        If friendly-traceback exception hook has not been set up prior
        to calling check_syntax, it will only be used for the duration
-       of this function call. It uses the value of 1 for the verbosity
-       level.
-
-        the
-       more keyword-based advanced_check_syntax(),
-       and will raise an exception if it identifies
-       some syntax errors, but also some less common "overflow" and "value"
-       errors.  advanced_check_syntax() provides a more flexibility
+       of this function call. By default, it uses the value of 1 for
+       the verbosity level.
 
        If friendly-traceback exception hook has not been set up prior
        to calling check_syntax, it will only be used for the duration
