@@ -146,7 +146,7 @@ def exec_code(*, source=None, path=None, verbosity=None, lang=None):
     return my_globals
 
 
-def run(filename, lang=None):
+def run(filename, lang=None, verbosity=1):
     """Given a filename (relative or absolute path), this function uses the
        more complex exec_code() to run a file.
 
@@ -167,7 +167,7 @@ def run(filename, lang=None):
 
        Returns False if problems have been found, None otherwise.
        """
-    exec_code(path=filename, lang=lang, verbosity=1)
+    exec_code(path=filename, lang=lang, verbosity=verbosity)
 
 
 def _temp_set_lang(lang):

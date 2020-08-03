@@ -1,6 +1,6 @@
 """public_api.py
 
-With the exception of 1) this package version and 2) some Friendly-console
+With the exception of some Friendly-console
 related classes or functions, this module includes **all** the functions
 that are part of the public API and can be directly used, as in::
 
@@ -11,22 +11,17 @@ instead of::
 
     import friendly_traceback
     friendly_traceback.public_api.some_function()
+    # or
+    friendly_traceback.some_inner_module.some_function()
 
-
-Note that this excludes a few modules that are used to install
-friendly-traceback upon importing it, such as::
-
-    from friendly_traceback import explanations
-    from friendly_traceback import explications  # French version
 """
 from functools import wraps
-import runpy
 
 from . import core
 from . import utils
 
-from .editors_helper import advanced_check_syntax, check_syntax, exec_code
-from . import editors_helper
+# Make functions from other modules directly available from here.
+from .editors_helper import advanced_check_syntax, check_syntax, exec_code, run
 from .session import session
 from .source_cache import cache, highlight_source
 from .path_info import (
@@ -35,19 +30,21 @@ from .path_info import (
     include_file_in_traceback,
 )
 
-__version__ = "0.0.34a"
 __all__ = [
     "advanced_check_syntax",
     "cache",
     "check_syntax",
+    "exclude_file_from_traceback",
     "exec_code",
     "highlight_source",
-    "exclude_file_from_traceback",
-    "is_excluded_file",
     "include_file_in_traceback",
+    "is_excluded_file",
+    "run",
     "__version__",
 ]
 # Note: more content is added to __all__ below
+
+__version__ = "0.0.34a"
 
 
 def make_public(f):
@@ -285,18 +282,3 @@ def show_again():
     a verbosity level to view the traceback again.
     """
     session.show_traceback_info_again()
-
-
-@make_public
-def run(filename, lang=None):
-    """First draft"""
-    editors_helper.run(filename, lang=lang)
-
-
-@make_public
-def run_program(name, exclude="", lang=None):
-    """Experimental code to make program run with Mu"""
-    exclude_file_from_traceback(exclude)
-    exclude_file_from_traceback("runpy.py")
-    install(lang=lang)
-    return runpy.run_module(name, run_name="__main__")
