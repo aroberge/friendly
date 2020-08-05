@@ -3,10 +3,11 @@
 Used to provide basic variable information in a way that
 can be useful for beginners without overwhelming them.
 """
-
+import builtins
 import tokenize
 
 from . import utils
+from .my_gettext import current_lang
 
 
 def get_var_info(line, frame):
@@ -85,3 +86,82 @@ def format_var_info(tok, _dict, _global=""):
     if length_info:
         result += f"  | len({name}): {length_info}"
     return result
+
+
+def get_similar_var_names(name, frame):
+    """This function looks for object with names similar to 'name' in
+       either the current locals() and globals() as well as in
+       Python's builtins.
+    """
+    _ = current_lang.translate
+
+    similar = {}
+    similar["locals"] = utils.edit_distance(name, frame.f_locals)
+    _globals = utils.edit_distance(name, frame.f_globals)
+    similar["globals"] = [var for var in _globals if var not in similar["locals"]]
+    similar["builtins"] = utils.edit_distance(name, dir(builtins))
+
+    nb_similar_names = (
+        len(similar["locals"]) + len(similar["globals"]) + len(similar["builtins"])
+    )
+    if nb_similar_names == 0:
+        return ""
+    elif nb_similar_names == 1:
+        message = _("\n    Perhaps you meant to write the following:")
+        if similar["locals"]:
+            message += _("\n        Local variable: ") + similar["locals"][0]
+        elif similar["globals"]:
+            message += _("\n        Global variable: ") + similar["globals"][0]
+        else:
+            message += _("\n        Python builtins: ") + similar["builtins"][0]
+    else:
+        message = _("\n    Perhaps you meant to write one of the following:")
+        if similar["locals"]:
+            message += _("\n        Local variable: ") + str(similar["locals"])[1:-1]
+        if similar["globals"]:
+            message += _("\n        Global variable: ") + str(similar["globals"])[1:-1]
+        if similar["builtins"]:
+            message += _("\n        Python builtins: ") + str(similar["builtins"])[1:-1]
+    return message
+
+
+def name_has_type_hint(name, frame):
+    """Identifies if a variable name has a type hint associated with it.
+
+        This can be useful if a user write something like::
+
+            name : something
+            use(name)
+
+        instead of::
+
+            name = something
+            use(name)
+
+        and sees a NameError.
+    """
+
+    _ = current_lang.translate
+
+    loc = frame.f_locals
+    glob = frame.f_globals
+
+    if "__annotations__" in loc:
+        if name in loc["__annotations__"]:
+            message = _(
+                "\n    Type hint found for '{name}' as a local variable.\n"
+            ).format(name=name)
+            message += _(
+                "    Perhaps you wrote {name} : {hint} instead of {name} = {hint}.\n\n"
+            ).format(name=name, hint=loc["__annotations__"][name])
+            return message
+
+    elif "__annotations__" in glob:
+        if name in glob["__annotations__"]:
+            message = _(
+                "\n    Type hint found for '{name}' as a global variable.\n"
+            ).format(name=name)
+            message += _(
+                "    Perhaps you wrote {name} : {hint} instead of {name} = {hint}.\n\n"
+            ).format(name=name, hint=glob["__annotations__"][name])
+            return message

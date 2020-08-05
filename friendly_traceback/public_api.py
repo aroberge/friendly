@@ -44,7 +44,7 @@ __all__ = [
 ]
 # Note: more content is added to __all__ below
 
-__version__ = "0.0.34a"
+__version__ = "0.0.35a"
 
 
 def make_public(f):

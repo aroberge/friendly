@@ -2,7 +2,6 @@
 
 The exception hook at the heart of Friendly-traceback
 """
-import builtins
 import inspect
 from itertools import dropwhile
 import os
@@ -14,7 +13,7 @@ from . import info_specific
 from . import utils
 from .my_gettext import current_lang
 from .session import session
-from .info_variables import get_var_info
+from . import info_variables
 
 from .source_cache import cache, highlight_source
 from .path_info import is_excluded_file
@@ -460,7 +459,7 @@ def process_parsing_error(etype, value, info):
     info["parsing_error_source"] = f"{partial_source}\n"
 
 
-def set_call_info(info, name, filename, linenumber, lines, index, frame):
+def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
     """This will outpt something like the following:
 
         [4]
@@ -481,82 +480,32 @@ def set_call_info(info, name, filename, linenumber, lines, index, frame):
         b = 2
     """
     source_info = get_partial_source(filename, linenumber, lines, index)
-    if name == "last_call":
+    if header_name == "last_call":
         get_header = last_call_header
     else:
         get_header = exception_raised_header
-    info["%s_header" % name] = get_header(linenumber, filename)  # [4]
-    info["%s_source" % name] = source_info["source"]  # [5]
+    info["%s_header" % header_name] = get_header(linenumber, filename)  # [4]
+    info["%s_source" % header_name] = source_info["source"]  # [5]
 
     if "line" in source_info and source_info["line"] is not None:
         if "NameError" in info["message"]:  # Special case; looking for typos
             _parts = info["cause"].split("'")
             try:
                 unknown_name = _parts[1]
-                info["%s_source" % name] += get_similar_var_names(unknown_name, frame)
+                hint = info_variables.name_has_type_hint(unknown_name, frame)
+                similar_names = info_variables.get_similar_var_names(
+                    unknown_name, frame
+                )
+                if hint:
+                    info["%s_variables" % header_name] = hint
+                elif similar_names:
+                    info["%s_variables" % header_name] = similar_names
             except IndexError:
                 pass
         else:
-            var_info = get_var_info(source_info["line"], frame)
+            var_info = info_variables.get_var_info(source_info["line"], frame)
             if var_info:
-                info["%s_variables" % name] = var_info  # [6]
-
-
-def get_similar_var_names(name, frame):
-    """To be used with NameError; currently work in progress"""
-    _ = current_lang.translate
-
-    loc = frame.f_locals
-    glob = frame.f_globals
-
-    if "__annotations__" in loc:
-        if name in loc["__annotations__"]:
-            message = _(
-                "\n    Type hint found for '{name}' as a local variable.\n"
-            ).format(name=name)
-            message += _(
-                "    Perhaps you wrote {name} : {hint} instead of {name} = {hint}.\n\n"
-            ).format(name=name, hint=loc["__annotations__"][name])
-            return message
-
-    elif "__annotations__" in glob:
-        if name in glob["__annotations__"]:
-            message = _(
-                "\n    Type hint found for '{name}' as a global variable.\n"
-            ).format(name=name)
-            message += _(
-                "    Perhaps you wrote {name} : {hint} instead of {name} = {hint}.\n\n"
-            ).format(name=name, hint=glob["__annotations__"][name])
-            return message
-
-    similar = {}
-    similar["locals"] = utils.edit_distance(name, frame.f_locals)
-    _globals = utils.edit_distance(name, frame.f_globals)
-    similar["globals"] = [var for var in _globals if var not in similar["locals"]]
-    similar["builtins"] = utils.edit_distance(name, dir(builtins))
-
-    nb_similar_names = (
-        len(similar["locals"]) + len(similar["globals"]) + len(similar["builtins"])
-    )
-    if nb_similar_names == 0:
-        return ""
-    elif nb_similar_names == 1:
-        message = _("\n    Perhaps you meant to write the following:")
-        if similar["locals"]:
-            message += _("\n        Local variable: ") + similar["locals"][0]
-        elif similar["globals"]:
-            message += _("\n        Global variable: ") + similar["globals"][0]
-        else:
-            message += _("\n        Python builtins: ") + similar["builtins"][0]
-    else:
-        message = _("\n    Perhaps you meant to write one of the following:")
-        if similar["locals"]:
-            message += _("\n        Local variable: ") + str(similar["locals"])[1:-1]
-        if similar["globals"]:
-            message += _("\n        Global variable: ") + str(similar["globals"])[1:-1]
-        if similar["builtins"]:
-            message += _("\n        Python builtins: ") + str(similar["builtins"])[1:-1]
-    return message
+                info["%s_variables" % header_name] = var_info  # [6]
 
 
 def set_cause(info, friendly, etype, value):
