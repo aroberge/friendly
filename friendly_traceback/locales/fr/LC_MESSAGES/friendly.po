@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-08-01 08:12-0300\n"
-"PO-Revision-Date: 2020-08-01 08:14-0300\n"
+"POT-Creation-Date: 2020-08-05 08:08-0300\n"
+"PO-Revision-Date: 2020-08-05 08:10-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -263,7 +263,13 @@ msgstr ""
 "que Python a pris comme indiquant une invocation de fonction.\n"
 "Il est possible que vous ayez oublié d'écrire une virgule avant le tuple.\n"
 
-#: core.py:201
+#: console.py:150
+msgid "Warning: you used type hints. Perhaps you meant {name} = {hint}."
+msgstr ""
+"Attention : vous avez utilisé des annotations de type. Peut-être vouliez-"
+"vous dire {name} = {hint}."
+
+#: core.py:200
 msgid ""
 "I suspect that you are using a regular\n"
 "Python console after importing Friendly-traceback.\n"
@@ -273,7 +279,7 @@ msgstr ""
 "console Python après avoir importé Friendly-traceback.\n"
 "Malheureusement, aucune autre information ne peut être fournie.\n"
 
-#: core.py:232
+#: core.py:231
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -284,7 +290,7 @@ msgstr ""
 "Est-ce que vous utilisez une console Python plutôt que la console \"Friendly"
 "\"?\n"
 
-#: core.py:244
+#: core.py:243
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
@@ -292,11 +298,11 @@ msgstr ""
 "Malheureusement, aucune information supplémentaire n’est disponible:\n"
 "le contenu du fichier '<string>' n’est pas accessible.\n"
 
-#: core.py:267
+#: core.py:266
 msgid "Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr "Exception levée à la ligne {linenumber} du fichier '{filename}'.\n"
 
-#: core.py:360
+#: core.py:359
 msgid ""
 "Python's error message (invalid syntax) cannot be used to identify the "
 "problem:"
@@ -304,11 +310,11 @@ msgstr ""
 "Le message d’erreur de Python (invalid syntax) ne peut pas être utilisé pour "
 "identifier le problème :"
 
-#: core.py:365
+#: core.py:364
 msgid "Likely cause based on the information given by Python:"
 msgstr "Cause probable basée sur les informations données par Python :"
 
-#: core.py:407
+#: core.py:406
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
@@ -318,16 +324,16 @@ msgstr ""
 "        vous devez utiliser la console 'Friendly' et non pas une \n"
 "        console Python régulière.\n"
 
-#: core.py:413
+#: core.py:412
 msgid "Problem: source of '{filename}' is not available\n"
 msgstr "Problème : la source de '{filename}' n'est pas disponible.\n"
 
-#: core.py:428
+#: core.py:427
 msgid "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 "L'exécution s'est arrêtée à la ligne {linenumber} du fichier '{filename}'\n"
 
-#: core.py:442
+#: core.py:441
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -337,7 +343,7 @@ msgstr ""
 "'{filename}'\n"
 "jusqu'à l'endroit indiqué par --> et ^.\n"
 
-#: core.py:448
+#: core.py:447
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
@@ -348,7 +354,7 @@ msgstr ""
 "La fin du fichier a été atteinte et Python s'attendait à voir plus de code.\n"
 "\n"
 
-#: core.py:454
+#: core.py:453
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'\n"
@@ -359,47 +365,7 @@ msgstr ""
 "pour une raison non spécifiée.\n"
 "\n"
 
-#: core.py:520
-msgid ""
-"\n"
-"    Perhaps you meant to write the following:"
-msgstr ""
-"\n"
-"    Peut-être que vous vouliez plutôt écrire :"
-
-#: core.py:522 core.py:530
-msgid ""
-"\n"
-"        Local variable: "
-msgstr ""
-"\n"
-"        Identifiant local : "
-
-#: core.py:524 core.py:532
-msgid ""
-"\n"
-"        Global variable: "
-msgstr ""
-"\n"
-"        Identifiant global : "
-
-#: core.py:526 core.py:534
-msgid ""
-"\n"
-"        Python builtins: "
-msgstr ""
-"\n"
-"        Identifiant Python (builtins) : "
-
-#: core.py:528
-msgid ""
-"\n"
-"    Perhaps you meant to write one of the following:"
-msgstr ""
-"\n"
-"    Peut-être que vous vouliez plutôt écrire un des choix suivants :"
-
-#: core.py:579
+#: core.py:552
 msgid "Python exception:"
 msgstr "Exception Python:"
 
@@ -538,7 +504,7 @@ msgstr ""
 "opération arithmétique\n"
 "est trop grand pour être manipulé par le processeur de l’ordinateur.\n"
 
-#: info_generic.py:141
+#: info_generic.py:140
 msgid ""
 "A RecursionError is raised when a function calls itself,\n"
 "directly or indirectly, too many times.\n"
@@ -552,13 +518,13 @@ msgstr ""
 "votre code\n"
 "et que votre programme ne terminerait jamais.\n"
 
-#: info_generic.py:152
+#: info_generic.py:151
 msgid "A SyntaxError occurs when Python cannot understand your code.\n"
 msgstr ""
 "Une exception de type SyntaxError se produit lorsque Python ne peut pas "
 "comprendre votre code.\n"
 
-#: info_generic.py:158
+#: info_generic.py:157
 msgid ""
 "A TabError indicates that you have used both spaces\n"
 "and tab characters to indent your code.\n"
@@ -576,7 +542,7 @@ msgstr ""
 "La recommandation de Python est de toujours utiliser des espaces\n"
 "pour indenter votre code.\n"
 
-#: info_generic.py:171
+#: info_generic.py:170
 msgid ""
 "A TypeError is usually caused by trying\n"
 "to combine two incompatible types of objects,\n"
@@ -589,7 +555,7 @@ msgstr ""
 "ou en tentant d'effectuer une opération non permise sur un type d'objet "
 "donné.\n"
 
-#: info_generic.py:182
+#: info_generic.py:181
 msgid ""
 "A ValueError indicates that a function or an operation\n"
 "received an argument of the right type, but an inappropriate value.\n"
@@ -597,7 +563,7 @@ msgstr ""
 "Une exception ValueError indique qu'une fonction ou une opération\n"
 "a reçu un argument du bon type, mais une valeur inappropriée.\n"
 
-#: info_generic.py:191
+#: info_generic.py:190
 msgid ""
 "In Python, variables that are used inside a function are known as \n"
 "local variables. Before they are used, they must be assigned a value.\n"
@@ -621,7 +587,7 @@ msgstr ""
 "qu’il s’agit d’une variable globale, sinon vous verrez une exception "
 "UnboundLocalError.\n"
 
-#: info_generic.py:206
+#: info_generic.py:205
 msgid ""
 "No information is known about this exception.\n"
 "Please report this example to\n"
@@ -631,7 +597,7 @@ msgstr ""
 "Veuillez signaler cet exemple à\n"
 "https://github.com/aroberge/friendly-traceback/issues\n"
 
-#: info_generic.py:216
+#: info_generic.py:215
 msgid ""
 "A ZeroDivisionError occurs when you are attempting to divide\n"
 "a value by zero:\n"
@@ -752,6 +718,70 @@ msgstr ""
 "Il est possible que vous avez oublié d'écrire l’instruction\n"
 "    global {var_name}\n"
 "comme première ligne à l’intérieur de votre fonction.\n"
+
+#: info_variables.py:110
+msgid ""
+"\n"
+"    Perhaps you meant to write the following:"
+msgstr ""
+"\n"
+"    Peut-être que vous vouliez plutôt écrire :"
+
+#: info_variables.py:112 info_variables.py:120
+msgid ""
+"\n"
+"        Local variable: "
+msgstr ""
+"\n"
+"        Identifiant local : "
+
+#: info_variables.py:114 info_variables.py:122
+msgid ""
+"\n"
+"        Global variable: "
+msgstr ""
+"\n"
+"        Identifiant global : "
+
+#: info_variables.py:116 info_variables.py:124
+msgid ""
+"\n"
+"        Python builtins: "
+msgstr ""
+"\n"
+"        Identifiant Python (builtins) : "
+
+#: info_variables.py:118
+msgid ""
+"\n"
+"    Perhaps you meant to write one of the following:"
+msgstr ""
+"\n"
+"    Peut-être que vous vouliez plutôt écrire un des choix suivants :"
+
+#: info_variables.py:151
+msgid ""
+"\n"
+"    Type hint found for '{name}' as a local variable.\n"
+msgstr ""
+"\n"
+"    Annotation de type trouvée pour '{name}' en tant que variable locale.\n"
+
+#: info_variables.py:154 info_variables.py:164
+msgid ""
+"    Perhaps you wrote {name} : {hint} instead of {name} = {hint}.\n"
+"\n"
+msgstr ""
+"    Peut-être avez-vous écrit {name} : {hint} au lieu de {name} = {hint}.\n"
+"\n"
+
+#: info_variables.py:161
+msgid ""
+"\n"
+"    Type hint found for '{name}' as a global variable.\n"
+msgstr ""
+"\n"
+"    Annotation de type trouvée pour '{name}' en tant que variable globale.\n"
 
 #: line_analyzer.py:105
 msgid ""
@@ -1512,7 +1542,7 @@ msgstr ""
 "Maintenant, «print» est une fonction; vous devez utiliser des parenthèses "
 "pour l'invoquer.\n"
 
-#: session.py:103
+#: session.py:105
 msgid "Level {level} not available; using default."
 msgstr "Niveau {Level} non disponible; la valeur par défaut est utilisée."
 

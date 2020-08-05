@@ -3,12 +3,16 @@
 Adaptation of Python's console found in code.py so that it can be
 used to show some "friendly" tracebacks.
 """
-
+import copy
 import os
 import platform
 from code import InteractiveConsole
+import codeop  # called by Python's code module and may appear in tracebacks
+
+# See below for exclusion.
 
 from . import public_api
+from .my_gettext import current_lang
 
 BANNER = "Friendly Console version {}. [Python version: {}]\n".format(
     public_api.__version__, platform.python_version()
@@ -22,12 +26,11 @@ class FriendlyConsole(InteractiveConsole):
         of code fragment executed by treating each of them as
         an individual source file.
         """
-        import codeop  # called by Python's code module
-
         public_api.exclude_file_from_traceback(codeop.__file__)
         self.fake_filename = "<friendly-console:%d>"
         self.counter = 1
         self.hints = {}  # Keeps track of type hints
+        self.old_locals = {}
 
         super().__init__(locals=locals)
 
@@ -114,6 +117,7 @@ class FriendlyConsole(InteractiveConsole):
         elsewhere in this code, and may not always be caught.  The
         caller should be prepared to deal with it.
         """
+        _ = current_lang.translate
         try:
             exec(code, self.locals)
         except SystemExit:
@@ -121,17 +125,33 @@ class FriendlyConsole(InteractiveConsole):
         except Exception:
             public_api.explain()
 
-        if "__annotations__" in self.locals:
-            hints = self.locals["__annotations__"]
-            if hints:
-                if hints != self.hints:
-                    print("Warning: you used type hints.")
-                    for hint in hints:
-                        if hint in self.hints and hints[hint] == self.hints[hint]:
-                            continue
-                        else:
-                            print("    ", hint, ":", hints[hint])
-                    self.hints = hints
+        self.check_for_annotations()
+        self.old_locals = copy.copy(self.locals)
+
+    def check_for_annotations(self):
+        """Attempts to detect code that uses : instead of = by mistake"""
+        _ = current_lang.translate
+        if "__annotations__" not in self.locals:
+            return
+
+        hints = self.locals["__annotations__"]
+        if not hints or hints == self.hints:
+            return
+
+        for name in hints:
+            if name in self.hints and hints[name] == self.hints[name]:
+                continue
+            if (
+                name not in self.locals
+                or name in self.old_locals
+                and self.old_locals[name] == self.locals[name]
+            ):
+                print(
+                    _(
+                        "Warning: you used type hints. Perhaps you meant {name} = {hint}."
+                    ).format(name=name, hint=hints[name])
+                )
+        self.hints = copy.copy(hints)
 
     # The following two methods are never used in this class, but they are
     # defined in the parent class. The following are the equivalent methods
