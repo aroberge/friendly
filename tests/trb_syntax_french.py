@@ -38,8 +38,8 @@ target = os.path.normpath(
 )
 
 intro_text = """
-Friendly SyntaxError tracebacks - en Français
-=============================================
+|france| Friendly SyntaxError tracebacks - en Français
+======================================================
 
 Le but principal de friendly-traceback est de fournir des rétroactions plus
 conviviales que les fameux **tracebacks** de Python lorsqu'une exception survient.
