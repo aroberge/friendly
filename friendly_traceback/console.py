@@ -27,6 +27,7 @@ class FriendlyConsole(InteractiveConsole):
         public_api.exclude_file_from_traceback(codeop.__file__)
         self.fake_filename = "<friendly-console:%d>"
         self.counter = 1
+        self.hints = {}  # Keeps track of type hints
 
         super().__init__(locals=locals)
 
@@ -119,6 +120,18 @@ class FriendlyConsole(InteractiveConsole):
             os._exit(1)
         except Exception:
             public_api.explain()
+
+        if "__annotations__" in self.locals:
+            hints = self.locals["__annotations__"]
+            if hints:
+                if hints != self.hints:
+                    print("Warning: you used type hints.")
+                    for hint in hints:
+                        if hint in self.hints and hints[hint] == self.hints[hint]:
+                            continue
+                        else:
+                            print("    ", hint, ":", hints[hint])
+                    self.hints = hints
 
     # The following two methods are never used in this class, but they are
     # defined in the parent class. The following are the equivalent methods

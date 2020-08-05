@@ -505,6 +505,30 @@ def set_call_info(info, name, filename, linenumber, lines, index, frame):
 def get_similar_var_names(name, frame):
     """To be used with NameError; currently work in progress"""
     _ = current_lang.translate
+
+    loc = frame.f_locals
+    glob = frame.f_globals
+
+    if "__annotations__" in loc:
+        if name in loc["__annotations__"]:
+            message = _(
+                "\n    Type hint found for '{name}' as a local variable.\n"
+            ).format(name=name)
+            message += _(
+                "    Perhaps you wrote {name} : {hint} instead of {name} = {hint}.\n\n"
+            ).format(name=name, hint=loc["__annotations__"][name])
+            return message
+
+    elif "__annotations__" in glob:
+        if name in glob["__annotations__"]:
+            message = _(
+                "\n    Type hint found for '{name}' as a global variable.\n"
+            ).format(name=name)
+            message += _(
+                "    Perhaps you wrote {name} : {hint} instead of {name} = {hint}.\n\n"
+            ).format(name=name, hint=glob["__annotations__"][name])
+            return message
+
     similar = {}
     similar["locals"] = utils.edit_distance(name, frame.f_locals)
     _globals = utils.edit_distance(name, frame.f_globals)
