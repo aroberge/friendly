@@ -121,8 +121,8 @@ def edit_distance(word_with_typo, words):
     return similar_words
 
 
-# The following code, including comments, has been copied from
-# https://gist.github.com/giststhebearbear/4145811
+# The following code, including comments, has been copied, with very
+# minor changes, from https://gist.github.com/giststhebearbear/4145811
 
 
 def _leven(s1, s2, maxDistance):
@@ -160,7 +160,7 @@ def _leven(s1, s2, maxDistance):
     #  to the shorter string making it static [0-n]
     #  since this row is static we can set it as
     #  curRow and start computation at the second row or index 1
-    curRow = [x for x in range(0, l1 + 1)]
+    curRow = list(range(0, l1 + 1))
 
     # use second length to loop through all the rows being built
     # we start at row one
