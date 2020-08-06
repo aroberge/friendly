@@ -62,7 +62,7 @@ class _State:
         if self.traceback_info is None:
             return
         explanation = self.formatter(self.traceback_info, level=self.level)
-        self.write_err(explanation)
+        self.write_err(explanation + "\n")
 
     def capture(self, txt):
         """Captures the output instead of writing to stderr."""
