@@ -28,6 +28,8 @@ for file in os.listdir(os.path.dirname(__file__)):
 def is_excluded_file(full_path):
     """Determines if the file belongs to the group that is excluded from tracebacks.
     """
+    if full_path.startswith("<frozen "):
+        return True
     return full_path in EXCLUDED_FILE_PATH
 
 
