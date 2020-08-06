@@ -162,14 +162,17 @@ def main():
     if args.source is not None:
         public_api.exclude_file_from_traceback(runpy.__file__)
         if sys.flags.interactive:
-            if args.import_only:
-                module = __import__(args.source)
-                module_dict = {}
-                for var in dir(module):
-                    module_dict[var] = getattr(module, var)
-            else:
-                module_dict = runpy.run_module(args.source, run_name="__main__")
-            console_defaults.update(module_dict)
+            try:
+                if args.import_only:
+                    module = __import__(args.source)
+                    module_dict = {}
+                    for var in dir(module):
+                        module_dict[var] = getattr(module, var)
+                else:
+                    module_dict = runpy.run_module(args.source, run_name="__main__")
+                console_defaults.update(module_dict)
+            except Exception:
+                public_api.explain()
             console.start_console(local_vars=console_defaults)
         elif args.import_only:
             module = __import__(args.source)
