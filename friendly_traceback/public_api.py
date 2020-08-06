@@ -171,27 +171,6 @@ def get_lang():
 @make_public
 def set_level(level):
     """Deprecated; use set_verbosity() instead.
-
-    Sets the verbosity level to be used. The values are as follows::
-
-            0: Normal Python tracebacks
-            1: Default - does not need to be specified
-            2: Python tracebacks appear before the friendly display
-            3: Python tracebacks appended at the end of the friendly display.
-            4: Python traceback followed by basic explanation
-            5: Only basic explanation
-            6: No generic explanation
-            7: Python tracebacks appear before the friendly display but
-               no generic explanation is included.
-            9: Python traceback
-
-        The Python tracebacks for level >= 1 are the simulated version.
-        You can use negative values to show the true Python traceback which
-        will likely include function calls from friendly-traceback itself.
-        Thus level -9 is equivalent to level 0.
-
-        Other values may be available, as we try to find the most useful
-        settings for beginners.
     """
     session.set_level(level)
 
