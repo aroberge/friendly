@@ -156,6 +156,31 @@ def no_generic_explanation_with_traceback(info, level=7, **kwargs):
     return result
 
 
+def minimal_for_console(info, level=8, **kwargs):
+    """Minimal traceback, useful for console use by more experienced users.
+    """
+
+    items = [
+        # (key, custom_indentation_code)
+        ("message", "indent"),
+        ("parsing_error_source", "none"),
+        ("cause", "double"),
+        ("last_call_source", "none"),
+        ("last_call_variables", "none"),
+        ("exception_raised_source", "none"),
+        ("exception_raised_variables", "none"),
+    ]
+    spacing = {"indent": " " * 4, "double": " " * 8, "none": ""}
+    result = [""]
+    for item, formatting in items:
+        if item == "generic":
+            continue
+        if item in info:
+            for line in info[item].split("\n"):
+                result.append(spacing[formatting] + line)
+    return result
+
+
 def markdown(info, level):
     """Traceback formatted with full information but with markdown syntax."""
     result = []
@@ -189,5 +214,6 @@ choose_formatter = {
     5: only_explain,
     6: no_generic_explanation,
     7: no_generic_explanation_with_traceback,
+    8: minimal_for_console,
     9: only_python_traceback,
 }
