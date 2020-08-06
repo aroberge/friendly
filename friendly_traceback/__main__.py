@@ -143,13 +143,7 @@ def import_function(dotted_path: str) -> type:
 
 
 def main():
-    console_defaults = {
-        "get_lang": public_api.get_lang,
-        "set_lang": public_api.set_lang,
-        "get_verbosity": public_api.get_verbosity,
-        "set_verbosity": public_api.set_verbosity,
-        "show_again": public_api.show_again,
-    }
+    console_defaults = {"friendly": public_api}
     args = parser.parse_args()
     if args.dev:
         console_defaults["tokenize"] = public_api.make_token_table
