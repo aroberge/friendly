@@ -3,6 +3,7 @@
 Adaptation of Python's console found in code.py so that it can be
 used to show some "friendly" tracebacks.
 """
+import builtins
 import copy
 import os
 import platform
@@ -141,11 +142,21 @@ class FriendlyConsole(InteractiveConsole):
         for name in hints:
             if name in self.hints and hints[name] == self.hints[name]:
                 continue
-            if (
+
+            if name in dir(builtins):
+                print(
+                    _(
+                        "Warning: you added a type hint to the python builtin '{name}'."
+                    ).format(name=name)
+                )
+            elif (
                 name not in self.locals
                 or name in self.old_locals
                 and self.old_locals[name] == self.locals[name]
             ):
+
+                # todo: check if builtin
+
                 print(
                     _(
                         "Warning: you used type hints. Perhaps you meant {name} = {hint}."
@@ -166,13 +177,7 @@ class FriendlyConsole(InteractiveConsole):
 
 def start_console(local_vars=None):
     """Starts a console; modified from code.interact"""
-    console_defaults = {
-        "get_lang": public_api.get_lang,
-        "set_lang": public_api.set_lang,
-        "get_verbosity": public_api.get_verbosity,
-        "set_verbosity": public_api.set_verbosity,
-        "show_again": public_api.show_again,
-    }
+    console_defaults = {"friendly": public_api}
     public_api.install()
 
     if local_vars is None:
