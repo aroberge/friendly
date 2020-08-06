@@ -453,11 +453,12 @@ def invalid_character_in_identifier(message="", line="", **kwargs):
 
         for quote in bad_quotation_marks:
             if quote in line:
-                return copy_paste + _(
+                return _(
                     "Python indicates that you used some unicode characters not allowed\n"
                     "as part of a variable name; this includes many emojis.\n"
                     "However, I suspect that you used a fancy unicode quotation mark\n"
-                    "instead of a normal single or double quote for a string."
+                    "instead of a normal single or double quote for a string.\n"
+                    "This can happen if you copy-pasted code.\n"
                     "\n"
                 )
         return _(
