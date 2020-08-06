@@ -18,7 +18,6 @@ instead of::
 from functools import wraps
 
 from . import core
-from . import utils
 
 # Make functions from other modules directly available from here.
 from .editors_helper import advanced_check_syntax, check_syntax, exec_code, run
@@ -134,20 +133,6 @@ def set_formatter(formatter=None):
        subject to change but include ``level``.
     """
     session.set_formatter(formatter=formatter)
-
-
-def make_token_table(source):
-    """Prints tokens found in source, excluding spaces and comments
-       formatted in a table.
-
-       This is occasionally useful to use at the console during development.
-
-       It is not part of the * import, and is really meant to be used
-       only by developers. It has been added in this public_api.py module
-       in order to give us more flexibility to change other modules
-       (such as utils.py) if needed.
-    """
-    return utils.make_token_table(source)
 
 
 # =========================================================================

@@ -109,12 +109,6 @@ parser.add_argument(
     action="store_true",
 )
 
-parser.add_argument(
-    "--dev",
-    help="""Adds some extra functions in the console, useful for development.
-         """,
-    action="store_true",
-)
 
 parser.add_argument(
     "--formatter",
@@ -145,8 +139,6 @@ def import_function(dotted_path: str) -> type:
 def main():
     console_defaults = {"friendly": public_api}
     args = parser.parse_args()
-    if args.dev:
-        console_defaults["tokenize"] = public_api.make_token_table
     if args.version:
         print(f"Friendly-traceback version {public_api.__version__}")
         sys.exit()

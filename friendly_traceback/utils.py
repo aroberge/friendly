@@ -92,7 +92,8 @@ def shorten_path(path):
 def make_token_table(source):
     """Prints tokens found in source, excluding spaces and comments.
 
-       This is occasionally useful to use at the console during development.
+       This was useful and might agin be useful to use
+       when writing new exception analyzers.
     """
     print(
         _token_format.format(
