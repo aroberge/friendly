@@ -68,7 +68,7 @@ causes = {
     "raise_syntax_error52": "is or includes an actual object of type 'set'",
     "raise_syntax_error53": "is or includes an actual object of type 'dict'",
     "raise_syntax_error54": "is or includes an actual object",
-    "raise_syntax_error55": "True is a constant in Python",
+    "raise_syntax_error55": "True is a constant in Python",  # see below
     "raise_syntax_error56": "only used to assign a value to a variable",
     "raise_syntax_error57": "use the function repr(x) instead of `x`.",
     "raise_syntax_error58": "generator expression instead of the name of a variable",
@@ -79,7 +79,7 @@ causes = {
     "raise_syntax_error63": "You used the nonlocal keyword at a module level",
     "raise_syntax_error64": "keyword argument should appear only once in a function definition",
     "raise_syntax_error65": "keyword argument should appear only once in a function call",
-    "raise_syntax_error66": "it reached the end of the file and expected more content.",
+    "raise_syntax_error66": "it reached the end of the file and expected more content.",  # see below
     "raise_syntax_error67": "In older version of Python, 'print' was a keyword",
     "raise_syntax_error68": "copy-pasted code from an interactive interpreter",
     "raise_syntax_error69": "pip is a command that needs to run in a terminal",

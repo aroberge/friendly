@@ -22,20 +22,13 @@ friendly_items = [
     ("exception_raised_variables", "none"),
 ]
 
-explain_items = [
-    ("header", "indent"),
-    ("message", "double"),
-    ("generic", "indent"),
-    ("parsing_error", "indent"),  # only for SyntaxError ...
-    ("parsing_error_source", "none"),  # and subclasses
-    ("cause_header", "indent"),
-    ("cause", "double"),
-]
+
+# TODO: support verbosity instead of level
 
 
 def format_traceback(info, level=1):
     """ Simple text formatter for the traceback."""
-    result = choose_formatter[abs(level)](info, level=level)
+    result = choose_formatter[level](info, level=level)
     return "\n".join(result)
 
 
@@ -54,72 +47,25 @@ def default(info, items=None, **kwargs):
     return result
 
 
-def python_traceback_before(info, level=2, **kwargs):
+def traceback_before_default(info, level=2, **kwargs):
     """Includes the Python traceback before all the information
        processed by Friendly-traceback.
     """
-    result = [""]
-    if level > 0:
-        result.extend(info["simulated_python_traceback"])
-    else:
-        result.extend(info["python_traceback"])
+    result = [info["simulated_python_traceback"]]
     result.extend(default(info))
     return result
 
 
-def python_traceback_after(info, level=3, **kwargs):
+def traceback_after_default(info, level=3, **kwargs):
     """Includes the Python traceback after all the information
        processed by Friendly-traceback.
     """
     result = default(info)
-    if level > 0:
-        result.extend(info["simulated_python_traceback"])
-    else:
-        result.extend(info["python_traceback"])
+    result.extend(info["simulated_python_traceback"])
     return result
 
 
-def only_add_explain(info, level=4, **kwargs):
-    """Includes the Python traceback before adding the generic
-       information about a given exception and the likely cause.
-    """
-    result = [""]
-    if level > 0:
-        result.extend(info["simulated_python_traceback"])
-    else:
-        result.extend(info["python_traceback"])
-    result.append("")
-
-    if "generic" in info:
-        for line in info["generic"].split("\n"):
-            result.append("    " + line)
-    if "cause_header" in info:
-        for line in info["cause_header"].split("\n"):
-            result.append("    " + line)
-    if "cause" in info:
-        for line in info["cause"].split("\n"):
-            result.append("        " + line)
-    return result
-
-
-def only_explain(info, level=5, **kwargs):
-    """Only shows the explanation, not where the program stopped
-       or the exception was raised.
-    """
-    result = default(info, items=explain_items)
-    return result
-
-
-def only_python_traceback(info, level=9, **kwargs):
-    """Shows only the Python traceback
-    """
-    if level > 0:
-        return info["simulated_python_traceback"]
-    else:
-        return info["python_traceback"]
-
-
-def no_generic_explanation(info, level=6, **kwargs):
+def no_generic_explanation(info, level=4, **kwargs):
     """Similar to the default option except that it does not display the
        generic information about a given exception.
     """
@@ -135,21 +81,37 @@ def no_generic_explanation(info, level=6, **kwargs):
     return result
 
 
-def no_generic_explanation_with_traceback(info, level=7, **kwargs):
-    """Similar to the level 2 except that it does not display the
-       generic information about a given exception.
+def traceback_before_no_generic(info, level=5, **kwargs):
+    """Includes the Python traceback before all the information
+       processed by Friendly-traceback.
     """
-    items = friendly_items
+    result = [info["simulated_python_traceback"]]
+    result.extend(no_generic_explanation(info))
+    return result
+
+
+def traceback_after_no_generic(info, level=6, **kwargs):
+    """Includes the Python traceback after all the information
+       processed by Friendly-traceback.
+    """
+    result = no_generic_explanation(info)
+    result.extend(info["simulated_python_traceback"])
+    return result
+
+
+def simple_explain(info, level=7, **kwargs):
+    """7: (Subject to change) Python tracebacks followed
+               by specific information.
+    """
+    items = [
+        ("simulated_python_traceback", "none")(
+            "parsing_error", "indent"
+        ),  # only for SyntaxError ...
+        ("cause", "double"),
+    ]
     spacing = {"indent": " " * 4, "double": " " * 8, "none": ""}
     result = [""]
-    if level > 0:
-        result.extend(info["simulated_python_traceback"])
-    else:
-        result.extend(info["python_traceback"])
-    result.append("")
     for item, formatting in items:
-        if item == "generic":
-            continue
         if item in info:
             for line in info[item].split("\n"):
                 result.append(spacing[formatting] + line)
@@ -160,25 +122,30 @@ def minimal_for_console(info, level=8, **kwargs):
     """Minimal traceback, useful for console use by more experienced users.
     """
 
-    items = [
-        # (key, custom_indentation_code)
-        ("message", "indent"),
-        ("parsing_error_source", "none"),
-        ("cause", "double"),
-        ("last_call_source", "none"),
-        ("last_call_variables", "none"),
-        ("exception_raised_source", "none"),
-        ("exception_raised_variables", "none"),
+    only_show = [
+        "message",
+        "parsing_error_source",
+        "cause",
+        "last_call_source",
+        "last_call_variables",
+        "exception_raised_source",
+        "exception_raised_variables",
     ]
     spacing = {"indent": " " * 4, "double": " " * 8, "none": ""}
     result = [""]
-    for item, formatting in items:
-        if item == "generic":
+    for item, formatting in friendly_items:
+        if item not in only_show:
             continue
         if item in info:
             for line in info[item].split("\n"):
                 result.append(spacing[formatting] + line)
     return result
+
+
+def only_python_traceback(info, level=9, **kwargs):
+    """Shows only the simulated Python traceback
+    """
+    return info["simulated_python_traceback"]
 
 
 def markdown(info, level):
@@ -208,12 +175,12 @@ def markdown(info, level):
 
 choose_formatter = {
     1: default,
-    2: python_traceback_before,
-    3: python_traceback_after,
-    4: only_add_explain,
-    5: only_explain,
-    6: no_generic_explanation,
-    7: no_generic_explanation_with_traceback,
+    2: traceback_before_default,
+    3: traceback_after_default,
+    4: no_generic_explanation,
+    5: traceback_before_no_generic,
+    6: traceback_after_no_generic,
+    7: simple_explain,
     8: minimal_for_console,
     9: only_python_traceback,
 }

@@ -80,7 +80,7 @@ class _State:
         current_lang.install(lang)
         self.lang = lang
 
-    def set_level(self, level=None, verbosity=None):
+    def set_verbosity(self, level=None, verbosity=None):
         """Sets the "verbosity level" and possibly resets sys.__excepthook__"""
         _ = current_lang.translate
         if verbosity is not None:
@@ -106,8 +106,6 @@ class _State:
             )
             self.level = self._default_level
 
-    set_verbosity = set_level
-
     def set_formatter(self, formatter=None):
         """Sets the default formatter. If no argument is given, the default
            formatter, based on the value for the level, is used.
@@ -117,19 +115,30 @@ class _State:
         else:
             self.formatter = formatter
 
-    def install(self, lang=None, redirect=None, level=None):
+    def install(self, lang=None, redirect=None, verbosity=None, level=None):
         """Replaces sys.excepthook by friendly_traceback's own version."""
+        _ = current_lang.translate
+        if verbosity is not None:
+            level = verbosity
+
         if level is None:
             if not self.installed:
                 level = 1
             else:
                 level = self.level
+        elif int(level) == level and 0 <= level <= 9:
+            pass
+        else:
+            self.write_err(
+                _("Level {level} not available; using default.").format(level=level)
+            )
+            level = 1
         self.installed = True
 
         if lang is not None:
             self.install_gettext(lang)
         self.set_redirect(redirect=redirect)
-        self.set_level(level=level)
+        self.set_verbosity(level=level)
         sys.excepthook = self.except_hook
 
     def uninstall(self):

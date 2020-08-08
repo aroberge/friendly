@@ -32,26 +32,24 @@ parser = argparse.ArgumentParser(
     Friendly-traceback will start an interactive console.
 
     Note: the values of the verbosity level described below are:
-        0: Normal Python tracebacks
-        1: Default - does not need to be specified.
-           The output does NOT include the standard Python traceback.
-        2: Python tracebacks appear before the friendly display
-        3: Python tracebacks appended at the end of the friendly display.
-        4: Python traceback followed by basic explanation
-        5: Only basic explanation
-        6: No generic explanation
-        7: Python tracebacks appear before the friendly display but
-           no generic explanation is included.
-        9: Python traceback only
 
-    The Python traceback for level > 1 is the simulated version, which
-    excludes calls from friendly-traceback itself.
-    You can use negative values to show the true Python traceback which
-    will likely include function calls from friendly-traceback itself.
-    Thus level -9 is equivalent to level 0.
+        0: Normal Python tracebacks: friendly_traceback is disabled.
+        1: Default - does not need to be specified. The normal Python
+           traceback is not included in the output.
+        2: Python tracebacks appear before the output of level 1.
+        3: Python tracebacks appended at the end of the output of level 1.
+        4: Same as 1, but generic explanation is not included
+        5: Same as 2, but generic explanation is not included
+        6: Same as 3, but generic explanation is not included
+        7: (Subject to change) Python tracebacks followed
+           by specific information.
+        8: Minimal friendly display of relevant information,
+           suitable for console use by advanced programmers.
+        9: Simulated Python traceback: see the documentation.
 
-    Other values may be available, as we try to find the most useful
-    settings for beginners.
+       Vocabulary examples:
+           Generic explanation: A NameError occurs when ...
+           Specific explanation: In your program, the unknown name is ...
         """.format(
             versions=versions
         )

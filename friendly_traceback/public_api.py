@@ -29,6 +29,7 @@ from .path_info import (
     include_file_in_traceback,
 )
 
+__version__ = "0.0.35a"
 __all__ = [
     "advanced_check_syntax",
     "cache",
@@ -41,12 +42,10 @@ __all__ = [
     "run",
     "__version__",
 ]
-# Note: more content is added to __all__ below
-
-__version__ = "0.0.35a"
 
 
 def make_public(f):
+    """Decorator used to add functions to __all__"""
     __all__.append(f.__name__)
 
     @wraps(f)
@@ -78,7 +77,7 @@ def explain(redirect=None):
 
 
 @make_public
-def install(lang=None, redirect=None, level=None):
+def install(lang=None, redirect=None, verbosity=None, level=None):
     """
     Replaces ``sys.excepthook`` by friendly_traceback's own version.
     Intercepts, and provides an explanation for all Python exceptions except
@@ -92,12 +91,16 @@ def install(lang=None, redirect=None, level=None):
         redirect: stream to be used to send the output.
                   The default is sys.stderr
 
-        level: verbosity level.  See set_level() for details.
+        verbosity: verbosity level.  See set_verbosity() for details.
+
+        level: deprecated; use verbosity instead.
 
         hook: exception_hook - if one wants to experiment using
               a different one.
     """
-    session.install(lang=lang, redirect=redirect, level=level)
+    # TODO: check validity here instead of in sessions.py
+
+    session.install(lang=lang, redirect=redirect, verbosity=verbosity, level=level)
 
 
 @make_public
@@ -132,6 +135,7 @@ def set_formatter(formatter=None):
        as well as arbitrary keyword-based arguments - these are currently
        subject to change but include ``level``.
     """
+    # TODO: change level to verbosity
     session.set_formatter(formatter=formatter)
 
 
@@ -172,37 +176,41 @@ def get_lang():
 def set_level(level):
     """Deprecated; use set_verbosity() instead.
     """
-    session.set_level(level)
+    set_verbosity(level)
 
 
 @make_public
 def set_verbosity(level):
-    """Sets the verbosity level to be used. The values are as follows::
+    """Sets the verbosity level to be used. These settings might be ignored
+       by custom formatters.
 
-            0: Normal Python tracebacks
+       Vocabulary examples ::
+           Generic explanation: A NameError occurs when ...
+           Specific explanation: In your program, the unknown name is ...
+
+       The values are as follows::
+
+            0: Normal Python tracebacks: friendly_traceback is disabled.
             1: Default - does not need to be specified. The normal Python
                traceback is not included in the output.
-            2: Python tracebacks appear before the friendly display
-            3: Python tracebacks appended at the end of the friendly display.
-            4: Python traceback followed by basic explanation only
-            5: Only basic explanation
-            6: No generic explanation
-            7: Python tracebacks appear before the friendly display but
-               no generic explanation is included.
-            9: Python traceback
-
-        Other values may be available, as we try to find the most useful
-        settings for beginners.
+            2: Python tracebacks appear before the output of level 1.
+            3: Python tracebacks appended at the end of the output of level 1.
+            4: Same as 1, but generic explanation is not included
+            5: Same as 2, but generic explanation is not included
+            6: Same as 3, but generic explanation is not included
+            7: (Subject to change) Python tracebacks followed
+               by specific information.
+            8: Minimal display of relevant information,
+               suitable for console use by advanced programmers.
+            9: Simulated Python traceback: see the documentation.
     """
-    session.set_level(level)
+    session.set_verbosity(level)
 
 
 @make_public
 def get_level():
-    """Deprecated: use get_verbosity instead
-
-       Returns the verbosity level currently used."""
-    return session.level
+    """Deprecated: use get_verbosity() instead."""
+    return get_verbosity()
 
 
 @make_public
@@ -243,6 +251,6 @@ def show_again():
     """Shows the traceback info again, on the default stream.
 
     Primarily intended to be used when the user changes
-    a verbosity level to view the traceback again.
+    a verbosity level to view the last computed traceback in a given language.
     """
     session.show_traceback_info_again()
