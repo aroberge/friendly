@@ -104,13 +104,11 @@ def simple_explain(info, level=7, **kwargs):
                by specific information.
     """
     items = [
-        ("simulated_python_traceback", "none")(
-            "parsing_error", "indent"
-        ),  # only for SyntaxError ...
+        ("parsing_error", "indent"),  # only for SyntaxError ...
         ("cause", "double"),
     ]
     spacing = {"indent": " " * 4, "double": " " * 8, "none": ""}
-    result = [""]
+    result = info["simulated_python_traceback"]
     for item, formatting in items:
         if item in info:
             for line in info[item].split("\n"):
