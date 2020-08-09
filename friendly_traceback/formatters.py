@@ -51,7 +51,7 @@ def traceback_before_default(info, level=2, **kwargs):
     """Includes the Python traceback before all the information
        processed by Friendly-traceback.
     """
-    result = [info["simulated_python_traceback"]]
+    result = info["simulated_python_traceback"]
     result.extend(default(info))
     return result
 
@@ -85,7 +85,7 @@ def traceback_before_no_generic(info, level=5, **kwargs):
     """Includes the Python traceback before all the information
        processed by Friendly-traceback.
     """
-    result = [info["simulated_python_traceback"]]
+    result = info["simulated_python_traceback"]
     result.extend(no_generic_explanation(info))
     return result
 
