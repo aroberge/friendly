@@ -16,10 +16,12 @@ friendly_items = [
     ("cause", "double"),
     ("last_call_header", "indent"),
     ("last_call_source", "none"),
-    ("last_call_variables", "none"),
+    ("last_call_variables_header", "indent"),
+    ("last_call_variables", "indent"),
     ("exception_raised_header", "indent"),
     ("exception_raised_source", "none"),
-    ("exception_raised_variables", "none"),
+    ("exception_raised_variables_header", "indent"),
+    ("exception_raised_variables", "indent"),
 ]
 
 

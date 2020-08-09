@@ -479,6 +479,7 @@ def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
         [6]
         b = 2
     """
+    _ = current_lang.translate
     source_info = get_partial_source(filename, linenumber, lines, index)
     if header_name == "last_call":
         get_header = last_call_header
@@ -488,23 +489,28 @@ def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
     info["%s_source" % header_name] = source_info["source"]  # [5]
 
     if "line" in source_info and source_info["line"] is not None:
-        if "NameError" in info["message"]:  # Special case; looking for typos
+        if "NameError" in info["message"]:  # Special case
             _parts = info["cause"].split("'")
             try:
                 unknown_name = _parts[1]
-                hint = info_variables.name_has_type_hint(unknown_name, frame)
-                similar_names = info_variables.get_similar_var_names(
+                hint_header, hint = info_variables.name_has_type_hint(
+                    unknown_name, frame
+                )
+                header, similar_names = info_variables.get_similar_var_names(
                     unknown_name, frame
                 )
                 if hint:
+                    info["%s_variables_header" % header_name] = hint_header
                     info["%s_variables" % header_name] = hint
                 elif similar_names:
+                    info["%s_variables_header" % header_name] = header
                     info["%s_variables" % header_name] = similar_names
             except IndexError:
                 pass
         else:
             var_info = info_variables.get_var_info(source_info["line"], frame)
             if var_info:
+                info["%s_variables_header" % header_name] = _("Variables:\n")
                 info["%s_variables" % header_name] = var_info  # [6]
 
 

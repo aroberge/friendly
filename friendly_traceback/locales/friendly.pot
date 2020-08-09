@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-08-05 08:08-0300\n"
+"POT-Creation-Date: 2020-08-09 08:35-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -196,7 +196,11 @@ msgid ""
 "Perhaps you had a missing comma before the tuple.\n"
 msgstr ""
 
-#: console.py:150
+#: console.py:146
+msgid "Warning: you added a type hint to the python builtin '{name}'."
+msgstr ""
+
+#: console.py:159
 msgid "Warning: you used type hints. Perhaps you meant {name} = {hint}."
 msgstr ""
 
@@ -271,7 +275,12 @@ msgid ""
 "for an unspecified reason.\n"
 msgstr ""
 
-#: core.py:552
+#: core.py:513
+msgid ""
+"Variables:\n"
+msgstr ""
+
+#: core.py:558
 msgid "Python exception:"
 msgstr ""
 
@@ -523,51 +532,36 @@ msgid ""
 msgstr ""
 
 #: info_variables.py:110
-msgid ""
-"\n"
-"    Perhaps you meant to write the following:"
+msgid "Perhaps you meant to write the following:"
 msgstr ""
 
-#: info_variables.py:112 info_variables.py:120
-msgid ""
-"\n"
-"        Local variable: "
+#: info_variables.py:112
+msgid "Perhaps you meant to write one of the following:"
 msgstr ""
 
-#: info_variables.py:114 info_variables.py:122
-msgid ""
-"\n"
-"        Global variable: "
+#: info_variables.py:115
+msgid "    Local variable: "
 msgstr ""
 
-#: info_variables.py:116 info_variables.py:124
-msgid ""
-"\n"
-"        Python builtins: "
+#: info_variables.py:117
+msgid "    Global variable: "
 msgstr ""
 
-#: info_variables.py:118
-msgid ""
-"\n"
-"    Perhaps you meant to write one of the following:"
+#: info_variables.py:119
+msgid "    Python builtins: "
 msgstr ""
 
-#: info_variables.py:151
-msgid ""
-"\n"
-"    Type hint found for '{name}' as a local variable.\n"
+#: info_variables.py:146
+msgid "Type hint found for '{name}' as a local variable."
 msgstr ""
 
-#: info_variables.py:154 info_variables.py:164
+#: info_variables.py:149 info_variables.py:159
 msgid ""
-"    Perhaps you wrote {name} : {hint} instead of {name} = {hint}.\n"
-"\n"
+"Perhaps you had written {name} : {hint} instead of {name} = {hint}.\n"
 msgstr ""
 
-#: info_variables.py:161
-msgid ""
-"\n"
-"    Type hint found for '{name}' as a global variable.\n"
+#: info_variables.py:156
+msgid "Type hint found for '{name}' as a global variable."
 msgstr ""
 
 #: line_analyzer.py:105
@@ -921,9 +915,11 @@ msgid ""
 "as part of a variable name; this includes many emojis.\n"
 "However, I suspect that you used a fancy unicode quotation mark\n"
 "instead of a normal single or double quote for a string.\n"
+"This can happen if you copy-pasted code.\n"
+"\n"
 msgstr ""
 
-#: message_analyzer.py:463
+#: message_analyzer.py:464
 msgid ""
 "You likely used some unicode character that is not allowed\n"
 "as part of a variable name in Python.\n"
@@ -931,34 +927,34 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:497
+#: message_analyzer.py:498
 msgid ""
 "Python tells us that the closing '{closing}' on the last line shown\n"
 "does not match the opening '{opening}' on line {lineno}.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:502
+#: message_analyzer.py:503
 msgid ""
 "Python tells us that the closing '{closing}' on the last line shown\n"
 "does not match the opening '{opening}'.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:513 message_analyzer.py:664
+#: message_analyzer.py:514 message_analyzer.py:665
 msgid ""
 "I will attempt to be give a bit more information.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:524
+#: message_analyzer.py:525
 msgid ""
 "Inside an f-string, which is a string prefixed by the letter f, \n"
 "you have another string, which starts with either a\n"
 "single quote (') or double quote (\"), without a matching closing one.\n"
 msgstr ""
 
-#: message_analyzer.py:541
+#: message_analyzer.py:542
 msgid ""
 "You are including the statement\n"
 "\n"
@@ -970,51 +966,51 @@ msgid ""
 "inside that function, which is the contrary of what 'global' implied.\n"
 msgstr ""
 
-#: message_analyzer.py:557
+#: message_analyzer.py:558
 msgid ""
 "You assigned a value to the variable '{name}'\n"
 "before declaring it as a global variable.\n"
 msgstr ""
 
-#: message_analyzer.py:569
+#: message_analyzer.py:570
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a global variable.\n"
 msgstr ""
 
-#: message_analyzer.py:581
+#: message_analyzer.py:582
 msgid ""
 "You assigned a value to the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
 msgstr ""
 
-#: message_analyzer.py:592
+#: message_analyzer.py:593
 msgid ""
 "You used '{name}' as a parameter for a function\n"
 "before declaring it also as a nonlocal variable:\n"
 "'{name}' cannot be both at the same time.\n"
 msgstr ""
 
-#: message_analyzer.py:605
+#: message_analyzer.py:606
 msgid ""
 "You used the variable '{name}'\n"
 "before declaring it as a nonlocal variable.\n"
 msgstr ""
 
-#: message_analyzer.py:615
+#: message_analyzer.py:616
 msgid ""
 "You used the nonlocal keyword at a module level.\n"
 "The nonlocal keyword refers to a variable inside a function\n"
 "given a value outside that function."
 msgstr ""
 
-#: message_analyzer.py:627
+#: message_analyzer.py:628
 msgid ""
 "You declared the variable '{name}' as being a\n"
 "nonlocal variable but it cannot be found.\n"
 msgstr ""
 
-#: message_analyzer.py:637
+#: message_analyzer.py:638
 msgid ""
 "You are using the continuation character '\\' outside of a string,\n"
 "and it is followed by some other character(s).\n"
@@ -1022,19 +1018,19 @@ msgid ""
 "\n"
 msgstr ""
 
-#: message_analyzer.py:653
+#: message_analyzer.py:654
 msgid ""
 "Python tells us that it reached the end of the file\n"
 "and expected more content.\n"
 "\n"
 msgstr ""
 
-#: message_analyzer.py:683 source_analyzer.py:84
+#: message_analyzer.py:684 source_analyzer.py:84
 msgid ""
 "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 
-#: message_analyzer.py:693
+#: message_analyzer.py:694
 msgid ""
 "In Python, you can call functions with only positional arguments\n"
 "\n"
@@ -1052,7 +1048,7 @@ msgid ""
 "According to Python, you used positional arguments after keyword ones.\n"
 msgstr ""
 
-#: message_analyzer.py:710
+#: message_analyzer.py:711
 msgid ""
 "In Python, you can define functions with only positional arguments\n"
 "\n"
@@ -1070,7 +1066,7 @@ msgid ""
 "According to Python, you used positional arguments after keyword ones.\n"
 msgstr ""
 
-#: message_analyzer.py:730
+#: message_analyzer.py:731
 msgid ""
 "Perhaps you need to type print({message})?\n"
 "\n"
@@ -1078,7 +1074,7 @@ msgid ""
 "Now, 'print' is a function; you need to use parentheses to call it.\n"
 msgstr ""
 
-#: session.py:105
+#: session.py:101 session.py:129
 msgid "Level {level} not available; using default."
 msgstr ""
 
