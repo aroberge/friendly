@@ -39,5 +39,5 @@ def test_cleaned_traceback():
     assert "test_clean_traceback" not in output
 
     # cleanup for other tests
-    friendly.include_file_in_traceback(__file__)
+    friendly.path_info.include_file_in_traceback(__file__)
     friendly.uninstall()

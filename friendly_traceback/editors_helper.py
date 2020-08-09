@@ -3,7 +3,11 @@ like the editor Mu, could use Friendly-traceback.
 
 See https://aroberge.github.io/friendly-traceback-docs/docs/html/mu.html
 for an example.
+
+At the moment, only run() is part of the public API.
 """
+# TODO: update docstring when documentation is revised to include info
+# about this module.
 import sys
 
 from .core import explain_traceback
@@ -146,7 +150,7 @@ def exec_code(*, source=None, path=None, verbosity=None, lang=None):
     return my_globals
 
 
-def run(filename, lang=None, verbosity=1):
+def run(filename, lang=None, verbosity=1, args=None):
     """Given a filename (relative or absolute path), this function uses the
        more complex exec_code() to run a file.
 
@@ -161,6 +165,11 @@ def run(filename, lang=None, verbosity=1):
 
        Returns False if problems have been found, None otherwise.
        """
+    if args is not None:
+        sys.argv = [filename]
+        args = [arg.strip() for arg in args.split(" ")]
+        # TODO: add extensive tests for this
+        sys.argv.extend([arg for arg in args if arg])  # remove empty strings
     exec_code(path=filename, lang=lang, verbosity=verbosity)
 
 

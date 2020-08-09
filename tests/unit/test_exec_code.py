@@ -24,19 +24,19 @@ def test_exec_code():
 
     # When a SyntaxError is raised, exec_code returns False
 
-    assert not friendly.exec_code(source=bad_code_syntax)
+    assert not friendly.editors_helper.exec_code(source=bad_code_syntax)
     result = friendly.get_output()  # content is flushed
     assert "Python exception" in result
     assert "SyntaxError" in result
 
     assert not friendly.get_output()  # confirm that content was flushed
 
-    assert not friendly.exec_code(source=bad_code_exec)
+    assert not friendly.editors_helper.exec_code(source=bad_code_exec)
     result = friendly.get_output()
     assert "Python exception" in result
     assert "NameError" in result
 
-    assert friendly.exec_code(source=good_code)
+    assert friendly.editors_helper.exec_code(source=good_code)
     assert not friendly.get_output()  # no new exceptions recorded
 
     try:
@@ -48,9 +48,9 @@ def test_exec_code():
     # will end with verbosity set to 0, which corresponds to normal Python
     # tracebacks
     friendly.uninstall()
-    friendly.exec_code(source=bad_code_syntax)
+    friendly.editors_helper.exec_code(source=bad_code_syntax)
     assert friendly.get_verbosity() == 0
-    friendly.exec_code(source=bad_code_syntax, verbosity=4)
+    friendly.editors_helper.exec_code(source=bad_code_syntax, verbosity=4)
     assert friendly.get_verbosity() == 0
 
     # When friendly-traceback is "installed", a call to exec_code
@@ -58,16 +58,16 @@ def test_exec_code():
     friendly.install(redirect="capture")
 
     friendly.set_verbosity(3)
-    friendly.exec_code(source=bad_code_syntax)
+    friendly.editors_helper.exec_code(source=bad_code_syntax)
     assert friendly.get_verbosity() == 3
-    friendly.exec_code(source=bad_code_syntax, verbosity=4)
+    friendly.editors_helper.exec_code(source=bad_code_syntax, verbosity=4)
     assert friendly.get_verbosity() == 3
 
     # A call to exec_code, with a language specified as an argument
     # should leave the previous language unchanged.
 
     friendly.set_lang("en")
-    assert not friendly.exec_code(source=bad_code_exec, lang="fr")
+    assert not friendly.editors_helper.exec_code(source=bad_code_exec, lang="fr")
     result = friendly.get_output()
     assert "Exception Python" in result  # French heading
     assert friendly.get_lang() == "en"

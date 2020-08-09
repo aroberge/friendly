@@ -28,7 +28,7 @@ class _State:
         self._default_except_hook = None
         self.installed = False
         self.running_script = False
-        self.traceback_info = None
+        self.saved_traceback_info = None
         self.set_defaults()
 
     def set_defaults(self):
@@ -47,10 +47,6 @@ class _State:
         else:  # used to reset
             self.except_hook = self._default_except_hook
 
-    def clear_traceback(self):
-        """Removes previous traceback_info"""
-        self.traceback_info = None
-
     def show_traceback_info_again(self):
         """If has not been cleared, write the traceback info again, using
            the default stream.
@@ -59,9 +55,9 @@ class _State:
            level and wishes to see a traceback reexplained without having
            to execute the code again.
         """
-        if self.traceback_info is None:
+        if self.saved_traceback_info is None:
             return
-        explanation = self.formatter(self.traceback_info, level=self.level)
+        explanation = self.formatter(self.saved_traceback_info, level=self.level)
         self.write_err(explanation + "\n")
 
     def capture(self, txt):

@@ -8,11 +8,10 @@ import copy
 import os
 import platform
 from code import InteractiveConsole
-import codeop  # called by Python's code module and may appear in tracebacks
-
-# See below for exclusion.
+import codeop  # need to import to exclude from tracebacks
 
 from . import public_api
+from . import source_cache
 from .my_gettext import current_lang
 
 BANNER = "Friendly Console version {}. [Python version: {}]\n".format(
@@ -57,9 +56,8 @@ class FriendlyConsole(InteractiveConsole):
         # If self.counter was not updated, it means that the previous
         # code sample was not valid and we reuse the same file name
         filename = self.fake_filename % self.counter
-        public_api.cache.add(filename, source)
+        source_cache.cache.add(filename, source)
 
-        # public_api.clear_traceback() # prevents show_again() from working
         more = self.runsource(source, filename)
         if not more:
             self.resetbuffer()
@@ -177,7 +175,7 @@ class FriendlyConsole(InteractiveConsole):
 
 def start_console(local_vars=None):
     """Starts a console; modified from code.interact"""
-    console_defaults = {"friendly": public_api}
+    console_defaults = {"friendly": public_api.Friendly()}
     public_api.install()
 
     if local_vars is None:

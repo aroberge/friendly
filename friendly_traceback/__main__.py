@@ -135,7 +135,7 @@ def import_function(dotted_path: str) -> type:
 
 
 def main():
-    console_defaults = {"friendly": public_api}
+    console_defaults = {"friendly": public_api.Friendly()}
     args = parser.parse_args()
     if args.version:
         print(f"Friendly-traceback version {public_api.__version__}")
@@ -167,7 +167,7 @@ def main():
         elif args.import_only:
             module = __import__(args.source)
         else:
-            sys.argv = ["", *args.args]
+            sys.argv = [args.source, *args.args]
             runpy.run_path(args.source, run_name="__main__")
     else:
         console.start_console(local_vars=console_defaults)

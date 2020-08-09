@@ -14,34 +14,21 @@ instead of::
     # or
     friendly_traceback.some_inner_module.some_function()
 
+If your code requires access to functions or classes that are not
+made available here and are not part of Friendly-console, please
+file an issue.
 """
 from functools import wraps
 
 from . import core
+from .session import session
 
 # Make functions from other modules directly available from here.
-from .editors_helper import advanced_check_syntax, check_syntax, exec_code, run
-from .session import session
-from .source_cache import cache, highlight_source
-from .path_info import (
-    exclude_file_from_traceback,
-    is_excluded_file,
-    include_file_in_traceback,
-)
+from .editors_helper import run
+from .path_info import exclude_file_from_traceback
 
 __version__ = "0.0.35a"
-__all__ = [
-    "advanced_check_syntax",
-    "cache",
-    "check_syntax",
-    "exclude_file_from_traceback",
-    "exec_code",
-    "highlight_source",
-    "include_file_in_traceback",
-    "is_excluded_file",
-    "run",
-    "__version__",
-]
+__all__ = ["exclude_file_from_traceback", "run", "__version__"]
 
 
 def make_public(f):
@@ -173,13 +160,6 @@ def get_lang():
 
 
 @make_public
-def set_level(level):
-    """Deprecated; use set_verbosity() instead.
-    """
-    set_verbosity(level)
-
-
-@make_public
 def set_verbosity(level):
     """Sets the verbosity level to be used. These settings might be ignored
        by custom formatters.
@@ -208,12 +188,6 @@ def set_verbosity(level):
 
 
 @make_public
-def get_level():
-    """Deprecated: use get_verbosity() instead."""
-    return get_verbosity()
-
-
-@make_public
 def get_verbosity():
     """Returns the verbosity level currently used."""
     return session.level
@@ -235,18 +209,6 @@ def get_stream():
 
 
 @make_public
-def clear_traceback():
-    """Clears the existing traceback."""
-    session.clear_traceback()
-
-
-@make_public
-def copy_traceback_info(info):
-    """Copy the traceback info obtained from another source."""
-    session.traceback_info = info
-
-
-@make_public
 def show_again():
     """Shows the traceback info again, on the default stream.
 
@@ -254,3 +216,33 @@ def show_again():
     a verbosity level to view the last computed traceback in a given language.
     """
     session.show_traceback_info_again()
+
+
+class Friendly:
+    """Simple API for use with the console"""
+
+    def __init__(self):
+        self.get_lang = get_lang
+        self.set_lang = set_lang
+        self.get_verbosity = get_verbosity
+        self.set_verbosity = set_verbosity
+        self.show_again = show_again
+        self.run = run
+
+
+# -----------------------------------------
+#   Deprecated functions
+# -----------------------------------------
+
+
+@make_public
+def set_level(level):
+    """Deprecated; use set_verbosity() instead.
+    """
+    set_verbosity(level)
+
+
+@make_public
+def get_level():
+    """Deprecated: use get_verbosity() instead."""
+    return get_verbosity()

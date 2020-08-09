@@ -80,7 +80,7 @@ def exception_hook(etype, value, tb, redirect=None):
         return
 
     try:
-        session.traceback_info = info = get_traceback_info(
+        session.saved_traceback_info = info = get_traceback_info(
             etype, value, tb, session.write_err
         )
         explanation = session.formatter(info, level=session.level)
