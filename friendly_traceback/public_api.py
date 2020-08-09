@@ -25,10 +25,11 @@ from .session import session
 
 # Make functions from other modules directly available from here.
 from .editors_helper import run
+from .formatters import tb_items_to_show
 from .path_info import exclude_file_from_traceback
 
 __version__ = "0.0.35a"
-__all__ = ["exclude_file_from_traceback", "run", "__version__"]
+__all__ = ["exclude_file_from_traceback", "run", "tb_items_to_show", "__version__"]
 
 
 def make_public(f):
@@ -218,6 +219,14 @@ def show_again():
     session.show_traceback_info_again()
 
 
+@make_public
+def print_itemized_traceback():
+    """This is a helper function for developer who want to write a formatter.
+       It prints each item recorded in a traceback dict.
+    """
+    session.print_itemized_traceback()
+
+
 class Friendly:
     """Simple API for use with the console"""
 
@@ -228,6 +237,7 @@ class Friendly:
         self.set_verbosity = set_verbosity
         self.show_again = show_again
         self.run = run
+        self.print_itemized_traceback = print_itemized_traceback
 
 
 # -----------------------------------------

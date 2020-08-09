@@ -2,7 +2,6 @@
 
 Keeps tabs of all settings.
 """
-
 import sys
 
 from .my_gettext import current_lang
@@ -29,7 +28,7 @@ class _State:
         self.installed = False
         self.running_script = False
         self.saved_traceback_info = None
-        self.formatter == formatters.format_traceback
+        self.formatter = formatters.format_traceback
         self.set_defaults()
 
     def set_defaults(self):
@@ -60,6 +59,21 @@ class _State:
             return
         explanation = self.formatter(self.saved_traceback_info, level=self.level)
         self.write_err(explanation + "\n")
+
+    def print_itemized_traceback(self):
+        """This is a helper function for developer who want to write a formatter.
+           It prints each item recorded in a traceback dict.
+        """
+        if self.saved_traceback_info is None:
+            print("No traceback has been recorded.")
+            return
+
+        print("Printing each item of traceback info dict.\n")
+        for item in self.saved_traceback_info:
+            print("-" * 50)
+            print("item = ", item)
+            print(self.saved_traceback_info[item])
+            print()
 
     def capture(self, txt):
         """Captures the output instead of writing to stderr."""
@@ -104,7 +118,6 @@ class _State:
         elif verbosity == 0:
             self.uninstall()
             return
-
         self.level = verbosity
 
     def set_formatter(self, formatter=None):
@@ -124,22 +137,19 @@ class _State:
 
         if level is None:
             if not self.installed:
-                level = 1
-            else:
-                level = self.level
-        elif int(level) == level and 0 <= level <= 9:
-            pass
+                self.set_verbosity(self._default_level)
+        elif 0 <= level <= 9:
+            self.set_verbosity(level)
         else:
             self.write_err(
-                _("Level {level} not available; using default.").format(level=level)
+                _("{level} is not a valid verbosity level.").format(level=level)
             )
-            level = 1
         self.installed = True
 
         if lang is not None:
             self.install_gettext(lang)
-        self.set_redirect(redirect=redirect)
-        self.set_verbosity(verbosity=level)
+        if redirect is not None:
+            self.set_redirect(redirect=redirect)
         sys.excepthook = self.except_hook
 
     def uninstall(self):

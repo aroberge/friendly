@@ -21,33 +21,9 @@ default_items_in_order = [
     "exception_raised_variables",
 ]
 
-# friendly_items includes all possible keys for info
-# except for "python_traceback" and "simulated_python_traceback"
-friendly_items = [
-    # (key, custom_indentation_code)
-    ("header", "indent"),
-    ("message", "double"),
-    ("generic", "indent"),
-    ("parsing_error", "indent"),  # only for SyntaxError ...
-    ("parsing_error_source", "none"),  # and subclasses
-    ("cause_header", "indent"),
-    ("cause", "double"),
-    ("last_call_header", "indent"),
-    ("last_call_source", "none"),
-    ("last_call_variables_header", "indent"),
-    ("last_call_variables", "indent"),
-    ("exception_raised_header", "indent"),
-    ("exception_raised_source", "none"),
-    ("exception_raised_variables_header", "indent"),
-    ("exception_raised_variables", "indent"),
-    ("simulated_python_traceback", "none"),
-]
-
-
-# TODO: support verbosity instead of level
-
 
 def tb_items_to_show(level=1):
+    """Given a verbosity level, returns a list of traceback items to show."""
     selector = {
         1: _default,
         2: _traceback_before_default,
@@ -63,185 +39,77 @@ def tb_items_to_show(level=1):
 
 
 def format_traceback(info, level=1):
-    items = tb_items_to_show(level=level)
-    spacing = {"indent": " " * 4, "double": " " * 8, "none": ""}
+    """Default formatter. Produces an output that is suitable for
+       insertion in a RestructuredText (.rst) code block,
+       with pre-formatted indentation.
+
+       It is also the default used in the friendly-console.
+    """
+
+    pre_items = {
+        "header": "single",
+        "message": "double",
+        "generic": "single",
+        "parsing_error": "single",
+        "parsing_error_source": "none",
+        "cause_header": "single",
+        "cause": "double",
+        "last_call_header": "single",
+        "last_call_source": "none",
+        "last_call_variables_header": "single",
+        "last_call_variables": "single",
+        "exception_raised_header": "single",
+        "exception_raised_source": "none",
+        "exception_raised_variables_header": "single",
+        "exception_raised_variables": "single",
+        "simulated_python_traceback": "none",
+    }
+
+    items_to_show = tb_items_to_show(level=level)
+    spacing = {"single": " " * 4, "double": " " * 8, "none": ""}
     result = [""]
-    for item, formatting in friendly_items:
-        if item not in items:
-            continue
+    for item in items_to_show:
         if item in info:
-            if item == "simulated_python_traceback":
-                for line in info[item]:
-                    result.append(line)
-            else:
-                for line in info[item].split("\n"):
-                    result.append(spacing[formatting] + line)
+            indentation = spacing[pre_items[item]]
+            for line in info[item].split("\n"):
+                result.append(indentation + line)
     return "\n".join(result)
 
 
-def _format_traceback(info, level=1):
-    """ Simple text formatter for the traceback."""
-    result = choose_formatter[level](info, level=level)
-    return "\n".join(result)
+# Needs fixing
+#
+# def markdown(info, level):
+#     """Traceback formatted with full information but with markdown syntax."""
+#     result = []
 
+#     # TODO: modify to work with new level selection, including new items.
+#     friendly_items = [
+#         ("header", "# ", ""),
+#         ("message", "", ""),
+#         ("generic", "", ""),
+#         ("parsing_error", "", ""),
+#         ("parsing_error_source", "```\n", "```"),
+#         ("cause_header", "## ", ""),
+#         ("cause", "", ""),
+#         ("last_call_header", "## ", ""),
+#         ("last_call_source", "```\n", "```"),
+#         ("last_call_variables", "Variables:\n```\n", "```"),
+#         ("exception_raised_header", "## ", ""),
+#         ("exception_raised_source", "```\n", "```"),
+#         ("exception_raised_variables", "Variables:\n```\n", "```"),
+#     ]
 
-def default(info, items=None, **kwargs):
-    """Shows all the information processed by Friendly-traceback with
-       formatting suitable for REPL.
-    """
-    if items is None:
-        items = friendly_items
-    spacing = {"indent": " " * 4, "double": " " * 8, "none": ""}
-    result = [""]
-    for item, formatting in items:
-        if item in info:
-            for line in info[item].split("\n"):
-                result.append(spacing[formatting] + line)
-    return result
-
-
-def traceback_before_default(info, level=2, **kwargs):
-    """Includes the Python traceback before all the information
-       processed by Friendly-traceback.
-    """
-    result = info["simulated_python_traceback"]
-    result.extend(default(info))
-    return result
-
-
-def traceback_after_default(info, level=3, **kwargs):
-    """Includes the Python traceback after all the information
-       processed by Friendly-traceback.
-    """
-    result = default(info)
-    result.extend(info["simulated_python_traceback"])
-    return result
-
-
-def no_generic_explanation(info, level=4, **kwargs):
-    """Similar to the default option except that it does not display the
-       generic information about a given exception.
-    """
-    items = friendly_items
-    spacing = {"indent": " " * 4, "double": " " * 8, "none": ""}
-    result = [""]
-    for item, formatting in items:
-        if item == "generic":
-            continue
-        if item in info:
-            for line in info[item].split("\n"):
-                result.append(spacing[formatting] + line)
-    return result
-
-
-def traceback_before_no_generic(info, level=5, **kwargs):
-    """Includes the Python traceback before all the information
-       processed by Friendly-traceback.
-    """
-    result = info["simulated_python_traceback"]
-    result.extend(no_generic_explanation(info))
-    return result
-
-
-def traceback_after_no_generic(info, level=6, **kwargs):
-    """Includes the Python traceback after all the information
-       processed by Friendly-traceback.
-    """
-    result = no_generic_explanation(info)
-    result.extend(info["simulated_python_traceback"])
-    return result
-
-
-def simple_explain(info, level=7, **kwargs):
-    """7: (Subject to change) Python tracebacks followed
-               by specific information.
-    """
-    items = [
-        ("parsing_error", "indent"),  # only for SyntaxError ...
-        ("cause", "double"),
-    ]
-    spacing = {"indent": " " * 4, "double": " " * 8, "none": ""}
-    result = info["simulated_python_traceback"]
-    for item, formatting in items:
-        if item in info:
-            for line in info[item].split("\n"):
-                result.append(spacing[formatting] + line)
-    return result
-
-
-def minimal_for_console(info, level=8, **kwargs):
-    """Minimal traceback, useful for console use by more experienced users.
-    """
-
-    only_show = [
-        "message",
-        "parsing_error_source",
-        "cause",
-        "last_call_source",
-        "last_call_variables",
-        "exception_raised_source",
-        "exception_raised_variables",
-    ]
-    spacing = {"indent": " " * 4, "double": " " * 8, "none": ""}
-    result = [""]
-    for item, formatting in friendly_items:
-        if item not in only_show:
-            continue
-        if item in info:
-            for line in info[item].split("\n"):
-                result.append(spacing[formatting] + line)
-    return result
-
-
-def only_python_traceback(info, level=9, **kwargs):
-    """Shows only the simulated Python traceback
-    """
-    return info["simulated_python_traceback"]
-
-
-def markdown(info, level):
-    """Traceback formatted with full information but with markdown syntax."""
-    result = []
-    friendly_items = [
-        ("header", "# ", ""),
-        ("message", "", ""),
-        ("generic", "", ""),
-        ("parsing_error", "", ""),
-        ("parsing_error_source", "```\n", "```"),
-        ("cause_header", "## ", ""),
-        ("cause", "", ""),
-        ("last_call_header", "## ", ""),
-        ("last_call_source", "```\n", "```"),
-        ("last_call_variables", "Variables:\n```\n", "```"),
-        ("exception_raised_header", "## ", ""),
-        ("exception_raised_source", "```\n", "```"),
-        ("exception_raised_variables", "Variables:\n```\n", "```"),
-    ]
-
-    for item, prefix, suffix in friendly_items:
-        if item in info:
-            result.append(prefix + info[item] + suffix)
-    return "\n\n".join(result)
-
-
-choose_formatter = {
-    1: default,
-    2: traceback_before_default,
-    3: traceback_after_default,
-    4: no_generic_explanation,
-    5: traceback_before_no_generic,
-    6: traceback_after_no_generic,
-    7: simple_explain,
-    8: minimal_for_console,
-    9: only_python_traceback,
-}
+#     for item, prefix, suffix in friendly_items:
+#         if item in info:
+#             result.append(prefix + info[item] + suffix)
+#     return "\n\n".join(result)
 
 
 def _default():
     """Includes all the information processed by Friendly-traceback
        except for the traditional Python traceback
     """
-    return default_items_in_order
+    return default_items_in_order[:]
 
 
 def _traceback_before_default():
@@ -258,7 +126,7 @@ def _traceback_after_default():
        processed by Friendly-traceback.
     """
     items = _default()
-    items.extend("simulated_python_traceback")
+    items.append("simulated_python_traceback")
     return items
 
 
@@ -270,6 +138,7 @@ def _no_generic_explanation():
     for item in default_items_in_order:
         if item == "generic":
             continue
+        items.append(item)
     return items
 
 
@@ -287,7 +156,7 @@ def _traceback_after_no_generic():
        processed by Friendly-traceback.
     """
     items = _no_generic_explanation()
-    items.extend("simulated_python_traceback")
+    items.append("simulated_python_traceback")
     return items
 
 
@@ -301,7 +170,6 @@ def _simple_explain():
 def _minimal_for_console():
     """Minimal traceback, useful for console use by more experienced users.
     """
-
     return [
         "message",
         "parsing_error_source",

@@ -160,15 +160,14 @@ def get_traceback_info(etype, value, tb, write_err):
     info = {}
 
     # normal Python traceback
-    python_tb = traceback.format_exception(etype, value, tb)
+    temp_tb = traceback.format_exception(etype, value, tb)
 
     # change formatting to conform to our line break notation
     # Note, some lines in python_tb have embedded \n as well as ending \n
     # we do not want to remove the embedded ones.
-    temp = []
-    for item in python_tb:
-        temp.append(item.rstrip())
-    info["python_traceback"] = python_tb = temp
+    python_tb = []
+    for item in temp_tb:
+        python_tb.append(item.rstrip())
 
     if hasattr(value, "friendly"):  # for custom exceptions
         friendly = getattr(value, "friendly")
@@ -275,26 +274,17 @@ def format_simulated_python_traceback(records, etype, value, python_tb):
     """
     simulated_python_tb = _get_traceback_information(records, etype, value)
 
-    str_python_tb = "\n".join(python_tb)
-    str_simulated_python_tb = "\n".join(simulated_python_tb)
-    simulated_no_heading = "\n".join(simulated_python_tb[1:])
+    header = "Traceback (most recent call last):"
+    if python_tb[0].startswith(header):
+        simulated_python_tb.insert(0, header)
 
-    if str_simulated_python_tb == str_python_tb:
-        result = simulated_python_tb
-    elif simulated_no_heading == str_python_tb:
-        # For syntax error in the standard Python console, often there is
-        # no title line "Traceback (most recent call last):"
-        result = simulated_python_tb[1:]
-    else:
-        result = simulated_python_tb
-        result[0] = "Simulated " + simulated_python_tb[0]
-    return result
+    return "\n".join(simulated_python_tb)
 
 
 def _get_traceback_information(records, etype, value):
     """ Gets the traceback information in a predefined format.
     """
-    result = ["Traceback (most recent call last):"]
+    result = []
 
     for record in records:
         frame, filename, linenumber, _func, lines, index = record
