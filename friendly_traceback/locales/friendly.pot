@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-08-09 08:35-0300\n"
+"POT-Creation-Date: 2020-08-09 10:24-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -276,8 +276,7 @@ msgid ""
 msgstr ""
 
 #: core.py:513
-msgid ""
-"Variables:\n"
+msgid "    Known identifiers:"
 msgstr ""
 
 #: core.py:558
@@ -1074,7 +1073,11 @@ msgid ""
 "Now, 'print' is a function; you need to use parentheses to call it.\n"
 msgstr ""
 
-#: session.py:101 session.py:129
+#: session.py:100
+msgid "Verbosity level {level} not available."
+msgstr ""
+
+#: session.py:135
 msgid "Level {level} not available; using default."
 msgstr ""
 

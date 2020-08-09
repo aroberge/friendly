@@ -3,6 +3,24 @@
 Default formatters showing all or only part of the available information.
 """
 
+default_items_in_order = [
+    "header",
+    "message",
+    "generic",
+    "parsing_error",
+    "parsing_error_source",
+    "cause_header",
+    "cause",
+    "last_call_header",
+    "last_call_source",
+    "last_call_variables_header",
+    "last_call_variables",
+    "exception_raised_header",
+    "exception_raised_source",
+    "exception_raised_variables_header",
+    "exception_raised_variables",
+]
+
 # friendly_items includes all possible keys for info
 # except for "python_traceback" and "simulated_python_traceback"
 friendly_items = [
@@ -22,13 +40,46 @@ friendly_items = [
     ("exception_raised_source", "none"),
     ("exception_raised_variables_header", "indent"),
     ("exception_raised_variables", "indent"),
+    ("simulated_python_traceback", "none"),
 ]
 
 
 # TODO: support verbosity instead of level
 
 
+def tb_items_to_show(level=1):
+    selector = {
+        1: _default,
+        2: _traceback_before_default,
+        3: _traceback_after_default,
+        4: _no_generic_explanation,
+        5: _traceback_before_no_generic,
+        6: _traceback_after_no_generic,
+        7: _simple_explain,
+        8: _minimal_for_console,
+        9: _only_python_traceback,
+    }
+    return selector[level]()
+
+
 def format_traceback(info, level=1):
+    items = tb_items_to_show(level=level)
+    spacing = {"indent": " " * 4, "double": " " * 8, "none": ""}
+    result = [""]
+    for item, formatting in friendly_items:
+        if item not in items:
+            continue
+        if item in info:
+            if item == "simulated_python_traceback":
+                for line in info[item]:
+                    result.append(line)
+            else:
+                for line in info[item].split("\n"):
+                    result.append(spacing[formatting] + line)
+    return "\n".join(result)
+
+
+def _format_traceback(info, level=1):
     """ Simple text formatter for the traceback."""
     result = choose_formatter[level](info, level=level)
     return "\n".join(result)
@@ -184,3 +235,85 @@ choose_formatter = {
     8: minimal_for_console,
     9: only_python_traceback,
 }
+
+
+def _default():
+    """Includes all the information processed by Friendly-traceback
+       except for the traditional Python traceback
+    """
+    return default_items_in_order
+
+
+def _traceback_before_default():
+    """Includes the Python traceback before all the information
+       processed by Friendly-traceback.
+    """
+    items = ["simulated_python_traceback"]
+    items.extend(_default())
+    return items
+
+
+def _traceback_after_default():
+    """Includes the Python traceback after all the information
+       processed by Friendly-traceback.
+    """
+    items = _default()
+    items.extend("simulated_python_traceback")
+    return items
+
+
+def _no_generic_explanation():
+    """Similar to the default option except that it does not display the
+       generic information about a given exception.
+    """
+    items = []
+    for item in default_items_in_order:
+        if item == "generic":
+            continue
+    return items
+
+
+def _traceback_before_no_generic():
+    """Includes the Python traceback before all the information
+       processed by Friendly-traceback.
+    """
+    items = ["simulated_python_traceback"]
+    items.extend(_no_generic_explanation())
+    return items
+
+
+def _traceback_after_no_generic():
+    """Includes the Python traceback after all the information
+       processed by Friendly-traceback.
+    """
+    items = _no_generic_explanation()
+    items.extend("simulated_python_traceback")
+    return items
+
+
+def _simple_explain():
+    """(Subject to change) Python tracebacks followed
+               by specific information.
+    """
+    return ["simulated_python_traceback", "parsing_error", "cause"]
+
+
+def _minimal_for_console():
+    """Minimal traceback, useful for console use by more experienced users.
+    """
+
+    return [
+        "message",
+        "parsing_error_source",
+        "cause",
+        "last_call_source",
+        "last_call_variables",
+        "exception_raised_source",
+        "exception_raised_variables",
+    ]
+
+
+def _only_python_traceback():
+    """Shows only the simulated Python traceback
+    """
+    return ["simulated_python_traceback"]

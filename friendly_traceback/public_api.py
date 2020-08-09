@@ -160,7 +160,7 @@ def get_lang():
 
 
 @make_public
-def set_verbosity(level):
+def set_verbosity(verbosity_level):
     """Sets the verbosity level to be used. These settings might be ignored
        by custom formatters.
 
@@ -184,7 +184,7 @@ def set_verbosity(level):
                suitable for console use by advanced programmers.
             9: Simulated Python traceback: see the documentation.
     """
-    session.set_verbosity(level)
+    session.set_verbosity(verbosity_level)
 
 
 @make_public
@@ -236,10 +236,10 @@ class Friendly:
 
 
 @make_public
-def set_level(level):
+def set_level(verbosity_level):
     """Deprecated; use set_verbosity() instead.
     """
-    set_verbosity(level)
+    set_verbosity(verbosity_level)
 
 
 @make_public

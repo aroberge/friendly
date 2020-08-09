@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-08-09 08:35-0300\n"
-"PO-Revision-Date: 2020-08-09 08:42-0300\n"
+"POT-Creation-Date: 2020-08-09 10:24-0300\n"
+"PO-Revision-Date: 2020-08-09 10:25-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -372,8 +372,8 @@ msgstr ""
 "\n"
 
 #: core.py:513
-msgid "Variables:\n"
-msgstr "Variables:\n"
+msgid "    Known identifiers:"
+msgstr "    Identificateurs connus :"
 
 #: core.py:558
 msgid "Python exception:"
@@ -1525,7 +1525,11 @@ msgstr ""
 "Maintenant, «print» est une fonction; vous devez utiliser des parenthèses "
 "pour l'invoquer.\n"
 
-#: session.py:101 session.py:129
+#: session.py:100
+msgid "Verbosity level {level} not available."
+msgstr "Niveau de verbosité {level} inconnu."
+
+#: session.py:135
 msgid "Level {level} not available; using default."
 msgstr "Niveau {Level} non disponible; la valeur par défaut est utilisée."
 
@@ -1606,6 +1610,9 @@ msgstr "accolade '{'"
 #: source_analyzer.py:269
 msgid "curly bracket '}'"
 msgstr "accolade '}'"
+
+#~ msgid "Variables:\n"
+#~ msgstr "Variables:\n"
 
 #~ msgid "I don't have enough information from Python:"
 #~ msgstr "Je n'ai pas assez d'informations de Python:"

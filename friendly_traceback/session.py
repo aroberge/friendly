@@ -29,6 +29,7 @@ class _State:
         self.installed = False
         self.running_script = False
         self.saved_traceback_info = None
+        self.formatter == formatters.format_traceback
         self.set_defaults()
 
     def set_defaults(self):
@@ -76,35 +77,39 @@ class _State:
         current_lang.install(lang)
         self.lang = lang
 
-    def set_verbosity(self, level=None, verbosity=None):
-        """Sets the "verbosity level" and possibly resets sys.__excepthook__"""
-        _ = current_lang.translate
-        if verbosity is not None:
-            level = verbosity
-        elif level is None:
-            level = self._default_level
+    def set_verbosity(self, verbosity=None):
+        """Sets the "verbosity level".
 
-        if level == 0:
+           If no argument is given, the default value is set.
+
+           If a value of 0 is chosen, Frendly-traceback is uninstalled
+           and sys.__excepthook__ is reset to its previous value.
+           """
+        # verbosity is the public name replacing level, which was used previously
+        # For simplicity, we still use level here.
+        _ = current_lang.translate
+        if verbosity is None:
+            self.level = self._default_level
+            return
+
+        elif verbosity == self.level:
+            return
+
+        elif verbosity not in range(0, 10):
+            self.write_err(
+                _("Verbosity level {level} not available.").format(level=verbosity)
+            )
+            return
+
+        elif verbosity == 0:
             self.uninstall()
             return
 
-        if level == self.level:
-            return
-
-        if (
-            self.formatter == formatters.format_traceback
-            and abs(level) in formatters.choose_formatter
-        ):
-            self.level = level
-        else:
-            self.write_err(
-                _("Level {level} not available; using default.").format(level=level)
-            )
-            self.level = self._default_level
+        self.level = verbosity
 
     def set_formatter(self, formatter=None):
         """Sets the default formatter. If no argument is given, the default
-           formatter, based on the value for the level, is used.
+           formatter is used.
         """
         if formatter is None:
             self.formatter = formatters.format_traceback
@@ -134,7 +139,7 @@ class _State:
         if lang is not None:
             self.install_gettext(lang)
         self.set_redirect(redirect=redirect)
-        self.set_verbosity(level=level)
+        self.set_verbosity(verbosity=level)
         sys.excepthook = self.except_hook
 
     def uninstall(self):
