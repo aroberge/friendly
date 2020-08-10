@@ -44,14 +44,13 @@ def test_exec_code():
     except Exception:
         assert not friendly.get_output()
 
-    # When friendly-traceback is not installed, a call to exec_code
-    # will end with verbosity set to 0, which corresponds to normal Python
-    # tracebacks
+    # Ensure that a call to exec_code only install() temporarily
+    # if it was not installed before.
     friendly.uninstall()
     friendly.editors_helper.exec_code(source=bad_code_syntax)
-    assert friendly.get_verbosity() == 0
+    assert not friendly.is_installed()
     friendly.editors_helper.exec_code(source=bad_code_syntax, verbosity=4)
-    assert friendly.get_verbosity() == 0
+    assert not friendly.is_installed()
 
     # When friendly-traceback is "installed", a call to exec_code
     # leaves its verbosity unchanged.

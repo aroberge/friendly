@@ -105,19 +105,12 @@ class _State:
         if verbosity is None:
             self.level = self._default_level
             return
-
-        elif verbosity == self.level:
-            return
-
         elif verbosity not in range(0, 10):
             self.write_err(
-                _("Verbosity level {level} not available.").format(level=verbosity)
+                _("Verbosity level {level} not valid.").format(level=verbosity)
             )
             return
 
-        elif verbosity == 0:
-            self.uninstall()
-            return
         self.level = verbosity
 
     def set_formatter(self, formatter=None):
@@ -129,34 +122,25 @@ class _State:
         else:
             self.formatter = formatter
 
-    def install(self, lang=None, redirect=None, verbosity=None, level=None):
-        """Replaces sys.excepthook by friendly_traceback's own version."""
+    def install(self, lang=None, redirect=None, verbosity=None):
+        """Replaces sys.excepthook by friendly_traceback's own version.
+        """
         _ = current_lang.translate
-        if verbosity is not None:
-            level = verbosity
-
-        if level is None:
-            if not self.installed:
-                self.set_verbosity(self._default_level)
-        elif 0 <= level <= 9:
-            self.set_verbosity(level)
-        else:
-            self.write_err(
-                _("{level} is not a valid verbosity level.").format(level=level)
-            )
-        self.installed = True
 
         if lang is not None:
             self.install_gettext(lang)
         if redirect is not None:
             self.set_redirect(redirect=redirect)
+        if verbosity is not None:
+            self.set_verbosity(verbosity)
+
         sys.excepthook = self.except_hook
+        self.installed = True
 
     def uninstall(self):
         """Resets sys.excepthook to the Python default"""
         self.installed = False
         sys.excepthook = sys.__excepthook__
-        self.level = 0
 
     def set_redirect(self, redirect=None):
         """Sets where the output is redirected."""

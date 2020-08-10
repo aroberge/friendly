@@ -86,9 +86,9 @@ def install(lang=None, redirect=None, verbosity=None, level=None):
         hook: exception_hook - if one wants to experiment using
               a different one.
     """
-    # TODO: check validity here instead of in sessions.py
-
-    session.install(lang=lang, redirect=redirect, verbosity=verbosity, level=level)
+    if verbosity is None:
+        verbosity_level = level  # Supporting deprecated argument
+    session.install(lang=lang, redirect=redirect, verbosity=verbosity_level)
 
 
 @make_public

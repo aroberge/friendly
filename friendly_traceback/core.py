@@ -73,12 +73,6 @@ def exception_hook(etype, value, tb, redirect=None):
         saved_current_redirect = session.write_err
         session.set_redirect(redirect=redirect)
 
-    if session.level == 0:  # Normal Python traceback
-        session.write_err("".join(traceback.format_exception(etype, value, tb)))
-        if redirect is not None:
-            session.set_redirect(redirect=saved_current_redirect)
-        return
-
     try:
         session.saved_traceback_info = info = get_traceback_info(
             etype, value, tb, session.write_err
@@ -187,6 +181,7 @@ def get_traceback_info(etype, value, tb, write_err):
     info["simulated_python_traceback"] = format_simulated_python_traceback(
         records, etype, value, python_tb
     )
+    info["original_python_traceback"] = "\n".join(python_tb)
 
     if issubclass(etype, SyntaxError):
         return info

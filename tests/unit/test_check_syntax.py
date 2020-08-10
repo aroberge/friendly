@@ -40,14 +40,14 @@ def test_check_syntax():
     except Exception:
         assert not friendly.get_output()
 
-    # When friendly-traceback is not installed, a call to check_syntax
-    # will end with verbosity set to 0, which corresponds to normal Python
-    # tracebacks
+    # Ensure that a call to advanced_check_syntax only install() temporarily
+    # if it was not installed before.
+
     friendly.uninstall()
     friendly.editors_helper.advanced_check_syntax(source=bad_code_syntax)
-    assert friendly.get_verbosity() == 0
+    assert not friendly.is_installed()
     friendly.editors_helper.advanced_check_syntax(source=bad_code_syntax, verbosity=4)
-    assert friendly.get_verbosity() == 0
+    assert not friendly.is_installed()
 
     # When friendly-traceback is "installed", a call to check_syntax
     # leaves its verbosity unchanged.

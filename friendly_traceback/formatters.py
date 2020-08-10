@@ -33,7 +33,8 @@ def tb_items_to_show(level=1):
         6: _traceback_after_no_generic,
         7: _simple_explain,
         8: _minimal_for_console,
-        9: _only_python_traceback,
+        9: _simulated_python_traceback,
+        0: _original_python_traceback,
     }
     return selector[level]()
 
@@ -63,6 +64,7 @@ def format_traceback(info, level=1):
         "exception_raised_variables_header": "single",
         "exception_raised_variables": "double",
         "simulated_python_traceback": "none",
+        "original_python_traceback": "none",
     }
 
     items_to_show = tb_items_to_show(level=level)
@@ -107,13 +109,13 @@ def format_traceback(info, level=1):
 
 def _default():
     """Includes all the information processed by Friendly-traceback
-       except for the traditional Python traceback
+       which does not include a traditional Python traceback
     """
     return default_items_in_order[:]
 
 
 def _traceback_before_default():
-    """Includes the Python traceback before all the information
+    """Includes the simulated Python traceback before all the information
        processed by Friendly-traceback.
     """
     items = ["simulated_python_traceback"]
@@ -122,7 +124,7 @@ def _traceback_before_default():
 
 
 def _traceback_after_default():
-    """Includes the Python traceback after all the information
+    """Includes the simulated Python traceback after all the information
        processed by Friendly-traceback.
     """
     items = _default()
@@ -143,7 +145,7 @@ def _no_generic_explanation():
 
 
 def _traceback_before_no_generic():
-    """Includes the Python traceback before all the information
+    """Includes the simulated Python traceback before all the information
        processed by Friendly-traceback.
     """
     items = ["simulated_python_traceback"]
@@ -152,7 +154,7 @@ def _traceback_before_no_generic():
 
 
 def _traceback_after_no_generic():
-    """Includes the Python traceback after all the information
+    """Includes the simulated Python traceback after all the information
        processed by Friendly-traceback.
     """
     items = _no_generic_explanation()
@@ -161,7 +163,7 @@ def _traceback_after_no_generic():
 
 
 def _simple_explain():
-    """(Subject to change) Python tracebacks followed
+    """(Subject to change) Simulated Python tracebacks followed
                by specific information.
     """
     return ["simulated_python_traceback", "parsing_error", "cause"]
@@ -181,7 +183,14 @@ def _minimal_for_console():
     ]
 
 
-def _only_python_traceback():
+def _simulated_python_traceback():
     """Shows only the simulated Python traceback
     """
     return ["simulated_python_traceback"]
+
+
+def _original_python_traceback():
+    """Shows only the original Python traceback, which includes calls
+       to friendly-traceback itself. It should only be used for diagnostic.
+    """
+    return ["original_python_traceback"]
