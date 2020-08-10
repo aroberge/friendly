@@ -199,7 +199,8 @@ def set_stream(stream):
     """Sets the stream to which the output should be directed.
 
        If the string ``"capture"`` is given as argument, the
-       output is saved and can be later retrieved by ``get_output()``."""
+       output is saved and can be later retrieved by ``get_output()``.
+    """
     session.set_redirect(redirect=stream)
 
 
@@ -213,14 +214,15 @@ def get_stream():
 def show_again():
     """Shows the traceback info again, on the default stream.
 
-    Primarily intended to be used when the user changes
-    a verbosity level to view the last computed traceback in a given language.
+        Primarily intended to be used when the user changes
+        a verbosity level to view the last computed traceback
+        in a given language.
     """
     session.show_traceback_info_again()
 
 
 @make_public
-def print_itemized_traceback():
+def print_items():
     """This is a helper function for developer who want to write a formatter.
        It prints each item recorded in a traceback dict.
     """
@@ -228,7 +230,22 @@ def print_itemized_traceback():
 
 
 class Friendly:
-    """Simple API for use with the console"""
+    __doc__ = f"""Simple API for use with the console
+
+    get_lang: {get_lang.__doc__}
+
+    set_lang: {set_lang.__doc__}
+
+    get_verbosity: {get_verbosity.__doc__}
+
+    set_verbosity: {set_verbosity.__doc__}
+
+    show_again: {show_again.__doc__}
+
+    run: {run.__doc__}
+
+    print_items: {print_items.__doc__}
+    """
 
     def __init__(self):
         self.get_lang = get_lang
@@ -237,7 +254,7 @@ class Friendly:
         self.set_verbosity = set_verbosity
         self.show_again = show_again
         self.run = run
-        self.print_itemized_traceback = print_itemized_traceback
+        self.print_items = print_items
 
 
 # -----------------------------------------
