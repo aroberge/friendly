@@ -44,8 +44,8 @@ parser = argparse.ArgumentParser(
            suitable for console use by advanced programmers.
         8: (Subject to change) Python tracebacks followed
            by specific information.
-        9: Simulated Python traceback: see the documentation.
-        0: Normal Python tracebacks: includes calls to friendly-traceback.
+        9: Python traceback
+        0: Python traceback that also includes calls to friendly-traceback.
 
        Vocabulary examples:
            Generic explanation: A NameError occurs when ...
