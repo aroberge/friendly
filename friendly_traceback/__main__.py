@@ -17,6 +17,13 @@ import sys
 from . import console
 from . import public_api
 
+try:
+    import rich  # noqa
+
+    rich_available = True
+except ImportError:
+    rich_available = False
+
 versions = "Friendly-traceback version {}. [Python version: {}]\n".format(
     public_api.__version__, platform.python_version()
 )
@@ -71,10 +78,6 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "--color", "--colour", help="""Not implemented yet.""", action="store_true"
-)
-
-parser.add_argument(
     "--lang",
     default="en",
     help="""This sets the language used by Friendly-tracebacks.
@@ -93,12 +96,18 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "--import_only",
+    "--import-only",
     help="""Imports the module instead of running it as a script.
          """,
     action="store_true",
 )
 
+parser.add_argument(
+    "--use-rich",
+    help="""Use package Rich if it is installed.
+         """,
+    action="store_true",
+)
 
 parser.add_argument(
     "--version",
@@ -141,13 +150,17 @@ def main():
         print(f"Friendly-traceback version {public_api.__version__}")
         sys.exit()
 
-    if args.color:
-        print("Color support has not yet been added.")
-
     public_api.install(lang=args.lang, level=args.verbosity)
 
     if args.formatter:
         public_api.set_formatter(import_function(args.formatter))
+
+    use_rich = False
+    if args.use_rich:
+        if not rich_available:
+            print("\n    Rich needs to be installed.\n\n")
+        else:
+            use_rich = True
 
     if args.source is not None:
         public_api.exclude_file_from_traceback(runpy.__file__)
@@ -163,14 +176,14 @@ def main():
                 console_defaults.update(module_dict)
             except Exception:
                 public_api.explain()
-            console.start_console(local_vars=console_defaults)
+            console.start_console(local_vars=console_defaults, use_rich=use_rich)
         elif args.import_only:
             module = __import__(args.source)
         else:
             sys.argv = [args.source, *args.args]
             runpy.run_path(args.source, run_name="__main__")
     else:
-        console.start_console(local_vars=console_defaults)
+        console.start_console(local_vars=console_defaults, use_rich=use_rich)
 
 
 main()

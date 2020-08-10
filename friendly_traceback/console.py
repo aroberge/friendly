@@ -14,13 +14,22 @@ from . import public_api
 from . import source_cache
 from .my_gettext import current_lang
 
+
+try:
+    from rich.console import Console
+
+    _rich_enabled = True
+except ImportError:
+    _rich_enabled = False
+
+
 BANNER = "Friendly Console version {}. [Python version: {}]\n".format(
     public_api.__version__, platform.python_version()
 )
 
 
 class FriendlyConsole(InteractiveConsole):
-    def __init__(self, locals=None):
+    def __init__(self, locals=None, use_rich=False):
         """This class builds upon Python's code.InteractiveConsole
         so as to provide friendly tracebacks. It keeps track
         of code fragment executed by treating each of them as
@@ -31,6 +40,10 @@ class FriendlyConsole(InteractiveConsole):
         self.counter = 1
         self.hints = {}  # Keeps track of type hints
         self.old_locals = {}
+        if _rich_enabled and use_rich:
+            self.rich_console = Console()
+        else:
+            self.rich_console = False
 
         super().__init__(locals=locals)
 
@@ -152,9 +165,6 @@ class FriendlyConsole(InteractiveConsole):
                 or name in self.old_locals
                 and self.old_locals[name] == self.locals[name]
             ):
-
-                # todo: check if builtin
-
                 print(
                     _(
                         "Warning: you used type hints. Perhaps you meant {name} = {hint}."
@@ -172,8 +182,20 @@ class FriendlyConsole(InteractiveConsole):
     def showtraceback(self):
         public_api.explain()
 
+    def raw_input(self, prompt=""):
+        """Write a prompt and read a line.
+        The returned line does not include the trailing newline.
+        When the user enters the EOF key sequence, EOFError is raised.
+        The base implementation uses the built-in function
+        input(); a subclass may replace this with a different
+        implementation.
+        """
+        if self.rich_console:
+            return self.rich_console.input("[green]" + prompt)
+        return input(prompt)
 
-def start_console(local_vars=None):
+
+def start_console(local_vars=None, use_rich=False):
     """Starts a console; modified from code.interact"""
     console_defaults = {"friendly": public_api.Friendly()}
     public_api.install()
@@ -183,5 +205,5 @@ def start_console(local_vars=None):
     else:
         local_vars.update(console_defaults)
 
-    console = FriendlyConsole(locals=local_vars)
+    console = FriendlyConsole(locals=local_vars, use_rich=use_rich)
     console.interact(banner=BANNER)
