@@ -105,19 +105,18 @@ def get_similar_var_names(name, frame):
         len(similar["locals"]) + len(similar["globals"]) + len(similar["builtins"])
     )
     if nb_similar_names == 0:
-        return "", ""
+        return ""
     elif nb_similar_names == 1:
-        header = _("Perhaps you meant to write the following:")
+        message = _("The following similar name was found:\n")
     else:
-        header = _("Perhaps you meant to write one of the following:")
-    message = ""
+        message = _("The following similar names were found:\n")
     if similar["locals"]:
-        message += _("    Local variable: ") + str(similar["locals"])[1:-1] + "\n"
+        message += _("    Local: ") + str(similar["locals"])[1:-1] + "\n"
     if similar["globals"]:
-        message += _("    Global variable: ") + str(similar["globals"])[1:-1] + "\n"
+        message += _("    Global: ") + str(similar["globals"])[1:-1] + "\n"
     if similar["builtins"]:
         message += _("    Python builtins: ") + str(similar["builtins"])[1:-1] + "\n"
-    return header, message
+    return message
 
 
 def name_has_type_hint(name, frame):
@@ -143,22 +142,27 @@ def name_has_type_hint(name, frame):
 
     if "__annotations__" in loc:
         if name in loc["__annotations__"]:
-            header = _("Type hint found for '{name}' as a local variable.").format(
+            hint = loc["__annotations__"][name]
+            if isinstance(hint, str):
+                hint = f"'{hint}'"
+            message = _("Type hint found for '{name}' as a local variable.\n").format(
                 name=name
             )
-            message = _(
-                "Perhaps you had written {name} : {hint} instead of {name} = {hint}.\n"
-            ).format(name=name, hint=repr(loc["__annotations__"][name]))
-            return header, message
+            message += _(
+                "Perhaps you had written {name} : {hint} instead of {name} = {hint}.\n\n"
+            ).format(name=name, hint=hint)
+            return message
 
-    elif "__annotations__" in glob:
+    if "__annotations__" in glob:
         if name in glob["__annotations__"]:
-            header = _("Type hint found for '{name}' as a global variable.").format(
+            hint = glob["__annotations__"][name]
+            if isinstance(hint, str):
+                hint = f"'{hint}'"
+            message = _("Type hint found for '{name}' as a global variable.\n").format(
                 name=name
             )
-            message = _(
-                "Perhaps you had written {name} : {hint} instead of {name} = {hint}.\n"
-            ).format(name=name, hint=repr(glob["__annotations__"][name]))
-            return header, message
-    else:
-        return "", ""
+            message += _(
+                "Perhaps you had written {name} : {hint} instead of {name} = {hint}.\n\n"
+            ).format(name=name, hint=hint)
+            return message
+    return ""

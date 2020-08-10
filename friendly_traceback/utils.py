@@ -108,13 +108,14 @@ def make_token_table(source):
 
 def edit_distance(word_with_typo, words):
     """Returns a list of words at a Damerau–Levenshtein distance of 1
+       with the exception of single-character words.
     """
     # Since _leven() below returns maxDistance in cases that might require
     # even more changes, we compute changes up to distance 2 and only
     # retain those that are at a distance of 1
     similar_words = []
     for word in words:
-        if word == "_":
+        if len(word) == 1:
             continue
         if _leven(word_with_typo, word, 2) == 1:
             similar_words.append(word)

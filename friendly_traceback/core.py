@@ -483,24 +483,19 @@ def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
             _parts = info["cause"].split("'")
             try:
                 unknown_name = _parts[1]
-                hint_header, hint = info_variables.name_has_type_hint(
+                hint = info_variables.name_has_type_hint(unknown_name, frame)
+                similar_names = info_variables.get_similar_var_names(
                     unknown_name, frame
                 )
-                header, similar_names = info_variables.get_similar_var_names(
-                    unknown_name, frame
-                )
-                if hint:
-                    info["%s_variables_header" % header_name] = hint_header
-                    info["%s_variables" % header_name] = hint
-                elif similar_names:
-                    info["%s_variables_header" % header_name] = header
-                    info["%s_variables" % header_name] = similar_names
+                cause = hint + similar_names
+                if cause:
+                    info["cause"] = cause
             except IndexError:
                 pass
         else:
             var_info = info_variables.get_var_info(source_info["line"], frame)
             if var_info:
-                info["%s_variables_header" % header_name] = _("    Known identifiers:")
+                info["%s_variables_header" % header_name] = _("Known identifiers")
                 info["%s_variables" % header_name] = var_info  # [6]
 
 

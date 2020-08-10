@@ -61,7 +61,7 @@ def format_traceback(info, level=1):
         "exception_raised_header": "single",
         "exception_raised_source": "none",
         "exception_raised_variables_header": "single",
-        "exception_raised_variables": "single",
+        "exception_raised_variables": "double",
         "simulated_python_traceback": "none",
     }
 

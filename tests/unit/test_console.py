@@ -4,7 +4,7 @@ sessions = [
     (
         ["python", "-im", "friendly_traceback", "tests.except.test_name_error"],
         "a = 41 \na+=1\nprint(a)\nd=f\n",
-        ["42", "NameError", "-->6:         cost"],
+        ["42", "NameError", "-->6:         this = something"],
         ["-->1: d=f", "NameError"],
     )
 ]
