@@ -171,7 +171,6 @@ def set_verbosity(verbosity_level):
 
        The values are as follows::
 
-            0: Normal Python tracebacks: friendly_traceback is disabled.
             1: Default - does not need to be specified. The normal Python
                traceback is not included in the output.
             2: Python tracebacks appear before the output of level 1.
@@ -179,11 +178,12 @@ def set_verbosity(verbosity_level):
             4: Same as 1, but generic explanation is not included
             5: Same as 2, but generic explanation is not included
             6: Same as 3, but generic explanation is not included
-            7: (Subject to change) Python tracebacks followed
-               by specific information.
-            8: Minimal display of relevant information,
+            7: Minimal display of relevant information,
                suitable for console use by advanced programmers.
+            8: (Subject to change) Python tracebacks followed
+               by specific information.
             9: Simulated Python traceback: see the documentation.
+            0: Normal Python tracebacks: includes calls to friendly-traceback.
     """
     session.set_verbosity(verbosity_level)
 

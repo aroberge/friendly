@@ -3,7 +3,7 @@
 Default formatters showing all or only part of the available information.
 """
 
-default_items_in_order = [
+default_items_in_order = [  # This list excludes two full traceback items
     "header",
     "message",
     "generic",
@@ -31,8 +31,8 @@ def tb_items_to_show(level=1):
         4: _no_generic_explanation,
         5: _traceback_before_no_generic,
         6: _traceback_after_no_generic,
-        7: _simple_explain,
-        8: _minimal_for_console,
+        7: _minimal_for_console,
+        8: _simple_explain,
         9: _simulated_python_traceback,
         0: _original_python_traceback,
     }
@@ -162,13 +162,6 @@ def _traceback_after_no_generic():
     return items
 
 
-def _simple_explain():
-    """(Subject to change) Simulated Python tracebacks followed
-               by specific information.
-    """
-    return ["simulated_python_traceback", "parsing_error", "cause"]
-
-
 def _minimal_for_console():
     """Minimal traceback, useful for console use by more experienced users.
     """
@@ -181,6 +174,13 @@ def _minimal_for_console():
         "exception_raised_source",
         "exception_raised_variables",
     ]
+
+
+def _simple_explain():  # Not (yet) included by Thonny
+    """(Subject to change) Simulated Python tracebacks followed
+               by specific information.
+    """
+    return ["simulated_python_traceback", "parsing_error", "cause"]
 
 
 def _simulated_python_traceback():
