@@ -12,7 +12,7 @@ def test_overflow_error():
         or "OverflowError: (34, 'Numerical result out of range')" in result
     )
     if friendly_traceback.get_lang() == "en":
-        assert "OverflowError is raised when the result" in result
+        assert "`OverflowError` is raised when the result" in result
     return result
 
 

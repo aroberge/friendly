@@ -12,7 +12,7 @@ def test_arithmetic_error():
     result = friendly_traceback.get_output()
     assert "ArithmeticError" in result
     if friendly_traceback.get_lang() == "en":
-        assert "ArithmeticError is the base class" in result
+        assert "`ArithmeticError` is the base class" in result
     return result
 
 

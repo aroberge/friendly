@@ -9,7 +9,7 @@ def test_zero_division_error():
     result = friendly_traceback.get_output()
     assert "ZeroDivisionError: division by zero" in result
     if friendly_traceback.get_lang() == "en":
-        assert "A ZeroDivisionError occurs when" in result
+        assert "A `ZeroDivisionError` occurs when" in result
     return result
 
 
@@ -22,7 +22,7 @@ def test_zero_division_error2():
     result = friendly_traceback.get_output()
     assert "ZeroDivisionError: integer division or modulo by zero" in result
     if friendly_traceback.get_lang() == "en":
-        assert "A ZeroDivisionError occurs when" in result
+        assert "A `ZeroDivisionError` occurs when" in result
     return result
 
 

@@ -97,7 +97,6 @@ def get_similar_var_names(name, frame):
        Python's builtins.
     """
     _ = current_lang.translate
-
     similar = {}
     similar["locals"] = utils.edit_distance(name, frame.f_locals)
     _globals = utils.edit_distance(name, frame.f_globals)
@@ -109,16 +108,30 @@ def get_similar_var_names(name, frame):
     )
     if nb_similar_names == 0:
         return ""
+
     elif nb_similar_names == 1:
-        message = _("The following similar name was found:\n\n")
-    else:
-        message = _("The following similar names were found:\n\n")
+        if similar["locals"]:
+            return _("The similar name `{name}` was found in the local scope. ").format(
+                name=str(similar["locals"])[1:-1]
+            )
+        elif similar["globals"]:
+            return _("The similar name `{name}` was found in the local scope. ").format(
+                name=str(similar["globals"])[1:-1]
+            )
+        else:
+            return _("The Python builtin `{name}` has a similar name. ").format(
+                name=str(similar["builtins"])[1:-1]
+            )
+
+    message = _(
+        "Instead of writing `{name}`, perhaps you meant one of the following:\n\n"
+    ).format(name=name)
     if similar["locals"]:
-        message += _("    Local: `") + str(similar["locals"])[1:-1] + "`\n"
+        message += _("    Local scope: ") + str(similar["locals"])[1:-1] + "\n"
     if similar["globals"]:
-        message += _("    Global: `") + str(similar["globals"])[1:-1] + "`\n"
+        message += _("    Global scope: ") + str(similar["globals"])[1:-1] + "\n"
     if similar["builtins"]:
-        message += _("    Python builtins: `") + str(similar["builtins"])[1:-1] + "`\n"
+        message += _("    Python builtins: ") + str(similar["builtins"])[1:-1] + "\n"
     return message
 
 
@@ -148,11 +161,11 @@ def name_has_type_hint(name, frame):
             hint = loc["__annotations__"][name]
             if isinstance(hint, str):
                 hint = f"'{hint}'"
-            message = _("Type hint found for `{name}` as a local variable.\n").format(
+            message = _("A type hint found for `{name}` in the local scope.\n").format(
                 name=name
             )
             message += _(
-                "Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n\n"
+                "Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n"
             ).format(name=name, hint=hint)
             return message
 
@@ -161,11 +174,11 @@ def name_has_type_hint(name, frame):
             hint = glob["__annotations__"][name]
             if isinstance(hint, str):
                 hint = f"'{hint}'"
-            message = _("Type hint found for `{name}` as a global variable.\n").format(
+            message = _("A type hint found for `{name}` in the global scope.\n").format(
                 name=name
             )
             message += _(
-                "Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n\n"
+                "Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n"
             ).format(name=name, hint=hint)
             return message
     return ""

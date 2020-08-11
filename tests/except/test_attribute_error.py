@@ -49,7 +49,7 @@ def test_misspelled_module_attribute_2():
         assert (
             "Instead of writing `cost`, perhaps you meant one of the following:\n" in result
         )
-    assert "['cos', 'cosh']" in result
+    assert "[`cos`, `cosh`]" in result
     return result
 
 

@@ -13,7 +13,7 @@ causes = {
     "raise_indentation_error1": "expected to begin a new indented block",
     "raise_indentation_error2": "does not match the indentation of the previous line",
     "raise_indentation_error3": "not aligned vertically with another block of code",
-    "raise_tab_error": "A TabError indicates that you have used",
+    "raise_tab_error": "A `TabError` indicates that you have used",
     "raise_syntax_error1": "assign a value to the Python keyword `def`",
     "raise_syntax_error2": "`if` but forgot to add a colon `:`",
     "raise_syntax_error3": "wrote a `while` loop but",

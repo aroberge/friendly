@@ -20,6 +20,8 @@ from .path_info import is_excluded_file
 from .friendly_exception import FriendlyException
 
 
+hack = {"found NameError cause": False}
+
 # The following is the function called `explain` in public_api.py
 
 
@@ -147,6 +149,8 @@ def get_traceback_info(etype, value, tb, write_err):
     """
     _ = current_lang.translate
 
+    hack["found NameError cause"] = False
+
     if issubclass(etype, FriendlyException):
         write_err(str(value))
         return {}
@@ -208,7 +212,25 @@ def get_traceback_info(etype, value, tb, write_err):
             info, "exception_raised", filename, linenumber, lines, index, frame
         )  # [5]
 
+    if issubclass(etype, NameError):
+        amend_name_error_cause(info, frame)
+
     return info
+
+
+def amend_name_error_cause(info, frame):
+    """Now that the frame where the error was raised has been identified,
+       we can try to find if the cause of the error might be due to a
+       typo.
+    """
+    _parts = info["message"].split("'")
+    try:
+        unknown_name = _parts[1]
+        hint = info_variables.name_has_type_hint(unknown_name, frame)
+        similar_names = info_variables.get_similar_var_names(unknown_name, frame)
+        info["cause"] += hint + similar_names
+    except IndexError:
+        pass
 
 
 # ============================================================================
@@ -474,22 +496,10 @@ def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
     info["%s_source" % header_name] = source_info["source"]  # [5]
 
     if "line" in source_info and source_info["line"] is not None:
-        if "NameError" in info["message"]:  # Special case
-            _parts = info["cause"].split("`")
-            try:
-                unknown_name = _parts[1]
-                hint = info_variables.name_has_type_hint(unknown_name, frame)
-                similar_names = info_variables.get_similar_var_names(
-                    unknown_name, frame
-                )
-                info["cause"] += hint + similar_names
-            except IndexError:
-                pass
-        else:
-            var_info = info_variables.get_var_info(source_info["line"], frame)
-            if var_info:
-                info["%s_variables_header" % header_name] = _("Known identifiers")
-                info["%s_variables" % header_name] = var_info  # [6]
+        var_info = info_variables.get_var_info(source_info["line"], frame)
+        if var_info:
+            info["%s_variables_header" % header_name] = _("Known identifiers")
+            info["%s_variables" % header_name] = var_info  # [6]
 
 
 def set_cause(info, friendly, etype, value):

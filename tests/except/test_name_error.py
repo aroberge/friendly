@@ -20,8 +20,8 @@ def test_name_error2():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "NameError: name 'babs' is not defined" in result
-    # if friendly_traceback.get_lang() == "en":
-    #     assert "The following similar names were found" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "perhaps you meant one of the following" in result
     return result
 
 x: 3
@@ -45,7 +45,7 @@ def test_name_error4():
     result = friendly_traceback.get_output()
     assert "NameError: name 'cost' is not defined" in result
     if friendly_traceback.get_lang() == "en":
-        assert "The following similar names were found" in result
+        assert "perhaps you meant one of the following" in result
     return result
 
 if __name__ == "__main__":

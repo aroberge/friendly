@@ -116,9 +116,10 @@ def rich_markdown(info, level):
                 #   the variable `x` is ...
                 # so that it shows formatted as code.
                 content = (
-                    content.replace(" '", " `")
-                    .replace("' ", " `")
-                    .replace("'\n", "`\n")
+                    content.replace(" '", " '`")
+                    .replace("' ", "`' ")
+                    .replace("'\n", "`'\n")
+                    .replace("'.", "`'.")
                 )
             prefix, suffix = markdown_items[item]
             result.append(prefix + content + suffix)

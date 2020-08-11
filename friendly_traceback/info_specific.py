@@ -61,10 +61,13 @@ def attribute_error_in_module(message, module, attribute):
             correct=misspelled[0], typo=attribute
         )
     else:
+        # transform ['a', 'b', 'c'] in "[`a`, `b`, `c`]"
+        candidates = str(["`{c}`".format(c=c) for c in misspelled])
+        candidates = candidates.replace("'", "")
         return _(
             "Instead of writing `{typo}`, perhaps you meant one of the following:\n"
             "{candidates}\n"
-        ).format(candidates=misspelled, typo=attribute)
+        ).format(candidates=candidates, typo=attribute)
 
 
 @register("FileNotFoundError")

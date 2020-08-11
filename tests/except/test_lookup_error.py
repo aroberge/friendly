@@ -13,7 +13,7 @@ def test_lookup_error():
     result = friendly_traceback.get_output()
     assert "LookupError" in result
     if friendly_traceback.get_lang() == "en":
-        assert "LookupError is the base class for" in result
+        assert "`LookupError` is the base class for" in result
     return result
 
 
