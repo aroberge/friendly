@@ -57,11 +57,11 @@ def format_traceback(info, level=1):
         "cause": "double",
         "last_call_header": "single",
         "last_call_source": "none",
-        "last_call_variables_header": "single",
-        "last_call_variables": "single",
+        "last_call_variables_header": "double",
+        "last_call_variables": "double",
         "exception_raised_header": "single",
         "exception_raised_source": "none",
-        "exception_raised_variables_header": "single",
+        "exception_raised_variables_header": "double",
         "exception_raised_variables": "double",
         "simulated_python_traceback": "none",
         "original_python_traceback": "none",
@@ -113,8 +113,8 @@ def rich_markdown(info, level):
                 # replacing something like
                 #   the variable 'x' is ...
                 # by
-                #   the variable `x` is ...
-                # so that it shows formatted as code.
+                #   the variable '`x`' is ...
+                # so that it is highlighted as code.
                 content = (
                     content.replace(" '", " '`")
                     .replace("' ", "`' ")

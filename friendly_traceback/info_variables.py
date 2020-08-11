@@ -52,7 +52,7 @@ def format_var_info(tok, _dict, _global=""):
        This can be useful information in case of IndexError and possibly
        others.
     """
-    MAX_LENGTH = 50
+    MAX_LENGTH = 45
     length_info = ""
     if _global:
         _global = "global "
