@@ -482,9 +482,7 @@ def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
                 similar_names = info_variables.get_similar_var_names(
                     unknown_name, frame
                 )
-                cause = hint + similar_names
-                if cause:
-                    info["cause"] = cause
+                info["cause"] += hint + similar_names
             except IndexError:
                 pass
         else:

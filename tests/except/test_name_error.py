@@ -34,7 +34,7 @@ def test_name_error3():
     result = friendly_traceback.get_output()
     assert "NameError: name 'x' is not defined" in result
     if friendly_traceback.get_lang() == "en":
-        assert "instead of x = 3" in result
+        assert "instead of `x = 3`" in result
     return result
 
 def test_name_error4():

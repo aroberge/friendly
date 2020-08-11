@@ -16,11 +16,11 @@ import sys
 
 from . import console
 from . import public_api
+from .session import session
 
+rich_available = True
 try:
     import rich  # noqa
-
-    rich_available = True
 except ImportError:
     rich_available = False
 
@@ -161,6 +161,8 @@ def main():
             print("\n    Rich needs to be installed.\n\n")
         else:
             use_rich = True
+            session.use_rich = True
+            session.set_formatter("rich")
 
     if args.source is not None:
         public_api.exclude_file_from_traceback(runpy.__file__)

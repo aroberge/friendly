@@ -7,10 +7,33 @@ import sys
 from .my_gettext import current_lang
 from . import formatters
 
+try:
+    from rich.console import Console
+    from rich.markdown import Markdown
+    from rich.theme import Theme
+
+    dark_background_theme = Theme(
+        {
+            "markdown.h1.border": "deep_sky_blue1",
+            "markdown.h1": "bold red",
+            "markdown.h2": "bold yellow underline",
+            "markdown.link": "white",
+            "markdown.code": "yellow",
+            "markdown.h3": "bold red",
+        }
+    )
+    console = Console(theme=dark_background_theme)
+except ImportError:
+    pass
+
 
 def _write_err(text):
     """Default writer"""
-    sys.stderr.write(text)
+    if session.use_rich:
+        md = Markdown(text)
+        console.print(md)
+    else:
+        sys.stderr.write(text)
 
 
 class _State:
@@ -119,6 +142,8 @@ class _State:
         """
         if formatter is None:
             self.formatter = formatters.format_traceback
+        elif formatter == "rich":
+            self.formatter = formatters.rich_markdown
         else:
             self.formatter = formatter
 
@@ -153,3 +178,6 @@ class _State:
 
 
 session = _State()
+
+# This settings is intentionally made here to give it visibility
+session.use_rich = False  # can be over-ridden elsewhere

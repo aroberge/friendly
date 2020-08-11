@@ -107,9 +107,9 @@ def get_similar_var_names(name, frame):
     if nb_similar_names == 0:
         return ""
     elif nb_similar_names == 1:
-        message = _("The following similar name was found:\n")
+        message = _("The following similar name was found:\n\n")
     else:
-        message = _("The following similar names were found:\n")
+        message = _("The following similar names were found:\n\n")
     if similar["locals"]:
         message += _("    Local: ") + str(similar["locals"])[1:-1] + "\n"
     if similar["globals"]:
@@ -149,7 +149,7 @@ def name_has_type_hint(name, frame):
                 name=name
             )
             message += _(
-                "Perhaps you had written {name} : {hint} instead of {name} = {hint}.\n\n"
+                "Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n\n"
             ).format(name=name, hint=hint)
             return message
 
@@ -162,7 +162,7 @@ def name_has_type_hint(name, frame):
                 name=name
             )
             message += _(
-                "Perhaps you had written {name} : {hint} instead of {name} = {hint}.\n\n"
+                "Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n\n"
             ).format(name=name, hint=hint)
             return message
     return ""

@@ -78,33 +78,40 @@ def format_traceback(info, level=1):
     return "\n".join(result)
 
 
-# Needs fixing
-#
-# def markdown(info, level):
-#     """Traceback formatted with full information but with markdown syntax."""
-#     result = []
+def rich_markdown(info, level):
+    """Traceback formatted with full information but with markdown syntax.
+       to be processed by Rich.
+    """
+    result = []
 
-#     # TODO: modify to work with new level selection, including new items.
-#     friendly_items = [
-#         ("header", "# ", ""),
-#         ("message", "", ""),
-#         ("generic", "", ""),
-#         ("parsing_error", "", ""),
-#         ("parsing_error_source", "```\n", "```"),
-#         ("cause_header", "## ", ""),
-#         ("cause", "", ""),
-#         ("last_call_header", "## ", ""),
-#         ("last_call_source", "```\n", "```"),
-#         ("last_call_variables", "Variables:\n```\n", "```"),
-#         ("exception_raised_header", "## ", ""),
-#         ("exception_raised_source", "```\n", "```"),
-#         ("exception_raised_variables", "Variables:\n```\n", "```"),
-#     ]
+    markdown_items = {
+        "header": ("# ", ""),
+        "message": ("### ", ""),
+        "generic": ("", ""),
+        "parsing_error": ("", ""),
+        "parsing_error_source": ("```python\n", "\n```"),
+        "cause_header": ("## ", ""),
+        "cause": ("", ""),
+        "last_call_header": ("## ", ""),
+        "last_call_source": ("```python\n", "\n```"),
+        "last_call_variables_header": ("## ", ""),
+        "last_call_variables": ("```\n", "\n```"),
+        "exception_raised_header": ("## ", ""),
+        "exception_raised_source": ("```python\n", "\n```"),
+        "exception_raised_variables_header": ("## ", ""),
+        "exception_raised_variables": ("```\n", "\n```"),
+        "simulated_python_traceback": ("```python\n", "\n```"),
+        "original_python_traceback": ("```python\n", "\n```"),
+    }
 
-#     for item, prefix, suffix in friendly_items:
-#         if item in info:
-#             result.append(prefix + info[item] + suffix)
-#     return "\n\n".join(result)
+    items_to_show = tb_items_to_show(level=level)
+    result = [""]
+    for item in items_to_show:
+        if item in info:
+            content = info[item].rstrip(":")
+            prefix, suffix = markdown_items[item]
+            result.append(prefix + content + suffix)
+    return "\n\n".join(result)
 
 
 def _default():
