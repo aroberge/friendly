@@ -20,6 +20,7 @@ try:
             "markdown.link": "white",
             "markdown.code": "deep_sky_blue1",
             "markdown.h3": "bold red underline",
+            "markdown.block_quote": "bold yellow",
         }
     )
     console = Console(theme=dark_background_theme)

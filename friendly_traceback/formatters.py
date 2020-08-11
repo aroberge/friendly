@@ -121,6 +121,8 @@ def rich_markdown(info, level):
                     .replace("'\n", "`'\n")
                     .replace("'.", "`'.")
                 )
+            elif item == "cause":
+                content = content.replace("|   ", "\n>   ")
             prefix, suffix = markdown_items[item]
             result.append(prefix + content + suffix)
     return "\n\n".join(result)

@@ -124,14 +124,26 @@ def get_similar_var_names(name, frame):
             )
 
     message = _(
-        "Instead of writing `{name}`, perhaps you meant one of the following:\n\n"
+        "Instead of writing `{name}`, perhaps you meant one of the following:\n"
     ).format(name=name)
     if similar["locals"]:
-        message += _("    Local scope: ") + str(similar["locals"])[1:-1] + "\n"
+        message += (
+            _("|   Local scope: ")
+            + str(similar["locals"])[1:-1].replace("'", "`")
+            + "\n"
+        )
     if similar["globals"]:
-        message += _("    Global scope: ") + str(similar["globals"])[1:-1] + "\n"
+        message += (
+            _("|   Global scope: ")
+            + str(similar["globals"])[1:-1].replace("'", "`")
+            + "\n"
+        )
     if similar["builtins"]:
-        message += _("    Python builtins: ") + str(similar["builtins"])[1:-1] + "\n"
+        message += (
+            _("|   Python builtins: ")
+            + str(similar["builtins"])[1:-1].replace("'", "`")
+            + "\n"
+        )
     return message
 
 
