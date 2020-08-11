@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-08-09 10:24-0300\n"
+"POT-Creation-Date: 2020-08-10 23:27-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -196,90 +196,90 @@ msgid ""
 "Perhaps you had a missing comma before the tuple.\n"
 msgstr ""
 
-#: console.py:146
+#: console.py:159
 msgid "Warning: you added a type hint to the python builtin '{name}'."
 msgstr ""
 
-#: console.py:159
+#: console.py:169
 msgid "Warning: you used type hints. Perhaps you meant {name} = {hint}."
 msgstr ""
 
-#: core.py:200
+#: core.py:194
 msgid ""
 "I suspect that you are using a regular\n"
 "Python console after importing Friendly-traceback.\n"
 "Unfortunately, no further processing can be done.\n"
 msgstr ""
 
-#: core.py:231
+#: core.py:225
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
 "Are you using a regular Python console instead of a Friendly-console?\n"
 msgstr ""
 
-#: core.py:243
+#: core.py:237
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
 msgstr ""
 
-#: core.py:266
+#: core.py:260
 msgid ""
 "Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: core.py:359
+#: core.py:344
 msgid "Python's error message (invalid syntax) cannot be used to identify the problem:"
 msgstr ""
 
-#: core.py:364
+#: core.py:349
 msgid "Likely cause based on the information given by Python:"
 msgstr ""
 
-#: core.py:406
+#: core.py:391
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
 "        regular Python console.\n"
 msgstr ""
 
-#: core.py:412
+#: core.py:397
 msgid ""
 "Problem: source of '{filename}' is not available\n"
 msgstr ""
 
-#: core.py:427
+#: core.py:412
 msgid ""
 "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: core.py:441
+#: core.py:426
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "beyond the location indicated below by --> and ^.\n"
 msgstr ""
 
-#: core.py:447
+#: core.py:432
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
 "It reached the end of the file and expected more content.\n"
 msgstr ""
 
-#: core.py:453
+#: core.py:438
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'\n"
 "for an unspecified reason.\n"
 msgstr ""
 
-#: core.py:513
-msgid "    Known identifiers:"
+#: core.py:491
+msgid "Known identifiers"
 msgstr ""
 
-#: core.py:558
+#: core.py:536
 msgid "Python exception:"
 msgstr ""
 
@@ -301,8 +301,8 @@ msgstr ""
 #: info_generic.py:38
 msgid ""
 "An attribute error occurs when the code contains something like\n"
-"    object.x\n"
-"and 'x' is not a method or attribute (variable) belonging to 'object'\n"
+"    `object.x`\n"
+"and `x` is not a method or attribute (variable) belonging to `object`.\n"
 msgstr ""
 
 #: info_generic.py:48
@@ -438,36 +438,36 @@ msgstr ""
 
 #: info_specific.py:43
 msgid ""
-"In your program, the object is '{obj}' and the attribute is '{attr}'.\n"
+"In your program, the object is `{obj}` and the attribute is `{attr}`.\n"
 msgstr ""
 
 #: info_specific.py:60
 msgid ""
-"Perhaps you meant to write '{correct}' instead of '{typo}'\n"
+"Perhaps you meant to write `{correct}` instead of `{typo}`\n"
 msgstr ""
 
 #: info_specific.py:64
 msgid ""
-"Instead of writing {typo}, perhaps you meant one of the following:\n"
+"Instead of writing `{typo}`, perhaps you meant one of the following:\n"
 "{candidates}\n"
 msgstr ""
 
 #: info_specific.py:78
 msgid ""
 "In your program, the name of the\n"
-"file that cannot be found is '{filename}'.\n"
+"file that cannot be found is `{filename}`.\n"
 msgstr ""
 
 #: info_specific.py:99
 msgid ""
-"The name of the module that could not be imported is '{name}'\n"
+"The name of the module that could not be imported is `{name}`\n"
 msgstr ""
 
 #: info_specific.py:107
 msgid ""
-"The object that could not be imported is '{name}'.\n"
+"The object that could not be imported is `{name}`.\n"
 "The module or package where it was \n"
-"expected to be found is '{module}'.\n"
+"expected to be found is `{module}`.\n"
 msgstr ""
 
 #: info_specific.py:113
@@ -508,59 +508,66 @@ msgstr ""
 #: info_specific.py:164
 msgid ""
 "In your program, the name of the key\n"
-"that cannot be found is '{key_name}'.\n"
+"that cannot be found is `{key_name}`.\n"
 msgstr ""
 
 #: info_specific.py:178
 msgid ""
 "In your program, the name of the\n"
-"module that cannot be found is '{mod_name}'.\n"
+"module that cannot be found is `{mod_name}`.\n"
 msgstr ""
 
-#: info_specific.py:192
+#: info_specific.py:194
 msgid ""
 "In your program, the unknown name is '{var_name}'.\n"
 msgstr ""
 
-#: info_specific.py:220
+#: info_specific.py:222
 msgid ""
-"The variable that appears to cause the problem is '{var_name}'.\n"
+"The variable that appears to cause the problem is `{var_name}`.\n"
 "Perhaps the statement\n"
-"    global {var_name}\n"
+"    `global {var_name}`\n"
 "should have been included as the first line inside your function.\n"
 msgstr ""
 
-#: info_variables.py:110
-msgid "Perhaps you meant to write the following:"
-msgstr ""
-
-#: info_variables.py:112
-msgid "Perhaps you meant to write one of the following:"
+#: info_variables.py:113
+msgid ""
+"The following similar name was found:\n"
+"\n"
 msgstr ""
 
 #: info_variables.py:115
-msgid "    Local variable: "
+msgid ""
+"The following similar names were found:\n"
+"\n"
 msgstr ""
 
 #: info_variables.py:117
-msgid "    Global variable: "
+msgid "    Local: `"
 msgstr ""
 
 #: info_variables.py:119
-msgid "    Python builtins: "
+msgid "    Global: `"
 msgstr ""
 
-#: info_variables.py:146
-msgid "Type hint found for '{name}' as a local variable."
+#: info_variables.py:121
+msgid "    Python builtins: `"
 msgstr ""
 
-#: info_variables.py:149 info_variables.py:159
+#: info_variables.py:151
 msgid ""
-"Perhaps you had written {name} : {hint} instead of {name} = {hint}.\n"
+"Type hint found for `{name}` as a local variable.\n"
 msgstr ""
 
-#: info_variables.py:156
-msgid "Type hint found for '{name}' as a global variable."
+#: info_variables.py:154 info_variables.py:167
+msgid ""
+"Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n"
+"\n"
+msgstr ""
+
+#: info_variables.py:164
+msgid ""
+"Type hint found for `{name}` as a global variable.\n"
 msgstr ""
 
 #: line_analyzer.py:105
@@ -1073,12 +1080,8 @@ msgid ""
 "Now, 'print' is a function; you need to use parentheses to call it.\n"
 msgstr ""
 
-#: session.py:100
-msgid "Verbosity level {level} not available."
-msgstr ""
-
-#: session.py:135
-msgid "Level {level} not available; using default."
+#: session.py:133
+msgid "Verbosity level {level} not valid."
 msgstr ""
 
 #: source_analyzer.py:108
