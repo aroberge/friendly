@@ -121,8 +121,11 @@ def rich_markdown(info, level):
                     .replace("'\n", "`'\n")
                     .replace("'.", "`'.")
                 )
-            elif item == "cause":
-                content = content.replace("|   ", "\n>   ")
+            elif item == "cause":  # formatting hack for typos shown in a block
+                new_content = content.replace("|   ", "\n>   ")
+                if new_content != content:
+                    content = new_content + "\n\n> "
+
             prefix, suffix = markdown_items[item]
             result.append(prefix + content + suffix)
     return "\n\n".join(result)

@@ -8,9 +8,20 @@ from .my_gettext import current_lang
 from . import formatters
 
 try:
-    from rich.console import Console
-    from rich.markdown import Markdown
+    from rich.console import Console, Segment
+    from rich.markdown import Markdown, BlockQuote
     from rich.theme import Theme
+
+    def _patch(self, console, options):
+        render_options = options.update(width=options.max_width - 4)
+        lines = console.render_lines(self.elements, render_options, style=self.style)
+        style = self.style
+        padding = Segment("     ", style)  # non-breakable spaces inserted
+        for line in lines:
+            yield padding
+            yield from line
+
+    BlockQuote.__rich_console__ = _patch
 
     dark_background_theme = Theme(
         {
