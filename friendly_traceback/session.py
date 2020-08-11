@@ -13,10 +13,16 @@ try:
     from rich.theme import Theme
 
     def _patch(self, console, options):
+        """Formatting hack to be able to have consecutive block quotes
+           without lines in between. Used for displaying possible typos
+           in a block. A further correction is done in the rich_markdown
+           formatter to insert a blank line after the 2 or 3 block quotes
+           shown.
+        """
         render_options = options.update(width=options.max_width - 4)
         lines = console.render_lines(self.elements, render_options, style=self.style)
         style = self.style
-        padding = Segment("     ", style)  # non-breakable spaces inserted
+        padding = Segment("       ", style)
         for line in lines:
             yield padding
             yield from line
