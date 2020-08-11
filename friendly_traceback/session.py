@@ -16,10 +16,11 @@ try:
         {
             "markdown.h1.border": "deep_sky_blue1",
             "markdown.h1": "bold red",
-            "markdown.h2": "bold yellow underline",
+            "markdown.h2": "green",
             "markdown.link": "white",
             "markdown.code": "yellow",
-            "markdown.h3": "bold red",
+            "markdown.code_block": "yellow",
+            "markdown.h3": "red underline",
         }
     )
     console = Console(theme=dark_background_theme)
