@@ -13,7 +13,7 @@ def test_attribute_error():
     result = friendly_traceback.get_output()
     assert "AttributeError: type object 'A' has no attribute 'x'" in result
     if friendly_traceback.get_lang() == "en":
-        assert "In your program, the object is 'A' and the attribute is 'x'." in result
+        assert "In your program, the object is `A` and the attribute is `x`." in result
     return result
 
 
@@ -28,7 +28,7 @@ def test_misspelled_module_attribute():
     assert "AttributeError: module 'string' has no attribute 'ascii_lowecase'" in result
     if friendly_traceback.get_lang() == "en":
         assert (
-            "Perhaps you meant to write 'ascii_lowercase' instead of 'ascii_lowecase'"
+            "Perhaps you meant to write `ascii_lowercase` instead of `ascii_lowecase`"
             in result
         )
     return result
@@ -47,7 +47,7 @@ def test_misspelled_module_attribute_2():
     ) in result
     if friendly_traceback.get_lang() == "en":
         assert (
-            "Instead of writing cost, perhaps you meant one of the following:\n" in result
+            "Instead of writing `cost`, perhaps you meant one of the following:\n" in result
         )
     assert "['cos', 'cosh']" in result
     return result

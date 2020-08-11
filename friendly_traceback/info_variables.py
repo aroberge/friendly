@@ -69,8 +69,11 @@ def format_var_info(tok, _dict, _global=""):
     # 2. Removing this information ensures that consecutive runs of
     #    script to create tracebacks for the documentation will yield
     #    exactly the same results. This makes it easier to spot changes/regressions.
-    if value.startswith("<") and value.endswith(">") and " at " in value:
-        value = value.split(" at ")[0] + ">"
+    if value.startswith("<") and value.endswith(">"):
+        if " at " in value:
+            value = value.split(" at ")[0] + ">"
+        elif " from " in value:
+            value = value.split(" from ")[0] + ">"
 
     if len(value) > MAX_LENGTH:  # too much text would be shown
         # We reduce the length of the repr, indicate this by ..., but we
@@ -111,11 +114,11 @@ def get_similar_var_names(name, frame):
     else:
         message = _("The following similar names were found:\n\n")
     if similar["locals"]:
-        message += _("    Local: ") + str(similar["locals"])[1:-1] + "\n"
+        message += _("    Local: `") + str(similar["locals"])[1:-1] + "`\n"
     if similar["globals"]:
-        message += _("    Global: ") + str(similar["globals"])[1:-1] + "\n"
+        message += _("    Global: `") + str(similar["globals"])[1:-1] + "`\n"
     if similar["builtins"]:
-        message += _("    Python builtins: ") + str(similar["builtins"])[1:-1] + "\n"
+        message += _("    Python builtins: `") + str(similar["builtins"])[1:-1] + "`\n"
     return message
 
 
@@ -145,7 +148,7 @@ def name_has_type_hint(name, frame):
             hint = loc["__annotations__"][name]
             if isinstance(hint, str):
                 hint = f"'{hint}'"
-            message = _("Type hint found for '{name}' as a local variable.\n").format(
+            message = _("Type hint found for `{name}` as a local variable.\n").format(
                 name=name
             )
             message += _(
@@ -158,7 +161,7 @@ def name_has_type_hint(name, frame):
             hint = glob["__annotations__"][name]
             if isinstance(hint, str):
                 hint = f"'{hint}'"
-            message = _("Type hint found for '{name}' as a global variable.\n").format(
+            message = _("Type hint found for `{name}` as a global variable.\n").format(
                 name=name
             )
             message += _(

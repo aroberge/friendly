@@ -41,7 +41,7 @@ def attribute_error(etype, value):
         if cause_identified:
             return cause_identified
     return _(
-        "In your program, the object is '{obj}' and the attribute is '{attr}'.\n"
+        "In your program, the object is `{obj}` and the attribute is `{attr}`.\n"
     ).format(obj=obj, attr=attribute)
 
 
@@ -57,12 +57,12 @@ def attribute_error_in_module(message, module, attribute):
         return False
 
     if len(misspelled) == 1:
-        return _("Perhaps you meant to write '{correct}' instead of '{typo}'\n").format(
+        return _("Perhaps you meant to write `{correct}` instead of `{typo}`\n").format(
             correct=misspelled[0], typo=attribute
         )
     else:
         return _(
-            "Instead of writing {typo}, perhaps you meant one of the following:\n"
+            "Instead of writing `{typo}`, perhaps you meant one of the following:\n"
             "{candidates}\n"
         ).format(candidates=misspelled, typo=attribute)
 
@@ -77,7 +77,7 @@ def file_not_found_error(etype, value):
     # By splitting value using ', we can extract the module name.
     return _(
         "In your program, the name of the\n"
-        "file that cannot be found is '{filename}'.\n"
+        "file that cannot be found is `{filename}`.\n"
     ).format(filename=str(value).split("'")[1])
 
 
@@ -97,7 +97,7 @@ def import_error(etype, value):
     if message.startswith("No module named"):
         name = message.split(" ")[-1]
         return _(
-            "The name of the module that could not be imported is '{name}'\n"
+            "The name of the module that could not be imported is `{name}`\n"
         ).format(name=name)
     else:
         parts = str(value).split("'")
@@ -105,9 +105,9 @@ def import_error(etype, value):
     if len(parts) > 3:
         module = parts[3]
         return _(
-            "The object that could not be imported is '{name}'.\n"
+            "The object that could not be imported is `{name}`.\n"
             "The module or package where it was \n"
-            "expected to be found is '{module}'.\n"
+            "expected to be found is `{module}`.\n"
         ).format(name=name, module=module)
     else:
         return _("The object that could not be imported is '{name}'.\n").format(
@@ -163,7 +163,7 @@ def key_error(etype, value):
     # By splitting value using ', we can extract the missing key name.
     return _(
         "In your program, the name of the key\n"
-        "that cannot be found is '{key_name}'.\n"
+        "that cannot be found is `{key_name}`.\n"
     ).format(key_name=str(value).split("'")[1])
 
 
@@ -177,7 +177,7 @@ def module_not_found_error(etype, value):
     # By splitting value using ', we can extract the module name.
     return _(
         "In your program, the name of the\n"
-        "module that cannot be found is '{mod_name}'.\n"
+        "module that cannot be found is `{mod_name}`.\n"
     ).format(mod_name=str(value).split("'")[1])
 
 
@@ -220,9 +220,9 @@ def unbound_local_error(etype, value):
     #
     # By splitting value using ', we can extract the variable name.
     return _(
-        "The variable that appears to cause the problem is '{var_name}'.\n"
+        "The variable that appears to cause the problem is `{var_name}`.\n"
         "Perhaps the statement\n"
-        "    global {var_name}\n"
+        "    `global {var_name}`\n"
         "should have been included as the first line inside your function.\n"
     ).format(var_name=str(value).split("'")[1])
 

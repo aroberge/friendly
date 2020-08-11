@@ -9,7 +9,7 @@ def test_import_error():
     result = friendly_traceback.get_output()
     assert "ImportError: cannot import name 'Pi'" in result
     if friendly_traceback.get_lang() == "en":
-        assert "The object that could not be imported is 'Pi'." in result
+        assert "The object that could not be imported is `Pi`." in result
     return result
 
 

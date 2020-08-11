@@ -24,7 +24,7 @@ def test_unbound_local_error():
     result = friendly_traceback.get_output()
     assert "UnboundLocalError: local variable 'a' referenced" in result
     if friendly_traceback.get_lang() == "en":
-        assert "The variable that appears to cause the problem is 'a'." in result
+        assert "The variable that appears to cause the problem is `a`." in result
     return result
 
 

@@ -92,11 +92,11 @@ def rich_markdown(info, level):
         "parsing_error_source": ("```python\n", "\n```"),
         "cause_header": ("## ", ""),
         "cause": ("", ""),
-        "last_call_header": ("## ", ""),
+        "last_call_header": ("### ", ""),
         "last_call_source": ("```python\n", "\n```"),
         "last_call_variables_header": ("## ", ""),
         "last_call_variables": ("```\n", "\n```"),
-        "exception_raised_header": ("## ", ""),
+        "exception_raised_header": ("### ", ""),
         "exception_raised_source": ("```python\n", "\n```"),
         "exception_raised_variables_header": ("## ", ""),
         "exception_raised_variables": ("```\n", "\n```"),
@@ -109,6 +109,17 @@ def rich_markdown(info, level):
     for item in items_to_show:
         if item in info:
             content = info[item].rstrip(":")
+            if item == "message":
+                # replacing something like
+                #   the variable 'x' is ...
+                # by
+                #   the variable `x` is ...
+                # so that it shows formatted as code.
+                content = (
+                    content.replace(" '", " `")
+                    .replace("' ", " `")
+                    .replace("'\n", "`\n")
+                )
             prefix, suffix = markdown_items[item]
             result.append(prefix + content + suffix)
     return "\n\n".join(result)

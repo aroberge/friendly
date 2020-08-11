@@ -37,8 +37,8 @@ def attribute_error(*args):
     _ = current_lang.translate
     return _(
         "An attribute error occurs when the code contains something like\n"
-        "    object.x\n"
-        "and 'x' is not a method or attribute (variable) belonging to 'object'\n"
+        "    `object.x`\n"
+        "and `x` is not a method or attribute (variable) belonging to `object`.\n"
     )
 
 
