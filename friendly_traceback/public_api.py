@@ -28,7 +28,7 @@ from .editors_helper import run
 from .formatters import tb_items_to_show
 from .path_info import exclude_file_from_traceback
 
-__version__ = "0.0.35a"
+__version__ = "0.0.36a"
 __all__ = ["exclude_file_from_traceback", "run", "tb_items_to_show", "__version__"]
 
 
