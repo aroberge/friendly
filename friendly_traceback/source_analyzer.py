@@ -170,7 +170,7 @@ def look_for_missing_bracket(
                 if _open_bracket == "{":
                     return _(
                         "It is possible that "
-                        "you used an equal sign '=' instead of a colon ':'\n"
+                        "you used an equal sign `=` instead of a colon `:`\n"
                         "to assign values to keys in a dict\n"
                         "before or at the position indicated by --> and ^.\n"
                     )
@@ -256,16 +256,16 @@ def matching_brackets(bra, ket):
 def name_bracket(bracket):
     _ = current_lang.translate
     if bracket == "(":
-        return _("parenthesis '('")
+        return _("parenthesis `(`")
     elif bracket == ")":
-        return _("parenthesis ')'")
+        return _("parenthesis `)`")
     elif bracket == "[":
-        return _("square bracket '['")
+        return _("square bracket `[`")
     elif bracket == "]":
-        return _("square bracket ']'")
+        return _("square bracket `]`")
     elif bracket == "{":
-        return _("curly bracket '{'")
+        return _("curly bracket `{`")
     elif bracket == "}":
-        return _("curly bracket '}'")
+        return _("curly bracket `}`")
     else:  # Should never happen - help for diagnostic
         raise FriendlyException("source_analyzer.name_bracket")

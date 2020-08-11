@@ -475,7 +475,7 @@ def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
 
     if "line" in source_info and source_info["line"] is not None:
         if "NameError" in info["message"]:  # Special case
-            _parts = info["cause"].split("'")
+            _parts = info["cause"].split("`")
             try:
                 unknown_name = _parts[1]
                 hint = info_variables.name_has_type_hint(unknown_name, frame)

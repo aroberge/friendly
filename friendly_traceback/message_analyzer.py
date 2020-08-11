@@ -108,11 +108,11 @@ def assign_to_keyword(message="", line="", **kwargs):
 
     if word in ["None", "True", "False", "__debug__", "Ellipsis (...)"]:
         return _(
-            "{keyword} is a constant in Python; you cannot assign it a value.\n" "\n"
+            "`{keyword}` is a constant in Python; you cannot assign it a value.\n" "\n"
         ).format(keyword=word)
     else:
         return _(
-            "You were trying to assign a value to the Python keyword '{keyword}'.\n"
+            "You were trying to assign a value to the Python keyword `{keyword}`.\n"
             "This is not allowed.\n"
             "\n"
         ).format(keyword=word)
@@ -129,7 +129,7 @@ def assign_to_conditional_expression(message="", **kwargs):
             "On the left-hand side of an equal sign, you have a\n"
             "conditional expression instead of the name of a variable.\n"
             "A conditional expression has the following form:\n\n"
-            "    variable = object if condition else other_object"
+            "    `variable = object if condition else other_object`"
         )
 
 
@@ -148,8 +148,8 @@ def assign_to_function_call(message="", line="", **kwargs):
             value = _("some value")
             return _(
                 "You wrote an expression like\n"
-                "    {fn_call} = {value}\n"
-                "where {fn_call}, on the left-hand side of the equal sign, is\n"
+                "    `{fn_call} = {value}`\n"
+                "where `{fn_call}`, on the left-hand side of the equal sign, is\n"
                 "a function call and not the name of a variable.\n"
             ).format(fn_call=fn_call, value=value)
 
@@ -158,8 +158,8 @@ def assign_to_function_call(message="", line="", **kwargs):
         value = info[1].strip()
         return _(
             "You wrote the expression\n"
-            "    {fn_call} = {value}\n"
-            "where {fn_call}, on the left-hand side of the equal sign, either is\n"
+            "    `{fn_call} = {value}`\n"
+            "where `{fn_call}`, on the left-hand side of the equal sign, either is\n"
             "or includes a function call and is not simply the name of a variable.\n"
         ).format(fn_call=fn_call, value=value)
 
@@ -186,21 +186,21 @@ def what_kind_of_literal(literal):
         return None
 
     if isinstance(a, int):
-        return _("of type 'int'")
+        return _("of type `int`")
     elif isinstance(a, str):
-        return _("of type 'str'")
+        return _("of type `str`")
     elif isinstance(a, float):
-        return _("of type 'float'")
+        return _("of type `float`")
     elif isinstance(a, complex):
-        return _("of type 'complex'")
+        return _("of type `complex`")
     elif isinstance(a, dict):
-        return _("of type 'dict'")
+        return _("of type `dict`")
     elif isinstance(a, tuple):
-        return _("of type 'tuple'")
+        return _("of type `tuple`")
     elif isinstance(a, list):
-        return _("of type 'list'")
+        return _("of type `list`")
     elif isinstance(a, set):
-        return _("of type 'set'")
+        return _("of type `set`")
     else:
         return None
 
@@ -247,7 +247,7 @@ def assign_to_literal(message="", line="", **kwargs):
             # fmt: off
             suggest = _(
                 " Perhaps you meant to write:\n"
-                "    {name} = {literal}\n"
+                "    `{name} = {literal}`\n"
                 "\n"
             ).format(literal=literal, name=name)
             # fmt: on
@@ -270,8 +270,8 @@ def assign_to_literal(message="", line="", **kwargs):
         return (
             _(
                 "You wrote an expression like\n"
-                "    {literal} = {name}\n"
-                "where <{literal}>, on the left-hand side of the equal sign,\n"
+                "    `{literal} = {name}`\n"
+                "where `{literal}`, on the left-hand side of the equal sign,\n"
                 "is or includes an actual object {of_type}\n"
                 "and is not simply the name of a variable."
             ).format(literal=literal, name=name, of_type=of_type)
@@ -299,7 +299,7 @@ def both_nonlocal_and_global(message="", line=None, **kwargs):
     if "is nonlocal and global" in message:
         name = message.split("'")[1]
         return _(
-            "You declared '{name}' as being both a global and nonlocal variable.\n"
+            "You declared `{name}` as being both a global and nonlocal variable.\n"
             "A variable can be global, or nonlocal, but not both at the same time.\n"
         ).format(name=name)
 
@@ -309,7 +309,7 @@ def break_outside_loop(message="", **kwargs):
     _ = current_lang.translate
     if "'break' outside loop" in message:
         return _(
-            "The Python keyword 'break' can only be used "
+            "The Python keyword `break` can only be used "
             "inside a for loop or inside a while loop.\n"
         )
 
@@ -319,7 +319,7 @@ def continue_outside_loop(message="", **kwargs):
     _ = current_lang.translate
     if "'continue' not properly in loop" in message:
         return _(
-            "The Python keyword 'continue' can only be used "
+            "The Python keyword `continue` can only be used "
             "inside a for loop or inside a while loop.\n"
         )
 
@@ -344,9 +344,9 @@ def delete_function_call(message="", line=None, **kwargs):
             correct = "del function"
         return _(
             "You attempted to delete a function call\n"
-            "    {line}\n"
+            "    `{line}`\n"
             "instead of deleting the function's name\n"
-            "    {correct}\n"
+            "    `{correct}`\n"
         ).format(line=line, correct=correct)
 
 
@@ -357,7 +357,7 @@ def duplicate_argument_in_function_definition(message="", line=None, **kwargs):
         name = message.split("'")[1]
         return _(
             "You have defined a function repeating the keyword argument\n"
-            "    '{name}'\n"
+            "    `{name}`\n"
             "twice; each keyword argument should appear only once"
             " in a function definition.\n"
         ).format(name=name)
@@ -381,8 +381,8 @@ def expression_cannot_contain_assignment(message="", **kwargs):
             "One of the following two possibilities could be the cause:\n"
             "1. You meant to do a comparison with == and wrote = instead.\n"
             "2. You called a function with a named argument:\n\n"
-            "       a_function(invalid=something)\n\n"
-            "where 'invalid' is not a valid variable name in Python\n"
+            "       `a_function(invalid=something)`\n\n"
+            "where `invalid` is not a valid variable name in Python\n"
             "either because it starts with a number, or is a string,\n"
             "or contains a period, etc.\n"
             "\n"
@@ -395,7 +395,7 @@ def generator_expression_must_be_parenthesized(message="", **kwargs):
     if "Generator expression must be parenthesized" in message:
         return _(
             "You are using a generator expression, something of the form\n"
-            "    x for x in thing\n"
+            "    `x for x in thing`\n"
             "You must add parentheses enclosing that expression.\n"
         )
 
@@ -416,8 +416,8 @@ def keyword_cannot_be_expression(message="", **kwargs):
     if "keyword can't be an expression" in message:
         return _(
             "You likely called a function with a named argument:\n\n"
-            "   a_function(invalid=something)\n\n"
-            "where 'invalid' is not a valid variable name in Python\n"
+            "   `a_function(invalid=something)`\n\n"
+            "where `invalid` is not a valid variable name in Python\n"
             "either because it starts with a number, or is a string,\n"
             "or contains a period, etc.\n"
             "\n"
@@ -435,7 +435,7 @@ def invalid_character_in_identifier(message="", line="", **kwargs):
                 bad_character = parts[1]
                 result = _(
                     "Python indicates that you used the unicode character"
-                    " {bad_character}\n"
+                    " `{bad_character}`\n"
                     "which is not allowed.\n"
                 ).format(bad_character=bad_character)
                 if bad_character in bad_quotation_marks:
@@ -496,13 +496,13 @@ def mismatched_parenthesis(
 
     if lineno is not None:
         response = _(
-            "Python tells us that the closing '{closing}' on the last line shown\n"
-            "does not match the opening '{opening}' on line {lineno}.\n\n"
+            "Python tells us that the closing `{closing}` on the last line shown\n"
+            "does not match the opening `{opening}` on line {lineno}.\n\n"
         ).format(closing=closing, opening=opening, lineno=lineno)
     else:
         response = _(
-            "Python tells us that the closing '{closing}' on the last line shown\n"
-            "does not match the opening '{opening}'.\n\n"
+            "Python tells us that the closing `{closing}` on the last line shown\n"
+            "does not match the opening `{opening}`.\n\n"
         ).format(closing=closing, opening=opening)
 
     additional_response = source_analyzer.look_for_mismatched_brackets(
@@ -541,11 +541,11 @@ def name_is_parameter_and_global(message="", line="", **kwargs):
             newline = f"global {name}"
         return _(
             "You are including the statement\n\n"
-            "    {newline}\n\n"
-            "indicating that '{name}' is a variable defined outside a function.\n"
-            "You are also using the same '{name}' as an argument for that\n"
+            "    `{newline}`\n\n"
+            "indicating that `{name}` is a variable defined outside a function.\n"
+            "You are also using the same `{name}` as an argument for that\n"
             "function, thus indicating that it should be variable known only\n"
-            "inside that function, which is the contrary of what 'global' implied.\n"
+            "inside that function, which is the contrary of what `global` implied.\n"
         ).format(newline=newline, name=name)
 
 
@@ -556,7 +556,7 @@ def name_assigned_to_prior_global(message="", **kwargs):
     if "is assigned to before global declaration" in message:
         name = message.split("'")[1]
         return _(
-            "You assigned a value to the variable '{name}'\n"
+            "You assigned a value to the variable `{name}`\n"
             "before declaring it as a global variable.\n"
         ).format(name=name)
 
@@ -568,7 +568,7 @@ def name_used_prior_global(message="", **kwargs):
     if "is used prior to global declaration" in message:
         name = message.split("'")[1]
         return _(
-            "You used the variable '{name}'\n"
+            "You used the variable `{name}`\n"
             "before declaring it as a global variable.\n"
         ).format(name=name)
 
@@ -580,7 +580,7 @@ def name_assigned_to_prior_nonlocal(message="", **kwargs):
     if "is assigned to before nonlocal declaration" in message:
         name = message.split("'")[1]
         return _(
-            "You assigned a value to the variable '{name}'\n"
+            "You assigned a value to the variable `{name}`\n"
             "before declaring it as a nonlocal variable.\n"
         ).format(name=name)
 
@@ -591,9 +591,9 @@ def name_is_parameter_and_nonlocal(message="", **kwargs):
     if "is parameter and nonlocal" in message:
         name = message.split("'")[1]
         return _(
-            "You used '{name}' as a parameter for a function\n"
+            "You used `{name}` as a parameter for a function\n"
             "before declaring it also as a nonlocal variable:\n"
-            "'{name}' cannot be both at the same time.\n"
+            "`{name}` cannot be both at the same time.\n"
         ).format(name=name)
 
 
@@ -604,7 +604,7 @@ def name_used_prior_nonlocal(message="", **kwargs):
     if "is used prior to nonlocal declaration" in message:
         name = message.split("'")[1]
         return _(
-            "You used the variable '{name}'\n"
+            "You used the variable `{name}`\n"
             "before declaring it as a nonlocal variable.\n"
         ).format(name=name)
 
@@ -626,7 +626,7 @@ def no_binding_for_nonlocal(message="", line=None, **kwargs):
     if "no binding for nonlocal" in message:
         name = message.split("'")[1]
         return _(
-            "You declared the variable '{name}' as being a\n"
+            "You declared the variable `{name}` as being a\n"
             "nonlocal variable but it cannot be found.\n"
         ).format(name=name)
 
@@ -636,7 +636,7 @@ def unexpected_character_after_continuation(message="", **kwargs):
     _ = current_lang.translate
     if "unexpected character after line continuation character" in message:
         return _(
-            "You are using the continuation character '\\' outside of a string,\n"
+            "You are using the continuation character `\\` outside of a string,\n"
             "and it is followed by some other character(s).\n"
             "I am guessing that you forgot to enclose some content in a string.\n"
             "\n"
@@ -693,11 +693,11 @@ def position_argument_follows_keyword_arg(message="", **kwargs):
         return
     return _(
         "In Python, you can call functions with only positional arguments\n\n"
-        "    test(1, 2, 3)\n\n"
+        "    `test(1, 2, 3)`\n\n"
         "or only keyword arguments\n\n"
-        "    test(a=1, b=2, c=3)\n\n"
+        "    `test(a=1, b=2, c=3)`\n\n"
         "or a combination of the two\n\n"
-        "    test(1, 2, c=3)\n\n"
+        "    `test(1, 2, c=3)`\n\n"
         "but with the keyword arguments appearing after all the positional ones.\n"
         "According to Python, you used positional arguments after keyword ones.\n"
     )
@@ -710,11 +710,11 @@ def non_default_arg_follows_default_arg(message="", **kwargs):
         return
     return _(
         "In Python, you can define functions with only positional arguments\n\n"
-        "    def test(a, b, c): ...\n\n"
+        "    `def test(a, b, c): ...`\n\n"
         "or only keyword arguments\n\n"
-        "    def test(a=1, b=2, c=3): ...\n\n"
+        "    `def test(a=1, b=2, c=3): ...`\n\n"
         "or a combination of the two\n\n"
-        "    def test(a, b, c=3): ...\n\n"
+        "    `def test(a, b, c=3): ...`\n\n"
         "but with the keyword arguments appearing after all the positional ones.\n"
         "According to Python, you used positional arguments after keyword ones.\n"
     )
@@ -729,7 +729,7 @@ def python2_print(message="", **kwargs):
         return
     message = message[59:-2]
     return _(
-        "Perhaps you need to type print({message})?\n\n"
-        "In older version of Python, 'print' was a keyword.\n"
-        "Now, 'print' is a function; you need to use parentheses to call it.\n"
+        "Perhaps you need to type `print({message})`?\n\n"
+        "In older version of Python, `print` was a keyword.\n"
+        "Now, `print` is a function; you need to use parentheses to call it.\n"
     ).format(message=message)

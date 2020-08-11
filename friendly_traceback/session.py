@@ -14,7 +14,7 @@ try:
 
     dark_background_theme = Theme(
         {
-            "markdown.h1.border": "deep_sky_blue1",
+            "markdown.h1.border": "bold yellow",
             "markdown.h1": "bold red",
             "markdown.h2": "bold green",
             "markdown.link": "white",

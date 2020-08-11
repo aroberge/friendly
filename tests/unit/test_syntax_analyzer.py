@@ -119,17 +119,17 @@ def test_eol_while_scanning_string_literal():
 
 
 def test_assign_to_keyword():
-    assert "None is a constant in Python; you cannot assign it a value" in find(
+    assert "`None` is a constant in Python; you cannot assign it a value" in find(
         message="can't assign to keyword", lines=["None = 1"]
     )
-    assert "assign a value to the Python keyword 'def'" in find(lines=["def = 1"])
+    assert "assign a value to the Python keyword `def`" in find(lines=["def = 1"])
 
 
 def test_confused_elif():
-    assert "wrote 'else if' instead" in find(lines=["    else if"])
-    assert "wrote 'else if' instead" in find(lines=["else if whatever:"])
-    assert "wrote 'elseif' instead" in find(lines=["    elseif"])
-    assert "wrote 'elseif' instead" in find(lines=["elseif True:"])
+    assert "wrote `else if` instead" in find(lines=["    else if"])
+    assert "wrote `else if` instead" in find(lines=["else if whatever:"])
+    assert "wrote `elseif` instead" in find(lines=["    elseif"])
+    assert "wrote `elseif` instead" in find(lines=["elseif True:"])
 
 
 def test_import_from():
@@ -137,7 +137,7 @@ def test_import_from():
 
 
 def test_missing_colon():
-    result = "forgot to add a colon ':' at the end"
+    result = "forgot to add a colon `:` at the end"
     assert result in find(lines=["class True"])
     assert result in find(lines=["if True"])
     assert result in find(lines=["elif True"])
@@ -163,7 +163,7 @@ def test_look_for_missing_bracket():
 
 
 def test_keyword_as_attribute():
-    assert "cannot use the Python keyword True as" in find(lines=["obj.True = 1"])
+    assert "cannot use the Python keyword `True` as" in find(lines=["obj.True = 1"])
 
 
 def test_misplaced_quote():
@@ -181,7 +181,7 @@ def test_missing_comma():
 
 def test_equal_sign_instead_of_colon():
     # inside look_for_missing_bracket
-    assert "used an equal sign '=' instead of a colon ':'" in find(
+    assert "used an equal sign `=` instead of a colon `:`" in find(
         lines=["a = {'a' = 1}"], linenumber=1, offset=8
     )
 

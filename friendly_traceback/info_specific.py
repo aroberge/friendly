@@ -191,7 +191,7 @@ def name_error(etype, value):
     # By splitting value using ', we can extract the variable name.
     #
     # May be overwritten in core.set_call_info()
-    return _("In your program, the unknown name is '{var_name}'.\n").format(
+    return _("In your program, the unknown name is `{var_name}`.\n").format(
         var_name=str(value).split("'")[1]
     )
 
