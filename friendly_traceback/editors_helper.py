@@ -163,14 +163,15 @@ def run(filename, lang=None, verbosity=1, args=None):
        to calling check_syntax, it will only be used for the duration
        of this function call.
 
-       Returns False if problems have been found, None otherwise.
+       Returns False if problems have been found, otherwise returns the
+       dict in which the module (filename) was executed.
        """
     if args is not None:
         sys.argv = [filename]
         args = [arg.strip() for arg in args.split(" ")]
         # TODO: add extensive tests for this
         sys.argv.extend([arg for arg in args if arg])  # remove empty strings
-    exec_code(path=filename, lang=lang, verbosity=verbosity)
+    return exec_code(path=filename, lang=lang, verbosity=verbosity)
 
 
 def _temp_set_lang(lang):
