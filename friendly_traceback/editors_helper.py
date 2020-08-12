@@ -107,9 +107,10 @@ def check_syntax(filename, lang=None):
 
 def exec_code(*, source=None, path=None, verbosity=None, lang=None):
     """This uses check_syntax to see if the code is valid and, if so,
-       executes it into an empty dict as globals. If no exception is
-       raised, this dict is returned. If an exception is raised, an
-       empty dict is returned.
+       executes it into a globals dict containing only
+       ``{"__name__": "__main__"}``.
+       If no SyntaxError exception is raised, this dict is returned;
+       otherwise, an empty dict is returned.
 
        It can either be used on a file, using the ``path`` argument, or
        on some code passed as a string, using the ``source`` argument.
@@ -144,7 +145,7 @@ def exec_code(*, source=None, path=None, verbosity=None, lang=None):
             session.set_verbosity(verbosity)
         explain_traceback()
         _reset(saved_except_hook, saved_lang, saved_verbosity)
-        return {}
+        return my_globals
 
     _reset(saved_except_hook, saved_lang, saved_verbosity)
     return my_globals
@@ -163,8 +164,8 @@ def run(filename, lang=None, verbosity=1, args=None):
        to calling check_syntax, it will only be used for the duration
        of this function call.
 
-       Returns an empty dict if problems have been found, otherwise returns the
-       dict in which the module (filename) was executed.
+       Returns an empty dict if a SyntaxError was raised,
+       otherwise returns the dict in which the module (filename) was executed.
        """
     if args is not None:
         sys.argv = [filename]
