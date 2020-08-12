@@ -9,7 +9,6 @@ command line. You can find more details by doing::
 
 """
 import argparse
-from importlib import import_module
 import platform
 import runpy
 import sys
@@ -125,24 +124,6 @@ Example: --formatter friendly_traceback.formatters.markdown
 )
 
 
-def import_function(dotted_path: str) -> type:
-    """Import a function from a module, given its dotted path.
-    """
-    try:
-        module_path, function_name = dotted_path.rsplit(".", 1)
-    except ValueError as err:
-        raise ImportError("%s doesn't look like a module path" % dotted_path) from err
-
-    module = import_module(module_path)
-
-    try:
-        return getattr(module, function_name)
-    except AttributeError as err:
-        raise ImportError(
-            'Module "%s" does not define a "%s" function' % (module_path, function_name)
-        ) from err
-
-
 def main():
     console_defaults = {"friendly": public_api.Friendly()}
     args = parser.parse_args()
@@ -153,7 +134,7 @@ def main():
     public_api.install(lang=args.lang, level=args.verbosity)
 
     if args.formatter:
-        public_api.set_formatter(import_function(args.formatter))
+        public_api.set_formatter(public_api.import_function(args.formatter))
 
     use_rich = False
     if args.use_rich:

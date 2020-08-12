@@ -19,6 +19,7 @@ made available here and are not part of Friendly-console, please
 file an issue.
 """
 from functools import wraps
+from importlib import import_module
 
 from . import core
 from .session import session
@@ -227,6 +228,27 @@ def print_items():
        It prints each item recorded in a traceback dict.
     """
     session.print_itemized_traceback()
+
+
+@make_public
+def import_function(dotted_path: str) -> type:
+    """Import a function from a module, given its dotted path.
+    """
+    # Required for --formatter flag
+    # Used by HackInScience.org
+    try:
+        module_path, function_name = dotted_path.rsplit(".", 1)
+    except ValueError as err:
+        raise ImportError("%s doesn't look like a module path" % dotted_path) from err
+
+    module = import_module(module_path)
+
+    try:
+        return getattr(module, function_name)
+    except AttributeError as err:
+        raise ImportError(
+            'Module "%s" does not define a "%s" function' % (module_path, function_name)
+        ) from err
 
 
 class Friendly:
