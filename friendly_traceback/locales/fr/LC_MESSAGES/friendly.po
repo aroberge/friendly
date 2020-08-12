@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-08-11 07:28-0300\n"
-"PO-Revision-Date: 2020-08-11 07:49-0300\n"
+"POT-Creation-Date: 2020-08-11 21:52-0300\n"
+"PO-Revision-Date: 2020-08-11 21:56-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -372,7 +372,7 @@ msgstr ""
 "\n"
 
 #: core.py:501
-msgid "Known identifiers"
+msgid "Known identifiers:"
 msgstr "Identificateurs connus :"
 
 #: core.py:546
@@ -733,45 +733,42 @@ msgstr ""
 
 #: info_variables.py:114 info_variables.py:118
 msgid "The similar name `{name}` was found in the local scope. "
-msgstr ""
+msgstr "Le nom semblable `{name}` a été trouvé dans la portée locale. "
 
 #: info_variables.py:122
 msgid "The Python builtin `{name}` has a similar name. "
-msgstr ""
+msgstr "L'identifiant Python (builtin) `{name}` a un nom semblable. "
 
 #: info_variables.py:126
-msgid ""
-"Instead of writing `{name}`, perhaps you meant one of the following:\n"
-"\n"
+msgid "Instead of writing `{name}`, perhaps you meant one of the following:\n"
 msgstr ""
-"Au lieu d’écrire `{name}`, peut-être que vous vouliez écrire l'un des "
-"attributs suivants :\n"
-"\n"
+"Au lieu d’écrire `{name}`, peut-être que vous vouliez écrire l'un des noms "
+"suivants :\n"
 
-#: info_variables.py:130
-msgid "    Local scope: "
-msgstr "    Identifiant local :"
+#: info_variables.py:131
+msgid "|   Local scope: "
+msgstr "|    Portée locale : "
 
-#: info_variables.py:132
-msgid "    Global scope: "
-msgstr "    Identifiant global :"
+#: info_variables.py:137
+msgid "|   Global scope: "
+msgstr "|    Portée globale : "
 
-#: info_variables.py:134
-msgid "    Python builtins: "
-msgstr "    Identifiant Python (builtins) :"
+#: info_variables.py:143
+msgid "|   Python builtins: "
+msgstr "|    Identifiant Python (builtins) : "
 
-#: info_variables.py:164
+#: info_variables.py:176
 msgid "A type hint found for `{name}` in the local scope.\n"
 msgstr ""
 "Annotation de type trouvée pour `{name}` en tant que variable locale.\n"
 
-#: info_variables.py:167 info_variables.py:180
+#: info_variables.py:179 info_variables.py:192
 msgid ""
 "Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n"
 msgstr ""
 "Peut-être aviez-vous écrit `{name} : {hint}` au lieu de `{name} = {hint}`.\n"
 
-#: info_variables.py:177
+#: info_variables.py:189
 msgid "A type hint found for `{name}` in the global scope.\n"
 msgstr ""
 "Annotation de type trouvée pour `{name}` en tant que variable globale.\n"
@@ -1534,7 +1531,7 @@ msgstr ""
 "Maintenant, `print` est une fonction; vous devez utiliser des parenthèses "
 "pour l'invoquer.\n"
 
-#: session.py:133
+#: session.py:151
 msgid "Verbosity level {level} not valid."
 msgstr "Niveau de verbosité {level} inconnu."
 

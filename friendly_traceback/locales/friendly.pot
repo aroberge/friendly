@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-08-11 07:28-0300\n"
+"POT-Creation-Date: 2020-08-11 21:52-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -276,7 +276,7 @@ msgid ""
 msgstr ""
 
 #: core.py:501
-msgid "Known identifiers"
+msgid "Known identifiers:"
 msgstr ""
 
 #: core.py:546
@@ -541,32 +541,31 @@ msgstr ""
 #: info_variables.py:126
 msgid ""
 "Instead of writing `{name}`, perhaps you meant one of the following:\n"
-"\n"
 msgstr ""
 
-#: info_variables.py:130
-msgid "    Local scope: "
+#: info_variables.py:131
+msgid "|   Local scope: "
 msgstr ""
 
-#: info_variables.py:132
-msgid "    Global scope: "
+#: info_variables.py:137
+msgid "|   Global scope: "
 msgstr ""
 
-#: info_variables.py:134
-msgid "    Python builtins: "
+#: info_variables.py:143
+msgid "|   Python builtins: "
 msgstr ""
 
-#: info_variables.py:164
+#: info_variables.py:176
 msgid ""
 "A type hint found for `{name}` in the local scope.\n"
 msgstr ""
 
-#: info_variables.py:167 info_variables.py:180
+#: info_variables.py:179 info_variables.py:192
 msgid ""
 "Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n"
 msgstr ""
 
-#: info_variables.py:177
+#: info_variables.py:189
 msgid ""
 "A type hint found for `{name}` in the global scope.\n"
 msgstr ""
@@ -1081,7 +1080,7 @@ msgid ""
 "Now, `print` is a function; you need to use parentheses to call it.\n"
 msgstr ""
 
-#: session.py:133
+#: session.py:151
 msgid "Verbosity level {level} not valid."
 msgstr ""
 
