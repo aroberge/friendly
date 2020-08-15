@@ -14,6 +14,7 @@ from .core import explain_traceback
 from .source_cache import cache
 from .my_gettext import current_lang
 from .session import session
+from .console import start_console
 
 
 def advanced_check_syntax(
@@ -135,9 +136,9 @@ def exec_code(*, source=None, path=None, verbosity=None, lang=None):
     saved_except_hook, saved_verbosity = _save_settings()
     saved_lang = _temp_set_lang(lang)
 
-    my_globals = {"__name__": "__main__"}
+    module_globals = {"__name__": "__main__"}
     try:
-        exec(code, my_globals)
+        exec(code, module_globals)
     except Exception:
         if verbosity is None:
             session.set_verbosity(1)  # our default
@@ -145,13 +146,13 @@ def exec_code(*, source=None, path=None, verbosity=None, lang=None):
             session.set_verbosity(verbosity)
         explain_traceback()
         _reset(saved_except_hook, saved_lang, saved_verbosity)
-        return my_globals
+        return module_globals
 
     _reset(saved_except_hook, saved_lang, saved_verbosity)
-    return my_globals
+    return module_globals
 
 
-def run(filename, lang=None, verbosity=1, args=None):
+def run(filename, lang=None, verbosity=1, args=None, console=False):
     """Given a filename (relative or absolute path), this function uses the
        more complex exec_code() to run a file.
 
@@ -172,7 +173,11 @@ def run(filename, lang=None, verbosity=1, args=None):
         args = [arg.strip() for arg in args.split(" ")]
         # TODO: add extensive tests for this
         sys.argv.extend([arg for arg in args if arg])  # remove empty strings
-    return exec_code(path=filename, lang=lang, verbosity=verbosity)
+    module_globals = exec_code(path=filename, lang=lang, verbosity=verbosity)
+    if console:
+        start_console(local_vars=module_globals)
+    else:
+        return module_globals
 
 
 def _temp_set_lang(lang):

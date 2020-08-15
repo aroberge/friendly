@@ -13,15 +13,19 @@ import platform
 import runpy
 import sys
 
+from .version import __version__
 from . import console
 from . import public_api
 from .session import session
 from .friendly_rich import rich_available
 
+try:
 
-versions = "Friendly-traceback version {}. [Python version: {}]\n".format(
-    public_api.__version__, platform.python_version()
-)
+    versions = "Friendly-traceback version {}. [Python version: {}]\n".format(
+        __version__, platform.python_version()
+    )
+except AttributeError:  # Weird circular import when using Idle
+    versions = print("Circular import")
 
 parser = argparse.ArgumentParser(
     formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -125,7 +129,7 @@ def main():
     console_defaults = {"friendly": public_api.Friendly()}
     args = parser.parse_args()
     if args.version:
-        print(f"Friendly-traceback version {public_api.__version__}")
+        print(f"Friendly-traceback version {__version__}")
         sys.exit()
 
     public_api.install(lang=args.lang, level=args.verbosity)
