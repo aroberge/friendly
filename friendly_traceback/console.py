@@ -41,6 +41,8 @@ class FriendlyConsole(InteractiveConsole):
             self.rich_console = False
 
         super().__init__(locals=locals)
+        self.check_for_builtins_changes()
+        self.check_for_annotations()
 
     def push(self, line):
         """Push a line to the interpreter.
@@ -132,8 +134,8 @@ class FriendlyConsole(InteractiveConsole):
         except Exception:
             public_api.explain()
 
-        self.check_for_annotations()
         self.check_for_builtins_changes()
+        self.check_for_annotations()
         self.old_locals = copy.copy(self.locals)
 
     def check_for_annotations(self):
@@ -188,6 +190,8 @@ class FriendlyConsole(InteractiveConsole):
         _ = current_lang.translate
         changed = []
         for name in self.saved_builtins:
+            if name.startswith("__") and name.endswith("__"):
+                continue
             if name in self.locals and self.saved_builtins[name] != self.locals[name]:
                 warning = _(
                     "Warning: you have redefined the python builtin `{name}`"

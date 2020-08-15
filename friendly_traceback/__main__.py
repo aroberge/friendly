@@ -61,7 +61,8 @@ parser.add_argument(
     "source",
     nargs="?",
     help="""Name of the script to be run as though it was the main module
-    run by Python, so that __name__ does equal '__main__'.
+    run by Python, so that __name__ does equal '__main__' unless
+    --import-only is specified.
     """,
 )
 
@@ -146,18 +147,15 @@ def main():
         if sys.flags.interactive:
             try:
                 if args.import_only:
-                    module = __import__(args.source)
-                    module_dict = {}
-                    for var in dir(module):
-                        module_dict[var] = getattr(module, var)
+                    module_dict = runpy.run_path(args.source)
                 else:
-                    module_dict = runpy.run_module(args.source, run_name="__main__")
+                    module_dict = runpy.run_path(args.source, run_name="__main__")
                 console_defaults.update(module_dict)
             except Exception:
                 public_api.explain()
             console.start_console(local_vars=console_defaults, use_rich=use_rich)
         elif args.import_only:
-            module = __import__(args.source)
+            runpy.run_path(args.source)
         else:
             sys.argv = [args.source, *args.args]
             runpy.run_path(args.source, run_name="__main__")
