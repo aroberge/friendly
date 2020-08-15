@@ -8,8 +8,9 @@ friendly_traceback.png
 # Intermediate data
 tests/syntax/data*.py
 
-# Simple test file
+# Simple test files
 test.py
+ignore.py
 
 #=====================
 # Byte-compiled / optimized / DLL files

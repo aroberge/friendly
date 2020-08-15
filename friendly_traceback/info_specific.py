@@ -113,7 +113,7 @@ def import_error(etype, value):
             "expected to be found is `{module}`.\n"
         ).format(name=name, module=module)
     else:
-        return _("The object that could not be imported is '{name}'.\n").format(
+        return _("The object that could not be imported is `{name}`.\n").format(
             name=name
         )
 

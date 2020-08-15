@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-08-15 06:51-0300\n"
+"POT-Creation-Date: 2020-08-15 08:05-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -196,20 +196,20 @@ msgid ""
 "Perhaps you had a missing comma before the tuple.\n"
 msgstr ""
 
-#: console.py:153
+#: console.py:156
 msgid "Warning: you added a type hint to the python builtin `{name}`."
 msgstr ""
 
-#: console.py:165
+#: console.py:168
 msgid ""
 "Warning: you used a type hint for a variable without assigning it a value.\n"
 msgstr ""
 
-#: console.py:171
+#: console.py:174
 msgid "Perhaps you meant `{name} = {hint}`."
 msgstr ""
 
-#: console.py:192
+#: console.py:197
 msgid "Warning: you have redefined the python builtin `{name}`"
 msgstr ""
 
@@ -481,7 +481,7 @@ msgstr ""
 
 #: info_specific.py:116
 msgid ""
-"The object that could not be imported is '{name}'.\n"
+"The object that could not be imported is `{name}`.\n"
 msgstr ""
 
 #: info_specific.py:127

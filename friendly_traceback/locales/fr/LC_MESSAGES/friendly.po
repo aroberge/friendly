@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-08-15 06:51-0300\n"
-"PO-Revision-Date: 2020-08-15 06:52-0300\n"
+"POT-Creation-Date: 2020-08-15 08:05-0300\n"
+"PO-Revision-Date: 2020-08-15 08:06-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -263,24 +263,24 @@ msgstr ""
 "que Python a pris comme indiquant une invocation de fonction.\n"
 "Il est possible que vous ayez oublié d'écrire une virgule avant le tuple.\n"
 
-#: console.py:153
+#: console.py:156
 msgid "Warning: you added a type hint to the python builtin `{name}`."
 msgstr ""
 "Attention : vous avez utilisé des annotations de type pour l'identifiant "
 "Python (builtin) `{name}`."
 
-#: console.py:165
+#: console.py:168
 msgid ""
 "Warning: you used a type hint for a variable without assigning it a value.\n"
 msgstr ""
 "Attention : vous avez utilisé une annotation de type pour une variable sans "
 "lui attribuer une valeur.\n"
 
-#: console.py:171
+#: console.py:174
 msgid "Perhaps you meant `{name} = {hint}`."
 msgstr "Peut-être que vous vouliez plutôt écrire :`{name} = {literal}`."
 
-#: console.py:192
+#: console.py:197
 msgid "Warning: you have redefined the python builtin `{name}`"
 msgstr ""
 "Attention : vous avez redéfini l'identifiant Python (builtin) `{name}`."
@@ -674,8 +674,8 @@ msgstr ""
 "Le module ou le paquet d'où il devait être importé est `{module}`.\n"
 
 #: info_specific.py:116
-msgid "The object that could not be imported is '{name}'.\n"
-msgstr "L’objet qui n’a pas pu être importé est' {name} '.\n"
+msgid "The object that could not be imported is `{name}`.\n"
+msgstr "L’objet qui n’a pas pu être importé est `{name} `.\n"
 
 #: info_specific.py:127
 msgid ""
