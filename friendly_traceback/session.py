@@ -6,50 +6,14 @@ import sys
 
 from .my_gettext import current_lang
 from . import formatters
-
-try:
-    from rich.console import Console, Segment
-    from rich.markdown import Markdown, BlockQuote
-    from rich.theme import Theme
-
-    def _patch(self, console, options):
-        """Formatting hack to be able to have consecutive block quotes
-           without lines in between. Used for displaying possible typos
-           in a block. A further correction is done in the rich_markdown
-           formatter to insert a blank line after the 2 or 3 block quotes
-           shown.
-        """
-        render_options = options.update(width=options.max_width - 4)
-        lines = console.render_lines(self.elements, render_options, style=self.style)
-        style = self.style
-        padding = Segment("       ", style)
-        for line in lines:
-            yield padding
-            yield from line
-
-    BlockQuote.__rich_console__ = _patch
-
-    dark_background_theme = Theme(
-        {
-            "markdown.h1.border": "bold yellow",
-            "markdown.h1": "bold red",
-            "markdown.h2": "bold green",
-            "markdown.link": "white",
-            "markdown.code": "deep_sky_blue1",
-            "markdown.h3": "bold red underline",
-            "markdown.block_quote": "bold yellow",
-        }
-    )
-    console = Console(theme=dark_background_theme)
-except ImportError:
-    pass
+from . import friendly_rich
 
 
 def _write_err(text):
     """Default writer"""
     if session.use_rich:
-        md = Markdown(text)
-        console.print(md)
+        md = friendly_rich.Markdown(text)
+        friendly_rich.console.print(md)
     else:
         sys.stderr.write(text)
 

@@ -14,14 +14,7 @@ from . import public_api
 from . import source_cache
 from .my_gettext import current_lang
 
-
-try:
-    from rich.console import Console
-
-    _rich_enabled = True
-except ImportError:
-    _rich_enabled = False
-
+from . import friendly_rich
 
 BANNER = "Friendly Console version {}. [Python version: {}]\n".format(
     public_api.__version__, platform.python_version()
@@ -40,8 +33,8 @@ class FriendlyConsole(InteractiveConsole):
         self.counter = 1
         self.hints = {}  # Keeps track of type hints
         self.old_locals = {}
-        if _rich_enabled and use_rich:
-            self.rich_console = Console()
+        if friendly_rich.rich_available and use_rich:
+            self.rich_console = friendly_rich.console
         else:
             self.rich_console = False
 

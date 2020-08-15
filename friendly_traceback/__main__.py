@@ -16,12 +16,8 @@ import sys
 from . import console
 from . import public_api
 from .session import session
+from .friendly_rich import rich_available
 
-rich_available = True
-try:
-    import rich  # noqa
-except ImportError:
-    rich_available = False
 
 versions = "Friendly-traceback version {}. [Python version: {}]\n".format(
     public_api.__version__, platform.python_version()
