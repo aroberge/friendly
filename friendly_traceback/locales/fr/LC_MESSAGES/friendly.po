@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-08-15 00:08-0300\n"
-"PO-Revision-Date: 2020-08-15 00:09-0300\n"
+"POT-Creation-Date: 2020-08-15 06:51-0300\n"
+"PO-Revision-Date: 2020-08-15 06:52-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -263,24 +263,24 @@ msgstr ""
 "que Python a pris comme indiquant une invocation de fonction.\n"
 "Il est possible que vous ayez oublié d'écrire une virgule avant le tuple.\n"
 
-#: console.py:152
-msgid "Warning: you added a type hint to the python builtin '{name}'."
+#: console.py:153
+msgid "Warning: you added a type hint to the python builtin `{name}`."
 msgstr ""
 "Attention : vous avez utilisé des annotations de type pour l'identifiant "
-"Python (builtin) '{name}'."
+"Python (builtin) `{name}`."
 
-#: console.py:160
+#: console.py:165
 msgid ""
 "Warning: you used a type hint for a variable without assigning it a value.\n"
 msgstr ""
 "Attention : vous avez utilisé une annotation de type pour une variable sans "
 "lui attribuer une valeur.\n"
 
-#: console.py:163
+#: console.py:171
 msgid "Perhaps you meant `{name} = {hint}`."
 msgstr "Peut-être que vous vouliez plutôt écrire :`{name} = {literal}`."
 
-#: console.py:184
+#: console.py:192
 msgid "Warning: you have redefined the python builtin `{name}`"
 msgstr ""
 "Attention : vous avez redéfini l'identifiant Python (builtin) `{name}`."
