@@ -65,8 +65,7 @@ parser.add_argument(
     "source",
     nargs="?",
     help="""Name of the script to be run as though it was the main module
-    run by Python, so that __name__ does equal '__main__' unless
-    --import-only is specified.
+    run by Python, so that __name__ does equal '__main__'.
     """,
 )
 
@@ -93,13 +92,6 @@ parser.add_argument(
     help="""This sets the "verbosity" level, that is the amount of information
             provided.
          """,
-)
-
-parser.add_argument(
-    "--import-only",
-    help="""Imports the module instead of running it as a script.
-         """,
-    action="store_true",
 )
 
 parser.add_argument(
@@ -150,16 +142,11 @@ def main():
         public_api.exclude_file_from_traceback(runpy.__file__)
         if sys.flags.interactive:
             try:
-                if args.import_only:
-                    module_dict = runpy.run_path(args.source)
-                else:
-                    module_dict = runpy.run_path(args.source, run_name="__main__")
+                module_dict = runpy.run_path(args.source, run_name="__main__")
                 console_defaults.update(module_dict)
             except Exception:
                 public_api.explain()
             console.start_console(local_vars=console_defaults, use_rich=use_rich)
-        elif args.import_only:
-            runpy.run_path(args.source)
         else:
             sys.argv = [args.source, *args.args]
             runpy.run_path(args.source, run_name="__main__")
