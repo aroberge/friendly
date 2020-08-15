@@ -17,5 +17,6 @@ del _valid_version
 del _sys
 del _warnings
 
+from .version import __version__  # noqa
 from .public_api import *  # noqa
 from .console import FriendlyConsole, start_console  # noqa

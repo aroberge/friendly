@@ -10,6 +10,7 @@ import platform
 from code import InteractiveConsole
 import codeop  # need to import to exclude from tracebacks
 
+from .version import __version__
 from . import public_api
 from . import source_cache
 from .my_gettext import current_lang
@@ -17,7 +18,7 @@ from .my_gettext import current_lang
 from . import friendly_rich
 
 BANNER = "Friendly Console version {}. [Python version: {}]\n".format(
-    public_api.__version__, platform.python_version()
+    __version__, platform.python_version()
 )
 
 
