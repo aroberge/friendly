@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-08-15 08:05-0300\n"
-"PO-Revision-Date: 2020-08-15 08:06-0300\n"
+"POT-Creation-Date: 2020-08-15 11:36-0300\n"
+"PO-Revision-Date: 2020-08-15 11:38-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -277,11 +277,13 @@ msgstr ""
 "lui attribuer une valeur.\n"
 
 #: console.py:174
-msgid "Perhaps you meant `{name} = {hint}`."
-msgstr "Peut-être que vous vouliez plutôt écrire :`{name} = {literal}`."
+msgid "Instead of `{name} : {hint}`, perhaps you meant `{name} = {hint}`."
+msgstr ""
+"Au lieu de `{name} : {hint}`, peut-être que vous vouliez plutôt écrire :"
+"`{name} = {literal}`."
 
 #: console.py:197
-msgid "Warning: you have redefined the python builtin `{name}`"
+msgid "Warning: you have redefined the python builtin `{name}`."
 msgstr ""
 "Attention : vous avez redéfini l'identifiant Python (builtin) `{name}`."
 

@@ -152,7 +152,7 @@ def exec_code(*, source=None, path=None, verbosity=None, lang=None):
     return module_globals
 
 
-def run(filename, lang=None, verbosity=1, args=None, console=False):
+def run(filename, lang=None, verbosity=1, args=None, console=True):
     """Given a filename (relative or absolute path), this function uses the
        more complex exec_code() to run a file.
 
@@ -165,8 +165,13 @@ def run(filename, lang=None, verbosity=1, args=None, console=False):
        to calling check_syntax, it will only be used for the duration
        of this function call.
 
-       Returns an empty dict if a SyntaxError was raised,
-       otherwise returns the dict in which the module (filename) was executed.
+       If console is set to False, run() returns an empty dict if a SyntaxError
+       was raised, otherwise returns the dict in which the module (filename)
+       was executed.
+
+       If console is set to True (the default), the execution continues
+       as an interactive session in a Friendly console, with the module
+       dict being the locals dict.
        """
     if args is not None:
         sys.argv = [filename]

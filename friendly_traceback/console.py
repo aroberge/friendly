@@ -17,7 +17,7 @@ from .my_gettext import current_lang
 
 from . import friendly_rich
 
-BANNER = "Friendly Console version {}. [Python version: {}]\n".format(
+BANNER = "\nFriendly Console version {}. [Python version: {}]\n".format(
     __version__, platform.python_version()
 )
 
@@ -171,9 +171,9 @@ class FriendlyConsole(InteractiveConsole):
                     wrote_title = True
                     if self.rich_console:
                         header = "#### " + header
-                suggest = _("Perhaps you meant `{name} = {hint}`.").format(
-                    name=name, hint=hints[name]
-                )
+                suggest = _(
+                    "Instead of `{name} : {hint}`, perhaps you meant `{name} = {hint}`."
+                ).format(name=name, hint=hints[name])
                 if self.rich_console:
                     suggest = "> " + suggest
                 warning = header + suggest
@@ -195,7 +195,7 @@ class FriendlyConsole(InteractiveConsole):
                 continue
             if name in self.locals and self.saved_builtins[name] != self.locals[name]:
                 warning = _(
-                    "Warning: you have redefined the python builtin `{name}`"
+                    "Warning: you have redefined the python builtin `{name}`."
                 ).format(name=name)
                 if self.rich_console:
                     warning = friendly_rich.Markdown("#### " + warning)
