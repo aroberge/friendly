@@ -32,6 +32,9 @@ class FriendlyConsole(InteractiveConsole):
         self.fake_filename = "<friendly-console:%d>"
         self.counter = 1
         self.old_locals = {}
+        self.saved_builtins = {}
+        for name in dir(builtins):
+            self.saved_builtins[name] = getattr(builtins, name)
         if friendly_rich.rich_available and use_rich:
             self.rich_console = friendly_rich.console
         else:
@@ -130,6 +133,7 @@ class FriendlyConsole(InteractiveConsole):
             public_api.explain()
 
         self.check_for_annotations()
+        self.check_for_builtins_changes()
         self.old_locals = copy.copy(self.locals)
 
     def check_for_annotations(self):
@@ -170,6 +174,25 @@ class FriendlyConsole(InteractiveConsole):
                 else:
                     print(warning)
         self.locals["__annotations__"] = {}
+
+    def check_for_builtins_changes(self):
+        """Warning users if they assign a value to a builtin"""
+        _ = current_lang.translate
+        changed = []
+        for name in self.saved_builtins:
+            if name in self.locals and self.saved_builtins[name] != self.locals[name]:
+                warning = _(
+                    "Warning: you have redefined the python builtin `{name}`"
+                ).format(name=name)
+                if self.rich_console:
+                    warning = friendly_rich.Markdown("### " + warning)
+                    self.rich_console.print(warning)
+                else:
+                    print(warning)
+                changed.append(name)
+
+        for name in changed:
+            self.saved_builtins[name] = self.locals[name]
 
     # The following two methods are never used in this class, but they are
     # defined in the parent class. The following are the equivalent methods
