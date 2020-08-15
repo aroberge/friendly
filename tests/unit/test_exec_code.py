@@ -31,7 +31,7 @@ def test_exec_code():
 
     assert not friendly.get_output()  # confirm that content was flushed
 
-    assert not friendly.editors_helper.exec_code(source=bad_code_exec)
+    friendly.editors_helper.exec_code(source=bad_code_exec)
     result = friendly.get_output()
     assert "Python exception" in result
     assert "NameError" in result
@@ -66,7 +66,7 @@ def test_exec_code():
     # should leave the previous language unchanged.
 
     friendly.set_lang("en")
-    assert not friendly.editors_helper.exec_code(source=bad_code_exec, lang="fr")
+    friendly.editors_helper.exec_code(source=bad_code_exec, lang="fr")
     result = friendly.get_output()
     assert "Exception Python" in result  # French heading
     assert friendly.get_lang() == "en"
