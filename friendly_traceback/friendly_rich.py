@@ -40,11 +40,12 @@ def init_console():
         {
             "markdown.h1.border": "bold yellow",
             "markdown.h1": "bold red",
-            "markdown.h2": "bold green",
-            "markdown.link": "white",
+            "markdown.h2": "bold red underline",  # Exception message; location header
+            "markdown.h3": "bold green",  # likely cause
+            "markdown.h4": "bold red",  # warning header
+            "markdown.block_quote": "bold yellow",  # variable info, warning info
+            "markdown.link": "white underline",
             "markdown.code": "deep_sky_blue1",
-            "markdown.h3": "bold red underline",
-            "markdown.block_quote": "bold yellow",
         }
     )
     return Console(theme=dark_background_theme)

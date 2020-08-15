@@ -146,27 +146,35 @@ class FriendlyConsole(InteractiveConsole):
         if not hints:
             return
 
+        wrote_title = False
         for name in hints:
             warning = ""
             if name in dir(builtins):
                 warning = _(
-                    "Warning: you added a type hint to the python builtin '{name}'."
+                    "Warning: you added a type hint to the python builtin `{name}`."
                 ).format(name=name)
+                if self.rich_console:
+                    warning = "#### " + warning
             elif (
                 name not in self.locals
                 or name in self.old_locals
                 and self.old_locals[name] == self.locals[name]
             ):
-                warning = _(
-                    "Warning: you used a type hint for a variable without assigning it a value.\n"
-                )
+                header = ""
+                if not wrote_title:
+                    header = _(
+                        "Warning: you used a type hint for a variable without assigning it a value.\n"
+                    )
+                    wrote_title = True
+                    if self.rich_console:
+                        header = "#### " + header
                 suggest = _("Perhaps you meant `{name} = {hint}`.").format(
                     name=name, hint=hints[name]
                 )
                 if self.rich_console:
-                    warning = "### " + warning + "## " + suggest
-                else:
-                    warning += suggest
+                    suggest = "> " + suggest
+                warning = header + suggest
+
             if warning:
                 if self.rich_console:
                     warning = friendly_rich.Markdown(warning)
@@ -185,7 +193,7 @@ class FriendlyConsole(InteractiveConsole):
                     "Warning: you have redefined the python builtin `{name}`"
                 ).format(name=name)
                 if self.rich_console:
-                    warning = friendly_rich.Markdown("### " + warning)
+                    warning = friendly_rich.Markdown("#### " + warning)
                     self.rich_console.print(warning)
                 else:
                     print(warning)
