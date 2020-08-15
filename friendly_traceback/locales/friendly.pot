@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-08-11 21:52-0300\n"
+"POT-Creation-Date: 2020-08-14 23:04-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -196,12 +196,12 @@ msgid ""
 "Perhaps you had a missing comma before the tuple.\n"
 msgstr ""
 
-#: console.py:159
+#: console.py:153
 msgid "Warning: you added a type hint to the python builtin '{name}'."
 msgstr ""
 
-#: console.py:169
-msgid "Warning: you used type hints. Perhaps you meant {name} = {hint}."
+#: console.py:163
+msgid "Warning: you used a type hint for a variable. Perhaps you meant {name} = {hint}."
 msgstr ""
 
 #: core.py:198
@@ -1080,7 +1080,7 @@ msgid ""
 "Now, `print` is a function; you need to use parentheses to call it.\n"
 msgstr ""
 
-#: session.py:151
+#: session.py:115
 msgid "Verbosity level {level} not valid."
 msgstr ""
 

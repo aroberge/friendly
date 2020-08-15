@@ -31,7 +31,6 @@ class FriendlyConsole(InteractiveConsole):
         public_api.exclude_file_from_traceback(codeop.__file__)
         self.fake_filename = "<friendly-console:%d>"
         self.counter = 1
-        self.hints = {}  # Keeps track of type hints
         self.old_locals = {}
         if friendly_rich.rich_available and use_rich:
             self.rich_console = friendly_rich.console
@@ -140,30 +139,32 @@ class FriendlyConsole(InteractiveConsole):
             return
 
         hints = self.locals["__annotations__"]
-        if not hints or hints == self.hints:
+        if not hints:
             return
 
         for name in hints:
             if name in self.hints and hints[name] == self.hints[name]:
                 continue
 
+            message = ""
             if name in dir(builtins):
-                print(
-                    _(
-                        "Warning: you added a type hint to the python builtin '{name}'."
-                    ).format(name=name)
-                )
+                message = _(
+                    "Warning: you added a type hint to the python builtin '{name}'."
+                ).format(name=name)
             elif (
                 name not in self.locals
                 or name in self.old_locals
                 and self.old_locals[name] == self.locals[name]
             ):
-                print(
-                    _(
-                        "Warning: you used type hints. Perhaps you meant {name} = {hint}."
-                    ).format(name=name, hint=hints[name])
-                )
-        self.hints = copy.copy(hints)
+                message = _(
+                    "Warning: you used a type hint for a variable. Perhaps you meant {name} = {hint}."
+                ).format(name=name, hint=hints[name])
+            if message:
+                if self.rich_console:
+                    self.rich_console.print("[red]" + message)
+                else:
+                    print(message)
+        self.locals["__annotations__"] = {}
 
     # The following two methods are never used in this class, but they are
     # defined in the parent class. The following are the equivalent methods

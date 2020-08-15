@@ -115,7 +115,7 @@ def edit_distance(word_with_typo, words):
     # retain those that are at a distance of 1
     similar_words = []
     for word in words:
-        if len(word) == 1:
+        if word == "_":
             continue
         if _leven(word_with_typo, word, 2) == 1:
             similar_words.append(word)

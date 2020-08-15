@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-08-11 21:52-0300\n"
-"PO-Revision-Date: 2020-08-11 21:56-0300\n"
+"POT-Creation-Date: 2020-08-14 23:04-0300\n"
+"PO-Revision-Date: 2020-08-14 23:05-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -263,17 +263,19 @@ msgstr ""
 "que Python a pris comme indiquant une invocation de fonction.\n"
 "Il est possible que vous ayez oublié d'écrire une virgule avant le tuple.\n"
 
-#: console.py:159
+#: console.py:153
 msgid "Warning: you added a type hint to the python builtin '{name}'."
 msgstr ""
 "Attention : vous avez utilisé des annotations de type pour l'identifiant "
 "Python (builtin) '{name}'."
 
-#: console.py:169
-msgid "Warning: you used type hints. Perhaps you meant {name} = {hint}."
+#: console.py:163
+msgid ""
+"Warning: you used a type hint for a variable. Perhaps you meant {name} = "
+"{hint}."
 msgstr ""
-"Attention : vous avez utilisé des annotations de type. Peut-être vouliez-"
-"vous dire {name} = {hint}."
+"Attention : vous avez utilisé une annotation de type pour une variable. Peut-"
+"être vouliez-vous dire {name} = {hint}."
 
 #: core.py:198
 msgid ""
@@ -1531,7 +1533,7 @@ msgstr ""
 "Maintenant, `print` est une fonction; vous devez utiliser des parenthèses "
 "pour l'invoquer.\n"
 
-#: session.py:151
+#: session.py:115
 msgid "Verbosity level {level} not valid."
 msgstr "Niveau de verbosité {level} inconnu."
 
