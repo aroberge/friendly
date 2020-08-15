@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-08-14 23:04-0300\n"
+"POT-Creation-Date: 2020-08-14 23:46-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -196,90 +196,95 @@ msgid ""
 "Perhaps you had a missing comma before the tuple.\n"
 msgstr ""
 
-#: console.py:153
+#: console.py:148
 msgid "Warning: you added a type hint to the python builtin '{name}'."
 msgstr ""
 
-#: console.py:163
-msgid "Warning: you used a type hint for a variable. Perhaps you meant {name} = {hint}."
+#: console.py:156
+msgid ""
+"Warning: you used a type hint for a variable without assigning it a value.\n"
 msgstr ""
 
-#: core.py:198
+#: console.py:159
+msgid "Perhaps you meant `{name} = {hint}`."
+msgstr ""
+
+#: core.py:193
 msgid ""
 "I suspect that you are using a regular\n"
 "Python console after importing Friendly-traceback.\n"
 "Unfortunately, no further processing can be done.\n"
 msgstr ""
 
-#: core.py:247
+#: core.py:242
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
 "Are you using a regular Python console instead of a Friendly-console?\n"
 msgstr ""
 
-#: core.py:259
+#: core.py:254
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
 msgstr ""
 
-#: core.py:282
+#: core.py:277
 msgid ""
 "Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: core.py:366
+#: core.py:361
 msgid "Python's error message (invalid syntax) cannot be used to identify the problem:"
 msgstr ""
 
-#: core.py:371
+#: core.py:366
 msgid "Likely cause based on the information given by Python:"
 msgstr ""
 
-#: core.py:413
+#: core.py:408
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
 "        regular Python console.\n"
 msgstr ""
 
-#: core.py:419
+#: core.py:414
 msgid ""
 "Problem: source of '{filename}' is not available\n"
 msgstr ""
 
-#: core.py:434
+#: core.py:429
 msgid ""
 "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: core.py:448
+#: core.py:443
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "beyond the location indicated below by --> and ^.\n"
 msgstr ""
 
-#: core.py:454
+#: core.py:449
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
 "It reached the end of the file and expected more content.\n"
 msgstr ""
 
-#: core.py:460
+#: core.py:455
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'\n"
 "for an unspecified reason.\n"
 msgstr ""
 
-#: core.py:501
+#: core.py:496
 msgid "Known identifiers:"
 msgstr ""
 
-#: core.py:546
+#: core.py:541
 msgid "Python exception:"
 msgstr ""
 

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-08-14 23:04-0300\n"
-"PO-Revision-Date: 2020-08-14 23:05-0300\n"
+"POT-Creation-Date: 2020-08-14 23:46-0300\n"
+"PO-Revision-Date: 2020-08-14 23:46-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -263,21 +263,24 @@ msgstr ""
 "que Python a pris comme indiquant une invocation de fonction.\n"
 "Il est possible que vous ayez oublié d'écrire une virgule avant le tuple.\n"
 
-#: console.py:153
+#: console.py:148
 msgid "Warning: you added a type hint to the python builtin '{name}'."
 msgstr ""
 "Attention : vous avez utilisé des annotations de type pour l'identifiant "
 "Python (builtin) '{name}'."
 
-#: console.py:163
+#: console.py:156
 msgid ""
-"Warning: you used a type hint for a variable. Perhaps you meant {name} = "
-"{hint}."
+"Warning: you used a type hint for a variable without assigning it a value.\n"
 msgstr ""
-"Attention : vous avez utilisé une annotation de type pour une variable. Peut-"
-"être vouliez-vous dire {name} = {hint}."
+"Attention : vous avez utilisé une annotation de type pour une variable sans "
+"lui attribuer une valeur.\n"
 
-#: core.py:198
+#: console.py:159
+msgid "Perhaps you meant `{name} = {hint}`."
+msgstr "Peut-être que vous vouliez plutôt écrire :`{name} = {literal}`."
+
+#: core.py:193
 msgid ""
 "I suspect that you are using a regular\n"
 "Python console after importing Friendly-traceback.\n"
@@ -287,7 +290,7 @@ msgstr ""
 "console Python après avoir importé Friendly-traceback.\n"
 "Malheureusement, aucune autre information ne peut être fournie.\n"
 
-#: core.py:247
+#: core.py:242
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -298,7 +301,7 @@ msgstr ""
 "Est-ce que vous utilisez une console Python plutôt que la console \"Friendly"
 "\"?\n"
 
-#: core.py:259
+#: core.py:254
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
@@ -306,11 +309,11 @@ msgstr ""
 "Malheureusement, aucune information supplémentaire n’est disponible:\n"
 "le contenu du fichier '<string>' n’est pas accessible.\n"
 
-#: core.py:282
+#: core.py:277
 msgid "Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr "Exception levée à la ligne {linenumber} du fichier '{filename}'.\n"
 
-#: core.py:366
+#: core.py:361
 msgid ""
 "Python's error message (invalid syntax) cannot be used to identify the "
 "problem:"
@@ -318,11 +321,11 @@ msgstr ""
 "Le message d’erreur de Python (invalid syntax) ne peut pas être utilisé pour "
 "identifier le problème :"
 
-#: core.py:371
+#: core.py:366
 msgid "Likely cause based on the information given by Python:"
 msgstr "Cause probable basée sur les informations données par Python :"
 
-#: core.py:413
+#: core.py:408
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
@@ -332,16 +335,16 @@ msgstr ""
 "        vous devez utiliser la console 'Friendly' et non pas une \n"
 "        console Python régulière.\n"
 
-#: core.py:419
+#: core.py:414
 msgid "Problem: source of '{filename}' is not available\n"
 msgstr "Problème : la source de '{filename}' n'est pas disponible.\n"
 
-#: core.py:434
+#: core.py:429
 msgid "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 "L'exécution s'est arrêtée à la ligne {linenumber} du fichier '{filename}'\n"
 
-#: core.py:448
+#: core.py:443
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -351,7 +354,7 @@ msgstr ""
 "'{filename}'\n"
 "jusqu'à l'endroit indiqué par --> et ^.\n"
 
-#: core.py:454
+#: core.py:449
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
@@ -362,7 +365,7 @@ msgstr ""
 "La fin du fichier a été atteinte et Python s'attendait à voir plus de code.\n"
 "\n"
 
-#: core.py:460
+#: core.py:455
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'\n"
@@ -373,11 +376,11 @@ msgstr ""
 "pour une raison non spécifiée.\n"
 "\n"
 
-#: core.py:501
+#: core.py:496
 msgid "Known identifiers:"
 msgstr "Identificateurs connus :"
 
-#: core.py:546
+#: core.py:541
 msgid "Python exception:"
 msgstr "Exception Python:"
 

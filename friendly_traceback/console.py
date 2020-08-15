@@ -143,12 +143,9 @@ class FriendlyConsole(InteractiveConsole):
             return
 
         for name in hints:
-            if name in self.hints and hints[name] == self.hints[name]:
-                continue
-
-            message = ""
+            warning = ""
             if name in dir(builtins):
-                message = _(
+                warning = _(
                     "Warning: you added a type hint to the python builtin '{name}'."
                 ).format(name=name)
             elif (
@@ -156,14 +153,22 @@ class FriendlyConsole(InteractiveConsole):
                 or name in self.old_locals
                 and self.old_locals[name] == self.locals[name]
             ):
-                message = _(
-                    "Warning: you used a type hint for a variable. Perhaps you meant {name} = {hint}."
-                ).format(name=name, hint=hints[name])
-            if message:
+                warning = _(
+                    "Warning: you used a type hint for a variable without assigning it a value.\n"
+                )
+                suggest = _("Perhaps you meant `{name} = {hint}`.").format(
+                    name=name, hint=hints[name]
+                )
                 if self.rich_console:
-                    self.rich_console.print("[red]" + message)
+                    warning = "### " + warning + "## " + suggest
                 else:
-                    print(message)
+                    warning += suggest
+            if warning:
+                if self.rich_console:
+                    warning = friendly_rich.Markdown(warning)
+                    self.rich_console.print(warning)
+                else:
+                    print(warning)
         self.locals["__annotations__"] = {}
 
     # The following two methods are never used in this class, but they are
