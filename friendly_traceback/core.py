@@ -20,8 +20,6 @@ from .path_info import is_excluded_file
 from .friendly_exception import FriendlyException
 
 
-hack = {"found NameError cause": False}
-
 # The following is the function called `explain` in public_api.py
 
 
@@ -148,9 +146,6 @@ def get_traceback_info(etype, value, tb, write_err):
     returns the result in a dict.
     """
     _ = current_lang.translate
-
-    hack["found NameError cause"] = False
-
     if issubclass(etype, FriendlyException):
         write_err(str(value))
         return {}
