@@ -56,7 +56,7 @@ def init_console():
             "markdown.h2": "bold red underline",  # Exception message; location header
             "markdown.h3": "bold green",  # likely cause
             "markdown.h4": "bold red",  # warning header
-            "markdown.link": "white underline",
+            "markdown.link": "bold yellow underline",
             "markdown.code": "deep_sky_blue1",
         }
     )
