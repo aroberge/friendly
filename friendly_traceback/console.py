@@ -199,6 +199,16 @@ class FriendlyConsole(InteractiveConsole):
         for name in self.saved_builtins:
             if name.startswith("__") and name.endswith("__"):
                 continue
+
+            if (
+                name == "pow"
+                and "cos" in self.locals
+                and "cosh" in self.locals
+                and "pi" in self.locals
+            ):
+                # we likely did 'from math import *' which redefines pow;
+                # no warning needed in this case
+                continue
             if name in self.locals and self.saved_builtins[name] != self.locals[name]:
                 warning = _(
                     "Warning: you have redefined the python builtin `{name}`."
