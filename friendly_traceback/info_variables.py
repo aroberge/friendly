@@ -30,6 +30,8 @@ def get_var_info(line, frame):
                 result = format_var_info(tok, loc)
             elif name in glob:
                 result = format_var_info(tok, glob, _global=True)
+            elif name in dir(builtins):
+                result = format_var_info(tok, builtins, _builtins=True)
             if result:
                 names_info.append(result)
 
@@ -38,7 +40,7 @@ def get_var_info(line, frame):
     return "\n".join(names_info)
 
 
-def format_var_info(tok, _dict, _global=""):
+def format_var_info(tok, _dict, _global="", _builtins=""):
     """Formats the variable information so that it fits on a single line
        for each variable.
 
@@ -52,12 +54,17 @@ def format_var_info(tok, _dict, _global=""):
        This can be useful information in case of IndexError and possibly
        others.
     """
+    _ = current_lang.translate
     MAX_LENGTH = 45
     length_info = ""
     if _global:
         _global = "global "
     name = tok.string
-    obj = _dict[name]
+
+    if _builtins:
+        obj = getattr(_dict, name)
+    else:
+        obj = _dict[name]
     try:
         value = repr(obj)
     except Exception:
