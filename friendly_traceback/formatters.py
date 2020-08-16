@@ -113,7 +113,7 @@ def _markdown(info, level, rich=False):
         "exception_raised_header": ("## ", ""),
         "exception_raised_source": ("```python\n", "\n```"),
         "exception_raised_variables_header": ("### ", ""),
-        "exception_raised_variables": ("```python\n", "\n```"),
+        "exception_raised_variables": ("", ""),
         "simulated_python_traceback": ("```python\n", "\n```"),
         "original_python_traceback": ("```python\n", "\n```"),
     }
@@ -149,6 +149,12 @@ def _markdown(info, level, rich=False):
                     .replace("'\n", "`'\n")
                     .replace("'.", "`'.")
                 )
+
+            if item.endswith("variables"):
+                parts = content.split(":")
+                if len(parts) > 1:
+                    if parts[1].strip().startswith("<"):
+                        content = content.replace("<", "'<").replace(">", ">'")
 
             prefix, suffix = markdown_items[item]
             result.append(prefix + content + suffix)
