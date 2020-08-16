@@ -149,13 +149,21 @@ class FriendlyConsole(InteractiveConsole):
         if not hints:
             return
 
+        warning_builtins = _(
+            "Warning: you added a type hint to the python builtin `{name}`."
+        )
+        header_warning = _(
+            "Warning: you used a type hint for a variable without assigning it a value.\n"
+        )
+        suggest_str = _(
+            "Instead of `{name} : {hint}`, perhaps you meant `{name} = {hint}`."
+        )
+
         wrote_title = False
         for name in hints:
             warning = ""
             if name in dir(builtins):
-                warning = _(
-                    "Warning: you added a type hint to the python builtin `{name}`."
-                ).format(name=name)
+                warning = warning_builtins.format(name=name)
                 if self.rich_console:
                     warning = "#### " + warning
             elif (
@@ -165,15 +173,11 @@ class FriendlyConsole(InteractiveConsole):
             ):
                 header = ""
                 if not wrote_title:
-                    header = _(
-                        "Warning: you used a type hint for a variable without assigning it a value.\n"
-                    )
+                    header = header_warning
                     wrote_title = True
                     if self.rich_console:
                         header = "#### " + header
-                suggest = _(
-                    "Instead of `{name} : {hint}`, perhaps you meant `{name} = {hint}`."
-                ).format(name=name, hint=hints[name])
+                suggest = suggest_str.format(name=name, hint=hints[name])
                 if self.rich_console:
                     suggest = "> " + suggest
                 warning = header + suggest
