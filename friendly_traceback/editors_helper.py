@@ -152,7 +152,7 @@ def exec_code(*, source=None, path=None, verbosity=None, lang=None):
     return module_globals
 
 
-def run(filename, lang=None, verbosity=1, args=None, console=True):
+def run(filename, lang=None, verbosity=1, args=None, console=True, use_rich=False):
     """Given a filename (relative or absolute path), this function uses the
        more complex exec_code() to run a file.
 
@@ -180,7 +180,7 @@ def run(filename, lang=None, verbosity=1, args=None, console=True):
         sys.argv.extend([arg for arg in args if arg])  # remove empty strings
     module_globals = exec_code(path=filename, lang=lang, verbosity=verbosity)
     if console:
-        start_console(local_vars=module_globals)
+        start_console(local_vars=module_globals, use_rich=use_rich)
     else:
         return module_globals
 
