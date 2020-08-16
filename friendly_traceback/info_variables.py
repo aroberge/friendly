@@ -128,19 +128,19 @@ def get_similar_var_names(name, frame):
     ).format(name=name)
     if similar["locals"]:
         message += (
-            _("|   Local scope: ")
+            _("*   Local scope: ")
             + str(similar["locals"])[1:-1].replace("'", "`")
             + "\n"
         )
     if similar["globals"]:
         message += (
-            _("|   Global scope: ")
+            _("*   Global scope: ")
             + str(similar["globals"])[1:-1].replace("'", "`")
             + "\n"
         )
     if similar["builtins"]:
         message += (
-            _("|   Python builtins: ")
+            _("*   Python builtins: ")
             + str(similar["builtins"])[1:-1].replace("'", "`")
             + "\n"
         )

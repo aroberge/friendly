@@ -18,14 +18,12 @@ from . import console
 from . import public_api
 from .session import session
 from .friendly_rich import rich_available
+from .my_gettext import current_lang
 
-try:
 
-    versions = "Friendly-traceback version {}. [Python version: {}]\n".format(
-        __version__, platform.python_version()
-    )
-except AttributeError:  # Weird circular import when using Idle
-    versions = print("Circular import")
+versions = "Friendly-traceback version {}. [Python version: {}]\n".format(
+    __version__, platform.python_version()
+)
 
 parser = argparse.ArgumentParser(
     formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -61,6 +59,7 @@ parser = argparse.ArgumentParser(
         )
     ),
 )
+
 parser.add_argument(
     "source",
     nargs="?",
@@ -108,7 +107,6 @@ parser.add_argument(
     action="store_true",
 )
 
-
 parser.add_argument(
     "--formatter",
     help="""Specify a formatter function, as a dotted path.
@@ -118,6 +116,8 @@ Example: --formatter friendly_traceback.formatters.markdown
 
 
 def main():
+    _ = current_lang.translate
+
     console_defaults = {"friendly": public_api.Friendly()}
     args = parser.parse_args()
     if args.version:
@@ -132,7 +132,7 @@ def main():
     use_rich = False
     if args.use_rich:
         if not rich_available:
-            print("\n    Rich needs to be installed.\n\n")
+            print(_("\n    Rich is not installed.\n\n"))
         else:
             use_rich = True
             session.use_rich = True

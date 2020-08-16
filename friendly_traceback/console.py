@@ -29,6 +29,7 @@ class FriendlyConsole(InteractiveConsole):
         of code fragment executed by treating each of them as
         an individual source file.
         """
+        _ = current_lang.translate
         public_api.exclude_file_from_traceback(codeop.__file__)
         self.fake_filename = "<friendly-console:%d>"
         self.counter = 1
@@ -36,10 +37,11 @@ class FriendlyConsole(InteractiveConsole):
         self.saved_builtins = {}
         for name in dir(builtins):
             self.saved_builtins[name] = getattr(builtins, name)
+        self.rich_console = False
         if friendly_rich.rich_available and use_rich:
             self.rich_console = friendly_rich.console
-        else:
-            self.rich_console = False
+        elif use_rich:
+            print(_("\n    Rich is not installed.\n\n"))
 
         super().__init__(locals=locals)
         self.check_for_builtins_changes()

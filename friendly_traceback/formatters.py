@@ -78,9 +78,23 @@ def format_traceback(info, level=1):
     return "\n".join(result)
 
 
+def markdown(info, level):
+    """Traceback formatted with with markdown syntax.
+    """
+    result = _markdown(info, level)
+    return "\n\n".join(result)
+
+
 def rich_markdown(info, level):
-    """Traceback formatted with full information but with markdown syntax.
-       to be processed by Rich.
+    """Traceback formatted with with markdown syntax with small tweaks
+       using with Rich.
+    """
+    result = _markdown(info, level, rich=True)
+    return "\n\n".join(result)
+
+
+def _markdown(info, level, rich=False):
+    """Traceback formatted with with markdown syntax.
     """
     result = []
 
@@ -95,11 +109,11 @@ def rich_markdown(info, level):
         "last_call_header": ("## ", ""),
         "last_call_source": ("```python\n", "\n```"),
         "last_call_variables_header": ("### ", ""),
-        "last_call_variables": ("```\n", "\n```"),
+        "last_call_variables": ("```python\n", "\n```"),
         "exception_raised_header": ("## ", ""),
         "exception_raised_source": ("```python\n", "\n```"),
         "exception_raised_variables_header": ("### ", ""),
-        "exception_raised_variables": ("```\n", "\n```"),
+        "exception_raised_variables": ("```python\n", "\n```"),
         "simulated_python_traceback": ("```python\n", "\n```"),
         "original_python_traceback": ("```python\n", "\n```"),
     }
@@ -108,7 +122,21 @@ def rich_markdown(info, level):
     result = [""]
     for item in items_to_show:
         if item in info:
-            content = info[item].rstrip(":")
+            # With normal markdown formatting, it does not make sense to have a
+            # header end with a colon.
+            # However, we style headers differently with Rich; see
+            # Rich theme in file friendly_rich.
+            content = info[item]
+            if item.endswith("header"):
+                if not rich:
+                    content = content.rstrip(":")
+                else:
+                    if item not in [
+                        "cause_header",
+                        "last_call_variables_header",
+                        "exception_raised_variables_header",
+                    ]:
+                        content = content.rstrip(":")
             if item == "message":
                 # replacing something like
                 #   the variable 'x' is ...
@@ -121,14 +149,10 @@ def rich_markdown(info, level):
                     .replace("'\n", "`'\n")
                     .replace("'.", "`'.")
                 )
-            elif item == "cause":  # formatting hack for typos shown in a block
-                new_content = content.replace("|   ", "\n>   ")
-                if new_content != content:
-                    content = new_content + "\n\n> "
 
             prefix, suffix = markdown_items[item]
             result.append(prefix + content + suffix)
-    return "\n\n".join(result)
+    return result
 
 
 def _default():
