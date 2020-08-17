@@ -53,10 +53,6 @@ ici tous les exemples possibles tels qu'interprétés par friendly-traceback.
      Ceci a besoin d'être fait de manière explicite lorsqu'on veut
      faire des corrections ou des ajouts, avant de faire la mise
      à jour du reste de la documentation avec Sphinx.
-     Sous Windows, si Sphinx est installé sur votre ordinateur, il est
-     plutôt suggéré d'exécuter make_trb.bat qui est au premier niveau
-     du répertoire de fichier. Si vous faites ceci, la documentation pour
-     toutes les langues sera automatiquement mise à jour.
 
 Friendly-traceback version: {friendly}
 Python version: {python}

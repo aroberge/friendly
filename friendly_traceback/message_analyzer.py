@@ -129,7 +129,7 @@ def assign_to_conditional_expression(message="", **kwargs):
             "On the left-hand side of an equal sign, you have a\n"
             "conditional expression instead of the name of a variable.\n"
             "A conditional expression has the following form:\n\n"
-            "    `variable = object if condition else other_object`"
+            "    variable = object if condition else other_object"
         )
 
 
@@ -147,8 +147,8 @@ def assign_to_function_call(message="", line="", **kwargs):
             fn_call = _("my_function(...)")
             value = _("some value")
             return _(
-                "You wrote an expression like\n"
-                "    `{fn_call} = {value}`\n"
+                "You wrote an expression like\n\n"
+                "    {fn_call} = {value}\n\n"
                 "where `{fn_call}`, on the left-hand side of the equal sign, is\n"
                 "a function call and not the name of a variable.\n"
             ).format(fn_call=fn_call, value=value)
@@ -157,8 +157,8 @@ def assign_to_function_call(message="", line="", **kwargs):
         fn_call = info[0].strip()
         value = info[1].strip()
         return _(
-            "You wrote the expression\n"
-            "    `{fn_call} = {value}`\n"
+            "You wrote the expression\n\n"
+            "    {fn_call} = {value}\n\n"
             "where `{fn_call}`, on the left-hand side of the equal sign, either is\n"
             "or includes a function call and is not simply the name of a variable.\n"
         ).format(fn_call=fn_call, value=value)
@@ -246,8 +246,8 @@ def assign_to_literal(message="", line="", **kwargs):
         if len(info) == 2 and name.isidentifier():
             # fmt: off
             suggest = _(
-                " Perhaps you meant to write:\n"
-                "    `{name} = {literal}`\n"
+                " Perhaps you meant to write:\n\n"
+                "    {name} = {literal}\n"
                 "\n"
             ).format(literal=literal, name=name)
             # fmt: on
@@ -269,8 +269,8 @@ def assign_to_literal(message="", line="", **kwargs):
 
         return (
             _(
-                "You wrote an expression like\n"
-                "    `{literal} = {name}`\n"
+                "You wrote an expression like\n\n"
+                "    {literal} = {name}\n"
                 "where `{literal}`, on the left-hand side of the equal sign,\n"
                 "is or includes an actual object {of_type}\n"
                 "and is not simply the name of a variable."
@@ -343,10 +343,10 @@ def delete_function_call(message="", line=None, **kwargs):
             line = "del function()"
             correct = "del function"
         return _(
-            "You attempted to delete a function call\n"
-            "    `{line}`\n"
-            "instead of deleting the function's name\n"
-            "    `{correct}`\n"
+            "You attempted to delete a function call\n\n"
+            "    {line}\n"
+            "instead of deleting the function's name\n\n"
+            "    {correct}\n"
         ).format(line=line, correct=correct)
 
 
@@ -356,8 +356,8 @@ def duplicate_argument_in_function_definition(message="", line=None, **kwargs):
     if "duplicate argument" in message and "function definition" in message:
         name = message.split("'")[1]
         return _(
-            "You have defined a function repeating the keyword argument\n"
-            "    `{name}`\n"
+            "You have defined a function repeating the keyword argument\n\n"
+            "    {name}\n"
             "twice; each keyword argument should appear only once"
             " in a function definition.\n"
         ).format(name=name)
@@ -381,7 +381,7 @@ def expression_cannot_contain_assignment(message="", **kwargs):
             "One of the following two possibilities could be the cause:\n"
             "1. You meant to do a comparison with == and wrote = instead.\n"
             "2. You called a function with a named argument:\n\n"
-            "       `a_function(invalid=something)`\n\n"
+            "       a_function(invalid=something)\n\n"
             "where `invalid` is not a valid variable name in Python\n"
             "either because it starts with a number, or is a string,\n"
             "or contains a period, etc.\n"
@@ -693,11 +693,11 @@ def position_argument_follows_keyword_arg(message="", **kwargs):
         return
     return _(
         "In Python, you can call functions with only positional arguments\n\n"
-        "    `test(1, 2, 3)`\n\n"
+        "    test(1, 2, 3)\n\n"
         "or only keyword arguments\n\n"
-        "    `test(a=1, b=2, c=3)`\n\n"
+        "    test(a=1, b=2, c=3)\n\n"
         "or a combination of the two\n\n"
-        "    `test(1, 2, c=3)`\n\n"
+        "    test(1, 2, c=3)\n\n"
         "but with the keyword arguments appearing after all the positional ones.\n"
         "According to Python, you used positional arguments after keyword ones.\n"
     )
@@ -710,11 +710,11 @@ def non_default_arg_follows_default_arg(message="", **kwargs):
         return
     return _(
         "In Python, you can define functions with only positional arguments\n\n"
-        "    `def test(a, b, c): ...`\n\n"
+        "    def test(a, b, c): ...\n\n"
         "or only keyword arguments\n\n"
-        "    `def test(a=1, b=2, c=3): ...`\n\n"
+        "    def test(a=1, b=2, c=3): ...\n\n"
         "or a combination of the two\n\n"
-        "    `def test(a, b, c=3): ...`\n\n"
+        "    def test(a, b, c=3): ...\n\n"
         "but with the keyword arguments appearing after all the positional ones.\n"
         "According to Python, you used positional arguments after keyword ones.\n"
     )
@@ -729,7 +729,8 @@ def python2_print(message="", **kwargs):
         return
     message = message[59:-2]
     return _(
-        "Perhaps you need to type `print({message})`?\n\n"
+        "Perhaps you need to type\n\n"
+        "     print({message})\n\n"
         "In older version of Python, `print` was a keyword.\n"
         "Now, `print` is a function; you need to use parentheses to call it.\n"
     ).format(message=message)

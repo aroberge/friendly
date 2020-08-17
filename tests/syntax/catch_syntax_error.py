@@ -70,7 +70,7 @@ causes = {
     "raise_syntax_error54": "is or includes an actual object",
     "raise_syntax_error55": "`True` is a constant in Python",  # see below
     "raise_syntax_error56": "only used to assign a value to a variable",
-    "raise_syntax_error57": "use the function repr(x).",
+    "raise_syntax_error57": "use the function `repr(x)`.",
     "raise_syntax_error58": "generator expression instead of the name of a variable",
     "raise_syntax_error59": "variable = object if condition else other_object",
     "raise_syntax_error60": "You used `x` as a parameter for a function",

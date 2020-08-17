@@ -13,11 +13,17 @@ def write(text):
     sys.stderr.write(text + "\n")
 
 
-def make_title(text):
-    write("\n" + text)
-    write("-" * len(text) + "\n")
-    write(".. code-block:: none\n")
-
+def make_title(text, format="pre"):
+    if format == "pre":
+        write("\n" + text)
+        write("-" * len(text) + "\n")
+        write(".. code-block:: none\n")
+    elif format == "markdown_docs":
+        write("\n---\n")
+        write("## " + text)
+    else:
+        print("Unsupported format: ", format)
+        sys.exit()
 
 # The format of each item of the dict below is:
 # ExceptionClass - optional heading:  (file, test_function)
@@ -189,7 +195,7 @@ cur_dir = os.getcwd()
 sys.path.append(os.path.join(cur_dir, "except"))
 
 
-def create_tracebacks(target, intro_text):
+def create_tracebacks(target, intro_text, format="pre"):
     with open(target, "w", encoding="utf8") as out:
         with redirect_stderr(out):
             write(intro_text)
@@ -197,7 +203,7 @@ def create_tracebacks(target, intro_text):
             for title in all_imports:
                 function = None
                 name, function = all_imports[title]
-                make_title(title)
+                make_title(title, format=format)
                 try:
                     mod = __import__(name)
                     if function is not None:

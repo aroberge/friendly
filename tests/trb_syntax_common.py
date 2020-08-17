@@ -13,10 +13,17 @@ def write(text):
     sys.stderr.write(text + "\n")
 
 
-def make_title(text):
-    write("\n" + text)
-    write("-" * len(text) + "\n")
-    write(".. code-block:: none\n")
+def make_title(text, format="pre"):
+    if format == "pre":
+        write("\n" + text)
+        write("-" * len(text) + "\n")
+        write(".. code-block:: none\n")
+    elif format == "markdown_docs":
+        write("\n---\n")
+        write("## " + text)
+    else:
+        print("Unsupported format: ", format)
+        sys.exit()
 
 
 all_imports = {
@@ -76,7 +83,7 @@ all_imports = {
     "SyntaxError - delete function call": "raise_syntax_error47",
     "SyntaxError - assigned prior to global declaration": "raise_syntax_error48",
     "SyntaxError - used prior to global declaration": "raise_syntax_error49",
-    "SyntaxError - assigned prior to nonlocal declaration": "raise_syntax_error5-",
+    "SyntaxError - assigned prior to nonlocal declaration": "raise_syntax_error50",
     "SyntaxError - used prior to nonlocal declaration": "raise_syntax_error51",
     "SyntaxError - named assignment with Python constant": "raise_syntax_error55",
     "SyntaxError - assignment to operator": "raise_syntax_error56",
@@ -108,7 +115,7 @@ cur_dir = os.getcwd()
 sys.path.append(os.path.join(cur_dir, "syntax"))
 
 
-def create_tracebacks(target, intro_text):
+def create_tracebacks(target, intro_text, format="pre"):
     with open(target, "w", encoding="utf8") as out:
         with redirect_stderr(out):
             write(intro_text)
@@ -119,7 +126,7 @@ def create_tracebacks(target, intro_text):
                     name, function = all_imports[title]
                 else:
                     name = all_imports[title]
-                make_title(title)
+                make_title(title, format=format)
                 try:
                     mod = __import__(name)
                     if function is not None:

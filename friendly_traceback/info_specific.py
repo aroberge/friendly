@@ -143,19 +143,6 @@ def indentation_error(etype, value):
     return this_case
 
 
-@register("IndexError")
-def index_error(etype, value):
-    _ = current_lang.translate
-    value = str(value)
-    if "list" in value:
-        this_case = _("In this case, the sequence is a list.\n")
-    elif "tuple" in value:
-        this_case = _("In this case, the sequence is a tuple.\n")
-    else:
-        this_case = None
-    return this_case
-
-
 @register("KeyError")
 def key_error(etype, value):
     _ = current_lang.translate

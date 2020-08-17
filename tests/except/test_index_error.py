@@ -10,8 +10,6 @@ def test_index_error1():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "IndexError: tuple index out of range" in result
-    if friendly_traceback.get_lang() == "en":
-        assert "In this case, the sequence is a tuple." in result
     return result
 
 
@@ -24,8 +22,6 @@ def test_index_error2():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "IndexError: list index out of range" in result
-    if friendly_traceback.get_lang() == "en":
-        assert "In this case, the sequence is a list." in result
     return result
 
 

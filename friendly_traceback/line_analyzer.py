@@ -151,7 +151,7 @@ def detect_backquote(tokens, offset=None):
             "You are using the backquote character.\n"
             "Either you meant to write a single quote, ', "
             "or copied Python 2 code;\n"
-            "in this latter case, use the function repr(x)."
+            "in this latter case, use the function `repr(x)`."
         )
 
 
@@ -199,10 +199,10 @@ def import_from(tokens, **kwargs):
         module = tokens[3].string
 
         return _(
-            "You wrote something like\n"
-            "    `import {function} from {module}`\n"
-            "instead of\n"
-            "    `from {module} import {function}`\n"
+            "You wrote something like\n\n"
+            "    import {function} from {module}\n"
+            "instead of\n\n"
+            "    from {module} import {function}\n\n"
             "\n"
         ).format(module=module, function=function)
 
@@ -305,8 +305,8 @@ def malformed_def(tokens, **kwargs):
         return _(
             "You tried to define {class_or_function} "
             "and did not use the correct syntax.\n"
-            "The correct syntax is:\n"
-            "    `def name ( optional_arguments ):`"
+            "The correct syntax is:\n\n"
+            "    def name ( optional_arguments ):"
             "\n"
         ).format(class_or_function=name)
     fn_name = tokens[1].string
