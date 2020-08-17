@@ -14,9 +14,14 @@ output.write("<div>\n")
 files = set([])
 
 
-def print_different(filename, in_36, in_37, in_38, in_39):
+def print_different(filename, in_36, in_37, in_38, in_39, topic):
     # Just tracking changes going forward in time, from
     # one version to the next.
+    if topic == "message":
+        header = "<h5>Different messages</h5>\n"
+    else:
+        header = "<h5>Different explanation</h5>\n"
+    header_added = False
     printed_37 = False
     printed_38 = False
     if in_36 != in_37:
@@ -25,6 +30,9 @@ def print_different(filename, in_36, in_37, in_38, in_39):
             files.add(filename)
             output.write(filename)
             output.write("</div>\n")
+        if not header_added:
+            output.write(header)
+            header_added = True
         output.write("<pre class='highlight friendly-small-pre'>")
         output.write("<b>3.6: </b>" + in_36 + "\n")
         output.write("<b>3.7: </b>" + in_37 + "\n")
@@ -36,6 +44,9 @@ def print_different(filename, in_36, in_37, in_38, in_39):
             files.add(filename)
             output.write(filename)
             output.write("</div>\n")
+        if not header_added:
+            output.write(header)
+            header_added = True
         output.write("<pre class='highlight friendly-small-pre'>")
         if not printed_37:
             output.write("<b>3.7: </b>" + in_37 + "\n")
@@ -47,6 +58,9 @@ def print_different(filename, in_36, in_37, in_38, in_39):
             files.add(filename)
             output.write(filename)
             output.write("</div>\n")
+        if not header_added:
+            output.write(header)
+            header_added = True
         output.write("<pre class='highlight friendly-small-pre'>")
         if not printed_38:
             output.write("<b>3.8: </b>" + in_38 + "\n")
@@ -72,6 +86,7 @@ for filename in info_36:
         data_37["message"],
         data_38["message"],
         data_39["message"],
+        "message",
     )
     # Leave the following data out for now as it does not give us anything
     # useful ... so far.
@@ -82,7 +97,12 @@ for filename in info_36:
     #     data_38["parsing_error_source"],
     # )
     print_different(
-        filename, data_36["cause"], data_37["cause"], data_38["cause"], data_39["cause"]
+        filename,
+        data_36["cause"],
+        data_37["cause"],
+        data_38["cause"],
+        data_39["cause"],
+        "explanation",
     )
 
 output.write("</div>\n")
