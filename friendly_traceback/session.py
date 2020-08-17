@@ -122,10 +122,12 @@ class _State:
         """Sets the default formatter. If no argument is given, the default
            formatter is used.
         """
-        if formatter is None:
+        if formatter is None or formatter == "pre":
             self.formatter = formatters.format_traceback
         elif formatter == "rich":
             self.formatter = formatters.rich_markdown
+        elif formatter == "markdown":
+            self.formatter = formatters.markdown
         else:
             self.formatter = formatter
 

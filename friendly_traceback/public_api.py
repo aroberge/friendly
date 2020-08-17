@@ -87,8 +87,8 @@ def install(lang=None, redirect=None, verbosity=None, level=None):
               a different one.
     """
     if verbosity is None:
-        verbosity_level = level  # Supporting deprecated argument
-    session.install(lang=lang, redirect=redirect, verbosity=verbosity_level)
+        verbosity = level  # Supporting deprecated argument
+    session.install(lang=lang, redirect=redirect, verbosity=verbosity)
 
 
 @make_public
@@ -123,7 +123,6 @@ def set_formatter(formatter=None):
        as well as arbitrary keyword-based arguments - these are currently
        subject to change but include ``level``.
     """
-    # TODO: change level to verbosity
     session.set_formatter(formatter=formatter)
 
 

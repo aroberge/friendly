@@ -89,15 +89,8 @@ parser.add_argument(
     type=int,
     default=1,
     help="""This sets the "verbosity" level, that is the amount of information
-            provided.
+            provided. ("level" is deprecated and will be removed.)
          """,
-)
-
-parser.add_argument(
-    "--use-rich",
-    help="""Use package Rich if it is installed.
-         """,
-    action="store_true",
 )
 
 parser.add_argument(
@@ -108,10 +101,13 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "--format",
     "--formatter",
-    help="""Specify a formatter function, as a dotted path.
-Example: --formatter friendly_traceback.formatters.markdown
-""",
+    default="pre",
+    help="""Specify an output format (pre - default, markown, or rich) or
+    a custom formatter function, as a dotted path.
+    Example: --formatter friendly_traceback.formatters.markdown
+    """,
 )
 
 
@@ -124,19 +120,22 @@ def main():
         print(f"Friendly-traceback version {__version__}")
         sys.exit()
 
-    public_api.install(lang=args.lang, level=args.verbosity)
-
-    if args.formatter:
-        public_api.set_formatter(public_api.import_function(args.formatter))
+    public_api.install(lang=args.lang, verbosity=args.verbosity)
 
     use_rich = False
-    if args.use_rich:
-        if not rich_available:
-            print(_("\n    Rich is not installed.\n\n"))
+    if args.format:
+        format = args.format
+        if format in ["pre", "markdown"]:
+            public_api.set_formatter(format)
+        elif format == "rich":
+            if not rich_available:
+                print(_("\n    Rich is not installed.\n\n"))
+            else:
+                use_rich = True
+                session.use_rich = True
+                public_api.set_formatter("rich")
         else:
-            use_rich = True
-            session.use_rich = True
-            session.set_formatter("rich")
+            public_api.set_formatter(public_api.import_function(args.format))
 
     if args.source is not None:
         public_api.exclude_file_from_traceback(runpy.__file__)
