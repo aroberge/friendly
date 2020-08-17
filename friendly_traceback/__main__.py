@@ -71,7 +71,7 @@ parser.add_argument(
 parser.add_argument(
     "args",
     nargs="*",
-    help="""Arguments to give to the script specified by source.
+    help="""Optional arguments to give to the script specified by source.
          """,
 )
 
@@ -104,9 +104,11 @@ parser.add_argument(
     "--format",
     "--formatter",
     default="pre",
-    help="""Specify an output format (pre - default, markown, or rich) or
+    help="""Specifies an output format (pre, markown, markdown_docs, or rich) or
     a custom formatter function, as a dotted path.
-    Example: --formatter friendly_traceback.formatters.markdown
+
+    For example: --formatter friendly_traceback.formatters.markdown is
+    equivalent to --formatter markdown
     """,
 )
 

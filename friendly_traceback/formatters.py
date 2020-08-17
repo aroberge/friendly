@@ -39,12 +39,15 @@ def tb_items_to_show(level=1):
     return selector[level]()
 
 
-def format_traceback(info, level=1):
-    """Default formatter. Produces an output that is suitable for
+def pre(info, level=1):
+    """Default formatter, primarily for console usage.
+
+       It also  produces an output that is suitable for
        insertion in a RestructuredText (.rst) code block,
        with pre-formatted indentation.
 
-       It is also the default used in the friendly-console.
+       The only change made to the content of "info" is
+       some added indentation.
     """
 
     pre_items = {
@@ -78,22 +81,44 @@ def format_traceback(info, level=1):
     return "\n".join(result)
 
 
-def markdown(info, level):
+def markdown(info, level=1):
     """Traceback formatted with with markdown syntax.
+
+    Some minor changes of the traceback info content are done,
+    for nicer final display when the markdown generated content
+    if further processed.
     """
-    result = _markdown(info, level)
+    result = _markdown(info, level=level)
     return "\n\n".join(result)
 
 
-def rich_markdown(info, level):
-    """Traceback formatted with with markdown syntax with small tweaks
-       using with Rich.
+def markdown_docs(info, level=1):
+    """Traceback formatted with with markdown syntax, where each
+    header is shifted down by 2 (h1 -> h3, etc.) so that they
+    can be inserted in a document, without creating artificial
+    top headers.
+
+    Some minor changes of the traceback info content are done,
+    for nicer final display when the markdown generated content
+    if further processed.
     """
-    result = _markdown(info, level, rich=True)
+    result = _markdown(info, level=level, docs=True)
     return "\n\n".join(result)
 
 
-def _markdown(info, level, rich=False):
+def rich_markdown(info, level=1):
+    """Traceback formatted with with markdown syntax suitable for
+    printing in color in the console using Rich.
+
+    Some minor changes of the traceback info content are done,
+    for nicer final display when the markdown generated content
+    if further processed.
+    """
+    result = _markdown(info, level=level, rich=True)
+    return "\n\n".join(result)
+
+
+def _markdown(info, level, rich=False, docs=False):
     """Traceback formatted with with markdown syntax.
     """
     result = []
@@ -137,7 +162,7 @@ def _markdown(info, level, rich=False):
                         "exception_raised_variables_header",
                     ]:
                         content = content.rstrip(":")
-            if item == "message":
+            if item == "message" and not docs:
                 # replacing something like
                 #   the variable 'x' is ...
                 # by
@@ -157,6 +182,9 @@ def _markdown(info, level, rich=False):
                         content = content.replace("<", '"<').replace(">", '>"')
 
             prefix, suffix = markdown_items[item]
+            if docs:
+                if prefix.startswith("#"):
+                    prefix = "##" + prefix
             result.append(prefix + content + suffix)
     return result
 

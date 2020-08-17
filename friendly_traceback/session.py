@@ -33,7 +33,7 @@ class _State:
         self.installed = False
         self.running_script = False
         self.saved_traceback_info = None
-        self.formatter = formatters.format_traceback
+        self.formatter = formatters.pre
         self.set_defaults()
 
     def set_defaults(self):
@@ -123,11 +123,13 @@ class _State:
            formatter is used.
         """
         if formatter is None or formatter == "pre":
-            self.formatter = formatters.format_traceback
+            self.formatter = formatters.pre
         elif formatter == "rich":
             self.formatter = formatters.rich_markdown
         elif formatter == "markdown":
             self.formatter = formatters.markdown
+        elif formatter == "markdown_docs":
+            self.formatter = formatters.markdown_docs
         else:
             self.formatter = formatter
 
