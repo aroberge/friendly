@@ -154,7 +154,7 @@ def _markdown(info, level, rich=False):
                 parts = content.split(":")
                 if len(parts) > 1:
                     if parts[1].strip().startswith("<"):
-                        content = content.replace("<", "'<").replace(">", ">'")
+                        content = content.replace("<", '"<').replace(">", '>"')
 
             prefix, suffix = markdown_items[item]
             result.append(prefix + content + suffix)
