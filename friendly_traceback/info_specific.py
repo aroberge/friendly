@@ -211,8 +211,8 @@ def unbound_local_error(etype, value):
     # By splitting value using ', we can extract the variable name.
     return _(
         "The variable that appears to cause the problem is `{var_name}`.\n"
-        "Perhaps the statement\n"
-        "    `global {var_name}`\n"
+        "Perhaps the statement\n\n"
+        "    global {var_name}\n\n"
         "should have been included as the first line inside your function.\n"
     ).format(var_name=str(value).split("'")[1])
 

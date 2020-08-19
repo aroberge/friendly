@@ -180,7 +180,7 @@ def get_traceback_info(etype, value, tb, write_err):
     info["simulated_python_traceback"] = format_simulated_python_traceback(
         records, etype, value, python_tb
     )
-    info["original_python_traceback"] = "\n".join(python_tb)
+    info["original_python_traceback"] = "\n".join(python_tb) + "\n"
 
     if issubclass(etype, SyntaxError):
         return info
@@ -290,7 +290,7 @@ def format_simulated_python_traceback(records, etype, value, python_tb):
     if python_tb[0].startswith(header):
         simulated_python_tb.insert(0, header)
 
-    return "\n".join(simulated_python_tb)
+    return "\n".join(simulated_python_tb) + "\n"
 
 
 def _get_traceback_information(records, etype, value):

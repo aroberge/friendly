@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-08-17 08:31-0300\n"
-"PO-Revision-Date: 2020-08-17 08:39-0300\n"
+"POT-Creation-Date: 2020-08-19 06:14-0300\n"
+"PO-Revision-Date: 2020-08-19 06:22-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -717,32 +717,36 @@ msgstr ""
 "est moins indentée que la ligne précédente\n"
 "et n’est pas alignée verticalement avec un autre bloc de code.\n"
 
-#: info_specific.py:153
+#: info_specific.py:154
 msgid ""
 "In your program, the name of the key\n"
 "that cannot be found is `{key_name}`.\n"
 msgstr "Dans votre programme, le nom de la clé inconnue est `{key_name}`.\n"
 
-#: info_specific.py:167
+#: info_specific.py:168
 msgid ""
 "In your program, the name of the\n"
 "module that cannot be found is `{mod_name}`.\n"
 msgstr "Dans votre programme, le nom du module inconnu est `{mod_name}`.\n"
 
-#: info_specific.py:183
+#: info_specific.py:184
 msgid "In your program, the unknown name is `{var_name}`.\n"
 msgstr "Dans votre programme, le nom inconnu est `{var_name}`.\n"
 
-#: info_specific.py:211
+#: info_specific.py:212
 msgid ""
 "The variable that appears to cause the problem is `{var_name}`.\n"
 "Perhaps the statement\n"
-"    `global {var_name}`\n"
+"\n"
+"    global {var_name}\n"
+"\n"
 "should have been included as the first line inside your function.\n"
 msgstr ""
 "La variable qui semble causer le problème est `{var_name}`.\n"
 "Il est possible que vous avez oublié d'écrire l’instruction\n"
-"    `global {var_name}`\n"
+"\n"
+"    global {var_name}\n"
+"\n"
 "comme première ligne à l’intérieur de votre fonction.\n"
 
 #: info_variables.py:121 info_variables.py:125

@@ -179,8 +179,7 @@ def set_verbosity(verbosity_level):
             6: Same as 3, but generic explanation is not included
             7: Minimal display of relevant information,
                suitable for console use by advanced programmers.
-            8: (Subject to change) Python tracebacks followed
-               by specific information.
+            8: Python tracebacks followed by specific explanation.
             9: Python traceback
             0: Python traceback that also includes calls to friendly-traceback.
     """
@@ -194,13 +193,15 @@ def get_verbosity():
 
 
 @make_public
-def set_stream(stream):
+def set_stream(redirect=None):
     """Sets the stream to which the output should be directed.
 
        If the string ``"capture"`` is given as argument, the
        output is saved and can be later retrieved by ``get_output()``.
+
+       If no argument is given, the default stream (stderr) is set.
     """
-    session.set_redirect(redirect=stream)
+    session.set_redirect(redirect=redirect)
 
 
 @make_public

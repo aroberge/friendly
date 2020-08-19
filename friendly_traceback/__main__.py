@@ -46,8 +46,7 @@ parser = argparse.ArgumentParser(
         6: Same as 3, but generic explanation is not included
         7: Minimal friendly display of relevant information,
            suitable for console use by advanced programmers.
-        8: (Subject to change) Python tracebacks followed
-           by specific information.
+        8: Python tracebacks followed by specific explanation.
         9: Python traceback
         0: Python traceback that also includes calls to friendly-traceback.
 

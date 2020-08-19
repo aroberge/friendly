@@ -66,8 +66,8 @@ def pre(info, level=1):
         "exception_raised_source": "none",
         "exception_raised_variables_header": "double",
         "exception_raised_variables": "double",
-        "simulated_python_traceback": "none",
-        "original_python_traceback": "none",
+        "simulated_python_traceback": "single",
+        "original_python_traceback": "single",
     }
 
     items_to_show = tb_items_to_show(level=level)
