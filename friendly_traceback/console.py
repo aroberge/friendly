@@ -161,35 +161,44 @@ class FriendlyConsole(InteractiveConsole):
             "Instead of `{name} : {hint}`, perhaps you meant `{name} = {hint}`."
         )
 
-        wrote_title = False
         for name in hints:
             warning = ""
             if name in dir(builtins):
                 warning = warning_builtins.format(name=name)
                 if self.rich_console:
                     warning = "#### " + warning
-            elif (
-                name not in self.locals
-                or name in self.old_locals
-                and self.old_locals[name] == self.locals[name]
-            ):
-                header = ""
-                if not wrote_title:
-                    header = header_warning
-                    wrote_title = True
-                    if self.rich_console:
-                        header = "#### " + header
-                suggest = suggest_str.format(name=name, hint=hints[name])
-                if self.rich_console:
-                    suggest = "> " + suggest
-                warning = header + suggest
-
-            if warning:
-                if self.rich_console:
                     warning = friendly_rich.Markdown(warning)
                     self.rich_console.print(warning)
                 else:
                     print(warning)
+
+        wrote_title = False
+        warning = ""
+
+        for name in hints:
+            if name in dir(builtins):
+                continue
+            if (
+                name not in self.locals
+                or name in self.old_locals
+                and self.old_locals[name] == self.locals[name]
+            ):
+                if not wrote_title:
+                    warning = header_warning
+                    wrote_title = True
+                    if self.rich_console:
+                        warning = "#### " + warning
+                suggest = suggest_str.format(name=name, hint=hints[name])
+                if self.rich_console:
+                    suggest = "* " + suggest
+                warning = warning + suggest + "\n"
+
+        if warning:
+            if self.rich_console:
+                warning = friendly_rich.Markdown(warning)
+                self.rich_console.print(warning)
+            else:
+                print(warning)
         self.locals["__annotations__"] = {}
 
     def check_for_builtins_changes(self):
