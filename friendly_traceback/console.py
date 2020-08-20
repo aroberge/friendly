@@ -257,7 +257,14 @@ class FriendlyConsole(InteractiveConsole):
 
 def start_console(local_vars=None, use_rich=False):
     """Starts a console; modified from code.interact"""
-    console_defaults = {"friendly": public_api.Friendly()}
+
+    def show(level):
+        old_level = public_api.get_verbosity()
+        public_api.set_verbosity(level)
+        public_api.show_again()
+        public_api.set_verbosity(old_level)
+
+    console_defaults = {"friendly": public_api.Friendly(), "show": show}
     public_api.install()
 
     if local_vars is None:
