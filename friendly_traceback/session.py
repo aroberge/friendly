@@ -112,11 +112,14 @@ class _State:
         if verbosity is None:
             self.level = self._default_level
             return
-        elif verbosity not in range(0, 10):
-            self.write_err(
-                _("Verbosity level {level} not valid.").format(level=verbosity)
-            )
-            return
+        else:
+            try:
+                formatters.tb_items_to_show(verbosity)
+            except KeyError:
+                self.write_err(
+                    _("Verbosity level {level} not valid.").format(level=verbosity)
+                )
+                return
 
         self.level = verbosity
 

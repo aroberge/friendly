@@ -258,15 +258,36 @@ class FriendlyConsole(InteractiveConsole):
 def start_console(local_vars=None, use_rich=False):
     """Starts a console; modified from code.interact"""
 
-    def explain(level=None):
-        if level is None:
-            level = 1
+    def explain(verbosity=None):
+        """Shows the previously recorded traceback info again, with the specified
+           verbosity level.
+        """
+        if verbosity is None:
+            verbosity = 1
         old_level = public_api.get_verbosity()
-        public_api.set_verbosity(level)
+        public_api.set_verbosity(verbosity)
         public_api.show_again()
         public_api.set_verbosity(old_level)
 
-    console_defaults = {"friendly": public_api.Friendly(), "explain": explain}
+    def what():
+        """If known, shows the generic explanation about a given exception."""
+        explain(11)
+
+    def where():
+        """Shows the information about where the exception occurred"""
+        explain(12)
+
+    def why():
+        """Shows the likely cause of the exception."""
+        explain(13)
+
+    console_defaults = {
+        "friendly": public_api.Friendly(),
+        "explain": explain,
+        "what": what,
+        "where": where,
+        "why": why,
+    }
     public_api.install()
 
     if local_vars is None:

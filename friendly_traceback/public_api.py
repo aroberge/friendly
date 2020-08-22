@@ -212,7 +212,7 @@ def get_stream():
 
 @make_public
 def show_again():
-    """Shows the traceback info again, on the default stream.
+    """Shows the previously recorded traceback info again, on the default stream.
 
         Primarily intended to be used when the user changes
         a verbosity level to view the last computed traceback

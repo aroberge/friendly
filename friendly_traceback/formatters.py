@@ -35,6 +35,9 @@ def tb_items_to_show(level=1):
         8: _simple_explain,
         9: _simulated_python_traceback,
         0: _original_python_traceback,
+        11: _what,
+        12: _where,
+        13: _why,
     }
     return selector[level]()
 
@@ -276,3 +279,30 @@ def _original_python_traceback():
        to friendly-traceback itself. It should only be used for diagnostic.
     """
     return ["original_python_traceback"]
+
+
+def _what():
+    """Shows only the generic meaning.
+
+       For example: A NameError means ...
+    """
+    return ["generic"]
+
+
+def _why():
+    """Show only the likely cause"""
+    return ["cause"]
+
+
+def _where():
+    """Shows the locations where the program stopped and where the
+       exception was raised, together with variable information
+       at these locations.
+    """
+    return [
+        "parsing_error_source",
+        "last_call_source",
+        "last_call_variables",
+        "exception_raised_source",
+        "exception_raised_variables",
+    ]
