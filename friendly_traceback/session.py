@@ -60,7 +60,9 @@ class _State:
            level and wishes to see a traceback reexplained without having
            to execute the code again.
         """
+        _ = current_lang.translate
         if self.saved_traceback_info is None:
+            print(_("Nothing to show: no exception recorded."))
             return
         explanation = self.formatter(self.saved_traceback_info, level=self.level)
         self.write_err(explanation + "\n")
