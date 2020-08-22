@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-08-19 06:14-0300\n"
+"POT-Creation-Date: 2020-08-22 06:55-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: __main__.py:134 console.py:44
+#: __main__.py:133 console.py:44
 msgid ""
 "\n"
 "    Rich is not installed.\n"
@@ -195,12 +195,21 @@ msgid ""
 "fewer positional arguments than it requires ({nb_required} missing).\n"
 msgstr ""
 
-#: analyze_type_error.py:288
+#: analyze_type_error.py:290
+msgid ""
+"Perhaps you had a missing comma before the second tuple.\n"
+msgstr ""
+
+#: analyze_type_error.py:292
+msgid ""
+"Perhaps you had a missing comma before the tuple.\n"
+msgstr ""
+
+#: analyze_type_error.py:294
 msgid ""
 "I suspect that you had an object of this type, {obj},\n"
 "followed by what looked like a tuple, '(...)',\n"
 "which Python took as an indication of a function call.\n"
-"Perhaps you had a missing comma before the tuple.\n"
 msgstr ""
 
 #: console.py:154
@@ -216,7 +225,7 @@ msgstr ""
 msgid "Instead of `{name} : {hint}`, perhaps you meant `{name} = {hint}`."
 msgstr ""
 
-#: console.py:213
+#: console.py:222
 msgid "Warning: you have redefined the python builtin `{name}`."
 msgstr ""
 
@@ -538,42 +547,42 @@ msgid ""
 "should have been included as the first line inside your function.\n"
 msgstr ""
 
-#: info_variables.py:121 info_variables.py:125
+#: info_variables.py:122 info_variables.py:129
 msgid "The similar name `{name}` was found in the local scope. "
 msgstr ""
 
-#: info_variables.py:129
+#: info_variables.py:136
 msgid "The Python builtin `{name}` has a similar name. "
 msgstr ""
 
-#: info_variables.py:133
+#: info_variables.py:142
 msgid ""
 "Instead of writing `{name}`, perhaps you meant one of the following:\n"
 msgstr ""
 
-#: info_variables.py:138
+#: info_variables.py:147
 msgid "*   Local scope: "
 msgstr ""
 
-#: info_variables.py:144
+#: info_variables.py:153
 msgid "*   Global scope: "
 msgstr ""
 
-#: info_variables.py:150
+#: info_variables.py:159
 msgid "*   Python builtins: "
 msgstr ""
 
-#: info_variables.py:183
+#: info_variables.py:192
 msgid ""
 "A type hint found for `{name}` in the local scope.\n"
 msgstr ""
 
-#: info_variables.py:186 info_variables.py:199
+#: info_variables.py:195 info_variables.py:208
 msgid ""
 "Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n"
 msgstr ""
 
-#: info_variables.py:196
+#: info_variables.py:205
 msgid ""
 "A type hint found for `{name}` in the global scope.\n"
 msgstr ""

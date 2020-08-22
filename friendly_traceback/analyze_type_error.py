@@ -285,11 +285,18 @@ def x_is_not_callable(message):
     pattern = re.compile(r"'(.*)' object is not callable")
     match = re.search(pattern, message)
     if match is not None:
-        return _(
-            "I suspect that you had an object of this type, {obj},\n"
-            "followed by what looked like a tuple, '(...)',\n"
-            "which Python took as an indication of a function call.\n"
-            "Perhaps you had a missing comma before the tuple.\n"
-        ).format(obj=convert_type(match.group(1)))
+        obj = match.group(1)
+        if obj == "tuple":
+            perhaps = _("Perhaps you had a missing comma before the second tuple.\n")
+        else:
+            perhaps = _("Perhaps you had a missing comma before the tuple.\n")
+        return (
+            _(
+                "I suspect that you had an object of this type, {obj},\n"
+                "followed by what looked like a tuple, '(...)',\n"
+                "which Python took as an indication of a function call.\n"
+            ).format(obj=convert_type(obj))
+            + perhaps
+        )
     else:
         return

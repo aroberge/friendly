@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-08-19 06:14-0300\n"
-"PO-Revision-Date: 2020-08-19 06:22-0300\n"
+"POT-Creation-Date: 2020-08-22 06:55-0300\n"
+"PO-Revision-Date: 2020-08-22 06:55-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Generator: Poedit 2.4\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: __main__.py:134 console.py:44
+#: __main__.py:133 console.py:44
 msgid ""
 "\n"
 "    Rich is not installed.\n"
@@ -261,17 +261,24 @@ msgstr ""
 "Vous avez apparemment invoqué la fonction '{fn_name}' avec\n"
 "moins d'arguments positionnels qu'il n'en faut ({nb_required} manquent).\n"
 
-#: analyze_type_error.py:288
+#: analyze_type_error.py:290
+msgid "Perhaps you had a missing comma before the second tuple.\n"
+msgstr ""
+"Peut-être avez-vous eu une virgule manquante avant le deuxième tuple.\n"
+
+#: analyze_type_error.py:292
+msgid "Perhaps you had a missing comma before the tuple.\n"
+msgstr "Peut-être que vous aviez une virgule manquante avant le tuple.\n"
+
+#: analyze_type_error.py:294
 msgid ""
 "I suspect that you had an object of this type, {obj},\n"
 "followed by what looked like a tuple, '(...)',\n"
 "which Python took as an indication of a function call.\n"
-"Perhaps you had a missing comma before the tuple.\n"
 msgstr ""
 "Je soupçonne que vous aviez un objet du type « {obj} »,\n"
 "suivi de ce qui ressemblait à un tuple, '(...) ',\n"
 "que Python a pris comme indiquant une invocation de fonction.\n"
-"Il est possible que vous ayez oublié d'écrire une virgule avant le tuple.\n"
 
 #: console.py:154
 msgid "Warning: you added a type hint to the python builtin `{name}`."
@@ -292,7 +299,7 @@ msgstr ""
 "Au lieu de `{name} : {hint}`, peut-être que vous vouliez plutôt écrire :"
 "`{name} = {literal}`."
 
-#: console.py:213
+#: console.py:222
 msgid "Warning: you have redefined the python builtin `{name}`."
 msgstr ""
 "Attention : vous avez redéfini l'identifiant Python (builtin) `{name}`."
@@ -749,44 +756,44 @@ msgstr ""
 "\n"
 "comme première ligne à l’intérieur de votre fonction.\n"
 
-#: info_variables.py:121 info_variables.py:125
+#: info_variables.py:122 info_variables.py:129
 msgid "The similar name `{name}` was found in the local scope. "
 msgstr "Le nom semblable `{name}` a été trouvé dans la portée locale. "
 
-#: info_variables.py:129
+#: info_variables.py:136
 msgid "The Python builtin `{name}` has a similar name. "
 msgstr "L'identifiant Python (builtin) `{name}` a un nom semblable. "
 
-#: info_variables.py:133
+#: info_variables.py:142
 msgid "Instead of writing `{name}`, perhaps you meant one of the following:\n"
 msgstr ""
 "Au lieu d’écrire `{name}`, peut-être que vous vouliez écrire l'un des noms "
 "suivants :\n"
 
-#: info_variables.py:138
+#: info_variables.py:147
 msgid "*   Local scope: "
 msgstr "*    Portée locale : "
 
-#: info_variables.py:144
+#: info_variables.py:153
 msgid "*   Global scope: "
 msgstr "*    Portée globale : "
 
-#: info_variables.py:150
+#: info_variables.py:159
 msgid "*   Python builtins: "
 msgstr "*    Identifiant Python (builtins) : "
 
-#: info_variables.py:183
+#: info_variables.py:192
 msgid "A type hint found for `{name}` in the local scope.\n"
 msgstr ""
 "Annotation de type trouvée pour `{name}` en tant que variable locale.\n"
 
-#: info_variables.py:186 info_variables.py:199
+#: info_variables.py:195 info_variables.py:208
 msgid ""
 "Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n"
 msgstr ""
 "Peut-être aviez-vous écrit `{name} : {hint}` au lieu de `{name} = {hint}`.\n"
 
-#: info_variables.py:196
+#: info_variables.py:205
 msgid "A type hint found for `{name}` in the global scope.\n"
 msgstr ""
 "Annotation de type trouvée pour `{name}` en tant que variable globale.\n"
