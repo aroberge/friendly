@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-08-22 06:55-0300\n"
+"POT-Creation-Date: 2020-08-22 08:44-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -197,7 +197,7 @@ msgstr ""
 
 #: analyze_type_error.py:290
 msgid ""
-"Perhaps you had a missing comma before the second tuple.\n"
+"Perhaps you had a missing comma between two tuples.\n"
 msgstr ""
 
 #: analyze_type_error.py:292
@@ -1112,7 +1112,11 @@ msgid ""
 "Now, `print` is a function; you need to use parentheses to call it.\n"
 msgstr ""
 
-#: session.py:115
+#: session.py:65
+msgid "Nothing to show: no exception recorded."
+msgstr ""
+
+#: session.py:120
 msgid "Verbosity level {level} not valid."
 msgstr ""
 

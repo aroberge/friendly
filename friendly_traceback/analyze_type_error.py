@@ -287,7 +287,7 @@ def x_is_not_callable(message):
     if match is not None:
         obj = match.group(1)
         if obj == "tuple":
-            perhaps = _("Perhaps you had a missing comma before the second tuple.\n")
+            perhaps = _("Perhaps you had a missing comma between two tuples.\n")
         else:
             perhaps = _("Perhaps you had a missing comma before the tuple.\n")
         return (

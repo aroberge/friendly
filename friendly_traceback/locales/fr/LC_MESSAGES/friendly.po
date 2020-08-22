@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-08-22 06:55-0300\n"
-"PO-Revision-Date: 2020-08-22 06:55-0300\n"
+"POT-Creation-Date: 2020-08-22 08:44-0300\n"
+"PO-Revision-Date: 2020-08-22 08:45-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -262,9 +262,8 @@ msgstr ""
 "moins d'arguments positionnels qu'il n'en faut ({nb_required} manquent).\n"
 
 #: analyze_type_error.py:290
-msgid "Perhaps you had a missing comma before the second tuple.\n"
-msgstr ""
-"Peut-être avez-vous eu une virgule manquante avant le deuxième tuple.\n"
+msgid "Perhaps you had a missing comma between two tuples.\n"
+msgstr "Peut-être que vous aviez une virgule manquante entre deux tuples.\n"
 
 #: analyze_type_error.py:292
 msgid "Perhaps you had a missing comma before the tuple.\n"
@@ -1583,7 +1582,11 @@ msgstr ""
 "Maintenant, `print` est une fonction; vous devez utiliser des parenthèses "
 "pour l'invoquer.\n"
 
-#: session.py:115
+#: session.py:65
+msgid "Nothing to show: no exception recorded."
+msgstr "Rien à montrer: pas d’exception enregistrée."
+
+#: session.py:120
 msgid "Verbosity level {level} not valid."
 msgstr "Niveau de verbosité {level} inconnu."
 
@@ -1664,6 +1667,10 @@ msgstr "accolade `{`"
 #: source_analyzer.py:269
 msgid "curly bracket `}`"
 msgstr "accolade `}`"
+
+#~ msgid "Perhaps you had a missing comma before the second tuple.\n"
+#~ msgstr ""
+#~ "Peut-être avez-vous eu une virgule manquante avant le deuxième tuple.\n"
 
 #~ msgid "In this case, the sequence is a list.\n"
 #~ msgstr "Dans ce cas, la séquence est une liste.\n"
