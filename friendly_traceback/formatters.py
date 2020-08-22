@@ -254,8 +254,10 @@ def _minimal_for_console():
         "message",
         "parsing_error_source",
         "cause",
+        "last_call_header",
         "last_call_source",
         "last_call_variables",
+        "exception_raised_header",
         "exception_raised_source",
         "exception_raised_variables",
     ]
@@ -301,8 +303,10 @@ def _where():
     """
     return [
         "parsing_error_source",
+        "last_call_header",
         "last_call_source",
         "last_call_variables",
+        "exception_raised_header",
         "exception_raised_source",
         "exception_raised_variables",
     ]
