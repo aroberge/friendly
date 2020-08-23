@@ -261,8 +261,6 @@ class Friendly:
 
     set_verbosity: {set_verbosity.__doc__}
 
-    show_again: {show_again.__doc__}
-
     run: {run.__doc__}
 
     print_items: {print_items.__doc__}

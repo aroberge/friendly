@@ -180,7 +180,7 @@ def run(filename, lang=None, verbosity=7, args=None, console=True, use_rich=Fals
         sys.argv.extend([arg for arg in args if arg])  # remove empty strings
     module_globals = exec_code(path=filename, lang=lang, verbosity=verbosity)
     if console:
-        start_console(local_vars=module_globals, use_rich=use_rich)
+        start_console(local_vars=module_globals, use_rich=use_rich, banner="")
     else:
         return module_globals
 

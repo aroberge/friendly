@@ -255,8 +255,10 @@ class FriendlyConsole(InteractiveConsole):
         return input(prompt)
 
 
-def start_console(local_vars=None, use_rich=False, verbosity=9, lang="en"):
+def start_console(local_vars=None, use_rich=False, verbosity=9, lang="en", banner=None):
     """Starts a console; modified from code.interact"""
+    if banner is None:
+        banner = BANNER
 
     def explain(verbosity=None):
         """Shows the previously recorded traceback info again, with the specified
@@ -296,4 +298,4 @@ def start_console(local_vars=None, use_rich=False, verbosity=9, lang="en"):
         local_vars.update(console_defaults)
 
     console = FriendlyConsole(locals=local_vars, use_rich=use_rich)
-    console.interact(banner=BANNER)
+    console.interact(banner=banner)
