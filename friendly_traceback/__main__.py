@@ -127,7 +127,7 @@ def main():
     elif args.source:
         verbosity = 1
     else:  # console
-        verbosity = 8
+        verbosity = 0
 
     public_api.install(lang=args.lang, verbosity=verbosity)
 

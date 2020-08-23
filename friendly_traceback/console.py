@@ -255,7 +255,7 @@ class FriendlyConsole(InteractiveConsole):
         return input(prompt)
 
 
-def start_console(local_vars=None, use_rich=False):
+def start_console(local_vars=None, use_rich=False, verbosity=9, lang="en"):
     """Starts a console; modified from code.interact"""
 
     def explain(verbosity=None):
@@ -288,8 +288,8 @@ def start_console(local_vars=None, use_rich=False):
         "where": where,
         "why": why,
     }
-    public_api.install()
-
+    if not public_api.is_installed():
+        public_api.install(verbosity=verbosity, lang=lang)
     if local_vars is None:
         local_vars = console_defaults
     else:
