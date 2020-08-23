@@ -1,6 +1,11 @@
 """core.py
 
-The exception hook at the heart of Friendly-traceback
+The exception hook at the heart of Friendly-traceback.
+
+You should not need to use any of the functions defined here;
+they are considered to be internal functions, subject to change at any
+time. If functions defined in public_api.py do not meet your needs,
+please file an issue.
 """
 import inspect
 from itertools import dropwhile
@@ -16,7 +21,7 @@ from .session import session
 from . import info_variables
 
 from .source_cache import cache, highlight_source
-from .path_info import is_excluded_file
+from .path_info import is_excluded_file, EXCLUDED_FILE_PATH
 from .friendly_exception import FriendlyException
 
 
@@ -34,9 +39,6 @@ def explain_traceback(redirect=None):
           redirect = some_stream
        is specified, the output goes to that stream, but without changing
        the global settings.
-
-       If the string "capture" is given as the value for redirect, the
-       output is saved and can be later retrieved by get_output().
     """
     # get_output() refers to a function in the public API
 
@@ -58,11 +60,7 @@ def exception_hook(etype, value, tb, redirect=None):
           redirect = some_stream
        is specified, the output goes to that stream for this call,
        but the session settings is restored afterwards.
-
-       If the string "capture" is given as the value for redirect, the
-       output is saved and can be later retrieved by get_output().
     """
-    # get_output() refers to a function in the public API
 
     if etype.__name__ == "SystemExit":
         raise SystemExit(str(value))
@@ -173,13 +171,10 @@ def get_traceback_info(etype, value, tb, write_err):
     set_generic(info, friendly, etype, value)  # [2]
     set_cause(info, friendly, etype, value)  # [3]
 
-    # Get all calls made, but remove calls from our code.
     records = inspect.getinnerframes(tb, cache.context)
-    records = cleanup_tracebacks(records, write_err)
+    records = cleanup_tracebacks(records)  # remove calls from our own code.
 
-    info["simulated_python_traceback"] = format_simulated_python_traceback(
-        records, etype, value, python_tb
-    )
+    format_simulated_python_traceback(records, etype, value, python_tb, info)
     info["original_python_traceback"] = "\n".join(python_tb) + "\n"
 
     if issubclass(etype, SyntaxError):
@@ -188,8 +183,6 @@ def get_traceback_info(etype, value, tb, write_err):
     if not records:
         if issubclass(etype, (FileNotFoundError, ImportError)):
             return info
-
-        # I don't know if this can still happen.
         info["cause"] = _(
             "I suspect that you are using a regular\n"
             "Python console after importing Friendly-traceback.\n"
@@ -257,7 +250,7 @@ def cannot_analyze_string():
     )
 
 
-def cleanup_tracebacks(records, write_err):
+def cleanup_tracebacks(records):
     """Remove excluded content from beginning and end of complete tracebacks.
 
         Tracebacks shown to users should originate in their own code,
@@ -279,18 +272,54 @@ def exception_raised_header(linenumber, filename):
     )
 
 
-def format_simulated_python_traceback(records, etype, value, python_tb):
+def format_simulated_python_traceback(records, etype, value, python_tb, info):
     """ When required, a standard Python traceback might be required to be
         included as part of the information shown to the user.
         This function does the required formatting.
     """
-    simulated_python_tb = _get_traceback_information(records, etype, value)
+    _ = current_lang.translate
+    suppressed = "       ... " + _("Many other lines.") + " ..."
 
-    header = "Traceback (most recent call last):"
+    sim_tb = _get_traceback_information(records, etype, value)
+    if len(sim_tb) > 5:
+        shortened_tb = [
+            sim_tb[0].replace("\n", ": "),
+            suppressed,
+            sim_tb[-3].replace("\n", ": "),
+            sim_tb[-2].replace("\n", ": "),
+            sim_tb[-1],
+        ]
+    else:
+        shortened_tb = sim_tb[:]
+
+    header = "Traceback (most recent call last):"  # not included in records
     if python_tb[0].startswith(header):
-        simulated_python_tb.insert(0, header)
+        sim_tb.insert(0, header)
+        shortened_tb.insert(0, header)
 
-    return "\n".join(simulated_python_tb) + "\n"
+    if "RecursionError" in python_tb[-1]:
+        sim_tb = []
+        exclude = False
+        for line in python_tb:  # excluding our own code
+            if exclude and line.strip() == "exec(code, self.locals)":
+                continue
+            exclude = False
+            for filename in EXCLUDED_FILE_PATH:
+                if filename in line:
+                    exclude = True
+                    break
+            if exclude:
+                continue
+            sim_tb.append(line)
+        if len(sim_tb) > 13:
+            _tb = sim_tb[0:3]
+            _tb.append(suppressed)
+            _tb.extend(sim_tb[-7:])
+            sim_tb = _tb
+
+    info["simulated_python_traceback"] = "\n".join(sim_tb) + "\n"
+    info["shortened_traceback"] = "\n".join(shortened_tb) + "\n"
+    return
 
 
 def _get_traceback_information(records, etype, value):

@@ -79,7 +79,11 @@ class _State:
         for item in self.saved_traceback_info:
             print("-" * 50)
             print("item = ", item)
-            print(self.saved_traceback_info[item])
+            item_str = self.saved_traceback_info[item]
+            if len(item_str) < 1000:
+                print(item_str)
+            else:
+                print(item_str[0:600] + " [item truncated] " + item_str[-300:])
             print()
 
     def capture(self, txt):
