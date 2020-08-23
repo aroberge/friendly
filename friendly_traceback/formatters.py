@@ -2,6 +2,7 @@
 
 Default formatters showing all or only part of the available information.
 """
+from .my_gettext import current_lang
 
 default_items_in_order = [  # This list excludes two full traceback items
     "header",
@@ -25,16 +26,17 @@ default_items_in_order = [  # This list excludes two full traceback items
 def tb_items_to_show(level=1):
     """Given a verbosity level, returns a list of traceback items to show."""
     selector = {
-        1: _default,
+        1: _default,  # for running script in non-interactive mode
         2: _traceback_before_default,
         3: _traceback_after_default,
         4: _no_generic_explanation,
         5: _traceback_before_no_generic,
         6: _traceback_after_no_generic,
-        7: _minimal_for_console,
-        8: _simple_explain,
-        9: _simulated_python_traceback,
-        0: _original_python_traceback,
+        7: _tb_plus_why,  # shortened traceback
+        8: _advanced_user,
+        9: _shortened_python_traceback,
+        0: _simulated_python_traceback,
+        -1: _original_python_traceback,
         11: _what,
         12: _where,
         13: _why,
@@ -52,6 +54,7 @@ def pre(info, level=1):
        The only change made to the content of "info" is
        some added indentation.
     """
+    _ = current_lang.translate
 
     pre_items = {
         "header": "single",
@@ -71,6 +74,7 @@ def pre(info, level=1):
         "exception_raised_variables": "double",
         "simulated_python_traceback": "single",
         "original_python_traceback": "single",
+        "shortened_traceback": "single",
     }
 
     items_to_show = tb_items_to_show(level=level)
@@ -81,6 +85,10 @@ def pre(info, level=1):
             indentation = spacing[pre_items[item]]
             for line in info[item].split("\n"):
                 result.append(indentation + line)
+
+    if result == [""]:
+        # this would occur in answer to why() if not cause is found
+        return "    " + _("I do not know.")
     return "\n".join(result)
 
 
@@ -91,7 +99,12 @@ def markdown(info, level=1):
     for nicer final display when the markdown generated content
     if further processed.
     """
+    _ = current_lang.translate
+
     result = _markdown(info, level=level)
+    if result == [""]:
+        # this would occur in answer to why() if not cause is found
+        return _("I do not know.")
     return "\n\n".join(result)
 
 
@@ -105,7 +118,11 @@ def markdown_docs(info, level=1):
     for nicer final display when the markdown generated content
     if further processed.
     """
+    _ = current_lang.translate
     result = _markdown(info, level=level, docs=True)
+    if result == [""]:
+        # this would occur in answer to why() if not cause is found
+        return _("I do not know.")
     return "\n\n".join(result)
 
 
@@ -117,7 +134,11 @@ def rich_markdown(info, level=1):
     for nicer final display when the markdown generated content
     if further processed.
     """
+    _ = current_lang.translate
     result = _markdown(info, level=level, rich=True)
+    if result == [""]:
+        # this would occur in answer to why() if not cause is found
+        return _("I do not know.")
     return "\n\n".join(result)
 
 
@@ -144,6 +165,7 @@ def _markdown(info, level, rich=False, docs=False):
         "exception_raised_variables": ("", ""),
         "simulated_python_traceback": ("```python\n", "\n```"),
         "original_python_traceback": ("```python\n", "\n```"),
+        "shortened_traceback": ("```python\n", "\n```"),
     }
 
     items_to_show = tb_items_to_show(level=level)
@@ -247,11 +269,11 @@ def _traceback_after_no_generic():
     return items
 
 
-def _minimal_for_console():
-    """Minimal traceback, useful for console use by more experienced users.
+def _advanced_user():  # Not (yet) included by Thonny
+    """Useful information for advanced users.
     """
     return [
-        "message",
+        "simulated_python_traceback",
         "parsing_error_source",
         "cause",
         "last_call_header",
@@ -263,17 +285,22 @@ def _minimal_for_console():
     ]
 
 
-def _simple_explain():  # Not (yet) included by Thonny
-    """(Subject to change) Simulated Python tracebacks followed
-               by specific information.
+def _tb_plus_why():
+    """Shortened Python tracebacks followed by specific information.
     """
-    return ["simulated_python_traceback", "parsing_error", "cause"]
+    return ["shortened_traceback", "parsing_error", "cause"]
 
 
 def _simulated_python_traceback():
     """Shows only the simulated Python traceback
     """
     return ["simulated_python_traceback"]
+
+
+def _shortened_python_traceback():
+    """Shows only the simulated Python traceback
+    """
+    return ["shortened_traceback"]
 
 
 def _original_python_traceback():
@@ -284,11 +311,11 @@ def _original_python_traceback():
 
 
 def _what():
-    """Shows only the generic meaning.
+    """Shows the message and and the generic meaning.
 
        For example: A NameError means ...
     """
-    return ["generic"]
+    return ["message", "generic"]
 
 
 def _why():
@@ -302,6 +329,7 @@ def _where():
        at these locations.
     """
     return [
+        "parsing_error",
         "parsing_error_source",
         "last_call_header",
         "last_call_source",

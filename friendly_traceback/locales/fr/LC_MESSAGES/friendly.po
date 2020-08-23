@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-08-22 08:44-0300\n"
-"PO-Revision-Date: 2020-08-22 08:45-0300\n"
+"POT-Creation-Date: 2020-08-23 10:11-0300\n"
+"PO-Revision-Date: 2020-08-23 10:11-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -303,7 +303,7 @@ msgid "Warning: you have redefined the python builtin `{name}`."
 msgstr ""
 "Attention : vous avez redéfini l'identifiant Python (builtin) `{name}`."
 
-#: core.py:193
+#: core.py:186
 msgid ""
 "I suspect that you are using a regular\n"
 "Python console after importing Friendly-traceback.\n"
@@ -313,7 +313,7 @@ msgstr ""
 "console Python après avoir importé Friendly-traceback.\n"
 "Malheureusement, aucune autre information ne peut être fournie.\n"
 
-#: core.py:242
+#: core.py:235
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -324,7 +324,7 @@ msgstr ""
 "Est-ce que vous utilisez une console Python plutôt que la console \"Friendly"
 "\"?\n"
 
-#: core.py:254
+#: core.py:247
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
@@ -332,11 +332,15 @@ msgstr ""
 "Malheureusement, aucune information supplémentaire n’est disponible:\n"
 "le contenu du fichier '<string>' n’est pas accessible.\n"
 
-#: core.py:277
+#: core.py:270
 msgid "Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr "Exception levée à la ligne {linenumber} du fichier '{filename}'.\n"
 
-#: core.py:361
+#: core.py:281
+msgid "Many other lines."
+msgstr "Beaucoup d’autres lignes."
+
+#: core.py:390
 msgid ""
 "Python's error message (invalid syntax) cannot be used to identify the "
 "problem:"
@@ -344,11 +348,11 @@ msgstr ""
 "Le message d’erreur de Python (invalid syntax) ne peut pas être utilisé pour "
 "identifier le problème :"
 
-#: core.py:366
+#: core.py:395
 msgid "Likely cause based on the information given by Python:"
 msgstr "Cause probable basée sur les informations données par Python :"
 
-#: core.py:408
+#: core.py:437
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
@@ -358,16 +362,16 @@ msgstr ""
 "        vous devez utiliser la console 'Friendly' et non pas une \n"
 "        console Python régulière.\n"
 
-#: core.py:414
+#: core.py:443
 msgid "Problem: source of '{filename}' is not available\n"
 msgstr "Problème : la source de '{filename}' n'est pas disponible.\n"
 
-#: core.py:429
+#: core.py:458
 msgid "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 "L'exécution s'est arrêtée à la ligne {linenumber} du fichier '{filename}'\n"
 
-#: core.py:443
+#: core.py:472
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -377,7 +381,7 @@ msgstr ""
 "'{filename}'\n"
 "jusqu'à l'endroit indiqué par --> et ^.\n"
 
-#: core.py:449
+#: core.py:478
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
@@ -388,7 +392,7 @@ msgstr ""
 "La fin du fichier a été atteinte et Python s'attendait à voir plus de code.\n"
 "\n"
 
-#: core.py:455
+#: core.py:484
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'\n"
@@ -399,13 +403,17 @@ msgstr ""
 "pour une raison non spécifiée.\n"
 "\n"
 
-#: core.py:496
+#: core.py:525
 msgid "Known identifiers:"
 msgstr "Identificateurs connus :"
 
-#: core.py:541
+#: core.py:570
 msgid "Python exception:"
 msgstr "Exception Python:"
+
+#: formatters.py:89 formatters.py:105 formatters.py:123 formatters.py:139
+msgid "I do not know."
+msgstr "Je ne sais pas."
 
 #: friendly_exception.py:10
 msgid ""
@@ -1586,7 +1594,7 @@ msgstr ""
 msgid "Nothing to show: no exception recorded."
 msgstr "Rien à montrer: pas d’exception enregistrée."
 
-#: session.py:120
+#: session.py:124
 msgid "Verbosity level {level} not valid."
 msgstr "Niveau de verbosité {level} inconnu."
 
@@ -1667,6 +1675,9 @@ msgstr "accolade `{`"
 #: source_analyzer.py:269
 msgid "curly bracket `}`"
 msgstr "accolade `}`"
+
+#~ msgid "Friendly-traceback: no information."
+#~ msgstr "Friendly-traceback: aucune information."
 
 #~ msgid "Perhaps you had a missing comma before the second tuple.\n"
 #~ msgstr ""

@@ -152,13 +152,13 @@ def exec_code(*, source=None, path=None, verbosity=None, lang=None):
     return module_globals
 
 
-def run(filename, lang=None, verbosity=1, args=None, console=True, use_rich=False):
+def run(filename, lang=None, verbosity=7, args=None, console=True, use_rich=False):
     """Given a filename (relative or absolute path), this function uses the
        more complex exec_code() to run a file.
 
        If friendly-traceback exception hook has not been set up prior
        to calling check_syntax, it will only be used for the duration
-       of this function call. By default, it uses the value of 1 for
+       of this function call. By default, it uses the value of 7 for
        the verbosity level.
 
        If friendly-traceback exception hook has not been set up prior

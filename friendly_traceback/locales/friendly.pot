@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-08-22 08:44-0300\n"
+"POT-Creation-Date: 2020-08-23 10:11-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -229,83 +229,91 @@ msgstr ""
 msgid "Warning: you have redefined the python builtin `{name}`."
 msgstr ""
 
-#: core.py:193
+#: core.py:186
 msgid ""
 "I suspect that you are using a regular\n"
 "Python console after importing Friendly-traceback.\n"
 "Unfortunately, no further processing can be done.\n"
 msgstr ""
 
-#: core.py:242
+#: core.py:235
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
 "Are you using a regular Python console instead of a Friendly-console?\n"
 msgstr ""
 
-#: core.py:254
+#: core.py:247
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
 msgstr ""
 
-#: core.py:277
+#: core.py:270
 msgid ""
 "Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: core.py:361
+#: core.py:281
+msgid "Many other lines."
+msgstr ""
+
+#: core.py:390
 msgid "Python's error message (invalid syntax) cannot be used to identify the problem:"
 msgstr ""
 
-#: core.py:366
+#: core.py:395
 msgid "Likely cause based on the information given by Python:"
 msgstr ""
 
-#: core.py:408
+#: core.py:437
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
 "        regular Python console.\n"
 msgstr ""
 
-#: core.py:414
+#: core.py:443
 msgid ""
 "Problem: source of '{filename}' is not available\n"
 msgstr ""
 
-#: core.py:429
+#: core.py:458
 msgid ""
 "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: core.py:443
+#: core.py:472
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "beyond the location indicated below by --> and ^.\n"
 msgstr ""
 
-#: core.py:449
+#: core.py:478
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
 "It reached the end of the file and expected more content.\n"
 msgstr ""
 
-#: core.py:455
+#: core.py:484
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'\n"
 "for an unspecified reason.\n"
 msgstr ""
 
-#: core.py:496
+#: core.py:525
 msgid "Known identifiers:"
 msgstr ""
 
-#: core.py:541
+#: core.py:570
 msgid "Python exception:"
+msgstr ""
+
+#: formatters.py:89 formatters.py:105 formatters.py:123 formatters.py:139
+msgid "I do not know."
 msgstr ""
 
 #: friendly_exception.py:10
@@ -1116,7 +1124,7 @@ msgstr ""
 msgid "Nothing to show: no exception recorded."
 msgstr ""
 
-#: session.py:120
+#: session.py:124
 msgid "Verbosity level {level} not valid."
 msgstr ""
 
