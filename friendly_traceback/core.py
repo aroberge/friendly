@@ -148,25 +148,14 @@ def get_traceback_info(etype, value, tb, write_err):
     """
     _ = current_lang.translate
 
-    # normal Python traceback
-    temp_tb = traceback.format_exception(etype, value, tb)
-
-    # change formatting to conform to our line break notation
-    # Note, some lines in python_tb have embedded \n as well as ending \n
-    # we do not want to remove the embedded ones.
-    python_tb = []
-    for item in temp_tb:
-        python_tb.append(item.rstrip())
-
     # Note: the numbered comments refer to the example above
     info = {"header": _("Python exception:")}  # [1a]
     info["message"] = get_message(etype.__name__, value)  # [1a]
     info["generic"] = get_generic_explanation(etype.__name__, etype, value)  # 2
     set_cause(info, etype, value)  # [3]
 
-    records = inspect.getinnerframes(tb, cache.context)
-    records = cleanup_tracebacks(records)  # remove calls from our own code.
-
+    records = get_records(tb, cache)
+    python_tb = traceback.format_exception(etype, value, tb)
     format_python_tracebacks(records, etype, value, python_tb, info)
 
     if issubclass(etype, SyntaxError):
@@ -231,26 +220,17 @@ def cannot_analyze_string():
     )
 
 
-def cleanup_tracebacks(records):
-    """Remove excluded content from beginning and end of complete tracebacks.
-
-        Tracebacks shown to users should originate in their own code,
-        and normally end there as well.  However, in intermediate calls,
-        they could possibly invoke some code from files which we had
-        decided to exclude.
+def get_records(tb, cache):
+    """Get the traceback frrame history, excluding those originating
+       from our own code included either at the beginning or at the
+       end of the traceback.
     """
+    records = inspect.getinnerframes(tb, cache.context)
     records = list(dropwhile(lambda record: is_excluded_file(record.filename), records))
     records.reverse()
     records = list(dropwhile(lambda record: is_excluded_file(record.filename), records))
     records.reverse()
     return records
-
-
-def exception_raised_header(linenumber, filename):
-    _ = current_lang.translate
-    return _("Exception raised on line {linenumber} of file '{filename}'.\n").format(
-        linenumber=linenumber, filename=utils.shorten_path(filename)
-    )
 
 
 def format_python_tracebacks(records, etype, value, python_tb, info):
@@ -260,6 +240,8 @@ def format_python_tracebacks(records, etype, value, python_tb, info):
     """
     _ = current_lang.translate
     suppressed = "       ... " + _("Many other lines.") + " ..."
+
+    python_tb = [line.rstrip() for line in python_tb]
 
     sim_tb = _get_traceback_information(records, etype, value)
     if len(sim_tb) > 5:
@@ -434,14 +416,6 @@ def get_partial_source(filename, linenumber, lines, index):
     return {"source": source, "line": line}
 
 
-def last_call_header(linenumber, filename):
-    _ = current_lang.translate
-
-    return _("Execution stopped on line {linenumber} of file '{filename}'.\n").format(
-        linenumber=linenumber, filename=utils.shorten_path(filename)
-    )
-
-
 def process_parsing_error(etype, value, info):
     _ = current_lang.translate
     filepath = value.filename
@@ -494,18 +468,28 @@ def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
     """
     _ = current_lang.translate
     source_info = get_partial_source(filename, linenumber, lines, index)
-    if header_name == "last_call":
-        get_header = last_call_header
-    else:
-        get_header = exception_raised_header
-    info["%s_header" % header_name] = get_header(linenumber, filename)  # [4]
-    info["%s_source" % header_name] = source_info["source"]  # [5]
+    info["%s_header" % header_name] = get_location_header(  # [4] or [5]
+        linenumber, filename, header_name
+    )
+    info["%s_source" % header_name] = source_info["source"]
 
     if "line" in source_info and source_info["line"] is not None:
         var_info = info_variables.get_var_info(source_info["line"], frame)
         if var_info:
             info["%s_variables_header" % header_name] = _("Known identifiers:")
             info["%s_variables" % header_name] = var_info  # [6]
+
+
+def get_location_header(linenumber, filename, header_name=None):
+    _ = current_lang.translate
+    if header_name == "exception_raised":
+        return _(
+            "Exception raised on line {linenumber} of file '{filename}'.\n"
+        ).format(linenumber=linenumber, filename=utils.shorten_path(filename))
+    else:
+        return _(
+            "Execution stopped on line {linenumber} of file '{filename}'.\n"
+        ).format(linenumber=linenumber, filename=utils.shorten_path(filename))
 
 
 def set_cause(info, etype, value):
