@@ -64,8 +64,11 @@ def exception_hook(etype, value, tb, redirect=None):
 
     if etype.__name__ == "SystemExit":
         raise SystemExit(str(value))
-    if etype.__name__ == "KeyboardInterrupt":
+    elif etype.__name__ == "KeyboardInterrupt":
         raise KeyboardInterrupt(str(value))
+    elif issubclass(etype, FriendlyException):  # Internal errors
+        session.write_err(str(value))
+        return
 
     if redirect is not None:
         saved_current_redirect = session.write_err
@@ -144,11 +147,6 @@ def get_traceback_info(etype, value, tb, write_err):
     returns the result in a dict.
     """
     _ = current_lang.translate
-    if issubclass(etype, FriendlyException):
-        write_err(str(value))
-        return {}
-
-    info = {}
 
     # normal Python traceback
     temp_tb = traceback.format_exception(etype, value, tb)
@@ -160,34 +158,22 @@ def get_traceback_info(etype, value, tb, write_err):
     for item in temp_tb:
         python_tb.append(item.rstrip())
 
-    if hasattr(value, "friendly"):  # for custom exceptions
-        friendly = getattr(value, "friendly")
-    else:
-        friendly = []
-
     # Note: the numbered comments refer to the example above
-    set_header(info, friendly)  # [1]
+    info = {"header": _("Python exception:")}  # [1a]
     info["message"] = get_message(etype.__name__, value)  # [1a]
-    set_generic(info, friendly, etype, value)  # [2]
-    set_cause(info, friendly, etype, value)  # [3]
+    info["generic"] = get_generic_explanation(etype.__name__, etype, value)  # 2
+    set_cause(info, etype, value)  # [3]
 
     records = inspect.getinnerframes(tb, cache.context)
     records = cleanup_tracebacks(records)  # remove calls from our own code.
 
-    format_simulated_python_traceback(records, etype, value, python_tb, info)
-    info["original_python_traceback"] = "\n".join(python_tb) + "\n"
+    format_python_tracebacks(records, etype, value, python_tb, info)
 
     if issubclass(etype, SyntaxError):
         return info
 
     if not records:
-        if issubclass(etype, (FileNotFoundError, ImportError)):
-            return info
-        info["cause"] = _(
-            "I suspect that you are using a regular\n"
-            "Python console after importing Friendly-traceback.\n"
-            "Unfortunately, no further processing can be done.\n"
-        )
+        print("WARNING: no records found.")
         return info
 
     frame, filename, linenumber, _func, lines, index = records[0]
@@ -219,11 +205,6 @@ def amend_name_error_cause(info, frame):
         info["cause"] += hint + similar_names
     except IndexError:
         pass
-
-
-# ============================================================================
-# The functions below are ordered alphabetically, ignoring leading underscores
-# ============================================================================
 
 
 def cannot_analyze_stdin():
@@ -272,7 +253,7 @@ def exception_raised_header(linenumber, filename):
     )
 
 
-def format_simulated_python_traceback(records, etype, value, python_tb, info):
+def format_python_tracebacks(records, etype, value, python_tb, info):
     """ When required, a standard Python traceback might be required to be
         included as part of the information shown to the user.
         This function does the required formatting.
@@ -319,6 +300,7 @@ def format_simulated_python_traceback(records, etype, value, python_tb, info):
 
     info["simulated_python_traceback"] = "\n".join(sim_tb) + "\n"
     info["shortened_traceback"] = "\n".join(shortened_tb) + "\n"
+    info["original_python_traceback"] = "\n".join(python_tb) + "\n"
     return
 
 
@@ -491,7 +473,7 @@ def process_parsing_error(etype, value, info):
 
 
 def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
-    """This will outpt something like the following:
+    """This will output something like the following:
 
         [4]
         Execution stopped on line 14 of file 'C:...test_unbound_local_error.py'.
@@ -526,45 +508,18 @@ def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
             info["%s_variables" % header_name] = var_info  # [6]
 
 
-def set_cause(info, friendly, etype, value):
+def set_cause(info, etype, value):
     """Sets the cause"""
     if issubclass(etype, SyntaxError) and value.filename == "<string>":
         info["cause"] = cannot_analyze_string()
+        return
     elif issubclass(etype, SyntaxError) and value.filename == "<stdin>":
         info["cause"] = cannot_analyze_stdin()
-    else:
-        if issubclass(etype, SyntaxError):
-            process_parsing_error(etype, value, info)
-        if "cause" in friendly:
-            info["cause"] = friendly["cause"]
-            if "cause_header" in friendly:
-                info["cause_header"] = friendly["cause_header"]
-        else:
-            header, cause = get_likely_cause(etype, value)
-            if cause is not None:
-                info["cause_header"] = header
-                info["cause"] = cause
+        return
 
-
-def set_generic(info, friendly, etype, value):
-    """Sets the value of the generic explanation.
-
-       This might be something like the following:
-
-        In Python, variables that are used inside a function are known as
-        local variables. Before they are used, they must be assigned a value.
-        A variable that is used before ...
-    """
-    if "generic" in friendly:
-        info["generic"] = friendly["generic"]
-    else:
-        info["generic"] = get_generic_explanation(etype.__name__, etype, value)
-
-
-def set_header(info, friendly):
-    """Sets the header for the exception"""
-    _ = current_lang.translate
-    if "header" in friendly:  # [1]
-        info["header"] = friendly["header"]
-    else:
-        info["header"] = _("Python exception:")
+    if issubclass(etype, SyntaxError):
+        process_parsing_error(etype, value, info)
+    header, cause = get_likely_cause(etype, value)
+    if cause is not None:
+        info["cause_header"] = header
+        info["cause"] = cause

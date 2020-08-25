@@ -116,7 +116,7 @@ def markdown_docs(info, level=1):
 
     Some minor changes of the traceback info content are done,
     for nicer final display when the markdown generated content
-    if further processed.
+    is further processed.
     """
     _ = current_lang.translate
     result = _markdown(info, level=level, docs=True)

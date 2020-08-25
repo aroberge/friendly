@@ -12,12 +12,13 @@ def test_uncleaned_traceback():
     friendly.install(redirect="capture")
 
     try:
-        raise ValueError
+        from . import raise_exception
     except ValueError:
         friendly.explain()
 
     output = friendly.get_output()
     assert "test_clean_traceback" in output
+    assert "André" in output
 
     # cleanup for other tests
     friendly.uninstall()
@@ -31,12 +32,13 @@ def test_cleaned_traceback():
     friendly.exclude_file_from_traceback(__file__)
 
     try:
-        raise ValueError
+        from . import raise_exception
     except ValueError:
         friendly.explain()
 
     output = friendly.get_output()
     assert "test_clean_traceback" not in output
+    assert "André" in output
 
     # cleanup for other tests
     friendly.path_info.include_file_in_traceback(__file__)
