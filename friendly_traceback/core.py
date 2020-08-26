@@ -294,14 +294,10 @@ def _get_traceback_information(records, etype, value):
     for record in records:
         frame, filename, linenumber, _func, lines, index = record
         source_info = get_partial_source(filename, linenumber, lines, index)
+        result.append('  File "{}", line {}, in {}'.format(filename, linenumber, _func))
         badline = source_info["line"]
-        if badline is None:
-            badline = ""
-        result.append(
-            '  File "{}", line {}, in {}\n    {}'.format(
-                filename, linenumber, _func, badline.strip()
-            )
-        )
+        if badline is not None:
+            result.append("    {}".format(badline.strip()))
 
     if issubclass(etype, SyntaxError):
         filename = value.filename
@@ -375,23 +371,11 @@ def get_partial_source(filename, linenumber, lines, index):
     _ = current_lang.translate
 
     if filename in cache.cache:
-        if filename == "<string>":
-            # We should no longer see <string> used as a filename;
-            # if so, it signals a potential problem we should look into.
-            print(
-                "Message to developer:",
-                " please revise cache to take care of <string> cases.",
-            )
         source, line = cache.get_formatted_partial_source(filename, linenumber, None)
     elif (
         filename == "<string>"
     ):  # note: Something might have been cached with this name
         source = cannot_analyze_string()
-        lines = source.split("\n")
-        new_lines = []
-        for _line in lines:
-            new_lines.append("    " + _line)
-        source = "\n".join(new_lines)
         line = None
     elif filename and os.path.abspath(filename):
         source, line = highlight_source(linenumber, index, lines)

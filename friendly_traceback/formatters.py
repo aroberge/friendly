@@ -149,7 +149,7 @@ def _markdown(info, level, rich=False, docs=False):
 
     markdown_items = {
         "header": ("# ", ""),
-        "message": ("## ", ""),
+        "message": ("```python\n", "\n```"),
         "generic": ("", ""),
         "parsing_error": ("", ""),
         "parsing_error_source": ("```python\n", "\n```"),
@@ -187,18 +187,6 @@ def _markdown(info, level, rich=False, docs=False):
                         "exception_raised_variables_header",
                     ]:
                         content = content.rstrip(":")
-            if item == "message" and not docs:
-                # replacing something like
-                #   the variable 'x' is ...
-                # by
-                #   the variable '`x`' is ...
-                # so that it is highlighted as code.
-                content = (
-                    content.replace(" '", " '`")
-                    .replace("' ", "`' ")
-                    .replace("'\n", "`'\n")
-                    .replace("'.", "`'.")
-                )
 
             if item.endswith("variables"):
                 parts = content.split(":")
@@ -225,8 +213,9 @@ def _traceback_before_default():
     """Includes the simulated Python traceback before all the information
        processed by Friendly-traceback.
     """
-    items = ["simulated_python_traceback"]
-    items.extend(_default())
+    items = _default()
+    # The traceback ends with the message; so we replace the message by the tb.
+    items[1] = "simulated_python_traceback"
     return items
 
 
