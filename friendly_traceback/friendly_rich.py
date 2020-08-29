@@ -14,11 +14,13 @@ try:
     from rich.syntax import Syntax
     from rich.text import Text
     from rich.theme import Theme
-    from . import dark_theme
+    from . import brunante
     import pygments.styles
 
-    sys.modules["pygments.styles.dark_theme"] = dark_theme
-    pygments.styles.STYLE_MAP["dark_theme"] = "dark_theme::BrunanteStyle"
+    # Monkeypatching pygments; inspired by
+    # https://gist.github.com/crowsonkb/4e2eb4439e3fe514cc4755b217f164d5
+    sys.modules["pygments.styles.brunante"] = brunante
+    pygments.styles.STYLE_MAP["brunante"] = "brunante::BrunanteStyle"
 except ImportError:
     rich_available = False
     Markdown = None
@@ -53,7 +55,7 @@ def init_console(theme="dark"):
         if theme == "light":
             syntax = Syntax(code, self.lexer_name, theme="tango")
         else:
-            syntax = Syntax(code, self.lexer_name, theme="dark_theme")
+            syntax = Syntax(code, self.lexer_name, theme="brunante")
         yield syntax
 
     CodeBlock.__rich_console__ = _patch_code_block
