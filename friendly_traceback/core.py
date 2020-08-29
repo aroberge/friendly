@@ -244,9 +244,10 @@ def format_python_tracebacks(records, etype, value, python_tb, info):
     python_tb = [line.rstrip() for line in python_tb]
 
     sim_tb = _get_traceback_information(records, etype, value)
-    if len(sim_tb) > 5:
+    if len(sim_tb) > 7:
         shortened_tb = [
             sim_tb[0].replace("\n", ": "),
+            sim_tb[1].replace("\n", ": "),
             suppressed,
             sim_tb[-3].replace("\n", ": "),
             sim_tb[-2].replace("\n", ": "),
@@ -274,8 +275,8 @@ def format_python_tracebacks(records, etype, value, python_tb, info):
             if exclude:
                 continue
             sim_tb.append(line)
-        if len(sim_tb) > 13:
-            _tb = sim_tb[0:3]
+        if len(sim_tb) > 15:
+            _tb = sim_tb[0:5]
             _tb.append(suppressed)
             _tb.extend(sim_tb[-7:])
             sim_tb = _tb

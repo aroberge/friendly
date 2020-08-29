@@ -22,7 +22,7 @@ def get_var_info(line, frame):
     for tok in tokens:
         if tok.type == tokenize.NAME:
             name = tok.string
-            if name in names:
+            if name in names or name in ["True", "False", "None"]:
                 continue
             names.append(name)
             result = ""

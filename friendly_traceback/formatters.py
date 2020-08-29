@@ -149,7 +149,7 @@ def _markdown(info, level, rich=False, docs=False):
 
     markdown_items = {
         "header": ("# ", ""),
-        "message": ("```python\n", "\n```"),
+        "message": ("```pytb\n", "\n```"),
         "generic": ("", ""),
         "parsing_error": ("", ""),
         "parsing_error_source": ("```python\n", "\n```"),
@@ -162,10 +162,10 @@ def _markdown(info, level, rich=False, docs=False):
         "exception_raised_header": ("## ", ""),
         "exception_raised_source": ("```python\n", "\n```"),
         "exception_raised_variables_header": ("### ", ""),
-        "exception_raised_variables": ("", ""),
-        "simulated_python_traceback": ("```python\n", "\n```"),
-        "original_python_traceback": ("```python\n", "\n```"),
-        "shortened_traceback": ("```python\n", "\n```"),
+        "exception_raised_variables": ("```python\n", "\n```"),
+        "simulated_python_traceback": ("```pytb\n", "\n```"),
+        "original_python_traceback": ("```pytb\n", "\n```"),
+        "shortened_traceback": ("```pytb\n", "\n```"),
     }
 
     items_to_show = tb_items_to_show(level=level)
@@ -187,12 +187,6 @@ def _markdown(info, level, rich=False, docs=False):
                         "exception_raised_variables_header",
                     ]:
                         content = content.rstrip(":")
-
-            if item.endswith("variables"):
-                parts = content.split(":")
-                if len(parts) > 1:
-                    if parts[1].strip().startswith("<"):
-                        content = content.replace("<", '"<').replace(">", '>"')
 
             prefix, suffix = markdown_items[item]
             if docs:

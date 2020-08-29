@@ -265,11 +265,12 @@ def start_console(local_vars=None, use_rich=False, verbosity=9, lang="en", banne
            verbosity level.
         """
         if verbosity is None:
-            verbosity = 1
+            verbosity = 2
         old_level = public_api.get_verbosity()
         public_api.set_verbosity(verbosity)
         public_api.show_again()
         public_api.set_verbosity(old_level)
+        print()
 
     def what():
         """If known, shows the generic explanation about a given exception."""

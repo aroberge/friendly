@@ -3,6 +3,7 @@
 All Rich-related imports and redefinitions are done here.
 
 """
+import sys
 
 rich_available = True
 try:
@@ -13,6 +14,11 @@ try:
     from rich.syntax import Syntax
     from rich.text import Text
     from rich.theme import Theme
+    from . import dark_theme
+    import pygments.styles
+
+    sys.modules["pygments.styles.dark_theme"] = dark_theme
+    pygments.styles.STYLE_MAP["dark_theme"] = "dark_theme::BrunanteStyle"
 except ImportError:
     rich_available = False
     Markdown = None
@@ -44,20 +50,20 @@ def init_console():
 
     def _patch_code_block(self, console, options):
         code = str(self.text).rstrip()
-        syntax = Syntax(code, self.lexer_name, theme=self.theme)
+        syntax = Syntax(code, self.lexer_name, theme="dark_theme")
         yield syntax
 
     CodeBlock.__rich_console__ = _patch_code_block
 
     dark_background_theme = Theme(
         {
-            "markdown.h1.border": "bold yellow",
-            "markdown.h1": "bold red",
-            "markdown.h2": "bold red underline",  # Exception message; location header
-            "markdown.h3": "bold green",  # likely cause
-            "markdown.h4": "bold red",  # warning header
-            "markdown.link": "bold yellow underline",
-            "markdown.code": "deep_sky_blue1",
+            "markdown.h1.border": "bold #DAEFA3",
+            "markdown.h1": "bold #B22518",
+            "markdown.h2": "bold #009999 underline",  # Exception message; location header
+            "markdown.h3": "bold #CDA869",  # likely cause
+            "markdown.h4": "bold #CF6A4C",  # warning header
+            "markdown.link": "bold #DAEFA3 underline",
+            "markdown.code": "#CDA869",
         }
     )
     return Console(theme=dark_background_theme)

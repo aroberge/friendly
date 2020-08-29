@@ -123,11 +123,11 @@ def main():
     if args.verbosity:
         verbosity = args.verbosity
     elif sys.flags.interactive:  # console after running
-        verbosity = 8
+        verbosity = 9
     elif args.source:
-        verbosity = 1
+        verbosity = 2
     else:  # console
-        verbosity = 0
+        verbosity = 9
 
     public_api.install(lang=args.lang, verbosity=verbosity)
 
