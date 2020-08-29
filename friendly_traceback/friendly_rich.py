@@ -25,7 +25,7 @@ except ImportError:
     Console = None
 
 
-def init_console():
+def init_console(theme="dark"):
     if not rich_available:
         return None
 
@@ -50,7 +50,10 @@ def init_console():
 
     def _patch_code_block(self, console, options):
         code = str(self.text).rstrip()
-        syntax = Syntax(code, self.lexer_name, theme="dark_theme")
+        if theme == "light":
+            syntax = Syntax(code, self.lexer_name, theme="tango")
+        else:
+            syntax = Syntax(code, self.lexer_name, theme="dark_theme")
         yield syntax
 
     CodeBlock.__rich_console__ = _patch_code_block
@@ -60,13 +63,25 @@ def init_console():
             "markdown.h1.border": "bold #DAEFA3",
             "markdown.h1": "bold #B22518",
             "markdown.h2": "bold #009999 underline",  # Exception message; location header
-            "markdown.h3": "bold #CDA869",  # likely cause
+            "markdown.h3": "bold #CF6A4C",  # likely cause
             "markdown.h4": "bold #CF6A4C",  # warning header
             "markdown.link": "bold #DAEFA3 underline",
             "markdown.code": "#CDA869",
         }
     )
-    return Console(theme=dark_background_theme)
-
-
-console = init_console()
+    light_background_theme = Theme(
+        {
+            "markdown.h1.border": "bold #3465a4",
+            "markdown.h1": "bold #B22518",
+            "markdown.h2": "bold #B22518 underline",  # Exception message; location header
+            "markdown.h3": "bold #0000cf",  # likely cause
+            "markdown.h4": "bold #CF6A4C",  # warning header
+            "markdown.link": "bold #3465a4 underline",
+            "markdown.item.bullet": "#3465a4",
+            "markdown.code": "#0000cf",
+        }
+    )
+    if theme == "light":
+        return Console(theme=light_background_theme)
+    else:
+        return Console(theme=dark_background_theme)

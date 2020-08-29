@@ -17,7 +17,7 @@ from .version import __version__
 from . import console
 from . import public_api
 from .session import session
-from .friendly_rich import rich_available
+from . import friendly_rich
 from .my_gettext import current_lang
 
 
@@ -111,6 +111,17 @@ parser.add_argument(
 )
 
 
+parser.add_argument("--debug", help="""For developer use.""", action="store_true")
+
+parser.add_argument(
+    "--theme",
+    help="""To use with 'rich' --format option.
+    Indicates if the background colour of the console is 'dark' or 'light'.
+    The default is 'dark'.
+    """,
+)
+
+
 def main():
     _ = current_lang.translate
 
@@ -119,6 +130,9 @@ def main():
     if args.version:
         print(f"Friendly-traceback version {__version__}")
         sys.exit()
+
+    if args.debug:
+        session._debug = True
 
     if args.verbosity:
         verbosity = args.verbosity
@@ -132,17 +146,20 @@ def main():
     public_api.install(lang=args.lang, verbosity=verbosity)
 
     use_rich = False
+    theme = "dark"
+
     if args.format:
         format = args.format
         if format in ["pre", "markdown"]:
             public_api.set_formatter(format)
         elif format == "rich":
-            if not rich_available:
+            if not friendly_rich.rich_available:
                 print(_("\n    Rich is not installed.\n\n"))
             else:
+                if args.theme == "light":
+                    theme = "light"
+                session.set_formatter("rich", theme=theme)
                 use_rich = True
-                session.use_rich = True
-                public_api.set_formatter("rich")
         else:
             public_api.set_formatter(public_api.import_function(args.format))
 
@@ -154,12 +171,18 @@ def main():
                 console_defaults.update(module_dict)
             except Exception:
                 public_api.explain()
-            console.start_console(local_vars=console_defaults, use_rich=use_rich)
+            console.start_console(
+                local_vars=console_defaults, use_rich=use_rich, theme=theme
+            )
         else:
             sys.argv = [args.source, *args.args]
             runpy.run_path(args.source, run_name="__main__")
     else:
-        console.start_console(local_vars=console_defaults, use_rich=use_rich)
+        if args.theme == "ligth":
+            theme = "light"
+        console.start_console(
+            local_vars=console_defaults, use_rich=use_rich, theme=theme
+        )
 
 
 main()

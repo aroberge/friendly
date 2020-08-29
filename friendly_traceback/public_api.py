@@ -115,7 +115,7 @@ def get_output(flush=True):
 
 
 @make_public
-def set_formatter(formatter=None):
+def set_formatter(formatter=None, **kwds):
     """Sets the default formatter. If no argument is given, the default
        formatter, based on the level, is used.
 
@@ -123,7 +123,7 @@ def set_formatter(formatter=None):
        as well as arbitrary keyword-based arguments - these are currently
        subject to change but include ``level``.
     """
-    session.set_formatter(formatter=formatter)
+    session.set_formatter(formatter=formatter, **kwds)
 
 
 # =========================================================================

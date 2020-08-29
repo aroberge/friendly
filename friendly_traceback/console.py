@@ -23,7 +23,7 @@ BANNER = "\nFriendly Console version {}. [Python version: {}]\n".format(
 
 
 class FriendlyConsole(InteractiveConsole):
-    def __init__(self, locals=None, use_rich=False):
+    def __init__(self, locals=None, use_rich=False, theme="dark"):
         """This class builds upon Python's code.InteractiveConsole
         so as to provide friendly tracebacks. It keeps track
         of code fragment executed by treating each of them as
@@ -39,7 +39,7 @@ class FriendlyConsole(InteractiveConsole):
             self.saved_builtins[name] = getattr(builtins, name)
         self.rich_console = False
         if friendly_rich.rich_available and use_rich:
-            self.rich_console = friendly_rich.console
+            self.rich_console = friendly_rich.init_console(theme)
         elif use_rich:
             print(_("\n    Rich is not installed.\n\n"))
 
@@ -255,10 +255,18 @@ class FriendlyConsole(InteractiveConsole):
         return input(prompt)
 
 
-def start_console(local_vars=None, use_rich=False, verbosity=9, lang="en", banner=None):
+def start_console(
+    local_vars=None, use_rich=False, verbosity=9, lang="en", banner=None, theme="dark"
+):
     """Starts a console; modified from code.interact"""
+    from . import session
+
     if banner is None:
         banner = BANNER
+    if theme != "light":
+        theme = "dark"
+    if use_rich:
+        session.session.set_formatter("rich", theme=theme)
 
     def explain(verbosity=None):
         """Shows the previously recorded traceback info again, with the specified
@@ -298,5 +306,5 @@ def start_console(local_vars=None, use_rich=False, verbosity=9, lang="en", banne
     else:
         local_vars.update(console_defaults)
 
-    console = FriendlyConsole(locals=local_vars, use_rich=use_rich)
+    console = FriendlyConsole(locals=local_vars, use_rich=use_rich, theme=theme)
     console.interact(banner=banner)

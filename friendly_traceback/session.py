@@ -13,7 +13,7 @@ def _write_err(text):
     """Default writer"""
     if session.use_rich:
         md = friendly_rich.Markdown(text)
-        friendly_rich.console.print(md)
+        session.console.print(md)
     else:
         sys.stderr.write(text)
 
@@ -34,6 +34,9 @@ class _State:
         self.running_script = False
         self.saved_traceback_info = None
         self.formatter = formatters.pre
+        self._debug = False
+        self.console = None
+        self.use_rich = False
         self.set_defaults()
 
     def set_defaults(self):
@@ -127,14 +130,17 @@ class _State:
 
         self.level = verbosity
 
-    def set_formatter(self, formatter=None):
+    def set_formatter(self, formatter=None, theme="dark"):
         """Sets the default formatter. If no argument is given, the default
            formatter is used.
         """
+        self.use_rich = False
         if formatter is None or formatter == "pre":
             self.formatter = formatters.pre
         elif formatter == "rich":
             self.formatter = formatters.rich_markdown
+            self.console = friendly_rich.init_console(theme)
+            self.use_rich = True
         elif formatter == "markdown":
             self.formatter = formatters.markdown
         elif formatter == "markdown_docs":

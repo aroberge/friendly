@@ -152,7 +152,11 @@ def get_traceback_info(etype, value, tb, write_err):
     info = {"header": _("Python exception:")}  # [1a]
     info["message"] = get_message(etype.__name__, value)  # [1a]
     info["generic"] = get_generic_explanation(etype.__name__, etype, value)  # 2
-    set_cause(info, etype, value)  # [3]
+    try:
+        set_cause(info, etype, value)  # [3]
+    except Exception as exc:
+        if session._debug:
+            print(exc)
 
     records = get_records(tb, cache)
     python_tb = traceback.format_exception(etype, value, tb)
