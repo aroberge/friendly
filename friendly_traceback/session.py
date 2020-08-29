@@ -7,6 +7,8 @@ import sys
 from .my_gettext import current_lang
 from . import formatters
 from . import friendly_rich
+from . import core
+from .friendly_exception import FriendlyException
 
 
 def _write_err(text):
@@ -29,7 +31,7 @@ class _State:
         self.context = 3
         self.write_err = _write_err
         self.except_hook = None
-        self._default_except_hook = None
+        self._default_except_hook = self.exception_hook
         self.installed = False
         self.running_script = False
         self.saved_traceback_info = None
@@ -69,25 +71,6 @@ class _State:
             return
         explanation = self.formatter(self.saved_traceback_info, level=self.level)
         self.write_err(explanation + "\n")
-
-    def print_itemized_traceback(self):
-        """This is a helper function for developer who want to write a formatter.
-           It prints each item recorded in a traceback dict.
-        """
-        if self.saved_traceback_info is None:
-            print("No traceback has been recorded.")
-            return
-
-        print("Printing each item of traceback info dict.\n")
-        for item in self.saved_traceback_info:
-            print("-" * 50)
-            print("item = ", item)
-            item_str = self.saved_traceback_info[item]
-            if len(item_str) < 1000:
-                print(item_str)
-            else:
-                print(item_str[0:600] + " [item truncated] " + item_str[-300:])
-            print()
 
     def capture(self, txt):
         """Captures the output instead of writing to stderr."""
@@ -177,8 +160,67 @@ class _State:
         else:
             self.write_err = _write_err
 
+    def explain_traceback(self, redirect=None):
+        """Replaces a standard traceback by a friendlier one, giving more
+           information about a given exception than a standard traceback.
+           Note that this excludes SystemExit and KeyboardInterrupt which
+           are re-raised.
+
+           By default, the output goes to sys.stderr or to some other stream
+           set to be the default by another API call.  However, if
+              redirect = some_stream
+           is specified, the output goes to that stream, but without changing
+           the global settings.
+        """
+        # get_output() refers to a function in the public API
+
+        etype, value, tb = sys.exc_info()
+        self.exception_hook(etype, value, tb, redirect=redirect)
+
+    def exception_hook(self, etype, value, tb, redirect=None):
+        """Replaces a standard traceback by a friendlier one,
+           except for SystemExit and KeyboardInterrupt which
+           are re-raised.
+
+           The values of the required arguments are typically the following:
+
+               etype, value, tb = sys.exc_info()
+
+           By default, the output goes to sys.stderr or to some other stream
+           set to be the default by another API call.  However, if
+              redirect = some_stream
+           is specified, the output goes to that stream for this call,
+           but the session settings is restored afterwards.
+        """
+
+        if etype.__name__ == "SystemExit":
+            raise SystemExit(str(value))
+        elif etype.__name__ == "KeyboardInterrupt":
+            raise KeyboardInterrupt(str(value))
+        elif issubclass(etype, FriendlyException):  # Internal errors
+            self.write_err(str(value))
+            return
+
+        if redirect is not None:
+            saved_current_redirect = self.write_err
+            self.set_redirect(redirect=redirect)
+
+        try:
+            self.saved_traceback_info = info = core.get_traceback_info(
+                etype, value, tb, self.write_err, self._debug
+            )
+            explanation = self.formatter(info, level=self.level)
+        except FriendlyException as e:
+            self.write_err(e)
+            return
+
+        self.write_err(explanation)
+        # Ensures that we start on a new line; essential for the console
+        if not explanation.endswith("\n"):
+            self.write_err("\n")
+
+        if redirect is not None:
+            self.set_redirect(redirect=saved_current_redirect)
+
 
 session = _State()
-
-# This settings is intentionally made here to give it visibility
-session.use_rich = False  # can be over-ridden elsewhere

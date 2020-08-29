@@ -10,89 +10,16 @@ please file an issue.
 import inspect
 from itertools import dropwhile
 import os
-import sys
 import traceback
 
 from . import info_generic
 from . import info_specific
 from . import utils
 from .my_gettext import current_lang
-from .session import session
 from . import info_variables
 
 from .source_cache import cache, highlight_source
 from .path_info import is_excluded_file, EXCLUDED_FILE_PATH
-from .friendly_exception import FriendlyException
-
-
-# The following is the function called `explain` in public_api.py
-
-
-def explain_traceback(redirect=None):
-    """Replaces a standard traceback by a friendlier one, giving more
-       information about a given exception than a standard traceback.
-       Note that this excludes SystemExit and KeyboardInterrupt which
-       are re-raised.
-
-       By default, the output goes to sys.stderr or to some other stream
-       set to be the default by another API call.  However, if
-          redirect = some_stream
-       is specified, the output goes to that stream, but without changing
-       the global settings.
-    """
-    # get_output() refers to a function in the public API
-
-    etype, value, tb = sys.exc_info()
-    exception_hook(etype, value, tb, redirect=redirect)
-
-
-def exception_hook(etype, value, tb, redirect=None):
-    """Replaces a standard traceback by a friendlier one,
-       except for SystemExit and KeyboardInterrupt which
-       are re-raised.
-
-       The values of the required arguments are typically the following:
-
-           etype, value, tb = sys.exc_info()
-
-       By default, the output goes to sys.stderr or to some other stream
-       set to be the default by another API call.  However, if
-          redirect = some_stream
-       is specified, the output goes to that stream for this call,
-       but the session settings is restored afterwards.
-    """
-
-    if etype.__name__ == "SystemExit":
-        raise SystemExit(str(value))
-    elif etype.__name__ == "KeyboardInterrupt":
-        raise KeyboardInterrupt(str(value))
-    elif issubclass(etype, FriendlyException):  # Internal errors
-        session.write_err(str(value))
-        return
-
-    if redirect is not None:
-        saved_current_redirect = session.write_err
-        session.set_redirect(redirect=redirect)
-
-    try:
-        session.saved_traceback_info = info = get_traceback_info(
-            etype, value, tb, session.write_err
-        )
-        explanation = session.formatter(info, level=session.level)
-    except FriendlyException as e:
-        session.write_err(e)
-        return
-
-    session.write_err(explanation)
-    # Ensures that we start on a new line; essential for the console
-    if not explanation.endswith("\n"):
-        session.write_err("\n")
-
-    if redirect is not None:
-        session.set_redirect(redirect=saved_current_redirect)
-
-
-session.set_exception_hook(_default=exception_hook)
 
 
 # ====================
@@ -142,7 +69,7 @@ session.set_exception_hook(_default=exception_hook)
 # b: 2
 
 
-def get_traceback_info(etype, value, tb, write_err):
+def get_traceback_info(etype, value, tb, write_err, debug=False):
     """ Gathers the basic information related to a traceback and
     returns the result in a dict.
     """
@@ -155,8 +82,8 @@ def get_traceback_info(etype, value, tb, write_err):
     try:
         set_cause(info, etype, value)  # [3]
     except Exception as exc:
-        if session._debug:
-            print("DEBUG INFORMATION:", exc)
+        if debug:
+            print("\n   DEBUG INFORMATION:", exc, "\n")
 
     records = get_records(tb, cache)
     python_tb = traceback.format_exception(etype, value, tb)

@@ -21,7 +21,6 @@ file an issue.
 from functools import wraps
 from importlib import import_module
 
-from . import core
 from .session import session
 
 # Make functions from other modules directly available from here.
@@ -61,7 +60,7 @@ def explain(redirect=None):
        If the string ``"capture"`` is given as the value for ``redirect``, the
        output is saved and can be later retrieved by ``get_output()``.
     """
-    core.explain_traceback(redirect=redirect)
+    session.explain_traceback(redirect=redirect)
 
 
 @make_public
@@ -222,14 +221,6 @@ def show_again():
 
 
 @make_public
-def print_items():
-    """This is a helper function for developer who want to write a formatter.
-       It prints each item recorded in a traceback dict.
-    """
-    session.print_itemized_traceback()
-
-
-@make_public
 def import_function(dotted_path: str) -> type:
     """Import a function from a module, given its dotted path.
     """
@@ -262,8 +253,6 @@ class Friendly:
     set_verbosity: {set_verbosity.__doc__}
 
     run: {run.__doc__}
-
-    print_items: {print_items.__doc__}
     """
 
     def __init__(self):
@@ -273,7 +262,6 @@ class Friendly:
         self.set_verbosity = set_verbosity
         self.show_again = show_again
         self.run = run
-        self.print_items = print_items
 
 
 # -----------------------------------------

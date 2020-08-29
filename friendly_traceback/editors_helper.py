@@ -10,7 +10,6 @@ At the moment, only run() is part of the public API.
 # about this module.
 import sys
 
-from .core import explain_traceback
 from .source_cache import cache
 from .my_gettext import current_lang
 from .session import session
@@ -67,7 +66,7 @@ def advanced_check_syntax(
                 session.set_verbosity(5)
             else:
                 session.set_verbosity(verbosity)
-            explain_traceback()
+            session.explain_traceback()
             _reset(saved_except_hook, saved_lang, saved_verbosity)
             return False
 
@@ -79,7 +78,7 @@ def advanced_check_syntax(
             session.set_verbosity(1)  # our default
         else:
             session.set_verbosity(verbosity)
-        explain_traceback()
+        session.explain_traceback()
         _reset(saved_except_hook, saved_lang, saved_verbosity)
         return False
 
@@ -144,7 +143,7 @@ def exec_code(*, source=None, path=None, verbosity=None, lang=None):
             session.set_verbosity(1)  # our default
         else:
             session.set_verbosity(verbosity)
-        explain_traceback()
+        session.explain_traceback()
         _reset(saved_except_hook, saved_lang, saved_verbosity)
         return module_globals
 
