@@ -156,7 +156,7 @@ def get_traceback_info(etype, value, tb, write_err):
         set_cause(info, etype, value)  # [3]
     except Exception as exc:
         if session._debug:
-            print(exc)
+            print("DEBUG INFORMATION:", exc)
 
     records = get_records(tb, cache)
     python_tb = traceback.format_exception(etype, value, tb)
