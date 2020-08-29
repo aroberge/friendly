@@ -81,9 +81,6 @@ def install(lang=None, redirect=None, verbosity=None, level=None):
         verbosity: verbosity level.  See set_verbosity() for details.
 
         level: deprecated; use verbosity instead.
-
-        hook: exception_hook - if one wants to experiment using
-              a different one.
     """
     if verbosity is None:
         verbosity = level  # Supporting deprecated argument

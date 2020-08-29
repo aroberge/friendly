@@ -75,6 +75,10 @@ def get_traceback_info(etype, value, tb, write_err, debug=False):
     """
     _ = current_lang.translate
 
+    if etype is None or not hasattr(etype, "__name__"):
+        print("Invalid arguments passed to exception hook.")
+        return
+
     # Note: the numbered comments refer to the example above
     info = {"header": _("Python exception:")}  # [1a]
     info["message"] = get_message(etype.__name__, value)  # [1a]

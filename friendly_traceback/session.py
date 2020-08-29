@@ -30,8 +30,6 @@ class _State:
         self._captured = []
         self.context = 3
         self.write_err = _write_err
-        self.except_hook = None
-        self._default_except_hook = self.exception_hook
         self.installed = False
         self.running_script = False
         self.saved_traceback_info = None
@@ -46,16 +44,6 @@ class _State:
         self.level = self._default_level = 1
         self.lang = "en"
         self.install_gettext(self.lang)
-
-    def set_exception_hook(self, hook=None, _default=None):
-        """Sets the custom exception hook to be used."""
-        if _default is not None:  # sets by core.py
-            self._default_except_hook = _default
-            self.except_hook = _default
-        elif hook is not None:  # user defined
-            self.except_hook = hook
-        else:  # used to reset
-            self.except_hook = self._default_except_hook
 
     def show_traceback_info_again(self):
         """If has not been cleared, write the traceback info again, using
@@ -143,7 +131,7 @@ class _State:
         if verbosity is not None:
             self.set_verbosity(verbosity)
 
-        sys.excepthook = self.except_hook
+        sys.excepthook = self.exception_hook
         self.installed = True
 
     def uninstall(self):
@@ -172,9 +160,11 @@ class _State:
            is specified, the output goes to that stream, but without changing
            the global settings.
         """
-        # get_output() refers to a function in the public API
-
+        _ = current_lang.translate
         etype, value, tb = sys.exc_info()
+        if etype is None:
+            print(_("Nothing to show: no exception recorded."))
+            return
         self.exception_hook(etype, value, tb, redirect=redirect)
 
     def exception_hook(self, etype, value, tb, redirect=None):
