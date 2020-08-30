@@ -4,7 +4,7 @@ Default formatters showing all or only part of the available information.
 """
 from .my_gettext import current_lang
 
-default_items_in_order = [  # This list excludes two full traceback items
+default_items_in_order = [  # This list excludes three traceback items
     "header",
     "message",
     "generic",
@@ -149,7 +149,7 @@ def _markdown(info, level, rich=False, docs=False):
 
     markdown_items = {
         "header": ("# ", ""),
-        "message": ("```pytb\n", "\n```"),
+        "message": ("", ""),
         "generic": ("", ""),
         "parsing_error": ("", ""),
         "parsing_error_source": ("```python\n", "\n```"),
@@ -190,7 +190,7 @@ def _markdown(info, level, rich=False, docs=False):
             if item == "message" and rich:
                 # Ensure consistent colour scheme
                 markdown_items["message"] = ("```py2tb\n", "\n```")
-                content = "Traceback:\n" + content
+                content = "Traceback message:\n" + content
 
             prefix, suffix = markdown_items[item]
             if docs:
