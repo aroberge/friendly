@@ -187,6 +187,10 @@ def _markdown(info, level, rich=False, docs=False):
                         "exception_raised_variables_header",
                     ]:
                         content = content.rstrip(":")
+            if item == "message" and rich:
+                # Ensure consistent colour scheme
+                markdown_items["message"] = ("```py2tb\n", "\n```")
+                content = "Traceback:\n" + content
 
             prefix, suffix = markdown_items[item]
             if docs:
