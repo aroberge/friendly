@@ -70,7 +70,7 @@ from .path_info import is_excluded_file, EXCLUDED_FILE_PATH
 
 
 def get_traceback_info(etype, value, tb, write_err, debug=False):
-    """ Gathers the basic information related to a traceback and
+    """Gathers the basic information related to a traceback and
     returns the result in a dict.
     """
     _ = current_lang.translate
@@ -83,32 +83,40 @@ def get_traceback_info(etype, value, tb, write_err, debug=False):
     info = {"header": _("Python exception:")}  # [1a]
     info["message"] = get_message(etype.__name__, value)  # [1a]
     info["generic"] = get_generic_explanation(etype.__name__, etype, value)  # 2
+
+    records = get_records(tb, cache)
+    python_tb = traceback.format_exception(etype, value, tb)
+    format_python_tracebacks(records, etype, value, python_tb, info)
+    if issubclass(etype, SyntaxError):
+        try:
+            set_cause_syntax(info, etype, value)  # [3]
+        except Exception as exc:
+            if debug:
+                print("\n   DEBUG INFORMATION:", exc, "\n")
+        return info
+
     try:
         set_cause(info, etype, value)  # [3]
     except Exception as exc:
         if debug:
             print("\n   DEBUG INFORMATION:", exc, "\n")
 
-    records = get_records(tb, cache)
-    python_tb = traceback.format_exception(etype, value, tb)
-    format_python_tracebacks(records, etype, value, python_tb, info)
-
-    if issubclass(etype, SyntaxError):
-        return info
-
     if not records:
         print("WARNING: no records found.")
         return info
 
-    frame, filename, linenumber, _func, lines, index = records[0]
-    set_call_info(info, "last_call", filename, linenumber, lines, index, frame)  # [4]
+    format_python_tracebacks(records, etype, value, python_tb, info)
 
-    # Origin of the exception
     if len(records) > 1:
-        frame, filename, linenumber, _func, lines, index = records[-1]
+        frame, filename, linenumber, _func, lines, index = records[0]
         set_call_info(
-            info, "exception_raised", filename, linenumber, lines, index, frame
-        )  # [5]
+            info, "last_call", filename, linenumber, lines, index, frame
+        )  # [4]
+
+    frame, filename, linenumber, _func, lines, index = records[-1]
+    set_call_info(
+        info, "exception_raised", filename, linenumber, lines, index, frame
+    )  # [5]
 
     if issubclass(etype, NameError):
         amend_name_error_cause(info, frame)
@@ -118,8 +126,8 @@ def get_traceback_info(etype, value, tb, write_err, debug=False):
 
 def amend_name_error_cause(info, frame):
     """Now that the frame where the error was raised has been identified,
-       we can try to find if the cause of the error might be due to a
-       typo.
+    we can try to find if the cause of the error might be due to a
+    typo.
     """
     _parts = info["message"].split("'")
     try:
@@ -133,8 +141,8 @@ def amend_name_error_cause(info, frame):
 
 def cannot_analyze_stdin():
     """Typical case: friendly_traceback is imported in an ordinary Python
-       interpreter (REPL), and the user does not activate the friendly
-       console.
+    interpreter (REPL), and the user does not activate the friendly
+    console.
     """
     _ = current_lang.translate
     return _(
@@ -146,7 +154,7 @@ def cannot_analyze_stdin():
 
 def cannot_analyze_string():
     """Typical case: some code is executed using exec(), and the 'filename'
-       is set to <string>.
+    is set to <string>.
     """
     _ = current_lang.translate
     return _(
@@ -157,8 +165,8 @@ def cannot_analyze_string():
 
 def get_records(tb, cache):
     """Get the traceback frrame history, excluding those originating
-       from our own code included either at the beginning or at the
-       end of the traceback.
+    from our own code included either at the beginning or at the
+    end of the traceback.
     """
     records = inspect.getinnerframes(tb, cache.context)
     records = list(dropwhile(lambda record: is_excluded_file(record.filename), records))
@@ -169,9 +177,9 @@ def get_records(tb, cache):
 
 
 def format_python_tracebacks(records, etype, value, python_tb, info):
-    """ When required, a standard Python traceback might be required to be
-        included as part of the information shown to the user.
-        This function does the required formatting.
+    """When required, a standard Python traceback might be required to be
+    included as part of the information shown to the user.
+    This function does the required formatting.
     """
     _ = current_lang.translate
     suppressed = "       ... " + _("Many other lines.") + " ..."
@@ -223,8 +231,7 @@ def format_python_tracebacks(records, etype, value, python_tb, info):
 
 
 def _get_traceback_information(records, etype, value):
-    """ Gets the traceback information in a predefined format.
-    """
+    """Gets the traceback information in a predefined format."""
     result = []
 
     for record in records:
@@ -263,8 +270,7 @@ def _get_traceback_information(records, etype, value):
 
 
 def get_generic_explanation(name, etype, value):
-    """Provides a generic explanation about a particular exception.
-    """
+    """Provides a generic explanation about a particular exception."""
     if name in info_generic.generic:
         explanation = info_generic.generic[name](etype, value)
     else:
@@ -274,7 +280,7 @@ def get_generic_explanation(name, etype, value):
 
 def get_likely_cause(etype, value):
     """Gets the likely cause of a given exception based on some information
-       specific to a given exception.
+    specific to a given exception.
     """
     _ = current_lang.translate
     header, cause = None, None
@@ -301,8 +307,8 @@ def get_message(name, value):
 
 def get_partial_source(filename, linenumber, lines, index):
     """Gets the part of the source where an exception occurred,
-       formatted in a pre-determined way, as well as the content
-       of the specific line where the exception occurred.
+    formatted in a pre-determined way, as well as the content
+    of the specific line where the exception occurred.
     """
     _ = current_lang.translate
 
@@ -369,22 +375,22 @@ def process_parsing_error(etype, value, info):
 def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
     """This will output something like the following:
 
-        [4]
-        Execution stopped on line 14 of file 'C:...test_unbound_local_error.py'.
-           12:
-           13:     try:
-        -->14:         inner()
+    [4]
+    Execution stopped on line 14 of file 'C:...test_unbound_local_error.py'.
+       12:
+       13:     try:
+    -->14:         inner()
 
-        inner: <function test_unbound_local_error.<loca... >
+    inner: <function test_unbound_local_error.<loca... >
 
-        [5]
-        Exception raised on line 11 of file 'C:...test_unbound_local_error.py'.
-            9:     def inner():
-           10:         b = 2
-        -->11:         a = a + b
+    [5]
+    Exception raised on line 11 of file 'C:...test_unbound_local_error.py'.
+        9:     def inner():
+       10:         b = 2
+    -->11:         a = a + b
 
-        [6]
-        b = 2
+    [6]
+    b = 2
     """
     _ = current_lang.translate
     source_info = get_partial_source(filename, linenumber, lines, index)
@@ -414,15 +420,22 @@ def get_location_header(linenumber, filename, header_name=None):
 
 def set_cause(info, etype, value):
     """Sets the cause"""
-    if issubclass(etype, SyntaxError) and value.filename == "<string>":
+    header, cause = get_likely_cause(etype, value)
+    if cause is not None:
+        info["cause_header"] = header
+        info["cause"] = cause
+
+
+def set_cause_syntax(info, etype, value):
+    """Sets the cause"""
+    if value.filename == "<string>":
         info["cause"] = cannot_analyze_string()
         return
-    elif issubclass(etype, SyntaxError) and value.filename == "<stdin>":
+    elif value.filename == "<stdin>":
         info["cause"] = cannot_analyze_stdin()
         return
 
-    if issubclass(etype, SyntaxError):
-        process_parsing_error(etype, value, info)
+    process_parsing_error(etype, value, info)
     header, cause = get_likely_cause(etype, value)
     if cause is not None:
         info["cause_header"] = header

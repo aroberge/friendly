@@ -52,6 +52,8 @@ def init_console(theme="dark"):
 
     def _patch_code_block(self, console, options):
         code = str(self.text).rstrip()
+        if self.lexer_name == "default":
+            self.lexer_name = "python"
         if theme == "light":
             syntax = Syntax(code, self.lexer_name, theme="tango")
         else:
