@@ -172,32 +172,35 @@ def format_python_tracebacks(records, etype, value, python_tb, info):
     """When required, a standard Python traceback might be required to be
     included as part of the information shown to the user.
     This function does the required formatting.
+
+    This function defines 3 traceback:
+    1. The standard Python traceback, given by Python
+    2. A "simulated" Python traceback, which is essentially the same as
+       the one given by Python, except that it excludes modules from this
+       project.  In addition, for RecursionError, this traceback is often
+       shortened, compared with a normal Python traceback.
+    3. A potentially shortened traceback, which does not include too much
+       output so as not to overwhelm beginners. It also include information
+       about the code on any line mentioned.
     """
     _ = current_lang.translate
-    suppressed = "       ... " + _("Many other lines.") + " ..."
+    suppressed = ["       ... " + _("Many other lines.") + " ..."]
 
     python_tb = [line.rstrip() for line in python_tb]
 
-    sim_tb = create_traceback(records, etype, value)
-    if len(sim_tb) > 7:
-        shortened_tb = [
-            sim_tb[0].replace("\n", ": "),
-            sim_tb[1].replace("\n", ": "),
-            suppressed,
-            sim_tb[-3].replace("\n", ": "),
-            sim_tb[-2].replace("\n", ": "),
-            sim_tb[-1],
-        ]
+    tb = create_traceback(records, etype, value)
+    if len(tb) > 9:
+        shortened_tb = tb[0:2] + suppressed + tb[-5:]
     else:
-        shortened_tb = sim_tb[:]
+        shortened_tb = tb[:]
 
     header = "Traceback (most recent call last):"  # not included in records
     if python_tb[0].startswith(header):
-        sim_tb.insert(0, header)
+        tb.insert(0, header)
         shortened_tb.insert(0, header)
 
     if "RecursionError" in python_tb[-1]:
-        sim_tb = []
+        tb = []
         exclude = False
         for line in python_tb:  # excluding our own code
             if exclude and line.strip() == "exec(code, self.locals)":
@@ -209,14 +212,11 @@ def format_python_tracebacks(records, etype, value, python_tb, info):
                     break
             if exclude:
                 continue
-            sim_tb.append(line)
-        if len(sim_tb) > 15:
-            _tb = sim_tb[0:5]
-            _tb.append(suppressed)
-            _tb.extend(sim_tb[-7:])
-            sim_tb = _tb
+            tb.append(line)
+        if len(tb) > 12:
+            tb = tb[0:4] + suppressed + tb[-5:]
 
-    info["simulated_python_traceback"] = "\n".join(sim_tb) + "\n"
+    info["simulated_python_traceback"] = "\n".join(tb) + "\n"
     info["shortened_traceback"] = "\n".join(shortened_tb) + "\n"
     info["original_python_traceback"] = "\n".join(python_tb) + "\n"
     return
