@@ -13,7 +13,7 @@ from . import line_analyzer
 from . import message_analyzer
 
 
-def set_cause_syntax(info, etype, value):
+def set_cause_syntax(etype, value, info):
     """Sets the cause"""
     process_parsing_error(etype, value, info)
     get_likely_cause(etype, value, info)

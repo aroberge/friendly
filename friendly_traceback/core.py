@@ -87,21 +87,9 @@ def get_traceback_info(etype, value, tb, debug=False):
     records = get_records(tb, cache)
     python_tb = traceback.format_exception(etype, value, tb)
     format_python_tracebacks(records, etype, value, python_tb, info)
+
     if issubclass(etype, SyntaxError):
-        from .syntax_error import analyze_syntax
-
-        if value.filename == "<string>":  # Temporary cause
-            info["cause"] = cannot_analyze_string()
-        elif value.filename == "<stdin>":
-            info["cause"] = cannot_analyze_stdin()
-
-        try:
-            analyze_syntax.set_cause_syntax(info, etype, value)  # [3]
-        except Exception as exc:
-            debug = True
-            if debug:
-                print("\n   DEBUG INFORMATION:", exc, "\n")
-        return info
+        return process_syntax_error(etype, value, info, debug)
 
     try:
         get_likely_cause(etype, value, info)  # [3]
@@ -129,6 +117,26 @@ def get_traceback_info(etype, value, tb, debug=False):
     if issubclass(etype, NameError):
         amend_name_error_cause(info, frame)
 
+    return info
+
+
+def process_syntax_error(etype, value, info, debug):
+    """Completes the information that can be obtained for a syntax error
+    and its subclasses.
+    """
+    from .syntax_error import analyze_syntax
+
+    if value.filename == "<string>":  # Temporary cause
+        info["cause"] = cannot_analyze_string()
+    elif value.filename == "<stdin>":
+        info["cause"] = cannot_analyze_stdin()
+
+    try:
+        analyze_syntax.set_cause_syntax(etype, value, info)  # [3]
+    except Exception as exc:
+        debug = True
+        if debug:
+            print("\n   DEBUG INFORMATION:", exc, "\n")
     return info
 
 
@@ -170,7 +178,7 @@ def format_python_tracebacks(records, etype, value, python_tb, info):
 
     python_tb = [line.rstrip() for line in python_tb]
 
-    sim_tb = _get_traceback_information(records, etype, value)
+    sim_tb = create_traceback(records, etype, value)
     if len(sim_tb) > 7:
         shortened_tb = [
             sim_tb[0].replace("\n", ": "),
@@ -214,8 +222,11 @@ def format_python_tracebacks(records, etype, value, python_tb, info):
     return
 
 
-def _get_traceback_information(records, etype, value):
-    """Gets the traceback information in a predefined format."""
+def create_traceback(records, etype, value):
+    """Using records that exclude code from certain files,
+    creates a list from which a standard-looking traceback can
+    be created.
+    """
     result = []
 
     for record in records:
