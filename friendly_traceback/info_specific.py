@@ -182,7 +182,7 @@ def name_error(etype, value, info, frame):
         similar_names = info_variables.get_similar_var_names(unknown_name, frame)
         cause += hint + similar_names
     except IndexError:
-        pass
+        print("WARNING: IndexError caught while processing NameError")
     return cause
 
 
@@ -204,12 +204,21 @@ def unbound_local_error(etype, value, info, frame):
     # UnboundLocalError: local variable 'a' referenced before assignment
     #
     # By splitting value using ', we can extract the variable name.
-    return _(
+    cause = _(
         "The variable that appears to cause the problem is `{var_name}`.\n"
         "Perhaps the statement\n\n"
         "    global {var_name}\n\n"
         "should have been included as the first line inside your function.\n"
     ).format(var_name=str(value).split("'")[1])
+    _parts = info["message"].split("'")
+    try:
+        unknown_name = _parts[1]
+        hint = info_variables.name_has_type_hint(unknown_name, frame)
+        similar_names = info_variables.get_similar_var_names(unknown_name, frame)
+        cause += hint + similar_names
+    except IndexError:
+        print("WARNING: IndexError caught while processing UnboundLocalError")
+    return cause
 
 
 @register("ZeroDivisionError")
