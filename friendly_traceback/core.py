@@ -96,7 +96,10 @@ def get_traceback_info(etype, value, tb, write_err, debug=False):
         return info
 
     try:
-        set_cause(info, etype, value)  # [3]
+        header, cause = get_likely_cause(etype, value)  # [3]
+        if cause is not None:
+            info["cause_header"] = header
+            info["cause"] = cause
     except Exception as exc:
         if debug:
             print("\n   DEBUG INFORMATION:", exc, "\n")
@@ -287,14 +290,26 @@ def get_likely_cause(etype, value):
     if etype.__name__ in info_specific.get_cause:
         cause = info_specific.get_cause[etype.__name__](etype, value)
         if cause is not None:
-            message = get_message(etype.__name__, value)
-            if etype.__name__ == "SyntaxError" and "invalid syntax" in message:
-                header = _(
-                    "Python's error message (invalid syntax) "
-                    "cannot be used to identify the problem:"
-                )
-            else:
-                header = _("Likely cause based on the information given by Python:")
+            header = _("Likely cause based on the information given by Python:")
+    return header, cause
+
+
+def get_likely_cause_syntax(etype, value):
+    """Gets the likely cause of a given exception based on some information
+    specific to a given exception.
+    """
+    _ = current_lang.translate
+    header, cause = None, None
+    cause = info_specific.get_cause[etype.__name__](etype, value)
+    if cause is not None:
+        message = get_message(etype.__name__, value)
+        if etype.__name__ == "SyntaxError" and "invalid syntax" in message:
+            header = _(
+                "Python's error message (invalid syntax) "
+                "cannot be used to identify the problem:"
+            )
+        else:
+            header = _("Likely cause based on the information given by Python:")
     return header, cause
 
 
@@ -418,14 +433,6 @@ def get_location_header(linenumber, filename, header_name=None):
         ).format(linenumber=linenumber, filename=utils.shorten_path(filename))
 
 
-def set_cause(info, etype, value):
-    """Sets the cause"""
-    header, cause = get_likely_cause(etype, value)
-    if cause is not None:
-        info["cause_header"] = header
-        info["cause"] = cause
-
-
 def set_cause_syntax(info, etype, value):
     """Sets the cause"""
     if value.filename == "<string>":
@@ -436,7 +443,7 @@ def set_cause_syntax(info, etype, value):
         return
 
     process_parsing_error(etype, value, info)
-    header, cause = get_likely_cause(etype, value)
+    header, cause = get_likely_cause_syntax(etype, value)
     if cause is not None:
         info["cause_header"] = header
         info["cause"] = cause

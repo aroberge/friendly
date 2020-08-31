@@ -8,10 +8,10 @@ import re
 import sys
 import tokenize
 
-from .my_gettext import current_lang
-from . import utils
+from friendly_traceback.my_gettext import current_lang
+from friendly_traceback import utils
 from . import source_analyzer
-from .friendly_exception import FriendlyException
+from friendly_traceback.friendly_exception import FriendlyException
 
 
 MESSAGE_ANALYZERS = []

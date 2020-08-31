@@ -20,9 +20,9 @@ In the interest of simplicity, extensibility and maintainability,
 we now have multiple functions, some of which have almost identical
 chunks of code.
 """
-from .my_gettext import current_lang
-from . import utils
-from .friendly_exception import FriendlyException
+from friendly_traceback.my_gettext import current_lang
+from friendly_traceback import utils
+from friendly_traceback.friendly_exception import FriendlyException
 
 
 def scan_source(source_lines=None, linenumber=0, offset=0):

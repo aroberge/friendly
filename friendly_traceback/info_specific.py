@@ -7,7 +7,6 @@ of a given exception.
 import sys
 
 from .my_gettext import current_lang
-from . import analyze_syntax
 from . import analyze_type_error
 from .utils import edit_distance
 
@@ -193,6 +192,8 @@ def overflow_error(*args):
 
 @register("SyntaxError")
 def syntax_error(etype, value):
+    from .syntax_error import analyze_syntax
+
     return analyze_syntax.find_likely_cause(value)
 
 

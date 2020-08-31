@@ -5,8 +5,8 @@ cause of a SyntaxError and providing a somewhat detailed explanation.
 """
 
 
-from .my_gettext import current_lang
-from .source_cache import cache
+from friendly_traceback.my_gettext import current_lang
+from friendly_traceback.source_cache import cache
 from . import source_analyzer
 from . import line_analyzer
 from . import message_analyzer
