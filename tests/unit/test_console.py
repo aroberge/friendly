@@ -27,8 +27,6 @@ def test_console():
         # of these tests: if stdout is not as expected, we have a problem.
         stdout, stderr = process.communicate(inp)
         process.wait()
-        print("stdout = ", stdout)
-        print("stderr = ", stderr)
         for item in out:
             assert item in stdout, item
         for item in err:

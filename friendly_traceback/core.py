@@ -138,7 +138,7 @@ def process_syntax_error(etype, value, info, debug):
     try:
         analyze_syntax.set_cause_syntax(etype, value, info)  # [3]
     except Exception as exc:
-        debug = True
+        print("WARNING: error caught in process_syntax_error()")
         if debug:
             print("\n   DEBUG INFORMATION:", exc, "\n")
     return info
