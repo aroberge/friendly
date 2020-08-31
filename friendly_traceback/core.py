@@ -14,9 +14,10 @@ import traceback
 
 from . import info_generic
 from . import info_specific
-from . import utils
-from .my_gettext import current_lang
 from . import info_variables
+from . import utils
+
+from .my_gettext import current_lang
 
 from .source_cache import cache, highlight_source
 from .path_info import is_excluded_file, EXCLUDED_FILE_PATH
@@ -84,18 +85,17 @@ def get_traceback_info(etype, value, tb, debug=False):
     info["message"] = get_message(etype.__name__, value)  # [1a]
     info["generic"] = get_generic_explanation(etype.__name__, etype, value)  # 2
 
+    # Unlike what we just did, in many function calls below,
+    # we pass the dict info as an argument and add to its content.
+    # This is the opposite of what is done in functional programming
+    # and is a deliberate choice we made.
+
     records = get_records(tb, cache)
     python_tb = traceback.format_exception(etype, value, tb)
     format_python_tracebacks(records, etype, value, python_tb, info)
 
     if issubclass(etype, SyntaxError):
         return process_syntax_error(etype, value, info, debug)
-
-    try:
-        get_likely_cause(etype, value, info)  # [3]
-    except Exception as exc:
-        if debug:
-            print("\n   DEBUG INFORMATION:", exc, "\n")
 
     if not records:
         print("WARNING: no records found.")
@@ -114,8 +114,12 @@ def get_traceback_info(etype, value, tb, debug=False):
         info, "exception_raised", filename, linenumber, lines, index, frame
     )  # [5]
 
-    if issubclass(etype, NameError):
-        amend_name_error_cause(info, frame)
+    try:
+        info_specific.get_likely_cause(etype, value, info, frame)  # [3]
+    except Exception as exc:
+        print("WARNING: error caught in get_likely_cause()")
+        if debug:
+            print("\n   DEBUG INFORMATION:", exc, "\n")
 
     return info
 
@@ -138,21 +142,6 @@ def process_syntax_error(etype, value, info, debug):
         if debug:
             print("\n   DEBUG INFORMATION:", exc, "\n")
     return info
-
-
-def amend_name_error_cause(info, frame):
-    """Now that the frame where the error was raised has been identified,
-    we can try to find if the cause of the error might be due to a
-    typo.
-    """
-    _parts = info["message"].split("'")
-    try:
-        unknown_name = _parts[1]
-        hint = info_variables.name_has_type_hint(unknown_name, frame)
-        similar_names = info_variables.get_similar_var_names(unknown_name, frame)
-        info["cause"] += hint + similar_names
-    except IndexError:
-        pass
 
 
 def get_records(tb, cache):
@@ -271,22 +260,6 @@ def get_generic_explanation(name, etype, value):
     else:
         explanation = info_generic.generic["Unknown"]()
     return explanation
-
-
-def get_likely_cause(etype, value, info):
-    """Gets the likely cause of a given exception based on some information
-    specific to a given exception.
-    """
-    _ = current_lang.translate
-    cause = None
-    if etype.__name__ in info_specific.get_cause:
-        cause = info_specific.get_cause[etype.__name__](etype, value)
-        if cause is not None:
-            info["cause_header"] = _(
-                "Likely cause based on the information given by Python:"
-            )
-            info["cause"] = cause
-    return
 
 
 def get_message(name, value):

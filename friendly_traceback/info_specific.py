@@ -8,9 +8,26 @@ import sys
 
 from .my_gettext import current_lang
 from . import analyze_type_error
+from . import info_variables
 from .utils import edit_distance
 
 get_cause = {}
+
+
+def get_likely_cause(etype, value, info, frame):
+    """Gets the likely cause of a given exception based on some information
+    specific to a given exception.
+    """
+    _ = current_lang.translate
+    cause = None
+    if etype.__name__ in get_cause:
+        cause = get_cause[etype.__name__](etype, value, info, frame)
+        if cause is not None:
+            info["cause_header"] = _(
+                "Likely cause based on the information given by Python:"
+            )
+            info["cause"] = cause
+    return
 
 
 def register(error_name):
@@ -19,8 +36,8 @@ def register(error_name):
     def add_exception(function):
         get_cause[error_name] = function
 
-        def wrapper(etype, value):
-            return function(etype, value)
+        def wrapper(etype, value, info, frame):
+            return function(etype, value, info, frame)
 
         return wrapper
 
@@ -28,7 +45,7 @@ def register(error_name):
 
 
 @register("AttributeError")
-def attribute_error(etype, value):
+def attribute_error(etype, value, info, frame):
     # str(value) is expected to be something like
     #
     # "AttributeError: type object 'A' has no attribute 'x'"
@@ -70,7 +87,7 @@ def attribute_error_in_module(message, module, attribute):
 
 
 @register("FileNotFoundError")
-def file_not_found_error(etype, value):
+def file_not_found_error(etype, value, info, frame):
     _ = current_lang.translate
     # str(value) is expected to be something like
     #
@@ -84,7 +101,7 @@ def file_not_found_error(etype, value):
 
 
 @register("ImportError")
-def import_error(etype, value):
+def import_error(etype, value, info, frame):
     _ = current_lang.translate
     # str(value) is expected to be something like
     #
@@ -118,7 +135,7 @@ def import_error(etype, value):
 
 
 @register("KeyError")
-def key_error(etype, value):
+def key_error(etype, value, info, frame):
     _ = current_lang.translate
     # str(value) is expected to be something like
     #
@@ -132,7 +149,7 @@ def key_error(etype, value):
 
 
 @register("ModuleNotFoundError")
-def module_not_found_error(etype, value):
+def module_not_found_error(etype, value, info, frame):
     _ = current_lang.translate
     # str(value) is expected to be something like
     #
@@ -146,7 +163,7 @@ def module_not_found_error(etype, value):
 
 
 @register("NameError")
-def name_error(etype, value):
+def name_error(etype, value, info, frame):
     _ = current_lang.translate
     # str(value) is expected to be something like
     #
@@ -155,9 +172,18 @@ def name_error(etype, value):
     # By splitting value using ', we can extract the variable name.
     #
     # May be overwritten in core.set_call_info()
-    return _("In your program, the unknown name is `{var_name}`.\n").format(
+    cause = _("In your program, the unknown name is `{var_name}`.\n").format(
         var_name=str(value).split("'")[1]
     )
+    _parts = info["message"].split("'")
+    try:
+        unknown_name = _parts[1]
+        hint = info_variables.name_has_type_hint(unknown_name, frame)
+        similar_names = info_variables.get_similar_var_names(unknown_name, frame)
+        cause += hint + similar_names
+    except IndexError:
+        pass
+    return cause
 
 
 @register("OverflowError")
@@ -166,12 +192,12 @@ def overflow_error(*args):
 
 
 @register("TypeError")
-def type_error(etype, value):
+def type_error(etype, value, info, frame):
     return analyze_type_error.convert_message(str(value))
 
 
 @register("UnboundLocalError")
-def unbound_local_error(etype, value):
+def unbound_local_error(etype, value, info, frame):
     _ = current_lang.translate
     # str(value) is expected to be something like
     #
