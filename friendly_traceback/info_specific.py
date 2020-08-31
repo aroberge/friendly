@@ -117,31 +117,6 @@ def import_error(etype, value):
         )
 
 
-@register("IndentationError")
-def indentation_error(etype, value):
-    _ = current_lang.translate
-
-    value = str(value)
-    if "unexpected indent" in value:
-        this_case = _(
-            "In this case, the line identified above\n"
-            "is more indented than expected and \n"
-            "does not match the indentation of the previous line.\n"
-        )
-    elif "expected an indented block" in value:
-        this_case = _(
-            "In this case, the line identified above\n"
-            "was expected to begin a new indented block.\n"
-        )
-    else:
-        this_case = _(
-            "In this case, the line identified above is\n"
-            "less indented than the preceding one,\n"
-            "and is not aligned vertically with another block of code.\n"
-        )
-    return this_case
-
-
 @register("KeyError")
 def key_error(etype, value):
     _ = current_lang.translate
@@ -188,13 +163,6 @@ def name_error(etype, value):
 @register("OverflowError")
 def overflow_error(*args):
     return  # No additional information can be provided
-
-
-@register("SyntaxError")
-def syntax_error(etype, value):
-    from .syntax_error import analyze_syntax
-
-    return analyze_syntax.find_likely_cause(value)
 
 
 @register("TypeError")

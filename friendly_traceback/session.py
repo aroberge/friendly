@@ -197,7 +197,7 @@ class _State:
 
         try:
             self.saved_traceback_info = info = core.get_traceback_info(
-                etype, value, tb, self.write_err, self._debug
+                etype, value, tb, self._debug
             )
             explanation = self.formatter(info, level=self.level)
         except FriendlyException as e:

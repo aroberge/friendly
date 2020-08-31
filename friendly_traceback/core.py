@@ -69,7 +69,7 @@ from .path_info import is_excluded_file, EXCLUDED_FILE_PATH
 # b: 2
 
 
-def get_traceback_info(etype, value, tb, write_err, debug=False):
+def get_traceback_info(etype, value, tb, debug=False):
     """Gathers the basic information related to a traceback and
     returns the result in a dict.
     """
@@ -88,18 +88,23 @@ def get_traceback_info(etype, value, tb, write_err, debug=False):
     python_tb = traceback.format_exception(etype, value, tb)
     format_python_tracebacks(records, etype, value, python_tb, info)
     if issubclass(etype, SyntaxError):
+        from .syntax_error import analyze_syntax
+
+        if value.filename == "<string>":  # Temporary cause
+            info["cause"] = cannot_analyze_string()
+        elif value.filename == "<stdin>":
+            info["cause"] = cannot_analyze_stdin()
+
         try:
-            set_cause_syntax(info, etype, value)  # [3]
+            analyze_syntax.set_cause_syntax(info, etype, value)  # [3]
         except Exception as exc:
+            debug = True
             if debug:
                 print("\n   DEBUG INFORMATION:", exc, "\n")
         return info
 
     try:
-        header, cause = get_likely_cause(etype, value)  # [3]
-        if cause is not None:
-            info["cause_header"] = header
-            info["cause"] = cause
+        get_likely_cause(etype, value, info)  # [3]
     except Exception as exc:
         if debug:
             print("\n   DEBUG INFORMATION:", exc, "\n")
@@ -140,30 +145,6 @@ def amend_name_error_cause(info, frame):
         info["cause"] += hint + similar_names
     except IndexError:
         pass
-
-
-def cannot_analyze_stdin():
-    """Typical case: friendly_traceback is imported in an ordinary Python
-    interpreter (REPL), and the user does not activate the friendly
-    console.
-    """
-    _ = current_lang.translate
-    return _(
-        "Unfortunately, no additional information is available:\n"
-        "the content of file '<stdin>' is not accessible.\n"
-        "Are you using a regular Python console instead of a Friendly-console?\n"
-    )
-
-
-def cannot_analyze_string():
-    """Typical case: some code is executed using exec(), and the 'filename'
-    is set to <string>.
-    """
-    _ = current_lang.translate
-    return _(
-        "Unfortunately, no additional information is available:\n"
-        "the content of file '<string>' is not accessible.\n"
-    )
 
 
 def get_records(tb, cache):
@@ -281,36 +262,20 @@ def get_generic_explanation(name, etype, value):
     return explanation
 
 
-def get_likely_cause(etype, value):
+def get_likely_cause(etype, value, info):
     """Gets the likely cause of a given exception based on some information
     specific to a given exception.
     """
     _ = current_lang.translate
-    header, cause = None, None
+    cause = None
     if etype.__name__ in info_specific.get_cause:
         cause = info_specific.get_cause[etype.__name__](etype, value)
         if cause is not None:
-            header = _("Likely cause based on the information given by Python:")
-    return header, cause
-
-
-def get_likely_cause_syntax(etype, value):
-    """Gets the likely cause of a given exception based on some information
-    specific to a given exception.
-    """
-    _ = current_lang.translate
-    header, cause = None, None
-    cause = info_specific.get_cause[etype.__name__](etype, value)
-    if cause is not None:
-        message = get_message(etype.__name__, value)
-        if etype.__name__ == "SyntaxError" and "invalid syntax" in message:
-            header = _(
-                "Python's error message (invalid syntax) "
-                "cannot be used to identify the problem:"
+            info["cause_header"] = _(
+                "Likely cause based on the information given by Python:"
             )
-        else:
-            header = _("Likely cause based on the information given by Python:")
-    return header, cause
+            info["cause"] = cause
+    return
 
 
 def get_message(name, value):
@@ -357,34 +322,28 @@ def get_partial_source(filename, linenumber, lines, index):
     return {"source": source, "line": line}
 
 
-def process_parsing_error(etype, value, info):
+def cannot_analyze_stdin():
+    """Typical case: friendly_traceback is imported in an ordinary Python
+    interpreter (REPL), and the user does not activate the friendly
+    console.
+    """
     _ = current_lang.translate
-    filepath = value.filename
-    linenumber = value.lineno
-    offset = value.offset
-    partial_source, _ignore = cache.get_formatted_partial_source(
-        filepath, linenumber, offset
+    return _(
+        "Unfortunately, no additional information is available:\n"
+        "the content of file '<stdin>' is not accessible.\n"
+        "Are you using a regular Python console instead of a Friendly-console?\n"
     )
-    if "-->" in partial_source:
-        info["parsing_error"] = _(
-            "Python could not understand the code in the file\n"
-            "'{filename}'\n"
-            "beyond the location indicated below by --> and ^.\n"
-        ).format(filename=utils.shorten_path(filepath))
-    elif "unexpected EOF while parsing" in repr(value):
-        info["parsing_error"] = _(
-            "Python could not understand the code the file\n"
-            "'{filename}'.\n"
-            "It reached the end of the file and expected more content.\n"
-        ).format(filename=utils.shorten_path(filepath))
-    else:
-        info["parsing_error"] = _(
-            "Python could not understand the code the file\n"
-            "'{filename}'\n"
-            "for an unspecified reason.\n"
-        ).format(filename=utils.shorten_path(filepath))
 
-    info["parsing_error_source"] = f"{partial_source}\n"
+
+def cannot_analyze_string():
+    """Typical case: some code is executed using exec(), and the 'filename'
+    is set to <string>.
+    """
+    _ = current_lang.translate
+    return _(
+        "Unfortunately, no additional information is available:\n"
+        "the content of file '<string>' is not accessible.\n"
+    )
 
 
 def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
@@ -431,19 +390,3 @@ def get_location_header(linenumber, filename, header_name=None):
         return _(
             "Execution stopped on line {linenumber} of file '{filename}'.\n"
         ).format(linenumber=linenumber, filename=utils.shorten_path(filename))
-
-
-def set_cause_syntax(info, etype, value):
-    """Sets the cause"""
-    if value.filename == "<string>":
-        info["cause"] = cannot_analyze_string()
-        return
-    elif value.filename == "<stdin>":
-        info["cause"] = cannot_analyze_stdin()
-        return
-
-    process_parsing_error(etype, value, info)
-    header, cause = get_likely_cause_syntax(etype, value)
-    if cause is not None:
-        info["cause_header"] = header
-        info["cause"] = cause
