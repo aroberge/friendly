@@ -268,36 +268,18 @@ def start_console(
     if use_rich:
         session.session.set_formatter("rich", theme=theme)
 
-    def explain(verbosity=None):
-        """Shows the previously recorded traceback info again, with the specified
-           verbosity level.
-        """
-        if verbosity is None:
-            verbosity = 2
-        old_level = public_api.get_verbosity()
-        public_api.set_verbosity(verbosity)
-        public_api.show_again()
-        public_api.set_verbosity(old_level)
-        print()
-
-    def what():
-        """If known, shows the generic explanation about a given exception."""
-        explain(11)
-
-    def where():
-        """Shows the information about where the exception occurred"""
-        explain(12)
-
-    def why():
-        """Shows the likely cause of the exception."""
-        explain(13)
-
+    friendly = public_api.Friendly()
     console_defaults = {
-        "friendly": public_api.Friendly(),
-        "explain": explain,
-        "what": what,
-        "where": where,
-        "why": why,
+        "friendly": friendly,
+        "explain": friendly.explain,
+        "tb": friendly.tb,
+        "what": friendly.what,
+        "where": friendly.where,
+        "why": friendly.why,
+        "get_lang": friendly.get_lang,
+        "set_lang": friendly.set_lang,
+        "get_verbosity": friendly.get_verbosity,
+        "set_verbosity": friendly.set_verbosity,
     }
     if not public_api.is_installed():
         public_api.install(verbosity=verbosity, lang=lang)

@@ -45,20 +45,20 @@ def make_public(f):
 @make_public
 def explain(redirect=None):
     """Replaces a standard traceback by a friendlier one, giving more
-       information about a given exception than a standard traceback.
-       Note that this excludes ``SystemExit`` and ``KeyboardInterrupt``
-       which are re-raised.
+    information about a given exception than a standard traceback.
+    Note that this excludes ``SystemExit`` and ``KeyboardInterrupt``
+    which are re-raised.
 
-       By default, the output goes to ``sys.stderr`` or to some other stream
-       set to be the default by another API call. However, if::
+    By default, the output goes to ``sys.stderr`` or to some other stream
+    set to be the default by another API call. However, if::
 
-          redirect = some_stream
+       redirect = some_stream
 
-       is specified, the output goes to that stream, but without changing
-       the global settings.
+    is specified, the output goes to that stream, but without changing
+    the global settings.
 
-       If the string ``"capture"`` is given as the value for ``redirect``, the
-       output is saved and can be later retrieved by ``get_output()``.
+    If the string ``"capture"`` is given as the value for ``redirect``, the
+    output is saved and can be later retrieved by ``get_output()``.
     """
     session.explain_traceback(redirect=redirect)
 
@@ -102,10 +102,10 @@ def is_installed():
 @make_public
 def get_output(flush=True):
     """Returns the result of captured output as a string which can be
-       written anywhere desired.
+    written anywhere desired.
 
-       By default, flushes all the captured content.
-       However, this can be overriden if desired.
+    By default, flushes all the captured content.
+    However, this can be overriden if desired.
     """
     return session.get_captured(flush=flush)
 
@@ -113,11 +113,11 @@ def get_output(flush=True):
 @make_public
 def set_formatter(formatter=None, **kwds):
     """Sets the default formatter. If no argument is given, the default
-       formatter, based on the level, is used.
+    formatter, based on the level, is used.
 
-       A custom formatter must accept ``info`` as a required arguments
-       as well as arbitrary keyword-based arguments - these are currently
-       subject to change but include ``level``.
+    A custom formatter must accept ``info`` as a required arguments
+    as well as arbitrary keyword-based arguments - these are currently
+    subject to change but include ``level``.
     """
     session.set_formatter(formatter=formatter, **kwds)
 
@@ -138,8 +138,8 @@ def set_formatter(formatter=None, **kwds):
 def set_lang(lang):
     """Sets the language to be used by gettext.
 
-       If no translations exist for that language, the original
-       English strings will be used.
+    If no translations exist for that language, the original
+    English strings will be used.
     """
     session.install_gettext(lang)
 
@@ -148,9 +148,9 @@ def set_lang(lang):
 def get_lang():
     """Returns the current language that had been set for translations.
 
-       Note that the value returned may not reflect truly what is being
-       see by the end user: if the translations do not exist for that language,
-       the default English strings are used.
+    Note that the value returned may not reflect truly what is being
+    see by the end user: if the translations do not exist for that language,
+    the default English strings are used.
     """
     return session.lang
 
@@ -158,26 +158,26 @@ def get_lang():
 @make_public
 def set_verbosity(verbosity_level):
     """Sets the verbosity level to be used. These settings might be ignored
-       by custom formatters.
+    by custom formatters.
 
-       Vocabulary examples ::
-           Generic explanation: A NameError occurs when ...
-           Specific explanation: In your program, the unknown name is ...
+    Vocabulary examples ::
+        Generic explanation: A NameError occurs when ...
+        Specific explanation: In your program, the unknown name is ...
 
-       The values are as follows::
+    The values are as follows::
 
-            1: All items except a Python traceback. Default for non-interactive scripts.
-            2: Python tracebacks appear before the output of level 1.
-            3: Python tracebacks appended at the end of the output of level 1.
-            4: Same as 1, but generic explanation is not included
-            5: Same as 2, but generic explanation is not included
-            6: Same as 3, but generic explanation is not included
-            7: Shortened python tracebacks followed by specific explanation.
-            8: Minimal display of relevant information,
-               suitable for console use by advanced programmers.
-            9: Shortened Python traceback
-            0: Python traceback.
-            -1: Python traceback that also includes calls to friendly-traceback.
+         1: All items except a Python traceback. Default for non-interactive scripts.
+         2: Python tracebacks appear before the output of level 1.
+         3: Python tracebacks appended at the end of the output of level 1.
+         4: Same as 1, but generic explanation is not included
+         5: Same as 2, but generic explanation is not included
+         6: Same as 3, but generic explanation is not included
+         7: Shortened python tracebacks followed by specific explanation.
+         8: Minimal display of relevant information,
+            suitable for console use by advanced programmers.
+         9: Shortened Python traceback
+         0: Python traceback.
+         -1: Python traceback that also includes calls to friendly-traceback.
     """
     session.set_verbosity(verbosity_level)
 
@@ -192,10 +192,10 @@ def get_verbosity():
 def set_stream(redirect=None):
     """Sets the stream to which the output should be directed.
 
-       If the string ``"capture"`` is given as argument, the
-       output is saved and can be later retrieved by ``get_output()``.
+    If the string ``"capture"`` is given as argument, the
+    output is saved and can be later retrieved by ``get_output()``.
 
-       If no argument is given, the default stream (stderr) is set.
+    If no argument is given, the default stream (stderr) is set.
     """
     session.set_redirect(redirect=redirect)
 
@@ -207,20 +207,8 @@ def get_stream():
 
 
 @make_public
-def show_again():
-    """Shows the previously recorded traceback info again, on the default stream.
-
-        Primarily intended to be used when the user changes
-        a verbosity level to view the last computed traceback
-        in a given language.
-    """
-    session.show_traceback_info_again()
-
-
-@make_public
 def import_function(dotted_path: str) -> type:
-    """Import a function from a module, given its dotted path.
-    """
+    """Import a function from a module, given its dotted path."""
     # Required for --formatter flag
     # Used by HackInScience.org
     try:
@@ -257,8 +245,45 @@ class Friendly:
         self.set_lang = set_lang
         self.get_verbosity = get_verbosity
         self.set_verbosity = set_verbosity
-        self.show_again = show_again
         self.run = run
+
+    def show_again(self):
+        """Shows the previously recorded traceback info again,
+        on the default stream.
+
+        Primarily intended to be used when the user changes
+        a verbosity level to view the last computed traceback
+        in a given language.
+        """
+        session.show_traceback_info_again()
+
+    def explain(self, verbosity=None):
+        """Shows the previously recorded traceback info again,
+        with the specified verbosity level.
+        """
+        if verbosity is None:
+            verbosity = 1
+        old_level = self.get_verbosity()
+        self.set_verbosity(verbosity)
+        self.show_again()
+        self.set_verbosity(old_level)
+        print()
+
+    def tb(self):
+        """Shows the traceback"""
+        self.explain(0)
+
+    def what(self):
+        """If known, shows the generic explanation about a given exception."""
+        self.explain(11)
+
+    def where(self):
+        """Shows the information about where the exception occurred"""
+        self.explain(12)
+
+    def why(self):
+        """Shows the likely cause of the exception."""
+        self.explain(13)
 
 
 # -----------------------------------------
@@ -268,8 +293,7 @@ class Friendly:
 
 @make_public
 def set_level(verbosity_level):
-    """Deprecated; use set_verbosity() instead.
-    """
+    """Deprecated; use set_verbosity() instead."""
     set_verbosity(verbosity_level)
 
 
