@@ -22,7 +22,7 @@ def _write_err(text):
 
 class _State:
     """Keeping track of various parameters in a single object meant
-       to be instantiated only once.
+    to be instantiated only once.
     """
 
     def __init__(self):
@@ -37,6 +37,7 @@ class _State:
         self._debug = False
         self.console = None
         self.use_rich = False
+        self.markdown = False
         self.set_defaults()
 
     def set_defaults(self):
@@ -47,11 +48,11 @@ class _State:
 
     def show_traceback_info_again(self):
         """If has not been cleared, write the traceback info again, using
-           the default stream.
+        the default stream.
 
-           This is intended to be used when a user changes the verbosity
-           level and wishes to see a traceback reexplained without having
-           to execute the code again.
+        This is intended to be used when a user changes the verbosity
+        level and wishes to see a traceback reexplained without having
+        to execute the code again.
         """
         _ = current_lang.translate
         if self.saved_traceback_info is None:
@@ -79,11 +80,11 @@ class _State:
     def set_verbosity(self, verbosity=None):
         """Sets the "verbosity level".
 
-           If no argument is given, the default value is set.
+        If no argument is given, the default value is set.
 
-           If a value of 0 is chosen, Frendly-traceback is uninstalled
-           and sys.__excepthook__ is reset to its previous value.
-           """
+        If a value of 0 is chosen, Frendly-traceback is uninstalled
+        and sys.__excepthook__ is reset to its previous value.
+        """
         # verbosity is the public name replacing level, which was used previously
         # For simplicity, we still use level here.
         _ = current_lang.translate
@@ -101,27 +102,39 @@ class _State:
 
         self.level = verbosity
 
-    def set_formatter(self, formatter=None, theme="dark"):
+    def set_formatter(self, formatter=None, theme="dark", markdown=False):
         """Sets the default formatter. If no argument is given, the default
-           formatter is used.
+        formatter is used.
         """
         self.use_rich = False
+        self.markdown = markdown
         if formatter is None or formatter == "pre":
             self.formatter = formatters.pre
         elif formatter == "rich":
             self.formatter = formatters.rich_markdown
             self.console = friendly_rich.init_console(theme)
             self.use_rich = True
+            self.markdown = True
         elif formatter == "markdown":
             self.formatter = formatters.markdown
+            self.markdown = True
         elif formatter == "markdown_docs":
             self.formatter = formatters.markdown_docs
+            self.markdown = True
         else:
             self.formatter = formatter
 
-    def install(self, lang=None, redirect=None, verbosity=None):
-        """Replaces sys.excepthook by friendly_traceback's own version.
+    def quote(self, text):
+        """Surrounds text by single quote, or by backquote if formatter
+        is markdown type.
         """
+        if self.markdown:
+            return f"`{text}`"
+        else:
+            return f"'{text}'"
+
+    def install(self, lang=None, redirect=None, verbosity=None):
+        """Replaces sys.excepthook by friendly_traceback's own version."""
         _ = current_lang.translate
 
         if lang is not None:
@@ -150,15 +163,15 @@ class _State:
 
     def explain_traceback(self, redirect=None):
         """Replaces a standard traceback by a friendlier one, giving more
-           information about a given exception than a standard traceback.
-           Note that this excludes SystemExit and KeyboardInterrupt which
-           are re-raised.
+        information about a given exception than a standard traceback.
+        Note that this excludes SystemExit and KeyboardInterrupt which
+        are re-raised.
 
-           By default, the output goes to sys.stderr or to some other stream
-           set to be the default by another API call.  However, if
-              redirect = some_stream
-           is specified, the output goes to that stream, but without changing
-           the global settings.
+        By default, the output goes to sys.stderr or to some other stream
+        set to be the default by another API call.  However, if
+           redirect = some_stream
+        is specified, the output goes to that stream, but without changing
+        the global settings.
         """
         _ = current_lang.translate
         etype, value, tb = sys.exc_info()
@@ -169,18 +182,18 @@ class _State:
 
     def exception_hook(self, etype, value, tb, redirect=None):
         """Replaces a standard traceback by a friendlier one,
-           except for SystemExit and KeyboardInterrupt which
-           are re-raised.
+        except for SystemExit and KeyboardInterrupt which
+        are re-raised.
 
-           The values of the required arguments are typically the following:
+        The values of the required arguments are typically the following:
 
-               etype, value, tb = sys.exc_info()
+            etype, value, tb = sys.exc_info()
 
-           By default, the output goes to sys.stderr or to some other stream
-           set to be the default by another API call.  However, if
-              redirect = some_stream
-           is specified, the output goes to that stream for this call,
-           but the session settings is restored afterwards.
+        By default, the output goes to sys.stderr or to some other stream
+        set to be the default by another API call.  However, if
+           redirect = some_stream
+        is specified, the output goes to that stream for this call,
+        but the session settings is restored afterwards.
         """
 
         if etype.__name__ == "SystemExit":

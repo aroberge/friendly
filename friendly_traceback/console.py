@@ -152,19 +152,17 @@ class FriendlyConsole(InteractiveConsole):
             return
 
         warning_builtins = _(
-            "Warning: you added a type hint to the python builtin `{name}`."
+            "Warning: you added a type hint to the python builtin {name}."
         )
         header_warning = _(
             "Warning: you used a type hint for a variable without assigning it a value.\n"
         )
-        suggest_str = _(
-            "Instead of `{name} : {hint}`, perhaps you meant `{name} = {hint}`."
-        )
+        suggest_str = _("Instead of {hint}, perhaps you meant {assignment}.")
 
         for name in hints:
             warning = ""
             if name in dir(builtins):
-                warning = warning_builtins.format(name=name)
+                warning = warning_builtins.format(name=public_api.quote(name))
                 if self.rich_console:
                     warning = "#### " + warning
                     warning = friendly_rich.Markdown(warning)
@@ -188,7 +186,10 @@ class FriendlyConsole(InteractiveConsole):
                     wrote_title = True
                     if self.rich_console:
                         warning = "#### " + warning
-                suggest = suggest_str.format(name=name, hint=hints[name])
+                suggest = suggest_str.format(
+                    hint=public_api.quote(f"{name} : {hints[name]}"),
+                    assignment=public_api.quote(f"{name} = {hints[name]}"),
+                )
                 if self.rich_console:
                     suggest = "* " + suggest
                 warning = warning + suggest + "\n"
@@ -220,8 +221,8 @@ class FriendlyConsole(InteractiveConsole):
                 continue
             if name in self.locals and self.saved_builtins[name] != self.locals[name]:
                 warning = _(
-                    "Warning: you have redefined the python builtin `{name}`."
-                ).format(name=name)
+                    "Warning: you have redefined the python builtin {name}."
+                ).format(name=public_api.quote(name))
                 if self.rich_console:
                     warning = friendly_rich.Markdown("#### " + warning)
                     self.rich_console.print(warning)

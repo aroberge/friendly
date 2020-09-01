@@ -207,6 +207,25 @@ def get_stream():
 
 
 @make_public
+def show_again():
+    """Shows the previously recorded traceback info again, on the default stream.
+
+        Primarily intended to be used when the user changes
+        a verbosity level to view the last computed traceback
+        in a given language.
+    """
+    session.show_traceback_info_again()
+
+
+@make_public
+def quote(text):
+    """Surrounds text by single quote, or by backquote if formatter
+    is markdown type.
+    """
+    return session.quote(text)
+
+
+@make_public
 def import_function(dotted_path: str) -> type:
     """Import a function from a module, given its dotted path."""
     # Required for --formatter flag
