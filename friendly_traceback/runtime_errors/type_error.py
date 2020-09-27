@@ -6,7 +6,7 @@ providing a more detailed explanation.
 
 import re
 
-from .my_gettext import current_lang
+from ..my_gettext import current_lang
 
 
 MESSAGES_PARSERS = []

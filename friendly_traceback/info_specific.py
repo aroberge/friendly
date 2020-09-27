@@ -7,7 +7,6 @@ of a given exception.
 import sys
 
 from .my_gettext import current_lang
-from . import analyze_type_error
 from . import info_variables
 from .utils import edit_distance
 
@@ -192,8 +191,10 @@ def overflow_error(*args):
 
 
 @register("TypeError")
-def type_error(etype, value, info, frame):
-    return analyze_type_error.convert_message(str(value))
+def _type_error(etype, value, info, frame):
+    from friendly_traceback.runtime_errors import type_error
+
+    return type_error.convert_message(str(value))
 
 
 @register("UnboundLocalError")

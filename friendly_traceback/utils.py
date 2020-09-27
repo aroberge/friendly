@@ -16,7 +16,7 @@ _token_format = "{type:<10}{string:<25} {start:^12} {end:^12} {line:^12}"
 
 class Token:
     """Token as generated from tokenize.generate_tokens written here in
-       a more convenient form for our purpose.
+    a more convenient form for our purpose.
     """
 
     def __init__(self, token):
@@ -59,7 +59,7 @@ def tokenize_source(source):
 
 def tokenize_source_lines(source_lines):
     """Makes a list of tokens from a source (list of lines),
-       ignoring spaces and comments.
+    ignoring spaces and comments.
     """
     source = "\n".join(source_lines)
     return tokenize_source(source)
@@ -92,8 +92,8 @@ def shorten_path(path):
 def make_token_table(source):
     """Prints tokens found in source, excluding spaces and comments.
 
-       This was useful and might agin be useful to use
-       when writing new exception analyzers.
+    This was useful and might agin be useful to use
+    when writing new exception analyzers.
     """
     print(
         _token_format.format(
@@ -108,7 +108,7 @@ def make_token_table(source):
 
 def edit_distance(word_with_typo, words):
     """Returns a list of words at a Damerau–Levenshtein distance of 1
-       with the exception of single-character words.
+    with the exception of single-character words.
     """
     # Since _leven() below returns maxDistance in cases that might require
     # even more changes, we compute changes up to distance 2 and only
