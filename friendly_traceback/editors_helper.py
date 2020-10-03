@@ -5,9 +5,10 @@ See https://aroberge.github.io/friendly-traceback-docs/docs/html/mu.html
 for an example.
 
 At the moment, only run() is part of the public API.
+
+If you make use of any other function here, please file an issue so
+it can be determined if it should be added to the public API.
 """
-# TODO: update docstring when documentation is revised to include info
-# about this module.
 import sys
 
 from .source_cache import cache
@@ -16,17 +17,13 @@ from .session import session
 from .console import start_console
 
 
-def advanced_check_syntax(
+def check_syntax(
     *, source=None, filename="Fake filename", path=None, verbosity=None, lang=None
 ):
     """This uses Python's ``compile()`` builtin which does some analysis of
        its code argument and will raise an exception if it identifies
        some syntax errors, but also some less common "overflow" and "value"
        errors.
-
-       Compared with ``check_syntax()``, the prefix ``advanced_`` simply refers
-       to the greater number of arguments, which are specified as
-       keywords-only arguments.
 
        This function can either be used on a file, using the ``path`` argument, or
        on some code passed as a string, using the ``source`` argument.
@@ -86,25 +83,6 @@ def advanced_check_syntax(
     return code
 
 
-def check_syntax(filename, lang=None):
-    """Given a filename (relative or absolute path), this function calls the
-       more keyword-based advanced_check_syntax(),
-       and will raise an exception if it identifies
-       some syntax errors, but also some less common "overflow" and "value"
-       errors.  advanced_check_syntax() provides a more flexibility
-
-       If friendly-traceback exception hook has not been set up prior
-       to calling check_syntax, it will only be used for the duration
-       of this function call.
-
-       Returns False if problems have been found, None otherwise.
-       """
-    if advanced_check_syntax(path=filename, lang=lang):
-        return None
-    else:
-        return False
-
-
 def exec_code(*, source=None, path=None, verbosity=None, lang=None):
     """This uses check_syntax to see if the code is valid and, if so,
        executes it into a globals dict containing only
@@ -126,9 +104,7 @@ def exec_code(*, source=None, path=None, verbosity=None, lang=None):
        to calling check_syntax, it will only be used for the duration
        of this function call.
     """
-    code = advanced_check_syntax(
-        source=source, path=path, verbosity=verbosity, lang=lang
-    )
+    code = check_syntax(source=source, path=path, verbosity=verbosity, lang=lang)
     if not code:
         return {}
 
@@ -169,8 +145,8 @@ def run(
        the verbosity level.
 
        If friendly-traceback exception hook has not been set up prior
-       to calling check_syntax, it will only be used for the duration
-       of this function call.
+       to calling check_syntax, the exception hook will only be used for
+       the duration of this function call.
 
        If console is set to False, run() returns an empty dict if a SyntaxError
        was raised, otherwise returns the dict in which the module (filename)
