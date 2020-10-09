@@ -14,7 +14,9 @@ from .friendly_exception import FriendlyException
 def _write_err(text):
     """Default writer"""
     if session.use_rich:
-        md = friendly_rich.Markdown(text)
+        md = friendly_rich.Markdown(
+            text, inline_code_lexer="python", code_theme="brunante"
+        )
         session.console.print(md)
     else:
         sys.stderr.write(text)

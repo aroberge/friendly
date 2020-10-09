@@ -33,7 +33,7 @@ def init_console(theme="dark"):
 
     def _patch_heading(self, console, options):
         """By default, all headings are centered by Rich; I prefer to have
-           them left-justified, except for <h1>
+        them left-justified, except for <h1>
         """
         text = self.text
         text.justify = "left"

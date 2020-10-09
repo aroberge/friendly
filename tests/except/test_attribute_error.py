@@ -61,7 +61,6 @@ def test_nonetype():
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "'NoneType' object has no attribute 'b'" in result
-    print("verbosity = ", friendly_traceback.get_verbosity())
     if friendly_traceback.get_lang() == "en":
         assert (
             "for a variable whose value is `None`" in result

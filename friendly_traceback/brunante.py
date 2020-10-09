@@ -57,7 +57,7 @@ class BrunanteStyle(Style):
         Generic.Prompt: "#8f5902",  # class: 'gp'
         Generic.Strong: "bold #f8f8f8",  # class: 'gs'
         Generic.Subheading: "bold #800080",  # class: 'gu'
-        Generic.Traceback: "#B22518",  # class: 'gt'
+        Generic.Traceback: "#ef2929",  # class: 'gt'
         #
         Keyword: "bold #F9EE98",  # class: 'k'
         Keyword.Constant: "bold #F9EE98",  # class: 'kc'
@@ -78,7 +78,7 @@ class BrunanteStyle(Style):
         Name.Constant: "#CDA869",  # class: 'no'
         Name.Decorator: "bold #CDA869",  # class: 'nd'
         Name.Entity: "#CDA869",  # class: 'ni'
-        Name.Exception: "bold #CDA869",  # class: 'ne'
+        Name.Exception: "#ef2929",  # class: 'ne'
         Name.Function: "#CDA869",  # class: 'nf'
         Name.Property: "#CDA869",  # class: 'py'
         Name.Label: "#CDA869",  # class: 'nl'
