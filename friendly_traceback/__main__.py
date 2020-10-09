@@ -137,11 +137,11 @@ def main():
     if args.verbosity:
         verbosity = args.verbosity
     elif sys.flags.interactive:  # console after running
-        verbosity = 9
+        verbosity = 7
     elif args.source:
         verbosity = 2
     else:  # console
-        verbosity = 9
+        verbosity = 7
 
     public_api.install(lang=args.lang, verbosity=verbosity)
 
@@ -178,7 +178,7 @@ def main():
             sys.argv = [args.source, *args.args]
             runpy.run_path(args.source, run_name="__main__")
     else:
-        if args.theme == "ligth":
+        if args.theme == "light":
             theme = "light"
         console.start_console(
             local_vars=console_defaults, use_rich=use_rich, theme=theme
