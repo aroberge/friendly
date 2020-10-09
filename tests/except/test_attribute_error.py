@@ -53,5 +53,20 @@ def test_misspelled_module_attribute_2():
     return result
 
 
+def test_nonetype():
+    a = None
+    try:
+        a.b
+    except Exception:
+        friendly_traceback.explain(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "'NoneType' object has no attribute 'b'" in result
+    print("verbosity = ", friendly_traceback.get_verbosity())
+    if friendly_traceback.get_lang() == "en":
+        assert (
+            "for a variable whose value is `None`" in result
+        )
+
+
 if __name__ == "__main__":
     print(test_attribute_error())
