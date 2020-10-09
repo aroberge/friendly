@@ -27,10 +27,8 @@ def test_misspelled_module_attribute():
     result = friendly_traceback.get_output()
     assert "AttributeError: module 'string' has no attribute 'ascii_lowecase'" in result
     if friendly_traceback.get_lang() == "en":
-        assert (
-            "Perhaps you meant to write `ascii_lowercase` instead of `ascii_lowecase`"
-            in result
-        )
+        assert "perhaps you meant one of the following:" in result
+        assert " [`ascii_lowercase`," in result
     return result
 
 
@@ -42,14 +40,13 @@ def test_misspelled_module_attribute_2():
     except Exception:
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
-    assert (
-        "AttributeError: module 'math' has no attribute 'cost'"
-    ) in result
+    assert ("AttributeError: module 'math' has no attribute 'cost'") in result
     if friendly_traceback.get_lang() == "en":
         assert (
-            "Instead of writing `cost`, perhaps you meant one of the following:\n" in result
+            "Instead of writing `cost`, perhaps you meant one of the following:\n"
+            in result
         )
-    assert "[`cos`, `cosh`]" in result
+    assert "`cos`, `cosh`" in result
     return result
 
 
@@ -62,9 +59,7 @@ def test_nonetype():
     result = friendly_traceback.get_output()
     assert "'NoneType' object has no attribute 'b'" in result
     if friendly_traceback.get_lang() == "en":
-        assert (
-            "for a variable whose value is `None`" in result
-        )
+        assert "for a variable whose value is `None`" in result
 
 
 if __name__ == "__main__":
