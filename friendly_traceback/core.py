@@ -128,7 +128,7 @@ def process_syntax_error(etype, value, info, debug):
     """Completes the information that can be obtained for a syntax error
     and its subclasses.
     """
-    from .syntax_error import analyze_syntax
+    from .syntax_errors import analyze_syntax
 
     if value.filename == "<string>":  # Temporary cause
         info["cause"] = cannot_analyze_string()

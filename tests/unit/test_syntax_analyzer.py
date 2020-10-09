@@ -48,7 +48,7 @@ _find_likely_cause() will proceed in three steps:
 """
 import sys
 from friendly_traceback import set_lang
-from friendly_traceback.syntax_error import analyze_syntax
+from friendly_traceback.syntax_errors import analyze_syntax
 
 set_lang("en")
 
