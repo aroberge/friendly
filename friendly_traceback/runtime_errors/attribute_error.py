@@ -17,7 +17,7 @@ def process_error(etype, value, info, frame):
             return cause_identified
     elif message.startswith("'NoneType'"):
         return _(
-            "You are attempting to access the attriburte `{attr}`\n"
+            "You are attempting to access the attribute `{attr}`\n"
             "for a variable whose value is `None`."
         ).format(attr=attribute)
     return _(
