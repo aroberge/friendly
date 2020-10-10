@@ -7,6 +7,7 @@ providing a more detailed explanation.
 import re
 
 from ..my_gettext import current_lang
+from .. import utils
 
 
 MESSAGES_PARSERS = []
@@ -14,7 +15,7 @@ MESSAGES_PARSERS = []
 
 def add_message_parser(func):
     """A simple decorator that adds a function to parse a specific message
-       to the list of known parsers."""
+    to the list of known parsers."""
     MESSAGES_PARSERS.append(func)
 
     def wrapper(*args):
@@ -244,20 +245,34 @@ def exception_derived_from_BaseException(message, *args):
 
 
 @add_message_parser
-def incorrect_nb_positional_arguments(message, *args):
+def incorrect_nb_positional_arguments(message, info, frame):
     _ = current_lang.translate
     # example: my_function() takes 0 positional arguments but x was/were given
     pattern = re.compile(r"(.*) takes (\d+) positional argument[s]* but (\d+) ")
     match = re.search(pattern, message)
 
     if match is not None:
+        fn_name = match.group(1)[:-2]
+        nb_required = match.group(2)
+        nb_given = match.group(3)
+        if int(nb_given) - int(nb_required) == 1:
+            tokens = utils.tokenize_source(info["badline"])
+            prev_token = tokens[0]
+            missing_self = False
+            for token in tokens:
+                if token.string == fn_name and prev_token.string == ".":
+                    missing_self = True
+                    break
+                prev_token = token
         cause = _(
-            "You apparently have called the function '{fn_name}' with\n"
-            "{nb_given} positional argument while it requires {nb_required}\n"
-            "such positional arguments.\n"
-        ).format(
-            fn_name=match.group(1), nb_given=match.group(3), nb_required=match.group(2)
-        )
+            "You apparently have called the function `{fn_name}` with\n"
+            "{nb_given} positional argument(s) while it requires {nb_required}\n"
+            "such positional argument(s).\n"
+        ).format(fn_name=fn_name, nb_given=nb_given, nb_required=nb_required)
+        if missing_self:
+            cause += _("Perhaps you forgot `self` when defining `{fn_name}`.\n").format(
+                fn_name=fn_name
+            )
         return cause
     else:
         return

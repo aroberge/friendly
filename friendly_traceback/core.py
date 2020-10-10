@@ -177,7 +177,7 @@ def format_python_tracebacks(records, etype, value, python_tb, info):
 
     python_tb = [line.rstrip() for line in python_tb]
 
-    tb = create_traceback(records, etype, value)
+    tb = create_traceback(records, etype, value, info)
     if len(tb) > 9:
         shortened_tb = tb[0:2] + suppressed + tb[-5:]
     else:
@@ -211,7 +211,7 @@ def format_python_tracebacks(records, etype, value, python_tb, info):
     return
 
 
-def create_traceback(records, etype, value):
+def create_traceback(records, etype, value, info):
     """Using records that exclude code from certain files,
     creates a list from which a standard-looking traceback can
     be created.
@@ -225,6 +225,8 @@ def create_traceback(records, etype, value):
         badline = source_info["line"]
         if badline is not None:
             result.append("    {}".format(badline.strip()))
+
+        info["badline"] = badline or " "
 
     if issubclass(etype, SyntaxError):
         filename = value.filename
