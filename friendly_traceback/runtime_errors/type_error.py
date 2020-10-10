@@ -246,8 +246,8 @@ def exception_derived_from_BaseException(message, *args):
 @add_message_parser
 def incorrect_nb_positional_arguments(message, *args):
     _ = current_lang.translate
-    # example: my_function() takes 0 positional arguments but 1 was given
-    pattern = re.compile(r"(.*) takes (\d+) positional arguments but (\d+) was given")
+    # example: my_function() takes 0 positional arguments but x was/were given
+    pattern = re.compile(r"(.*) takes (\d+) positional argument[s]* but (\d+) ")
     match = re.search(pattern, message)
 
     if match is not None:
