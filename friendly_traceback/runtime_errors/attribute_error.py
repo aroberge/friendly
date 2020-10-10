@@ -4,7 +4,7 @@ from ..my_gettext import current_lang
 from ..utils import edit_distance
 
 
-def process_error(etype, value, info, frame):
+def get_cause(value, info, frame):
     # str(value) is expected to be something like
     #
     # "AttributeError: type object 'A' has no attribute 'x'"

@@ -23,10 +23,11 @@ def add_message_parser(func):
     return wrapper
 
 
-def convert_message(message):
+def get_cause(value, info, frame):
     _ = current_lang.translate
+    message = str(value)
     for parser in MESSAGES_PARSERS:
-        cause = parser(message)
+        cause = parser(message, info, frame)
         if cause is not None:
             return cause
     return _(
@@ -60,7 +61,7 @@ def convert_type(short_form):
 
 
 @add_message_parser
-def parse_can_only_concatenate(message):
+def parse_can_only_concatenate(message, *args):
     _ = current_lang.translate
     # example: can only concatenate str (not "int") to str
     pattern = re.compile(
@@ -79,7 +80,7 @@ def parse_can_only_concatenate(message):
 
 
 @add_message_parser
-def parse_must_be_str(message):
+def parse_must_be_str(message, *args):
     _ = current_lang.translate
     # python 3.6 version: must be str, not int
     # example: can only concatenate str (not "int") to str
@@ -95,7 +96,7 @@ def parse_must_be_str(message):
 
 
 @add_message_parser
-def parse_unsupported_operand_type(message):
+def parse_unsupported_operand_type(message, *args):
     _ = current_lang.translate
     # example: unsupported operand type(s) for +: 'int' and 'str'
     pattern = re.compile(
@@ -177,7 +178,7 @@ def parse_unsupported_operand_type(message):
 
 
 @add_message_parser
-def parse_order_comparison(message):
+def parse_order_comparison(message, *args):
     _ = current_lang.translate
     # example: '<' not supported between instances of 'int' and 'str'
     pattern = re.compile(
@@ -200,7 +201,7 @@ def parse_order_comparison(message):
 
 
 @add_message_parser
-def bad_operand_type_for_unary(message):
+def bad_operand_type_for_unary(message, *args):
     _ = current_lang.translate
 
     # example: bad operand type for unary +: 'str'
@@ -218,7 +219,7 @@ def bad_operand_type_for_unary(message):
 
 
 @add_message_parser
-def does_not_support_item_asssignment(message):
+def does_not_support_item_asssignment(message, *args):
     _ = current_lang.translate
     # example: 'tuple' object does not support item assignment
     pattern = re.compile(r"[\'\"](\w+)[\'\"] object does not support item assignment")
@@ -236,14 +237,14 @@ def does_not_support_item_asssignment(message):
 
 
 @add_message_parser
-def exception_derived_from_BaseException(message):
+def exception_derived_from_BaseException(message, *args):
     _ = current_lang.translate
     if "exceptions must derive from BaseException" in message:
         return _("In Python 3, exceptions must be derived from BaseException.\n")
 
 
 @add_message_parser
-def incorrect_nb_positional_arguments(message):
+def incorrect_nb_positional_arguments(message, *args):
     _ = current_lang.translate
     # example: my_function() takes 0 positional arguments but 1 was given
     pattern = re.compile(r"(.*) takes (\d+) positional arguments but (\d+) was given")
@@ -263,7 +264,7 @@ def incorrect_nb_positional_arguments(message):
 
 
 @add_message_parser
-def missing_positional_arguments(message):
+def missing_positional_arguments(message, *args):
     _ = current_lang.translate
     # example: my_function() missing 1 required positional argument
     pattern = re.compile(r"(.*) missing (\d+) required positional argument")
@@ -280,7 +281,7 @@ def missing_positional_arguments(message):
 
 
 @add_message_parser
-def x_is_not_callable(message):
+def x_is_not_callable(message, *args):
     _ = current_lang.translate
     pattern = re.compile(r"'(.*)' object is not callable")
     match = re.search(pattern, message)
