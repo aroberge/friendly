@@ -27,8 +27,7 @@ def test_misspelled_module_attribute():
     result = friendly_traceback.get_output()
     assert "AttributeError: module 'string' has no attribute 'ascii_lowecase'" in result
     if friendly_traceback.get_lang() == "en":
-        assert "perhaps you meant one of the following:" in result
-        assert " [`ascii_lowercase`," in result
+        assert "Perhaps you meant to write `ascii_lowercase`" in result
     return result
 
 
@@ -47,6 +46,7 @@ def test_misspelled_module_attribute_2():
             in result
         )
     assert "`cos`, `cosh`" in result
+    assert not "acosh" in result
     return result
 
 

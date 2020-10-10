@@ -108,7 +108,24 @@ def make_token_table(source):
 
 
 def edit_distance(word_with_typo, words):
-    """Returns a list of similar words
-    """
-    similar_words = difflib.get_close_matches(word_with_typo, words, cutoff=0.7)
-    return [word for word in similar_words if word != "_"]
+    """Returns a list of similar words"""
+    # The parameters we chose are based on experimenting with
+    # different values of the cutoff paramater for the difflib function
+    # get_close_matches.
+    #
+    # Suppose we have the following words:
+    # ['cos', 'cosh', 'acos', 'acosh']
+    # If we use a cutoff of 0.66, and ask for a maximum of 4 matches,
+    # all will be a match for 'cost'.  However, if we increase the cutoff
+    # to 0.67, 'acosh' will be dropped from the list, which seems sensible.
+    #
+    # However, this cutoff is "too generous" when dealing with long words.
+    # Using a cutoff up to 0.75 will result in both 'ascii_lowercase'
+    # and 'ascii_uppercase' matching 'ascii_lowecase'. Increasing the cutoff
+    # to 0.76 will drop ascii_uppercase as a match which also seems sensible.
+    #
+    # We thus use a heuristic cutoff based on length which ends up
+    # matching our expectation as to what a close match should be.
+
+    cutoff = min(0.8, 0.65 + 0.01 * len(word_with_typo))
+    return difflib.get_close_matches(word_with_typo, words, n=5, cutoff=cutoff)
