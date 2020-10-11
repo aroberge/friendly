@@ -16,6 +16,10 @@ call ..\..\venv-friendly3.9\scripts\activate
 call python compile_data.py
 call deactivate
 
+call ..\..\venv-friendly3.10\scripts\activate
+call python compile_data.py
+call deactivate
+
 call python compare_data.py
 copy compare_data.html ..\..\..\friendly-traceback-docs\docs\source\compare_data.html
 del compare_data.html
@@ -43,6 +47,11 @@ call  python trb_syntax_english.py
 call  deactivate
 
 call ..\venv-friendly3.9\scripts\activate
+call  python trb_english.py
+call  python trb_syntax_english.py
+call  deactivate
+
+call ..\venv-friendly3.10\scripts\activate
 call  python trb_english.py
 call  python trb_syntax_english.py
 call  deactivate
