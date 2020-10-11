@@ -212,7 +212,7 @@ def assign_to_f_expression(message="", line="", **kwargs):
         return _(
             "You wrote an expression that has an f-string\n"
             "on the left-hand side of the equal sign.\n"
-            "An f-string should only appear on the right-hand"
+            "An f-string should only appear on the right-hand "
             "side of the equal sign.\n"
         )
 
@@ -236,8 +236,8 @@ def assign_to_literal(message="", line="", **kwargs):
                 return _(
                     "You wrote an expression that has an f-string\n"
                     "on the left-hand side of the equal sign.\n"
-                    "An f-string should only appear on the right-hand"
-                    "side of the equal sign\n."
+                    "An f-string should only appear on the right-hand "
+                    "side of the equal sign.\n"
                 )
         else:
             literal = None
