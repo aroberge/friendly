@@ -50,7 +50,7 @@ def convert_type(short_form):
     elif short_form == "list":
         return _("a `list`")
     elif short_form == "NoneType":
-        return _("a variable equal to None (`NoneType`)")
+        return _("a variable equal to `None` (`NoneType`)")
     elif short_form == "set":
         return _("a `set`")
     elif short_form == "str":

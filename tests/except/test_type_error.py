@@ -57,7 +57,7 @@ def test_type_error2():
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for +:" in result
     if friendly_traceback.get_lang() == "en":
-        assert "an integer (`int`) and a variable equal to None (`NoneType`)" in result
+        assert "an integer (`int`) and a variable equal to `None` (`NoneType`)" in result
     return result
 
 
