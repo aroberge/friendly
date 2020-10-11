@@ -256,14 +256,18 @@ def incorrect_nb_positional_arguments(message, info, frame):
         nb_required = match.group(2)
         nb_given = match.group(3)
         if int(nb_given) - int(nb_required) == 1:
-            tokens = utils.tokenize_source(info["badline"])
-            prev_token = tokens[0]
-            missing_self = False
-            for token in tokens:
-                if token.string == fn_name and prev_token.string == ".":
-                    missing_self = True
-                    break
-                prev_token = token
+            # Python 3.10
+            if "." in fn_name:
+                missing_self = True
+            else:
+                tokens = utils.tokenize_source(info["badline"])
+                prev_token = tokens[0]
+                missing_self = False
+                for token in tokens:
+                    if token.string == fn_name and prev_token.string == ".":
+                        missing_self = True
+                        break
+                    prev_token = token
         cause = _(
             "You apparently have called the function `{fn_name}` with\n"
             "{nb_given} positional argument(s) while it requires {nb_required}\n"

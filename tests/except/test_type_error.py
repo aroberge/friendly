@@ -374,7 +374,8 @@ def test_type_error13():
     except Exception:
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
-    assert "TypeError: fn() takes 0 positional arguments but 1 was given" in result
+    assert "TypeError" in result
+    assert "fn() takes 0 positional arguments but 1 was given" in result
     if friendly_traceback.get_lang() == "en":
         assert "1 positional argument(s) while it requires 0" in result
     return result
@@ -390,7 +391,8 @@ def test_type_error13a():
     except Exception:
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
-    assert "TypeError: f() takes 1 positional argument but 2 were given" in result
+    assert "TypeError" in result
+    assert "f() takes 1 positional argument but 2 were given" in result
     if friendly_traceback.get_lang() == "en":
         assert "2 positional argument(s) while it requires 1" in result
         assert "Perhaps you forgot `self`" in result
@@ -406,7 +408,8 @@ def test_type_error14():
     except Exception:
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
-    assert "TypeError: fn() missing 2 required positional argument" in result
+    assert "TypeError" in result
+    assert "fn() missing 2 required positional argument" in result
     if friendly_traceback.get_lang() == "en":
         assert "fewer positional arguments than it requires (2 missing)." in result
     return result

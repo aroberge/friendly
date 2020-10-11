@@ -1,1 +1,1 @@
-venv-friendly3.6\scripts\activate & python -m pytest & venv-friendly3.7\scripts\activate & python -m pytest & venv-friendly3.8\scripts\activate & python -m pytest & venv-friendly3.9\scripts\activate & python -m pytest & activate
+venv-friendly3.6\scripts\activate & python -m pytest & venv-friendly3.7\scripts\activate & python -m pytest & venv-friendly3.8\scripts\activate & python -m pytest & venv-friendly3.9\scripts\activate & python -m pytest & venv-friendly3.10\scripts\activate & python -m pytest & activate
