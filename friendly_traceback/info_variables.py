@@ -81,7 +81,7 @@ def format_var_info(tok, _dict, _global="", _builtins=""):
             value = value.split(" at ")[0] + ">"
         elif " from " in value:  # example: module X from stdlib_path
             parts = value.split(" from ")
-            path = parts[1][:-1].replace("'", "").replace("\\\\", "\\")
+            path = parts[1][:-1]
             value = parts[0] + "> from " + utils.shorten_path(path)
 
     if len(value) > MAX_LENGTH:  # too much text would be shown

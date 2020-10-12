@@ -78,15 +78,17 @@ def shorten_path(path):
     # and the way Python displays filenames may vary.
     # To properly compare, we convert everything to lowercase
     # However, we ensure that the shortened path retains its cases
+    path = path.replace("'", "")  # We might get passed a path repr
+    path = os.path.normpath(path)
     path_lower = path.lower()
     if path_lower.startswith(TESTS):
         path = "TESTS:" + path[len(TESTS) :]
     elif path_lower.startswith(FRIENDLY):
         path = "FRIENDLY:" + path[len(FRIENDLY) :]
     elif path_lower.startswith(PYTHON):
-        path = "PYTHON_STDLIB:" + path[len(PYTHON) :]
+        path = "PYTHON_LIB:" + path[len(PYTHON) :]
     elif path_lower.startswith(HOME):
-        path = "~" + path[len(HOME) :]
+        path = "HOME_DIR:" + path[len(HOME) :]
     return path
 
 
