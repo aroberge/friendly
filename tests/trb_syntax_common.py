@@ -108,6 +108,7 @@ all_imports = {
     "SyntaxError - invalid character (bad quote)": "raise_syntax_error75",
     "SyntaxError - single = instead of double == with if": "raise_syntax_error76",
     "SyntaxError - single = instead of double == with elif": "raise_syntax_error77",
+    "SyntaxError - single = instead of double == with while": "raise_syntax_error78",
 }
 
 if sys.version_info < (3, 8):
