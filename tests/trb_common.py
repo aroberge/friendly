@@ -169,6 +169,10 @@ all_imports = {
         "test_type_error",
         "test_type_error13",
     ),
+    "TypeError - 13a: wrong number of positional arguments": (
+        "test_type_error",
+        "test_type_error13a",
+    ),
     "TypeError - 14: missing positional arguments": (
         "test_type_error",
         "test_type_error14",
@@ -186,7 +190,7 @@ all_imports = {
         "test_type_error16",
     ),
     "UnboundLocalError": ("test_unbound_local_error", "test_unbound_local_error"),
-    "Unknown exception": ("test_unknown_error", "test_unknown_error"),
+    "Unknown exception": ("test_unknown_error", "test_function_unknown_error"),
     "ZeroDivisionError - 1": ("test_zero_division_error", "test_zero_division_error"),
     "ZeroDivisionError - 2": ("test_zero_division_error", "test_zero_division_error2"),
 }

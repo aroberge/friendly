@@ -5,7 +5,7 @@ class MyException(Exception):
     pass
 
 
-def test_unknown_error():
+def test_function_unknown_error():
     try:
         raise MyException("Some informative message about an unknown exception.")
     except Exception as e:
