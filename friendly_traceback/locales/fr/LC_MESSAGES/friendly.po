@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-12 16:13-0300\n"
-"PO-Revision-Date: 2020-10-12 16:19-0300\n"
+"POT-Creation-Date: 2020-10-12 17:34-0300\n"
+"PO-Revision-Date: 2020-10-12 17:35-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -842,7 +842,7 @@ msgstr ""
 "ou que vous avez copié du code de Python 2;\n"
 "dans ce dernier cas, utilisez la fonction `repr(x)`."
 
-#: syntax_errors\line_analyzer.py:166 syntax_errors\message_analyzer.py:114
+#: syntax_errors\line_analyzer.py:165 syntax_errors\message_analyzer.py:114
 msgid ""
 "You were trying to assign a value to the Python keyword `{keyword}`.\n"
 "This is not allowed.\n"
@@ -852,7 +852,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:182
+#: syntax_errors\line_analyzer.py:181
 msgid ""
 "You likely meant to use Python's `elif` keyword\n"
 "but wrote `{name}` instead\n"
@@ -862,7 +862,7 @@ msgstr ""
 "au lieu d'utiliser le mot-clé `elif`.\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:201
+#: syntax_errors\line_analyzer.py:200
 msgid ""
 "You wrote something like\n"
 "\n"
@@ -879,7 +879,7 @@ msgstr ""
 "    from {module} import {function}\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:219
+#: syntax_errors\line_analyzer.py:218
 msgid ""
 "You cannot use the Python keyword `{word}` as an attribute.\n"
 "\n"
@@ -888,7 +888,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:223
+#: syntax_errors\line_analyzer.py:222
 msgid ""
 "You cannot use the constant `__debug__` as an attribute.\n"
 "\n"
@@ -896,7 +896,7 @@ msgstr ""
 "Vous ne pouvez pas utiliser la constante `__debug__` comme attribut.\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:242
+#: syntax_errors\line_analyzer.py:241
 msgid ""
 "There appears to be a Python identifier (variable name)\n"
 "immediately following a string.\n"
@@ -908,11 +908,11 @@ msgstr ""
 "Je soupçonne que vous essayiez d'utiliser un apostrophe ou un guillemet\n"
 "à l'intérieur d'une chaîne qui était délimitée par ces mêmes caractères.\n"
 
-#: syntax_errors\line_analyzer.py:265
+#: syntax_errors\line_analyzer.py:264
 msgid "a class"
 msgstr "une classe"
 
-#: syntax_errors\line_analyzer.py:266
+#: syntax_errors\line_analyzer.py:265
 msgid ""
 "You wanted to define `{class_}`\n"
 "but forgot to add a colon `:` at the end\n"
@@ -922,7 +922,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points `:` à la fin.\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:272
+#: syntax_errors\line_analyzer.py:271
 msgid ""
 "You wrote a `{for_while}` loop but\n"
 "forgot to add a colon `:` at the end\n"
@@ -932,7 +932,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points `:` à la fin.\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:278
+#: syntax_errors\line_analyzer.py:277
 msgid ""
 "You wrote a statement beginning with\n"
 "`{name}` but forgot to add a colon `:` at the end\n"
@@ -942,11 +942,11 @@ msgstr ""
 "`{name}` mais vous avez oublié d’ajouter deux points `:` à la fin.\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:304
+#: syntax_errors\line_analyzer.py:303
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: syntax_errors\line_analyzer.py:305
+#: syntax_errors\line_analyzer.py:304
 msgid ""
 "You tried to define {class_or_function} and did not use the correct syntax.\n"
 "The correct syntax is:\n"
@@ -960,14 +960,14 @@ msgstr ""
 "    def nom ( arguments_optionnels ):\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:314
+#: syntax_errors\line_analyzer.py:313
 msgid "You tried to use the Python keyword `{kwd}` as a function name.\n"
 msgstr ""
 "Vous avez tenté d'utiliser le mot clé Python `{kwd}` comme nom de fonction.\n"
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:361
+#: syntax_errors\line_analyzer.py:360
 msgid ""
 "I am guessing that you tried to use the Python keyword\n"
 "`{kwd}` as an argument in the definition of a function.\n"
@@ -977,7 +977,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:374
+#: syntax_errors\line_analyzer.py:373
 msgid ""
 "In older version of Python, `print` was a keyword.\n"
 "Now, `print` is a function; you need to use parentheses to call it.\n"
@@ -986,7 +986,7 @@ msgstr ""
 "Maintenant, `print` est une fonction; vous devez utiliser des parenthèses "
 "pour l'invoquer.\n"
 
-#: syntax_errors\line_analyzer.py:387
+#: syntax_errors\line_analyzer.py:386
 msgid ""
 "It looks as if you are attempting to use pip to install a module.\n"
 "`pip` is a command that needs to run in a terminal,\n"
@@ -996,16 +996,25 @@ msgstr ""
 "`pip` est une commande qui doit être invoquée dans un terminal,\n"
 "pas dans un interprète Python.\n"
 
-#: syntax_errors\line_analyzer.py:409
+#: syntax_errors\line_analyzer.py:408
 msgid "You cannot have a dot `.` followed by `{bracket}`.\n"
 msgstr "Vous ne pouvez pas avoir un point `.` suivi de `{bracket}`.\n"
 
-#: syntax_errors\line_analyzer.py:423
+#: syntax_errors\line_analyzer.py:422
 msgid ""
 "It looks like you are trying to raise an exception using Python 2 syntax.\n"
 msgstr ""
 "Je crois que vous essayez de lever une exception en utilisant la syntaxe de "
 "Python 2.\n"
+
+#: syntax_errors\line_analyzer.py:437
+msgid ""
+"You used an assignment operator `=` instead of an equality operator `==`\n"
+"with an `{if_elif}` statement.\n"
+msgstr ""
+"Vous avez utilisé un opérateur d’affectation `=` au lieu d’un opérateur "
+"d'égalité '=='\n"
+"avec un énoncé `{if_elif}`.\n"
 
 #: syntax_errors\message_analyzer.py:110
 msgid ""

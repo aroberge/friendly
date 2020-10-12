@@ -19,7 +19,7 @@ def count_char(tokens, char):
 
 def find_offending_token(tokens, offset):
     """Based on the offset provided by Python in the traceback, we find
-       the token that was flagged as being in error.
+    the token that was flagged as being in error.
     """
     # Note that the offset provided by Python starts at 1 instead of 0
     offset -= 1  # shift for proper comparison
@@ -60,7 +60,7 @@ LINE_ANALYZERS = []
 
 def add_line_analyzer(func):
     """A simple decorator that adds a function to the list
-       of all functions that analyze a single line of code."""
+    of all functions that analyze a single line of code."""
     LINE_ANALYZERS.append(func)
 
     def wrapper(tokens, offset=None):
@@ -76,7 +76,7 @@ def add_line_analyzer(func):
 
 def analyze_last_line(line, offset=None):
     """Analyzes the last line of code as identified by Python as that
-       on which the error occurred."""
+    on which the error occurred."""
     tokens = utils.tokenize_source(line)  # tokens do not include spaces nor comments
 
     if not tokens:
@@ -111,7 +111,7 @@ def copy_pasted_code(tokens, **kwargs):
 @add_line_analyzer
 def detect_walrus(tokens, offset=None):
     """Detecting if code uses named assignment operator := with an
-       older version of Python.
+    older version of Python.
     """
     _ = current_lang.translate
     if sys.version_info >= (3, 8):
@@ -139,7 +139,7 @@ def detect_walrus(tokens, offset=None):
 @add_line_analyzer
 def detect_backquote(tokens, offset=None):
     """Detecting if the error is due to using `x` which was allowed
-       in Python 2.
+    in Python 2.
     """
     _ = current_lang.translate
     bad_token, ignore = find_offending_token(tokens, offset)
@@ -157,8 +157,7 @@ def detect_backquote(tokens, offset=None):
 
 @add_line_analyzer
 def assign_to_a_keyword(tokens, **kwargs):
-    """Checks to see if line is of the form 'keyword = ...'
-    """
+    """Checks to see if line is of the form 'keyword = ...'"""
     _ = current_lang.translate
     if len(tokens) < 2 or (tokens[0].string not in kwlist) or tokens[1].string != "=":
         return False
@@ -285,7 +284,7 @@ def missing_colon(tokens, **kwargs):
 @add_line_analyzer
 def malformed_def(tokens, **kwargs):
     """Looks for problems with defining a function, assuming that
-       the information passed looks like a complete statement"""
+    the information passed looks like a complete statement"""
     _ = current_lang.translate
     if tokens[0].string != "def":
         return False
@@ -423,3 +422,19 @@ def raise_single_exception(tokens, offset=None):
         return _(
             "It looks like you are trying to raise an exception using Python 2 syntax.\n"
         )
+
+
+@add_line_analyzer
+def assign_instead_of_equal(tokens, offset=None):
+    """Checks to see if an assignment sign, '=', has been used instead of
+    an equal sign, '==', in an if or elif statement."""
+    _ = current_lang.translate
+    if tokens[0].string not in ["if", "elif"]:
+        return False
+
+    bad_token, ignore = find_offending_token(tokens, offset)
+    if bad_token.string == "=":
+        return _(
+            "You used an assignment operator `=` instead of an equality operator `==`\n"
+            "with an `{if_elif}` statement.\n"
+        ).format(if_elif=tokens[0].string)
