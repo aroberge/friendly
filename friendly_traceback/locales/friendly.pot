@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-10-10 16:19-0300\n"
+"POT-Creation-Date: 2020-10-12 16:13-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -270,24 +270,23 @@ msgid ""
 "The object that could not be imported is `{name}`.\n"
 msgstr ""
 
-#: info_specific.py:106
+#: info_specific.py:104
 msgid ""
-"In your program, the name of the key\n"
-"that cannot be found is `{key_name}`.\n"
+"In your program, the key that cannot be found is `{key_name!r}`.\n"
 msgstr ""
 
-#: info_specific.py:120
+#: info_specific.py:117
 msgid ""
 "In your program, the name of the\n"
 "module that cannot be found is `{mod_name}`.\n"
 msgstr ""
 
-#: info_specific.py:136
+#: info_specific.py:133
 msgid ""
 "In your program, the unknown name is `{var_name}`.\n"
 msgstr ""
 
-#: info_specific.py:170
+#: info_specific.py:167
 msgid ""
 "The variable that appears to cause the problem is `{var_name}`.\n"
 "Perhaps the statement\n"
@@ -297,42 +296,42 @@ msgid ""
 "should have been included as the first line inside your function.\n"
 msgstr ""
 
-#: info_variables.py:122 info_variables.py:129
+#: info_variables.py:124 info_variables.py:131
 msgid "The similar name `{name}` was found in the local scope. "
 msgstr ""
 
-#: info_variables.py:136
+#: info_variables.py:138
 msgid "The Python builtin `{name}` has a similar name. "
 msgstr ""
 
-#: info_variables.py:142
+#: info_variables.py:144
 msgid ""
 "Instead of writing `{name}`, perhaps you meant one of the following:\n"
 msgstr ""
 
-#: info_variables.py:147
+#: info_variables.py:149
 msgid "*   Local scope: "
 msgstr ""
 
-#: info_variables.py:153
+#: info_variables.py:155
 msgid "*   Global scope: "
 msgstr ""
 
-#: info_variables.py:159
+#: info_variables.py:161
 msgid "*   Python builtins: "
 msgstr ""
 
-#: info_variables.py:192
+#: info_variables.py:194
 msgid ""
 "A type hint found for `{name}` in the local scope.\n"
 msgstr ""
 
-#: info_variables.py:195 info_variables.py:208
+#: info_variables.py:197 info_variables.py:210
 msgid ""
 "Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n"
 msgstr ""
 
-#: info_variables.py:205
+#: info_variables.py:207
 msgid ""
 "A type hint found for `{name}` in the global scope.\n"
 msgstr ""
@@ -386,7 +385,7 @@ msgid "a `list`"
 msgstr ""
 
 #: runtime_errors\type_error.py:53
-msgid "a variable equal to None (`NoneType`)"
+msgid "a variable equal to `None` (`NoneType`)"
 msgstr ""
 
 #: runtime_errors\type_error.py:55
@@ -488,35 +487,35 @@ msgid ""
 "In Python 3, exceptions must be derived from BaseException.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:267
+#: runtime_errors\type_error.py:271
 msgid ""
 "You apparently have called the function `{fn_name}` with\n"
 "{nb_given} positional argument(s) while it requires {nb_required}\n"
 "such positional argument(s).\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:273
+#: runtime_errors\type_error.py:277
 msgid ""
 "Perhaps you forgot `self` when defining `{fn_name}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:289
+#: runtime_errors\type_error.py:293
 msgid ""
 "You apparently have called the function '{fn_name}' with\n"
 "fewer positional arguments than it requires ({nb_required} missing).\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:306
+#: runtime_errors\type_error.py:310
 msgid ""
 "Perhaps you had a missing comma between two tuples.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:308
+#: runtime_errors\type_error.py:312
 msgid ""
 "Perhaps you had a missing comma before the tuple.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:310
+#: runtime_errors\type_error.py:314
 msgid ""
 "I suspect that you had an object of this type, {obj},\n"
 "followed by what looked like a tuple, '(...)',\n"
@@ -825,19 +824,11 @@ msgstr ""
 msgid "of type `set`"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:212
+#: syntax_errors\message_analyzer.py:212 syntax_errors\message_analyzer.py:236
 msgid ""
 "You wrote an expression that has an f-string\n"
 "on the left-hand side of the equal sign.\n"
-"An f-string should only appear on the right-handside of the equal sign.\n"
-msgstr ""
-
-#: syntax_errors\message_analyzer.py:236
-msgid ""
-"You wrote an expression that has an f-string\n"
-"on the left-hand side of the equal sign.\n"
-"An f-string should only appear on the right-handside of the equal sign\n"
-"."
+"An f-string should only appear on the right-hand side of the equal sign.\n"
 msgstr ""
 
 #: syntax_errors\message_analyzer.py:244
