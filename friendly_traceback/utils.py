@@ -84,7 +84,7 @@ def shorten_path(path):
     elif path_lower.startswith(FRIENDLY):
         path = "FRIENDLY:" + path[len(FRIENDLY) :]
     elif path_lower.startswith(PYTHON):
-        path = "PYTHON:" + path[len(PYTHON) :]
+        path = "PYTHON_STDLIB:" + path[len(PYTHON) :]
     elif path_lower.startswith(HOME):
         path = "~" + path[len(HOME) :]
     return path

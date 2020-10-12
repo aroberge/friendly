@@ -60,7 +60,7 @@ all_imports = {
     "NameError - 3": ("test_name_error", "test_name_error3"),
     "NameError - 4": ("test_name_error", "test_name_error4"),
     "OverflowError": ("test_overflow_error", "test_overflow_error"),
-    "RecursionError": ("test_recursion_error", "test_recursion_error"),
+    "RecursionError": ("test_recursion_error", "test_function_recursion_error"),
     "TypeError - 1: concatenate two different types": (
         "test_type_error",
         "test_type_error1",

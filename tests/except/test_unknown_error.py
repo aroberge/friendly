@@ -19,4 +19,4 @@ def test_function_unknown_error():
 
 
 if __name__ == "__main__":
-    print(test_unknown_error())
+    print(test_function_unknown_error())

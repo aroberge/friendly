@@ -55,7 +55,7 @@ def format_var_info(tok, _dict, _global="", _builtins=""):
        others.
     """
     _ = current_lang.translate
-    MAX_LENGTH = 45
+    MAX_LENGTH = 65
     length_info = ""
     if _global:
         _global = "global "
@@ -79,8 +79,10 @@ def format_var_info(tok, _dict, _global="", _builtins=""):
     if value.startswith("<") and value.endswith(">"):
         if " at " in value:
             value = value.split(" at ")[0] + ">"
-        elif " from " in value:
-            value = value.split(" from ")[0] + ">"
+        elif " from " in value:  # example: module X from stdlib_path
+            parts = value.split(" from ")
+            path = parts[1][:-1].replace("'", "").replace("\\\\", "\\")
+            value = parts[0] + "> from " + utils.shorten_path(path)
 
     if len(value) > MAX_LENGTH:  # too much text would be shown
         # We reduce the length of the repr, indicate this by ..., but we
