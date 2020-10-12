@@ -194,8 +194,9 @@ all_imports = {
 cur_dir = os.getcwd()
 sys.path.append(os.path.join(cur_dir, "except"))
 
+save_messages = {}
 
-def create_tracebacks(target, intro_text, format="pre"):
+def create_tracebacks(target, intro_text, format="pre", messages=None):
     with open(target, "w", encoding="utf8") as out:
         with redirect_stderr(out):
             write(intro_text)
@@ -207,10 +208,17 @@ def create_tracebacks(target, intro_text, format="pre"):
                 try:
                     mod = __import__(name)
                     if function is not None:
-                        result = getattr(mod, function)()
+                        result, message = getattr(mod, function)()
+                        save_messages[function] = message
                         write(result)
-                except Exception:
+                except Exception as e:
                     friendly_traceback.explain()
 
+    if messages:
+        with open(messages, "w", encoding="utf8") as out:
+            out.write("messages = {\n")
+            for key in save_messages:
+                out.write(f"    {repr(key)}: {repr(save_messages[key])},\n")
+            out.write("}\n")
 
 print("Number of cases in trb_common.py: ", len(all_imports))

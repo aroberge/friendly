@@ -7,6 +7,7 @@ friendly_traceback.png
 
 # Intermediate data
 tests/syntax/data*.py
+tests/messages_*.py
 
 # Simple test files
 test.py

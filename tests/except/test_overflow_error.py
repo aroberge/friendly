@@ -4,7 +4,8 @@ import friendly_traceback
 def test_overflow_error():
     try:
         2.0 ** 1600
-    except Exception:
+    except Exception as e:
+        message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert (
@@ -13,7 +14,7 @@ def test_overflow_error():
     )
     if friendly_traceback.get_lang() == "en":
         assert "`OverflowError` is raised when the result" in result
-    return result
+    return result, message
 
 
 if __name__ == "__main__":

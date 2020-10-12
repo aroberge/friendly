@@ -7,13 +7,14 @@ def test_arithmetic_error():
         # Usually, a subclass such as ZeroDivisionError, etc., would
         # likely be raised.
         raise ArithmeticError
-    except Exception:
+    except Exception as e:
+        message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "ArithmeticError" in result
     if friendly_traceback.get_lang() == "en":
         assert "`ArithmeticError` is the base class" in result
-    return result
+    return result, message
 
 
 if __name__ == "__main__":

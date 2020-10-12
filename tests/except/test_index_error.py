@@ -6,11 +6,12 @@ def test_index_error1():
     b = [1, 2, 3]
     try:
         print(a[3], b[2])
-    except Exception:
+    except Exception as e:
+        message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "IndexError: tuple index out of range" in result
-    return result
+    return result, message
 
 
 def test_index_error2():
@@ -18,11 +19,12 @@ def test_index_error2():
     b = tuple(range(50))
     try:
         print(a[50], b[0])
-    except Exception:
+    except Exception as e:
+        message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "IndexError: list index out of range" in result
-    return result
+    return result, message
 
 
 if __name__ == "__main__":

@@ -8,13 +8,14 @@ def test_attribute_error():
     A()
     try:
         A.x
-    except Exception:
+    except Exception as e:
+        message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "AttributeError: type object 'A' has no attribute 'x'" in result
     if friendly_traceback.get_lang() == "en":
         assert "In your program, the object is `A` and the attribute is `x`." in result
-    return result
+    return result, message
 
 
 def test_misspelled_module_attribute():
@@ -22,13 +23,14 @@ def test_misspelled_module_attribute():
 
     try:
         string.ascii_lowecase
-    except Exception:
+    except Exception as e:
+        message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "AttributeError: module 'string' has no attribute 'ascii_lowecase'" in result
     if friendly_traceback.get_lang() == "en":
         assert "Perhaps you meant to write `ascii_lowercase`" in result
-    return result
+    return result, message
 
 
 def test_misspelled_module_attribute_2():
@@ -36,7 +38,8 @@ def test_misspelled_module_attribute_2():
 
     try:
         math.cost
-    except Exception:
+    except Exception as e:
+        message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert ("AttributeError: module 'math' has no attribute 'cost'") in result
@@ -47,14 +50,15 @@ def test_misspelled_module_attribute_2():
         )
     assert "`cos`, `cosh`" in result
     assert not "acosh" in result
-    return result
+    return result, message
 
 
 def test_nonetype():
     a = None
     try:
         a.b
-    except Exception:
+    except Exception as e:
+        message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "'NoneType' object has no attribute 'b'" in result

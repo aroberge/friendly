@@ -37,6 +37,8 @@ target = os.path.normpath(
     os.path.join(docs_root_dir, f"docs/source/tracebacks_{LANG}_{py_version}.rst")
 )
 
+messages = os.path.join(this_dir, f"messages_{py_version}".replace(".", "_") + ".py")
+
 intro_text = """
 Friendly tracebacks - in English
 ======================================
@@ -65,4 +67,4 @@ Python version: {python}
 )
 
 
-trb_common.create_tracebacks(target, intro_text)
+trb_common.create_tracebacks(target, intro_text, messages=messages)

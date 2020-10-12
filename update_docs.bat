@@ -56,6 +56,10 @@ call  python trb_english.py
 call  python trb_syntax_english.py
 call  deactivate
 
+call python compare_messages.py
+copy compare_messages.html ..\..\friendly-traceback-docs\docs\source\compare_messages.html
+del compare_messages.html
+
 cd ..\..\friendly-traceback-docs\docs
 call make html
 cd ..\..\friendly-traceback
