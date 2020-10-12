@@ -126,6 +126,20 @@ def edit_distance(word_with_typo, words):
     #
     # We thus use a heuristic cutoff based on length which ends up
     # matching our expectation as to what a close match should be.
+    get = difflib.get_close_matches
 
     cutoff = min(0.8, 0.65 + 0.01 * len(word_with_typo))
-    return difflib.get_close_matches(word_with_typo, words, n=5, cutoff=cutoff)
+    result = get(word_with_typo, words, n=5, cutoff=cutoff)
+    if result:
+        return result
+
+    # The choice of parameters above might not be helpful in identifying
+    # typos based on wrong case like 'Pi' or 'PI' instead of 'pi'.
+    # In the absence of results, we try
+    # to see if the typos could have been caused by using the wrong case
+    result = get(word_with_typo.lower(), words, n=1, cutoff=cutoff)
+    if result:
+        return result
+    else:
+        result = get(word_with_typo.upper(), words, n=1, cutoff=cutoff)
+    return result

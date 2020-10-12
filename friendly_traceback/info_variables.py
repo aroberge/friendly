@@ -122,21 +122,21 @@ def get_similar_var_names(name, frame):
         if similar["locals"]:
             return (
                 _("The similar name `{name}` was found in the local scope. ").format(
-                    name=str(similar["locals"])[1:-1]
+                    name=str(similar["locals"][0]).replace("'", "`")
                 )
                 + "\n"
             )
         elif similar["globals"]:
             return (
                 _("The similar name `{name}` was found in the local scope. ").format(
-                    name=str(similar["globals"])[1:-1]
+                    name=str(similar["globals"][0]).replace("'", "`")
                 )
                 + "\n"
             )
         else:
             return (
                 _("The Python builtin `{name}` has a similar name. ").format(
-                    name=str(similar["builtins"])[1:-1]
+                    name=str(similar["builtins"][0]).replace("'", "`")
                 )
                 + "\n"
             )
