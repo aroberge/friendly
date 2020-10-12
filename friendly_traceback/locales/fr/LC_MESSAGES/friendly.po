@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-10 16:19-0300\n"
-"PO-Revision-Date: 2020-10-10 16:21-0300\n"
+"POT-Creation-Date: 2020-10-12 16:13-0300\n"
+"PO-Revision-Date: 2020-10-12 16:19-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -380,23 +380,21 @@ msgstr ""
 msgid "The object that could not be imported is `{name}`.\n"
 msgstr "L’objet qui n’a pas pu être importé est `{name} `.\n"
 
-#: info_specific.py:106
-msgid ""
-"In your program, the name of the key\n"
-"that cannot be found is `{key_name}`.\n"
-msgstr "Dans votre programme, le nom de la clé inconnue est `{key_name}`.\n"
+#: info_specific.py:104
+msgid "In your program, the key that cannot be found is `{key_name!r}`.\n"
+msgstr "Dans votre programme, la clé inconnue est `{key_name!r}`.\n"
 
-#: info_specific.py:120
+#: info_specific.py:117
 msgid ""
 "In your program, the name of the\n"
 "module that cannot be found is `{mod_name}`.\n"
 msgstr "Dans votre programme, le nom du module inconnu est `{mod_name}`.\n"
 
-#: info_specific.py:136
+#: info_specific.py:133
 msgid "In your program, the unknown name is `{var_name}`.\n"
 msgstr "Dans votre programme, le nom inconnu est `{var_name}`.\n"
 
-#: info_specific.py:170
+#: info_specific.py:167
 msgid ""
 "The variable that appears to cause the problem is `{var_name}`.\n"
 "Perhaps the statement\n"
@@ -412,44 +410,44 @@ msgstr ""
 "\n"
 "comme première ligne à l’intérieur de votre fonction.\n"
 
-#: info_variables.py:122 info_variables.py:129
+#: info_variables.py:124 info_variables.py:131
 msgid "The similar name `{name}` was found in the local scope. "
 msgstr "Le nom semblable `{name}` a été trouvé dans la portée locale. "
 
-#: info_variables.py:136
+#: info_variables.py:138
 msgid "The Python builtin `{name}` has a similar name. "
 msgstr "L'identifiant Python (builtin) `{name}` a un nom semblable. "
 
-#: info_variables.py:142
+#: info_variables.py:144
 msgid "Instead of writing `{name}`, perhaps you meant one of the following:\n"
 msgstr ""
 "Au lieu d’écrire `{name}`, peut-être que vous vouliez écrire l'un des noms "
 "suivants :\n"
 
-#: info_variables.py:147
+#: info_variables.py:149
 msgid "*   Local scope: "
 msgstr "*    Portée locale : "
 
-#: info_variables.py:153
+#: info_variables.py:155
 msgid "*   Global scope: "
 msgstr "*    Portée globale : "
 
-#: info_variables.py:159
+#: info_variables.py:161
 msgid "*   Python builtins: "
 msgstr "*    Identifiant Python (builtins) : "
 
-#: info_variables.py:192
+#: info_variables.py:194
 msgid "A type hint found for `{name}` in the local scope.\n"
 msgstr ""
 "Annotation de type trouvée pour `{name}` en tant que variable locale.\n"
 
-#: info_variables.py:195 info_variables.py:208
+#: info_variables.py:197 info_variables.py:210
 msgid ""
 "Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n"
 msgstr ""
 "Peut-être aviez-vous écrit `{name} : {hint}` au lieu de `{name} = {hint}`.\n"
 
-#: info_variables.py:205
+#: info_variables.py:207
 msgid "A type hint found for `{name}` in the global scope.\n"
 msgstr ""
 "Annotation de type trouvée pour `{name}` en tant que variable globale.\n"
@@ -510,8 +508,8 @@ msgid "a `list`"
 msgstr "une liste ('list')"
 
 #: runtime_errors\type_error.py:53
-msgid "a variable equal to None (`NoneType`)"
-msgstr "une variable de valeur None ('NoneType')"
+msgid "a variable equal to `None` (`NoneType`)"
+msgstr "une variable ayant la valeur `None` ('NoneType')"
 
 #: runtime_errors\type_error.py:55
 msgid "a `set`"
@@ -647,7 +645,7 @@ msgid "In Python 3, exceptions must be derived from BaseException.\n"
 msgstr ""
 "Dans Python 3, les exceptions doivent être dérivées de BaseException.\n"
 
-#: runtime_errors\type_error.py:267
+#: runtime_errors\type_error.py:271
 msgid ""
 "You apparently have called the function `{fn_name}` with\n"
 "{nb_given} positional argument(s) while it requires {nb_required}\n"
@@ -656,12 +654,12 @@ msgstr ""
 "Vous avez apparemment invoqué la fonction `{fn_name}` avec\n"
 "{nb_given} arguments positionnels alors qu'elle en requiert {nb_required}.\n"
 
-#: runtime_errors\type_error.py:273
+#: runtime_errors\type_error.py:277
 msgid "Perhaps you forgot `self` when defining `{fn_name}`.\n"
 msgstr ""
 "Peut-être avez-vous oublié `self` lors de la définition de `{fn_name}`.\n"
 
-#: runtime_errors\type_error.py:289
+#: runtime_errors\type_error.py:293
 msgid ""
 "You apparently have called the function '{fn_name}' with\n"
 "fewer positional arguments than it requires ({nb_required} missing).\n"
@@ -669,15 +667,15 @@ msgstr ""
 "Vous avez apparemment invoqué la fonction '{fn_name}' avec\n"
 "moins d'arguments positionnels qu'il n'en faut ({nb_required} manquent).\n"
 
-#: runtime_errors\type_error.py:306
+#: runtime_errors\type_error.py:310
 msgid "Perhaps you had a missing comma between two tuples.\n"
 msgstr "Peut-être que vous aviez une virgule manquante entre deux tuples.\n"
 
-#: runtime_errors\type_error.py:308
+#: runtime_errors\type_error.py:312
 msgid "Perhaps you had a missing comma before the tuple.\n"
 msgstr "Peut-être que vous aviez une virgule manquante avant le tuple.\n"
 
-#: runtime_errors\type_error.py:310
+#: runtime_errors\type_error.py:314
 msgid ""
 "I suspect that you had an object of this type, {obj},\n"
 "followed by what looked like a tuple, '(...)',\n"
@@ -1113,29 +1111,16 @@ msgstr "de type `list`"
 msgid "of type `set`"
 msgstr "de type `set`"
 
-#: syntax_errors\message_analyzer.py:212
+#: syntax_errors\message_analyzer.py:212 syntax_errors\message_analyzer.py:236
 msgid ""
 "You wrote an expression that has an f-string\n"
 "on the left-hand side of the equal sign.\n"
-"An f-string should only appear on the right-handside of the equal sign.\n"
+"An f-string should only appear on the right-hand side of the equal sign.\n"
 msgstr ""
 "Vous avez écrit une expression qui a une chaine de\n"
 "caractères formatés (aussi appelé f-string)\n"
-"sur le côté gauche du signe égal.\n"
+"sur le côté gauche du signe d'égalité.\n"
 "Une f-string ne doit apparaître que sur le côté droit du signe d’égalité.\n"
-
-#: syntax_errors\message_analyzer.py:236
-msgid ""
-"You wrote an expression that has an f-string\n"
-"on the left-hand side of the equal sign.\n"
-"An f-string should only appear on the right-handside of the equal sign\n"
-"."
-msgstr ""
-"Vous avez écrit une expression qui a une chaine de\n"
-"caractères formatés (aussi appelé f-string)\n"
-"sur le côté gauche du signe égal.\n"
-"Une f-string ne doit apparaître que sur le côté droit du signe d’égalité.\n"
-"."
 
 #: syntax_errors\message_analyzer.py:244
 msgid "variable_name"
@@ -1676,6 +1661,19 @@ msgstr "accolade `{`"
 #: syntax_errors\source_analyzer.py:269
 msgid "curly bracket `}`"
 msgstr "accolade `}`"
+
+#~ msgid ""
+#~ "You wrote an expression that has an f-string\n"
+#~ "on the left-hand side of the equal sign.\n"
+#~ "An f-string should only appear on the right-handside of the equal sign\n"
+#~ "."
+#~ msgstr ""
+#~ "Vous avez écrit une expression qui a une chaine de\n"
+#~ "caractères formatés (aussi appelé f-string)\n"
+#~ "sur le côté gauche du signe égal.\n"
+#~ "Une f-string ne doit apparaître que sur le côté droit du signe "
+#~ "d’égalité.\n"
+#~ "."
 
 #~ msgid ""
 #~ "I suspect that you are using a regular\n"
