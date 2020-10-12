@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-12 17:34-0300\n"
-"PO-Revision-Date: 2020-10-12 17:35-0300\n"
+"POT-Creation-Date: 2020-10-12 17:48-0300\n"
+"PO-Revision-Date: 2020-10-12 17:48-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1007,7 +1007,7 @@ msgstr ""
 "Je crois que vous essayez de lever une exception en utilisant la syntaxe de "
 "Python 2.\n"
 
-#: syntax_errors\line_analyzer.py:437
+#: syntax_errors\line_analyzer.py:439
 msgid ""
 "You used an assignment operator `=` instead of an equality operator `==`\n"
 "with an `{if_elif}` statement.\n"
@@ -1015,6 +1015,15 @@ msgstr ""
 "Vous avez utilisé un opérateur d’affectation `=` au lieu d’un opérateur "
 "d'égalité '=='\n"
 "avec un énoncé `{if_elif}`.\n"
+
+#: syntax_errors\line_analyzer.py:444
+msgid ""
+"You used an assignment operator `=` instead of an equality operator `==`\n"
+"with a `{while_}` statement.\n"
+msgstr ""
+"Vous avez utilisé un opérateur d’affectation `=` au lieu d’un opérateur "
+"d'égalité '=='\n"
+"avec un énoncé `{while_}`.\n"
 
 #: syntax_errors\message_analyzer.py:110
 msgid ""

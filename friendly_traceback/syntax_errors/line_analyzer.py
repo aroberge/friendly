@@ -429,12 +429,19 @@ def assign_instead_of_equal(tokens, offset=None):
     """Checks to see if an assignment sign, '=', has been used instead of
     an equal sign, '==', in an if or elif statement."""
     _ = current_lang.translate
-    if tokens[0].string not in ["if", "elif"]:
+    if tokens[0].string not in ["if", "elif", "while"]:
         return False
 
     bad_token, ignore = find_offending_token(tokens, offset)
     if bad_token.string == "=":
-        return _(
-            "You used an assignment operator `=` instead of an equality operator `==`\n"
-            "with an `{if_elif}` statement.\n"
-        ).format(if_elif=tokens[0].string)
+        statement = tokens[0].string
+        if statement in ["if", "elif"]:
+            return _(
+                "You used an assignment operator `=` instead of an equality operator `==`\n"
+                "with an `{if_elif}` statement.\n"
+            ).format(if_elif=statement)
+        else:
+            return _(
+                "You used an assignment operator `=` instead of an equality operator `==`\n"
+                "with a `{while_}` statement.\n"
+            ).format(while_=statement)

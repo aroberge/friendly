@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-10-12 17:34-0300\n"
+"POT-Creation-Date: 2020-10-12 17:48-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -743,10 +743,16 @@ msgid ""
 "It looks like you are trying to raise an exception using Python 2 syntax.\n"
 msgstr ""
 
-#: syntax_errors\line_analyzer.py:437
+#: syntax_errors\line_analyzer.py:439
 msgid ""
 "You used an assignment operator `=` instead of an equality operator `==`\n"
 "with an `{if_elif}` statement.\n"
+msgstr ""
+
+#: syntax_errors\line_analyzer.py:444
+msgid ""
+"You used an assignment operator `=` instead of an equality operator `==`\n"
+"with a `{while_}` statement.\n"
 msgstr ""
 
 #: syntax_errors\message_analyzer.py:110

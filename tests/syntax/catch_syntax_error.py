@@ -89,8 +89,9 @@ causes = {
     "raise_syntax_error73": "trying to raise an exception using Python 2 syntax.",
     "raise_syntax_error74": "must add parentheses enclosing",
     "raise_syntax_error75": "fancy unicode quotation mark",
-    "raise_syntax_error76": "`=` instead of an equal sign `==` with an `if` statement",
-    "raise_syntax_error77": "`=` instead of an equal sign `==` with an `elif` statement",
+    "raise_syntax_error76": "`=` instead of an equality operator `==` with an `if` statement",
+    "raise_syntax_error77": "`=` instead of an equality operator `==` with an `elif` statement",
+    "raise_syntax_error78": "`=` instead of an equality operator `==` with a `while` statement",
 }
 
 if sys.version_info < (3, 8):
