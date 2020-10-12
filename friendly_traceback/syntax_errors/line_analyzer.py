@@ -437,11 +437,16 @@ def assign_instead_of_equal(tokens, offset=None):
         statement = tokens[0].string
         if statement in ["if", "elif"]:
             return _(
-                "You used an assignment operator `=` instead of an equality operator `==`\n"
+                "You used an assignment operator `=` instead of an equality operator `==` \n"
                 "with an `{if_elif}` statement.\n"
             ).format(if_elif=statement)
-        else:
+        elif sys.version_info < (3, 8):
             return _(
-                "You used an assignment operator `=` instead of an equality operator `==`\n"
+                "You used an assignment operator `=` instead of an equality operator `==` \n"
                 "with a `{while_}` statement.\n"
             ).format(while_=statement)
+        else:
+            return _(
+                "You used an assignment operator `=`; perhaps you meant to use \n"
+                "an equality operator, `==`, or the walrus operator `:=`.\n"
+            )

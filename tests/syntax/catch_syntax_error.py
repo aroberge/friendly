@@ -91,7 +91,7 @@ causes = {
     "raise_syntax_error75": "fancy unicode quotation mark",
     "raise_syntax_error76": "`=` instead of an equality operator `==` with an `if` statement",
     "raise_syntax_error77": "`=` instead of an equality operator `==` with an `elif` statement",
-    "raise_syntax_error78": "`=` instead of an equality operator `==` with a `while` statement",
+    "raise_syntax_error78": "You used an assignment operator `=`",
 }
 
 if sys.version_info < (3, 8):

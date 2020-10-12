@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-12 17:48-0300\n"
-"PO-Revision-Date: 2020-10-12 17:48-0300\n"
+"POT-Creation-Date: 2020-10-12 18:32-0300\n"
+"PO-Revision-Date: 2020-10-12 18:35-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1009,21 +1009,30 @@ msgstr ""
 
 #: syntax_errors\line_analyzer.py:439
 msgid ""
-"You used an assignment operator `=` instead of an equality operator `==`\n"
+"You used an assignment operator `=` instead of an equality operator `==` \n"
 "with an `{if_elif}` statement.\n"
 msgstr ""
 "Vous avez utilisé un opérateur d’affectation `=` au lieu d’un opérateur "
-"d'égalité '=='\n"
+"d'égalité `==` \n"
 "avec un énoncé `{if_elif}`.\n"
 
 #: syntax_errors\line_analyzer.py:444
 msgid ""
-"You used an assignment operator `=` instead of an equality operator `==`\n"
+"You used an assignment operator `=` instead of an equality operator `==` \n"
 "with a `{while_}` statement.\n"
 msgstr ""
 "Vous avez utilisé un opérateur d’affectation `=` au lieu d’un opérateur "
-"d'égalité '=='\n"
+"d'égalité `==` \n"
 "avec un énoncé `{while_}`.\n"
+
+#: syntax_errors\line_analyzer.py:449
+msgid ""
+"You used an assignment operator `=`; perhaps you meant to use \n"
+"an equality operator, `==`, or the walrus operator `:=`.\n"
+msgstr ""
+"Vous avez utilisé un opérateur d’affectation `=`; vous vouliez peut-être "
+"utiliser \n"
+"un opérateur d'égalité, `==`, ou l'opérateur `:=`.\n"
 
 #: syntax_errors\message_analyzer.py:110
 msgid ""

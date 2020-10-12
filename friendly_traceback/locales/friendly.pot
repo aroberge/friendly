@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-10-12 17:48-0300\n"
+"POT-Creation-Date: 2020-10-12 18:32-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -745,14 +745,20 @@ msgstr ""
 
 #: syntax_errors\line_analyzer.py:439
 msgid ""
-"You used an assignment operator `=` instead of an equality operator `==`\n"
+"You used an assignment operator `=` instead of an equality operator `==` \n"
 "with an `{if_elif}` statement.\n"
 msgstr ""
 
 #: syntax_errors\line_analyzer.py:444
 msgid ""
-"You used an assignment operator `=` instead of an equality operator `==`\n"
+"You used an assignment operator `=` instead of an equality operator `==` \n"
 "with a `{while_}` statement.\n"
+msgstr ""
+
+#: syntax_errors\line_analyzer.py:449
+msgid ""
+"You used an assignment operator `=`; perhaps you meant to use \n"
+"an equality operator, `==`, or the walrus operator `:=`.\n"
 msgstr ""
 
 #: syntax_errors\message_analyzer.py:110
