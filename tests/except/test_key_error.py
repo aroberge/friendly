@@ -11,7 +11,7 @@ def test_key_error():
     result = friendly_traceback.get_output()
     assert "KeyError: 'c'" in result
     if friendly_traceback.get_lang() == "en":
-        assert "that cannot be found is `c`." in result
+        assert "that cannot be found is `'c'`." in result
     return result, message
 
 

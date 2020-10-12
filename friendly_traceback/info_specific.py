@@ -101,12 +101,9 @@ def key_error(value, info, frame):
     # str(value) is expected to be something like
     #
     # KeyError: 'c'
-    #
-    # By splitting value using ', we can extract the missing key name.
     return _(
-        "In your program, the name of the key\n"
-        "that cannot be found is `{key_name}`.\n"
-    ).format(key_name=str(value).split("'")[1])
+        "In your program, the key that cannot be found is `{key_name!r}`.\n"
+    ).format(key_name=value.args[0])
 
 
 @register("ModuleNotFoundError")
