@@ -266,30 +266,22 @@ class Friendly:
         self.set_verbosity = set_verbosity
         self.run = run
 
-    def _show_again(self):
-        """Shows the previously recorded traceback info again,
-        on the default stream.
-
-        Primarily intended to be used when the user changes
-        a verbosity level to view the last computed traceback
-        in a given language.
-        """
-        session.show_traceback_info_again()
-
     def explain(self, verbosity=None):
         """Shows the previously recorded traceback info again,
         with the specified verbosity level.
+
+        See set_verbosity() for details.
         """
         if verbosity is None:
             verbosity = 1
         old_level = self.get_verbosity()
         self.set_verbosity(verbosity)
-        self._show_again()
+        session.show_traceback_info_again()
         self.set_verbosity(old_level)
         print()
 
     def traceback(self):
-        """Shows the traceback"""
+        """Shows the traceback."""
         self.explain(0)
 
     def what(self):
