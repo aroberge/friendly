@@ -266,7 +266,7 @@ class Friendly:
         self.set_verbosity = set_verbosity
         self.run = run
 
-    def show_again(self):
+    def _show_again(self):
         """Shows the previously recorded traceback info again,
         on the default stream.
 
@@ -284,11 +284,11 @@ class Friendly:
             verbosity = 1
         old_level = self.get_verbosity()
         self.set_verbosity(verbosity)
-        self.show_again()
+        self._show_again()
         self.set_verbosity(old_level)
         print()
 
-    def tb(self):
+    def traceback(self):
         """Shows the traceback"""
         self.explain(0)
 

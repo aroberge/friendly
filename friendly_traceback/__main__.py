@@ -101,9 +101,9 @@ parser.add_argument(
 parser.add_argument(
     "--format",
     "--formatter",
-    default="pre",
     help="""Specifies an output format (pre, markown, markdown_docs, or rich) or
-    a custom formatter function, as a dotted path.
+    a custom formatter function, as a dotted path. By default, the console
+    will use Rich if it is available.
 
     For example: --formatter friendly_traceback.formatters.markdown is
     equivalent to --formatter markdown
@@ -146,8 +146,6 @@ def main():
     public_api.install(lang=args.lang, verbosity=verbosity)
 
     use_rich = False
-    theme = "dark"
-
     if args.format:
         format = args.format
         if format in ["pre", "markdown"]:
@@ -156,12 +154,15 @@ def main():
             if not friendly_rich.rich_available:
                 print(_("\n    Rich is not installed.\n\n"))
             else:
-                if args.theme == "light":
-                    theme = "light"
-                session.set_formatter("rich", theme=theme)
                 use_rich = True
         else:
             public_api.set_formatter(public_api.import_function(args.format))
+    elif friendly_rich.rich_available:
+        use_rich = True
+
+    theme = "dark"
+    if use_rich and args.theme == "light":
+        theme = "light"
 
     if args.source is not None:
         public_api.exclude_file_from_traceback(runpy.__file__)
@@ -171,6 +172,8 @@ def main():
                 console_defaults.update(module_dict)
             except Exception:
                 public_api.explain()
+            if use_rich:
+                session.set_formatter("rich", theme=theme)
             console.start_console(
                 local_vars=console_defaults, use_rich=use_rich, theme=theme
             )
@@ -178,8 +181,8 @@ def main():
             sys.argv = [args.source, *args.args]
             runpy.run_path(args.source, run_name="__main__")
     else:
-        if args.theme == "light":
-            theme = "light"
+        if use_rich:
+            session.set_formatter("rich", theme=theme)
         console.start_console(
             local_vars=console_defaults, use_rich=use_rich, theme=theme
         )

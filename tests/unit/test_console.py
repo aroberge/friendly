@@ -2,7 +2,16 @@ import subprocess
 
 sessions = [
     (
-        ["python", "-im", "friendly_traceback", "tests/except/test_name_error.py", "--verbosity", " 1"],
+        [
+            "python",
+            "-im",
+            "friendly_traceback",
+            "tests/except/test_name_error.py",
+            "--verbosity",
+            " 1",
+            "--format",
+            "pre",
+        ],
         "a = 41 \na+=1\nprint(a)\nd=f\n",
         ["42", "NameError", "-->6:         this = something"],
         ["-->1: d=f", "NameError"],

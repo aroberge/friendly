@@ -273,7 +273,7 @@ def start_console(
     console_defaults = {
         "friendly": friendly,
         "explain": friendly.explain,
-        "tb": friendly.tb,
+        "traceback": friendly.traceback,
         "what": friendly.what,
         "where": friendly.where,
         "why": friendly.why,
