@@ -60,23 +60,23 @@ def look_for_mismatched_brackets(
     brackets = []
     for token in source_tokens:
         if (
-            token.start_line == max_linenumber
+            token.start_row == max_linenumber
             and token.start_col > offset
-            or token.start_line > max_linenumber
+            or token.start_row > max_linenumber
         ):
             return
 
         if token.string not in "()[]}{":
             continue
         if token.string in "([{":
-            brackets.append((token.string, token.start_line, token.start_col))
+            brackets.append((token.string, token.start_row, token.start_col))
         elif token.string in ")]}":
             # In some of the cases below, we include the offending lines at the
             # bottom of the error message as they might not be shown in the
             # partial source included in the traceback.
             if not brackets:
                 bracket = name_bracket(token.string)
-                _lineno = token.start_line
+                _lineno = token.start_row
                 _source = f"\n    {_lineno}: {source_lines[_lineno-1]}\n"
                 shift = len(str(_lineno)) + token.start_col + 6
                 _source += " " * shift + "^\n"
@@ -84,7 +84,7 @@ def look_for_mismatched_brackets(
                     _(
                         "The closing {bracket} on line {linenumber}"
                         " does not match anything.\n"
-                    ).format(bracket=bracket, linenumber=token.start_line)
+                    ).format(bracket=bracket, linenumber=token.start_row)
                     + _source
                 )
             else:
@@ -94,13 +94,13 @@ def look_for_mismatched_brackets(
                     open_bracket = name_bracket(open_bracket)
                     _source = f"\n    {open_lineno}: {source_lines[open_lineno-1]}\n"
                     shift = len(str(open_lineno)) + open_col + 6
-                    if open_lineno == token.start_line:
+                    if open_lineno == token.start_row:
                         _source += " " * shift + "^"
                         shift = token.start_col - open_col - 1
                         _source += " " * shift + "^\n"
                     else:
                         _source += " " * shift + "^\n"
-                        _lineno = token.start_line
+                        _lineno = token.start_row
                         _source += f"    {_lineno}: {source_lines[_lineno-1]}\n"
                         shift = len(str(_lineno)) + token.start_col + 6
                         _source += " " * shift + "^\n"
@@ -110,7 +110,7 @@ def look_for_mismatched_brackets(
                             "the opening {open_bracket} on line {open_lineno}.\n"
                         ).format(
                             bracket=bracket,
-                            close_lineno=token.start_line,
+                            close_lineno=token.start_row,
                             open_bracket=open_bracket,
                             open_lineno=open_lineno,
                         )
@@ -160,13 +160,13 @@ def look_for_missing_bracket(
         will_be_previous = token.string
 
         if (
-            token.start_line == max_linenumber
+            token.start_row == max_linenumber
             and token.start_col >= offset
-            or token.start_line > max_linenumber
+            or token.start_row > max_linenumber
         ):
             # We are beyond the location flagged by Python;
             if previous_token_string == "=" and brackets:
-                _open_bracket, _start_line, _start_col = brackets.pop()
+                _open_bracket, _start_row, _start_col = brackets.pop()
                 if _open_bracket == "{":
                     return _(
                         "It is possible that "
@@ -175,7 +175,7 @@ def look_for_missing_bracket(
                         "before or at the position indicated by --> and ^.\n"
                     )
                 else:
-                    brackets.append((_open_bracket, _start_line, _start_col))
+                    brackets.append((_open_bracket, _start_row, _start_col))
             # Perhaps we are simply missing a comma between items.
             # If so, we should be able to find a closing bracket.
             if token.string in "([{":
@@ -195,7 +195,7 @@ def look_for_missing_bracket(
         if token.string not in "()[]}{":
             continue
         if token.string in "([{":
-            brackets.append((token.string, token.start_line, token.start_col))
+            brackets.append((token.string, token.start_row, token.start_col))
         elif token.string in ")]}":
             # In some of the cases below, we include the offending lines at the
             # bottom of the error message as they might not be shown in the

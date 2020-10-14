@@ -23,8 +23,8 @@ class Token:
     def __init__(self, token):
         self.type = token[0]
         self.string = token[1]
-        self.start = self.start_line, self.start_col = token[2]
-        self.end = self.end_line, self.end_col = token[3]
+        self.start = self.start_row, self.start_col = token[2]
+        self.end = self.end_row, self.end_col = token[3]
         self.line = token[4]
         if self.line and self.line[-1] == "\n":
             self.line = self.line[:-1]
