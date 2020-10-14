@@ -61,7 +61,9 @@ def test_type_error2():
     result = friendly_traceback.get_output()
     assert "TypeError: unsupported operand type(s) for +:" in result
     if friendly_traceback.get_lang() == "en":
-        assert "an integer (`int`) and a variable equal to `None` (`NoneType`)" in result
+        assert (
+            "an integer (`int`) and a variable equal to `None` (`NoneType`)" in result
+        )
     return result, message
 
 
@@ -481,6 +483,21 @@ def test_type_error16():
     if friendly_traceback.get_lang() == "en":
         assert "In Python 3, exceptions must be derived from BaseException." in result
     return result, message
+
+
+def test_type_error17():
+    try:
+        "a" * "2"
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "TypeError: can't multiply sequence by non-int of type 'str'" in result
+    if friendly_traceback.get_lang() == "en":
+        assert (
+            "Perhaps you forgot to convert a string into an integer using `int()`."
+            in result
+        )
 
 
 if __name__ == "__main__":

@@ -320,3 +320,12 @@ def x_is_not_callable(message, *args):
         )
     else:
         return
+
+
+@add_message_parser
+def cannot_multiply_by_str(message, *args):
+    _ = current_lang.translate
+    if "can't multiply sequence by non-int of type 'str'" not in message:
+        return
+
+    return _("Perhaps you forgot to convert a string into an integer using `int()`.")
