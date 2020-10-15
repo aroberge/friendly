@@ -15,4 +15,4 @@ def test_module_not_found_error():
 
 
 if __name__ == "__main__":
-    print(test_module_not_found_error())
+    print(test_module_not_found_error()[0])

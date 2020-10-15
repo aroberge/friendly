@@ -15,4 +15,4 @@ def test_import_error():
 
 
 if __name__ == "__main__":
-    print(test_import_error())
+    print(test_import_error()[0])

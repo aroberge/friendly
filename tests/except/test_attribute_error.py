@@ -67,4 +67,4 @@ def test_nonetype():
 
 
 if __name__ == "__main__":
-    print(test_attribute_error())
+    print(test_attribute_error()[0])

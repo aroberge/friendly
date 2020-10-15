@@ -501,4 +501,4 @@ def test_type_error17():
 
 
 if __name__ == "__main__":
-    print(test_type_error1a())
+    print(test_type_error1a()[0])

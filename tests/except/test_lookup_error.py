@@ -19,4 +19,4 @@ def test_lookup_error():
 
 
 if __name__ == "__main__":
-    print(test_lookup_error())
+    print(test_lookup_error()[0])

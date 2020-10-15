@@ -30,4 +30,4 @@ def test_unbound_local_error():
 
 
 if __name__ == "__main__":
-    print(test_unbound_local_error())
+    print(test_unbound_local_error()[0])

@@ -28,5 +28,5 @@ def test_index_error2():
 
 
 if __name__ == "__main__":
-    print(test_index_error1())
-    print(test_index_error2())
+    print(test_index_error1()[0])
+    print(test_index_error2()[0])

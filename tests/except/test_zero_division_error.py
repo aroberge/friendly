@@ -29,6 +29,6 @@ def test_zero_division_error2():
 
 
 if __name__ == "__main__":
-    print(test_zero_division_error())
+    print(test_zero_division_error()[0])
     print("-" * 60)
-    print(test_zero_division_error2())
+    print(test_zero_division_error2()[0])

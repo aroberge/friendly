@@ -18,4 +18,4 @@ def test_file_not_found_error():
 
 
 if __name__ == "__main__":
-    print(test_file_not_found_error())
+    print(test_file_not_found_error()[0])

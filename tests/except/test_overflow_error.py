@@ -18,4 +18,4 @@ def test_overflow_error():
 
 
 if __name__ == "__main__":
-    print(test_overflow_error())
+    print(test_overflow_error()[0])

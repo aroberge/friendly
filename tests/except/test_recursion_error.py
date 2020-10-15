@@ -17,4 +17,4 @@ def test_function_recursion_error():
 
 
 if __name__ == "__main__":
-    print(test_function_recursion_error())
+    print(test_function_recursion_error()[0])

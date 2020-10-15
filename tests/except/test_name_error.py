@@ -53,4 +53,4 @@ def test_name_error4():
     return result, message
 
 if __name__ == "__main__":
-    print(test_name_error())
+    print(test_name_error()[0])

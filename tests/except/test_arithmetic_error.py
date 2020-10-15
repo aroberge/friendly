@@ -18,4 +18,4 @@ def test_arithmetic_error():
 
 
 if __name__ == "__main__":
-    print(test_arithmetic_error())
+    print(test_arithmetic_error()[0])

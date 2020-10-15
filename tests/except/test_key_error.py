@@ -16,4 +16,4 @@ def test_key_error():
 
 
 if __name__ == "__main__":
-    print(test_key_error())
+    print(test_key_error()[0])
