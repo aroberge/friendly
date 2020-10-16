@@ -15,17 +15,19 @@ def get_variables_in_frame_by_scope(frame, scope):
     """Returns a list of variables based on the provided scope, which must
     be one of 'local', 'global', or 'nonlocal'.
     """
-    if scope not in ["local", "global", "nonlocal"]:
+    if scope not in ["local", "global", "nonlocal", "declared nonlocal"]:
         raise FriendlyException(
             "Internal error: unknown scope '{scope}' "
             + "in get_variable_in_frame_by_scope()."
         )
 
-    locals_ = frame.f_locals
+    if scope == "declared nonlocal":
+        return list(frame.f_code.co_freevars)
+    elif scope == "local":
+        return frame.f_locals
+
     globals_ = frame.f_globals
-    if scope == "local":
-        return locals_
-    elif scope == "global":
+    if scope == "global":
         return globals_
     else:
         nonlocals_ = {}

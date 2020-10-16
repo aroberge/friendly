@@ -3,6 +3,7 @@ import inspect
 import friendly_traceback as friendly
 
 global_a = 1
+global_b = 2
 global_annotated : "this"
 
 
@@ -17,18 +18,45 @@ def no_pytest_get_variables_in_frame_by_scope():
     b = 2
     def outer():
         c = 3
+        d = 4
         def inner():
+            global global_a
+            global global_b
             nonlocal current_frame
-            d = 4
+            nonlocal c
+            e = 5
+            global_b += 1
             current_frame = inspect.currentframe()
         inner()
 
     outer()
 
-    assert "d" in get(current_frame, "local")
-    assert "c" in get(current_frame, "nonlocal")
-    assert "b" in get(current_frame, "nonlocal")
+    # declaring a variable global and changing (or not) its value
+    # does not make it a local variable
     assert "global_a" in get(current_frame, "global")
+    assert "global_a" not in get(current_frame, "local")
+    assert "global_b" not in get(current_frame, "local")
+
+    # nonlocal variable two frames removed is the same as one frame removed
+    # b: two frames removed
+    assert "b" in get(current_frame, "nonlocal")
+    assert "b" not in get(current_frame, "local")
+    assert "b" not in get(current_frame, "declared nonlocal")
+    assert "b" not in get(current_frame, "global")
+    # d: one frame removed
+    assert "d" in get(current_frame, "nonlocal")
+    assert "d" not in get(current_frame, "local")
+    assert "d" not in get(current_frame, "declared nonlocal")
+    assert "d" not in get(current_frame, "global")
+
+    # declaring a variable nonlocal makes it also a local variable
+    assert "c" in get(current_frame, "local")
+    assert "c" in get(current_frame, "nonlocal")
+    assert "c" in get(current_frame, "declared nonlocal")
+    assert "c" not in get(current_frame, "global")
+
+    assert "e" in get(current_frame, "local")
+
     print("no_pytest_get_variables_in_frame_by_scope: ok")
 
 
