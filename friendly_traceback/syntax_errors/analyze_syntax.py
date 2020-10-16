@@ -53,10 +53,10 @@ def process_parsing_error(etype, value, info):
         filepath, linenumber, offset
     )
     if "-->" in partial_source:
-        info["parsing_error"] = _(
+        info["generic"] += _(
             "Python could not understand the code in the file\n"
             "'{filename}'\n"
-            "beyond the location indicated below by --> and ^.\n"
+            "beyond the location indicated by --> and ^.\n"
         ).format(filename=utils.shorten_path(filepath))
     elif "unexpected EOF while parsing" in repr(value):
         info["parsing_error"] = _(
