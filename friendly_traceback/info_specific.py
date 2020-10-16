@@ -41,7 +41,7 @@ def register(error_name):
 
 
 @register("AttributeError")
-def attribute_error(value, info, frame):
+def _attribute_error(value, info, frame):
     from .runtime_errors import attribute_error
 
     return attribute_error.get_cause(value, info, frame)
@@ -157,28 +157,10 @@ def _type_error(value, info, frame):
 
 
 @register("UnboundLocalError")
-def unbound_local_error(value, info, frame):
-    _ = current_lang.translate
-    # str(value) is expected to be something like
-    #
-    # UnboundLocalError: local variable 'a' referenced before assignment
-    #
-    # By splitting value using ', we can extract the variable name.
-    cause = _(
-        "The variable that appears to cause the problem is `{var_name}`.\n"
-        "Perhaps the statement\n\n"
-        "    global {var_name}\n\n"
-        "should have been included as the first line inside your function.\n"
-    ).format(var_name=str(value).split("'")[1])
-    _parts = info["message"].split("'")
-    try:
-        unknown_name = _parts[1]
-        hint = info_variables.name_has_type_hint(unknown_name, frame)
-        similar_names = info_variables.get_similar_var_names(unknown_name, frame)
-        cause += hint + similar_names
-    except IndexError:
-        print("WARNING: IndexError caught while processing UnboundLocalError")
-    return cause
+def _unbound_local_error(value, info, frame):
+    from .runtime_errors import unbound_local_error
+
+    return unbound_local_error.get_cause(value, info, frame)
 
 
 @register("ZeroDivisionError")
