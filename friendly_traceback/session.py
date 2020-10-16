@@ -2,6 +2,7 @@
 
 Keeps tabs of all settings.
 """
+import os.path
 import sys
 
 from .my_gettext import current_lang
@@ -20,6 +21,11 @@ def _write_err(text):
         session.console.print(md)
     else:
         sys.stderr.write(text)
+
+    if session._debug:
+        log_file = os.path.join(os.path.expanduser("~"), "friendly.log")
+        with open(log_file, "a", encoding="utf8") as out:
+            out.write(text + "\n" + "=" * 70 + "\n\n")
 
 
 class _State:

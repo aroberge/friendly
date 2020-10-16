@@ -9,6 +9,7 @@ command line. You can find more details by doing::
 
 """
 import argparse
+import os.path
 import platform
 import runpy
 import sys
@@ -133,6 +134,9 @@ def main():
 
     if args.debug:
         session._debug = True
+        log_file = os.path.join(os.path.expanduser("~"), "friendly.log")
+        with open(log_file, "w", encoding="utf8") as out:
+            out.write("Friendly log\n\n")
 
     if args.verbosity:
         verbosity = args.verbosity
