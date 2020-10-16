@@ -8,11 +8,39 @@ import tokenize
 
 from . import utils
 from .my_gettext import current_lang
+from .friendly_exception import FriendlyException
+
+
+def get_variables_in_frame_by_scope(frame, scope):
+    """Returns a list of variables based on the provided scope, which must
+    be one of 'local', 'global', or 'nonlocal'.
+    """
+    if scope not in ["local", "global", "nonlocal"]:
+        raise FriendlyException(
+            "Internal error: unknown scope '{scope}' "
+            + "in get_variable_in_frame_by_scope()."
+        )
+
+    locals_ = frame.f_locals
+    globals_ = frame.f_globals
+    if scope == "local":
+        return locals_
+    elif scope == "global":
+        return globals_
+    else:
+        nonlocals_ = {}
+        while frame.f_back is not None:
+            frame = frame.f_back
+            for key in frame.f_locals:
+                if key in globals_ or key in nonlocals_:
+                    continue
+                nonlocals_[key] = frame.f_locals[key]
+        return nonlocals_
 
 
 def get_var_info(line, frame):
     """Given a line of code and a frame object, it obtains the
-       value (repr) of the names found in either the local or global scope.
+    value (repr) of the names found in either the local or global scope.
     """
     tokens = utils.tokenize_source(line)
     loc = frame.f_locals
@@ -42,17 +70,17 @@ def get_var_info(line, frame):
 
 def format_var_info(tok, _dict, _global="", _builtins=""):
     """Formats the variable information so that it fits on a single line
-       for each variable.
+    for each variable.
 
-       The format we want is something like the following:
+    The format we want is something like the following:
 
-       [global] name: repr(name)
+    [global] name: repr(name)
 
-       However, if repr(name) exceeds a certain value, it is truncated.
-       When that is the case, if len(name) is defined, as is the case for
-       lists, tuples, dicts, etc., then len(name) is shown on a separate line.
-       This can be useful information in case of IndexError and possibly
-       others.
+    However, if repr(name) exceeds a certain value, it is truncated.
+    When that is the case, if len(name) is defined, as is the case for
+    lists, tuples, dicts, etc., then len(name) is shown on a separate line.
+    This can be useful information in case of IndexError and possibly
+    others.
     """
     _ = current_lang.translate
     MAX_LENGTH = 65
@@ -102,8 +130,8 @@ def format_var_info(tok, _dict, _global="", _builtins=""):
 
 def get_similar_var_names(name, frame):
     """This function looks for object with names similar to 'name' in
-       either the current locals() and globals() as well as in
-       Python's builtins.
+    either the current locals() and globals() as well as in
+    Python's builtins.
     """
     _ = current_lang.translate
     similar = {}
@@ -168,17 +196,17 @@ def get_similar_var_names(name, frame):
 def name_has_type_hint(name, frame):
     """Identifies if a variable name has a type hint associated with it.
 
-        This can be useful if a user write something like::
+    This can be useful if a user write something like::
 
-            name : something
-            use(name)
+        name : something
+        use(name)
 
-        instead of::
+    instead of::
 
-            name = something
-            use(name)
+        name = something
+        use(name)
 
-        and sees a NameError.
+    and sees a NameError.
     """
 
     _ = current_lang.translate
