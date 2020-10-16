@@ -6,6 +6,17 @@ You should not need to use any of the functions defined here;
 they are considered to be internal functions, subject to change at any
 time. If functions defined in public_api.py do not meet your needs,
 please file an issue.
+
+IMPORTANT: All the traceback information is collected in a dict called 'info'
+which is passed around as an argument to many functions where its content
+can be changed. Admittedly, this is going against the "best practices"
+from modern functional programming where only immutable objects are
+passed to functions which do not produce side effects.
+
+I have found that passing this 'info' object around was an easier way
+to figure out when a change is made as one can simply do a string search
+and locate a particular message, instead of attempting to follow
+function call after function call.
 """
 import inspect
 from itertools import dropwhile
@@ -81,9 +92,9 @@ def get_traceback_info(etype, value, tb, debug=False):
         return
 
     # Note: the numbered comments refer to the example above
-    info = {"header": _("Python exception:")}  # [1a]
+    info = {"header": _("Python exception:")}  # [1]
     info["message"] = get_message(etype.__name__, value)  # [1a]
-    info["generic"] = get_generic_explanation(etype.__name__, etype, value)  # 2
+    info["generic"] = get_generic_explanation(etype.__name__, etype, value)  # [2]
 
     # Unlike what we just did, in many function calls below,
     # we pass the dict info as an argument and add to its content.
@@ -117,7 +128,8 @@ def get_traceback_info(etype, value, tb, debug=False):
     try:
         info_specific.get_likely_cause(etype, value, info, frame)  # [3]
     except Exception as exc:
-        print("WARNING: error caught in get_likely_cause()")
+        print("WARNING: Internal error caught in get_likely_cause().")
+        print("Suggestion for developers: run again with --debug option.")
         if debug:
             print("\n   DEBUG INFORMATION:", exc, "\n")
 
@@ -138,7 +150,8 @@ def process_syntax_error(etype, value, info, debug):
     try:
         analyze_syntax.set_cause_syntax(etype, value, info)  # [3]
     except Exception as exc:
-        print("WARNING: error caught in process_syntax_error()")
+        print("WARNING: Internal error caught in process_syntax_error()")
+        print("Suggestion for developers: run again with --debug option.")
         if debug:
             print("\n   DEBUG INFORMATION:", exc, "\n")
     return info
