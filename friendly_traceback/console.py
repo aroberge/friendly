@@ -281,6 +281,7 @@ def start_console(
         "set_lang": friendly.set_lang,
         "get_verbosity": friendly.get_verbosity,
         "set_verbosity": friendly.set_verbosity,
+        "suggest": friendly.suggest,
     }
     if not public_api.is_installed():
         public_api.install(verbosity=verbosity, lang=lang)

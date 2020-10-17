@@ -7,7 +7,7 @@ global_b = 2
 global_annotated : "this"
 
 
-def no_pytest_get_variables_in_frame_by_scope():
+def test_get_variables_in_frame_by_scope():
     # We cannot use pytest for this test as it messes with the frames
     # and generates a RuntimeError.
 
@@ -56,8 +56,5 @@ def no_pytest_get_variables_in_frame_by_scope():
 
     assert "e" in get(current_frame, "local")
 
-    print("no_pytest_get_variables_in_frame_by_scope: ok")
-
-
 if __name__ == '__main__':
-    no_pytest_get_variables_in_frame_by_scope()
+    test_get_variables_in_frame_by_scope()

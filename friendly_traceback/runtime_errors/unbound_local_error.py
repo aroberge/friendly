@@ -30,9 +30,9 @@ def get_cause(value, info, frame):
             "should have been included as the first line inside your function.\n"
         ).format(var_name=unknown_name)
 
-        info["shortened_traceback"] += _(
-            "Did you forget to add `global {var_name}`?\n"
-        ).format(var_name=unknown_name)
+        info["suggest"] = _("Did you forget to add `global {var_name}`?\n").format(
+            var_name=unknown_name
+        )
 
     hint = info_variables.name_has_type_hint(unknown_name, frame)
     similar_names = info_variables.get_similar_var_names(unknown_name, frame)

@@ -35,7 +35,7 @@ def get_variables_in_frame_by_scope(frame, scope):
         nonlocals_ = {}
         while frame.f_back is not None:
             frame = frame.f_back
-            for key in frame.f_locals:
+            for key in list(frame.f_locals):
                 if key in globals_ or key in nonlocals_:
                     continue
                 nonlocals_[key] = frame.f_locals[key]
