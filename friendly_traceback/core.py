@@ -21,6 +21,7 @@ function call after function call.
 import inspect
 from itertools import dropwhile
 import os
+import re
 import traceback
 
 from . import info_generic
@@ -181,7 +182,7 @@ def format_python_tracebacks(records, etype, value, python_tb, info):
     2. A "simulated" Python traceback, which is essentially the same as
        the one given by Python, except that it excludes modules from this
        project.  In addition, for RecursionError, this traceback is often
-       shortened, compared with a normal Python traceback.
+       further shortened, compared with a normal Python traceback.
     3. A potentially shortened traceback, which does not include too much
        output so as not to overwhelm beginners. It also include information
        about the code on any line mentioned.
@@ -196,6 +197,15 @@ def format_python_tracebacks(records, etype, value, python_tb, info):
         shortened_tb = tb[0:2] + suppressed + tb[-5:]
     else:
         shortened_tb = tb[:]
+
+    pattern = re.compile(r'File "(.*)", ')
+    temp = []
+    for line in shortened_tb:
+        match = re.search(pattern, line)
+        if match:
+            line = line.replace(match.group(1), utils.shorten_path(match.group(1)))
+        temp.append(line)
+    shortened_tb = temp
 
     header = "Traceback (most recent call last):"  # not included in records
     if python_tb[0].startswith(header):
