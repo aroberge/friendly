@@ -224,7 +224,7 @@ def _traceback_before_default():
     """
     items = _default()
     # The traceback ends with the message; so we replace the message by the tb.
-    items[1] = "simulated_python_traceback"
+    items[1] = "shortened_traceback"
     return items
 
 
@@ -233,7 +233,7 @@ def _traceback_after_default():
     processed by Friendly-traceback.
     """
     items = _default()
-    items.append("simulated_python_traceback")
+    items.append("shortened_traceback")
     return items
 
 
@@ -253,7 +253,7 @@ def _traceback_before_no_generic():
     """Includes the simulated Python traceback before all the information
     processed by Friendly-traceback.
     """
-    items = ["simulated_python_traceback"]
+    items = ["shortened_traceback"]
     items.extend(_no_generic_explanation())
     return items
 
@@ -263,7 +263,7 @@ def _traceback_after_no_generic():
     processed by Friendly-traceback.
     """
     items = _no_generic_explanation()
-    items.append("simulated_python_traceback")
+    items.append("shortened_traceback")
     return items
 
 
@@ -271,6 +271,7 @@ def _advanced_user():  # Not (yet) included by Thonny
     """Useful information for advanced users."""
     return [
         "simulated_python_traceback",
+        "suggest",
         "parsing_error_source",
         "cause",
         "last_call_header",
