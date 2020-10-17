@@ -22,6 +22,8 @@ def get_cause(value, info, frame):
 
     scopes = info_variables.get_definition_scope(unknown_name, frame)
 
+    cause = ""
+
     if "global" in scopes:
         cause = _(
             "The variable that appears to cause the problem is `{var_name}`.\n"
@@ -31,6 +33,18 @@ def get_cause(value, info, frame):
         ).format(var_name=unknown_name)
 
         info["suggest"] = _("Did you forget to add `global {var_name}`?\n").format(
+            var_name=unknown_name
+        )
+
+    elif "nonlocal" in scopes:
+        cause = _(
+            "The variable that appears to cause the problem is `{var_name}`.\n"
+            "Perhaps the statement\n\n"
+            "    nonlocal {var_name}\n\n"
+            "should have been included as the first line inside your function.\n"
+        ).format(var_name=unknown_name)
+
+        info["suggest"] = _("Did you forget to add `nonlocal {var_name}`?\n").format(
             var_name=unknown_name
         )
 
