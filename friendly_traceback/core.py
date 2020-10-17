@@ -129,10 +129,10 @@ def get_traceback_info(etype, value, tb, debug=False):
         info_specific.get_likely_cause(etype, value, info, frame)  # [3]
     except Exception as exc:
         print("WARNING: Internal error caught in get_likely_cause().")
-        print("Suggestion for developers: run again with --debug option.")
         if debug:
             print("\n   DEBUG INFORMATION:", exc, "\n")
-
+        else:
+            print("Suggestion for developers: run again with --debug option.")
     return info
 
 
@@ -151,9 +151,10 @@ def process_syntax_error(etype, value, info, debug):
         analyze_syntax.set_cause_syntax(etype, value, info)  # [3]
     except Exception as exc:
         print("WARNING: Internal error caught in process_syntax_error()")
-        print("Suggestion for developers: run again with --debug option.")
         if debug:
             print("\n   DEBUG INFORMATION:", exc, "\n")
+        else:
+            print("Suggestion for developers: run again with --debug option.")
     return info
 
 
