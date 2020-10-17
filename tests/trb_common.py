@@ -25,6 +25,7 @@ def make_title(text, format="pre"):
         print("Unsupported format: ", format)
         sys.exit()
 
+
 # The format of each item of the dict below is:
 # ExceptionClass - optional heading:  (file, test_function)
 #
@@ -36,7 +37,10 @@ def make_title(text, format="pre"):
 
 all_imports = {
     "ArithmeticError": ("test_arithmetic_error", "test_arithmetic_error"),
-    "AttributeError - class attribute": ("test_attribute_error", "test_attribute_error"),
+    "AttributeError - class attribute": (
+        "test_attribute_error",
+        "test_attribute_error",
+    ),
     "AttributeError - typo in module attribute": (
         "test_attribute_error",
         "test_misspelled_module_attribute",
@@ -189,7 +193,14 @@ all_imports = {
         "test_type_error",
         "test_type_error16",
     ),
-    "UnboundLocalError": ("test_unbound_local_error", "test_unbound_local_error"),
+    "UnboundLocalError - 1: missing global": (
+        "test_unbound_local_error",
+        "test_unbound_local_error_missing_global",
+    ),
+    "UnboundLocalError - 2: missing nonlocal": (
+        "test_unbound_local_error",
+        "test_unbound_local_error_missing_nonlocal",
+    ),
     "Unknown exception": ("test_unknown_error", "test_function_unknown_error"),
     "ZeroDivisionError - 1": ("test_zero_division_error", "test_zero_division_error"),
     "ZeroDivisionError - 2": ("test_zero_division_error", "test_zero_division_error2"),
@@ -199,6 +210,7 @@ cur_dir = os.getcwd()
 sys.path.append(os.path.join(cur_dir, "runtime"))
 
 save_messages = {}
+
 
 def create_tracebacks(target, intro_text, format="pre", messages=None):
     with open(target, "w", encoding="utf8") as out:
@@ -224,5 +236,6 @@ def create_tracebacks(target, intro_text, format="pre", messages=None):
             for key in save_messages:
                 out.write(f"    {repr(key)}: {repr(save_messages[key])},\n")
             out.write("}\n")
+
 
 print("Number of cases in trb_common.py: ", len(all_imports))
