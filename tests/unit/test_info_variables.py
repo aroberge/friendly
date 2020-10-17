@@ -7,7 +7,6 @@ global_b = 2
 global_annotated : "this"
 
 
-
 def no_pytest_get_variables_in_frame_by_scope():
     # We cannot use pytest for this test as it messes with the frames
     # and generates a RuntimeError.

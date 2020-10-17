@@ -40,6 +40,18 @@ def get_variables_in_frame_by_scope(frame, scope):
         return nonlocals_
 
 
+def get_definition_scope(variable_name, frame):
+    """Returns a list of scopes ('local', 'global', 'nonlocal',
+    'declared nonlocal') in which a variable is defined.
+    """
+    scopes = []
+    for scope in ["local", "global", "nonlocal", "declared nonlocal"]:
+        in_scope = get_variables_in_frame_by_scope(frame, scope)
+        if variable_name is in_scope:
+            scopes.append(scope)
+    return scope
+
+
 def get_var_info(line, frame):
     """Given a line of code and a frame object, it obtains the
     value (repr) of the names found in either the local or global scope.

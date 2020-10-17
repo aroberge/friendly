@@ -6,7 +6,7 @@ sessions = [
             "python",
             "-im",
             "friendly_traceback",
-            "tests/except/test_name_error.py",
+            "tests/runtime/test_name_error.py",
             "--verbosity",
             " 1",
             "--format",

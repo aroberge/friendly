@@ -196,7 +196,7 @@ all_imports = {
 }
 
 cur_dir = os.getcwd()
-sys.path.append(os.path.join(cur_dir, "except"))
+sys.path.append(os.path.join(cur_dir, "runtime"))
 
 save_messages = {}
 

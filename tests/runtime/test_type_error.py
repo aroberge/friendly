@@ -425,7 +425,7 @@ def test_type_error13a():
     assert "f() takes 1 positional argument but 2 were given" in result
     if friendly_traceback.get_lang() == "en":
         assert "2 positional argument(s) while it requires 1" in result
-        assert "Perhaps you forgot `self`" in result
+        # assert "Perhaps you forgot `self`" in result
     return result, message
 
 
