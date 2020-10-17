@@ -14,6 +14,8 @@ from .friendly_exception import FriendlyException
 def get_variables_in_frame_by_scope(frame, scope):
     """Returns a list of variables based on the provided scope, which must
     be one of 'local', 'global', or 'nonlocal'.
+
+    Important: this function is incompatible with tests run using pytest.
     """
     if scope not in ["local", "global", "nonlocal", "declared nonlocal"]:
         raise FriendlyException(
@@ -43,19 +45,25 @@ def get_variables_in_frame_by_scope(frame, scope):
 def get_definition_scope(variable_name, frame):
     """Returns a list of scopes ('local', 'global', 'nonlocal',
     'declared nonlocal') in which a variable is defined.
+
+    Important: this function is incompatible with tests run using pytest.
     """
     scopes = []
     for scope in ["local", "global", "nonlocal", "declared nonlocal"]:
         in_scope = get_variables_in_frame_by_scope(frame, scope)
-        if variable_name is in_scope:
+        if variable_name in in_scope:
             scopes.append(scope)
-    return scope
+    return scopes
 
 
 def get_var_info(line, frame):
     """Given a line of code and a frame object, it obtains the
     value (repr) of the names found in either the local or global scope.
+
+    We ignore values found only in nonlocal scope as they should be irrelevant
     """
+    # This will not look in nonlocal scope using the above functions and
+    # should thus be safe to include in any tests run with pytest.
     tokens = utils.tokenize_source(line)
     loc = frame.f_locals
     glob = frame.f_globals
@@ -148,10 +156,14 @@ def get_similar_var_names(name, frame):
     Python's builtins.
     """
     _ = current_lang.translate
+
     similar = {}
-    similar["locals"] = utils.edit_distance(name, frame.f_locals)
-    _globals = utils.edit_distance(name, frame.f_globals)
-    similar["globals"] = [var for var in _globals if var not in similar["locals"]]
+    locals_ = get_variables_in_frame_by_scope(frame, "local")
+    similar["locals"] = utils.edit_distance(name, locals_)
+
+    globals_ = get_variables_in_frame_by_scope(frame, "global")
+    similar["globals"] = utils.edit_distance(name, globals_)
+
     similar["builtins"] = utils.edit_distance(name, dir(builtins))
 
     nb_similar_names = (
@@ -164,21 +176,30 @@ def get_similar_var_names(name, frame):
         if similar["locals"]:
             return (
                 _("The similar name `{name}` was found in the local scope. ").format(
-                    name=str(similar["locals"][0]).replace("'", "`")
+                    name=str(similar["locals"][0]).replace("'", "")
                 )
                 + "\n"
             )
         elif similar["globals"]:
-            return (
-                _("The similar name `{name}` was found in the local scope. ").format(
-                    name=str(similar["globals"][0]).replace("'", "`")
+            similar_name = similar["globals"][0]
+            if name != similar_name:
+                return (
+                    _(
+                        "The similar name `{name}` was found in the global scope. "
+                    ).format(name=similar_name.replace("'", ""))
+                    + "\n"
                 )
-                + "\n"
-            )
+            else:
+                return (
+                    _("The name `{name}` was found in the global scope. ").format(
+                        name=name
+                    )
+                    + "\n"
+                )
         else:
             return (
                 _("The Python builtin `{name}` has a similar name. ").format(
-                    name=str(similar["builtins"][0]).replace("'", "`")
+                    name=str(similar["builtins"][0]).replace("'", "")
                 )
                 + "\n"
             )

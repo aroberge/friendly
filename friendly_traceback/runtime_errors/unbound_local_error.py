@@ -21,6 +21,7 @@ def get_cause(value, info, frame):
     unknown_name = match.group(1)
 
     scopes = info_variables.get_definition_scope(unknown_name, frame)
+
     if "global" in scopes:
         cause = _(
             "The variable that appears to cause the problem is `{var_name}`.\n"
@@ -30,7 +31,7 @@ def get_cause(value, info, frame):
         ).format(var_name=unknown_name)
 
         info["shortened_traceback"] += _(
-            "Did you forget to add `global {var_name}`?"
+            "Did you forget to add `global {var_name}`?\n"
         ).format(var_name=unknown_name)
 
     hint = info_variables.name_has_type_hint(unknown_name, frame)
