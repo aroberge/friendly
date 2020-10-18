@@ -5,7 +5,6 @@ def test_attribute_error():
     class A:
         pass
 
-    A()
     try:
         A.x
     except Exception as e:
@@ -14,7 +13,7 @@ def test_attribute_error():
     result = friendly_traceback.get_output()
     assert "AttributeError: type object 'A' has no attribute 'x'" in result
     if friendly_traceback.get_lang() == "en":
-        assert "In your program, the object is `A` and the attribute is `x`." in result
+        assert "for an object of type `A`" in result
     return result, message
 
 
@@ -29,7 +28,7 @@ def test_misspelled_module_attribute():
     result = friendly_traceback.get_output()
     assert "AttributeError: module 'string' has no attribute 'ascii_lowecase'" in result
     if friendly_traceback.get_lang() == "en":
-        assert "Perhaps you meant to write `ascii_lowercase`" in result
+        assert "Did you mean `ascii_lowercase`" in result
     return result, message
 
 
@@ -45,10 +44,10 @@ def test_misspelled_module_attribute_2():
     assert ("AttributeError: module 'math' has no attribute 'cost'") in result
     if friendly_traceback.get_lang() == "en":
         assert (
-            "Instead of writing `cost`, perhaps you meant one of the following:\n"
+            "Instead of writing `math.cost`, perhaps you meant to write one of"
             in result
         )
-    assert "`cos`, `cosh`" in result
+    assert "cos, cosh" in result
     assert not "acosh" in result
     return result, message
 

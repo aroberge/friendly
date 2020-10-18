@@ -7,7 +7,7 @@ def test_lookup_error():
         # It should normally not be raised by user code,
         # other than possibly codecs.lookup(), which is why we raise
         # it directly here for our example.
-        raise LookupError
+        raise LookupError("Fake message")
     except Exception as e:
         message = str(e)
         friendly_traceback.explain(redirect="capture")
