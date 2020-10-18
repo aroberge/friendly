@@ -1,5 +1,7 @@
 import friendly_traceback
 
+# TODO: make sure that all these cases are captured in the documentation
+
 
 def test_attribute_error():
     class A:
@@ -13,7 +15,21 @@ def test_attribute_error():
     result = friendly_traceback.get_output()
     assert "AttributeError: type object 'A' has no attribute 'x'" in result
     if friendly_traceback.get_lang() == "en":
-        assert "for an object of type `A`" in result
+        assert "The object of type `A`" in result
+    return result, message
+
+
+def test_attribute_error2():
+    try:
+        a = [1, 2, 3]
+        a.appendh(4)
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "AttributeError: 'list' object has no attribute 'appendh'" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Did you mean `append`" in result
     return result, message
 
 
