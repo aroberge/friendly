@@ -1,4 +1,10 @@
-modules = [
+"""Names of base modules found in the standard library,
+that do not start with an underscore.
+
+This list is not authoritative but should be good enough.
+"""
+
+names = [
     "abc",
     "aifc",
     "antigravity",

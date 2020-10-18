@@ -10,11 +10,6 @@ def get_cause(value, info, frame):
 
     message = str(value)
 
-    pattern = re.compile(r"No module named '(.*)'")
-    match = re.search(pattern, message)
-    if match:
-        return no_module_named(match.group(1), info, frame)
-
     # Python 3.7+
     pattern2 = re.compile(r"cannot import name '(.*)' from '(.*)'")
     match = re.search(pattern2, message)
@@ -31,13 +26,6 @@ def get_cause(value, info, frame):
         "No information is known about this exception.\n"
         "Please report this example to\n"
         "https://github.com/aroberge/friendly-traceback/issues\n"
-    )
-
-
-def no_module_named(name, info, frame):
-    _ = current_lang.translate
-    return _("The name of the module that could not be imported is `{name}`\n").format(
-        name=name
     )
 
 
