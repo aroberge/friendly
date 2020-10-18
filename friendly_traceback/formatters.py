@@ -4,6 +4,8 @@ Default formatters showing all or only part of the available information.
 """
 from .my_gettext import current_lang
 
+RICH_HEADER = False
+
 default_items_in_order = [  # This list excludes three traceback items
     "header",
     "message",
@@ -155,6 +157,8 @@ def _no_result(info, level):
 
 def _markdown(info, level, rich=False, docs=False):
     """Traceback formatted with with markdown syntax."""
+    global RICH_HEADER
+    RICH_HEADER = False
     result = []
 
     markdown_items = {
@@ -182,6 +186,9 @@ def _markdown(info, level, rich=False, docs=False):
     items_to_show = tb_items_to_show(level=level)
     result = [""]
     for item in items_to_show:
+        if rich and item == "header":  # Skip it here; handled by session.py
+            RICH_HEADER = True
+            continue
         if item in info:
             # With normal markdown formatting, it does not make sense to have a
             # header end with a colon.

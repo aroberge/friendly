@@ -18,6 +18,13 @@ def _write_err(text):
         md = friendly_rich.Markdown(
             text, inline_code_lexer="python", code_theme="brunante"
         )
+        if formatters.RICH_HEADER:
+            info = session.saved_traceback_info
+            if info and "header" in info and info["header"]:
+                title = info["header"].replace(":", "")
+            else:
+                title = "Traceback"
+            md = friendly_rich.Panel(md, title=title)
         session.console.print(md)
     else:
         sys.stderr.write(text)
