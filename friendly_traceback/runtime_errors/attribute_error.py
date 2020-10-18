@@ -1,3 +1,5 @@
+"""Getting specific information for AttributeError"""
+
 import sys
 
 import re
@@ -7,9 +9,6 @@ from ..utils import edit_distance
 
 
 def get_cause(value, info, frame):
-    # str(value) is expected to be something like
-    #
-    # "AttributeError: type object 'A' has no attribute 'x'"
     _ = current_lang.translate
     message = str(value)
 
@@ -60,8 +59,8 @@ def attribute_error_in_module(message, module, attribute, info):
         # transform ['a', 'b', 'c'] in "[`a`, `b`, `c`]"
         candidates = ["{c}".format(c=c.replace("'", "")) for c in similar]
         candidates = ", ".join(candidates)
-        info["suggest"] = _("Did you mean one of the following: `{name}`?\n").format(
-            name=candidates
+        info["suggest"] = _("Did you mean one of the following: `{names}`?\n").format(
+            names=candidates
         )
         return _(
             "Instead of writing `{module}.{typo}`, perhaps you meant to write one of \n"
