@@ -257,7 +257,7 @@ class FriendlyConsole(InteractiveConsole):
 
 
 def start_console(
-    local_vars=None, use_rich=False, verbosity=9, lang="en", banner=None, theme="dark"
+    local_vars=None, use_rich=False, verbosity=7, lang="en", banner=None, theme="dark"
 ):
     """Starts a console; modified from code.interact"""
     from . import session

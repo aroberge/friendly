@@ -164,7 +164,11 @@ def run(
     module_globals = exec_code(path=filename, lang=lang, verbosity=verbosity)
     if console:
         start_console(
-            local_vars=module_globals, use_rich=use_rich, banner="", theme=theme
+            local_vars=module_globals,
+            use_rich=use_rich,
+            banner="",
+            theme=theme,
+            verbosity=verbosity,
         )
     else:
         return module_globals
