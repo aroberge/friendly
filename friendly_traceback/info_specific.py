@@ -137,7 +137,7 @@ def name_error(value, info, frame):
     try:
         unknown_name = _parts[1]
         hint = info_variables.name_has_type_hint(unknown_name, frame)
-        similar_names = info_variables.get_similar_var_names(unknown_name, frame)
+        similar_names = info_variables.get_similar_names(unknown_name, frame)
         cause += hint + similar_names
     except IndexError:
         print("WARNING: IndexError caught while processing NameError")

@@ -60,7 +60,8 @@ def get_var_info(line, frame):
     """Given a line of code and a frame object, it obtains the
     value (repr) of the names found in either the local or global scope.
 
-    We ignore values found only in nonlocal scope as they should be irrelevant
+    We ignore values found only in nonlocal scope as they should not
+    be relevant.
     """
     # This will not look in nonlocal scope using the above functions and
     # should thus be safe to include in any tests run with pytest.
@@ -150,13 +151,11 @@ def format_var_info(tok, _dict, _global="", _builtins=""):
     return result
 
 
-def get_similar_var_names(name, frame):
-    """This function looks for object with names similar to 'name' in
+def get_similar_names(name, frame):
+    """This function looks for objects with names similar to 'name' in
     either the current locals() and globals() as well as in
     Python's builtins.
     """
-    _ = current_lang.translate
-
     similar = {}
     locals_ = get_variables_in_frame_by_scope(frame, "local")
     similar["locals"] = utils.edit_distance(name, locals_)
@@ -165,6 +164,12 @@ def get_similar_var_names(name, frame):
     similar["globals"] = utils.edit_distance(name, globals_)
 
     similar["builtins"] = utils.edit_distance(name, dir(builtins))
+    return format_similar_names(name, similar)
+
+
+def format_similar_names(name, similar):
+    """This function formats the names that were found to be similar"""
+    _ = current_lang.translate
 
     nb_similar_names = (
         len(similar["locals"]) + len(similar["globals"]) + len(similar["builtins"])
@@ -242,6 +247,9 @@ def name_has_type_hint(name, frame):
         use(name)
 
     and sees a NameError.
+
+    Note that this is a draft implementation that only looks in the
+    local and global scope, and ignore nonlocal scope(s).
     """
 
     _ = current_lang.translate
