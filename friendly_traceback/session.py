@@ -15,6 +15,7 @@ from .friendly_exception import FriendlyException
 def _write_err(text):
     """Default writer"""
     if session.use_rich:
+        session.console.print()
         md = friendly_rich.Markdown(
             text, inline_code_lexer="python", code_theme="brunante"
         )
@@ -26,6 +27,7 @@ def _write_err(text):
                 title = "Traceback"
             md = friendly_rich.Panel(md, title=title)
         session.console.print(md)
+        session.console.print()
     else:
         sys.stderr.write(text)
 
