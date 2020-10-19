@@ -8,14 +8,25 @@ def test_attribute_error():
         pass
 
     try:
-        A.x
+        A.x  # testing type
     except Exception as e:
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
     assert "AttributeError: type object 'A' has no attribute 'x'" in result
     if friendly_traceback.get_lang() == "en":
-        assert "The object of type `A`" in result
+        assert "The object of type `A` has no attribute" in result
+
+    try:
+        a = A()
+        a.x  # Testing instance
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "AttributeError: 'A' object has no attribute 'x'" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "The object `a` has no attribute" in result
     return result, message
 
 
