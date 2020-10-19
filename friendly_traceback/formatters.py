@@ -206,9 +206,10 @@ def _markdown(info, level, rich=False, docs=False):
                     ]:
                         content = content.rstrip(":")
             if item == "message" and rich:
-                # Ensure consistent colour scheme
-                markdown_items["message"] = ("```py2tb\n", "\n```")
-                content = "Traceback message:\n" + content
+                # Ensure that the exception name is highlighted.
+                content = content.split(":")
+                content[0] = "`" + content[0] + "`"
+                content = ":".join(content)
 
             prefix, suffix = markdown_items[item]
             if docs:
@@ -277,6 +278,7 @@ def _traceback_after_no_generic():
 def _advanced_user():  # Not (yet) included by Thonny
     """Useful information for advanced users."""
     return [
+        "header",
         "simulated_python_traceback",
         "suggest",
         "parsing_error_source",
