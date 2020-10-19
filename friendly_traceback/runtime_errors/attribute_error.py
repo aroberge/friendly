@@ -5,7 +5,7 @@ import sys
 import re
 
 from ..my_gettext import current_lang
-from ..utils import edit_distance
+from ..utils import get_similar_words
 
 
 def get_cause(value, info, frame):
@@ -45,7 +45,7 @@ def attribute_error_in_module(message, module, attribute, info):
         mod = sys.modules[module]
     except Exception:
         return False
-    similar = edit_distance(attribute, dir(mod))
+    similar = get_similar_words(attribute, dir(mod))
     if not similar:
         return False
 
@@ -77,7 +77,7 @@ def attribute_error_in_object(message, obj_name, attribute, info, frame):
         attrs = dir(obj)
     except Exception:
         return False
-    similar = edit_distance(attribute, attrs)
+    similar = get_similar_words(attribute, attrs)
     if not similar:
         explain = _(
             "The object of type `{obj}` has no attribute named `{attr}`.\n"

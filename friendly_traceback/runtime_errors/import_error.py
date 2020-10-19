@@ -4,7 +4,7 @@ import re
 import sys
 
 from ..my_gettext import current_lang
-from ..utils import edit_distance
+from ..utils import get_similar_words
 
 
 def get_cause(value, info, frame):
@@ -44,7 +44,7 @@ def cannot_import_name_from(name, module, info, frame):
         mod = sys.modules[module]
     except Exception:
         return cause
-    similar = edit_distance(name, dir(mod))
+    similar = get_similar_words(name, dir(mod))
     if not similar:
         return cause
 

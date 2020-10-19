@@ -3,7 +3,7 @@
 import re
 
 from ..my_gettext import current_lang
-from ..utils import edit_distance
+from ..utils import get_similar_words
 
 from . import stdlib_modules
 
@@ -32,7 +32,7 @@ def get_cause(value, info, frame):
 
 def no_module_named(name, info):
     _ = current_lang.translate
-    similar = edit_distance(name, stdlib_modules.names)
+    similar = get_similar_words(name, stdlib_modules.names)
 
     explain = _(
         "The name of the module that could not be imported is `{name}`.\n"

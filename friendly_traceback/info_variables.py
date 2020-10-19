@@ -158,12 +158,12 @@ def get_similar_names(name, frame):
     """
     similar = {}
     locals_ = get_variables_in_frame_by_scope(frame, "local")
-    similar["locals"] = utils.edit_distance(name, locals_)
+    similar["locals"] = utils.get_similar_words(name, locals_)
 
     globals_ = get_variables_in_frame_by_scope(frame, "global")
-    similar["globals"] = utils.edit_distance(name, globals_)
+    similar["globals"] = utils.get_similar_words(name, globals_)
 
-    similar["builtins"] = utils.edit_distance(name, dir(builtins))
+    similar["builtins"] = utils.get_similar_words(name, dir(builtins))
     return format_similar_names(name, similar)
 
 
