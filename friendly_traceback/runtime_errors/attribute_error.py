@@ -93,6 +93,14 @@ def attribute_error_in_object(obj_name, attribute, info, frame):
     if known_builtin:
         return use_builtin_function(true_name, attribute, known_builtin, info)
 
+    if not obj_of_type:
+        # We have identified the first object; is the attribute a second object
+        try:
+            if eval(attribute, frame.f_globals, frame.f_locals):
+                return missing_comma(true_name, attribute, info)
+        except Exception:
+            pass
+
     if obj_of_type:
         explain = _(
             "The object of type `{obj}` has no attribute named `{attr}`.\n"
@@ -174,3 +182,16 @@ def find_true_object_name(obj, obj_name, attribute, info, frame):
             pass
 
     return obj_name
+
+
+def missing_comma(first, second, info):
+    _ = current_lang.translate
+
+    info["suggest"] = _("Did you mean to separate object names by a comma?")
+
+    return _(
+        "`{second}` is not an attribute of `{first}`.\n"
+        "However, both `{first}` and `{second}` are known objects.\n"
+        "Perhaps you wrote a period [`{first}.{second}`]\n"
+        "instead of a comma [`{first}, {second}`].\n"
+    ).format(first=first, second=second)

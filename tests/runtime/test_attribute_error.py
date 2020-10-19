@@ -2,6 +2,18 @@ import friendly_traceback
 
 # TODO: make sure that all these cases are captured in the documentation
 
+# Need to add more cases, ensuring that correct object is always identified
+
+# a = [1, 2, 3]
+# b = 3, 4, 5
+
+# b[0] > a.max  --> max(a)
+# b.min == a[0]  --> min(b)
+# a.length  --> len(a)
+# a.len --> len(a)
+
+# a.b -> a, b ?
+
 
 def test_attribute_error():
     class A:
