@@ -3,44 +3,19 @@
 A few useful objects which do not naturally fit anywhere else.
 """
 import difflib
-import token as token_module
 import tokenize
 import os.path
 
 from io import StringIO
+from token_utils import Token
 
 from .friendly_exception import FriendlyException
 
 
-_token_format = "{type:<10}{string:<25} {start:^12} {end:^12} {line:^12}"
-
-
-class Token:
-    """Token as generated from tokenize.generate_tokens written here in
-    a more convenient form for our purpose.
-    """
-
-    def __init__(self, token):
-        self.type = token[0]
-        self.string = token[1]
-        self.start = self.start_row, self.start_col = token[2]
-        self.end = self.end_row, self.end_col = token[3]
-        self.line = token[4]
-        if self.line and self.line[-1] == "\n":
-            self.line = self.line[:-1]
-
-    def __repr__(self):
-        return _token_format.format(
-            type=token_module.tok_name[self.type],
-            string=self.string,
-            start=str(self.start),
-            end=str(self.end),
-            line=str(self.line),
-        )
-
-
 def tokenize_source(source):
     """Makes a list of tokens from a source (str), ignoring spaces and comments."""
+    # We use this version which is slightly different from the one found
+    # in token_utils and works better by ignoring many space-like tokens.
     tokens = []
     try:
         for tok in tokenize.generate_tokens(StringIO(source).readline):
@@ -90,23 +65,6 @@ def shorten_path(path):
     elif path_lower.startswith(HOME):
         path = "HOME_DIR:" + path[len(HOME) :]
     return path
-
-
-def make_token_table(source):
-    """Prints tokens found in source, excluding spaces and comments.
-
-    This was useful and might agin be useful to use
-    when writing new exception analyzers.
-    """
-    print(
-        _token_format.format(
-            type="Type", string="String", start="Start", end="End", line="last"
-        )
-    )
-    print("-" * 73)
-    tokens = tokenize_source(source)
-    for token in tokens:
-        print(token)
 
 
 def get_similar_words(word_with_typo, words):

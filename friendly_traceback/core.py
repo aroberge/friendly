@@ -188,7 +188,7 @@ def format_python_tracebacks(records, etype, value, python_tb, info):
        about the code on any line mentioned.
     """
     _ = current_lang.translate
-    suppressed = ["       ... " + _("Many other lines.") + " ..."]
+    suppressed = ["\n       ... " + _("More lines not shown.") + " ...\n"]
 
     python_tb = [line.rstrip() for line in python_tb]
 
