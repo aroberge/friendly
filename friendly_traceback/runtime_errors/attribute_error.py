@@ -4,8 +4,6 @@ import sys
 
 import re
 
-from token_utils import untokenize
-
 from ..my_gettext import current_lang
 from ..utils import get_similar_words, tokenize_source
 
@@ -83,7 +81,9 @@ def attribute_error_in_object(obj_name, attribute, info, frame):
     # name. Depending on whether or not we can identify the true object name,
     # we might need to change slightly the feedback with give.
     obj_of_type = True
-    true_name, good_line = find_true_object_name(obj, obj_name, attribute, info, frame)
+    true_name, index = find_true_object_name_and_position(
+        obj, obj_name, attribute, info, frame
+    )
     if true_name != obj_name:
         obj_of_type = False
 
@@ -99,7 +99,7 @@ def attribute_error_in_object(obj_name, attribute, info, frame):
         # We have identified the first object; is the attribute a second object
         try:
             if eval(attribute, frame.f_globals, frame.f_locals):
-                return missing_comma(true_name, attribute, info, good_line)
+                return missing_comma(true_name, attribute, info, index)
         except Exception:
             pass
 
@@ -112,6 +112,8 @@ def attribute_error_in_object(obj_name, attribute, info, frame):
             obj=true_name, attr=attribute
         )
     known_attributes = [a for a in known_attributes if "__" not in a]
+    if len(known_attributes) > 10:
+        known_attributes = known_attributes[:9] + ["..."]
     if known_attributes:
         explain += _(
             "The following are some of its known attributes:\n" "`{names}`."
@@ -162,7 +164,13 @@ def use_builtin_function(obj_name, attribute, known_builtin, info):
     ).format(known_builtin=known_builtin, obj_name=obj_name, attribute=attribute)
 
 
-def find_true_object_name(obj, obj_name, attribute, info, frame):
+def find_true_object_name_and_position(obj, obj_name, attribute, info, frame):
+
+    # TODO: this fails if the attribute is on a separate line
+    # where we might have written a list vertically, with one item per line
+    # but used a period instead of a comma somewhere.
+    # We might need to retrieve the entire source, starting at the
+    # location of the bad line.
 
     tokens = tokenize_source(info["bad_line"])
     for index, tok in enumerate(tokens):
@@ -177,33 +185,21 @@ def find_true_object_name(obj, obj_name, attribute, info, frame):
                 and tokens[index + 1] == "."
                 and tokens[index + 2] == attribute
             ):
-                # Create a corrected line with the period replaced by a comma
-                # but ensure that there is at least one space between
-                # the comma and the attribute.
-                if tokens[index + 1].end_col == tokens[index + 2].start_col:
-                    tokens[index + 1].string = ", "
-                else:
-                    tokens[index + 1].string = ","
-                good_line = untokenize(tokens)
-                return tok.string, good_line
+                return tok.string, index
         except Exception:
             pass
 
     return obj_name, None
 
 
-def missing_comma(first, second, info, good_line):
+def missing_comma(first, second, info, index):
     _ = current_lang.translate
 
     info["suggest"] = _("Did you mean to separate object names by a comma?")
 
-    bad_line = info["bad_line"]
-
     return _(
         "`{second}` is not an attribute of `{first}`.\n"
         "However, both `{first}` and `{second}` are known objects.\n"
-        "Perhaps you wrote a period to separate these two objects,\n\n"
-        "    {bad_line}\n\n"
-        "instead of using a comma\n\n"
-        "    {good_line}\n\n"
-    ).format(first=first, second=second, bad_line=bad_line, good_line=good_line)
+        "Perhaps you wrote a period to separate these two objects, \n"
+        "instead of using a comma.\n"
+    ).format(first=first, second=second)

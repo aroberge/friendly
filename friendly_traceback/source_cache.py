@@ -4,12 +4,6 @@ Used to cache and retrieve source code.
 This is especially useful when a custom REPL is used.
 """
 
-# Some comments below refer to avant-idle. avant-idle is currently a
-# project (currently unpublished) where we integrated Friendly-traceback
-# and AvantPy into a modified version of Python's IDLE. This was done
-# both to use as a demonstration and also to determine what functionality
-# should be part of a public API.
-
 import os.path
 
 
@@ -33,23 +27,7 @@ class Cache:
         if os.path.isfile(filename):
             self.ages[filename] = os.path.getmtime(filename)  # modification time
 
-    def get_copy(self):
-        """Gets a copy of the entire cache"""
-        # This is used in avant-idle to pass the content of a cache in
-        # the main process to a second process where an exception has been
-        # raised.
-        return self.cache
-
-    def replace(self, other_cache):
-        """Replaces the current cache by another"""
-        # This is used in avant-idle to replace the content of the cache
-        # in a process (where no storage normally takes place) by
-        # that of another where the actual caching of the source is done.
-        self.cache.clear()
-        for key in other_cache:
-            self.add(key, other_cache[key])
-
-    def get_source(self, filename):
+    def get_source_lines(self, filename):
         """Given a filename, returns the corresponding source, either
            from the cache or from actually opening the file.
 
@@ -61,7 +39,7 @@ class Cache:
            If no source can be found, an empty list is returned.
         """
         # The main reason we care about ensuring we have the latest version
-        # of a given file is for the 'avant-idle' project where we could
+        # of a given file is situations where we could
         # 'edit and run' multiple times a given file. We need to ensure that
         # the content shown by the traceback is accurate.
 
@@ -105,7 +83,7 @@ class Cache:
         """Formats a few lines around a 'bad line', and returns
            the formatted source as well as the content of the 'bad line'.
         """
-        lines = self.get_source(filename)
+        lines = self.get_source_lines(filename)
         if not lines:
             return "", ""
 

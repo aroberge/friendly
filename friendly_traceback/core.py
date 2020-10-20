@@ -251,13 +251,15 @@ def create_traceback(records, etype, value, info):
             result.append("    {}".format(bad_line.strip()))
 
         info["bad_line"] = bad_line or " "
+        info["filename"] = filename or " "
+        info["linenumber"] = linenumber or None
 
     if issubclass(etype, SyntaxError):
-        filename = value.filename
-        linenumber = value.lineno
+        info["filename"] = filename = value.filename
+        info["linenumber"] = linenumber = value.lineno
         offset = value.offset
         msg = value.msg
-        lines = cache.get_source(filename)
+        lines = cache.get_source_lines(filename)
         result.append('  File "{}", line {}'.format(filename, linenumber))
         try:
             _line = lines[linenumber - 1].rstrip()

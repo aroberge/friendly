@@ -108,7 +108,7 @@ def syntax_error_cause(value):
     linenumber = value.lineno
     offset = value.offset
     message = value.msg
-    source_lines = cache.get_source(filepath)
+    source_lines = cache.get_source_lines(filepath)
     if not source_lines and filepath == "<stdin>":
         source_lines = [""]
         linenumber = 1
