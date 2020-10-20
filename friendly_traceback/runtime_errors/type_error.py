@@ -260,7 +260,7 @@ def incorrect_nb_positional_arguments(message, info, frame):
             if "." in fn_name:
                 missing_self = True
             else:
-                tokens = utils.tokenize_source(info["badline"])
+                tokens = utils.tokenize_source(info["bad_line"])
                 prev_token = tokens[0]
                 missing_self = False
                 for token in tokens:

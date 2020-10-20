@@ -79,9 +79,8 @@ def cannot_import_name(name, info, frame):
     # Python 3.6 does not give us the name of the module
     _ = current_lang.translate
     pattern = re.compile(r"from (.*) import")
-    if "badline" in info:
-        match = re.search(pattern, info["badline"])
-        if match:
-            return cannot_import_name_from(name, match.group(1), info, frame)
+    match = re.search(pattern, info["bad_line"])
+    if match:
+        return cannot_import_name_from(name, match.group(1), info, frame)
 
     return _("The object that could not be imported is `{name}`.\n").format(name=name)

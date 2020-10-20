@@ -4,6 +4,8 @@ import sys
 
 import re
 
+from token_utils import untokenize
+
 from ..my_gettext import current_lang
 from ..utils import get_similar_words, tokenize_source
 
@@ -81,7 +83,7 @@ def attribute_error_in_object(obj_name, attribute, info, frame):
     # name. Depending on whether or not we can identify the true object name,
     # we might need to change slightly the feedback with give.
     obj_of_type = True
-    true_name = find_true_object_name(obj, obj_name, attribute, info, frame)
+    true_name, good_line = find_true_object_name(obj, obj_name, attribute, info, frame)
     if true_name != obj_name:
         obj_of_type = False
 
@@ -97,7 +99,7 @@ def attribute_error_in_object(obj_name, attribute, info, frame):
         # We have identified the first object; is the attribute a second object
         try:
             if eval(attribute, frame.f_globals, frame.f_locals):
-                return missing_comma(true_name, attribute, info)
+                return missing_comma(true_name, attribute, info, good_line)
         except Exception:
             pass
 
@@ -162,9 +164,7 @@ def use_builtin_function(obj_name, attribute, known_builtin, info):
 
 def find_true_object_name(obj, obj_name, attribute, info, frame):
 
-    if "badline" not in info:
-        return obj_name
-    tokens = tokenize_source(info["badline"])
+    tokens = tokenize_source(info["bad_line"])
     for index, tok in enumerate(tokens):
         try:
             candidate = eval(tok.string, frame.f_globals, frame.f_locals)
@@ -174,24 +174,36 @@ def find_true_object_name(obj, obj_name, attribute, info, frame):
             # we have the correct one.
             if (
                 isinstance(candidate, obj)
-                and tokens[index + 1].string == "."
-                and tokens[index + 2].string == attribute
+                and tokens[index + 1] == "."
+                and tokens[index + 2] == attribute
             ):
-                return tok.string
+                # Create a corrected line with the period replaced by a comma
+                # but ensure that there is at least one space between
+                # the comma and the attribute.
+                if tokens[index + 1].end_col == tokens[index + 2].start_col:
+                    tokens[index + 1].string = ", "
+                else:
+                    tokens[index + 1].string = ","
+                good_line = untokenize(tokens)
+                return tok.string, good_line
         except Exception:
             pass
 
-    return obj_name
+    return obj_name, None
 
 
-def missing_comma(first, second, info):
+def missing_comma(first, second, info, good_line):
     _ = current_lang.translate
 
     info["suggest"] = _("Did you mean to separate object names by a comma?")
 
+    bad_line = info["bad_line"]
+
     return _(
         "`{second}` is not an attribute of `{first}`.\n"
         "However, both `{first}` and `{second}` are known objects.\n"
-        "Perhaps you wrote a period [`{first}.{second}`]\n"
-        "instead of a comma [`{first}, {second}`].\n"
-    ).format(first=first, second=second)
+        "Perhaps you wrote a period to separate these two objects,\n\n"
+        "    {bad_line}\n\n"
+        "instead of using a comma\n\n"
+        "    {good_line}\n\n"
+    ).format(first=first, second=second, bad_line=bad_line, good_line=good_line)

@@ -246,11 +246,11 @@ def create_traceback(records, etype, value, info):
         frame, filename, linenumber, _func, lines, index = record
         source_info = get_partial_source(filename, linenumber, lines, index)
         result.append('  File "{}", line {}, in {}'.format(filename, linenumber, _func))
-        badline = source_info["line"]
-        if badline is not None:
-            result.append("    {}".format(badline.strip()))
+        bad_line = source_info["line"]
+        if bad_line is not None:
+            result.append("    {}".format(bad_line.strip()))
 
-        info["badline"] = badline or " "
+        info["bad_line"] = bad_line or " "
 
     if issubclass(etype, SyntaxError):
         filename = value.filename
@@ -261,9 +261,9 @@ def create_traceback(records, etype, value, info):
         result.append('  File "{}", line {}'.format(filename, linenumber))
         try:
             _line = lines[linenumber - 1].rstrip()
-            badline = _line.strip()
-            offset = offset - (len(_line) - len(badline))  # removing indent
-            result.append("    {}".format(badline))
+            bad_line = _line.strip()
+            offset = offset - (len(_line) - len(bad_line))  # removing indent
+            result.append("    {}".format(bad_line))
             result.append(" " * (3 + offset) + "^")
         except Exception:
             pass
