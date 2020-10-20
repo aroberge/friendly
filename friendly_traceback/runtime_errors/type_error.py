@@ -264,7 +264,7 @@ def incorrect_nb_positional_arguments(message, info, frame):
                 prev_token = tokens[0]
                 missing_self = False
                 for token in tokens:
-                    if token.string == fn_name and prev_token.string == ".":
+                    if token == fn_name and prev_token == ".":
                         missing_self = True
                         break
                     prev_token = token

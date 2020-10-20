@@ -11,16 +11,26 @@ from token_utils import Token
 
 from .friendly_exception import FriendlyException
 
+# Note about the Token class
+# Instances of the Token class have many attributes including a
+# string attribute. When **comparing** to a normal Python string,
+# we can use directly
+#     token == 'string'
+# instead of the slightly more cumbersome
+#     token.string == 'string'
+
 
 def tokenize_source(source):
-    """Makes a list of tokens from a source (str), ignoring spaces and comments."""
+    """Makes a list of tokens from a source (str), ignoring space-like tokens
+    and comments.
+    """
     # We use this version which is slightly different from the one found
     # in token_utils and works better by ignoring many space-like tokens.
     tokens = []
     try:
         for tok in tokenize.generate_tokens(StringIO(source).readline):
             token = Token(tok)
-            if not token.string.strip():  # ignore spaces
+            if not token.string.strip():  # ignore any space-like token
                 continue
             if token.type == tokenize.COMMENT:
                 break

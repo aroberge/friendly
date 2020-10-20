@@ -14,7 +14,7 @@ from friendly_traceback.friendly_exception import FriendlyException
 
 def count_char(tokens, char):
     """Counts how many times a given character appears in a list of tokens"""
-    return sum(1 for token in tokens if token.string == char)
+    return sum(1 for token in tokens if token == char)
 
 
 def find_offending_token(tokens, offset):
@@ -118,7 +118,7 @@ def detect_walrus(tokens, offset=None):
         return False
 
     bad_token, index = find_offending_token(tokens, offset)
-    if bad_token is None or bad_token.string != ":":
+    if bad_token is None or bad_token != ":":
         return False
 
     try:
@@ -126,7 +126,7 @@ def detect_walrus(tokens, offset=None):
     except IndexError:
         return False
 
-    if next_token.string != "=":
+    if next_token != "=":
         return False
 
     return _(
@@ -146,7 +146,7 @@ def detect_backquote(tokens, offset=None):
     if bad_token is None:
         return False
     # the token that gets flagged as problematic is the one after ""
-    if bad_token.string == "`":
+    if bad_token == "`":
         return _(
             "You are using the backquote character.\n"
             "Either you meant to write a single quote, ', "
@@ -404,7 +404,7 @@ def dot_followed_by_bracket(tokens, offset=None):
     if bad_token is None or index == 0:
         return False
     prev_token = tokens[index - 1]
-    if bad_token.string in ["(", ")", "[", "]", "{", "}"] and prev_token.string == ".":
+    if bad_token.string in ["(", ")", "[", "]", "{", "}"] and prev_token == ".":
         return _("You cannot have a dot `.` followed by `{bracket}`.\n").format(
             bracket=bad_token.string
         )
@@ -418,7 +418,7 @@ def raise_single_exception(tokens, offset=None):
     bad_token, ignore = find_offending_token(tokens, offset)
     if bad_token is None:
         return False
-    if bad_token.string == ",":
+    if bad_token == ",":
         return _(
             "It looks like you are trying to raise an exception using Python 2 syntax.\n"
         )
@@ -433,7 +433,7 @@ def assign_instead_of_equal(tokens, offset=None):
         return False
 
     bad_token, ignore = find_offending_token(tokens, offset)
-    if bad_token.string == "=":
+    if bad_token == "=":
         statement = tokens[0].string
         if statement in ["if", "elif"]:
             return _(
