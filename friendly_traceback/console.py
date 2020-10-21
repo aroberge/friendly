@@ -252,7 +252,7 @@ class FriendlyConsole(InteractiveConsole):
         implementation.
         """
         if self.rich_console:
-            return self.rich_console.input("[green]" + prompt)
+            return self.rich_console.input("[bold #009999]" + prompt)
         return input(prompt)
 
 

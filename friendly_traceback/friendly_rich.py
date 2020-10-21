@@ -7,10 +7,10 @@ import sys
 
 rich_available = True
 try:
-    from rich import box
+    from rich import pretty
     from rich.console import Console
     from rich.markdown import Markdown, Heading, CodeBlock
-    from rich.panel import Panel
+    from rich.panel import Panel  # noqa
     from rich.syntax import Syntax
     from rich.text import Text
     from rich.theme import Theme
@@ -25,6 +25,7 @@ except ImportError:
     rich_available = False
     Markdown = None
     Console = None
+    brunante = None
 
 
 def init_console(theme="dark"):
@@ -33,20 +34,14 @@ def init_console(theme="dark"):
 
     def _patch_heading(self, console, options):
         """By default, all headings are centered by Rich; I prefer to have
-        them left-justified, except for <h1>
+        them left-justified, except for <h3>
         """
         text = self.text
         text.justify = "left"
-        if self.level == 1:
-            text.justify = "center"
-            # Draw a border around h1s
-            yield Panel(text, box=box.DOUBLE, style="markdown.h1.border")
+        if self.level == 3:
+            yield Text("    ") + text
         else:
-            # Indent only h2 headers
-            if self.level == 2:
-                yield Text("    ") + text
-            else:
-                yield text
+            yield text
 
     Heading.__rich_console__ = _patch_heading
 
@@ -62,20 +57,20 @@ def init_console(theme="dark"):
 
     CodeBlock.__rich_console__ = _patch_code_block
 
-    dark_background_theme = Theme(
-        {
-            "markdown.h1.border": "bold #DAEFA3",
-            "markdown.h1": "bold #B22518",
-            "markdown.h2": "bold #009999 underline",  # Exception message; location header
-            "markdown.h3": "bold #CF6A4C",  # likely cause
-            "markdown.h4": "bold #CF6A4C",  # warning header
-            "markdown.link": "bold #DAEFA3 underline",
-            "markdown.code": "#CDA869",
-        }
-    )
+    _theme = {
+        "markdown.h1": "bold #B22518",
+        "markdown.h2": "bold #009999 underline",  # Exception message; location header
+        "markdown.h3": "bold #CF6A4C",  # likely cause
+        "markdown.h4": "bold #CF6A4C",  # warning header
+        "markdown.link": "bold #DAEFA3 underline",
+        "markdown.code": "#CDA869",
+    }
+    if brunante is not None:
+        _theme.update(**brunante.my_style)
+
+    dark_background_theme = Theme(_theme)
     light_background_theme = Theme(
         {
-            "markdown.h1.border": "bold #3465a4",
             "markdown.h1": "bold #B22518",
             "markdown.h2": "bold #B22518 underline",  # Exception message; location header
             "markdown.h3": "bold #0000cf",  # likely cause
@@ -86,6 +81,9 @@ def init_console(theme="dark"):
         }
     )
     if theme == "light":
-        return Console(theme=light_background_theme)
+        console = Console(theme=light_background_theme)
     else:
-        return Console(theme=dark_background_theme)
+        console = Console(theme=dark_background_theme)
+
+    pretty.install(console=console)
+    return console
