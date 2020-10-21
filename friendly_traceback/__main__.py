@@ -19,7 +19,6 @@ from . import console
 from . import public_api
 from .session import session
 from . import friendly_rich
-from .my_gettext import current_lang
 
 
 versions = "Friendly-traceback version {}. [Python version: {}]\n".format(
@@ -85,10 +84,9 @@ parser.add_argument(
 
 parser.add_argument(
     "--verbosity",
-    "--level",
     type=int,
     help="""This sets the "verbosity" level, that is the amount of information
-            provided. ("level" is deprecated and will be removed.)
+            provided.
          """,
 )
 
@@ -118,14 +116,18 @@ parser.add_argument(
     "--theme",
     help="""To use with 'rich' --format option.
     Indicates if the background colour of the console is 'dark' or 'light'.
-    The default is 'dark'.
+    The default is 'dark'. The light theme is just a proof of concept.
     """,
 )
 
 
-def main():
-    _ = current_lang.translate
+def warn(text):
+    print("   #")
+    print(f"   # Warning: {text}")
+    print("   #")
 
+
+def main():
     console_defaults = {"friendly": public_api.Friendly()}
     args = parser.parse_args()
     if args.version:
@@ -156,7 +158,7 @@ def main():
             public_api.set_formatter(format)
         elif format == "rich":
             if not friendly_rich.rich_available:
-                print(_("\n    Rich is not installed.\n\n"))
+                warn("Rich is not installed.")
             else:
                 use_rich = True
         else:
@@ -165,8 +167,15 @@ def main():
         use_rich = True
 
     theme = "dark"
-    if use_rich and args.theme == "light":
-        theme = "light"
+    if use_rich:
+        if args.theme == "light":
+            theme = "light"
+            warn("light theme is just a proof of concept.")
+        elif args.theme not in [None, "dark"]:
+            warn(f"unknown theme '{args.theme}'.")
+        session.set_formatter("rich", theme=theme)
+    elif args.theme is not None:
+        warn("theme argument ignored.")
 
     if args.source is not None:
         public_api.exclude_file_from_traceback(runpy.__file__)
@@ -176,8 +185,6 @@ def main():
                 console_defaults.update(module_dict)
             except Exception:
                 public_api.explain()
-            if use_rich:
-                session.set_formatter("rich", theme=theme)
             console.start_console(
                 local_vars=console_defaults, use_rich=use_rich, theme=theme
             )
@@ -185,8 +192,6 @@ def main():
             sys.argv = [args.source, *args.args]
             runpy.run_path(args.source, run_name="__main__")
     else:
-        if use_rich:
-            session.set_formatter("rich", theme=theme)
         console.start_console(
             local_vars=console_defaults, use_rich=use_rich, theme=theme
         )

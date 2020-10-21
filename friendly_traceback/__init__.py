@@ -10,7 +10,9 @@ if not _valid_version:
     _sys.exit()
 
 
-# Ensure that warnings are not shown to the end user, possibly causing confusion.
+# Ensure that warnings are not shown to the end user, as they could
+# cause confusion.  Eventually, we might want to interpret them like
+# we do for Exceptions.
 _warnings.simplefilter("ignore")
 
 del _valid_version
