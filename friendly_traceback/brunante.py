@@ -51,25 +51,40 @@ from pygments.token import (
 # https://en.wikipedia.org/wiki/List_of_colors:_N%E2%80%93Z N to Z
 # using some primary classification
 
-# Yellow: "#F9EE98"  No corresponding name
+# Yellow: "#F0E68C"  Khaki
 # Orange: #FF8243 Mango tango
 # Red: #D92121 Maximum red
 # Green: #87A96B Asparagus
 # White: #F4F0EC Isabelline
-# Beige: #D99A6C Tan (Crayola)
+# Beige: #DEB887 Burleywood
 # Brown:
-# Blue: #6699CC Blue gray
+# Blue: #87CEEB Skyblue
 # Gray: #555555
 
 colours = {
-    "yellow": "#F9EE98",
+    "yellow": "#F0E68C",
     "orange": "#FF8243",
     "red": "#D92121",
     "white": "#F4F0EC",
-    "beige": "#D99A6C",
-    "blue": "#6699CC",
+    "beige": "#DEB887",
+    "blue": "#87CEEB",
     "gray": "#555555",
     "green": "#87A96B",
+    "small-heading": "#9370DB",
+}
+
+my_style = {
+    "builtins": colours["yellow"],
+    "code": colours["beige"],
+    "comments": colours["gray"],
+    "keywords": colours["yellow"],
+    "numbers": colours["blue"],
+    "operators": colours["white"],
+    "string": colours["green"],
+    "text": colours["white"],
+    "TrueFalseNone": colours["orange"],
+    "Exception": colours["red"],
+    "diagnostics": "#FF00FF",  # Magenta; when trying to figure out a category
 }
 
 
@@ -78,44 +93,24 @@ colours = {
 # are consistent.  pretty() highlight objects based on their repr name
 # with the following choices:
 
-# repr.brace
-# repr.comma
-# repr.tag_start
-# repr.tag_name
-# repr.tag_contents
-# repr.tag_end
-# repr.attrib_name
-# repr.attrib_equal
-# repr.attrib_value
-# prompt
-
-
 rich_style = {
-    "markdown.code": colours["beige"],
-    "repr.tag_name": colours["beige"],  # for consistency with Python
-    "markdown.h1": "bold #B22518",
-    "markdown.h2": "bold #009999 underline",  # Exception message; location header
-    "markdown.h3": "bold #CF6A4C",  # likely cause
-    "markdown.h4": "bold #CF6A4C",  # warning header
-    "markdown.link": "bold #DAEFA3 underline",
-    "repr.url": "bold #DAEFA3 underline",
-    "repr.number": colours["orange"],
+    "markdown.code": my_style["code"],
+    "repr.tag_name": my_style["code"],  # for consistency with Python
+    "markdown.h1": my_style["diagnostics"],
+    # Exception message; location header H2
+    "markdown.h2": f"underline {colours['orange']}",
+    "markdown.h3": colours["small-heading"],  # likely cause
+    "markdown.h4": colours["small-heading"],  # warning header
+    "markdown.link": f"not underline {my_style['keywords']}",
+    "repr.url": my_style["diagnostics"],
+    "repr.number": my_style["numbers"],
     # The next three are identical for pygments, so we keep them identical
-    "repr.bool_false": colours["orange"],
-    "repr.bool_true": colours["orange"],
-    "repr.none": colours["orange"],
+    "repr.bool_false": my_style["TrueFalseNone"],
+    "repr.bool_true": my_style["TrueFalseNone"],
+    "repr.none": my_style["TrueFalseNone"],
     #
-    "repr.str": colours["green"],
-    "repr.error": colours["red"],
-}
-
-my_style = {
-    "builtins": colours["yellow"],
-    "keywords": colours["blue"],
-    "comments": colours["gray"],
-    "text": colours["white"],
-    "operators": colours["white"],
-    "diagnostics": "#FF00FF",  # Magenta
+    "repr.str": my_style["string"],
+    "repr.error": my_style["Exception"],
 }
 
 my_style.update(**rich_style)
@@ -132,7 +127,7 @@ class BrunanteStyle(Style):
     styles = {
         Text: my_style["text"],  # class:  ''
         Whitespace: "",  # class: 'w'
-        Error: my_style["repr.error"],  # class: 'err'
+        Error: my_style["Exception"],  # class: 'err'
         Other: my_style["diagnostics"],  # class 'x'
         #
         Comment: my_style["comments"],  # class: 'c'
@@ -142,19 +137,19 @@ class BrunanteStyle(Style):
         Comment.Special: my_style["comments"],  # class: 'cs'
         #
         Generic: my_style["text"],  # class: 'g'
-        Generic.Deleted: my_style["repr.error"],  # class: 'gd'
+        Generic.Deleted: my_style["Exception"],  # class: 'gd'
         Generic.Emph: my_style["text"],  # class: 'ge'
-        Generic.Error: my_style["repr.error"],  # class: 'gr'
+        Generic.Error: my_style["Exception"],  # class: 'gr'
         Generic.Heading: my_style["text"],  # class: 'gh'
         Generic.Inserted: my_style["text"],  # class: 'gi'
         Generic.Output: my_style["text"],  # class: 'go'
         Generic.Prompt: my_style["keywords"],  # class: 'gp'
         Generic.Strong: my_style["text"],  # class: 'gs'
         Generic.Subheading: my_style["text"],  # class: 'gu'
-        Generic.Traceback: my_style["repr.error"],  # class: 'gt'
+        Generic.Traceback: my_style["Exception"],  # class: 'gt'
         #
         Keyword: my_style["keywords"],  # class: 'k' #FADA5E Royal yellow #FFFF66
-        Keyword.Constant: my_style["repr.bool_true"],  # class: 'kc'
+        Keyword.Constant: my_style["TrueFalseNone"],  # class: 'kc'
         Keyword.Declaration: my_style["keywords"],  # class: 'kd'
         Keyword.Namespace: my_style["keywords"],  # class: 'kn'
         Keyword.Pseudo: my_style["keywords"],  # class: 'kp'
@@ -164,49 +159,49 @@ class BrunanteStyle(Style):
         Literal: my_style["text"],  # class: 'l'
         Literal.Date: my_style["text"],  # class: 'ld'
         #
-        Name: my_style["markdown.code"],  # class: 'n'
-        Name.Attribute: my_style["markdown.code"],  # class: 'na'
+        Name: my_style["code"],  # class: 'n'
+        Name.Attribute: my_style["code"],  # class: 'na'
         # The following is for file path in tracebacks and Python builtins.
         Name.Builtin: my_style["builtins"],  # class: 'nb'
         Name.Builtin.Pseudo: my_style["builtins"],  # class: 'bp'
-        Name.Class: my_style["markdown.code"],  # class: 'nc'
-        Name.Constant: my_style["markdown.code"],  # class: 'no'
-        Name.Decorator: my_style["markdown.code"],  # class: 'nd'
-        Name.Entity: my_style["markdown.code"],  # class: 'ni'
-        Name.Exception: my_style["repr.error"],  # class: 'ne'
-        Name.Function: my_style["markdown.code"],  # class: 'nf'
-        Name.Property: my_style["markdown.code"],  # class: 'py'
-        Name.Label: my_style["markdown.code"],  # class: 'nl'
-        Name.Namespace: my_style["markdown.code"],  # class: 'nn'
-        Name.Other: my_style["markdown.code"],  # class: 'nx'
-        Name.Tag: my_style["markdown.code"],  # class: 'nt' - like a keyword
-        Name.Variable: my_style["markdown.code"],  # class: 'nv'
-        Name.Variable.Class: my_style["markdown.code"],  # class: 'vc'
-        Name.Variable.Global: my_style["markdown.code"],  # class: 'vg'
-        Name.Variable.Instance: my_style["markdown.code"],  # class: 'vi'
+        Name.Class: my_style["code"],  # class: 'nc'
+        Name.Constant: my_style["code"],  # class: 'no'
+        Name.Decorator: my_style["code"],  # class: 'nd'
+        Name.Entity: my_style["code"],  # class: 'ni'
+        Name.Exception: my_style["Exception"],  # class: 'ne'
+        Name.Function: my_style["code"],  # class: 'nf'
+        Name.Property: my_style["code"],  # class: 'py'
+        Name.Label: my_style["code"],  # class: 'nl'
+        Name.Namespace: my_style["code"],  # class: 'nn'
+        Name.Other: my_style["diagnostics"],  # class: 'nx'
+        Name.Tag: my_style["code"],  # class: 'nt' - like a keyword
+        Name.Variable: my_style["text"],  # class: 'nv'
+        Name.Variable.Class: my_style["code"],  # class: 'vc'
+        Name.Variable.Global: my_style["code"],  # class: 'vg'
+        Name.Variable.Instance: my_style["text"],  # class: 'vi'
         #
-        Number: my_style["repr.number"],  # class: 'm'
-        Number.Float: my_style["repr.number"],  # class: 'mf'
-        Number.Hex: my_style["repr.number"],  # class: 'mh'
-        Number.Integer: my_style["repr.number"],  # class: 'mi'
-        Number.Integer.Long: my_style["repr.number"],  # class: 'il'
-        Number.Oct: my_style["repr.number"],  # class: 'mo'
+        Number: my_style["numbers"],  # class: 'm'
+        Number.Float: my_style["numbers"],  # class: 'mf'
+        Number.Hex: my_style["numbers"],  # class: 'mh'
+        Number.Integer: my_style["numbers"],  # class: 'mi'
+        Number.Integer.Long: my_style["numbers"],  # class: 'il'
+        Number.Oct: my_style["numbers"],  # class: 'mo'
         #
         Operator: my_style["operators"],  # class: 'o'
         Operator.Word: my_style["operators"],  # class: 'ow'
         #
         Punctuation: my_style["operators"],  # class: 'p'
         #
-        String: my_style["repr.str"],  # class: 's'
-        String.Backtick: my_style["repr.str"],  # class: 'sb'
-        String.Char: my_style["repr.str"],  # class: 'sc'
-        String.Doc: my_style["repr.str"],  # class: 'sd'
-        String.Double: my_style["repr.str"],  # class: 's2'
-        String.Escape: my_style["repr.str"],  # class: 'se'
-        String.Heredoc: my_style["repr.str"],  # class: 'sh'
-        String.Interpol: my_style["repr.str"],  # class: 'si'
-        String.Other: my_style["repr.str"],  # class: 'sx'
-        String.Regex: my_style["repr.str"],  # class: 'sr'
-        String.Single: my_style["repr.str"],  # class: 's1'
-        String.Symbol: my_style["repr.str"],  # class: 'ss'
+        String: my_style["string"],  # class: 's'
+        String.Backtick: my_style["string"],  # class: 'sb'
+        String.Char: my_style["string"],  # class: 'sc'
+        String.Doc: my_style["string"],  # class: 'sd'
+        String.Double: my_style["string"],  # class: 's2'
+        String.Escape: my_style["string"],  # class: 'se'
+        String.Heredoc: my_style["string"],  # class: 'sh'
+        String.Interpol: my_style["string"],  # class: 'si'
+        String.Other: my_style["string"],  # class: 'sx'
+        String.Regex: my_style["string"],  # class: 'sr'
+        String.Single: my_style["string"],  # class: 's1'
+        String.Symbol: my_style["string"],  # class: 'ss'
     }
