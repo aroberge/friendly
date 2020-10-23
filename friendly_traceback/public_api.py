@@ -29,7 +29,7 @@ from .editors_helper import run
 # from .formatters import tb_items_to_show
 from .path_info import exclude_file_from_traceback
 
-__all__ = ["exclude_file_from_traceback", "run"]  # , "tb_items_to_show"]
+__all__ = ["exclude_file_from_traceback", "run"]
 
 
 def make_public(f):
@@ -157,33 +157,6 @@ def get_lang():
     return session.lang
 
 
-# @make_public
-# def set_verbosity(verbosity_level):
-#     """Sets the verbosity level to be used. These settings might be ignored
-#     by custom formatters.
-
-#     Vocabulary examples ::
-#         Generic explanation: A NameError occurs when ...
-#         Specific explanation: In your program, the unknown name is ...
-
-#     The values are as follows::
-
-#         1: All items except with a shortened Python traceback.
-#            Default for non-interactive scripts.
-#         2: Same as 1, except that the traceback is not shown.
-#         3: Similar to 1 but Python tracebacks appended at the end of the output.
-#         4: Same as 1, but generic explanation is not included
-#         5: Same as 2, but generic explanation is not included
-#         6: Same as 3, but generic explanation is not included
-#         7: Shortened python tracebacks followed by suggestion/hint.
-#         8: Subject to change.
-#         9: Shortened Python traceback
-#         0: Normal Python traceback.
-#         -1: Python traceback that also includes calls to friendly-traceback.
-#     """
-#     session.set_verbosity(verbosity_level)
-
-
 @make_public
 def set_include(include):
     "placeholder docstring"
@@ -194,12 +167,6 @@ def set_include(include):
 def get_include():
     "placeholder docstring"
     return session.get_include()
-
-
-# @make_public
-# def get_verbosity():
-#     """Returns the verbosity level currently used."""
-#     return session.level
 
 
 @make_public
@@ -297,18 +264,21 @@ class Friendly:
 
         See set_verbosity() for details.
         """
-        # if verbosity is None:
-        #     verbosity = 1
-        # old_level = self.get_verbosity()
-        old_include = self.get_include
+        old_include = self.get_include()
         self.set_include(include)
         session.show_traceback_info_again()
         self.set_include(old_include)
-        # self.set_verbosity(old_level)
 
     def traceback(self):
         """Shows the traceback."""
         self.explain("python_tb")
+
+    def more(self):
+        """Used to display information additional to the minimal traceback,
+        with the exception of the generic information.
+        Potentially useful for advanced users.
+        """
+        self.explain("more")
 
     def what(self):
         """If known, shows the generic explanation about a given exception."""
@@ -325,6 +295,14 @@ class Friendly:
     def hint(self):
         """Shows hint/suggestion if available."""
         self.explain("hint")
+
+    def debug(self):
+        """This functions displays the true traceback recorded, that
+        includes friendly-traceback's own code.
+        It also sets a debug flag for the current session.
+        """
+        session._debug = True
+        self.explain("debug_tb")
 
 
 # -----------------------------------------

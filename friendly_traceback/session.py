@@ -97,27 +97,12 @@ class _State:
         self.lang = lang
 
     def set_include(self, include):
+        if include not in formatters.items_groups:
+            raise ValueError(f"{include} is not a valid value.")
         self.include = include
 
     def get_include(self):
         return self.include
-
-    # def set_verbosity(self, verbosity=None):
-    #     """Sets the "verbosity level".
-
-    #     If no argument is given, the default value is set.
-
-    #     If a value of 0 is chosen, Frendly-traceback is uninstalled
-    #     and sys.__excepthook__ is reset to its previous value.
-    #     """
-    #     # verbosity is the public name replacing level, which was used previously
-    #     # For simplicity, we still use level here.
-    #     _ = current_lang.translate
-    #     if verbosity is None:
-    #         self.level = self._default_level
-    #         return
-
-    #     self.level = verbosity
 
     def set_formatter(self, formatter=None, theme="dark", markdown=False):
         """Sets the default formatter. If no argument is given, the default

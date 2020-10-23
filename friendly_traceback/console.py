@@ -257,7 +257,12 @@ class FriendlyConsole(InteractiveConsole):
 
 
 def start_console(
-    local_vars=None, use_rich=False, verbosity=7, lang="en", banner=None, theme="dark"
+    local_vars=None,
+    use_rich=False,
+    include="minimal",
+    lang="en",
+    banner=None,
+    theme="dark",
 ):
     """Starts a console; modified from code.interact"""
     from . import session
@@ -277,16 +282,16 @@ def start_console(
         "what": friendly.what,
         "where": friendly.where,
         "why": friendly.why,
+        "more": friendly.more,
         "get_lang": friendly.get_lang,
         "set_lang": friendly.set_lang,
-        "get_verbosity": friendly.get_verbosity,
-        "set_verbosity": friendly.set_verbosity,
         "get_include": friendly.get_include,
         "set_include": friendly.set_include,
         "hint": friendly.hint,
+        "debug": friendly.debug,
     }
     if not public_api.is_installed():
-        public_api.install(verbosity=verbosity, lang=lang)
+        public_api.install(include=include, lang=lang)
     if local_vars is None:
         local_vars = console_defaults
     else:
