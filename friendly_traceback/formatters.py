@@ -39,6 +39,40 @@ from .my_gettext import current_lang
 
 RICH_HEADER = False
 
+# The following is the order in which the various items, if they exist
+# and have been selected to be printed, would be printed.
+# If you are writing a custom formatter, this should be taken as the
+# authoritative list of items to consider.
+
+items_in_order = [
+    "header",
+    "message",  # The last line of a Python traceback
+    "original_python_traceback",
+    "simulated_python_traceback",
+    "shortened_traceback",
+    "suggest",
+    "generic",
+    "parsing_error",
+    "parsing_error_source",
+    "cause_header",
+    "cause",
+    "last_call_header",
+    "last_call_source",
+    "last_call_variables_header",
+    "last_call_variables",
+    "exception_raised_header",
+    "exception_raised_source",
+    "exception_raised_variables_header",
+    "exception_raised_variables",
+]
+
+
+# ===============================
+#
+#  Next, we have the four formatters.
+#
+# ===============================
+
 
 def pre(info, level=1):
     """Default formatter, primarily for console usage.
@@ -50,6 +84,7 @@ def pre(info, level=1):
     The only change made to the content of "info" is
     some added indentation.
     """
+    # We first define the indentation to appear before each item
     pre_items = {
         "header": "single",
         "message": "double",
@@ -95,9 +130,6 @@ def markdown(info, level=1):
     if further processed.
     """
     return _markdown(info, level=level)
-    # if result == [""]:
-    #     return _no_result(info, level)
-    # return "\n\n".join(result)
 
 
 def markdown_docs(info, level=1):
@@ -111,10 +143,6 @@ def markdown_docs(info, level=1):
     is further processed.
     """
     return _markdown(info, level=level, docs=True)
-    # if result == [""]:
-    #     return _no_result(info, level)
-
-    # return "\n\n".join(result)
 
 
 def rich_markdown(info, level=1):
@@ -129,9 +157,6 @@ def rich_markdown(info, level=1):
     final output, by ``session._write_err()``.
     """
     return _markdown(info, level=level, rich=True)
-    # if result == [""]:
-    #     return _no_result(info, level)
-    # return "\n\n".join(result)
 
 
 def _markdown(info, level, rich=False, docs=False):
@@ -201,6 +226,22 @@ def _markdown(info, level, rich=False, docs=False):
     return "\n\n".join(result)
 
 
+def _no_result(info, level):
+    """Should normally only be called if no result is available
+    from either hint() or why().
+    """
+    _ = current_lang.translate
+    if level == 13:  # why()
+        return _("I do not know.")
+    elif level == 14:  # suggest()
+        if info["cause"]:
+            return _("I have no suggestion to offer; try `why()`.")
+        else:
+            return _("I have no suggestion to offer.")
+    else:
+        return f"Internal error: level = {level} in formatters._no_result()"
+
+
 items_groups = {
     "header": {"header"},
     "message": {"message"},  # Also included as last line of traceback
@@ -238,30 +279,8 @@ items_groups["explain"] = (
 items_groups["no_tb"] = items_groups["explain"]
 items_groups["no_tb"].discard(items_groups["friendly_tb"])
 
-items_in_order = [
-    "header",
-    "message",
-    "original_python_traceback",
-    "simulated_python_traceback",
-    "shortened_traceback",
-    "suggest",
-    "generic",
-    "parsing_error",
-    "parsing_error_source",
-    "cause_header",
-    "cause",
-    "last_call_header",
-    "last_call_source",
-    "last_call_variables_header",
-    "last_call_variables",
-    "exception_raised_header",
-    "exception_raised_source",
-    "exception_raised_variables_header",
-    "exception_raised_variables",
-]
 
-
-def items_to_show(*groups):
+def select_items(*groups):
     items = set([])
     traceback_present = False
     for group in groups:
@@ -280,7 +299,7 @@ def items_to_show(*groups):
 
 def make_item_selector(items):
     def selector():
-        return items_to_show(items)
+        return select_items(items)
 
     return selector()
 
@@ -311,39 +330,18 @@ def tb_items_to_show(level=1):
     return selector[level]()
 
 
-def _no_result(info, level):
-    """Should only be called if no result is available from either
-    suggest() or why()
-    """
-    _ = current_lang.translate
-    if level == 13:  # why()
-        return _("I do not know.")
-    elif level == 14:  # suggest()
-        if info["cause"]:
-            return _("I have no suggestion to offer; try `why()`.")
-        else:
-            return _("I have no suggestion to offer.")
-    else:
-        return f"Internal error: level = {level} in formatters._no_result()"
-
-
 def _default():
     """Includes all the information processed by Friendly-traceback
     which does not include a traditional Python traceback
     """
-    return items_to_show("no_tb")
-    # return items_in_order[:]
+    return select_items("no_tb")
 
 
 def _traceback_before_default():
     """Includes the simulated Python traceback before all the information
     processed by Friendly-traceback.
     """
-    return items_to_show("explain")
-    # items = _default()
-    # # The traceback ends with the message; so we replace the message by the tb.
-    # items[1] = "shortened_traceback"
-    # return items
+    return select_items("explain")
 
 
 def _traceback_after_default():
@@ -404,8 +402,7 @@ def _advanced_user():  # Not (yet) included by Thonny
 
 def _tb_plus_suggest():
     """Shortened Python tracebacks followed by specific information."""
-    return items_to_show("explain")
-    # return ["shortened_traceback", "parsing_error", "suggest"]
+    return select_items("explain")
 
 
 def _simulated_python_traceback():

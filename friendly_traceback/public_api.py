@@ -305,7 +305,7 @@ class Friendly:
         """Shows the likely cause of the exception."""
         self.explain(13)
 
-    def suggest(self):
+    def hint(self):
         """Shows hint/suggestion if available."""
         self.explain(14)
 
