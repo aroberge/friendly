@@ -18,7 +18,7 @@ from .console import start_console
 
 
 def check_syntax(
-    *, source=None, filename="Fake filename", path=None, verbosity=None, lang=None
+    *, source=None, filename="Fake filename", path=None, include=None, lang=None
 ):
     """This uses Python's ``compile()`` builtin which does some analysis of
        its code argument and will raise an exception if it identifies
@@ -34,7 +34,7 @@ def check_syntax(
        Note that the ``path`` argument, if provided, takes precedence
        over the ``source`` argument.
 
-       Two additional named arguments, ``verbosity`` and ``lang``, can be
+       Two additional named arguments, ``include`` and ``lang``, can be
        provided to temporarily set the values to be used during this function
        call. The original values are restored at the end.
 
@@ -48,7 +48,7 @@ def check_syntax(
     """
     _ = current_lang.translate
 
-    saved_except_hook, saved_verbosity = _save_settings()
+    saved_except_hook, saved_include = _save_settings()
     saved_lang = _temp_set_lang(lang)
 
     if path is not None:
@@ -59,31 +59,31 @@ def check_syntax(
         except Exception:
             # Do not show the Python traceback which would include
             #  the call to open() in the traceback
-            if verbosity is None:
-                session.set_verbosity(5)
+            if include is None:
+                session.set_include("no_tb")
             else:
-                session.set_verbosity(verbosity)
+                session.set_include(include)
             session.explain_traceback()
-            _reset(saved_except_hook, saved_lang, saved_verbosity)
+            _reset(saved_except_hook, saved_lang, saved_include)
             return False
 
     cache.add(filename, source)
     try:
         code = compile(source, filename, "exec")
     except Exception:
-        if verbosity is None:
-            session.set_verbosity(1)  # our default
+        if include is None:
+            session.set_include("explain")  # our default
         else:
-            session.set_verbosity(verbosity)
+            session.set_include(include)
         session.explain_traceback()
-        _reset(saved_except_hook, saved_lang, saved_verbosity)
+        _reset(saved_except_hook, saved_lang, saved_include)
         return False
 
-    _reset(saved_except_hook, saved_lang, saved_verbosity)
+    _reset(saved_except_hook, saved_lang, saved_include)
     return code
 
 
-def exec_code(*, source=None, path=None, verbosity=None, lang=None):
+def exec_code(*, source=None, path=None, include=None, lang=None):
     """This uses check_syntax to see if the code is valid and, if so,
        executes it into a globals dict containing only
        ``{"__name__": "__main__"}``.
@@ -96,7 +96,7 @@ def exec_code(*, source=None, path=None, verbosity=None, lang=None):
        Note that the ``path`` argument, if provided, takes precedence
        over the ``source`` argument.
 
-       Two additional named arguments, ``verbosity`` and ``lang``, can be
+       Two additional named arguments, ``include`` and ``lang``, can be
        provided to temporarily set the values to be used during this function
        call. The original values are restored at the end.
 
@@ -104,33 +104,33 @@ def exec_code(*, source=None, path=None, verbosity=None, lang=None):
        to calling check_syntax, it will only be used for the duration
        of this function call.
     """
-    code = check_syntax(source=source, path=path, verbosity=verbosity, lang=lang)
+    code = check_syntax(source=source, path=path, include=include, lang=lang)
     if not code:
         return {}
 
-    saved_except_hook, saved_verbosity = _save_settings()
+    saved_except_hook, saved_include = _save_settings()
     saved_lang = _temp_set_lang(lang)
 
     module_globals = {"__name__": "__main__"}
     try:
         exec(code, module_globals)
     except Exception:
-        if verbosity is None:
-            session.set_verbosity(1)  # our default
+        if include is None:
+            session.set_include("explain")  # our default
         else:
-            session.set_verbosity(verbosity)
+            session.set_include(include)
         session.explain_traceback()
-        _reset(saved_except_hook, saved_lang, saved_verbosity)
+        _reset(saved_except_hook, saved_lang, saved_include)
         return module_globals
 
-    _reset(saved_except_hook, saved_lang, saved_verbosity)
+    _reset(saved_except_hook, saved_lang, saved_include)
     return module_globals
 
 
 def run(
     filename,
     lang=None,
-    verbosity=7,
+    include="minimal",
     args=None,
     console=True,
     use_rich=False,
@@ -141,8 +141,7 @@ def run(
 
        If friendly-traceback exception hook has not been set up prior
        to calling check_syntax, it will only be used for the duration
-       of this function call. By default, it uses the value of 7 for
-       the verbosity level.
+       of this function call.
 
        If friendly-traceback exception hook has not been set up prior
        to calling check_syntax, the exception hook will only be used for
@@ -161,14 +160,14 @@ def run(
         args = [arg.strip() for arg in args.split(" ")]
         # TODO: add extensive tests for this
         sys.argv.extend([arg for arg in args if arg])  # remove empty strings
-    module_globals = exec_code(path=filename, lang=lang, verbosity=verbosity)
+    module_globals = exec_code(path=filename, lang=lang, include=include)
     if console:
         start_console(
             local_vars=module_globals,
             use_rich=use_rich,
             banner="",
             theme=theme,
-            verbosity=verbosity,
+            include=include,
         )
     else:
         return module_globals
@@ -193,16 +192,16 @@ def _temp_set_lang(lang):
 
 def _save_settings():
     current_except_hook = sys.excepthook
-    current_verbosity = session.level
+    current_include = session.include
 
-    return current_except_hook, current_verbosity
+    return current_except_hook, current_include
 
 
-def _reset(saved_except_hook, saved_lang, saved_verbosity):
-    """Resets both verbosity and lang to their original values"""
+def _reset(saved_except_hook, saved_lang, saved_include):
+    """Resets both include and lang to their original values"""
     if saved_lang is not None:
         session.install_gettext(saved_lang)
-    session.set_verbosity(saved_verbosity)
-    # set_verbosity(0) restores sys.excepthook to sys.__excepthook__
+    session.set_include(saved_include)
+    # set_include(0) restores sys.excepthook to sys.__excepthook__
     # which might not be what is wanted. So, we reset sys.excepthook last
     sys.excepthook = saved_except_hook

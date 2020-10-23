@@ -11,7 +11,7 @@ A formatter is a function that takes two arguments::
 
 2. A second argument which is meant to convey what information should be shown.
    This second argument used to be a single integer ("verbosity level").
-   It is currently recently being replaced by a tuple of strings. However,
+   It is currently recently being replaced by a string. However,
    this might change as we experiment with various options prior to
    version 1.0
 
@@ -290,161 +290,161 @@ def select_items(group_name):
     return ordered_items
 
 
-def make_item_selector(items):
-    def selector():
-        return select_items(items)
+# def make_item_selector(items):
+#     def selector():
+#         return select_items(items)
 
-    return selector()
-
-
-def tb_items_to_show(level=1):
-    """Given a verbosity level, returns a list of traceback items to show."""
-    if level == 1:
-        return make_item_selector("explain")
-    elif level == 2:
-        return make_item_selector("no_tb")
-    selector = {
-        1: _traceback_before_default,  # for running script in non-interactive mode
-        2: _default,  # used to be level 1
-        3: _traceback_before_default,  # same as 1
-        4: _traceback_before_no_generic,
-        5: _no_generic_explanation,  # define as more
-        6: _traceback_after_no_generic,
-        7: _tb_plus_suggest,  # shortened traceback, default for console
-        8: _advanced_user,
-        9: _shortened_python_traceback,
-        0: _simulated_python_traceback,
-        -1: _original_python_traceback,
-        11: _what,
-        12: _where,
-        13: _why,
-        14: _suggest,
-    }
-    return selector[level]()
+#     return selector()
 
 
-def _default():
-    """Includes all the information processed by Friendly-traceback
-    which does not include a traditional Python traceback
-    """
-    return select_items("no_tb")
+# def tb_items_to_show(level=1):
+#     """Given a verbosity level, returns a list of traceback items to show."""
+#     if level == 1:
+#         return make_item_selector("explain")
+#     elif level == 2:
+#         return make_item_selector("no_tb")
+#     selector = {
+#         1: _traceback_before_default,  # for running script in non-interactive mode
+#         2: _default,  # used to be level 1
+#         3: _traceback_before_default,  # same as 1
+#         4: _traceback_before_no_generic,
+#         5: _no_generic_explanation,  # define as more
+#         6: _traceback_after_no_generic,
+#         7: _tb_plus_suggest,  # shortened traceback, default for console
+#         8: _advanced_user,
+#         9: _shortened_python_traceback,
+#         0: _simulated_python_traceback,
+#         -1: _original_python_traceback,
+#         11: _what,
+#         12: _where,
+#         13: _why,
+#         14: _suggest,
+#     }
+#     return selector[level]()
 
 
-def _traceback_before_default():
-    """Includes the simulated Python traceback before all the information
-    processed by Friendly-traceback.
-    """
-    return select_items("explain")
+# def _default():
+#     """Includes all the information processed by Friendly-traceback
+#     which does not include a traditional Python traceback
+#     """
+#     return select_items("no_tb")
 
 
-def _traceback_after_default():
-    """Includes the simulated Python traceback after all the information
-    processed by Friendly-traceback.
-    """
-    items = _default()
-    items.append("shortened_traceback")
-    return items
+# def _traceback_before_default():
+#     """Includes the simulated Python traceback before all the information
+#     processed by Friendly-traceback.
+#     """
+#     return select_items("explain")
 
 
-def _no_generic_explanation():
-    """Similar to the default option except that it does not display the
-    generic information about a given exception.
-    """
-    items = []
-    for item in items_in_order:
-        if item == "generic":
-            continue
-        items.append(item)
-    return items
+# def _traceback_after_default():
+#     """Includes the simulated Python traceback after all the information
+#     processed by Friendly-traceback.
+#     """
+#     items = _default()
+#     items.append("shortened_traceback")
+#     return items
 
 
-def _traceback_before_no_generic():
-    """Includes the simulated Python traceback before all the information
-    processed by Friendly-traceback.
-    """
-    items = ["shortened_traceback"]
-    items.extend(_no_generic_explanation())
-    return items
+# def _no_generic_explanation():
+#     """Similar to the default option except that it does not display the
+#     generic information about a given exception.
+#     """
+#     items = []
+#     for item in items_in_order:
+#         if item == "generic":
+#             continue
+#         items.append(item)
+#     return items
 
 
-def _traceback_after_no_generic():
-    """Includes the simulated Python traceback after all the information
-    processed by Friendly-traceback.
-    """
-    items = _no_generic_explanation()
-    items.append("shortened_traceback")
-    return items
+# def _traceback_before_no_generic():
+#     """Includes the simulated Python traceback before all the information
+#     processed by Friendly-traceback.
+#     """
+#     items = ["shortened_traceback"]
+#     items.extend(_no_generic_explanation())
+#     return items
 
 
-def _advanced_user():  # Not (yet) included by Thonny
-    """Useful information for advanced users."""
-    return [
-        "header",
-        "simulated_python_traceback",
-        "suggest",
-        "parsing_error_source",
-        "cause",
-        "last_call_header",
-        "last_call_source",
-        "last_call_variables",
-        "exception_raised_header",
-        "exception_raised_source",
-        "exception_raised_variables",
-    ]
+# def _traceback_after_no_generic():
+#     """Includes the simulated Python traceback after all the information
+#     processed by Friendly-traceback.
+#     """
+#     items = _no_generic_explanation()
+#     items.append("shortened_traceback")
+#     return items
 
 
-def _tb_plus_suggest():
-    """Shortened Python tracebacks followed by specific information."""
-    return select_items("explain")
+# def _advanced_user():  # Not (yet) included by Thonny
+#     """Useful information for advanced users."""
+#     return [
+#         "header",
+#         "simulated_python_traceback",
+#         "suggest",
+#         "parsing_error_source",
+#         "cause",
+#         "last_call_header",
+#         "last_call_source",
+#         "last_call_variables",
+#         "exception_raised_header",
+#         "exception_raised_source",
+#         "exception_raised_variables",
+#     ]
 
 
-def _simulated_python_traceback():
-    """Shows only the simulated Python traceback"""
-    return ["simulated_python_traceback"]
+# def _tb_plus_suggest():
+#     """Shortened Python tracebacks followed by specific information."""
+#     return select_items("explain")
 
 
-def _shortened_python_traceback():
-    """Shows only the simulated Python traceback"""
-    return ["shortened_traceback"]
+# def _simulated_python_traceback():
+#     """Shows only the simulated Python traceback"""
+#     return ["simulated_python_traceback"]
 
 
-def _original_python_traceback():
-    """Shows only the original Python traceback, which includes calls
-    to friendly-traceback itself. It should only be used for diagnostic.
-    """
-    return ["original_python_traceback"]
+# def _shortened_python_traceback():
+#     """Shows only the simulated Python traceback"""
+#     return ["shortened_traceback"]
 
 
-def _what():
-    """Shows the message and and the generic meaning.
-
-    For example: A NameError means ...
-    """
-    return ["message", "generic"]
-
-
-def _why():
-    """Show only the likely cause"""
-    return ["cause"]
+# def _original_python_traceback():
+#     """Shows only the original Python traceback, which includes calls
+#     to friendly-traceback itself. It should only be used for diagnostic.
+#     """
+#     return ["original_python_traceback"]
 
 
-def _suggest():
-    """Show only the hint/suggestion if available"""
-    return ["suggest"]
+# def _what():
+#     """Shows the message and and the generic meaning.
+
+#     For example: A NameError means ...
+#     """
+#     return ["message", "generic"]
 
 
-def _where():
-    """Shows the locations where the program stopped and where the
-    exception was raised, together with variable information
-    at these locations.
-    """
-    return [
-        "parsing_error",
-        "parsing_error_source",
-        "last_call_header",
-        "last_call_source",
-        "last_call_variables",
-        "exception_raised_header",
-        "exception_raised_source",
-        "exception_raised_variables",
-    ]
+# def _why():
+#     """Show only the likely cause"""
+#     return ["cause"]
+
+
+# def _suggest():
+#     """Show only the hint/suggestion if available"""
+#     return ["suggest"]
+
+
+# def _where():
+#     """Shows the locations where the program stopped and where the
+#     exception was raised, together with variable information
+#     at these locations.
+#     """
+#     return [
+#         "parsing_error",
+#         "parsing_error_source",
+#         "last_call_header",
+#         "last_call_source",
+#         "last_call_variables",
+#         "exception_raised_header",
+#         "exception_raised_source",
+#         "exception_raised_variables",
+#     ]

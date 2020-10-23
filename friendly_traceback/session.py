@@ -61,7 +61,7 @@ class _State:
     def set_defaults(self):
         """Sets some defaults for various values"""
         self.include = "explain"
-        self.level = self._default_level = 1
+        # self.level = self._default_level = 1
         self.lang = "en"
         self.install_gettext(self.lang)
 
@@ -102,22 +102,22 @@ class _State:
     def get_include(self):
         return self.include
 
-    def set_verbosity(self, verbosity=None):
-        """Sets the "verbosity level".
+    # def set_verbosity(self, verbosity=None):
+    #     """Sets the "verbosity level".
 
-        If no argument is given, the default value is set.
+    #     If no argument is given, the default value is set.
 
-        If a value of 0 is chosen, Frendly-traceback is uninstalled
-        and sys.__excepthook__ is reset to its previous value.
-        """
-        # verbosity is the public name replacing level, which was used previously
-        # For simplicity, we still use level here.
-        _ = current_lang.translate
-        if verbosity is None:
-            self.level = self._default_level
-            return
+    #     If a value of 0 is chosen, Frendly-traceback is uninstalled
+    #     and sys.__excepthook__ is reset to its previous value.
+    #     """
+    #     # verbosity is the public name replacing level, which was used previously
+    #     # For simplicity, we still use level here.
+    #     _ = current_lang.translate
+    #     if verbosity is None:
+    #         self.level = self._default_level
+    #         return
 
-        self.level = verbosity
+    #     self.level = verbosity
 
     def set_formatter(self, formatter=None, theme="dark", markdown=False):
         """Sets the default formatter. If no argument is given, the default

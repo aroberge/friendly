@@ -16,7 +16,7 @@ def test_check_syntax():
     good_code = "c = 1"
 
     friendly.set_stream("capture")
-    original_verbosity = friendly.get_verbosity()
+    original_include = friendly.get_include()
     installed = friendly.is_installed()
     # ----- end of set-up
 
@@ -46,18 +46,18 @@ def test_check_syntax():
     friendly.uninstall()
     friendly.editors_helper.check_syntax(source=bad_code_syntax)
     assert not friendly.is_installed()
-    friendly.editors_helper.check_syntax(source=bad_code_syntax, verbosity=4)
+    friendly.editors_helper.check_syntax(source=bad_code_syntax, include="python_tb")
     assert not friendly.is_installed()
 
     # When friendly-traceback is "installed", a call to check_syntax
-    # leaves its verbosity unchanged.
+    # leaves its include unchanged.
     friendly.install(redirect="capture")
 
-    friendly.set_verbosity(3)
+    friendly.set_include("explain")
     friendly.editors_helper.check_syntax(source=bad_code_syntax)
-    assert friendly.get_verbosity() == 3
-    friendly.editors_helper.check_syntax(source=bad_code_syntax, verbosity=4)
-    assert friendly.get_verbosity() == 3
+    assert friendly.get_include() == "explain"
+    friendly.editors_helper.check_syntax(source=bad_code_syntax, include="python_tb")
+    assert friendly.get_include() == "explain"
 
     # A call to advanced_code_syntax, with a language specified as an argument
     # should leave the previous language unchanged.
@@ -73,7 +73,7 @@ def test_check_syntax():
     friendly.set_stream(None)
     if installed:
         friendly.uninstall()
-    friendly.set_verbosity(original_verbosity)
+    friendly.set_include(original_include)
 
 
 if __name__ == "__main__":

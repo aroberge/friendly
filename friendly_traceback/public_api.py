@@ -25,10 +25,11 @@ from .session import session
 
 # Make functions from other modules directly available from here.
 from .editors_helper import run
-from .formatters import tb_items_to_show
+
+# from .formatters import tb_items_to_show
 from .path_info import exclude_file_from_traceback
 
-__all__ = ["exclude_file_from_traceback", "run", "tb_items_to_show"]
+__all__ = ["exclude_file_from_traceback", "run"]  # , "tb_items_to_show"]
 
 
 def make_public(f):
@@ -114,11 +115,11 @@ def get_output(flush=True):
 @make_public
 def set_formatter(formatter=None, **kwds):
     """Sets the default formatter. If no argument is given, the default
-    formatter, based on the level, is used.
+    formatter is used.
 
     A custom formatter must accept ``info`` as a required arguments
-    as well as arbitrary keyword-based arguments - these are currently
-    subject to change but include ``level``.
+    as well an additional argument whose value is subject to change.
+    See formatters.py for details.
     """
     session.set_formatter(formatter=formatter, **kwds)
 
@@ -156,31 +157,31 @@ def get_lang():
     return session.lang
 
 
-@make_public
-def set_verbosity(verbosity_level):
-    """Sets the verbosity level to be used. These settings might be ignored
-    by custom formatters.
+# @make_public
+# def set_verbosity(verbosity_level):
+#     """Sets the verbosity level to be used. These settings might be ignored
+#     by custom formatters.
 
-    Vocabulary examples ::
-        Generic explanation: A NameError occurs when ...
-        Specific explanation: In your program, the unknown name is ...
+#     Vocabulary examples ::
+#         Generic explanation: A NameError occurs when ...
+#         Specific explanation: In your program, the unknown name is ...
 
-    The values are as follows::
+#     The values are as follows::
 
-        1: All items except with a shortened Python traceback.
-           Default for non-interactive scripts.
-        2: Same as 1, except that the traceback is not shown.
-        3: Similar to 1 but Python tracebacks appended at the end of the output.
-        4: Same as 1, but generic explanation is not included
-        5: Same as 2, but generic explanation is not included
-        6: Same as 3, but generic explanation is not included
-        7: Shortened python tracebacks followed by suggestion/hint.
-        8: Subject to change.
-        9: Shortened Python traceback
-        0: Normal Python traceback.
-        -1: Python traceback that also includes calls to friendly-traceback.
-    """
-    session.set_verbosity(verbosity_level)
+#         1: All items except with a shortened Python traceback.
+#            Default for non-interactive scripts.
+#         2: Same as 1, except that the traceback is not shown.
+#         3: Similar to 1 but Python tracebacks appended at the end of the output.
+#         4: Same as 1, but generic explanation is not included
+#         5: Same as 2, but generic explanation is not included
+#         6: Same as 3, but generic explanation is not included
+#         7: Shortened python tracebacks followed by suggestion/hint.
+#         8: Subject to change.
+#         9: Shortened Python traceback
+#         0: Normal Python traceback.
+#         -1: Python traceback that also includes calls to friendly-traceback.
+#     """
+#     session.set_verbosity(verbosity_level)
 
 
 @make_public
@@ -195,10 +196,10 @@ def get_include():
     return session.get_include()
 
 
-@make_public
-def get_verbosity():
-    """Returns the verbosity level currently used."""
-    return session.level
+# @make_public
+# def get_verbosity():
+#     """Returns the verbosity level currently used."""
+#     return session.level
 
 
 @make_public
@@ -275,8 +276,8 @@ class Friendly:
     def __init__(self):
         self.get_lang = get_lang
         self.set_lang = set_lang
-        self.get_verbosity = get_verbosity
-        self.set_verbosity = set_verbosity
+        # self.get_verbosity = get_verbosity
+        # self.set_verbosity = set_verbosity
         self.get_include = get_include
         self.set_include = set_include
         self.run = run
@@ -334,10 +335,11 @@ class Friendly:
 @make_public
 def set_level(verbosity_level):
     """Deprecated; use set_verbosity() instead."""
-    set_verbosity(verbosity_level)
+    print("friendly-traceback set_level is deprecated; defaults will be used.")
+    set_include("explain")
 
 
-@make_public
-def get_level():
-    """Deprecated: use get_verbosity() instead."""
-    return get_verbosity()
+# @make_public
+# def get_level():
+#     """Deprecated: use get_verbosity() instead."""
+#     return get_verbosity()
