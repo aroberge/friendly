@@ -34,25 +34,6 @@ parser = argparse.ArgumentParser(
 
     If no command line arguments other than -m are specified,
     Friendly-traceback will start an interactive console.
-
-    Note: the values of the verbosity level described below are:
-
-        1: All items except with a shortened Python traceback.
-           Default for non-interactive scripts.
-        2: Same as 1, except that the traceback is not shown.
-        3: Similar to 1 but Python tracebacks appended at the end of the output.
-        4: Same as 1, but generic explanation is not included
-        5: Same as 2, but generic explanation is not included
-        6: Same as 3, but generic explanation is not included
-        7: Shortened python tracebacks followed by suggestion/hint.
-        8: Subject to change.
-        9: Shortened Python traceback
-        0: Normal Python traceback.
-        -1: Python traceback that also includes calls to friendly-traceback.
-
-       Vocabulary examples:
-           Generic explanation: A NameError occurs when ...
-           Specific explanation: In your program, the unknown name is ...
         """.format(
             versions=versions
         )
@@ -79,14 +60,6 @@ parser.add_argument(
     default="en",
     help="""This sets the language used by Friendly-tracebacks.
             Usually this is a two-letter code such as 'fr' for French.
-         """,
-)
-
-parser.add_argument(
-    "--verbosity",
-    type=int,
-    help="""This sets the "verbosity" level, that is the amount of information
-            provided.
          """,
 )
 
@@ -140,16 +113,11 @@ def main():
         with open(log_file, "w", encoding="utf8") as out:
             out.write("Friendly log\n\n")
 
-    if args.verbosity:
-        verbosity = args.verbosity
-    elif sys.flags.interactive:  # console after running
-        verbosity = 7
-    elif args.source:
-        verbosity = 1
-    else:  # console
-        verbosity = 7
+    include = "minimal"
+    if args.source:
+        include = "explain"
 
-    public_api.install(lang=args.lang, verbosity=verbosity)
+    public_api.install(lang=args.lang, include=include)
 
     use_rich = False
     if args.format:

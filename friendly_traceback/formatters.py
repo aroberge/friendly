@@ -74,7 +74,7 @@ items_in_order = [
 # ===============================
 
 
-def pre(info, level=1):
+def pre(info, include="minimal"):
     """Default formatter, primarily for console usage.
 
     It also  produces an output that is suitable for
@@ -107,7 +107,8 @@ def pre(info, level=1):
         "shortened_traceback": "single",
     }
 
-    items_to_show = tb_items_to_show(level=level)
+    # items_to_show = tb_items_to_show(level=level)
+    items_to_show = select_items(include)
     spacing = {"single": " " * 4, "double": " " * 8, "none": ""}
     result = [""]
     for item in items_to_show:
@@ -117,22 +118,22 @@ def pre(info, level=1):
                 result.append(indentation + line)
 
     if result == [""]:
-        return _no_result(info, level)
+        return _no_result(info, include)
 
     return "\n".join(result)
 
 
-def markdown(info, level=1):
+def markdown(info, include="minimal"):
     """Traceback formatted with markdown syntax.
 
     Some minor changes of the traceback info content are done,
     for nicer final display when the markdown generated content
     if further processed.
     """
-    return _markdown(info, level=level)
+    return _markdown(info, include)
 
 
-def markdown_docs(info, level=1):
+def markdown_docs(info, include="minimal"):
     """Traceback formatted with markdown syntax, where each
     header is shifted down by 2 (h1 -> h3, etc.) so that they
     can be inserted in a document, without creating artificial
@@ -142,10 +143,10 @@ def markdown_docs(info, level=1):
     for nicer final display when the markdown generated content
     is further processed.
     """
-    return _markdown(info, level=level, docs=True)
+    return _markdown(info, include, docs=True)
 
 
-def rich_markdown(info, level=1):
+def rich_markdown(info, include="minimal"):
     """Traceback formatted with with markdown syntax suitable for
     printing in color in the console using Rich.
 
@@ -156,10 +157,10 @@ def rich_markdown(info, level=1):
     Some additional processing is done just prior to doing the
     final output, by ``session._write_err()``.
     """
-    return _markdown(info, level=level, rich=True)
+    return _markdown(info, include, rich=True)
 
 
-def _markdown(info, level, rich=False, docs=False):
+def _markdown(info, include, rich=False, docs=False):
     """Traceback formatted with with markdown syntax."""
     global RICH_HEADER
     RICH_HEADER = False
@@ -187,7 +188,7 @@ def _markdown(info, level, rich=False, docs=False):
         "shortened_traceback": ("```pytb\n", "\n```"),
     }
 
-    items_to_show = tb_items_to_show(level=level)
+    items_to_show = select_items(include)  # tb_items_to_show(level=level)
     result = [""]
     for item in items_to_show:
         if rich and item == "header":  # Skip it here; handled by session.py
@@ -222,24 +223,24 @@ def _markdown(info, level, rich=False, docs=False):
             result.append(prefix + content + suffix)
 
     if result == [""]:
-        return _no_result(info, level)
+        return _no_result(info, include)
     return "\n\n".join(result)
 
 
-def _no_result(info, level):
+def _no_result(info, include):
     """Should normally only be called if no result is available
     from either hint() or why().
     """
     _ = current_lang.translate
-    if level == 13:  # why()
+    if include == "why":
         return _("I do not know.")
-    elif level == 14:  # suggest()
+    elif include == "hint":
         if info["cause"]:
             return _("I have no suggestion to offer; try `why()`.")
         else:
             return _("I have no suggestion to offer.")
     else:
-        return f"Internal error: level = {level} in formatters._no_result()"
+        return f"Internal error: include = {include} in formatters._no_result()"
 
 
 items_groups = {
@@ -247,7 +248,7 @@ items_groups = {
     "message": {"message"},  # Also included as last line of traceback
     "hint": {"suggest"},
     "generic": {"generic"},
-    "what": {"message", "generic"},
+    "what": {"message", "generic"},  # Only include "message" here.
     "why": {"cause"},
     "where": {
         "parsing_error",
@@ -280,16 +281,8 @@ items_groups["no_tb"] = items_groups["explain"]
 items_groups["no_tb"].discard(items_groups["friendly_tb"])
 
 
-def select_items(*groups):
-    items = set([])
-    traceback_present = False
-    for group in groups:
-        if group in {"friendly_tb", "python_tb", "debug_tb"}:
-            traceback_present = True
-        items = items.union(items_groups[group])
-    if traceback_present:
-        items.discard(items_groups["message"])
-
+def select_items(group_name):
+    items = items_groups[group_name]
     ordered_items = []
     for item in items_in_order:
         if item in items:

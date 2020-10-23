@@ -281,6 +281,8 @@ def start_console(
         "set_lang": friendly.set_lang,
         "get_verbosity": friendly.get_verbosity,
         "set_verbosity": friendly.set_verbosity,
+        "get_include": friendly.get_include,
+        "set_include": friendly.set_include,
         "hint": friendly.hint,
     }
     if not public_api.is_installed():

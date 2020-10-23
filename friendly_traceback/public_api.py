@@ -64,7 +64,7 @@ def explain(redirect=None):
 
 
 @make_public
-def install(lang=None, redirect=None, verbosity=None, level=None):
+def install(lang=None, redirect=None, include="minimal", level=None):
     """
     Replaces ``sys.excepthook`` by friendly_traceback's own version.
     Intercepts, and provides an explanation for all Python exceptions except
@@ -78,13 +78,14 @@ def install(lang=None, redirect=None, verbosity=None, level=None):
         redirect: stream to be used to send the output.
                   The default is sys.stderr
 
-        verbosity: verbosity level.  See set_verbosity() for details.
+        include: controls the amout of information displayed.
+        See set_include() for details.
 
         level: deprecated; use verbosity instead.
     """
-    if verbosity is None:
-        verbosity = level  # Supporting deprecated argument
-    session.install(lang=lang, redirect=redirect, verbosity=verbosity)
+    if level is not None:
+        print("Friendly-traceback: level is no longer supported")
+    session.install(lang=lang, redirect=redirect, include=include)
 
 
 @make_public
@@ -183,6 +184,18 @@ def set_verbosity(verbosity_level):
 
 
 @make_public
+def set_include(include):
+    "placeholder docstring"
+    session.set_include(include)
+
+
+@make_public
+def get_include():
+    "placeholder docstring"
+    return session.get_include()
+
+
+@make_public
 def get_verbosity():
     """Returns the verbosity level currently used."""
     return session.level
@@ -252,9 +265,9 @@ class Friendly:
 
     set_lang: {set_lang.__doc__}
 
-    get_verbosity: {get_verbosity.__doc__}
+    get_include: {get_include.__doc__}
 
-    set_verbosity: {set_verbosity.__doc__}
+    set_include: {set_include.__doc__}
 
     run: {run.__doc__}
     """
@@ -264,6 +277,8 @@ class Friendly:
         self.set_lang = set_lang
         self.get_verbosity = get_verbosity
         self.set_verbosity = set_verbosity
+        self.get_include = get_include
+        self.set_include = set_include
         self.run = run
 
     def _show_info(self):
@@ -275,39 +290,40 @@ class Friendly:
         for item in session.saved_traceback_info:
             print(f"{item}: {session.saved_traceback_info[item]}")
 
-    def explain(self, verbosity=None):
+    def explain(self, include="explain"):
         """Shows the previously recorded traceback info again,
         with the specified verbosity level.
 
         See set_verbosity() for details.
         """
-        if verbosity is None:
-            verbosity = 1
-        old_level = self.get_verbosity()
-        self.set_verbosity(verbosity)
+        # if verbosity is None:
+        #     verbosity = 1
+        # old_level = self.get_verbosity()
+        old_include = self.get_include
+        self.set_include(include)
         session.show_traceback_info_again()
-        self.set_verbosity(old_level)
-        print()
+        self.set_include(old_include)
+        # self.set_verbosity(old_level)
 
     def traceback(self):
         """Shows the traceback."""
-        self.explain(0)
+        self.explain("python_tb")
 
     def what(self):
         """If known, shows the generic explanation about a given exception."""
-        self.explain(11)
+        self.explain("what")
 
     def where(self):
         """Shows the information about where the exception occurred"""
-        self.explain(12)
+        self.explain("where")
 
     def why(self):
         """Shows the likely cause of the exception."""
-        self.explain(13)
+        self.explain("why")
 
     def hint(self):
         """Shows hint/suggestion if available."""
-        self.explain(14)
+        self.explain("hint")
 
 
 # -----------------------------------------

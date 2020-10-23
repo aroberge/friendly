@@ -60,6 +60,7 @@ class _State:
 
     def set_defaults(self):
         """Sets some defaults for various values"""
+        self.include = "explain"
         self.level = self._default_level = 1
         self.lang = "en"
         self.install_gettext(self.lang)
@@ -76,7 +77,7 @@ class _State:
         if self.saved_traceback_info is None:
             print(_("Nothing to show: no exception recorded."))
             return
-        explanation = self.formatter(self.saved_traceback_info, level=self.level)
+        explanation = self.formatter(self.saved_traceback_info, include=self.include)
         self.write_err(explanation + "\n")
 
     def capture(self, txt):
@@ -95,6 +96,12 @@ class _State:
         current_lang.install(lang)
         self.lang = lang
 
+    def set_include(self, include):
+        self.include = include
+
+    def get_include(self):
+        return self.include
+
     def set_verbosity(self, verbosity=None):
         """Sets the "verbosity level".
 
@@ -109,14 +116,6 @@ class _State:
         if verbosity is None:
             self.level = self._default_level
             return
-        else:
-            try:
-                formatters.tb_items_to_show(verbosity)
-            except KeyError:
-                self.write_err(
-                    _("Verbosity level {level} not valid.").format(level=verbosity)
-                )
-                return
 
         self.level = verbosity
 
@@ -151,7 +150,7 @@ class _State:
         else:
             return f"'{text}'"
 
-    def install(self, lang=None, redirect=None, verbosity=None):
+    def install(self, lang=None, redirect=None, include="explain"):
         """Replaces sys.excepthook by friendly_traceback's own version."""
         _ = current_lang.translate
 
@@ -159,8 +158,8 @@ class _State:
             self.install_gettext(lang)
         if redirect is not None:
             self.set_redirect(redirect=redirect)
-        if verbosity is not None:
-            self.set_verbosity(verbosity)
+        if include != self.include:
+            self.set_include(include)
 
         sys.excepthook = self.exception_hook
         self.installed = True
@@ -230,7 +229,7 @@ class _State:
             self.saved_traceback_info = info = core.get_traceback_info(
                 etype, value, tb, self._debug
             )
-            explanation = self.formatter(info, level=self.level)
+            explanation = self.formatter(info, include=self.include)
         except FriendlyException as e:
             self.write_err(e)
             return
