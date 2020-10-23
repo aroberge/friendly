@@ -139,7 +139,21 @@ def format_var_info(tok, _dict, _global="", _builtins=""):
         # We reduce the length of the repr, indicate this by ..., but we
         # also keep the last character so that the repr of a list still
         # ends with ], that of a tuple still ends with ), etc.
-        value = value[0 : MAX_LENGTH - 5] + "..." + value[-1]
+        if "," in value:  # try to truncate at a natural place
+            parts = value.split(", ")
+            length = 0
+            new_parts = []
+            for part in parts:
+                if len(part) + length > MAX_LENGTH:
+                    break
+                new_parts.append(part + ", ")
+                length += len(part) + 2
+            if new_parts:
+                value = "".join(new_parts) + "..." + value[-1]
+            else:
+                value = value[0 : MAX_LENGTH - 5] + "..." + value[-1]
+        else:
+            value = value[0 : MAX_LENGTH - 5] + "..." + value[-1]
         try:
             length_info = len(obj)
         except TypeError:
@@ -147,7 +161,7 @@ def format_var_info(tok, _dict, _global="", _builtins=""):
 
     result = f"    {_global}{name}: {value}"
     if length_info:
-        result += f"  | len({name}): {length_info}"
+        result += f"\n        len({name}): {length_info}"
     return result
 
 
