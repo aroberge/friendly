@@ -85,5 +85,5 @@ def init_console(theme="dark"):
     else:
         console = Console(theme=dark_background_theme)
 
-    pretty.install(console=console)
+    pretty.install(console=console, indent_guides=True)
     return console

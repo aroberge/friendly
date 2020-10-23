@@ -111,6 +111,7 @@ rich_style = {
     #
     "repr.str": my_style["string"],
     "repr.error": my_style["Exception"],
+    "repr.indent": my_style["comments"],
 }
 
 my_style.update(**rich_style)
