@@ -266,6 +266,15 @@ class Friendly:
         self.set_verbosity = set_verbosity
         self.run = run
 
+    def _show_info(self):
+        """Debugging tool: shows the content of traceback info."""
+        if session.saved_traceback_info is None:
+            print("No recorded traceback\n")
+            return
+        print("Recorded traceback information:\n")
+        for item in session.saved_traceback_info:
+            print(f"{item}: {session.saved_traceback_info[item]}")
+
     def explain(self, verbosity=None):
         """Shows the previously recorded traceback info again,
         with the specified verbosity level.

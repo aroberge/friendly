@@ -116,6 +116,7 @@ class _State:
                 self.write_err(
                     _("Verbosity level {level} not valid.").format(level=verbosity)
                 )
+                raise
                 return
 
         self.level = verbosity

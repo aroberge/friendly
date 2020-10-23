@@ -1,51 +1,43 @@
 """formatters.py
 
 Default formatters showing all or only part of the available information.
+
+A formatter is a function that takes two arguments::
+
+1. a dict (named ``info`` everywhere in friendly-traceback files) containing
+   all the information that can be shown to the user, as well as some
+   entries that are meant to be used only internally as the full
+   friendly-traceback information is obtained.
+
+2. A second argument which is meant to convey what information should be shown.
+   This second argument used to be a single integer ("verbosity level").
+   It is currently recently being replaced by a tuple of strings. However,
+   this might change as we experiment with various options prior to
+   version 1.0
+
+A formatter returns a single string. By default, this string will be
+written to stderr; however this can be changed by the calling program.
+
+This module currently contains 4 formatters:
+
+* ``pre()``: this produces output with leading spaces so that it can be
+  embedded as a code-block in a file (such as .rst). It can also be used
+  to print the information in a traditional console, including that
+  found in IDLE.
+
+* ``markdown()``: This produces an output formatted with markdown syntax.
+
+* ``markdown_docs()``: This produces an output formatted markdown syntax,
+    but where each header is shifted down by 2 (h1 -> h3, etc.) so that they
+    can be inserted in a document, without creating artificial top headers.
+
+* ``rich_markdown()``: This produces an output formatted with markdown syntax,
+    with some modification, with the end result intended to be printed
+    in colour in a console using Rich (https://github.com/willmcgugan/rich).
 """
 from .my_gettext import current_lang
 
 RICH_HEADER = False
-
-default_items_in_order = [  # This list excludes three traceback items
-    "header",
-    "message",
-    "suggest",
-    "generic",
-    "parsing_error",
-    "parsing_error_source",
-    "cause_header",
-    "cause",
-    "last_call_header",
-    "last_call_source",
-    "last_call_variables_header",
-    "last_call_variables",
-    "exception_raised_header",
-    "exception_raised_source",
-    "exception_raised_variables_header",
-    "exception_raised_variables",
-]
-
-
-def tb_items_to_show(level=1):
-    """Given a verbosity level, returns a list of traceback items to show."""
-    selector = {
-        1: _traceback_before_default,  # for running script in non-interactive mode
-        2: _default,  # used to be level 1
-        3: _traceback_after_default,
-        4: _traceback_before_no_generic,
-        5: _no_generic_explanation,
-        6: _traceback_after_no_generic,
-        7: _tb_plus_suggest,  # shortened traceback, default for console
-        8: _advanced_user,
-        9: _shortened_python_traceback,
-        0: _simulated_python_traceback,
-        -1: _original_python_traceback,
-        11: _what,
-        12: _where,
-        13: _why,
-        14: _suggest,
-    }
-    return selector[level]()
 
 
 def pre(info, level=1):
@@ -96,20 +88,20 @@ def pre(info, level=1):
 
 
 def markdown(info, level=1):
-    """Traceback formatted with with markdown syntax.
+    """Traceback formatted with markdown syntax.
 
     Some minor changes of the traceback info content are done,
     for nicer final display when the markdown generated content
     if further processed.
     """
-    result = _markdown(info, level=level)
-    if result == [""]:
-        return _no_result(info, level)
-    return "\n\n".join(result)
+    return _markdown(info, level=level)
+    # if result == [""]:
+    #     return _no_result(info, level)
+    # return "\n\n".join(result)
 
 
 def markdown_docs(info, level=1):
-    """Traceback formatted with with markdown syntax, where each
+    """Traceback formatted with markdown syntax, where each
     header is shifted down by 2 (h1 -> h3, etc.) so that they
     can be inserted in a document, without creating artificial
     top headers.
@@ -118,11 +110,11 @@ def markdown_docs(info, level=1):
     for nicer final display when the markdown generated content
     is further processed.
     """
-    result = _markdown(info, level=level, docs=True)
-    if result == [""]:
-        return _no_result(info, level)
+    return _markdown(info, level=level, docs=True)
+    # if result == [""]:
+    #     return _no_result(info, level)
 
-    return "\n\n".join(result)
+    # return "\n\n".join(result)
 
 
 def rich_markdown(info, level=1):
@@ -132,27 +124,14 @@ def rich_markdown(info, level=1):
     Some minor changes of the traceback info content are done,
     for nicer final display when the markdown generated content
     if further processed.
-    """
-    result = _markdown(info, level=level, rich=True)
-    if result == [""]:
-        return _no_result(info, level)
-    return "\n\n".join(result)
 
-
-def _no_result(info, level):
-    """Should only be called if no result is available from either
-    suggest() or why()
+    Some additional processing is done just prior to doing the
+    final output, by ``session._write_err()``.
     """
-    _ = current_lang.translate
-    if level == 13:  # why()
-        return _("I do not know.")
-    elif level == 14:  # suggest()
-        if info["cause"]:
-            return _("I have no suggestion to offer; try `why()`.")
-        else:
-            return _("I have no suggestion to offer.")
-    else:
-        return f"Internal error: level = {level} in formatters._no_result()"
+    return _markdown(info, level=level, rich=True)
+    # if result == [""]:
+    #     return _no_result(info, level)
+    # return "\n\n".join(result)
 
 
 def _markdown(info, level, rich=False, docs=False):
@@ -216,24 +195,155 @@ def _markdown(info, level, rich=False, docs=False):
                 if prefix.startswith("#"):
                     prefix = "##" + prefix
             result.append(prefix + content + suffix)
-    return result
+
+    if result == [""]:
+        return _no_result(info, level)
+    return "\n\n".join(result)
+
+
+items_groups = {
+    "header": {"header"},
+    "message": {"message"},  # Also included as last line of traceback
+    "hint": {"suggest"},
+    "generic": {"generic"},
+    "what": {"message", "generic"},
+    "why": {"cause"},
+    "where": {
+        "parsing_error",
+        "parsing_error_source",
+        "last_call_header",
+        "last_call_source",
+        "last_call_variables_header",
+        "last_call_variables",
+        "exception_raised_header",
+        "exception_raised_source",
+        "exception_raised_variables_header",
+        "exception_raised_variables",
+    },
+    "friendly_tb": {"shortened_traceback"},
+    "python_tb": {"simulated_python_traceback"},
+    "debug_tb": {"original_python_traceback"},
+}
+items_groups["minimal"] = (
+    items_groups["header"]
+    .union(items_groups["friendly_tb"])
+    .union(items_groups["hint"])
+)
+items_groups["more"] = (
+    items_groups["header"].union(items_groups["why"]).union(items_groups["where"])
+)
+items_groups["explain"] = (
+    items_groups["minimal"].union(items_groups["generic"]).union(items_groups["more"])
+)
+items_groups["no_tb"] = items_groups["explain"]
+items_groups["no_tb"].discard(items_groups["friendly_tb"])
+
+items_in_order = [
+    "header",
+    "message",
+    "original_python_traceback",
+    "simulated_python_traceback",
+    "shortened_traceback",
+    "suggest",
+    "generic",
+    "parsing_error",
+    "parsing_error_source",
+    "cause_header",
+    "cause",
+    "last_call_header",
+    "last_call_source",
+    "last_call_variables_header",
+    "last_call_variables",
+    "exception_raised_header",
+    "exception_raised_source",
+    "exception_raised_variables_header",
+    "exception_raised_variables",
+]
+
+
+def items_to_show(*groups):
+    items = set([])
+    traceback_present = False
+    for group in groups:
+        if group in {"friendly_tb", "python_tb", "debug_tb"}:
+            traceback_present = True
+        items = items.union(items_groups[group])
+    if traceback_present:
+        items.discard(items_groups["message"])
+
+    ordered_items = []
+    for item in items_in_order:
+        if item in items:
+            ordered_items.append(item)
+    return ordered_items
+
+
+def make_item_selector(items):
+    def selector():
+        return items_to_show(items)
+
+    return selector()
+
+
+def tb_items_to_show(level=1):
+    """Given a verbosity level, returns a list of traceback items to show."""
+    if level == 1:
+        return make_item_selector("explain")
+    elif level == 2:
+        return make_item_selector("no_tb")
+    selector = {
+        1: _traceback_before_default,  # for running script in non-interactive mode
+        2: _default,  # used to be level 1
+        3: _traceback_before_default,  # same as 1
+        4: _traceback_before_no_generic,
+        5: _no_generic_explanation,  # define as more
+        6: _traceback_after_no_generic,
+        7: _tb_plus_suggest,  # shortened traceback, default for console
+        8: _advanced_user,
+        9: _shortened_python_traceback,
+        0: _simulated_python_traceback,
+        -1: _original_python_traceback,
+        11: _what,
+        12: _where,
+        13: _why,
+        14: _suggest,
+    }
+    return selector[level]()
+
+
+def _no_result(info, level):
+    """Should only be called if no result is available from either
+    suggest() or why()
+    """
+    _ = current_lang.translate
+    if level == 13:  # why()
+        return _("I do not know.")
+    elif level == 14:  # suggest()
+        if info["cause"]:
+            return _("I have no suggestion to offer; try `why()`.")
+        else:
+            return _("I have no suggestion to offer.")
+    else:
+        return f"Internal error: level = {level} in formatters._no_result()"
 
 
 def _default():
     """Includes all the information processed by Friendly-traceback
     which does not include a traditional Python traceback
     """
-    return default_items_in_order[:]
+    return items_to_show("no_tb")
+    # return items_in_order[:]
 
 
 def _traceback_before_default():
     """Includes the simulated Python traceback before all the information
     processed by Friendly-traceback.
     """
-    items = _default()
-    # The traceback ends with the message; so we replace the message by the tb.
-    items[1] = "shortened_traceback"
-    return items
+    return items_to_show("explain")
+    # items = _default()
+    # # The traceback ends with the message; so we replace the message by the tb.
+    # items[1] = "shortened_traceback"
+    # return items
 
 
 def _traceback_after_default():
@@ -250,7 +360,7 @@ def _no_generic_explanation():
     generic information about a given exception.
     """
     items = []
-    for item in default_items_in_order:
+    for item in items_in_order:
         if item == "generic":
             continue
         items.append(item)
@@ -294,7 +404,8 @@ def _advanced_user():  # Not (yet) included by Thonny
 
 def _tb_plus_suggest():
     """Shortened Python tracebacks followed by specific information."""
-    return ["shortened_traceback", "parsing_error", "suggest"]
+    return items_to_show("explain")
+    # return ["shortened_traceback", "parsing_error", "suggest"]
 
 
 def _simulated_python_traceback():
