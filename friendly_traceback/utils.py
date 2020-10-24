@@ -3,12 +3,153 @@
 A few useful objects which do not naturally fit anywhere else.
 """
 import difflib
-import tokenize
+import keyword
+import tokenize as py_tokenize
 import os.path
 
-import token_utils
+from io import StringIO
 
 from .friendly_exception import FriendlyException
+
+_token_format = "type={type}  string={string}  start={start}  end={end}  line={line}"
+
+
+class Token:
+    """Token as generated from Python's tokenize.generate_tokens written here in
+    a more convenient form, and with some custom methods.
+
+    The various parameters are::
+
+        type: token type
+        string: the token written as a string
+        start = (start_row, start_col)
+        end = (end_row, end_col)
+        line: entire line of code where the token is found.
+
+    Token instances are mutable objects. Therefore, given a list of tokens,
+    we can change the value of any token's attribute, untokenize the list and
+    automatically obtain a transformed source.
+    """
+
+    def __init__(self, token):
+        self.type = token[0]
+        self.string = token[1]
+        self.start = self.start_row, self.start_col = token[2]
+        self.end = self.end_row, self.end_col = token[3]
+        self.line = token[4]
+
+    def __eq__(self, other):
+        """Compares a Token with another object; returns true if
+        self.string == other.string or if self.string == other.
+        """
+        if hasattr(other, "string"):
+            return self.string == other.string
+        elif isinstance(other, str):
+            return self.string == other
+        else:
+            raise TypeError(
+                "A token can only be compared to another token or to a string."
+            )
+
+    def is_comment(self):
+        """Returns True if the token is a comment."""
+        return self.type == py_tokenize.COMMENT
+
+    def is_identifier(self):
+        """Returns ``True`` if the token represents a valid Python identifier
+        excluding Python keywords.
+
+        Note: this is different from Python's string method ``isidentifier``
+        which also returns ``True`` if the string is a keyword.
+        """
+        return self.string.isidentifier() and not self.is_keyword()
+
+    def is_integer(self):
+        """Returns True if the token represents an integer"""
+        return self.is_number() and self.string.isdigit()
+
+    def is_keyword(self):
+        """Returns True if the token represents a Python keyword."""
+        return keyword.iskeyword(self.string)
+
+    def is_number(self):
+        """Returns True if the token represents a number"""
+        return self.type == py_tokenize.NUMBER
+
+    def is_space(self):
+        """Returns True if the token indicates a change in indentation,
+        the end of a line, or the end of the source
+        (``INDENT``, ``DEDENT``, ``NEWLINE``, ``NL``, and ``ENDMARKER``).
+
+        Note that spaces, including tab charcters ``\\t``, between tokens
+        on a given line are not considered to be tokens themselves.
+        """
+        return self.type in (
+            py_tokenize.INDENT,
+            py_tokenize.DEDENT,
+            py_tokenize.NEWLINE,
+            py_tokenize.NL,
+            py_tokenize.ENDMARKER,
+        )
+
+    def is_string(self):
+        """Returns True if the token is a string"""
+        return self.type == py_tokenize.STRING
+
+    def __repr__(self):
+        """Nicely formatted token to help with debugging session.
+
+        Note that it does **not** print a string representation that could be
+        used to create a new ``Token`` instance, which is something you should
+        never need to do other than indirectly by using the functions
+        provided in this module.
+        """
+        return _token_format.format(
+            type="%s (%s)" % (self.type, py_tokenize.tok_name[self.type]),
+            string=repr(self.string),
+            start=str(self.start),
+            end=str(self.end),
+            line=repr(self.line),
+        )
+
+
+def find_token_by_position(tokens, row, column):
+    """Given a list of tokens, a specific row (linenumber) and column,
+    a two-tuple is returned that includes the token
+    found at that position as well as its list index.
+
+    If no such token can be found, ``None, None`` is returned.
+    """
+    for index, tok in enumerate(tokens):
+        if (
+            tok.start_row <= row <= tok.end_row
+            and tok.start_col <= column < tok.end_col
+        ):
+            return tok, index
+    return None, None
+
+
+def get_significant_tokens(source):
+    """Gets a list of tokens from a source (str), ignoring comments
+    as well as any token whose string value is either null or
+    consists of spaces, newline or tab characters.
+
+    If an exception is raised by Python's tokenize module, the list of tokens
+    accumulated up to that point is returned.
+    """
+    tokens = []
+    try:
+        for tok in py_tokenize.generate_tokens(StringIO(source).readline):
+            token = Token(tok)
+            if not token.string.strip():
+                continue
+            if token.is_comment():
+                continue
+            tokens.append(token)
+    except py_tokenize.TokenError:
+        return tokens
+
+    return tokens
 
 
 def tokenize_source(source):
@@ -16,7 +157,7 @@ def tokenize_source(source):
     and comments.
     """
     try:
-        return token_utils.get_significant_tokens(source)
+        return get_significant_tokens(source)
     except Exception as e:
         raise FriendlyException("%s --> utils.tokenize_source" % repr(e))
 
@@ -29,7 +170,7 @@ def tokenize_source_lines(source_lines):
     return tokenize_source(source)
 
 
-PYTHON = os.path.dirname(tokenize.__file__).lower()
+PYTHON = os.path.dirname(py_tokenize.__file__).lower()
 this_dir = os.path.dirname(__file__)
 FRIENDLY = os.path.abspath(os.path.join(this_dir, "..")).lower()
 TESTS = os.path.join(FRIENDLY, "tests").lower()
