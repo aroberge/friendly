@@ -34,7 +34,6 @@ from .my_gettext import current_lang
 from .source_cache import cache, highlight_source
 from .path_info import is_excluded_file, EXCLUDED_FILE_PATH
 
-
 # ====================
 # The following is an example of a formatted traceback, with each
 # part identified by a number enclosed by brackets
@@ -393,12 +392,18 @@ def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
 
 
 def get_location_header(linenumber, filename, header_name=None):
+    from .session import session
+
     _ = current_lang.translate
+    filename = utils.shorten_path(filename)
+    if session.use_rich:
+        filename = f"`'{filename}'`"
+
     if header_name == "exception_raised":
-        return _(
-            "Exception raised on line {linenumber} of file '{filename}'.\n"
-        ).format(linenumber=linenumber, filename=utils.shorten_path(filename))
+        return _("Exception raised on line {linenumber} of file {filename}.\n").format(
+            linenumber=linenumber, filename=filename
+        )
     else:
-        return _(
-            "Execution stopped on line {linenumber} of file '{filename}'.\n"
-        ).format(linenumber=linenumber, filename=utils.shorten_path(filename))
+        return _("Execution stopped on line {linenumber} of file {filename}.\n").format(
+            linenumber=linenumber, filename=filename
+        )
