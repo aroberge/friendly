@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-10-12 18:32-0300\n"
+"POT-Creation-Date: 2020-10-23 21:29-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: __main__.py:157 console.py:44
+#: console.py:44
 msgid ""
 "\n"
 "    Rich is not installed.\n"
@@ -39,55 +39,63 @@ msgstr ""
 msgid "Warning: you have redefined the python builtin {name}."
 msgstr ""
 
-#: core.py:84
+#: core.py:96
 msgid "Python exception:"
 msgstr ""
 
-#: core.py:176
-msgid "Many other lines."
+#: core.py:191
+msgid "More lines not shown."
 msgstr ""
 
-#: core.py:293
+#: core.py:319
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
 "        regular Python console.\n"
 msgstr ""
 
-#: core.py:299
+#: core.py:325
 msgid ""
 "Problem: source of '{filename}' is not available\n"
 msgstr ""
 
-#: core.py:317
+#: core.py:343
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
 "Are you using a regular Python console instead of a Friendly-console?\n"
 msgstr ""
 
-#: core.py:329
+#: core.py:355
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
 msgstr ""
 
-#: core.py:365
+#: core.py:391
 msgid "Known identifiers:"
 msgstr ""
 
-#: core.py:372
+#: core.py:398
 msgid ""
 "Exception raised on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: core.py:376
+#: core.py:402
 msgid ""
 "Execution stopped on line {linenumber} of file '{filename}'.\n"
 msgstr ""
 
-#: formatters.py:91 formatters.py:107 formatters.py:125 formatters.py:141
+#: formatters.py:236
 msgid "I do not know."
+msgstr ""
+
+#: formatters.py:239
+msgid "I have no suggestion to offer; try `why()`."
+msgstr ""
+
+#: formatters.py:241
+msgid "I have no suggestion to offer."
 msgstr ""
 
 #: friendly_exception.py:10
@@ -226,7 +234,9 @@ msgid ""
 "an `UnboundLocalError`.\n"
 msgstr ""
 
-#: info_generic.py:205
+#: info_generic.py:205 runtime_errors\import_error.py:27
+#: runtime_errors\module_not_found_error.py:26
+#: runtime_errors\unbound_local_error.py:17
 msgid ""
 "No information is known about this exception.\n"
 "Please report this example to\n"
@@ -253,109 +263,189 @@ msgid ""
 "file that cannot be found is `{filename}`.\n"
 msgstr ""
 
-#: info_specific.py:79
+#: info_specific.py:77
 msgid ""
-"The name of the module that could not be imported is `{name}`\n"
+"In your program, the key that cannot be found is `{key_name!r}`.\n"
 msgstr ""
 
-#: info_specific.py:87
+#: info_specific.py:111
+msgid ""
+"In your program, the unknown name is `{var_name}`.\n"
+msgstr ""
+
+#: info_variables.py:197
+msgid "The similar name `{name}` was found in the local scope. "
+msgstr ""
+
+#: info_variables.py:206
+msgid "The similar name `{name}` was found in the global scope. "
+msgstr ""
+
+#: info_variables.py:213
+msgid "The name `{name}` was found in the global scope. "
+msgstr ""
+
+#: info_variables.py:220
+msgid "The Python builtin `{name}` has a similar name. "
+msgstr ""
+
+#: info_variables.py:226
+msgid ""
+"Instead of writing `{name}`, perhaps you meant one of the following:\n"
+msgstr ""
+
+#: info_variables.py:231
+msgid "*   Local scope: "
+msgstr ""
+
+#: info_variables.py:237
+msgid "*   Global scope: "
+msgstr ""
+
+#: info_variables.py:243
+msgid "*   Python builtins: "
+msgstr ""
+
+#: info_variables.py:279
+msgid ""
+"A type hint found for `{name}` in the local scope.\n"
+msgstr ""
+
+#: info_variables.py:282 info_variables.py:295
+msgid ""
+"Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n"
+msgstr ""
+
+#: info_variables.py:292
+msgid ""
+"A type hint found for `{name}` in the global scope.\n"
+msgstr ""
+
+#: runtime_errors\attribute_error.py:29
+msgid ""
+"You are attempting to access the attribute `{attr}`\n"
+"for a variable whose value is `None`."
+msgstr ""
+
+#: runtime_errors\attribute_error.py:51 runtime_errors\attribute_error.py:129
+#: runtime_errors\import_error.py:52
+#: runtime_errors\module_not_found_error.py:43
+msgid ""
+"Did you mean `{name}`?\n"
+msgstr ""
+
+#: runtime_errors\attribute_error.py:52
+msgid ""
+"Perhaps you meant to write `{module}.{correct}` instead of `{module}.{typo}`\n"
+msgstr ""
+
+#: runtime_errors\attribute_error.py:60 runtime_errors\import_error.py:61
+msgid ""
+"Did you mean one of the following: `{names}`?\n"
+msgstr ""
+
+#: runtime_errors\attribute_error.py:63
+msgid ""
+"Instead of writing `{module}.{typo}`, perhaps you meant to write one of \n"
+"the following names which are attributes of module `{module}`:\n"
+"`{candidates}`\n"
+msgstr ""
+
+#: runtime_errors\attribute_error.py:107
+msgid ""
+"The object of type `{obj}` has no attribute named `{attr}`.\n"
+msgstr ""
+
+#: runtime_errors\attribute_error.py:111
+msgid ""
+"The object `{obj}` has no attribute named `{attr}`.\n"
+msgstr ""
+
+#: runtime_errors\attribute_error.py:118
+msgid ""
+"The following are some of its known attributes:\n"
+"`{names}`."
+msgstr ""
+
+#: runtime_errors\attribute_error.py:130
+msgid ""
+"Perhaps you meant to write `{obj}.{correct}` instead of `{obj}.{typo}`\n"
+msgstr ""
+
+#: runtime_errors\attribute_error.py:138
+msgid ""
+"Did you mean one of the following: `{name}`?\n"
+msgstr ""
+
+#: runtime_errors\attribute_error.py:141
+msgid ""
+"Instead of writing `{obj}.{typo}`, perhaps you meant to write one of \n"
+"the following names which are attributes of object `{obj}`:\n"
+"`{candidates}`\n"
+msgstr ""
+
+#: runtime_errors\attribute_error.py:157
+msgid "Did you mean to use `{known_builtin}({obj_name})`?"
+msgstr ""
+
+#: runtime_errors\attribute_error.py:160
+msgid ""
+"The object `{obj_name}` has no attribute named `{attribute}`.\n"
+"Perhaps you can use the Python builtin function `{known_builtin}` instead:\n"
+"`{known_builtin}({obj_name})`."
+msgstr ""
+
+#: runtime_errors\attribute_error.py:198
+msgid "Did you mean to separate object names by a comma?"
+msgstr ""
+
+#: runtime_errors\attribute_error.py:200
+msgid ""
+"`{second}` is not an attribute of `{first}`.\n"
+"However, both `{first}` and `{second}` are known objects.\n"
+"Perhaps you wrote a period to separate these two objects, \n"
+"instead of using a comma.\n"
+msgstr ""
+
+#: runtime_errors\import_error.py:37 runtime_errors\import_error.py:71
 msgid ""
 "The object that could not be imported is `{name}`.\n"
 "The module or package where it was \n"
 "expected to be found is `{module}`.\n"
 msgstr ""
 
-#: info_specific.py:93
+#: runtime_errors\import_error.py:53
+msgid ""
+"Perhaps you meant to import `{correct}` from `{module}` instead of `{typo}`\n"
+msgstr ""
+
+#: runtime_errors\import_error.py:64
+msgid ""
+"Instead of trying to import `{typo}` from `{module}`, \n"
+"perhaps you meant to import one of \n"
+"the following names which are found in module `{module}`:\n"
+"`{candidates}`\n"
+msgstr ""
+
+#: runtime_errors\import_error.py:86
 msgid ""
 "The object that could not be imported is `{name}`.\n"
 msgstr ""
 
-#: info_specific.py:104
+#: runtime_errors\module_not_found_error.py:37
 msgid ""
-"In your program, the key that cannot be found is `{key_name!r}`.\n"
+"The name of the module that could not be imported is `{name}`.\n"
 msgstr ""
 
-#: info_specific.py:117
+#: runtime_errors\module_not_found_error.py:46
 msgid ""
-"In your program, the name of the\n"
-"module that cannot be found is `{mod_name}`.\n"
+"The following existing modules have names that are similar \n"
+"to the module you tried to import: `{names}`\n"
 msgstr ""
 
-#: info_specific.py:133
+#: runtime_errors\module_not_found_error.py:51
 msgid ""
-"In your program, the unknown name is `{var_name}`.\n"
-msgstr ""
-
-#: info_specific.py:167
-msgid ""
-"The variable that appears to cause the problem is `{var_name}`.\n"
-"Perhaps the statement\n"
-"\n"
-"    global {var_name}\n"
-"\n"
-"should have been included as the first line inside your function.\n"
-msgstr ""
-
-#: info_variables.py:124 info_variables.py:131
-msgid "The similar name `{name}` was found in the local scope. "
-msgstr ""
-
-#: info_variables.py:138
-msgid "The Python builtin `{name}` has a similar name. "
-msgstr ""
-
-#: info_variables.py:144
-msgid ""
-"Instead of writing `{name}`, perhaps you meant one of the following:\n"
-msgstr ""
-
-#: info_variables.py:149
-msgid "*   Local scope: "
-msgstr ""
-
-#: info_variables.py:155
-msgid "*   Global scope: "
-msgstr ""
-
-#: info_variables.py:161
-msgid "*   Python builtins: "
-msgstr ""
-
-#: info_variables.py:194
-msgid ""
-"A type hint found for `{name}` in the local scope.\n"
-msgstr ""
-
-#: info_variables.py:197 info_variables.py:210
-msgid ""
-"Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n"
-msgstr ""
-
-#: info_variables.py:207
-msgid ""
-"A type hint found for `{name}` in the global scope.\n"
-msgstr ""
-
-#: runtime_errors\attribute_error.py:19
-msgid ""
-"You are attempting to access the attribute `{attr}`\n"
-"for a variable whose value is `None`."
-msgstr ""
-
-#: runtime_errors\attribute_error.py:23
-msgid ""
-"In your program, the object is `{obj}` and the attribute is `{attr}`.\n"
-msgstr ""
-
-#: runtime_errors\attribute_error.py:40
-msgid ""
-"Perhaps you meant to write `{correct}` instead of `{typo}`\n"
-msgstr ""
-
-#: runtime_errors\attribute_error.py:47
-msgid ""
-"Instead of writing `{typo}`, perhaps you meant one of the following:\n"
-"{candidates}\n"
+"`{name}` is an existing module that has a similar name.\n"
 msgstr ""
 
 #: runtime_errors\type_error.py:34
@@ -522,12 +612,48 @@ msgid ""
 "which Python took as an indication of a function call.\n"
 msgstr ""
 
-#: session.py:61 session.py:181
-msgid "Nothing to show: no exception recorded."
+#: runtime_errors\type_error.py:331
+msgid "Perhaps you forgot to convert a string into an integer using `int()`."
 msgstr ""
 
-#: session.py:101
-msgid "Verbosity level {level} not valid."
+#: runtime_errors\unbound_local_error.py:30
+msgid ""
+"The identifier `{var_name}` exists in both the global and nonlocal scope.\n"
+"This can be rather confusing and is not recommended.\n"
+"Depending on which variable you wanted to refer to, you needed to add either\n"
+"\n"
+"    global {var_name}\n"
+"\n"
+"or\n"
+"\n"
+"    nonlocal {var_name}\n"
+"\n"
+"as the first line inside your function.\n"
+msgstr ""
+
+#: runtime_errors\unbound_local_error.py:39
+msgid ""
+"Did you forget to add either `global {var_name}` or \n"
+"`nonlocal {var_name}`?\n"
+msgstr ""
+
+#: runtime_errors\unbound_local_error.py:52
+msgid ""
+"The identifier `{var_name}` exists in the {scope} scope.\n"
+"Perhaps the statement\n"
+"\n"
+"    {scope} {var_name}\n"
+"\n"
+"should have been included as the first line inside your function.\n"
+msgstr ""
+
+#: runtime_errors\unbound_local_error.py:59
+msgid ""
+"Did you forget to add `{scope} {var_name}`?\n"
+msgstr ""
+
+#: session.py:78 session.py:181
+msgid "Nothing to show: no exception recorded."
 msgstr ""
 
 #: syntax_errors\analyze_syntax.py:36
@@ -538,7 +664,7 @@ msgstr ""
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
-"beyond the location indicated below by --> and ^.\n"
+"beyond the location indicated by --> and ^.\n"
 msgstr ""
 
 #: syntax_errors\analyze_syntax.py:62
