@@ -6,6 +6,7 @@ import re
 
 from ..my_gettext import current_lang
 from ..utils import get_similar_words, tokenize_source
+from ..source_cache import cache
 
 
 def get_cause(value, info, frame):
@@ -166,20 +167,31 @@ def use_builtin_function(obj_name, attribute, known_builtin, info):
 
 def find_true_object_name_and_position(obj, obj_name, attribute, info, frame):
 
-    # TODO: this fails if the attribute is on a separate line
-    # where we might have written a list vertically, with one item per line
-    # but used a period instead of a comma somewhere.
-    # We might need to retrieve the entire source, starting at the
-    # location of the bad line.
-
     tokens = tokenize_source(info["bad_line"])
     for index, tok in enumerate(tokens):
         try:
             candidate = eval(tok.string, frame.f_globals, frame.f_locals)
+            if (
+                isinstance(candidate, obj)
+                and tokens[index + 1] == "."
+                and tokens[index + 2] == attribute
+            ):
+                return tok.string, index
+        except Exception:
+            pass
 
-            # There could be more than one object of the same type on the
-            # line of code identified as problematic. We need to ensure that
-            # we have the correct one.
+    # Perhaps we had a situation like the following:
+    #  a = [ obj
+    #           . attribute]  <-- bad line
+    #
+    # So, let's try again with the complete source.
+
+    source_lines = cache.get_source_lines(info["filename"])
+    source = "\n".join(source_lines)
+    tokens = tokenize_source(source)
+    for index, tok in enumerate(tokens):
+        try:
+            candidate = eval(tok.string, frame.f_globals, frame.f_locals)
             if (
                 isinstance(candidate, obj)
                 and tokens[index + 1] == "."
