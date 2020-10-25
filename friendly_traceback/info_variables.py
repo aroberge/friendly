@@ -127,15 +127,20 @@ def format_var_info(tok, _dict, _global="", _builtins=""):
     # 2. Removing this information ensures that consecutive runs of
     #    script to create tracebacks for the documentation will yield
     #    exactly the same results. This makes it easier to spot changes/regressions.
+    indent = "        "
     if value.startswith("<") and value.endswith(">"):
         if " at " in value:
             value = value.split(" at ")[0] + ">"
         elif " from " in value:  # example: module X from stdlib_path
-            parts = value.split(" from ")
-            path = parts[1][:-1]
-            value = parts[0] + "> from " + utils.shorten_path(path)
+            obj_repr, path = value.split(" from ")
+            path = utils.shorten_path(path[:-1])  # -1 removes >
+            # Avoid lines that are too long
+            if len(obj_repr) + len(path) < MAX_LENGTH:
+                value = obj_repr + "> from " + path
+            else:
+                value = obj_repr + f">\n{indent}from " + path
 
-    if len(value) > MAX_LENGTH:  # too much text would be shown
+    if len(value) > MAX_LENGTH and not value.startswith("<"):
         # We reduce the length of the repr, indicate this by ..., but we
         # also keep the last character so that the repr of a list still
         # ends with ], that of a tuple still ends with ), etc.
@@ -161,7 +166,7 @@ def format_var_info(tok, _dict, _global="", _builtins=""):
 
     result = f"    {_global}{name}: {value}"
     if length_info:
-        result += f"\n        len({name}): {length_info}"
+        result += f"\n{indent}len({name}): {length_info}"
     return result
 
 
