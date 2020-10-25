@@ -104,8 +104,9 @@ def main():
     console_defaults = {"friendly": public_api.Friendly()}
     args = parser.parse_args()
     if args.version:
-        print(f"Friendly-traceback version {__version__}")
-        sys.exit()
+        print(f"\nFriendly-traceback version {__version__}")
+        if not args.source:
+            sys.exit()
 
     if args.debug:
         session._debug = True
