@@ -43,10 +43,10 @@ def attribute_error_in_module(module, attribute, info):
     try:
         mod = sys.modules[module]
     except Exception:
-        return False
+        return
     similar = get_similar_words(attribute, dir(mod))
     if not similar:
-        return False
+        return
 
     if len(similar) == 1:
         info["suggest"] = _("Did you mean `{name}`?\n").format(name=similar[0])
@@ -76,7 +76,7 @@ def attribute_error_in_object(obj_name, attribute, info, frame):
         obj = eval(obj_name, frame.f_globals, frame.f_locals)
         known_attributes = dir(obj)
     except Exception:
-        return False
+        return
 
     # The error message gives us the type of object instead of the true object
     # name. Depending on whether or not we can identify the true object name,

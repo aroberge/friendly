@@ -86,17 +86,6 @@ def _module_not_found_error(value, info, frame):
 
     return module_not_found_error.get_cause(value, info, frame)
 
-    # _ = current_lang.translate
-    # # str(value) is expected to be something like
-    # #
-    # # ModuleNotFoundError: No module named 'does_not_exist'
-    # #
-    # # By splitting value using ', we can extract the module name.
-    # return _(
-    #     "In your program, the name of the\n"
-    #     "module that cannot be found is `{mod_name}`.\n"
-    # ).format(mod_name=str(value).split("'")[1])
-
 
 @register("NameError")
 def name_error(value, info, frame):
