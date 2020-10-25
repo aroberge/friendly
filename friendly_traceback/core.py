@@ -387,7 +387,7 @@ def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
     if "line" in source_info and source_info["line"] is not None:
         var_info = info_variables.get_var_info(source_info["line"], frame)
         if var_info:
-            info["%s_variables_header" % header_name] = _("Known identifiers:")
+            info["%s_variables_header" % header_name] = _("Known objects:")
             info["%s_variables" % header_name] = var_info  # [6]
 
 

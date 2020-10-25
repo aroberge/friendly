@@ -28,7 +28,7 @@ def local_variable_referenced(unknown_name, info, frame):
 
     if "global" in scopes and "nonlocal" in scopes:
         cause = _(
-            "The identifier `{var_name}` exists in both the global and nonlocal scope.\n"
+            "The name `{var_name}` exists in both the global and nonlocal scope.\n"
             "This can be rather confusing and is not recommended.\n"
             "Depending on which variable you wanted to refer to, you needed to add either\n\n"
             "    global {var_name}\n\n"
@@ -50,7 +50,7 @@ def local_variable_referenced(unknown_name, info, frame):
         scope = "nonlocal"
 
     cause = _(
-        "The identifier `{var_name}` exists in the {scope} scope.\n"
+        "The name `{var_name}` exists in the {scope} scope.\n"
         "Perhaps the statement\n\n"
         "    {scope} {var_name}\n\n"
         "should have been included as the first line inside your function.\n"

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-23 21:29-0300\n"
-"PO-Revision-Date: 2020-10-23 21:44-0300\n"
+"POT-Creation-Date: 2020-10-25 09:03-0300\n"
+"PO-Revision-Date: 2020-10-25 09:06-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -49,15 +49,15 @@ msgstr ""
 msgid "Warning: you have redefined the python builtin {name}."
 msgstr "Attention : vous avez redéfini l'identifiant Python (builtin) {name}."
 
-#: core.py:96
+#: core.py:95
 msgid "Python exception:"
 msgstr "Exception Python:"
 
-#: core.py:191
+#: core.py:190
 msgid "More lines not shown."
 msgstr "Plus de lignes non affichées."
 
-#: core.py:319
+#: core.py:318
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
@@ -67,11 +67,11 @@ msgstr ""
 "        vous devez utiliser la console 'Friendly' et non pas une \n"
 "        console Python régulière.\n"
 
-#: core.py:325
+#: core.py:324
 msgid "Problem: source of '{filename}' is not available\n"
 msgstr "Problème : la source de '{filename}' n'est pas disponible.\n"
 
-#: core.py:343
+#: core.py:342
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -82,7 +82,7 @@ msgstr ""
 "Est-ce que vous utilisez une console Python plutôt que la console \"Friendly"
 "\"?\n"
 
-#: core.py:355
+#: core.py:354
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
@@ -90,18 +90,18 @@ msgstr ""
 "Malheureusement, aucune information supplémentaire n’est disponible:\n"
 "le contenu du fichier '<string>' n’est pas accessible.\n"
 
-#: core.py:391
-msgid "Known identifiers:"
-msgstr "Identificateurs connus :"
+#: core.py:390
+msgid "Known objects:"
+msgstr "Objets connus :"
 
-#: core.py:398
-msgid "Exception raised on line {linenumber} of file '{filename}'.\n"
-msgstr "Exception levée à la ligne {linenumber} du fichier '{filename}'.\n"
+#: core.py:403
+msgid "Exception raised on line {linenumber} of file {filename}.\n"
+msgstr "Exception levée à la ligne {linenumber} du fichier {filename}.\n"
 
-#: core.py:402
-msgid "Execution stopped on line {linenumber} of file '{filename}'.\n"
+#: core.py:407
+msgid "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
-"L'exécution s'est arrêtée à la ligne {linenumber} du fichier '{filename}'\n"
+"L'exécution s'est arrêtée à la ligne {linenumber} du fichier {filename}\n"
 
 #: formatters.py:236
 msgid "I do not know."
@@ -381,57 +381,57 @@ msgstr "Dans votre programme, la clé inconnue est `{key_name!r}`.\n"
 msgid "In your program, the unknown name is `{var_name}`.\n"
 msgstr "Dans votre programme, le nom inconnu est `{var_name}`.\n"
 
-#: info_variables.py:197
+#: info_variables.py:202
 msgid "The similar name `{name}` was found in the local scope. "
 msgstr "Le nom semblable `{name}` a été trouvé dans la portée locale. "
 
-#: info_variables.py:206
+#: info_variables.py:211
 msgid "The similar name `{name}` was found in the global scope. "
 msgstr "Le nom semblable `{name}` a été trouvé dans la portée globale. "
 
-#: info_variables.py:213
+#: info_variables.py:218
 msgid "The name `{name}` was found in the global scope. "
 msgstr "Le nom semblable `{name}` a été trouvé dans la portée globale. "
 
-#: info_variables.py:220
+#: info_variables.py:225
 msgid "The Python builtin `{name}` has a similar name. "
 msgstr "L'identifiant Python (builtin) `{name}` a un nom semblable. "
 
-#: info_variables.py:226
+#: info_variables.py:231
 msgid "Instead of writing `{name}`, perhaps you meant one of the following:\n"
 msgstr ""
 "Au lieu d’écrire `{name}`, peut-être que vous vouliez écrire l'un des noms "
 "suivants :\n"
 
-#: info_variables.py:231
+#: info_variables.py:236
 msgid "*   Local scope: "
 msgstr "*    Portée locale : "
 
-#: info_variables.py:237
+#: info_variables.py:242
 msgid "*   Global scope: "
 msgstr "*    Portée globale : "
 
-#: info_variables.py:243
+#: info_variables.py:248
 msgid "*   Python builtins: "
 msgstr "*    Identifiant Python (builtins) : "
 
-#: info_variables.py:279
+#: info_variables.py:284
 msgid "A type hint found for `{name}` in the local scope.\n"
 msgstr ""
 "Annotation de type trouvée pour `{name}` en tant que variable locale.\n"
 
-#: info_variables.py:282 info_variables.py:295
+#: info_variables.py:287 info_variables.py:300
 msgid ""
 "Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n"
 msgstr ""
 "Peut-être aviez-vous écrit `{name} : {hint}` au lieu de `{name} = {hint}`.\n"
 
-#: info_variables.py:292
+#: info_variables.py:297
 msgid "A type hint found for `{name}` in the global scope.\n"
 msgstr ""
 "Annotation de type trouvée pour `{name}` en tant que variable globale.\n"
 
-#: runtime_errors\attribute_error.py:29
+#: runtime_errors\attribute_error.py:30
 msgid ""
 "You are attempting to access the attribute `{attr}`\n"
 "for a variable whose value is `None`."
@@ -439,13 +439,13 @@ msgstr ""
 "Vous tentez d’accéder à l’attribut `{attar}`\n"
 "pour une variable dont la valeur est `None`."
 
-#: runtime_errors\attribute_error.py:51 runtime_errors\attribute_error.py:129
+#: runtime_errors\attribute_error.py:52 runtime_errors\attribute_error.py:130
 #: runtime_errors\import_error.py:52
 #: runtime_errors\module_not_found_error.py:43
 msgid "Did you mean `{name}`?\n"
 msgstr "Vouliez-vous dire `{name}`?\n"
 
-#: runtime_errors\attribute_error.py:52
+#: runtime_errors\attribute_error.py:53
 msgid ""
 "Perhaps you meant to write `{module}.{correct}` instead of `{module}.{typo}"
 "`\n"
@@ -453,11 +453,11 @@ msgstr ""
 "Peut-être que vous vouliez plutôt écrire : `{module}.{correct}` au lieu de "
 "`{module}.{typo}`.\n"
 
-#: runtime_errors\attribute_error.py:60 runtime_errors\import_error.py:61
+#: runtime_errors\attribute_error.py:61 runtime_errors\import_error.py:61
 msgid "Did you mean one of the following: `{names}`?\n"
 msgstr "Vouliez-vous dire l’un des éléments suivants: `{names}`?\n"
 
-#: runtime_errors\attribute_error.py:63
+#: runtime_errors\attribute_error.py:64
 msgid ""
 "Instead of writing `{module}.{typo}`, perhaps you meant to write one of \n"
 "the following names which are attributes of module `{module}`:\n"
@@ -467,15 +467,15 @@ msgstr ""
 "l'un des attributs suivants du module `{module}` :\n"
 "{candidates}\n"
 
-#: runtime_errors\attribute_error.py:107
+#: runtime_errors\attribute_error.py:108
 msgid "The object of type `{obj}` has no attribute named `{attr}`.\n"
 msgstr "L’objet de type `{obj}` n’a pas d’attribut nommé `{attr}`.\n"
 
-#: runtime_errors\attribute_error.py:111
+#: runtime_errors\attribute_error.py:112
 msgid "The object `{obj}` has no attribute named `{attr}`.\n"
 msgstr "L’objet `{obj}` n’a pas d’attribut nommé `{attr}`.\n"
 
-#: runtime_errors\attribute_error.py:118
+#: runtime_errors\attribute_error.py:119
 msgid ""
 "The following are some of its known attributes:\n"
 "`{names}`."
@@ -483,18 +483,18 @@ msgstr ""
 "Voici quelques-uns de ses attributs connus :\n"
 "`{names}`."
 
-#: runtime_errors\attribute_error.py:130
+#: runtime_errors\attribute_error.py:131
 msgid ""
 "Perhaps you meant to write `{obj}.{correct}` instead of `{obj}.{typo}`\n"
 msgstr ""
 "Peut-être que vous vouliez plutôt écrire : `{obj}.{correct}` au lieu de "
 "`{obj}.{typo}`.\n"
 
-#: runtime_errors\attribute_error.py:138
+#: runtime_errors\attribute_error.py:139
 msgid "Did you mean one of the following: `{name}`?\n"
 msgstr "Vouliez-vous dire l’un des éléments suivants: `{name}`?\n"
 
-#: runtime_errors\attribute_error.py:141
+#: runtime_errors\attribute_error.py:142
 msgid ""
 "Instead of writing `{obj}.{typo}`, perhaps you meant to write one of \n"
 "the following names which are attributes of object `{obj}`:\n"
@@ -504,11 +504,11 @@ msgstr ""
 "l'un des attributs suivants de l'objet `{obj}` :\n"
 "{candidates}\n"
 
-#: runtime_errors\attribute_error.py:157
+#: runtime_errors\attribute_error.py:158
 msgid "Did you mean to use `{known_builtin}({obj_name})`?"
 msgstr "Vouliez-vous utiliser `{known_builtin}({obj_name})`?"
 
-#: runtime_errors\attribute_error.py:160
+#: runtime_errors\attribute_error.py:161
 msgid ""
 "The object `{obj_name}` has no attribute named `{attribute}`.\n"
 "Perhaps you can use the Python builtin function `{known_builtin}` instead:\n"
@@ -519,11 +519,11 @@ msgstr ""
 "à la place:\n"
 "`{known_builtin}({obj_name})`."
 
-#: runtime_errors\attribute_error.py:198
+#: runtime_errors\attribute_error.py:210
 msgid "Did you mean to separate object names by a comma?"
 msgstr "Vouliez-vous séparer les noms d’objets par une virgule ?"
 
-#: runtime_errors\attribute_error.py:200
+#: runtime_errors\attribute_error.py:212
 msgid ""
 "`{second}` is not an attribute of `{first}`.\n"
 "However, both `{first}` and `{second}` are known objects.\n"
@@ -797,7 +797,7 @@ msgstr ""
 
 #: runtime_errors\unbound_local_error.py:30
 msgid ""
-"The identifier `{var_name}` exists in both the global and nonlocal scope.\n"
+"The name `{var_name}` exists in both the global and nonlocal scope.\n"
 "This can be rather confusing and is not recommended.\n"
 "Depending on which variable you wanted to refer to, you needed to add "
 "either\n"
@@ -810,8 +810,7 @@ msgid ""
 "\n"
 "as the first line inside your function.\n"
 msgstr ""
-"L’identificateur `{var_name}` existe à la fois dans la portée globale et non "
-"locale.\n"
+"Le nom `{var_name}` existe à la fois dans la portée globale et non locale.\n"
 "Cela peut être assez déroutant et n’est pas recommandé.\n"
 "Selon la variable à laquelle vous vouliez vous référer, vous deviez ajouter\n"
 "\n"
@@ -833,14 +832,14 @@ msgstr ""
 
 #: runtime_errors\unbound_local_error.py:52
 msgid ""
-"The identifier `{var_name}` exists in the {scope} scope.\n"
+"The name `{var_name}` exists in the {scope} scope.\n"
 "Perhaps the statement\n"
 "\n"
 "    {scope} {var_name}\n"
 "\n"
 "should have been included as the first line inside your function.\n"
 msgstr ""
-"L’identificateur `{var_name}` existe dans la portée {scope}.\n"
+"Le nom `{var_name}` existe dans la portée {scope}.\n"
 "Peut-être la déclaration\n"
 "\n"
 "    {scope} {var_name}\n"
@@ -924,7 +923,7 @@ msgstr ""
 "est moins indentée que la ligne précédente\n"
 "et n’est pas alignée verticalement avec un autre bloc de code.\n"
 
-#: syntax_errors\analyze_syntax.py:146
+#: syntax_errors\analyze_syntax.py:147
 msgid ""
 "Python gave us the following informative message\n"
 "about the possible cause of the error:\n"
@@ -945,7 +944,7 @@ msgstr ""
 "mais il est possible que me trompe.\n"
 "\n"
 
-#: syntax_errors\analyze_syntax.py:154
+#: syntax_errors\analyze_syntax.py:155
 msgid ""
 "I make an effort below to guess what caused the problem\n"
 "but I might guess incorrectly.\n"
@@ -955,7 +954,7 @@ msgstr ""
 "tromper.\n"
 "\n"
 
-#: syntax_errors\analyze_syntax.py:182
+#: syntax_errors\analyze_syntax.py:183
 msgid ""
 "Currently, I cannot guess the likely cause of this error.\n"
 "Try to examine closely the line indicated as well as the line\n"
@@ -1005,7 +1004,7 @@ msgstr ""
 "ou que vous avez copié du code de Python 2;\n"
 "dans ce dernier cas, utilisez la fonction `repr(x)`."
 
-#: syntax_errors\line_analyzer.py:165 syntax_errors\message_analyzer.py:114
+#: syntax_errors\line_analyzer.py:165 syntax_errors\message_analyzer.py:117
 msgid ""
 "You were trying to assign a value to the Python keyword `{keyword}`.\n"
 "This is not allowed.\n"
@@ -1197,7 +1196,7 @@ msgstr ""
 "utiliser \n"
 "un opérateur d'égalité, `==`, ou l'opérateur `:=`.\n"
 
-#: syntax_errors\message_analyzer.py:110
+#: syntax_errors\message_analyzer.py:113
 msgid ""
 "`{keyword}` is a constant in Python; you cannot assign it a value.\n"
 "\n"
@@ -1206,7 +1205,7 @@ msgstr ""
 "une valeur.\n"
 "\n"
 
-#: syntax_errors\message_analyzer.py:128
+#: syntax_errors\message_analyzer.py:131
 msgid ""
 "On the left-hand side of an equal sign, you have a\n"
 "conditional expression instead of the name of a variable.\n"
@@ -1220,15 +1219,15 @@ msgstr ""
 "\n"
 "    variable = objet if condition else autre_objet"
 
-#: syntax_errors\message_analyzer.py:147
+#: syntax_errors\message_analyzer.py:150
 msgid "my_function(...)"
 msgstr "ma_fonction(…)"
 
-#: syntax_errors\message_analyzer.py:148
+#: syntax_errors\message_analyzer.py:151
 msgid "some value"
 msgstr "une certaine valeur"
 
-#: syntax_errors\message_analyzer.py:149
+#: syntax_errors\message_analyzer.py:152
 msgid ""
 "You wrote an expression like\n"
 "\n"
@@ -1244,7 +1243,7 @@ msgstr ""
 "où `{fn_call}`, du côté gauche du signe d'égalité\n"
 "est une fonction et non le nom d’une variable.\n"
 
-#: syntax_errors\message_analyzer.py:159
+#: syntax_errors\message_analyzer.py:162
 msgid ""
 "You wrote the expression\n"
 "\n"
@@ -1261,7 +1260,7 @@ msgstr ""
 "d'une fonction, ou inclus une telle invocation,\n"
 "et n'est pas simplement le nom d'une variable.\n"
 
-#: syntax_errors\message_analyzer.py:174
+#: syntax_errors\message_analyzer.py:177
 msgid ""
 "On the left-hand side of an equal sign, you have a\n"
 "generator expression instead of the name of a variable.\n"
@@ -1269,39 +1268,39 @@ msgstr ""
 "Du côté gauche d'un signe d'égalité, vous avez une\n"
 "expression génératrice au lieu du nom d'une variable.\n"
 
-#: syntax_errors\message_analyzer.py:189
+#: syntax_errors\message_analyzer.py:192
 msgid "of type `int`"
 msgstr "de type `int`"
 
-#: syntax_errors\message_analyzer.py:191
+#: syntax_errors\message_analyzer.py:194
 msgid "of type `str`"
 msgstr "de type `str`"
 
-#: syntax_errors\message_analyzer.py:193
+#: syntax_errors\message_analyzer.py:196
 msgid "of type `float`"
 msgstr "de type `float`"
 
-#: syntax_errors\message_analyzer.py:195
+#: syntax_errors\message_analyzer.py:198
 msgid "of type `complex`"
 msgstr "de type `complex`"
 
-#: syntax_errors\message_analyzer.py:197
+#: syntax_errors\message_analyzer.py:200
 msgid "of type `dict`"
 msgstr "de type `dict`"
 
-#: syntax_errors\message_analyzer.py:199
+#: syntax_errors\message_analyzer.py:202
 msgid "of type `tuple`"
 msgstr "de type `tuple`"
 
-#: syntax_errors\message_analyzer.py:201
+#: syntax_errors\message_analyzer.py:204
 msgid "of type `list`"
 msgstr "de type `list`"
 
-#: syntax_errors\message_analyzer.py:203
+#: syntax_errors\message_analyzer.py:206
 msgid "of type `set`"
 msgstr "de type `set`"
 
-#: syntax_errors\message_analyzer.py:212 syntax_errors\message_analyzer.py:236
+#: syntax_errors\message_analyzer.py:215 syntax_errors\message_analyzer.py:239
 msgid ""
 "You wrote an expression that has an f-string\n"
 "on the left-hand side of the equal sign.\n"
@@ -1312,11 +1311,11 @@ msgstr ""
 "sur le côté gauche du signe d'égalité.\n"
 "Une f-string ne doit apparaître que sur le côté droit du signe d’égalité.\n"
 
-#: syntax_errors\message_analyzer.py:244
+#: syntax_errors\message_analyzer.py:247
 msgid "variable_name"
 msgstr "nom_de_variable"
 
-#: syntax_errors\message_analyzer.py:248
+#: syntax_errors\message_analyzer.py:251
 msgid ""
 " Perhaps you meant to write:\n"
 "\n"
@@ -1328,7 +1327,7 @@ msgstr ""
 "    {name} = {literal}\n"
 "\n"
 
-#: syntax_errors\message_analyzer.py:271
+#: syntax_errors\message_analyzer.py:274
 msgid ""
 "You wrote an expression like\n"
 "\n"
@@ -1344,7 +1343,7 @@ msgstr ""
 "est ou inclut un objet {of_type}\n"
 "et n'est pas simplement le nom d'une variable."
 
-#: syntax_errors\message_analyzer.py:289
+#: syntax_errors\message_analyzer.py:292
 msgid ""
 "You wrote an expression that includes some mathematical operations\n"
 "on the left-hand side of the equal sign which should be\n"
@@ -1354,7 +1353,7 @@ msgstr ""
 "du côté gauche du signe d'égalité; ceci devrait être\n"
 "utilisé uniquement pour attribuer une valeur à une variable."
 
-#: syntax_errors\message_analyzer.py:301
+#: syntax_errors\message_analyzer.py:304
 msgid ""
 "You declared `{name}` as being both a global and nonlocal variable.\n"
 "A variable can be global, or nonlocal, but not both at the same time.\n"
@@ -1363,7 +1362,7 @@ msgstr ""
 "Une variable peut être d'un seul type à la fois: soit globale, soit non "
 "locale, ou soit locale.\n"
 
-#: syntax_errors\message_analyzer.py:311
+#: syntax_errors\message_analyzer.py:314
 msgid ""
 "The Python keyword `break` can only be used inside a for loop or inside a "
 "while loop.\n"
@@ -1371,7 +1370,7 @@ msgstr ""
 "Le mot-clé Python `break` ne peut être utilisé qu'à l'intérieur d'une boucle "
 "`for` ou à l'intérieur d'une boucle `while`.\n"
 
-#: syntax_errors\message_analyzer.py:321
+#: syntax_errors\message_analyzer.py:324
 msgid ""
 "The Python keyword `continue` can only be used inside a for loop or inside a "
 "while loop.\n"
@@ -1379,7 +1378,7 @@ msgstr ""
 "Le mot-clé Python `continue` ne peut être utilisé qu'à l'intérieur d'une "
 "boucle `for` ou à l'intérieur d'une boucle `while`.\n"
 
-#: syntax_errors\message_analyzer.py:345
+#: syntax_errors\message_analyzer.py:348
 msgid ""
 "You attempted to delete a function call\n"
 "\n"
@@ -1395,7 +1394,7 @@ msgstr ""
 "\n"
 "    {correct}\n"
 
-#: syntax_errors\message_analyzer.py:358
+#: syntax_errors\message_analyzer.py:361
 msgid ""
 "You have defined a function repeating the keyword argument\n"
 "\n"
@@ -1409,7 +1408,7 @@ msgstr ""
 "deux fois; chaque argument nommé ne doit apparaître qu'une seule fois dans "
 "une définition de fonction.\n"
 
-#: syntax_errors\message_analyzer.py:370
+#: syntax_errors\message_analyzer.py:373
 msgid ""
 "You starting writing a string with a single or double quote\n"
 "but never ended the string with another quote on that line.\n"
@@ -1418,7 +1417,7 @@ msgstr ""
 "avec un guillemet simple ou double, mais n'avez jamais\n"
 "terminé la chaîne avec un autre guillemet sur cette ligne.\n"
 
-#: syntax_errors\message_analyzer.py:380
+#: syntax_errors\message_analyzer.py:383
 msgid ""
 "One of the following two possibilities could be the cause:\n"
 "1. You meant to do a comparison with == and wrote = instead.\n"
@@ -1443,7 +1442,7 @@ msgstr ""
 "ou contient un point, etc.\n"
 "\n"
 
-#: syntax_errors\message_analyzer.py:396
+#: syntax_errors\message_analyzer.py:399
 msgid ""
 "You are using a generator expression, something of the form\n"
 "    `x for x in thing`\n"
@@ -1453,7 +1452,7 @@ msgstr ""
 "    `x for x in objet`\n"
 "Vous devez ajouter des parenthèses qui entourent cette expression.\n"
 
-#: syntax_errors\message_analyzer.py:407
+#: syntax_errors\message_analyzer.py:410
 msgid ""
 "You have called a function repeating the same keyword argument.\n"
 "Each keyword argument should appear only once in a function call.\n"
@@ -1461,7 +1460,7 @@ msgstr ""
 "Vous avez invoqué une fonction en répétant le même argument nommé.\n"
 "Chaque argument de ce type ne peut apparaître qu'une seule fois.\n"
 
-#: syntax_errors\message_analyzer.py:417
+#: syntax_errors\message_analyzer.py:420
 msgid ""
 "You likely called a function with a named argument:\n"
 "\n"
@@ -1481,11 +1480,11 @@ msgstr ""
 "ou contenir un point, etc.\n"
 "\n"
 
-#: syntax_errors\message_analyzer.py:430
+#: syntax_errors\message_analyzer.py:433
 msgid "Did you use copy-paste?\n"
 msgstr "Avez-vous utilisé copier-coller?\n"
 
-#: syntax_errors\message_analyzer.py:436
+#: syntax_errors\message_analyzer.py:439
 msgid ""
 "Python indicates that you used the unicode character `{bad_character}`\n"
 "which is not allowed.\n"
@@ -1493,7 +1492,11 @@ msgstr ""
 "Python indique que vous avez utilisé le caractère unicode `{bad_character}`\n"
 "ce qui n’est pas permis.\n"
 
-#: syntax_errors\message_analyzer.py:445
+#: syntax_errors\message_analyzer.py:445 syntax_errors\message_analyzer.py:462
+msgid "Did you mean to use a normal quote character, `'` or `\"`?"
+msgstr "Vouliez vous utiliser un guillemet normal, `'` ou `\"`?"
+
+#: syntax_errors\message_analyzer.py:451
 msgid ""
 "I suspect that you used a fancy unicode quotation mark\n"
 "instead of a normal single or double quote for a string.\n"
@@ -1502,7 +1505,7 @@ msgstr ""
 "au lieu d'un guillemet normal (simple ou double) pour une chaîne de "
 "caractères.\n"
 
-#: syntax_errors\message_analyzer.py:456
+#: syntax_errors\message_analyzer.py:465
 msgid ""
 "Python indicates that you used some unicode characters not allowed\n"
 "as part of a variable name; this includes many emojis.\n"
@@ -1519,7 +1522,7 @@ msgstr ""
 "Cela peut se produire si vous utilisez du copier-coller.\n"
 "\n"
 
-#: syntax_errors\message_analyzer.py:464
+#: syntax_errors\message_analyzer.py:473
 msgid ""
 "You likely used some unicode character that is not allowed\n"
 "as part of a variable name in Python.\n"
@@ -1531,7 +1534,7 @@ msgstr ""
 "Cela comprend de nombreux emojis.\n"
 "\n"
 
-#: syntax_errors\message_analyzer.py:498
+#: syntax_errors\message_analyzer.py:507
 msgid ""
 "Python tells us that the closing `{closing}` on the last line shown\n"
 "does not match the opening `{opening}` on line {lineno}.\n"
@@ -1543,7 +1546,7 @@ msgstr ""
 "{lineno}.\n"
 "\n"
 
-#: syntax_errors\message_analyzer.py:503
+#: syntax_errors\message_analyzer.py:512
 msgid ""
 "Python tells us that the closing `{closing}` on the last line shown\n"
 "does not match the opening `{opening}`.\n"
@@ -1553,7 +1556,7 @@ msgstr ""
 "à la parenthèse de gauche `{opening}`.\n"
 "\n"
 
-#: syntax_errors\message_analyzer.py:514 syntax_errors\message_analyzer.py:665
+#: syntax_errors\message_analyzer.py:523 syntax_errors\message_analyzer.py:674
 msgid ""
 "I will attempt to be give a bit more information.\n"
 "\n"
@@ -1562,7 +1565,7 @@ msgstr ""
 "\n"
 "\n"
 
-#: syntax_errors\message_analyzer.py:525
+#: syntax_errors\message_analyzer.py:534
 msgid ""
 "Inside an f-string, which is a string prefixed by the letter f, \n"
 "you have another string, which starts with either a\n"
@@ -1575,7 +1578,7 @@ msgstr ""
 "ou des guillemets (\"), mais n'est pas terminé par un autre caractère "
 "semblable.\n"
 
-#: syntax_errors\message_analyzer.py:542
+#: syntax_errors\message_analyzer.py:551
 msgid ""
 "You are including the statement\n"
 "\n"
@@ -1596,7 +1599,7 @@ msgstr ""
 "à l'intérieur de cette fonction, ce qui est le contraire de ce que `global` "
 "sous-entendait.\n"
 
-#: syntax_errors\message_analyzer.py:558
+#: syntax_errors\message_analyzer.py:567
 msgid ""
 "You assigned a value to the variable `{name}`\n"
 "before declaring it as a global variable.\n"
@@ -1604,7 +1607,7 @@ msgstr ""
 "Vous avez attribué une valeur à la variable `{name}`\n"
 "avant de la déclarer comme une variable globale.\n"
 
-#: syntax_errors\message_analyzer.py:570
+#: syntax_errors\message_analyzer.py:579
 msgid ""
 "You used the variable `{name}`\n"
 "before declaring it as a global variable.\n"
@@ -1612,7 +1615,7 @@ msgstr ""
 "Vous avez utilisé la variable `{name}`\n"
 "avant de la déclarer comme une variable globale.\n"
 
-#: syntax_errors\message_analyzer.py:582
+#: syntax_errors\message_analyzer.py:591
 msgid ""
 "You assigned a value to the variable `{name}`\n"
 "before declaring it as a nonlocal variable.\n"
@@ -1620,7 +1623,7 @@ msgstr ""
 "Vous avez attribué une valeur à la variable `{name}`\n"
 "avant de la déclarer comme variable non locale.\n"
 
-#: syntax_errors\message_analyzer.py:593
+#: syntax_errors\message_analyzer.py:602
 msgid ""
 "You used `{name}` as a parameter for a function\n"
 "before declaring it also as a nonlocal variable:\n"
@@ -1630,7 +1633,7 @@ msgstr ""
 "avant de la déclarer également comme une variable non locale :\n"
 "`{name}` ne peut pas être les deux en même temps.\n"
 
-#: syntax_errors\message_analyzer.py:606
+#: syntax_errors\message_analyzer.py:615
 msgid ""
 "You used the variable `{name}`\n"
 "before declaring it as a nonlocal variable.\n"
@@ -1638,7 +1641,7 @@ msgstr ""
 "Vous avez utilisé la variable `{name}`\n"
 "avant de la déclarer comme variable non locale.\n"
 
-#: syntax_errors\message_analyzer.py:616
+#: syntax_errors\message_analyzer.py:625
 msgid ""
 "You used the nonlocal keyword at a module level.\n"
 "The nonlocal keyword refers to a variable inside a function\n"
@@ -1649,7 +1652,7 @@ msgstr ""
 "fonction\n"
 "qui a une valeur attribuée à l'extérieur de cette fonction."
 
-#: syntax_errors\message_analyzer.py:628
+#: syntax_errors\message_analyzer.py:637
 msgid ""
 "You declared the variable `{name}` as being a\n"
 "nonlocal variable but it cannot be found.\n"
@@ -1657,7 +1660,7 @@ msgstr ""
 "Vous avez déclaré la variable `{name}` comme non locale\n"
 "mais elle n'existe pas ailleurs.\n"
 
-#: syntax_errors\message_analyzer.py:638
+#: syntax_errors\message_analyzer.py:647
 msgid ""
 "You are using the continuation character `\\` outside of a string,\n"
 "and it is followed by some other character(s).\n"
@@ -1671,7 +1674,7 @@ msgstr ""
 "ou un apostrophe.\n"
 "\n"
 
-#: syntax_errors\message_analyzer.py:654
+#: syntax_errors\message_analyzer.py:663
 msgid ""
 "Python tells us that it reached the end of the file\n"
 "and expected more content.\n"
@@ -1681,13 +1684,13 @@ msgstr ""
 "et s'attendait à plus de contenu.\n"
 "\n"
 
-#: syntax_errors\message_analyzer.py:684 syntax_errors\source_analyzer.py:84
+#: syntax_errors\message_analyzer.py:693 syntax_errors\source_analyzer.py:84
 msgid "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'a pas de symbole ouvrant qui "
 "lui correspond.\n"
 
-#: syntax_errors\message_analyzer.py:694
+#: syntax_errors\message_analyzer.py:703
 msgid ""
 "In Python, you can call functions with only positional arguments\n"
 "\n"
@@ -1722,7 +1725,7 @@ msgstr ""
 "Selon Python, vous avez utilisé des arguments positionnels après des "
 "arguments nommés.\n"
 
-#: syntax_errors\message_analyzer.py:711
+#: syntax_errors\message_analyzer.py:720
 msgid ""
 "In Python, you can define functions with only positional arguments\n"
 "\n"
@@ -1757,7 +1760,7 @@ msgstr ""
 "Selon Python, vous avez utilisé des arguments positionnels après des "
 "arguments nommés.\n"
 
-#: syntax_errors\message_analyzer.py:731
+#: syntax_errors\message_analyzer.py:740
 msgid ""
 "Perhaps you need to type\n"
 "\n"
