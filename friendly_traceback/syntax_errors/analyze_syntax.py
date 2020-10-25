@@ -30,7 +30,7 @@ def get_likely_cause(etype, value, info):
     elif etype.__name__ == "TabError":
         cause = None
     else:
-        cause = syntax_error_cause(value)
+        cause = syntax_error_cause(value, info)
     if cause is not None:
         if "invalid syntax" in info["message"]:
             header = _(
@@ -98,7 +98,7 @@ def indentation_error_cause(value):
     return this_case
 
 
-def syntax_error_cause(value):
+def syntax_error_cause(value, info):
     """Given some source code as a list of lines, a linenumber
     (starting at 1) indicating where a SyntaxError was detected,
     a message (which follows SyntaxError:) and an offset,
@@ -112,10 +112,10 @@ def syntax_error_cause(value):
     if not source_lines and filepath == "<stdin>":
         source_lines = [""]
         linenumber = 1
-    return _find_likely_cause(source_lines, linenumber, message, offset)
+    return _find_likely_cause(source_lines, linenumber, message, offset, info)
 
 
-def _find_likely_cause(source_lines, linenumber, message, offset):
+def _find_likely_cause(source_lines, linenumber, message, offset, info):
     """Given some source code as a list of lines, a linenumber
     (starting at 1) indicating where a SyntaxError was detected,
     a message (which follows SyntaxError:) and an offset,
@@ -139,6 +139,7 @@ def _find_likely_cause(source_lines, linenumber, message, offset):
             linenumber=linenumber,
             source_lines=source_lines,
             offset=offset,
+            info=info,
         )
         if cause:
             return cause
@@ -160,7 +161,7 @@ def _find_likely_cause(source_lines, linenumber, message, offset):
     # where the error has been found by Python, and try to find the source
     # of the error
 
-    cause = line_analyzer.analyze_last_line(line, offset=offset)
+    cause = line_analyzer.analyze_last_line(line, offset=offset, info=info)
     if cause:
         return notice + cause
 
@@ -172,7 +173,7 @@ def _find_likely_cause(source_lines, linenumber, message, offset):
     # while we look for missing or mismatched brackets, such as (],
     # we also can sometimes identify other problems during this step.
 
-    cause = source_analyzer.scan_source(source_lines, linenumber, offset)
+    cause = source_analyzer.scan_source(source_lines, linenumber, offset, info=info)
     if cause:
         return notice + cause
 

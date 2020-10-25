@@ -44,7 +44,9 @@ bad_quotation_marks = [
 ]
 
 
-def analyze_message(message="", line="", linenumber=0, source_lines=None, offset=0):
+def analyze_message(
+    message="", line="", linenumber=0, source_lines=None, offset=0, info=None
+):
     for case in MESSAGE_ANALYZERS:
         cause = case(
             message=message,
@@ -52,6 +54,7 @@ def analyze_message(message="", line="", linenumber=0, source_lines=None, offset
             linenumber=linenumber,
             source_lines=source_lines,
             offset=offset,
+            info=info,
         )
         if cause:
             return cause
@@ -59,7 +62,7 @@ def analyze_message(message="", line="", linenumber=0, source_lines=None, offset
 
 def add_python_message(func):
     """A simple decorator that adds a function the the list of functions
-       that process a message given by Python.
+    that process a message given by Python.
     """
     MESSAGE_ANALYZERS.append(func)
 
@@ -425,7 +428,7 @@ def keyword_cannot_be_expression(message="", **kwargs):
 
 
 @add_python_message
-def invalid_character_in_identifier(message="", line="", **kwargs):
+def invalid_character_in_identifier(message="", line="", info=None, **kwargs):
     _ = current_lang.translate
     copy_paste = _("Did you use copy-paste?\n")
     if "invalid character" in message:
@@ -439,6 +442,9 @@ def invalid_character_in_identifier(message="", line="", **kwargs):
                     "which is not allowed.\n"
                 ).format(bad_character=bad_character)
                 if bad_character in bad_quotation_marks:
+                    info["suggest"] = _(
+                        "Did you mean to use a normal quote character, `'` or `\"`?"
+                    )
                     return (
                         copy_paste
                         + result
@@ -453,6 +459,9 @@ def invalid_character_in_identifier(message="", line="", **kwargs):
 
         for quote in bad_quotation_marks:
             if quote in line:
+                info["suggest"] = _(
+                    "Did you mean to use a normal quote character, `'` or `\"`?"
+                )
                 return _(
                     "Python indicates that you used some unicode characters not allowed\n"
                     "as part of a variable name; this includes many emojis.\n"

@@ -63,7 +63,7 @@ def add_line_analyzer(func):
     of all functions that analyze a single line of code."""
     LINE_ANALYZERS.append(func)
 
-    def wrapper(tokens, offset=None):
+    def wrapper(tokens, offset=None, info=None):
         return func(tokens, offset=offset)
 
     return wrapper
@@ -74,7 +74,7 @@ def add_line_analyzer(func):
 # ========================================================
 
 
-def analyze_last_line(line, offset=None):
+def analyze_last_line(line, offset=None, info=None):
     """Analyzes the last line of code as identified by Python as that
     on which the error occurred."""
     tokens = utils.tokenize_source(line)  # tokens do not include spaces nor comments
@@ -83,7 +83,7 @@ def analyze_last_line(line, offset=None):
         return
 
     for analyzer in LINE_ANALYZERS:
-        cause = analyzer(tokens, offset=offset)
+        cause = analyzer(tokens, offset=offset, info=info)
         if cause:
             return cause
     return
@@ -109,7 +109,7 @@ def copy_pasted_code(tokens, **kwargs):
 
 
 @add_line_analyzer
-def detect_walrus(tokens, offset=None):
+def detect_walrus(tokens, offset=None, info=None):
     """Detecting if code uses named assignment operator := with an
     older version of Python.
     """
@@ -137,7 +137,7 @@ def detect_walrus(tokens, offset=None):
 
 
 @add_line_analyzer
-def detect_backquote(tokens, offset=None):
+def detect_backquote(tokens, offset=None, info=None):
     """Detecting if the error is due to using `x` which was allowed
     in Python 2.
     """
@@ -398,7 +398,7 @@ def calling_pip(tokens, **kwargs):
 
 
 @add_line_analyzer
-def dot_followed_by_bracket(tokens, offset=None):
+def dot_followed_by_bracket(tokens, offset=None, info=None):
     _ = current_lang.translate
     bad_token, index = find_offending_token(tokens, offset)
     if bad_token is None or index == 0:
@@ -411,7 +411,7 @@ def dot_followed_by_bracket(tokens, offset=None):
 
 
 @add_line_analyzer
-def raise_single_exception(tokens, offset=None):
+def raise_single_exception(tokens, offset=None, info=None):
     _ = current_lang.translate
     if tokens[0].string != "raise":
         return False
@@ -425,7 +425,7 @@ def raise_single_exception(tokens, offset=None):
 
 
 @add_line_analyzer
-def assign_instead_of_equal(tokens, offset=None):
+def assign_instead_of_equal(tokens, offset=None, info=None):
     """Checks to see if an assignment sign, '=', has been used instead of
     an equal sign, '==', in an if or elif statement."""
     _ = current_lang.translate

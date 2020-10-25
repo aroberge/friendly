@@ -25,7 +25,7 @@ from friendly_traceback import utils
 from friendly_traceback.friendly_exception import FriendlyException
 
 
-def scan_source(source_lines=None, linenumber=0, offset=0):
+def scan_source(source_lines=None, linenumber=0, offset=0, info=None):
     """Scans the entire source, looking at possible causes of
        SyntaxError: invalid syntax
     """
