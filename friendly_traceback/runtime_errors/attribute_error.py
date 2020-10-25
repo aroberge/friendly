@@ -13,6 +13,9 @@ def get_cause(value, info, frame):
     _ = current_lang.translate
     message = str(value)
 
+    # if hasattr(frame, 'f_code') and hasattr(frame.f_code, "co_names"):
+    #     print(frame.f_code.co_names)
+
     pattern = re.compile(r"module '(.*)' has no attribute '(.*)'")
     match = re.search(pattern, message)
     if match:

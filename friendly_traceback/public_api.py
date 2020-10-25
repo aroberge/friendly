@@ -249,20 +249,21 @@ class Friendly:
         self.set_include = set_include
         self.run = run
 
-    def _show_info(self):
+    def _tb_info(self):
         """Debugging tool: shows the content of traceback info."""
         if session.saved_traceback_info is None:
             print("No recorded traceback\n")
             return
         print("Recorded traceback information:\n")
+        if session.use_rich:  # will automatically pretty print
+            return session.saved_traceback_info
+
         for item in session.saved_traceback_info:
             print(f"{item}: {session.saved_traceback_info[item]}")
 
     def explain(self, include="explain"):
         """Shows the previously recorded traceback info again,
         with the specified verbosity level.
-
-        See set_verbosity() for details.
         """
         old_include = self.get_include()
         self.set_include(include)

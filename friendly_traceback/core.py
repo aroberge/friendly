@@ -384,11 +384,10 @@ def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
     )
     info["%s_source" % header_name] = source_info["source"]
 
-    if "line" in source_info and source_info["line"] is not None:
-        var_info = info_variables.get_var_info(source_info["line"], frame)
-        if var_info:
-            info["%s_variables_header" % header_name] = _("Known objects:")
-            info["%s_variables" % header_name] = var_info  # [6]
+    var_info = info_variables.get_var_info(frame)
+    if var_info:
+        info["%s_variables_header" % header_name] = _("Known objects:")
+        info["%s_variables" % header_name] = var_info  # [6]
 
 
 def get_location_header(linenumber, filename, header_name=None):

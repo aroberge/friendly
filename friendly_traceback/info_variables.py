@@ -4,7 +4,6 @@ Used to provide basic variable information in a way that
 can be useful for beginners without overwhelming them.
 """
 import builtins
-import tokenize
 
 from . import utils
 from .my_gettext import current_lang
@@ -14,8 +13,6 @@ from .friendly_exception import FriendlyException
 def get_variables_in_frame_by_scope(frame, scope):
     """Returns a list of variables based on the provided scope, which must
     be one of 'local', 'global', or 'nonlocal'.
-
-    Important: this function is incompatible with tests run using pytest.
     """
     if scope not in ["local", "global", "nonlocal", "declared nonlocal"]:
         raise FriendlyException(
@@ -35,6 +32,8 @@ def get_variables_in_frame_by_scope(frame, scope):
         nonlocals_ = {}
         while frame.f_back is not None:
             frame = frame.f_back
+            # By creating a new list here, we prevent a failure when
+            # running with pytest.
             for key in list(frame.f_locals):
                 if key in globals_ or key in nonlocals_:
                     continue
@@ -45,8 +44,6 @@ def get_variables_in_frame_by_scope(frame, scope):
 def get_definition_scope(variable_name, frame):
     """Returns a list of scopes ('local', 'global', 'nonlocal',
     'declared nonlocal') in which a variable is defined.
-
-    Important: this function is incompatible with tests run using pytest.
     """
     scopes = []
     for scope in ["local", "global", "nonlocal", "declared nonlocal"]:
@@ -56,42 +53,36 @@ def get_definition_scope(variable_name, frame):
     return scopes
 
 
-def get_var_info(line, frame):
-    """Given a line of code and a frame object, it obtains the
-    value (repr) of the names found in either the local or global scope.
+def get_var_info(frame):
+    """Given a frame object, it obtains the value (repr) of the names
+    found in the logical line (which may span many lines in the file)
+    where the exception occurred.
 
-    We ignore values found only in nonlocal scope as they should not
+    We ignore values found *only* in nonlocal scope as they should not
     be relevant.
     """
-    # This will not look in nonlocal scope using the above functions and
-    # should thus be safe to include in any tests run with pytest.
-    tokens = utils.tokenize_source(line)
     loc = frame.f_locals
     glob = frame.f_globals
     names_info = []
-    names = []
-    for tok in tokens:
-        if tok.type == tokenize.NAME:
-            name = tok.string
-            if name in names or name in ["True", "False", "None"]:
-                continue
-            names.append(name)
-            result = ""
-            if name in loc:
-                result = format_var_info(tok, loc)
-            elif name in glob:
-                result = format_var_info(tok, glob, _global=True)
-            elif name in dir(builtins):
-                result = format_var_info(tok, builtins, _builtins=True)
-            if result:
-                names_info.append(result)
+
+    names = frame.f_code.co_names
+    for name in names:
+        result = ""
+        if name in loc:
+            result = format_var_info(name, loc)
+        elif name in glob:
+            result = format_var_info(name, glob, _global=True)
+        elif name in dir(builtins):
+            result = format_var_info(name, builtins, _builtins=True)
+        if result:
+            names_info.append(result)
 
     if names_info:
         names_info.append("")
     return "\n".join(names_info)
 
 
-def format_var_info(tok, _dict, _global="", _builtins=""):
+def format_var_info(name, _dict, _global="", _builtins=""):
     """Formats the variable information so that it fits on a single line
     for each variable.
 
@@ -110,7 +101,6 @@ def format_var_info(tok, _dict, _global="", _builtins=""):
     length_info = ""
     if _global:
         _global = "global "
-    name = tok.string
 
     if _builtins:
         obj = getattr(_dict, name)
@@ -139,6 +129,9 @@ def format_var_info(tok, _dict, _global="", _builtins=""):
                 value = obj_repr + "> from " + path
             else:
                 value = obj_repr + f">\n{indent}from " + path
+        # The following is done so that, when using rich, pygments
+        # does not style the - and 'in' in a weird way.
+        value = value.replace("built-in", "builtin")
 
     if len(value) > MAX_LENGTH and not value.startswith("<"):
         # We reduce the length of the repr, indicate this by ..., but we
