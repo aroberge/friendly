@@ -108,15 +108,16 @@ def main():
         if not args.source:
             sys.exit()
 
+    include = "minimal"
+    if args.source:
+        include = "explain"
+
     if args.debug:
         session._debug = True
         log_file = os.path.join(os.path.expanduser("~"), "friendly.log")
         with open(log_file, "w", encoding="utf8") as out:
             out.write("Friendly log\n\n")
-
-    include = "minimal"
-    if args.source:
-        include = "explain"
+        include = "debug_tb"
 
     public_api.install(lang=args.lang, include=include)
 

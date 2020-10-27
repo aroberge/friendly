@@ -91,6 +91,24 @@ def test_misspelled_module_attribute_2():
     return result, message
 
 
+def test_shadow_stdlib_module():
+    import turtle
+
+    try:
+        turtle.Pen
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "AttributeError: module 'turtle' has no attribute 'Pen'" in result
+    if friendly_traceback.get_lang() == "en":
+        assert (
+            "There is also a module named `turtle` in Python's standard library."
+            in result
+        )
+    return result, message
+
+
 def test_nonetype():
     a = None
     try:
