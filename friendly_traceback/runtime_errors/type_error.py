@@ -274,9 +274,10 @@ def incorrect_nb_positional_arguments(message, info, frame):
             "such positional argument(s).\n"
         ).format(fn_name=fn_name, nb_given=nb_given, nb_required=nb_required)
         if missing_self:
-            cause += _("Perhaps you forgot `self` when defining `{fn_name}`.\n").format(
-                fn_name=fn_name
-            )
+            info["suggest"] = _(
+                "Perhaps you forgot `self` when defining `{fn_name}`.\n"
+            ).format(fn_name=fn_name)
+            cause += info["suggest"]
         return cause
     else:
         return
