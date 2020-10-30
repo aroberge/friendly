@@ -122,5 +122,34 @@ def test_nonetype():
         assert "for a variable whose value is `None`" in result
 
 
+def test_perhaps_comma1():
+    abcd = 'hello'
+    defg = 'world'
+    try:
+        a = [abcd. defg]
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "'str' object has no attribute 'defg'" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Did you mean to separate object names by a comma" in result
+
+
+def test_perhaps_comma2():
+    # same as previous, but objects on separate lines
+    abcd = 'hello'
+    defg = 'world'
+    try:
+        a = [abcd.
+            defg]
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "'str' object has no attribute 'defg'" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Did you mean to separate object names by a comma" in result
+
 if __name__ == "__main__":
     print(test_attribute_error()[0])
