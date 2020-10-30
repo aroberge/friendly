@@ -301,7 +301,7 @@ def missing_positional_arguments(message, *args):
 
 
 @add_message_parser
-def x_is_not_callable(message, *args):
+def x_is_not_callable(message, info, *args):
     _ = current_lang.translate
     pattern = re.compile(r"'(.*)' object is not callable")
     match = re.search(pattern, message)
@@ -311,6 +311,8 @@ def x_is_not_callable(message, *args):
             perhaps = _("Perhaps you had a missing comma between two tuples.\n")
         else:
             perhaps = _("Perhaps you had a missing comma before the tuple.\n")
+
+        info["suggest"] = perhaps
         return (
             _(
                 "I suspect that you had an object of this type, {obj},\n"
