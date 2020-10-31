@@ -5,7 +5,6 @@ of a given exception.
 """
 
 from .my_gettext import current_lang
-from . import info_variables
 
 get_cause = {}
 
@@ -89,26 +88,10 @@ def _module_not_found_error(value, info, frame):
 
 @register("NameError")
 def name_error(value, info, frame):
-    _ = current_lang.translate
-    # str(value) is expected to be something like
-    #
-    # NameError: name 'c' is not defined
-    #
-    # By splitting value using ', we can extract the variable name.
-    #
-    # May be overwritten in core.set_call_info()
-    cause = _("In your program, the unknown name is `{var_name}`.\n").format(
-        var_name=str(value).split("'")[1]
-    )
-    _parts = info["message"].split("'")
-    try:
-        unknown_name = _parts[1]
-        hint = info_variables.name_has_type_hint(unknown_name, frame)
-        similar_names = info_variables.get_similar_names(unknown_name, frame)
-        cause += hint + similar_names
-    except IndexError:
-        print("WARNING: IndexError caught while processing NameError")
-    return cause
+
+    from .runtime_errors import name_error
+
+    return name_error.get_cause(value, info, frame)
 
 
 @register("OverflowError")
