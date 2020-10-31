@@ -194,6 +194,12 @@ def get_similar_names(name, frame):
     similar["globals"] = [name for name in names if name not in similar["locals"]]
 
     similar["builtins"] = utils.get_similar_words(name, dir(builtins))
+    all_similar = similar["locals"] + similar["globals"] + similar["builtins"]
+    if all_similar:
+        most_similar = utils.get_similar_words(name, all_similar)
+        similar["best"] = most_similar[0]
+    else:
+        similar["best"] = None
     return similar
 
 

@@ -19,10 +19,11 @@ def get_cause(value, info, frame):
     )
 
     hint = info_variables.name_has_type_hint(unknown_name, frame)
-    similar_names = info_variables.get_similar_names(unknown_name, frame)
-    similar_names = format_similar_names(unknown_name, similar_names)
-    cause += hint + similar_names
+    similar = info_variables.get_similar_names(unknown_name, frame)
+    if similar["best"] is not None:
+        info["suggest"] = _("Did you mean `{name}`?").format(name=similar["best"])
 
+    cause += hint + format_similar_names(unknown_name, similar)
     return cause
 
 
