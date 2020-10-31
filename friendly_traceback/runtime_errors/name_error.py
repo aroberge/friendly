@@ -20,6 +20,73 @@ def get_cause(value, info, frame):
 
     hint = info_variables.name_has_type_hint(unknown_name, frame)
     similar_names = info_variables.get_similar_names(unknown_name, frame)
+    similar_names = format_similar_names(unknown_name, similar_names)
     cause += hint + similar_names
 
     return cause
+
+
+def format_similar_names(name, similar):
+    """This function formats the names that were found to be similar"""
+    _ = current_lang.translate
+
+    nb_similar_names = (
+        len(similar["locals"]) + len(similar["globals"]) + len(similar["builtins"])
+    )
+    if nb_similar_names == 0:
+        return ""
+
+    elif nb_similar_names == 1:
+        if similar["locals"]:
+            return (
+                _("The similar name `{name}` was found in the local scope. ").format(
+                    name=str(similar["locals"][0]).replace("'", "")
+                )
+                + "\n"
+            )
+        elif similar["globals"]:
+            similar_name = similar["globals"][0]
+            if name != similar_name:
+                return (
+                    _(
+                        "The similar name `{name}` was found in the global scope. "
+                    ).format(name=similar_name.replace("'", ""))
+                    + "\n"
+                )
+            else:
+                return (
+                    _("The name `{name}` was found in the global scope. ").format(
+                        name=name
+                    )
+                    + "\n"
+                )
+        else:
+            return (
+                _("The Python builtin `{name}` has a similar name. ").format(
+                    name=str(similar["builtins"][0]).replace("'", "")
+                )
+                + "\n"
+            )
+
+    message = _(
+        "Instead of writing `{name}`, perhaps you meant one of the following:\n"
+    ).format(name=name)
+    if similar["locals"]:
+        message += (
+            _("*   Local scope: ")
+            + str(similar["locals"])[1:-1].replace("'", "`")
+            + "\n"
+        )
+    if similar["globals"]:
+        message += (
+            _("*   Global scope: ")
+            + str(similar["globals"])[1:-1].replace("'", "`")
+            + "\n"
+        )
+    if similar["builtins"]:
+        message += (
+            _("*   Python builtins: ")
+            + str(similar["builtins"])[1:-1].replace("'", "`")
+            + "\n"
+        )
+    return message
