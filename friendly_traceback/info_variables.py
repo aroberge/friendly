@@ -190,7 +190,8 @@ def get_similar_names(name, frame):
     similar["locals"] = utils.get_similar_words(name, locals_)
 
     globals_ = get_variables_in_frame_by_scope(frame, "global")
-    similar["globals"] = utils.get_similar_words(name, globals_)
+    names = utils.get_similar_words(name, globals_)
+    similar["globals"] = [name for name in names if name not in similar["locals"]]
 
     similar["builtins"] = utils.get_similar_words(name, dir(builtins))
     return format_similar_names(name, similar)
