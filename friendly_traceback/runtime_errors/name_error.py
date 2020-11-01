@@ -18,7 +18,7 @@ def get_cause(value, info, frame):
 
     unknown_name = match.group(1)
 
-    cause = _("In your program, the unknown name is `{var_name}`.\n").format(
+    cause = _("In your program, `{var_name}` is an unknown name.\n").format(
         var_name=unknown_name
     )
 
@@ -27,11 +27,11 @@ def get_cause(value, info, frame):
     if similar["best"] is not None:
         info["suggest"] = _("Did you mean `{name}`?").format(name=similar["best"])
 
-    cause += hint + format_similar_names(unknown_name, similar)
+    cause += hint + format_similar_names(unknown_name, similar, hint)
     return cause
 
 
-def format_similar_names(name, similar):
+def format_similar_names(name, similar, hint):
     """This function formats the names that were found to be similar"""
     _ = current_lang.translate
 
@@ -39,7 +39,10 @@ def format_similar_names(name, similar):
         len(similar["locals"]) + len(similar["globals"]) + len(similar["builtins"])
     )
     if nb_similar_names == 0:
-        return ""
+        if hint:
+            return ""
+        else:
+            return _("I have no additional information for you.")
 
     elif nb_similar_names == 1:
         if similar["locals"]:

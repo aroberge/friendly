@@ -10,7 +10,7 @@ def test_name_error():
     result = friendly_traceback.get_output()
     assert "NameError: name 'something' is not defined" in result
     if friendly_traceback.get_lang() == "en":
-        assert "In your program, the unknown name is `something`." in result
+        assert "In your program, `something` is an unknown name." in result
     return result, message
 
 def test_name_error2():
@@ -37,7 +37,7 @@ def test_name_error3():
     result = friendly_traceback.get_output()
     assert "NameError: name 'x' is not defined" in result
     if friendly_traceback.get_lang() == "en":
-        assert "instead of `x = 3`" in result
+        assert "x = 3" in result
     return result, message
 
 def test_name_error4():

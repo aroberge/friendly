@@ -199,7 +199,14 @@ def get_similar_names(name, frame):
         most_similar = utils.get_similar_words(name, all_similar)
         similar["best"] = most_similar[0]
     else:
-        similar["best"] = None
+        # utils.get_similar_words() used above only look for relatively
+        # minor letter mismatches in making suggestions.
+        # Here we add a few additional hard-coded cases.
+        if name in ["length", "lenght"]:
+            similar["builtins"] = ["len"]
+            similar["best"] = "len"
+        else:
+            similar["best"] = None
     return similar
 
 
@@ -227,17 +234,23 @@ def name_has_type_hint(name, frame):
     loc = frame.f_locals
     glob = frame.f_globals
 
+    type_hint_found_in_scope = _(
+        "A type hint found for `{name}` in the {scope} scope.\n"
+    )
+    perhaps = _(
+        "Perhaps you had used a colon instead of an equal sign and written\n\n"
+        "    {name} : {hint}\n\n"
+        "instead of\n\n"
+        "    {name} = {hint}\n"
+    )
+
     if "__annotations__" in loc:
         if name in loc["__annotations__"]:
             hint = loc["__annotations__"][name]
             if isinstance(hint, str):
                 hint = f"'{hint}'"
-            message = _("A type hint found for `{name}` in the local scope.\n").format(
-                name=name
-            )
-            message += _(
-                "Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n"
-            ).format(name=name, hint=hint)
+            message = type_hint_found_in_scope.format(name=name, scope="local")
+            message += perhaps.format(name=name, hint=hint)
             return message
 
     if "__annotations__" in glob:
@@ -245,11 +258,7 @@ def name_has_type_hint(name, frame):
             hint = glob["__annotations__"][name]
             if isinstance(hint, str):
                 hint = f"'{hint}'"
-            message = _("A type hint found for `{name}` in the global scope.\n").format(
-                name=name
-            )
-            message += _(
-                "Perhaps you had written `{name} : {hint}` instead of `{name} = {hint}`.\n"
-            ).format(name=name, hint=hint)
+            message = type_hint_found_in_scope.format(name=name, scope="global")
+            message += perhaps.format(name=name, hint=hint)
             return message
     return ""
