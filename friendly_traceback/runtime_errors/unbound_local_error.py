@@ -25,6 +25,18 @@ def local_variable_referenced(unknown_name, info, frame):
     _ = current_lang.translate
 
     scopes = info_variables.get_definition_scope(unknown_name, frame)
+    if not scopes:
+        similar = info_variables.get_similar_names(unknown_name, frame)
+        if similar["best"] is not None:
+            best_guess = similar["best"]
+            if best_guess in similar["locals"]:
+                info["suggest"] = _("Did you mean `{name}`?").format(
+                    name=similar["best"]
+                )
+                return format_similar_names(unknown_name, similar)
+
+        else:
+            return None
 
     if "global" in scopes and "nonlocal" in scopes:
         cause = _(
@@ -42,12 +54,12 @@ def local_variable_referenced(unknown_name, info, frame):
         ).format(var_name=unknown_name)
         return cause
 
-    cause = ""
-
     if "global" in scopes:
         scope = "global"
     elif "nonlocal" in scopes:
         scope = "nonlocal"
+    else:
+        return
 
     cause = _(
         "The name `{var_name}` exists in the {scope} scope.\n"
@@ -61,3 +73,26 @@ def local_variable_referenced(unknown_name, info, frame):
     )
 
     return cause
+
+
+def format_similar_names(unknown_name, similar):
+    """This function formats the names that were found to be similar"""
+    _ = current_lang.translate
+
+    nb_similar_names = len(similar["locals"])
+    if nb_similar_names == 1:
+        return (
+            _("The similar name `{name}` was found in the local scope. ").format(
+                name=str(similar["locals"][0]).replace("'", "")
+            )
+            + "\n"
+        )
+
+    message = _(
+        "Instead of writing `{name}`, perhaps you meant one of the following:\n"
+    ).format(name=unknown_name)
+    message += (
+        _("*   Local scope: ") + str(similar["locals"])[1:-1].replace("'", "`") + "\n"
+    )
+
+    return message

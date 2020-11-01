@@ -225,7 +225,7 @@ def get_similar_words(word_with_typo, words):
     words = [word for word in words if len(word) > 1]
 
     get = difflib.get_close_matches
-    cutoff = min(0.8, 0.65 + 0.01 * len(word_with_typo))
+    cutoff = min(0.8, 0.63 + 0.01 * len(word_with_typo))
     result = get(word_with_typo, words, n=5, cutoff=cutoff)
     if result:
         return result
