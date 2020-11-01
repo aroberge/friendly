@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-01 09:13-0400\n"
-"PO-Revision-Date: 2020-11-01 09:22-0400\n"
+"POT-Creation-Date: 2020-11-01 18:20-0400\n"
+"PO-Revision-Date: 2020-11-01 18:22-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Generator: Poedit 2.4\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: console.py:44
+#: console.py:50
 msgid ""
 "\n"
 "    Rich is not installed.\n"
@@ -27,25 +27,25 @@ msgstr ""
 "    Rich n'est pas installé.\n"
 "\n"
 
-#: console.py:154
+#: console.py:166
 msgid "Warning: you added a type hint to the python builtin {name}."
 msgstr ""
 "Attention : vous avez utilisé des annotations de type pour l'identifiant "
 "Python (builtin) {name}."
 
-#: console.py:157
+#: console.py:169
 msgid ""
 "Warning: you used a type hint for a variable without assigning it a value.\n"
 msgstr ""
 "Attention : vous avez utilisé une annotation de type pour une variable sans "
 "lui attribuer une valeur.\n"
 
-#: console.py:160
+#: console.py:172
 msgid "Instead of {hint}, perhaps you meant {assignment}."
 msgstr ""
 "Au lieu de {hint}, peut-être que vous vouliez plutôt écrire : {assignment}."
 
-#: console.py:223
+#: console.py:240
 msgid "Warning: you have redefined the python builtin {name}."
 msgstr "Attention : vous avez redéfini l'identifiant Python (builtin) {name}."
 
@@ -336,7 +336,7 @@ msgstr ""
 "`UnboundLocalError`.\n"
 
 #: info_generic.py:205 runtime_errors\import_error.py:27
-#: runtime_errors\module_not_found_error.py:26 runtime_errors\name_error.py:13
+#: runtime_errors\module_not_found_error.py:26 runtime_errors\name_error.py:14
 #: runtime_errors\unbound_local_error.py:17
 msgid ""
 "No information is known about this exception.\n"
@@ -377,12 +377,12 @@ msgstr "Dans votre programme, le nom du fichier inconnu est `{filename}`.\n"
 msgid "In your program, the key that cannot be found is `{key_name!r}`.\n"
 msgstr "Dans votre programme, la clé inconnue est `{key_name!r}`.\n"
 
-#: info_variables.py:237
+#: info_variables.py:243
 msgid "A type hint found for `{name}` in the {scope} scope.\n"
 msgstr ""
 "Annotation de type trouvée pour `{name}` en tant que variable {scope}e.\n"
 
-#: info_variables.py:240
+#: info_variables.py:246
 msgid ""
 "Perhaps you had used a colon instead of an equal sign and written\n"
 "\n"
@@ -422,7 +422,7 @@ msgstr ""
 "Toutefois, il ne semble pas que le module `{module}` ait été importé.\n"
 
 #: runtime_errors\attribute_error.py:59 runtime_errors\attribute_error.py:107
-#: runtime_errors\attribute_error.py:157 runtime_errors\attribute_error.py:257
+#: runtime_errors\attribute_error.py:157 runtime_errors\attribute_error.py:254
 #: runtime_errors\import_error.py:52
 #: runtime_errors\module_not_found_error.py:43
 msgid "Did you mean `{name}`?\n"
@@ -511,7 +511,7 @@ msgstr ""
 "Toutefois, les objets de type `{obj_type}` ont un attribut nommé `{correct}` "
 "qui est similaire à ce que vous avez écrit.\n"
 
-#: runtime_errors\attribute_error.py:168 runtime_errors\attribute_error.py:266
+#: runtime_errors\attribute_error.py:168 runtime_errors\attribute_error.py:263
 msgid "Did you mean one of the following: `{name}`?\n"
 msgstr "Vouliez-vous dire l’un des éléments suivants: `{name}`?\n"
 
@@ -529,15 +529,15 @@ msgstr ""
 "sont similaires à ce que vous avez écrit:\n"
 "`{candidates}`\n"
 
-#: runtime_errors\attribute_error.py:235
+#: runtime_errors\attribute_error.py:232
 msgid "The object of type `{obj}` has no attribute named `{attr}`.\n"
 msgstr "L’objet de type `{obj}` n’a pas d’attribut nommé `{attr}`.\n"
 
-#: runtime_errors\attribute_error.py:239
+#: runtime_errors\attribute_error.py:236
 msgid "The object `{obj}` has no attribute named `{attr}`.\n"
 msgstr "L’objet `{obj}` n’a pas d’attribut nommé `{attr}`.\n"
 
-#: runtime_errors\attribute_error.py:246
+#: runtime_errors\attribute_error.py:243
 msgid ""
 "The following are some of its known attributes:\n"
 "`{names}`."
@@ -545,14 +545,14 @@ msgstr ""
 "Voici quelques-uns de ses attributs connus :\n"
 "`{names}`."
 
-#: runtime_errors\attribute_error.py:258
+#: runtime_errors\attribute_error.py:255
 msgid ""
 "Perhaps you meant to write `{obj}.{correct}` instead of `{obj}.{typo}`\n"
 msgstr ""
 "Peut-être que vous vouliez plutôt écrire : `{obj}.{correct}` au lieu de "
 "`{obj}.{typo}`.\n"
 
-#: runtime_errors\attribute_error.py:269
+#: runtime_errors\attribute_error.py:266
 msgid ""
 "Instead of writing `{obj}.{typo}`, perhaps you meant to write one of \n"
 "the following names which are attributes of object `{obj}`:\n"
@@ -562,11 +562,11 @@ msgstr ""
 "l'un des attributs suivants de l'objet `{obj}` :\n"
 "{candidates}\n"
 
-#: runtime_errors\attribute_error.py:285
+#: runtime_errors\attribute_error.py:282
 msgid "Did you mean to use `{known_builtin}({obj_name})`?"
 msgstr "Vouliez-vous utiliser `{known_builtin}({obj_name})`?"
 
-#: runtime_errors\attribute_error.py:288
+#: runtime_errors\attribute_error.py:285
 msgid ""
 "The object `{obj_name}` has no attribute named `{attribute}`.\n"
 "Perhaps you can use the Python builtin function `{known_builtin}` instead:\n"
@@ -577,11 +577,11 @@ msgstr ""
 "à la place:\n"
 "`{known_builtin}({obj_name})`."
 
-#: runtime_errors\attribute_error.py:337
+#: runtime_errors\attribute_error.py:334
 msgid "Did you mean to separate object names by a comma?"
 msgstr "Vouliez-vous séparer les noms d’objets par une virgule ?"
 
-#: runtime_errors\attribute_error.py:339
+#: runtime_errors\attribute_error.py:336
 msgid ""
 "`{second}` is not an attribute of `{first}`.\n"
 "However, both `{first}` and `{second}` are known objects.\n"
@@ -641,51 +641,65 @@ msgstr ""
 msgid "`{name}` is an existing module that has a similar name.\n"
 msgstr "`{name}` est un module existant qui a un nom similaire.\n"
 
-#: runtime_errors\name_error.py:21
+#: runtime_errors\name_error.py:22
 msgid "In your program, `{var_name}` is an unknown name.\n"
 msgstr "Dans votre programme, `{var_name}` est un nom inconnu.\n"
 
-#: runtime_errors\name_error.py:28
+#: runtime_errors\name_error.py:29 runtime_errors\unbound_local_error.py:33
 msgid "Did you mean `{name}`?"
 msgstr "Vouliez-vous dire `{name}`?"
 
-#: runtime_errors\name_error.py:45
+#: runtime_errors\name_error.py:37
 msgid "I have no additional information for you."
 msgstr "Je n’ai pas d’informations supplémentaires pour vous."
 
-#: runtime_errors\name_error.py:50
+#: runtime_errors\name_error.py:54 runtime_errors\unbound_local_error.py:85
 msgid "The similar name `{name}` was found in the local scope. "
 msgstr "Le nom semblable `{name}` a été trouvé dans la portée locale. "
 
-#: runtime_errors\name_error.py:59
+#: runtime_errors\name_error.py:63
 msgid "The similar name `{name}` was found in the global scope. "
 msgstr "Le nom semblable `{name}` a été trouvé dans la portée globale. "
 
-#: runtime_errors\name_error.py:66
+#: runtime_errors\name_error.py:70
 msgid "The name `{name}` was found in the global scope. "
 msgstr "Le nom semblable `{name}` a été trouvé dans la portée globale. "
 
-#: runtime_errors\name_error.py:73
+#: runtime_errors\name_error.py:77
 msgid "The Python builtin `{name}` has a similar name. "
 msgstr "L'identifiant Python (builtin) `{name}` a un nom semblable. "
 
-#: runtime_errors\name_error.py:79
+#: runtime_errors\name_error.py:83 runtime_errors\unbound_local_error.py:91
 msgid "Instead of writing `{name}`, perhaps you meant one of the following:\n"
 msgstr ""
 "Au lieu d’écrire `{name}`, peut-être que vous vouliez écrire l'un des noms "
 "suivants :\n"
 
-#: runtime_errors\name_error.py:84
+#: runtime_errors\name_error.py:88 runtime_errors\unbound_local_error.py:95
 msgid "*   Local scope: "
 msgstr "*    Portée locale : "
 
-#: runtime_errors\name_error.py:90
+#: runtime_errors\name_error.py:94
 msgid "*   Global scope: "
 msgstr "*    Portée globale : "
 
-#: runtime_errors\name_error.py:96
+#: runtime_errors\name_error.py:100
 msgid "*   Python builtins: "
 msgstr "*    Identifiant Python (builtins) : "
+
+#: runtime_errors\name_error.py:139
+msgid "Did you forget to add `self`?"
+msgstr "Avez-vous oublié d’ajouter `self`?"
+
+#: runtime_errors\name_error.py:144
+msgid ""
+"The {scope} object `{obj}` has an attribute named `{unknown_name}`.\n"
+"Perhaps you should have written `self.{unknown_name}` instead of "
+"`{unknown_name}`.\n"
+msgstr ""
+"L’objet {scope} `{obj}` a un attribut nommé `{unknown_name}`.\n"
+"Peut-être que vous auriez dû écrire `moi-même.{unknown_name}` au lieu de "
+"`{unknown_name}`.\n"
 
 #: runtime_errors\type_error.py:34
 msgid ""
@@ -899,7 +913,7 @@ msgstr ""
 "Peut-être avez-vous oublié de convertir une chaîne à un entier à l’aide de "
 "`int()`."
 
-#: runtime_errors\unbound_local_error.py:30
+#: runtime_errors\unbound_local_error.py:42
 msgid ""
 "The name `{var_name}` exists in both the global and nonlocal scope.\n"
 "This can be rather confusing and is not recommended.\n"
@@ -926,7 +940,7 @@ msgstr ""
 "\n"
 "comme la première ligne à l’intérieur de votre fonction.\n"
 
-#: runtime_errors\unbound_local_error.py:39
+#: runtime_errors\unbound_local_error.py:51
 msgid ""
 "Did you forget to add either `global {var_name}` or \n"
 "`nonlocal {var_name}`?\n"
@@ -934,7 +948,7 @@ msgstr ""
 "Avez-vous oublié d’ajouter soit `global {var_name}` ou \n"
 "`nonlocal {var_name}`?\n"
 
-#: runtime_errors\unbound_local_error.py:52
+#: runtime_errors\unbound_local_error.py:64
 msgid ""
 "The name `{var_name}` exists in the {scope} scope.\n"
 "Perhaps the statement\n"
@@ -951,7 +965,7 @@ msgstr ""
 "aurait dû être incluse comme première ligne à l’intérieur de votre "
 "fonction.\n"
 
-#: runtime_errors\unbound_local_error.py:59
+#: runtime_errors\unbound_local_error.py:71
 msgid "Did you forget to add `{scope} {var_name}`?\n"
 msgstr "Avez-vous oublié d’ajouter `{scope} {var_name}`?\n"
 

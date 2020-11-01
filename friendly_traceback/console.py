@@ -7,6 +7,7 @@ import builtins
 import copy
 import os
 import platform
+import traceback
 from code import InteractiveConsole
 import codeop  # need to import to exclude from tracebacks
 
@@ -140,7 +141,13 @@ class FriendlyConsole(InteractiveConsole):
         except SystemExit:
             os._exit(1)
         except Exception:
-            public_api.explain()
+            try:
+                public_api.explain()
+            except Exception:
+                print("Friendly-traceback Internal Error")
+                print("-" * 60)
+                traceback.print_exc()
+                print("-" * 60)
 
         self.check_for_builtins_changes()
         self.check_for_annotations()
