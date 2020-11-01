@@ -196,9 +196,6 @@ def attribute_error_in_object(obj_type, attribute, info, frame):
     if obj_type in standard_types:
         pass
 
-    # if hasattr(frame, 'f_code') and hasattr(frame.f_code, "co_names"):
-    #     print(frame.f_code.co_names)
-
     try:
         obj = eval(obj_type, frame.f_globals, frame.f_locals)
         known_attributes = dir(obj)

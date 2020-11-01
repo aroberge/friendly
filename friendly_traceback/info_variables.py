@@ -9,6 +9,9 @@ from . import utils
 from .my_gettext import current_lang
 from .friendly_exception import FriendlyException
 
+INDENT = "        "
+MAX_LENGTH = 65
+
 
 def get_variables_in_frame_by_scope(frame, scope):
     """Returns a list of variables based on the provided scope, which must
@@ -99,6 +102,29 @@ def get_var_info(displayed_source, frame):
     return "\n".join(names_info)
 
 
+def simplify_name(name):
+    """Remove irrelevant memory location information from functions, etc."""
+    # There are two reasons to do this:
+    # 1. this information is essentially of no value for beginners
+    # 2. Removing this information ensures that consecutive runs of
+    #    script to create tracebacks for the documentation will yield
+    #    exactly the same results. This makes it easier to spot changes/regressions.
+    if " at " in name:
+        name = name.split(" at ")[0] + ">"
+    elif " from " in name:  # example: module X from stdlib_path
+        obj_repr, path = name.split(" from ")
+        path = utils.shorten_path(path[:-1])  # -1 removes >
+        # Avoid lines that are too long
+        if len(obj_repr) + len(path) < MAX_LENGTH:
+            name = obj_repr + "> from " + path
+        else:
+            name = obj_repr + f">\n{INDENT}from " + path
+    # The following is done so that, when using rich, pygments
+    # does not style the - and 'in' in a weird way.
+    name = name.replace("built-in", "builtin")
+    return name.replace("<__main__.", "<")
+
+
 def format_var_info(name, _dict, _global="", _builtins=""):
     """Formats the variable information so that it fits on a single line
     for each variable.
@@ -114,7 +140,6 @@ def format_var_info(name, _dict, _global="", _builtins=""):
     others.
     """
     _ = current_lang.translate
-    MAX_LENGTH = 65
     length_info = ""
     if _global:
         _global = "global "
@@ -128,27 +153,8 @@ def format_var_info(name, _dict, _global="", _builtins=""):
     except Exception:
         return ""
 
-    # Remove irrelevant memory location information from functions, etc.
-    # There are two reasons to do this:
-    # 1. this information is essentially of no value for beginners
-    # 2. Removing this information ensures that consecutive runs of
-    #    script to create tracebacks for the documentation will yield
-    #    exactly the same results. This makes it easier to spot changes/regressions.
-    indent = "        "
     if value.startswith("<") and value.endswith(">"):
-        if " at " in value:
-            value = value.split(" at ")[0] + ">"
-        elif " from " in value:  # example: module X from stdlib_path
-            obj_repr, path = value.split(" from ")
-            path = utils.shorten_path(path[:-1])  # -1 removes >
-            # Avoid lines that are too long
-            if len(obj_repr) + len(path) < MAX_LENGTH:
-                value = obj_repr + "> from " + path
-            else:
-                value = obj_repr + f">\n{indent}from " + path
-        # The following is done so that, when using rich, pygments
-        # does not style the - and 'in' in a weird way.
-        value = value.replace("built-in", "builtin")
+        value = simplify_name(value)
 
     if len(value) > MAX_LENGTH and not value.startswith("<"):
         # We reduce the length of the repr, indicate this by ..., but we
@@ -176,7 +182,7 @@ def format_var_info(name, _dict, _global="", _builtins=""):
 
     result = f"    {_global}{name}: {value}"
     if length_info:
-        result += f"\n{indent}len({name}): {length_info}"
+        result += f"\n{INDENT}len({name}): {length_info}"
     return result
 
 

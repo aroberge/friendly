@@ -2,6 +2,7 @@ import re
 
 from ..my_gettext import current_lang
 from .. import info_variables
+from .. import utils
 
 
 def get_cause(value, info, frame):
@@ -27,8 +28,14 @@ def get_cause(value, info, frame):
     if similar["best"] is not None:
         info["suggest"] = _("Did you mean `{name}`?").format(name=similar["best"])
 
-    cause += hint + format_similar_names(unknown_name, similar, hint)
-    return cause
+    additional = hint + format_similar_names(unknown_name, similar, hint)
+    try:
+        additional += missing_self(unknown_name, frame, info)
+    except Exception as e:
+        print("exception raised: ", e)
+    if not additional:
+        additional = _("I have no additional information for you.")
+    return cause + additional
 
 
 def format_similar_names(name, similar, hint):
@@ -39,10 +46,7 @@ def format_similar_names(name, similar, hint):
         len(similar["locals"]) + len(similar["globals"]) + len(similar["builtins"])
     )
     if nb_similar_names == 0:
-        if hint:
-            return ""
-        else:
-            return _("I have no additional information for you.")
+        return ""
 
     elif nb_similar_names == 1:
         if similar["locals"]:
@@ -98,3 +102,56 @@ def format_similar_names(name, similar, hint):
             + "\n"
         )
     return message
+
+
+def missing_self(unknown_name, frame, info):
+    """If the unknown name is referred to with no '.' before it,
+    and is an attribute of a known object, perhaps 'self.'
+    is missing."""
+    _ = current_lang.translate
+
+    try:
+        tokens = utils.get_significant_tokens(info["bad_line"])
+    except Exception:
+        return ""
+
+    if not tokens:
+        return ""
+
+    prev_token = tokens[0]
+    for token in tokens:
+        if token == unknown_name and prev_token != ".":
+            break
+        prev_token = token
+    else:
+        return ""
+
+    env = (("local", frame.f_locals), ("global", frame.f_globals))
+
+    for scope, dict_ in env:
+        names = info_variables.get_variables_in_frame_by_scope(frame, scope)
+        dict_copy = dict(dict_)
+        for name in names:
+            try:
+                obj = eval(name, dict_copy)  # Can raise SyntaxError and possibly others
+                known_attributes = dir(obj)
+                if unknown_name in known_attributes:
+                    suggest = _("Did you forget to add `self`?")
+                    if "suggest" not in info:
+                        info["suggest"] = suggest
+                    else:
+                        info["suggest"] += " " + suggest
+                    return _(
+                        "The {scope} object `{obj}`"
+                        " has an attribute named `{unknown_name}`.\n"
+                        "Perhaps you should have written `self.{unknown_name}`"
+                        " instead of `{unknown_name}`.\n"
+                    ).format(
+                        scope=scope,
+                        obj=info_variables.simplify_name(repr(obj)),
+                        unknown_name=unknown_name,
+                    )
+            except Exception:
+                pass
+
+    return ""
