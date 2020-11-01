@@ -30,6 +30,9 @@ class LangState:
         self.translate = None
         self.lang = "en"
 
+    def no_translation(self, text):
+        return text
+
     def install(self, lang=None):
         """Sets the language to be used for translations"""
         if lang is None:
@@ -60,7 +63,10 @@ class LangState:
                 # is not available.
             )
         self.lang = lang
-        self.translate = _lang.gettext
+        if lang == "en":
+            self.translate = self.no_translation
+        else:
+            self.translate = _lang.gettext
 
 
 current_lang = LangState()  # noqa
