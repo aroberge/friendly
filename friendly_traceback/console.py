@@ -21,6 +21,11 @@ BANNER = "\nFriendly Console version {}. [Python version: {}]\n".format(
     __version__, platform.python_version()
 )
 
+please_comment = (
+    "   Do you find these warnings useful?\n"
+    "   Comment at https://github.com/aroberge/friendly-traceback/issues/112"
+)
+
 
 class FriendlyConsole(InteractiveConsole):
     def __init__(self, locals=None, use_rich=False, theme="dark"):
@@ -167,14 +172,16 @@ class FriendlyConsole(InteractiveConsole):
                     warning = "#### " + warning
                     warning = friendly_rich.Markdown(warning)
                     self.rich_console.print(warning)
+                    self.rich_console.print(please_comment)
                 else:
                     print(warning)
+                    print(please_comment)
 
         wrote_title = False
         warning = ""
 
         for name in hints:
-            if name in dir(builtins):
+            if name in dir(builtins):  # Taken care of above
                 continue
             if (
                 name not in self.locals
@@ -198,9 +205,12 @@ class FriendlyConsole(InteractiveConsole):
             if self.rich_console:
                 warning = friendly_rich.Markdown(warning)
                 self.rich_console.print(warning)
+                self.rich_console.print(please_comment)
             else:
                 print(warning)
-        self.locals["__annotations__"] = {}
+                print(please_comment)
+
+            self.locals["__annotations__"] = {}
 
     def check_for_builtins_changes(self):
         """Warning users if they assign a value to a builtin"""
@@ -226,8 +236,10 @@ class FriendlyConsole(InteractiveConsole):
                 if self.rich_console:
                     warning = friendly_rich.Markdown("#### " + warning)
                     self.rich_console.print(warning)
+                    self.rich_console.print(please_comment)
                 else:
                     print(warning)
+                    print(please_comment)
                 changed.append(name)
 
         for name in changed:

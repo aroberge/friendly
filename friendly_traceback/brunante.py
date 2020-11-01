@@ -102,7 +102,7 @@ rich_style = {
     "markdown.h3": colours["small-heading"],  # likely cause
     "markdown.h4": colours["orange"],  # warning header
     "markdown.link": f"not underline {my_style['keywords']}",
-    "repr.url": my_style["diagnostics"],
+    "repr.url": my_style["string"],
     "repr.number": my_style["numbers"],
     # The next three are identical for pygments, so we keep them identical
     "repr.bool_false": my_style["TrueFalseNone"],
