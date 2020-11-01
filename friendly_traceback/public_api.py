@@ -249,8 +249,8 @@ class Friendly:
         self.set_include = set_include
         self.run = run
 
-    def _tb_info(self):
-        """Debugging tool: shows the content of traceback info."""
+    def _info(self):
+        """Debugging tool: shows the complete content of traceback info."""
         if session.saved_traceback_info is None:
             print("No recorded traceback\n")
             return
@@ -271,7 +271,7 @@ class Friendly:
         self.set_include(old_include)
 
     def traceback(self):
-        """Shows the traceback."""
+        """Shows the Python traceback, with the added suggestion/hint."""
         self.explain("python_tb")
 
     def more(self):
@@ -300,7 +300,8 @@ class Friendly:
     def debug(self):
         """This functions displays the true traceback recorded, that
         includes friendly-traceback's own code.
-        It also sets a debug flag for the current session.
+        It also adds the suggestion/hint from friendly-traceback
+        and sets a debug flag for the current session.
         """
         session._debug = True
         self.explain("debug_tb")
@@ -316,9 +317,3 @@ def set_level(verbosity_level):
     """Deprecated; use set_verbosity() instead."""
     print("friendly-traceback set_level is deprecated; defaults will be used.")
     set_include("explain")
-
-
-# @make_public
-# def get_level():
-#     """Deprecated: use get_verbosity() instead."""
-#     return get_verbosity()

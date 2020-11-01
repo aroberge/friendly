@@ -10,7 +10,11 @@ def get_cause(value, info, frame):
     pattern = re.compile(r"name '(.*)' is not defined")
     match = re.search(pattern, str(value))
     if not match:
-        return
+        return _(
+            "No information is known about this exception.\n"
+            "Please report this example to\n"
+            "https://github.com/aroberge/friendly-traceback/issues\n"
+        )
 
     unknown_name = match.group(1)
 

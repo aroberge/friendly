@@ -262,15 +262,11 @@ items_groups = {
         "exception_raised_variables_header",
         "exception_raised_variables",
     },
-    "friendly_tb": {"shortened_traceback"},
-    "python_tb": {"simulated_python_traceback"},
-    "debug_tb": {"original_python_traceback"},
+    "friendly_tb": {"shortened_traceback", "suggest"},
+    "python_tb": {"simulated_python_traceback", "suggest"},
+    "debug_tb": {"original_python_traceback", "suggest"},
 }
-items_groups["minimal"] = (
-    items_groups["header"]
-    .union(items_groups["friendly_tb"])
-    .union(items_groups["hint"])
-)
+items_groups["minimal"] = items_groups["header"].union(items_groups["friendly_tb"])
 items_groups["more"] = items_groups["why"].union(items_groups["where"])
 items_groups["explain"] = (
     items_groups["minimal"].union(items_groups["generic"]).union(items_groups["more"])
