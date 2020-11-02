@@ -10,6 +10,8 @@ def get_cause(value, info, frame):
 
     pattern = re.compile(r"name '(.*)' is not defined")
     match = re.search(pattern, str(value))
+    if match:
+        return name_not_defined(match.group(1), info, frame)
     if not match:
         return _(
             "No information is known about this exception.\n"
@@ -17,8 +19,31 @@ def get_cause(value, info, frame):
             "https://github.com/aroberge/friendly-traceback/issues\n"
         )
 
-    unknown_name = match.group(1)
+    # unknown_name = match.group(1)
 
+    # cause = _("In your program, `{var_name}` is an unknown name.\n").format(
+    #     var_name=unknown_name
+    # )
+
+    # hint = info_variables.name_has_type_hint(unknown_name, frame)
+    # similar = info_variables.get_similar_names(unknown_name, frame)
+    # if similar["best"] is not None:
+    #     info["suggest"] = _("Did you mean `{name}`?").format(name=similar["best"])
+    # elif hint:
+    #     info["suggest"] = _("Did you use a colon instead of an equal sign?")
+
+    # additional = hint + format_similar_names(unknown_name, similar, hint)
+    # try:
+    #     additional += missing_self(unknown_name, frame, info)
+    # except Exception as e:
+    #     print("exception raised: ", e)
+    # if not additional:
+    #     additional = _("I have no additional information for you.")
+    # return cause + additional
+
+
+def name_not_defined(unknown_name, info, frame):
+    _ = current_lang.translate
     cause = _("In your program, `{var_name}` is an unknown name.\n").format(
         var_name=unknown_name
     )
@@ -27,6 +52,8 @@ def get_cause(value, info, frame):
     similar = info_variables.get_similar_names(unknown_name, frame)
     if similar["best"] is not None:
         info["suggest"] = _("Did you mean `{name}`?").format(name=similar["best"])
+    elif hint:
+        info["suggest"] = _("Did you use a colon instead of an equal sign?")
 
     additional = hint + format_similar_names(unknown_name, similar, hint)
     try:

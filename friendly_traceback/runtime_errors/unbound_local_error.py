@@ -36,6 +36,10 @@ def local_variable_referenced(unknown_name, info, frame):
                 return format_similar_names(unknown_name, similar)
 
         else:
+            possible_cause = info_variables.name_has_type_hint(unknown_name, frame)
+            if possible_cause:
+                info["suggest"] = _("Did you use a colon instead of an equal sign?")
+                return possible_cause
             return None
 
     if "global" in scopes and "nonlocal" in scopes:

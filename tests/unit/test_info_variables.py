@@ -40,18 +40,15 @@ def test_get_variables_in_frame_by_scope():
     # b: two frames removed
     assert "b" in get(current_frame, "nonlocal")
     assert "b" not in get(current_frame, "local")
-    assert "b" not in get(current_frame, "declared nonlocal")
     assert "b" not in get(current_frame, "global")
     # d: one frame removed
     assert "d" in get(current_frame, "nonlocal")
     assert "d" not in get(current_frame, "local")
-    assert "d" not in get(current_frame, "declared nonlocal")
     assert "d" not in get(current_frame, "global")
 
     # declaring a variable nonlocal makes it also a local variable
     assert "c" in get(current_frame, "local")
     assert "c" in get(current_frame, "nonlocal")
-    assert "c" in get(current_frame, "declared nonlocal")
     assert "c" not in get(current_frame, "global")
 
     assert "e" in get(current_frame, "local")

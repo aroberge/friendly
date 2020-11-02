@@ -21,8 +21,6 @@ def get_variables_in_frame_by_scope(frame, scope):
         return frame.f_locals
     elif scope == "global":
         return frame.f_globals
-    elif scope == "declared nonlocal":
-        return list(frame.f_code.co_freevars)
     elif scope == "nonlocal":
         globals_ = frame.f_globals
         nonlocals_ = {}
@@ -47,7 +45,7 @@ def get_definition_scope(variable_name, frame):
     'declared nonlocal') in which a variable is defined.
     """
     scopes = []
-    for scope in ["local", "global", "nonlocal", "declared nonlocal"]:
+    for scope in ["local", "global", "nonlocal"]:
         in_scope = get_variables_in_frame_by_scope(frame, scope)
         if variable_name in in_scope:
             scopes.append(scope)
@@ -242,8 +240,13 @@ def name_has_type_hint(name, frame):
         "instead of\n\n"
         "    {name} = {hint}\n"
     )
+    nonlocals = get_variables_in_frame_by_scope(frame, "nonlocal")
 
-    scopes = (("local", frame.f_locals), ("global", frame.f_globals))
+    scopes = (
+        ("local", frame.f_locals),
+        ("global", frame.f_globals),
+        ("nonlocal", nonlocals),
+    )
 
     for scope, scope_dict in scopes:
         if "__annotations__" in scope_dict and name in scope_dict["__annotations__"]:
