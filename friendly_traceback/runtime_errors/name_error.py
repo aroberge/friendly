@@ -8,38 +8,39 @@ from .. import utils
 def get_cause(value, info, frame):
     _ = current_lang.translate
 
+    message = str(value)
+
     pattern = re.compile(r"name '(.*)' is not defined")
-    match = re.search(pattern, str(value))
+    match = re.search(pattern, message)
     if match:
         return name_not_defined(match.group(1), info, frame)
-    if not match:
-        return _(
-            "No information is known about this exception.\n"
-            "Please report this example to\n"
-            "https://github.com/aroberge/friendly-traceback/issues\n"
-        )
 
-    # unknown_name = match.group(1)
+    pattern2 = re.compile(
+        r"free variable '(.*)' referenced before assignment in enclosing scope"
+    )
+    match = re.search(pattern2, message)
+    if match:
+        return free_variable_referenced(match.group(1), info, frame)
 
-    # cause = _("In your program, `{var_name}` is an unknown name.\n").format(
-    #     var_name=unknown_name
-    # )
+    return _(
+        "No information is known about this exception.\n"
+        "Please report this example to\n"
+        "https://github.com/aroberge/friendly-traceback/issues\n"
+    )
 
-    # hint = info_variables.name_has_type_hint(unknown_name, frame)
-    # similar = info_variables.get_similar_names(unknown_name, frame)
-    # if similar["best"] is not None:
-    #     info["suggest"] = _("Did you mean `{name}`?").format(name=similar["best"])
-    # elif hint:
-    #     info["suggest"] = _("Did you use a colon instead of an equal sign?")
 
-    # additional = hint + format_similar_names(unknown_name, similar, hint)
-    # try:
-    #     additional += missing_self(unknown_name, frame, info)
-    # except Exception as e:
-    #     print("exception raised: ", e)
-    # if not additional:
-    #     additional = _("I have no additional information for you.")
-    # return cause + additional
+def free_variable_referenced(unknown_name, info, frame):
+    _ = current_lang.translate
+    cause = _(
+        "In your program, `{var_name}` is an unknown name\n"
+        " but has been found to appear in a nonlocal scope where "
+        "it had not been assigned a value.\n"
+    ).format(var_name=unknown_name)
+    hint = info_variables.name_has_type_hint(unknown_name, frame)
+    if hint:
+        return cause + hint
+    else:
+        return cause + _("I have no additional information for you.")
 
 
 def name_not_defined(unknown_name, info, frame):

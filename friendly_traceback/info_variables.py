@@ -227,8 +227,8 @@ def name_has_type_hint(name, frame):
 
     and sees a NameError.
 
-    Note that this is a draft implementation that only looks in the
-    local and global scope, and ignore nonlocal scope(s).
+    HOWEVER, when an exception is raised, it seems that the only type hints
+    that are picked up correctly are those found in the global scope.
     """
 
     _ = current_lang.translate
