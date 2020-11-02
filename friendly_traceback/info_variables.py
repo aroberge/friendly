@@ -235,9 +235,6 @@ def name_has_type_hint(name, frame):
 
     _ = current_lang.translate
 
-    loc = frame.f_locals
-    glob = frame.f_globals
-
     type_hint_found_in_scope = _(
         "A type hint found for `{name}` in the {scope} scope.\n"
     )
@@ -248,21 +245,15 @@ def name_has_type_hint(name, frame):
         "    {name} = {hint}\n"
     )
 
-    if "__annotations__" in loc:
-        if name in loc["__annotations__"]:
-            hint = loc["__annotations__"][name]
+    scopes = (("local", frame.f_locals), ("global", frame.f_globals))
+
+    for scope, scope_dict in scopes:
+        if "__annotations__" in scope_dict and name in scope_dict["__annotations__"]:
+            hint = scope_dict["__annotations__"][name]
             if isinstance(hint, str):
                 hint = f"'{hint}'"
-            message = type_hint_found_in_scope.format(name=name, scope="local")
+            message = type_hint_found_in_scope.format(name=name, scope=scope)
             message += perhaps.format(name=name, hint=hint)
             return message
 
-    if "__annotations__" in glob:
-        if name in glob["__annotations__"]:
-            hint = glob["__annotations__"][name]
-            if isinstance(hint, str):
-                hint = f"'{hint}'"
-            message = type_hint_found_in_scope.format(name=name, scope="global")
-            message += perhaps.format(name=name, hint=hint)
-            return message
     return ""
