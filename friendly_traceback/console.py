@@ -308,6 +308,7 @@ def start_console(
         "set_include": friendly.set_include,
         "hint": friendly.hint,
         "debug": friendly.debug,
+        "_info": friendly._info,
     }
     if not public_api.is_installed():
         public_api.install(include=include, lang=lang)
