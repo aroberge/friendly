@@ -237,8 +237,6 @@ def name_has_type_hint(name, frame):
 
     type_hint_found_in_scope = _(
         "A type hint found for `{name}` in the {scope} scope.\n"
-    )
-    perhaps = _(
         "Perhaps you had used a colon instead of an equal sign and written\n\n"
         "    {name} : {hint}\n\n"
         "instead of\n\n"
@@ -252,8 +250,6 @@ def name_has_type_hint(name, frame):
             hint = scope_dict["__annotations__"][name]
             if isinstance(hint, str):
                 hint = f"'{hint}'"
-            message = type_hint_found_in_scope.format(name=name, scope=scope)
-            message += perhaps.format(name=name, hint=hint)
-            return message
+            return type_hint_found_in_scope.format(name=name, scope=scope, hint=hint)
 
     return ""
