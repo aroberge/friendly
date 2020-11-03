@@ -73,7 +73,7 @@ def add_python_message(func):
 
 
 @add_python_message
-def assign_to_keyword(message="", line="", **kwargs):
+def assign_to_keyword(message="", line="", info=None, **kwargs):
     _ = current_lang.translate
     if not (
         message == "can't assign to keyword"  # Python 3.6, 3.7
@@ -109,6 +109,9 @@ def assign_to_keyword(message="", line="", **kwargs):
                 raise FriendlyException("analyze_syntax.assign_to_keyword")
             break
 
+    info["suggest"] = _("You cannot assign a value to `{keyword}`.").format(
+        keyword=word
+    )
     if word in ["None", "True", "False", "__debug__", "Ellipsis (...)"]:
         return _(
             "`{keyword}` is a constant in Python; you cannot assign it a value.\n" "\n"
@@ -583,11 +586,12 @@ def name_used_prior_global(message="", **kwargs):
 
 
 @add_python_message
-def name_assigned_to_prior_nonlocal(message="", **kwargs):
+def name_assigned_to_prior_nonlocal(message="", info=None, **kwargs):
     # something like: name 'p' is assigned to before global declaration
     _ = current_lang.translate
     if "is assigned to before nonlocal declaration" in message:
         name = message.split("'")[1]
+        info["suggest"] = _("Did you forget to add `nonlocal`?")
         return _(
             "You assigned a value to the variable `{name}`\n"
             "before declaring it as a nonlocal variable.\n"
@@ -607,10 +611,11 @@ def name_is_parameter_and_nonlocal(message="", **kwargs):
 
 
 @add_python_message
-def name_used_prior_nonlocal(message="", **kwargs):
+def name_used_prior_nonlocal(message="", info=None, **kwargs):
     # something like: name 'q' is used prior to nonlocal declaration
     _ = current_lang.translate
     if "is used prior to nonlocal declaration" in message:
+        info["suggest"] = _("Did you forget to write `nonlocal` first?")
         name = message.split("'")[1]
         return _(
             "You used the variable `{name}`\n"

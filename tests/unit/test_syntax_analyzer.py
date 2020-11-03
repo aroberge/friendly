@@ -56,7 +56,7 @@ set_lang("en")
 def find(lines=[" "], linenumber=1, message="invalid syntax", offset=1):
     return analyze_syntax._find_likely_cause(
         source_lines=lines, linenumber=linenumber, message=message, offset=offset,
-        info=[]
+        info={}
     )
 
 

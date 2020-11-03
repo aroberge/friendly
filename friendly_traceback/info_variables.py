@@ -41,8 +41,8 @@ def get_variables_in_frame_by_scope(frame, scope):
 
 
 def get_definition_scope(variable_name, frame):
-    """Returns a list of scopes ('local', 'global', 'nonlocal',
-    'declared nonlocal') in which a variable is defined.
+    """Returns a list of scopes ('local', 'global', 'nonlocal')
+    in which a variable is defined.
     """
     scopes = []
     for scope in ["local", "global", "nonlocal"]:
