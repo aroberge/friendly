@@ -37,8 +37,8 @@ def free_variable_referenced(unknown_name, info, frame):
         "it had not been assigned a value.\n"
     ).format(var_name=unknown_name)
     hint = info_variables.name_has_type_hint(unknown_name, frame)
-    if hint:
-        return cause + hint
+    if hint:  # TODO: I don't think this can ever find anything when an exception
+        return cause + hint  # is raised; I need to check this.
     else:
         return cause + _("I have no additional information for you.")
 
@@ -76,59 +76,37 @@ def format_similar_names(name, similar, hint):
     if nb_similar_names == 0:
         return ""
 
-    elif nb_similar_names == 1:
+    found_local = _("The similar name `{name}` was found in the local scope.\n")
+    found_global = _("The similar name `{name}` was found in the global scope.\n")
+    name_found = _("The name `{name}` was found in the global scope.\n")
+    builtin_similar = _("The Python builtin `{name}` has a similar name.\n")
+
+    if nb_similar_names == 1:
         if similar["locals"]:
-            return (
-                _("The similar name `{name}` was found in the local scope. ").format(
-                    name=str(similar["locals"][0]).replace("'", "")
-                )
-                + "\n"
-            )
+            name = str(similar["locals"][0]).replace("'", "")
+            return found_local.format(name=name)
         elif similar["globals"]:
             similar_name = similar["globals"][0]
             if name != similar_name:
-                return (
-                    _(
-                        "The similar name `{name}` was found in the global scope. "
-                    ).format(name=similar_name.replace("'", ""))
-                    + "\n"
-                )
+                name = similar_name.replace("'", "")
+                return found_global.format(name=name)
             else:
-                return (
-                    _("The name `{name}` was found in the global scope. ").format(
-                        name=name
-                    )
-                    + "\n"
-                )
+                return name_found.format(name=name)
         else:
-            return (
-                _("The Python builtin `{name}` has a similar name. ").format(
-                    name=str(similar["builtins"][0]).replace("'", "")
-                )
-                + "\n"
-            )
+            return builtin_similar.format(name=name)
 
     message = _(
         "Instead of writing `{name}`, perhaps you meant one of the following:\n"
     ).format(name=name)
-    if similar["locals"]:
-        message += (
-            _("*   Local scope: ")
-            + str(similar["locals"])[1:-1].replace("'", "`")
-            + "\n"
-        )
-    if similar["globals"]:
-        message += (
-            _("*   Global scope: ")
-            + str(similar["globals"])[1:-1].replace("'", "`")
-            + "\n"
-        )
-    if similar["builtins"]:
-        message += (
-            _("*   Python builtins: ")
-            + str(similar["builtins"])[1:-1].replace("'", "`")
-            + "\n"
-        )
+
+    for scope, pre in (
+        ("locals", _("*   Local scope: ")),
+        ("globals", _("*   Global scope: ")),
+        ("builtins", _("*   Python builtins: ")),
+    ):
+        if similar[scope]:
+            message += pre + str(similar[scope])[1:-1].replace("'", "`") + "\n"
+
     return message
 
 
