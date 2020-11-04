@@ -14,5 +14,20 @@ def test_import_error():
     return result, message
 
 
+def test_circular_import():
+    try:
+        import circular_a
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain(redirect="capture")
+    result = friendly_traceback.get_output()
+    # The actual message varies a lot depending on Python version.
+    assert "ImportError" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "what is known as a 'circular import'" in result
+
+    return result, message
+
+
 if __name__ == "__main__":
     print(test_import_error()[0])

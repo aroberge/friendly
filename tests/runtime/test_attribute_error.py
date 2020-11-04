@@ -109,18 +109,6 @@ def test_shadow_stdlib_module():
     return result, message
 
 
-def test_circular_import():
-    try:
-        import circular_a
-    except Exception as e:
-        message = str(e)
-        friendly_traceback.explain(redirect="capture")
-    result = friendly_traceback.get_output()
-    print(result)
-
-    return result, message
-
-
 def test_nonetype():
     a = None
     try:
