@@ -65,7 +65,7 @@ def explain(redirect=None):
 
 
 @make_public
-def install(lang=None, redirect=None, include="minimal", level=None):
+def install(lang=None, redirect=None, include="explain", level=None):
     """
     Replaces ``sys.excepthook`` by friendly_traceback's own version.
     Intercepts, and provides an explanation for all Python exceptions except
@@ -86,6 +86,7 @@ def install(lang=None, redirect=None, include="minimal", level=None):
     """
     if level is not None:
         print("Friendly-traceback: level is no longer supported")
+        print("The documentation needs to be updated to reflect this change.")
     session.install(lang=lang, redirect=redirect, include=include)
 
 
