@@ -113,11 +113,11 @@ def test_syntax_errors(filename):
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
 
-    if "syntax" in filename:
+    if "syntax" in filename and not "indented" in cause:
         assert "SyntaxError" in result, (
             "SyntaxError identified incorrectly; %s" % filename
         )
-    elif "indentation" in filename:
+    elif "indentation" in filename or "indented" in cause:
         assert "IndentationError" in result, (
             "IndentationError identified incorrectly; %s" % filename
         )
