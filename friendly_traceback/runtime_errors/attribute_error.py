@@ -81,7 +81,7 @@ def attribute_error_in_module(module, attribute, info, frame):
     # TODO: check to see if module shadows a standard library module;
     # perhaps use turtle as a good case.
 
-    if module in stdlib_modules.names:
+    if module in stdlib_modules.names and hasattr(mod, "__file__"):
         mod_path = shorten_path(mod.__file__)
         if not mod_path.startswith("PYTHON_LIB:"):
             info["suggest"] = _(

@@ -133,12 +133,14 @@ def test_nonetype():
     if friendly_traceback.get_lang() == "en":
         assert "for a variable whose value is `None`" in result
 
+    return result, message
+
 
 def test_perhaps_comma1():
-    abcd = 'hello'
-    defg = 'world'
+    abcd = "hello"
+    defg = "world"
     try:
-        a = [abcd. defg]
+        a = [abcd.defg]
     except Exception as e:
         message = str(e)
         friendly_traceback.explain(redirect="capture")
@@ -146,15 +148,16 @@ def test_perhaps_comma1():
     assert "'str' object has no attribute 'defg'" in result
     if friendly_traceback.get_lang() == "en":
         assert "Did you mean to separate object names by a comma" in result
+
+    return result, message
 
 
 def test_perhaps_comma2():
     # same as previous, but objects on separate lines
-    abcd = 'hello'
-    defg = 'world'
+    abcd = "hello"
+    defg = "world"
     try:
-        a = [abcd.
-            defg]
+        a = [abcd.defg]
     except Exception as e:
         message = str(e)
         friendly_traceback.explain(redirect="capture")
@@ -162,6 +165,23 @@ def test_perhaps_comma2():
     assert "'str' object has no attribute 'defg'" in result
     if friendly_traceback.get_lang() == "en":
         assert "Did you mean to separate object names by a comma" in result
+    return result, message
+
+
+def test_builtin_module_with_no_file():
+    """Issue 116"""
+    import sys
+
+    try:
+        sys.foo
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "module 'sys' has no attribute 'foo'" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Python tells us" in result
+    return result, message
 
 if __name__ == "__main__":
     print(test_attribute_error()[0])
