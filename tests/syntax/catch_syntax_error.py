@@ -92,6 +92,7 @@ causes = {
     "raise_syntax_error76": "`=` instead of an equality operator `==` with an `if` statement",
     "raise_syntax_error77": "`=` instead of an equality operator `==` with an `elif` statement",
     "raise_syntax_error78": "You used an assignment operator `=`",
+    "raise_syntax_error79": "You used an f-string that contains invalid Python code."
 }
 
 if sys.version_info < (3, 8):

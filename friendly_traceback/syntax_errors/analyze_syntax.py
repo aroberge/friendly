@@ -109,9 +109,6 @@ def syntax_error_cause(value, info):
     offset = value.offset
     message = value.msg
     source_lines = cache.get_source_lines(filepath)
-    if not source_lines and filepath == "<stdin>":
-        source_lines = [""]
-        linenumber = 1
     return _find_likely_cause(source_lines, linenumber, message, offset, info)
 
 

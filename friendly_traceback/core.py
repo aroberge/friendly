@@ -144,8 +144,13 @@ def process_syntax_error(etype, value, info, debug):
 
     if value.filename == "<string>":  # Temporary cause
         info["cause"] = cannot_analyze_string()
+        return info
     elif value.filename == "<stdin>":
         info["cause"] = cannot_analyze_stdin()
+        return info
+    elif value.filename == "<fstring>":
+        info["cause"] = cannot_analyze_fstring()
+        return info
 
     try:
         analyze_syntax.set_cause_syntax(etype, value, info)  # [3]
@@ -354,6 +359,17 @@ def cannot_analyze_string():
     return _(
         "Unfortunately, no additional information is available:\n"
         "the content of file '<string>' is not accessible.\n"
+    )
+
+
+def cannot_analyze_fstring():
+    """Typical case: an f-string contains some code with syntax error.
+    """
+    _ = current_lang.translate
+    return _(
+        "You used an f-string that contains invalid Python code.\n"
+        "Unfortunately, no additional information is available:\n"
+        "the content of file '<fstring>' is not accessible.\n"
     )
 
 
