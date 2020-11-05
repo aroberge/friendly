@@ -308,6 +308,22 @@ class Friendly:
 
     def what(self, exception=None, lang="en"):
         """If known, shows the generic explanation about a given exception."""
+
+        if exception is not None:
+            if hasattr(exception, "__name__"):
+                exception = exception.__name__
+            if lang is not None:
+                old_lang = get_lang()
+                set_lang(lang)
+            result = info_generic.get_generic_explanation(exception)
+            if lang is not None:
+                set_lang(old_lang)
+            if session.use_rich:
+                session.write_err(result)
+            else:
+                print(result)
+            return
+
         self.explain("what")
 
     def where(self):
@@ -357,6 +373,6 @@ class Friendly:
 
 @make_public
 def set_level(verbosity_level):
-    """Deprecated; use set_verbosity() instead."""
+    """Deprecated. Details about new API to be provided later."""
     print("friendly-traceback set_level is deprecated; defaults will be used.")
     set_include("explain")
