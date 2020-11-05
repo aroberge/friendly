@@ -13,8 +13,8 @@ def register(error_name):
     def add_exception(function):
         generic[error_name] = function
 
-        def wrapper(etype, value):
-            return function(etype, value)
+        def wrapper():
+            return function()
 
         return wrapper
 
@@ -22,7 +22,7 @@ def register(error_name):
 
 
 @register("ArithmeticError")
-def arithmetic_error(*args):
+def arithmetic_error():
     _ = current_lang.translate
     return _(
         "`ArithmeticError` is the base class for those built-in exceptions\n"
@@ -33,7 +33,7 @@ def arithmetic_error(*args):
 
 
 @register("AttributeError")
-def attribute_error(*args):
+def attribute_error():
     _ = current_lang.translate
     return _(
         "An `AttributeError` occurs when the code contains something like\n"
@@ -43,7 +43,7 @@ def attribute_error(*args):
 
 
 @register("FileNotFoundError")
-def file_not_found_error(*args):
+def file_not_found_error():
     _ = current_lang.translate
     return _(
         "A `FileNotFoundError` exception indicates that you\n"
@@ -53,7 +53,7 @@ def file_not_found_error(*args):
 
 
 @register("ImportError")
-def import_error(*args):
+def import_error():
     _ = current_lang.translate
     return _(
         "An `ImportError` exception indicates that a certain object could not\n"
@@ -63,7 +63,7 @@ def import_error(*args):
 
 
 @register("IndentationError")
-def indentation_error(etype, value):
+def indentation_error():
     _ = current_lang.translate
     return _(
         "An `IndentationError` occurs when a given line of code is\n"
@@ -72,7 +72,7 @@ def indentation_error(etype, value):
 
 
 @register("IndexError")
-def index_error(*args):
+def index_error():
     _ = current_lang.translate
     return _(
         "An `IndexError` occurs when you are try to get an item from a list,\n"
@@ -84,7 +84,7 @@ def index_error(*args):
 
 
 @register("KeyError")
-def key_error(*args):
+def key_error():
     _ = current_lang.translate
     return _(
         "A `KeyError` is raised when a value is not found as a\n"
@@ -93,7 +93,7 @@ def key_error(*args):
 
 
 @register("LookupError")
-def lookup_error(*args):
+def lookup_error():
     _ = current_lang.translate
     return _(
         "`LookupError` is the base class for the exceptions that are raised\n"
@@ -103,7 +103,7 @@ def lookup_error(*args):
 
 
 @register("ModuleNotFoundError")
-def module_not_found_error(*args):
+def module_not_found_error():
     _ = current_lang.translate
     return _(
         "A `ModuleNotFoundError` exception indicates that you\n"
@@ -114,7 +114,7 @@ def module_not_found_error(*args):
 
 
 @register("NameError")
-def name_error(*args):
+def name_error():
     _ = current_lang.translate
     return _(
         "A `NameError` exception indicates that a variable or\n"
@@ -126,7 +126,7 @@ def name_error(*args):
 
 
 @register("OverflowError")
-def overflow_error(*args):
+def overflow_error():
     _ = current_lang.translate
     return _(
         "An `OverflowError` is raised when the result of an arithmetic operation\n"
@@ -135,7 +135,7 @@ def overflow_error(*args):
 
 
 @register("RecursionError")
-def recursion_error(*args):
+def recursion_error():
     _ = current_lang.translate
     return _(
         "A `RecursionError` is raised when a function calls itself,\n"
@@ -146,13 +146,13 @@ def recursion_error(*args):
 
 
 @register("SyntaxError")
-def syntax_error(*args):
+def syntax_error():
     _ = current_lang.translate
     return _("A `SyntaxError` occurs when Python cannot understand your code.\n")
 
 
 @register("TabError")
-def tab_error(*args):
+def tab_error():
     _ = current_lang.translate
     return _(
         "A `TabError` indicates that you have used both spaces\n"
@@ -165,7 +165,7 @@ def tab_error(*args):
 
 
 @register("TypeError")
-def type_error(*args):
+def type_error():
     _ = current_lang.translate
     return _(
         "A `TypeError` is usually caused by trying\n"
@@ -176,7 +176,7 @@ def type_error(*args):
 
 
 @register("ValueError")
-def value_error(*args):
+def value_error():
     _ = current_lang.translate
     return _(
         "A `ValueError` indicates that a function or an operation\n"
@@ -185,7 +185,7 @@ def value_error(*args):
 
 
 @register("UnboundLocalError")
-def unbound_local_error(*args):
+def unbound_local_error():
     _ = current_lang.translate
     return _(
         "In Python, variables that are used inside a function are known as \n"
@@ -200,7 +200,7 @@ def unbound_local_error(*args):
 
 
 @register("Unknown")
-def unknown(*args):
+def unknown():
     _ = current_lang.translate
     return _(
         "No information is known about this exception.\n"
@@ -210,7 +210,7 @@ def unknown(*args):
 
 
 @register("ZeroDivisionError")
-def zero_division_error(*args):
+def zero_division_error():
     _ = current_lang.translate
     return _(
         "A `ZeroDivisionError` occurs when you are attempting to divide\n"

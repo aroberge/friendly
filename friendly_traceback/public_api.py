@@ -22,6 +22,7 @@ from functools import wraps
 from importlib import import_module
 
 from .session import session
+from . import core
 
 # Make functions from other modules directly available from here.
 from .editors_helper import run
@@ -123,6 +124,18 @@ def set_formatter(formatter=None, **kwds):
     See formatters.py for details.
     """
     session.set_formatter(formatter=formatter, **kwds)
+
+
+@make_public
+def get_what(exception_name, lang=None):
+    """Returns what a given exception means, also known as the
+    generic explanation elsewhere in this package.
+
+    Something like: A NameError means ...
+    """
+    if lang is not None:
+        set_lang(lang)
+    return core.get_generic_explanation(exception_name)
 
 
 # =========================================================================

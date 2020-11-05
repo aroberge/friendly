@@ -94,7 +94,7 @@ def get_traceback_info(etype, value, tb, debug=False):
     # Note: the numbered comments refer to the example above
     info = {"header": _("Python exception:")}  # [1]
     info["message"] = get_message(etype.__name__, value)  # [1a]
-    info["generic"] = get_generic_explanation(etype.__name__, etype, value)  # [2]
+    info["generic"] = get_generic_explanation(etype.__name__)  # [2]
 
     # Unlike what we just did, in many function calls below,
     # we pass the dict info as an argument and add to its content.
@@ -285,10 +285,10 @@ def create_traceback(records, etype, value, info):
     return result
 
 
-def get_generic_explanation(name, etype, value):
+def get_generic_explanation(exception_name):
     """Provides a generic explanation about a particular exception."""
-    if name in info_generic.generic:
-        explanation = info_generic.generic[name](etype, value)
+    if exception_name in info_generic.generic:
+        explanation = info_generic.generic[exception_name]()
     else:
         explanation = info_generic.generic["Unknown"]()
     return explanation
