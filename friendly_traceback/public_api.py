@@ -22,7 +22,7 @@ from functools import wraps
 from importlib import import_module
 
 from .session import session
-from . import core
+from . import info_generic
 
 # Make functions from other modules directly available from here.
 from .editors_helper import run
@@ -128,14 +128,17 @@ def set_formatter(formatter=None, **kwds):
 
 @make_public
 def get_what(exception_name, lang=None):
-    """Returns what a given exception means, also known as the
+    """Given an exception name as a string argument,
+    returns what this exception means, also known as the
     generic explanation elsewhere in this package.
 
-    Something like: A NameError means ...
+    Something like:
+
+        A `RecursionError` is raised when a function calls itself ...
     """
     if lang is not None:
         set_lang(lang)
-    return core.get_generic_explanation(exception_name)
+    return info_generic.get_generic_explanation(exception_name)
 
 
 # =========================================================================
@@ -205,9 +208,9 @@ def get_stream():
 def show_again():
     """Shows the previously recorded traceback info again, on the default stream.
 
-        Primarily intended to be used when the user changes
-        a verbosity level to view the last computed traceback
-        in a given language.
+    Primarily intended to be used when the user changes
+    a verbosity level to view the last computed traceback
+    in a given language.
     """
     session.show_traceback_info_again()
 

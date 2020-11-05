@@ -4,14 +4,23 @@ Generic information about Python exceptions.
 """
 from .my_gettext import current_lang
 
-generic = {}
+GENERIC = {}
+
+
+def get_generic_explanation(exception_name):
+    """Provides a generic explanation about a particular exception."""
+    if exception_name in GENERIC:
+        explanation = GENERIC[exception_name]()
+    else:
+        explanation = GENERIC["Unknown"]()
+    return explanation
 
 
 def register(error_name):
     """Decorator used to record as available an explanation for a given exception"""
 
     def add_exception(function):
-        generic[error_name] = function
+        GENERIC[error_name] = function
 
         def wrapper():
             return function()
