@@ -301,7 +301,6 @@ def start_console(
     console_defaults = {
         "friendly": friendly,
         "explain": friendly.explain,
-        "traceback": friendly.traceback,
         "what": friendly.what,
         "where": friendly.where,
         "why": friendly.why,
@@ -311,6 +310,9 @@ def start_console(
         "get_include": friendly.get_include,
         "set_include": friendly.set_include,
         "hint": friendly.hint,
+        "friendly_tb": friendly.friendly_tb,
+        "python_tb": friendly.python_tb,
+        "debug_tb": friendly.debug_tb,
         "debug": friendly.debug,
         "_info": friendly._info,
     }

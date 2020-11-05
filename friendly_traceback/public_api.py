@@ -295,10 +295,6 @@ class Friendly:
         session.show_traceback_info_again()
         self.set_include(old_include)
 
-    def traceback(self):
-        """Shows the Python traceback, with the added suggestion/hint."""
-        self.explain("python_tb")
-
     def more(self):
         """Used to display information additional to the minimal traceback,
         with the exception of the generic information.

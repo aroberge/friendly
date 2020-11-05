@@ -129,7 +129,7 @@ class BrunanteStyle(Style):
         Text: my_style["text"],  # class:  ''
         Whitespace: "",  # class: 'w'
         Error: my_style["Exception"],  # class: 'err'
-        Other: my_style["diagnostics"],  # class 'x'
+        Other: my_style["string"],  # class 'x'
         #
         Comment: my_style["comments"],  # class: 'c'
         Comment.Multiline: my_style["comments"],  # class: 'cm'
