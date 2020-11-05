@@ -282,7 +282,7 @@ class FriendlyConsole(InteractiveConsole):
 def start_console(
     local_vars=None,
     use_rich=False,
-    include="minimal",
+    include="friendly_tb",
     lang="en",
     banner=None,
     theme="dark",

@@ -56,11 +56,11 @@ def test_exec_code():
     # leaves its include unchanged.
     friendly.install(redirect="capture")
 
-    friendly.set_include("minimal")
+    friendly.set_include("friendly_tb")
     friendly.editors_helper.exec_code(source=bad_code_syntax)
-    assert friendly.get_include() == "minimal"
+    assert friendly.get_include() == "friendly_tb"
     friendly.editors_helper.exec_code(source=bad_code_syntax, include="no_tb")
-    assert friendly.get_include() == "minimal"
+    assert friendly.get_include() == "friendly_tb"
 
     # A call to exec_code, with a language specified as an argument
     # should leave the previous language unchanged.

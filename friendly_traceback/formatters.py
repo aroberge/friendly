@@ -74,7 +74,7 @@ items_in_order = [
 # ===============================
 
 
-def pre(info, include="minimal"):
+def pre(info, include="friendly_tb"):
     """Default formatter, primarily for console usage.
 
     It also  produces an output that is suitable for
@@ -123,7 +123,7 @@ def pre(info, include="minimal"):
     return "\n".join(result)
 
 
-def markdown(info, include="minimal"):
+def markdown(info, include="friendly_tb"):
     """Traceback formatted with markdown syntax.
 
     Some minor changes of the traceback info content are done,
@@ -133,7 +133,7 @@ def markdown(info, include="minimal"):
     return _markdown(info, include)
 
 
-def markdown_docs(info, include="minimal"):
+def markdown_docs(info, include="friendly_tb"):
     """Traceback formatted with markdown syntax, where each
     header is shifted down by 2 (h1 -> h3, etc.) so that they
     can be inserted in a document, without creating artificial
@@ -146,7 +146,7 @@ def markdown_docs(info, include="minimal"):
     return _markdown(info, include, docs=True)
 
 
-def rich_markdown(info, include="minimal"):
+def rich_markdown(info, include="friendly_tb"):
     """Traceback formatted with with markdown syntax suitable for
     printing in color in the console using Rich.
 
@@ -263,13 +263,15 @@ items_groups = {
         "exception_raised_variables",
     },
     "friendly_tb": {"shortened_traceback", "suggest"},
-    "python_tb": {"simulated_python_traceback", "suggest"},
-    "debug_tb": {"original_python_traceback", "suggest"},
+    "python_tb": {"simulated_python_traceback"},
+    "debug_tb": {"original_python_traceback"},
 }
-items_groups["minimal"] = items_groups["header"].union(items_groups["friendly_tb"])
 items_groups["more"] = items_groups["why"].union(items_groups["where"])
 items_groups["explain"] = (
-    items_groups["minimal"].union(items_groups["generic"]).union(items_groups["more"])
+    items_groups["friendly_tb"]
+    .union(items_groups["header"])
+    .union(items_groups["generic"])
+    .union(items_groups["more"])
 )
 items_groups["no_tb"] = items_groups["explain"]
 items_groups["no_tb"].discard(items_groups["friendly_tb"])

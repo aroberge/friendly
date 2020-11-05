@@ -135,10 +135,18 @@ def get_what(exception_name, lang=None):
     Something like:
 
         A `RecursionError` is raised when a function calls itself ...
+
+    If argument lang is specified, the information is provided
+    in that language (if available) without changing the overall
+    default language used.
     """
     if lang is not None:
+        old_lang = get_lang()
         set_lang(lang)
-    return info_generic.get_generic_explanation(exception_name)
+    result = info_generic.get_generic_explanation(exception_name)
+    if lang is not None:
+        set_lang(old_lang)
+    return result
 
 
 # =========================================================================
@@ -298,7 +306,7 @@ class Friendly:
         """
         self.explain("more")
 
-    def what(self):
+    def what(self, exception=None, lang="en"):
         """If known, shows the generic explanation about a given exception."""
         self.explain("what")
 
@@ -313,6 +321,24 @@ class Friendly:
     def hint(self):
         """Shows hint/suggestion if available."""
         self.explain("hint")
+
+    def friendly_tb(self):
+        """Shows the friendly traceback, which includes the hint/suggestion
+        if available.
+        """
+        self.explain("friendly_tb")
+
+    def python_tb(self):
+        """Shows the Python traceback, excluding files from friendly-traceback
+        itself.
+        """
+        self.explain("python_tb")
+
+    def debug_tb(self):
+        """Shows the true Python traceback, which includes
+        files from friendly-traceback itself.
+        """
+        self.explain("debug_tb")
 
     def debug(self):
         """This functions displays the true traceback recorded, that

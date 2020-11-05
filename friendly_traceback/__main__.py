@@ -108,7 +108,7 @@ def main():
         if not args.source:
             sys.exit()
 
-    include = "minimal"
+    include = "friendly_tb"
     if args.source:
         include = "explain"
 

@@ -130,7 +130,7 @@ def exec_code(*, source=None, path=None, include=None, lang=None):
 def run(
     filename,
     lang=None,
-    include="minimal",
+    include="friendly_tb",
     args=None,
     console=True,
     use_rich=False,
