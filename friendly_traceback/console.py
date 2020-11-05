@@ -188,7 +188,7 @@ class FriendlyConsole(InteractiveConsole):
         warning = ""
 
         for name in hints:
-            if name in dir(builtins):  # Taken care of above
+            if name in dir(builtins):  # Already taken care of these above
                 continue
             if (
                 name not in self.locals
@@ -200,13 +200,17 @@ class FriendlyConsole(InteractiveConsole):
                     wrote_title = True
                     if self.rich_console:
                         warning = "#### " + warning
-                suggest = suggest_str.format(
-                    hint=public_api.quote(f"{name} : {hints[name]}"),
-                    assignment=public_api.quote(f"{name} = {hints[name]}"),
-                )
-                if self.rich_console:
+                if not str(f"{hints[name]}").startswith("<"):
+                    suggest = suggest_str.format(
+                        hint=public_api.quote(f"{name} : {hints[name]}"),
+                        assignment=public_api.quote(f"{name} = {hints[name]}"),
+                    )
+                else:
+                    suggest = ""
+                if self.rich_console and suggest:
                     suggest = "* " + suggest
-                warning = warning + suggest + "\n"
+                if suggest:
+                    warning = warning + suggest + "\n"
 
         if warning:
             if self.rich_console:
