@@ -83,7 +83,7 @@ def cannot_import_name_from(name, module, info, frame, add_circular_hint=True):
     if len(similar) == 1:
         info["suggest"] = _("Did you mean `{name}`?\n").format(name=similar[0])
         return _(
-            "Perhaps you meant to import `{correct}` from `{module}` "
+            "Perhaps you meant to import `{correct}` (from `{module}`) "
             "instead of `{typo}`\n"
         ).format(correct=similar[0], typo=name, module=module)
     else:

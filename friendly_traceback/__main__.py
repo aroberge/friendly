@@ -32,8 +32,7 @@ parser = argparse.ArgumentParser(
 
     {versions}
 
-    If no command line arguments other than -m are specified,
-    Friendly-traceback will start an interactive console.
+    If no source is given Friendly-traceback will start an interactive console.
         """.format(
             versions=versions
         )
@@ -43,8 +42,9 @@ parser = argparse.ArgumentParser(
 parser.add_argument(
     "source",
     nargs="?",
-    help="""Name of the script to be run as though it was the main module
-    run by Python, so that __name__ does equal '__main__'.
+    help="""Name of the Python script (path/to/my_program.py)
+    to be run as though it was the main module, so that its
+    __name__ does equal '__main__'.
     """,
 )
 
@@ -65,7 +65,7 @@ parser.add_argument(
 
 parser.add_argument(
     "--version",
-    help="""Displays the current version.
+    help="""Only displays the current version.
          """,
     action="store_true",
 )

@@ -28,7 +28,6 @@ def _write_err(text):
             md = friendly_rich.Panel(md, title=title)
             formatters.RICH_HEADER = False
         session.console.print(md)
-        session.console.print()
     else:
         sys.stderr.write(text)
 
