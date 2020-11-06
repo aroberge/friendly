@@ -15,6 +15,7 @@ from .source_cache import cache
 from .my_gettext import current_lang
 from .session import session
 from .console import start_console
+from . import friendly_rich
 
 
 def check_syntax(
@@ -139,14 +140,6 @@ def run(
     """Given a filename (relative or absolute path), this function uses the
        more complex exec_code() to run a file.
 
-       If friendly-traceback exception hook has not been set up prior
-       to calling check_syntax, it will only be used for the duration
-       of this function call.
-
-       If friendly-traceback exception hook has not been set up prior
-       to calling check_syntax, the exception hook will only be used for
-       the duration of this function call.
-
        If console is set to False, run() returns an empty dict if a SyntaxError
        was raised, otherwise returns the dict in which the module (filename)
        was executed.
@@ -155,6 +148,12 @@ def run(
        as an interactive session in a Friendly console, with the module
        dict being the locals dict.
        """
+    session.install(lang=lang, include=include)
+    if use_rich:
+        if friendly_rich.rich_available:
+            session.use_rich = True
+            session.set_formatter("rich", theme=theme)
+
     if args is not None:
         sys.argv = [filename]
         args = [arg.strip() for arg in args.split(" ")]
