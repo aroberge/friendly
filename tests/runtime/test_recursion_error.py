@@ -10,6 +10,7 @@ def test_function_recursion_error():
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
     assert "RecursionError" in result
     if friendly_traceback.get_lang() == "en":
         assert "too many times" in result

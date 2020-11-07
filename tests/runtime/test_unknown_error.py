@@ -12,6 +12,7 @@ def test_function_unknown_error():
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
     assert "Some informative message" in result
     if friendly_traceback.get_lang() == "en":
         assert "Please report this example" in result

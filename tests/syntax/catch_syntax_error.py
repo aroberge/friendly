@@ -113,6 +113,7 @@ def test_syntax_errors(filename):
     except Exception:
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
 
     if "syntax" in filename and not "indented" in cause:
         assert "SyntaxError" in result, (

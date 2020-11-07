@@ -9,6 +9,7 @@ def test_key_error():
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
     assert "KeyError: 'c'" in result
     if friendly_traceback.get_lang() == "en":
         assert "that cannot be found is `'c'`." in result

@@ -25,6 +25,7 @@ def test_attribute_error():
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
     assert "AttributeError: type object 'A' has no attribute 'x'" in result
     if friendly_traceback.get_lang() == "en":
         assert "The object of type `A` has no attribute" in result
@@ -36,6 +37,7 @@ def test_attribute_error():
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
     assert "AttributeError: 'A' object has no attribute 'x'" in result
     if friendly_traceback.get_lang() == "en":
         assert "The object `a` has no attribute" in result
@@ -50,6 +52,7 @@ def test_attribute_error2():
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
     assert "AttributeError: 'list' object has no attribute 'appendh'" in result
     if friendly_traceback.get_lang() == "en":
         assert "Did you mean `append`" in result
@@ -65,6 +68,7 @@ def test_misspelled_module_attribute():
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
     assert "AttributeError: module 'string' has no attribute 'ascii_lowecase'" in result
     if friendly_traceback.get_lang() == "en":
         assert "Did you mean `ascii_lowercase`" in result
@@ -80,6 +84,7 @@ def test_misspelled_module_attribute_2():
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
     assert ("AttributeError: module 'math' has no attribute 'cost'") in result
     if friendly_traceback.get_lang() == "en":
         assert (
@@ -100,6 +105,7 @@ def test_shadow_stdlib_module():
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
     assert "AttributeError: module 'turtle' has no attribute 'Pen'" in result
     if friendly_traceback.get_lang() == "en":
         assert (
@@ -117,6 +123,7 @@ def test_nonetype():
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
     assert "'NoneType' object has no attribute 'b'" in result
     if friendly_traceback.get_lang() == "en":
         assert "for a variable whose value is `None`" in result
@@ -133,6 +140,7 @@ def test_perhaps_comma1():
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
     assert "'str' object has no attribute 'defg'" in result
     if friendly_traceback.get_lang() == "en":
         assert "Did you mean to separate object names by a comma" in result
@@ -150,6 +158,7 @@ def test_perhaps_comma2():
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
     assert "'str' object has no attribute 'defg'" in result
     if friendly_traceback.get_lang() == "en":
         assert "Did you mean to separate object names by a comma" in result
@@ -166,6 +175,7 @@ def test_builtin_module_with_no_file():
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
     assert "module 'sys' has no attribute 'foo'" in result
     if friendly_traceback.get_lang() == "en":
         assert "Python tells us" in result

@@ -8,6 +8,7 @@ def test_name_error():
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
     assert "NameError: name 'something' is not defined" in result
     if friendly_traceback.get_lang() == "en":
         assert "In your program, `something` is an unknown name." in result
@@ -21,6 +22,7 @@ def test_name_error2():
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
     assert "NameError: name 'babs' is not defined" in result
     if friendly_traceback.get_lang() == "en":
         assert "perhaps you meant one of the following" in result
@@ -35,6 +37,7 @@ def test_name_error3():
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
     assert "NameError: name 'x' is not defined" in result
     if friendly_traceback.get_lang() == "en":
         assert "x = 3" in result
@@ -47,6 +50,7 @@ def test_name_error4():
         message = str(e)
         friendly_traceback.explain(redirect="capture")
     result = friendly_traceback.get_output()
+    assert not "WARNING" in result, "Internal error found."
     assert "NameError: name 'cost' is not defined" in result
     if friendly_traceback.get_lang() == "en":
         assert "perhaps you meant one of the following" in result

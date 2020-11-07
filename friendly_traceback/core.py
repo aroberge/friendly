@@ -109,7 +109,7 @@ def get_traceback_info(etype, value, tb, debug=False):
         return process_syntax_error(etype, value, info, debug)
 
     if not records:
-        print("WARNING: no records found.")
+        info["WARNING"] = "WARNING: no records found."
         return info
 
     format_python_tracebacks(records, etype, value, python_tb, info)
