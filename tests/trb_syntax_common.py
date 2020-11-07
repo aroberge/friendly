@@ -135,6 +135,8 @@ def create_tracebacks(target, intro_text, format="pre"):
                     if function is not None:
                         result = getattr(mod, function)()
                         write(result)
+                        if "WARNING" in result:
+                            print("WARNING in ", name, function)
                 except Exception:
                     friendly_traceback.explain()
 

@@ -27,6 +27,7 @@ assert os.path.isdir(docs_root_dir), "Separate docs repo need to exist"
 LANG = "fr"
 friendly_traceback.install()
 friendly_traceback.set_lang(LANG)
+friendly_traceback.set_formatter("pre")
 
 sys.path.insert(0, this_dir)
 
@@ -63,5 +64,6 @@ Python version: {python}
     name=__file__,
 )
 
+print(f"Python version: {platform.python_version()}; ", end="")
 
 trb_common.create_tracebacks(target, intro_text)

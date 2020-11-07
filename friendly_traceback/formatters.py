@@ -20,6 +20,10 @@ written to stderr; however this can be changed by the calling program.
 
 This module currently contains 4 formatters:
 
+* ``repl()``: This is used to print the information in a traditional console,
+  including that found in IDLE.  The indentation of the traceback itself
+  is chosen so as to reproduce that of a normal Python traceback.
+
 * ``pre()``: this produces output with leading spaces so that it can be
   embedded as a code-block in a file (such as .rst). It can also be used
   to print the information in a traditional console, including that
@@ -45,6 +49,7 @@ RICH_HEADER = False
 # authoritative list of items to consider.
 
 items_in_order = [
+    "WARNING",
     "header",
     "message",  # The last line of a Python traceback
     "original_python_traceback",
@@ -67,17 +72,64 @@ items_in_order = [
 ]
 
 
+default_indentation = {  # used with repl and pre formatters.
+    "header": "single",
+    "message": "double",
+    "suggest": "double",
+    "generic": "single",
+    "parsing_error": "single",
+    "parsing_error_source": "none",
+    "cause_header": "single",
+    "cause": "double",
+    "last_call_header": "single",
+    "last_call_source": "none",
+    "last_call_variables_header": "double",
+    "last_call_variables": "double",
+    "exception_raised_header": "single",
+    "exception_raised_source": "none",
+    "exception_raised_variables_header": "double",
+    "exception_raised_variables": "double",
+}
+
 # ===============================
 #
-#  Next, we have the four formatters.
+#  Next, we have the five formatters.
 #
 # ===============================
+
+
+def repl(info, include="friendly_tb"):
+    """Default formatter, primarily for console usage.
+
+    The only change made to the content of "info" is
+    some added indentation.
+    """
+    # We first define the indentation to appear before each item
+    repl_items = {
+        "WARNING": "none",
+        "simulated_python_traceback": "none",
+        "original_python_traceback": "none",
+        "shortened_traceback": "none",
+    }
+    repl_items.update(**default_indentation)
+
+    items_to_show = select_items(include)
+    spacing = {"single": " " * 4, "double": " " * 8, "none": ""}
+    result = [""]
+    for item in items_to_show:
+        if item in info:
+            indentation = spacing[repl_items[item]]
+            for line in info[item].split("\n"):
+                result.append(indentation + line)
+
+    if result == [""]:
+        return _no_result(info, include)
+
+    return "\n".join(result)
 
 
 def pre(info, include="friendly_tb"):
-    """Default formatter, primarily for console usage.
-
-    It also  produces an output that is suitable for
+    """Formatter that produces an output that is suitable for
     insertion in a RestructuredText (.rst) code block,
     with pre-formatted indentation.
 
@@ -86,28 +138,13 @@ def pre(info, include="friendly_tb"):
     """
     # We first define the indentation to appear before each item
     pre_items = {
-        "header": "single",
-        "message": "double",
-        "suggest": "double",
-        "generic": "single",
-        "parsing_error": "single",
-        "parsing_error_source": "none",
-        "cause_header": "single",
-        "cause": "double",
-        "last_call_header": "single",
-        "last_call_source": "none",
-        "last_call_variables_header": "double",
-        "last_call_variables": "double",
-        "exception_raised_header": "single",
-        "exception_raised_source": "none",
-        "exception_raised_variables_header": "double",
-        "exception_raised_variables": "double",
+        "WARNING": "single",
         "simulated_python_traceback": "single",
         "original_python_traceback": "single",
         "shortened_traceback": "single",
     }
+    pre_items.update(**default_indentation)
 
-    # items_to_show = tb_items_to_show(level=level)
     items_to_show = select_items(include)
     spacing = {"single": " " * 4, "double": " " * 8, "none": ""}
     result = [""]
@@ -133,7 +170,7 @@ def markdown(info, include="friendly_tb"):
     return _markdown(info, include)
 
 
-def markdown_docs(info, include="friendly_tb"):
+def markdown_docs(info, include="explain"):
     """Traceback formatted with markdown syntax, where each
     header is shifted down by 2 (h1 -> h3, etc.) so that they
     can be inserted in a document, without creating artificial
@@ -167,6 +204,7 @@ def _markdown(info, include, rich=False, docs=False):
     result = []
 
     markdown_items = {
+        "WARNING": ("# ", ""),
         "header": ("# ", ""),
         "message": ("", ""),
         "suggest": ("", "\n"),
@@ -189,6 +227,8 @@ def _markdown(info, include, rich=False, docs=False):
     }
 
     items_to_show = select_items(include)  # tb_items_to_show(level=level)
+    if rich and include == "explain":
+        items_to_show.insert(0, "header")
     result = [""]
     for item in items_to_show:
         if rich and item == "header":  # Skip it here; handled by session.py
@@ -262,14 +302,13 @@ items_groups = {
         "exception_raised_variables_header",
         "exception_raised_variables",
     },
-    "friendly_tb": {"shortened_traceback", "suggest"},
+    "friendly_tb": {"shortened_traceback", "suggest", "WARNING"},
     "python_tb": {"simulated_python_traceback"},
     "debug_tb": {"original_python_traceback"},
 }
 items_groups["more"] = items_groups["why"].union(items_groups["where"])
 items_groups["explain"] = (
     items_groups["friendly_tb"]
-    .union(items_groups["header"])
     .union(items_groups["generic"])
     .union(items_groups["more"])
 )

@@ -24,7 +24,6 @@ def test_check_syntax():
 
     assert not friendly.editors_helper.check_syntax(source=bad_code_syntax)
     result = friendly.get_output()  # content is flushed
-    assert "Python exception" in result
     assert "SyntaxError" in result
 
     assert not friendly.get_output()  # confirm that content was flushed
@@ -65,7 +64,7 @@ def test_check_syntax():
     friendly.set_lang("en")
     assert not friendly.editors_helper.check_syntax(source=bad_code_syntax, lang="fr")
     result = friendly.get_output()
-    assert "Exception Python" in result  # French heading
+    assert "Une exception de type `SyntaxError`" in result
     assert friendly.get_lang() == "en"
 
     # Clean up and restore for other tests

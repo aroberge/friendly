@@ -73,7 +73,7 @@ parser.add_argument(
 parser.add_argument(
     "--format",
     "--formatter",
-    help="""Specifies an output format (pre, markown, markdown_docs, or rich) or
+    help="""Specifies an output format (repl, pre, markown, markdown_docs, or rich) or
     a custom formatter function, as a dotted path. By default, the console
     will use Rich if it is available.
 
@@ -93,6 +93,15 @@ parser.add_argument(
     """,
 )
 
+parser.add_argument(
+    "--include",
+    help="""Specifies what content to include by default in the traceback.
+    The defaults are 'friendly_tb' if the friendly-console is going to be shown,
+    otherwise it is 'explain'.
+    See the documentation for more details.
+    """,
+)
+
 
 def warn(text):
     print("   #")
@@ -109,7 +118,9 @@ def main():
             sys.exit()
 
     include = "friendly_tb"
-    if args.source:
+    if args.include:
+        include = args.include
+    elif args.source:
         include = "explain"
 
     if args.debug:
@@ -124,7 +135,7 @@ def main():
     use_rich = False
     if args.format:
         format = args.format
-        if format in ["pre", "markdown"]:
+        if format in ["repl", "pre", "markdown"]:
             public_api.set_formatter(format)
         elif format == "rich":
             if not friendly_rich.rich_available:

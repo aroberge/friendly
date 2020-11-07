@@ -227,6 +227,8 @@ def create_tracebacks(target, intro_text, format="pre", messages=None):
                         result, message = getattr(mod, function)()
                         save_messages[function] = message
                         write(result)
+                        if "WARNING" in result:
+                            print("WARNING in ", name, function)
                 except Exception as e:
                     friendly_traceback.explain()
 

@@ -22,11 +22,10 @@ docs_root_dir = os.path.abspath(
 )
 assert os.path.isdir(docs_root_dir), "Separate docs repo need to exist"
 
-# sys.path.insert(0, root_dir)
-
 LANG = "en"
 friendly_traceback.install()
 friendly_traceback.set_lang(LANG)
+friendly_traceback.set_formatter("pre")
 
 sys.path.insert(0, this_dir)
 py_version = f"{sys.version_info.major}.{sys.version_info.minor}"
@@ -36,6 +35,7 @@ import trb_common
 target = os.path.normpath(
     os.path.join(docs_root_dir, f"docs/source/tracebacks_{LANG}_{py_version}.rst")
 )
+
 
 messages = os.path.join(this_dir, f"messages_{py_version}".replace(".", "_") + ".py")
 
@@ -66,5 +66,6 @@ Python version: {python}
     name=__file__,
 )
 
+print(f"Python version: {platform.python_version()}; ", end="")
 
 trb_common.create_tracebacks(target, intro_text, messages=messages)

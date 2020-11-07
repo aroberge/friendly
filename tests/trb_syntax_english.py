@@ -26,6 +26,7 @@ assert os.path.isdir(docs_root_dir), "Separate docs repo need to exist"
 LANG = "en"
 friendly_traceback.install()
 friendly_traceback.set_lang(LANG)
+friendly_traceback.set_formatter("pre")
 
 sys.path.insert(0, this_dir)
 py_version = f"{sys.version_info.major}.{sys.version_info.minor}"
@@ -67,5 +68,6 @@ Python version: {python}
     name=__file__,
 )
 
+print(f"Python version: {platform.python_version()}; ", end="")
 
 trb_syntax_common.create_tracebacks(target, intro_text)

@@ -43,19 +43,19 @@ class _State:
     """
 
     def __init__(self):
-        self.set_formatter()
         self._captured = []
         self.context = 3
         self.write_err = _write_err
         self.installed = False
         self.running_script = False
         self.saved_traceback_info = None
-        self.formatter = formatters.pre
+        self.formatter = formatters.repl
         self._debug = False
         self.console = None
         self.use_rich = False
         self.markdown = False
         self.set_defaults()
+        self.set_formatter()
 
     def set_defaults(self):
         """Sets some defaults for various values"""
@@ -109,7 +109,9 @@ class _State:
         """
         self.use_rich = False
         self.markdown = markdown
-        if formatter is None or formatter == "pre":
+        if formatter is None or formatter == "repl":
+            self.formatter = formatters.repl
+        elif formatter == "pre":
             self.formatter = formatters.pre
         elif formatter == "rich":
             self.formatter = formatters.rich_markdown

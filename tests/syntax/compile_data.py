@@ -13,7 +13,7 @@ out_file = f"data_{major}_{minor}.py"
 results = {"version": (major, minor)}
 
 
-def _formatter(info, level=None):
+def _formatter(info, include=None):
     items = {"cause": None}
     for key in info:
         if key in ("message", "parsing_error_source", "cause"):
