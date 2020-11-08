@@ -85,5 +85,10 @@ def init_console(theme="dark"):
     else:
         console = Console(theme=dark_background_theme)
 
-    pretty.install(console=console, indent_guides=True)
+    # Rich has no version attribute that we can check
+    try:
+        # indent_guide need Rich version 9.1+
+        pretty.install(console=console, indent_guides=True)
+    except Exception:
+        pretty.install(console=console)
     return console
