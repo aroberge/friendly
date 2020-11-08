@@ -1,4 +1,6 @@
-"""public_api.py
+"""
+public_api.py
+-------------
 
 With the exception of some Friendly-console
 related classes or functions, this module includes **all** the functions

@@ -1,10 +1,12 @@
-"""The functions in this module have been created so that user of tools,
-like the editor Mu, could use Friendly-traceback.
+"""
+editors_helper.py
+-----------------
 
-See https://aroberge.github.io/friendly-traceback-docs/docs/html/mu.html
-for an example.
+The functions in this module have been created so that user editors/IDEs
+could use Friendly-traceback without having to change the content of
+their own programs.
 
-At the moment, only run() is part of the public API.
+At the moment, only ``run()`` is part of the public API.
 
 If you make use of any other function here, please file an issue so
 it can be determined if it should be added to the public API.
@@ -22,29 +24,34 @@ def check_syntax(
     *, source=None, filename="Fake filename", path=None, include=None, lang=None
 ):
     """This uses Python's ``compile()`` builtin which does some analysis of
-       its code argument and will raise an exception if it identifies
-       some syntax errors, but also some less common "overflow" and "value"
-       errors.
+    its code argument and will raise an exception if it identifies
+    some syntax errors, but also some less common "overflow" and "value"
+    errors.
 
-       This function can either be used on a file, using the ``path`` argument, or
-       on some code passed as a string, using the ``source`` argument.
-       For the latter case, one can also specify a corresponding ``filename``:
-       this could be useful if this function is invoked from a GUI-based
-       editor.
+    Note that there are a few syntax errors that are not caught by this,
+    as they are identified by Python very late in its execution
+    process. See for example
+    `this blog post <https://aroberge.blogspot.com/2019/12/a-tiny-python-exception-oddity.html>`_
 
-       Note that the ``path`` argument, if provided, takes precedence
-       over the ``source`` argument.
+    This function can either be used on a file, using the ``path`` argument, or
+    on some code passed as a string, using the ``source`` argument.
+    For the latter case, one can also specify a corresponding ``filename``:
+    this could be useful if this function is invoked from a GUI-based
+    editor.
 
-       Two additional named arguments, ``include`` and ``lang``, can be
-       provided to temporarily set the values to be used during this function
-       call. The original values are restored at the end.
+    Note that the ``path`` argument, if provided, takes precedence
+    over the ``source`` argument.
 
-       If friendly-traceback exception hook has not been set up prior
-       to calling check_syntax, it will only be used for the duration
-       of this function call.
+    Two additional named arguments, ``include`` and ``lang``, can be
+    provided to temporarily set the values to be used during this function
+    call. The original values are restored at the end.
 
-       Returns a tuple containing a code object and a filename if no exception
-       has been raised, False otherwise.
+    If friendly-traceback exception hook has not been set up prior
+    to calling check_syntax, it will only be used for the duration
+    of this function call.
+
+    Returns a tuple containing a code object and a filename if no exception
+    has been raised, False otherwise.
 
     """
     _ = current_lang.translate
@@ -86,24 +93,24 @@ def check_syntax(
 
 def exec_code(*, source=None, path=None, include=None, lang=None):
     """This uses check_syntax to see if the code is valid and, if so,
-       executes it into a globals dict containing only
-       ``{"__name__": "__main__"}``.
-       If no SyntaxError exception is raised, this dict is returned;
-       otherwise, an empty dict is returned.
+    executes it into a globals dict containing only
+    ``{"__name__": "__main__"}``.
+    If no ``SyntaxError`` exception is raised, this dict is returned;
+    otherwise, an empty dict is returned.
 
-       It can either be used on a file, using the ``path`` argument, or
-       on some code passed as a string, using the ``source`` argument.
+    It can either be used on a file, using the ``path`` argument, or
+    on some code passed as a string, using the ``source`` argument.
 
-       Note that the ``path`` argument, if provided, takes precedence
-       over the ``source`` argument.
+    Note that the ``path`` argument, if provided, takes precedence
+    over the ``source`` argument.
 
-       Two additional named arguments, ``include`` and ``lang``, can be
-       provided to temporarily set the values to be used during this function
-       call. The original values are restored at the end.
+    Two additional named arguments, ``include`` and ``lang``, can be
+    provided to temporarily set the values to be used during this function
+    call. The original values are restored at the end.
 
-       If friendly-traceback exception hook has not been set up prior
-       to calling check_syntax, it will only be used for the duration
-       of this function call.
+    If friendly-traceback exception hook has not been set up prior
+    to calling check_syntax, it will only be used for the duration
+    of this function call.
     """
     code = check_syntax(source=source, path=path, include=include, lang=lang)
     if not code:
@@ -137,17 +144,38 @@ def run(
     use_rich=False,
     theme="dark",
 ):
-    """Given a filename (relative or absolute path), this function uses the
-       more complex exec_code() to run a file.
+    """Given a filename (relative or absolute path) ending with the ".py"
+    extension, this function uses the
+    more complex ``exec_code()`` to run a file.
 
-       If console is set to False, run() returns an empty dict if a SyntaxError
-       was raised, otherwise returns the dict in which the module (filename)
-       was executed.
+    If console is set to ``False``, ``run()`` returns an empty dict
+    if a ``SyntaxError`` was raised, otherwise returns the dict in
+    which the module (``filename``) was executed.
 
-       If console is set to True (the default), the execution continues
-       as an interactive session in a Friendly console, with the module
-       dict being the locals dict.
-       """
+    If console is set to ``True`` (the default), the execution continues
+    as an interactive session in a Friendly console, with the module
+    dict being used as the locals dict.
+
+    Other arguments include:
+
+    ``lang``: language used; currenly only ``en`` (default) and ``fr``
+    are available.
+
+    ``include``: specifies what information is to be included if an
+    exception is raised.
+
+    ``args``: arguments that are passed to the program as though it
+    was run on the command line as follows::
+
+        python filename.py arg1, arg2, ...
+
+    ``use_rich``: set to ``True`` if Rich is available and the environment
+    supports it.
+
+    ``theme``: Theme to be used with Rich. Currently only ``dark``,
+    the default, and ``light`` are available. ``light`` is meant for
+    light coloured background and has not been extensively tested.
+    """
     session.install(lang=lang, include=include)
     if use_rich:
         if friendly_rich.rich_available:
@@ -174,11 +202,11 @@ def run(
 
 def _temp_set_lang(lang):
     """If lang is not none, temporarily set session.lang to the provided
-       value. Keep track of the original lang setting and return it.
+    value. Keep track of the original lang setting and return it.
 
-       A value of None for saved_lang indicates that no resetting will
-       be required.
-       """
+    A value of None for saved_lang indicates that no resetting will
+    be required.
+    """
     saved_lang = None
     if lang is not None:
         saved_lang = session.lang
