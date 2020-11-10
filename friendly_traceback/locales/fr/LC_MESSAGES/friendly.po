@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2020-11-02 18:37-0400\n"
-"PO-Revision-Date: 2020-11-02 20:13-0400\n"
+"PO-Revision-Date: 2020-11-10 16:05+0100\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -79,8 +79,7 @@ msgid ""
 msgstr ""
 "Malheureusement, aucune information supplémentaire n’est disponible:\n"
 "le contenu du fichier '<stdin>' n’est pas accessible.\n"
-"Est-ce que vous utilisez une console Python plutôt que la console \"Friendly"
-"\"?\n"
+"Est-ce que vous utilisez une console Python plutôt que la console \"Friendly\" ?\n"
 
 #: core.py:354
 msgid ""
@@ -423,7 +422,7 @@ msgstr ""
 #: runtime_errors\import_error.py:52
 #: runtime_errors\module_not_found_error.py:43
 msgid "Did you mean `{name}`?\n"
-msgstr "Vouliez-vous dire `{name}`?\n"
+msgstr "Vouliez-vous dire `{name}` ?\n"
 
 #: runtime_errors\attribute_error.py:62
 msgid ""
@@ -435,7 +434,7 @@ msgstr ""
 
 #: runtime_errors\attribute_error.py:72 runtime_errors\import_error.py:61
 msgid "Did you mean one of the following: `{names}`?\n"
-msgstr "Vouliez-vous dire l’un des éléments suivants: `{names}`?\n"
+msgstr "Vouliez-vous dire l’un des éléments suivants: `{names}` ?\n"
 
 #: runtime_errors\attribute_error.py:75
 msgid ""
@@ -449,7 +448,7 @@ msgstr ""
 
 #: runtime_errors\attribute_error.py:87
 msgid "Did you give your program the same name as a Python module?"
-msgstr "Avez-vous donné à votre programme le même nom qu’un module Python ?"
+msgstr "Avez-vous donné à votre programme le même nom qu’un module Python ?"
 
 #: runtime_errors\attribute_error.py:90
 msgid ""
@@ -480,7 +479,7 @@ msgstr ""
 
 #: runtime_errors\attribute_error.py:131
 msgid "Did you use a period instead of a comma?"
-msgstr "Vouliez-vous séparer les noms d’objets par une virgule ?"
+msgstr "Vouliez-vous séparer les noms d’objets par une virgule ?"
 
 #: runtime_errors\attribute_error.py:133
 msgid ""
@@ -510,7 +509,7 @@ msgstr ""
 
 #: runtime_errors\attribute_error.py:168 runtime_errors\attribute_error.py:263
 msgid "Did you mean one of the following: `{name}`?\n"
-msgstr "Vouliez-vous dire l’un des éléments suivants: `{name}`?\n"
+msgstr "Vouliez-vous dire l’un des éléments suivants: `{name}` ?\n"
 
 #: runtime_errors\attribute_error.py:171
 msgid ""
@@ -561,7 +560,7 @@ msgstr ""
 
 #: runtime_errors\attribute_error.py:282
 msgid "Did you mean to use `{known_builtin}({obj_name})`?"
-msgstr "Vouliez-vous utiliser `{known_builtin}({obj_name})`?"
+msgstr "Vouliez-vous utiliser `{known_builtin}({obj_name})` ?"
 
 #: runtime_errors\attribute_error.py:285
 msgid ""
@@ -576,7 +575,7 @@ msgstr ""
 
 #: runtime_errors\attribute_error.py:334
 msgid "Did you mean to separate object names by a comma?"
-msgstr "Vouliez-vous séparer les noms d’objets par une virgule ?"
+msgstr "Vouliez-vous séparer les noms d’objets par une virgule ?"
 
 #: runtime_errors\attribute_error.py:336
 msgid ""
@@ -658,11 +657,11 @@ msgstr "Dans votre programme, `{var_name}` est un nom inconnu.\n"
 
 #: runtime_errors\name_error.py:55 runtime_errors\unbound_local_error.py:33
 msgid "Did you mean `{name}`?"
-msgstr "Vouliez-vous dire `{name}`?"
+msgstr "Vouliez-vous dire `{name}` ?"
 
 #: runtime_errors\name_error.py:57 runtime_errors\unbound_local_error.py:41
 msgid "Did you use a colon instead of an equal sign?"
-msgstr "Avez-vous utilisé deux points au lieu d’un signe égal?"
+msgstr "Avez-vous utilisé deux points au lieu d’un signe égal ?"
 
 #: runtime_errors\name_error.py:79
 msgid "The similar name `{name}` was found in the local scope.\n"
@@ -700,7 +699,7 @@ msgstr "*    Identifiant Python (builtins) : "
 
 #: runtime_errors\name_error.py:145
 msgid "Did you forget to add `self`?"
-msgstr "Avez-vous oublié d’ajouter `self`?"
+msgstr "Avez-vous oublié d’ajouter `self` ?"
 
 #: runtime_errors\name_error.py:150
 msgid ""
@@ -957,7 +956,7 @@ msgid ""
 "`nonlocal {var_name}`?\n"
 msgstr ""
 "Avez-vous oublié d’ajouter soit `global {var_name}` ou \n"
-"`nonlocal {var_name}`?\n"
+"`nonlocal {var_name}` ?\n"
 
 #: runtime_errors\unbound_local_error.py:68
 msgid ""
@@ -978,7 +977,7 @@ msgstr ""
 
 #: runtime_errors\unbound_local_error.py:75
 msgid "Did you forget to add `{scope} {var_name}`?\n"
-msgstr "Avez-vous oublié d’ajouter `{scope} {var_name}`?\n"
+msgstr "Avez-vous oublié d’ajouter `{scope} {var_name}` ?\n"
 
 #: runtime_errors\unbound_local_error.py:89
 msgid "The similar name `{name}` was found in the local scope. "
@@ -1615,7 +1614,7 @@ msgstr ""
 
 #: syntax_errors\message_analyzer.py:433
 msgid "Did you use copy-paste?\n"
-msgstr "Avez-vous utilisé copier-coller?\n"
+msgstr "Avez-vous utilisé copier-coller ?\n"
 
 #: syntax_errors\message_analyzer.py:439
 msgid ""
@@ -1627,7 +1626,7 @@ msgstr ""
 
 #: syntax_errors\message_analyzer.py:445 syntax_errors\message_analyzer.py:462
 msgid "Did you mean to use a normal quote character, `'` or `\"`?"
-msgstr "Vouliez vous utiliser un guillemet normal, `'` ou `\"`?"
+msgstr "Vouliez vous utiliser un guillemet normal, `'` ou `\"` ?"
 
 #: syntax_errors\message_analyzer.py:451
 msgid ""
