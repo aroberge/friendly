@@ -119,7 +119,7 @@ class FriendlyConsole(InteractiveConsole):
             code = self.compile(source, filename, symbol)
         except (OverflowError, SyntaxError, ValueError):
             # Case 1
-            friendly_traceback.explain()
+            friendly_traceback.explain_traceback()
             return False
 
         if code is None:
@@ -133,7 +133,7 @@ class FriendlyConsole(InteractiveConsole):
     def runcode(self, code):
         """Execute a code object.
 
-        When an exception occurs, friendly_traceback.explain() is called to
+        When an exception occurs, friendly_traceback.explain_traceback() is called to
         display a traceback.  All exceptions are caught except
         SystemExit, which, unlike the case for the original version in the
         standard library, cleanly exists the program. This is done
@@ -151,7 +151,7 @@ class FriendlyConsole(InteractiveConsole):
             os._exit(1)
         except Exception:
             try:
-                friendly_traceback.explain()
+                friendly_traceback.explain_traceback()
             except Exception:
                 print("Friendly-traceback Internal Error")
                 print("-" * 60)
@@ -270,10 +270,10 @@ class FriendlyConsole(InteractiveConsole):
     # that can be used if an explicit call is desired for some reason.
 
     def showsyntaxerror(self, filename=None):
-        friendly_traceback.explain()
+        friendly_traceback.explain_traceback()
 
     def showtraceback(self):
-        friendly_traceback.explain()
+        friendly_traceback.explain_traceback()
 
     def raw_input(self, prompt=""):
         """Write a prompt and read a line.

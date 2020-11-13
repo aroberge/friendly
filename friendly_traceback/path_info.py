@@ -49,7 +49,7 @@ def include_file_in_traceback(full_path):
             try:
                 some_module.do_something(...)
             except Exception:
-                friendly_traceback.explain()
+                friendly_traceback.explain_traceback()
             finally:
                 if revert:
                     include_file_in_traceback(some_module.__file__)

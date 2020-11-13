@@ -8,7 +8,7 @@ def test_type_error1():
         result = a + one
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     py37 = "TypeError: can only concatenate" in result
@@ -26,7 +26,7 @@ def test_type_error1a():
         result = a + a_list
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     py37 = "TypeError: can only concatenate" in result
@@ -44,7 +44,7 @@ def test_type_error1b():
         result = a_tuple + a_list
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: can only concatenate" in result
@@ -60,7 +60,7 @@ def test_type_error2():
         result = one + none
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for +:" in result
@@ -78,7 +78,7 @@ def test_type_error2a():
         one += two
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for +=:" in result
@@ -94,7 +94,7 @@ def test_type_error3():
         result = a - b
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for -:" in result
@@ -110,7 +110,7 @@ def test_type_error3a():
         b -= a
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for -=:" in result
@@ -126,7 +126,7 @@ def test_type_error4():
         result = a * b
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for *:" in result
@@ -142,7 +142,7 @@ def test_type_error4a():
         b *= a
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for *=:" in result
@@ -158,7 +158,7 @@ def test_type_error5():
         result = a / b
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for /:" in result
@@ -174,7 +174,7 @@ def test_type_error5a():
         b /= a
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for /=:" in result
@@ -190,7 +190,7 @@ def test_type_error5b():
         result = a // b
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for //:" in result
@@ -206,7 +206,7 @@ def test_type_error5c():
         b //= a
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for //=:" in result
@@ -222,7 +222,7 @@ def test_type_error6():
         result = a & b
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for &:" in result
@@ -238,7 +238,7 @@ def test_type_error6a():
         b &= a
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for &=:" in result
@@ -254,7 +254,7 @@ def test_type_error7():
         result = a ** b
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for ** or pow():" in result
@@ -270,7 +270,7 @@ def test_type_error7a():
         a **= b
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for ** or pow():" in result
@@ -286,7 +286,7 @@ def test_type_error8():
         result = a >> b
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for >>:" in result
@@ -302,7 +302,7 @@ def test_type_error8a():
         a >>= b
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for >>=:" in result
@@ -318,7 +318,7 @@ def test_type_error9():
         result = a @ b
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for @:" in result
@@ -334,7 +334,7 @@ def test_type_error9a():
         a @= b
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for @=:" in result
@@ -350,7 +350,7 @@ def test_type_error10():
         b < a
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: '<' not supported between instances of 'int' and 'str'" in result
@@ -365,7 +365,7 @@ def test_type_error11():
         print(a)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: bad operand type for unary +: 'str'" in result
@@ -380,7 +380,7 @@ def test_type_error11a():
         print(a)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: bad operand type for unary -: 'list'" in result
@@ -395,7 +395,7 @@ def test_type_error11b():
         print(a)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: bad operand type for unary ~: 'tuple'" in result
@@ -410,7 +410,7 @@ def test_type_error12():
         a[0] = 0
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: 'tuple' object does not support item assignment" in result
@@ -427,7 +427,7 @@ def test_type_error13():
         fn(1)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError" in result
@@ -446,7 +446,7 @@ def test_type_error13a():
         A().f(1)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError" in result
@@ -465,7 +465,7 @@ def test_type_error14():
         fn(1)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError" in result
@@ -480,7 +480,7 @@ def test_type_error15():
         _ = (1, 2)(3, 4)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: 'tuple' object is not callable" in result
@@ -494,7 +494,7 @@ def test_type_error15a():
         _ = [1, 2](3, 4)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert "TypeError: 'list' object is not callable" in result
     if friendly_traceback.get_lang() == "en":
@@ -507,7 +507,7 @@ def test_type_error16():
         raise "exception"
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: exceptions must derive from BaseException" in result
@@ -521,7 +521,7 @@ def test_type_error17():
         "a" * "2"
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "TypeError: can't multiply sequence by non-int of type 'str'" in result

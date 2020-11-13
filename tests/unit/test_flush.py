@@ -5,7 +5,7 @@ def test_flush():
     try:
         b = c
     except Exception:
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output(flush=False)
     assert "NameError: name 'c' is not defined" in result
     result1 = friendly_traceback.get_output()  # flushes

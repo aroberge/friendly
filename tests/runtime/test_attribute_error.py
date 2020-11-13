@@ -23,7 +23,7 @@ def test_attribute_error():
         A.x  # testing type
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "AttributeError: type object 'A' has no attribute 'x'" in result
@@ -35,7 +35,7 @@ def test_attribute_error():
         a.x  # Testing instance
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "AttributeError: 'A' object has no attribute 'x'" in result
@@ -50,7 +50,7 @@ def test_attribute_error2():
         a.appendh(4)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "AttributeError: 'list' object has no attribute 'appendh'" in result
@@ -66,7 +66,7 @@ def test_misspelled_module_attribute():
         string.ascii_lowecase
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "AttributeError: module 'string' has no attribute 'ascii_lowecase'" in result
@@ -82,7 +82,7 @@ def test_misspelled_module_attribute_2():
         math.cost
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert ("AttributeError: module 'math' has no attribute 'cost'") in result
@@ -103,7 +103,7 @@ def test_shadow_stdlib_module():
         turtle.Pen
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "AttributeError: module 'turtle' has no attribute 'Pen'" in result
@@ -121,7 +121,7 @@ def test_nonetype():
         a.b
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "'NoneType' object has no attribute 'b'" in result
@@ -138,7 +138,7 @@ def test_perhaps_comma1():
         a = [abcd.defg]
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "'str' object has no attribute 'defg'" in result
@@ -156,7 +156,7 @@ def test_perhaps_comma2():
         a = [abcd.defg]
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "'str' object has no attribute 'defg'" in result
@@ -173,7 +173,7 @@ def test_builtin_module_with_no_file():
         sys.foo
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "module 'sys' has no attribute 'foo'" in result

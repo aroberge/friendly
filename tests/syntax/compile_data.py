@@ -31,7 +31,7 @@ for filename in catch_syntax_error.causes:
     try:
         exec("import %s" % filename)
     except Exception:
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     out = eval(friendly_traceback.get_output())  # convert back to dict.
     info[filename] = out
 

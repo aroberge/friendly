@@ -6,7 +6,7 @@ def test_name_error():
         this = something
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "NameError: name 'something' is not defined" in result
@@ -20,7 +20,7 @@ def test_name_error2():
         x = babs(-1)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "NameError: name 'babs' is not defined" in result
@@ -35,7 +35,7 @@ def test_name_error3():
         y = x
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "NameError: name 'x' is not defined" in result
@@ -48,7 +48,7 @@ def test_name_error4():
         cost  # wrote from math import * above
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "NameError: name 'cost' is not defined" in result

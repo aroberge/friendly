@@ -230,7 +230,7 @@ def create_tracebacks(target, intro_text, format="pre", messages=None):
                         if "WARNING" in result:
                             print("WARNING in ", name, function)
                 except Exception as e:
-                    friendly_traceback.explain()
+                    friendly_traceback.explain_traceback()
 
     if messages:
         with open(messages, "w", encoding="utf8") as out:

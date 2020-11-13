@@ -111,7 +111,7 @@ def test_syntax_errors(filename):
         except ImportError:
             exec("import %s" % filename)
     except Exception:
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
 

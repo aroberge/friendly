@@ -8,7 +8,7 @@ def test_function_recursion_error():
         a()
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "RecursionError" in result

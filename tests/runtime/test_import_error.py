@@ -6,7 +6,7 @@ def test_import_error():
         from math import Pi
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert "ImportError: cannot import name 'Pi'" in result
@@ -20,7 +20,7 @@ def test_circular_import():
         import circular_a
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     # The actual message varies a lot depending on Python version.
     assert not "WARNING" in result, "Internal error found."

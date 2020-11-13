@@ -31,6 +31,14 @@ del _warnings
 
 
 def explain(redirect=None):
+    """Deprecated: Use explain_traceback() instead.
+    """
+    # The reason for removing this is to avoid confusion with
+    # explain() used in the console.
+    session.explain_traceback(redirect=redirect)
+
+
+def explain_traceback(redirect=None):
     """Replaces a standard traceback by a friendlier one, giving more
     information about a given exception than a standard traceback.
     Note that this excludes ``SystemExit`` and ``KeyboardInterrupt``

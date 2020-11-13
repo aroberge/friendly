@@ -19,7 +19,7 @@ from . import console
 from . import friendly_rich
 
 # Importing objects from __init__.py
-from . import explain, exclude_file_from_traceback, import_function, install
+from . import explain_traceback, exclude_file_from_traceback, import_function, install
 from . import session, set_formatter, __version__
 
 
@@ -167,7 +167,7 @@ def main():
                 module_dict = runpy.run_path(args.source, run_name="__main__")
                 console_defaults.update(module_dict)
             except Exception:
-                explain()
+                explain_traceback()
             console.start_console(
                 local_vars=console_defaults, use_rich=use_rich, theme=theme
             )

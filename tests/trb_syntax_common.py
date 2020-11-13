@@ -138,7 +138,7 @@ def create_tracebacks(target, intro_text, format="pre"):
                         if "WARNING" in result:
                             print("WARNING in ", name, function)
                 except Exception:
-                    friendly_traceback.explain()
+                    friendly_traceback.explain_traceback()
 
 
 print("Number of cases in trb_syntax_common.py: ", len(all_imports))

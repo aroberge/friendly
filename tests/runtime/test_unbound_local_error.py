@@ -27,7 +27,7 @@ def test_unbound_local_error_missing_global():
         outer_missing_global()
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert (
@@ -48,7 +48,7 @@ def test_unbound_local_error_missing_nonlocal():
         outer_missing_nonlocal()
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain(redirect="capture")
+        friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "WARNING" in result, "Internal error found."
     assert (
