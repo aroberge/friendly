@@ -6,7 +6,7 @@ The functions in this module have been created so that user editors/IDEs
 could use Friendly-traceback without having to change the content of
 their own programs.
 
-At the moment, only ``run()`` is part of the public API.
+None of these are part of the public API.
 
 If you make use of any other function here, please file an issue so
 it can be determined if it should be added to the public API.
@@ -16,8 +16,6 @@ import sys
 from .source_cache import cache
 from .my_gettext import current_lang
 from .config import session
-from .console import start_console
-from . import friendly_rich
 
 
 def check_syntax(
@@ -133,71 +131,6 @@ def exec_code(*, source=None, path=None, include=None, lang=None):
 
     _reset(saved_except_hook, saved_lang, saved_include)
     return module_globals
-
-
-def run(
-    filename,
-    lang=None,
-    include="friendly_tb",
-    args=None,
-    console=True,
-    use_rich=False,
-    theme="dark",
-):
-    """Given a filename (relative or absolute path) ending with the ".py"
-    extension, this function uses the
-    more complex ``exec_code()`` to run a file.
-
-    If console is set to ``False``, ``run()`` returns an empty dict
-    if a ``SyntaxError`` was raised, otherwise returns the dict in
-    which the module (``filename``) was executed.
-
-    If console is set to ``True`` (the default), the execution continues
-    as an interactive session in a Friendly console, with the module
-    dict being used as the locals dict.
-
-    Other arguments include:
-
-    ``lang``: language used; currenly only ``en`` (default) and ``fr``
-    are available.
-
-    ``include``: specifies what information is to be included if an
-    exception is raised.
-
-    ``args``: arguments that are passed to the program as though it
-    was run on the command line as follows::
-
-        python filename.py arg1, arg2, ...
-
-    ``use_rich``: set to ``True`` if Rich is available and the environment
-    supports it.
-
-    ``theme``: Theme to be used with Rich. Currently only ``dark``,
-    the default, and ``light`` are available. ``light`` is meant for
-    light coloured background and has not been extensively tested.
-    """
-    session.install(lang=lang, include=include)
-    if use_rich:
-        if friendly_rich.rich_available:
-            session.use_rich = True
-            session.set_formatter("rich", theme=theme)
-
-    if args is not None:
-        sys.argv = [filename]
-        args = [arg.strip() for arg in args.split(" ")]
-        # TODO: add extensive tests for this
-        sys.argv.extend([arg for arg in args if arg])  # remove empty strings
-    module_globals = exec_code(path=filename, lang=lang, include=include)
-    if console:
-        start_console(
-            local_vars=module_globals,
-            use_rich=use_rich,
-            banner="",
-            theme=theme,
-            include=include,
-        )
-    else:
-        return module_globals
 
 
 def _temp_set_lang(lang):

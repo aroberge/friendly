@@ -30,6 +30,13 @@ please_comment = (
 )
 
 
+def quote(text):
+    """Surrounds text by single quote, or by backquote if formatter
+    is markdown type.
+    """
+    return session.quote(text)
+
+
 class FriendlyConsole(InteractiveConsole):
     def __init__(self, locals=None, use_rich=False, theme="dark"):
         """This class builds upon Python's code.InteractiveConsole
@@ -176,7 +183,7 @@ class FriendlyConsole(InteractiveConsole):
         for name in hints:
             warning = ""
             if name in dir(builtins):
-                warning = warning_builtins.format(name=friendly_traceback.quote(name))
+                warning = warning_builtins.format(name=quote(name))
                 if self.rich_console:
                     warning = "#### " + warning
                     warning = friendly_rich.Markdown(warning)
@@ -204,8 +211,8 @@ class FriendlyConsole(InteractiveConsole):
                         warning = "#### " + warning
                 if not str(f"{hints[name]}").startswith("<"):
                     suggest = suggest_str.format(
-                        hint=friendly_traceback.quote(f"{name} : {hints[name]}"),
-                        assignment=friendly_traceback.quote(f"{name} = {hints[name]}"),
+                        hint=quote(f"{name} : {hints[name]}"),
+                        assignment=quote(f"{name} = {hints[name]}"),
                     )
                 else:
                     suggest = ""
@@ -245,7 +252,7 @@ class FriendlyConsole(InteractiveConsole):
             if name in self.locals and self.saved_builtins[name] != self.locals[name]:
                 warning = _(
                     "Warning: you have redefined the python builtin {name}."
-                ).format(name=friendly_traceback.quote(name))
+                ).format(name=quote(name))
                 if self.rich_console:
                     warning = friendly_rich.Markdown("#### " + warning)
                     self.rich_console.print(warning)

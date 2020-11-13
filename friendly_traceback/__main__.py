@@ -14,11 +14,13 @@ import platform
 import runpy
 import sys
 
-from .version import __version__
+# Importing modules
 from . import console
-from . import public_api
-from .config import session
 from . import friendly_rich
+
+# Importing objects from __init__.py
+from . import explain, exclude_file_from_traceback, import_function, install
+from . import session, set_formatter, __version__
 
 
 versions = "Friendly-traceback version {}. [Python version: {}]\n".format(
@@ -129,20 +131,20 @@ def main():
             out.write("Friendly log\n\n")
         include = "debug_tb"
 
-    public_api.install(lang=args.lang, include=include)
+    install(lang=args.lang, include=include)
 
     use_rich = False
     if args.format:
         format = args.format
         if format in ["repl", "pre", "markdown"]:
-            public_api.set_formatter(format)
+            set_formatter(format)
         elif format == "rich":
             if not friendly_rich.rich_available:
                 warn("Rich is not installed.")
             else:
                 use_rich = True
         else:
-            public_api.set_formatter(public_api.import_function(args.format))
+            set_formatter(import_function(args.format))
     elif friendly_rich.rich_available:
         use_rich = True
 
@@ -159,13 +161,13 @@ def main():
 
     console_defaults = {}
     if args.source is not None:
-        public_api.exclude_file_from_traceback(runpy.__file__)
+        exclude_file_from_traceback(runpy.__file__)
         if sys.flags.interactive:
             try:
                 module_dict = runpy.run_path(args.source, run_name="__main__")
                 console_defaults.update(module_dict)
             except Exception:
-                public_api.explain()
+                explain()
             console.start_console(
                 local_vars=console_defaults, use_rich=use_rich, theme=theme
             )
