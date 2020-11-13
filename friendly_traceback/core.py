@@ -393,7 +393,7 @@ def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
 
 
 def get_location_header(linenumber, filename, header_name=None):
-    from .session import session
+    from .config import session
 
     _ = current_lang.translate
     filename = utils.shorten_path(filename)

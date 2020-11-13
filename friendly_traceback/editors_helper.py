@@ -15,7 +15,7 @@ import sys
 
 from .source_cache import cache
 from .my_gettext import current_lang
-from .session import session
+from .config import session
 from .console import start_console
 from . import friendly_rich
 

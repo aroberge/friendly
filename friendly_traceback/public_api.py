@@ -23,7 +23,7 @@ file an issue.
 from functools import wraps
 from importlib import import_module
 
-from .session import session
+from .config import session
 from . import info_generic
 
 # Make functions from other modules directly available from here.
@@ -253,6 +253,7 @@ def import_function(dotted_path: str) -> type:
         ) from err
 
 
+@make_public
 class Friendly:
     __doc__ = f"""Simple API for use with the console
 

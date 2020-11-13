@@ -21,4 +21,24 @@ del _warnings
 
 from .version import __version__  # noqa
 from .public_api import *  # noqa
-from .console import FriendlyConsole, start_console  # noqa
+
+
+def start_console(
+    local_vars=None,
+    use_rich=False,
+    include="friendly_tb",
+    lang="en",
+    banner=None,
+    theme="dark",
+):
+    """Starts a Friendly console"""
+    from . import console
+
+    console.start_console(
+        local_vars=local_vars,
+        use_rich=use_rich,
+        include=include,
+        lang=lang,
+        banner=banner,
+        theme=theme,
+    )

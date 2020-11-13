@@ -17,7 +17,7 @@ import sys
 from .version import __version__
 from . import console
 from . import public_api
-from .session import session
+from .config import session
 from . import friendly_rich
 
 

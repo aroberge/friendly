@@ -11,15 +11,15 @@ import traceback
 from code import InteractiveConsole
 import codeop  # need to import to exclude from tracebacks
 
-from .version import __version__
-from . import public_api
+import friendly_traceback
+
 from . import source_cache
 from .my_gettext import current_lang
 
 from . import friendly_rich
 
 BANNER = "\nFriendly Console version {}. [Python version: {}]\n".format(
-    __version__, platform.python_version()
+    friendly_traceback.__version__, platform.python_version()
 )
 
 please_comment = (
@@ -36,7 +36,7 @@ class FriendlyConsole(InteractiveConsole):
         an individual source file.
         """
         _ = current_lang.translate
-        public_api.exclude_file_from_traceback(codeop.__file__)
+        friendly_traceback.exclude_file_from_traceback(codeop.__file__)
         self.fake_filename = "<friendly-console:%d>"
         self.counter = 1
         self.old_locals = {}
@@ -110,7 +110,7 @@ class FriendlyConsole(InteractiveConsole):
             code = self.compile(source, filename, symbol)
         except (OverflowError, SyntaxError, ValueError):
             # Case 1
-            public_api.explain()
+            friendly_traceback.explain()
             return False
 
         if code is None:
@@ -142,7 +142,7 @@ class FriendlyConsole(InteractiveConsole):
             os._exit(1)
         except Exception:
             try:
-                public_api.explain()
+                friendly_traceback.explain()
             except Exception:
                 print("Friendly-traceback Internal Error")
                 print("-" * 60)
@@ -174,7 +174,7 @@ class FriendlyConsole(InteractiveConsole):
         for name in hints:
             warning = ""
             if name in dir(builtins):
-                warning = warning_builtins.format(name=public_api.quote(name))
+                warning = warning_builtins.format(name=friendly_traceback.quote(name))
                 if self.rich_console:
                     warning = "#### " + warning
                     warning = friendly_rich.Markdown(warning)
@@ -202,8 +202,8 @@ class FriendlyConsole(InteractiveConsole):
                         warning = "#### " + warning
                 if not str(f"{hints[name]}").startswith("<"):
                     suggest = suggest_str.format(
-                        hint=public_api.quote(f"{name} : {hints[name]}"),
-                        assignment=public_api.quote(f"{name} = {hints[name]}"),
+                        hint=friendly_traceback.quote(f"{name} : {hints[name]}"),
+                        assignment=friendly_traceback.quote(f"{name} = {hints[name]}"),
                     )
                 else:
                     suggest = ""
@@ -243,7 +243,7 @@ class FriendlyConsole(InteractiveConsole):
             if name in self.locals and self.saved_builtins[name] != self.locals[name]:
                 warning = _(
                     "Warning: you have redefined the python builtin {name}."
-                ).format(name=public_api.quote(name))
+                ).format(name=friendly_traceback.quote(name))
                 if self.rich_console:
                     warning = friendly_rich.Markdown("#### " + warning)
                     self.rich_console.print(warning)
@@ -261,10 +261,10 @@ class FriendlyConsole(InteractiveConsole):
     # that can be used if an explicit call is desired for some reason.
 
     def showsyntaxerror(self, filename=None):
-        public_api.explain()
+        friendly_traceback.explain()
 
     def showtraceback(self):
-        public_api.explain()
+        friendly_traceback.explain()
 
     def raw_input(self, prompt=""):
         """Write a prompt and read a line.
@@ -288,16 +288,16 @@ def start_console(
     theme="dark",
 ):
     """Starts a console; modified from code.interact"""
-    from . import session
+    from . import config
 
     if banner is None:
         banner = BANNER
     if theme != "light":
         theme = "dark"
     if use_rich:
-        session.session.set_formatter("rich", theme=theme)
+        config.session.set_formatter("rich", theme=theme)
 
-    friendly = public_api.Friendly()
+    friendly = friendly_traceback.Friendly()
     console_defaults = {
         "friendly": friendly,
         "explain": friendly.explain,
@@ -316,8 +316,8 @@ def start_console(
         "debug": friendly.debug,
         "_info": friendly._info,
     }
-    if not public_api.is_installed():
-        public_api.install(include=include, lang=lang)
+    if not friendly_traceback.is_installed():
+        friendly_traceback.install(include=include, lang=lang)
     if local_vars is None:
         local_vars = console_defaults
     else:
