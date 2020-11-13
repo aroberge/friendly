@@ -110,7 +110,6 @@ def warn(text):
 
 
 def main():
-    console_defaults = {"friendly": public_api.Friendly()}
     args = parser.parse_args()
     if args.version:
         print(f"\nFriendly-traceback version {__version__}")
@@ -158,6 +157,7 @@ def main():
     elif args.theme is not None:
         warn("theme argument ignored.")
 
+    console_defaults = {}
     if args.source is not None:
         public_api.exclude_file_from_traceback(runpy.__file__)
         if sys.flags.interactive:
