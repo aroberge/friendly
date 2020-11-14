@@ -130,6 +130,7 @@ def run(
     console=True,
     use_rich=False,
     theme="dark",
+    redirect=None,
 ):
     """Given a filename (relative or absolute path) ending with the ".py"
     extension, this function uses the
@@ -151,10 +152,10 @@ def run(
     ``include``: specifies what information is to be included if an
     exception is raised.
 
-    ``args``: arguments that are passed to the program as though it
+    ``args``: strings tuple that is passed to the program as though it
     was run on the command line as follows::
 
-        python filename.py arg1, arg2, ...
+        python filename.py arg1 arg2 ...
 
     ``use_rich``: set to ``True`` if Rich is available and the environment
     supports it.
@@ -163,7 +164,7 @@ def run(
     the default, and ``light`` are available. ``light`` is meant for
     light coloured background and has not been extensively tested.
     """
-    session.install(lang=lang, include=include)
+    session.install(lang=lang, include=include, redirect=redirect)
     if use_rich:
         if friendly_rich.rich_available:
             session.use_rich = True
@@ -171,9 +172,7 @@ def run(
 
     if args is not None:
         sys.argv = [filename]
-        args = [arg.strip() for arg in args.split(" ")]
-        # TODO: add extensive tests for this
-        sys.argv.extend([arg for arg in args if arg])  # remove empty strings
+        sys.argv.extend(list(args))
     module_globals = editors_helper.exec_code(path=filename, lang=lang, include=include)
     if console:
         start_console(

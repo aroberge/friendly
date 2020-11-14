@@ -50,9 +50,6 @@ import sys
 from friendly_traceback import set_lang
 from friendly_traceback.syntax_errors import analyze_syntax
 
-set_lang("en")
-
-
 def find(lines=[" "], linenumber=1, message="invalid syntax", offset=1):
     return analyze_syntax._find_likely_cause(
         source_lines=lines, linenumber=linenumber, message=message, offset=offset,
@@ -70,6 +67,7 @@ def test_no_false_positive():
     # The following tests use valid syntax.
     # They should never have raised a Syntax error, and thus
     # we should not be able to find a likely cause of a problem.
+    set_lang("en")
     no_cause = "I cannot guess the likely cause of this error"
 
     assert no_cause in find(["def test(arg1, arg2):"])
