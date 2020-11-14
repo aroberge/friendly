@@ -1,4 +1,6 @@
-"""console.py
+"""
+console.py
+==========
 
 Adaptation of Python's console found in code.py so that it can be
 used to show some "friendly" tracebacks.
@@ -30,7 +32,7 @@ please_comment = (
 )
 
 
-def quote(text):
+def _quote(text):
     """Surrounds text by single quote, or by backquote if formatter
     is markdown type.
     """
@@ -183,7 +185,7 @@ class FriendlyConsole(InteractiveConsole):
         for name in hints:
             warning = ""
             if name in dir(builtins):
-                warning = warning_builtins.format(name=quote(name))
+                warning = warning_builtins.format(name=_quote(name))
                 if self.rich_console:
                     warning = "#### " + warning
                     warning = friendly_rich.Markdown(warning)
@@ -211,8 +213,8 @@ class FriendlyConsole(InteractiveConsole):
                         warning = "#### " + warning
                 if not str(f"{hints[name]}").startswith("<"):
                     suggest = suggest_str.format(
-                        hint=quote(f"{name} : {hints[name]}"),
-                        assignment=quote(f"{name} = {hints[name]}"),
+                        hint=_quote(f"{name} : {hints[name]}"),
+                        assignment=_quote(f"{name} = {hints[name]}"),
                     )
                 else:
                     suggest = ""
@@ -252,7 +254,7 @@ class FriendlyConsole(InteractiveConsole):
             if name in self.locals and self.saved_builtins[name] != self.locals[name]:
                 warning = _(
                     "Warning: you have redefined the python builtin {name}."
-                ).format(name=quote(name))
+                ).format(name=_quote(name))
                 if self.rich_console:
                     warning = friendly_rich.Markdown("#### " + warning)
                     self.rich_console.print(warning)

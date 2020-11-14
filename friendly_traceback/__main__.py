@@ -14,18 +14,45 @@ import platform
 import runpy
 import sys
 
+from importlib import import_module
+
 # Importing modules
 from . import console
 from . import friendly_rich
 
 # Importing objects from __init__.py
-from . import explain_traceback, exclude_file_from_traceback, import_function, install
+from . import explain_traceback, exclude_file_from_traceback, install
 from . import session, set_formatter, __version__
 
 
 versions = "Friendly-traceback version {}. [Python version: {}]\n".format(
     __version__, platform.python_version()
 )
+
+
+def import_function(dotted_path: str) -> type:
+    """Import a function from a module, given its dotted path.
+
+    This is a utility function currently used when a custom formatter
+    is used using a command line argument::
+
+        python -m friendly_traceback --format custom_formatter
+    """
+    # Used by HackInScience.org
+    try:
+        module_path, function_name = dotted_path.rsplit(".", 1)
+    except ValueError as err:
+        raise ImportError("%s doesn't look like a module path" % dotted_path) from err
+
+    module = import_module(module_path)
+
+    try:
+        return getattr(module, function_name)
+    except AttributeError as err:
+        raise ImportError(
+            'Module "%s" does not define a "%s" function' % (module_path, function_name)
+        ) from err
+
 
 parser = argparse.ArgumentParser(
     formatter_class=argparse.RawDescriptionHelpFormatter,
