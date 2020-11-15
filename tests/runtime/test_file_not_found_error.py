@@ -8,7 +8,7 @@ def test_file_not_found_error():
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "WARNING" in result, "Internal error found."
+    assert not "debug_warning" in result, "Internal error found."
     assert (
         "FileNotFoundError: [Errno 2] No such file or directory: 'does_not_exist'"
         in result

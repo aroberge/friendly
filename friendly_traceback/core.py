@@ -109,7 +109,7 @@ def get_traceback_info(etype, value, tb, debug=False):
         return process_syntax_error(etype, value, info, debug)
 
     if not records:
-        info["WARNING"] = "WARNING: no records found."
+        info["debug_warning"] = "debug_warning: no records found."
         return info
 
     format_python_tracebacks(records, etype, value, python_tb, info)
@@ -128,7 +128,9 @@ def get_traceback_info(etype, value, tb, debug=False):
     try:
         info_specific.get_likely_cause(etype, value, info, frame)  # [3]
     except Exception:
-        info["WARNING"] = "WARNING: Internal error caught in `get_likely_cause()`."
+        info[
+            "debug_warning"
+        ] = "debug_warning: Internal error caught in `get_likely_cause()`."
         if debug:
             raise
     return info
@@ -153,7 +155,9 @@ def process_syntax_error(etype, value, info, debug):
     try:
         analyze_syntax.set_cause_syntax(etype, value, info)  # [3]
     except Exception:
-        info["WARNING"] = "WARNING: Internal error caught in `process_syntax_error()`."
+        info[
+            "debug_warning"
+        ] = "debug_warning: Internal error caught in `process_syntax_error()`."
         if debug:
             raise
     return info

@@ -49,7 +49,7 @@ RICH_HEADER = False
 # authoritative list of items to consider.
 
 items_in_order = [
-    "WARNING",
+    "debug_warning",
     "header",
     "message",  # The last line of a Python traceback
     "original_python_traceback",
@@ -106,7 +106,7 @@ def repl(info, include="friendly_tb"):
     """
     # We first define the indentation to appear before each item
     repl_items = {
-        "WARNING": "none",
+        "debug_warning": "none",
         "simulated_python_traceback": "none",
         "original_python_traceback": "none",
         "shortened_traceback": "none",
@@ -138,7 +138,7 @@ def pre(info, include="friendly_tb"):
     """
     # We first define the indentation to appear before each item
     pre_items = {
-        "WARNING": "single",
+        "debug_warning": "single",
         "simulated_python_traceback": "single",
         "original_python_traceback": "single",
         "shortened_traceback": "single",
@@ -204,7 +204,7 @@ def _markdown(info, include, rich=False, docs=False):
     result = []
 
     markdown_items = {
-        "WARNING": ("# ", ""),
+        "debug_warning": ("# ", ""),
         "header": ("# ", ""),
         "message": ("", ""),
         "suggest": ("", "\n"),
@@ -302,7 +302,7 @@ items_groups = {
         "exception_raised_variables_header",
         "exception_raised_variables",
     },
-    "friendly_tb": {"shortened_traceback", "suggest", "WARNING"},
+    "friendly_tb": {"shortened_traceback", "suggest", "debug_warning"},
     "python_tb": {"simulated_python_traceback"},
     "debug_tb": {"original_python_traceback"},
 }

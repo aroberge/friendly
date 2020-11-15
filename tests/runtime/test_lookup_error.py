@@ -12,7 +12,7 @@ def test_lookup_error():
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "WARNING" in result, "Internal error found."
+    assert not "debug_warning" in result, "Internal error found."
     assert "LookupError" in result
     if friendly_traceback.get_lang() == "en":
         assert "`LookupError` is the base class for" in result

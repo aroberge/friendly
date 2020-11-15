@@ -8,7 +8,7 @@ def test_zero_division_error():
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "WARNING" in result, "Internal error found."
+    assert not "debug_warning" in result, "Internal error found."
     assert "ZeroDivisionError: division by zero" in result
     if friendly_traceback.get_lang() == "en":
         assert "A `ZeroDivisionError` occurs when" in result
@@ -23,7 +23,7 @@ def test_zero_division_error2():
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "WARNING" in result, "Internal error found."
+    assert not "debug_warning" in result, "Internal error found."
     assert "ZeroDivisionError: integer division or modulo by zero" in result
     if friendly_traceback.get_lang() == "en":
         assert "A `ZeroDivisionError` occurs when" in result

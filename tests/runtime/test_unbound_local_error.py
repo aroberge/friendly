@@ -29,7 +29,7 @@ def test_unbound_local_error_missing_global():
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "WARNING" in result, "Internal error found."
+    assert not "debug_warning" in result, "Internal error found."
     assert (
         "UnboundLocalError: local variable 'spam_missing_global' referenced" in result
     )
@@ -50,7 +50,7 @@ def test_unbound_local_error_missing_nonlocal():
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "WARNING" in result, "Internal error found."
+    assert not "debug_warning" in result, "Internal error found."
     assert (
         "UnboundLocalError: local variable 'spam_missing_nonlocal' referenced" in result
     )
