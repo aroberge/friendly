@@ -16,6 +16,8 @@ if your terminal console supports it.
 
 [Full documentation available here](https://aroberge.github.io/friendly-traceback-docs/docs/html/)
 
+![Example](https://raw.githubusercontent.com/aroberge/friendly-traceback/master/friendly_indexerror_en.png)
+
 
 ## State of this project
 
