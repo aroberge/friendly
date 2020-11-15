@@ -11,7 +11,7 @@ def get_generic_explanation(exception_name):
     """Provides a generic explanation about a particular exception."""
     if exception_name in GENERIC:
         explanation = GENERIC[exception_name]()
-    if exception_name.endswith("Warning"):
+    elif exception_name.endswith("Warning"):
         explanation = GENERIC["UnknownWarning"]()
     else:
         explanation = GENERIC["Unknown"]()

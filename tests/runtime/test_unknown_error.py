@@ -15,7 +15,7 @@ def test_function_unknown_error():
     assert not "debug_warning" in result, "Internal error found."
     assert "Some informative message" in result
     if friendly_traceback.get_lang() == "en":
-        assert "Please report this example" in result
+        assert "No information is available about this exception." in result
     return result, message
 
 
