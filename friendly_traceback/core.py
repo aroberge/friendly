@@ -27,12 +27,13 @@ import traceback
 from . import info_generic
 from . import info_specific
 from . import info_variables
-from . import utils
+
+# from . import utils
 
 from .my_gettext import current_lang
 
 from .source_cache import cache, highlight_source
-from .path_info import is_excluded_file, EXCLUDED_FILE_PATH
+from .path_info import is_excluded_file, EXCLUDED_FILE_PATH, path_utils
 
 # ====================
 # The following is an example of a formatted traceback, with each
@@ -207,7 +208,7 @@ def format_python_tracebacks(records, etype, value, python_tb, info):
     for line in shortened_tb:
         match = re.search(pattern, line)
         if match:
-            line = line.replace(match.group(1), utils.shorten_path(match.group(1)))
+            line = line.replace(match.group(1), path_utils.shorten_path(match.group(1)))
         temp.append(line)
     shortened_tb = temp
 
@@ -400,7 +401,7 @@ def get_location_header(linenumber, filename, header_name=None):
     from .config import session
 
     _ = current_lang.translate
-    filename = utils.shorten_path(filename)
+    filename = path_utils.shorten_path(filename)
     if session.use_rich:
         filename = f"`'{filename}'`"
 

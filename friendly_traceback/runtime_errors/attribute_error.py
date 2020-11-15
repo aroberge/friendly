@@ -4,7 +4,8 @@ import sys
 import re
 
 from ..my_gettext import current_lang
-from ..utils import get_similar_words, tokenize_source, shorten_path
+from ..utils import get_similar_words, tokenize_source
+from ..path_info import path_utils
 from ..source_cache import cache
 from . import stdlib_modules
 
@@ -82,7 +83,7 @@ def attribute_error_in_module(module, attribute, info, frame):
     # perhaps use turtle as a good case.
 
     if module in stdlib_modules.names and hasattr(mod, "__file__"):
-        mod_path = shorten_path(mod.__file__)
+        mod_path = path_utils.shorten_path(mod.__file__)
         if not mod_path.startswith("PYTHON_LIB:"):
             info["suggest"] = _(
                 "Did you give your program the same name as a Python module?"

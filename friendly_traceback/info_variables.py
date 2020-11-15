@@ -6,6 +6,7 @@ can be useful for beginners without overwhelming them.
 import builtins
 
 from . import utils
+from .path_info import path_utils
 from .my_gettext import current_lang
 from .friendly_exception import FriendlyException
 
@@ -109,7 +110,7 @@ def simplify_name(name):
         name = name.split(" at ")[0] + ">"
     elif " from " in name:  # example: module X from stdlib_path
         obj_repr, path = name.split(" from ")
-        path = utils.shorten_path(path[:-1])  # -1 removes >
+        path = path_utils.shorten_path(path[:-1])  # -1 removes >
         # Avoid lines that are too long
         if len(obj_repr) + len(path) < MAX_LENGTH:
             name = obj_repr + "> from " + path

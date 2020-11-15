@@ -55,3 +55,46 @@ def include_file_in_traceback(full_path):
 
     """
     EXCLUDED_FILE_PATH.discard(full_path)
+
+
+class PathUtil:
+    def __init__(self):
+        self.python = os.path.dirname(os.__file__)
+        this_dir = os.path.dirname(__file__)
+        self.friendly = os.path.abspath(os.path.join(this_dir, ".."))
+        self.tests = None
+        tests = os.path.join(self.friendly, "tests")
+        if os.path.exists(tests):
+            self.tests = tests
+        self.home = os.path.expanduser("~")
+        self.cwd = os.getcwd()
+
+    def shorten_path(self, path):
+        path = path.replace("'", "")  # We might get passed a path repr
+        path = os.path.normpath(path)
+        path_lower = path.lower()
+        self.cwd = os.getcwd()  # make sure it is up to date
+        if self.tests is not None and path_lower.startswith(self.tests.lower()):
+            path = "TESTS:" + path[len(self.tests) :]
+        elif path_lower.startswith(self.friendly.lower()):
+            path = "FRIENDLY:" + path[len(self.friendly) :]
+        elif path_lower.startswith(self.cwd.lower()):
+            path = "CWD:" + path[len(self.cwd) :]
+        elif path_lower.startswith(self.python.lower()):
+            path = "PYTHON_LIB:" + path[len(self.python) :]
+        elif path_lower.startswith(self.home.lower()):
+            path = "HOME:" + path[len(self.home) :]
+        return path
+
+    def show_paths(self):
+        paths = {}
+        paths["CWD"] = self.cwd
+        paths["HOME"] = self.home
+        paths["FRIENDLY"] = self.friendly
+        if self.tests is not None:
+            paths["TESTS"] = self.tests
+        paths["PYTHON_LIB"] = self.python
+        return paths
+
+
+path_utils = PathUtil()

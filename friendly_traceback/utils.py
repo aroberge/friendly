@@ -5,7 +5,6 @@ A few useful objects which do not naturally fit anywhere else.
 import difflib
 import keyword
 import tokenize as py_tokenize
-import os.path
 
 from io import StringIO
 
@@ -168,32 +167,6 @@ def tokenize_source_lines(source_lines):
     """
     source = "\n".join(source_lines)
     return tokenize_source(source)
-
-
-PYTHON = os.path.dirname(py_tokenize.__file__).lower()
-this_dir = os.path.dirname(__file__)
-FRIENDLY = os.path.abspath(os.path.join(this_dir, "..")).lower()
-TESTS = os.path.join(FRIENDLY, "tests").lower()
-HOME = os.path.expanduser("~").lower()
-
-
-def shorten_path(path):
-    # On windows, the filenames are not case sensitive
-    # and the way Python displays filenames may vary.
-    # To properly compare, we convert everything to lowercase
-    # However, we ensure that the shortened path retains its cases
-    path = path.replace("'", "")  # We might get passed a path repr
-    path = os.path.normpath(path)
-    path_lower = path.lower()
-    if path_lower.startswith(TESTS):
-        path = "TESTS:" + path[len(TESTS) :]
-    elif path_lower.startswith(FRIENDLY):
-        path = "FRIENDLY:" + path[len(FRIENDLY) :]
-    elif path_lower.startswith(PYTHON):
-        path = "PYTHON_LIB:" + path[len(PYTHON) :]
-    elif path_lower.startswith(HOME):
-        path = "HOME_DIR:" + path[len(HOME) :]
-    return path
 
 
 def get_similar_words(word_with_typo, words):

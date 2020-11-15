@@ -4,7 +4,8 @@ import re
 import sys
 
 from ..my_gettext import current_lang
-from ..utils import get_similar_words, shorten_path
+from ..utils import get_similar_words
+from ..path_info import path_utils
 
 
 def get_cause(value, info, frame):
@@ -135,7 +136,7 @@ def find_circular_import(name, info):
         match_import = re.search(pattern_import, line)
 
         if match_file:
-            current_file = shorten_path(match_file.group(1))
+            current_file = path_utils.shorten_path(match_file.group(1))
         elif match_from or match_import:
             if match_from:
                 modules_imported.append((current_file, match_from.group(1)))

@@ -7,7 +7,7 @@ cause of a SyntaxError and providing a somewhat detailed explanation.
 
 from friendly_traceback.my_gettext import current_lang
 from friendly_traceback.source_cache import cache
-from friendly_traceback import utils
+from friendly_traceback.path_info import path_utils
 from . import source_analyzer
 from . import line_analyzer
 from . import message_analyzer
@@ -57,19 +57,19 @@ def process_parsing_error(etype, value, info):
             "Python could not understand the code in the file\n"
             "'{filename}'\n"
             "beyond the location indicated by --> and ^.\n"
-        ).format(filename=utils.shorten_path(filepath))
+        ).format(filename=path_utils.shorten_path(filepath))
     elif "unexpected EOF while parsing" in repr(value):
         info["parsing_error"] = _(
             "Python could not understand the code the file\n"
             "'{filename}'.\n"
             "It reached the end of the file and expected more content.\n"
-        ).format(filename=utils.shorten_path(filepath))
+        ).format(filename=path_utils.shorten_path(filepath))
     else:
         info["parsing_error"] = _(
             "Python could not understand the code the file\n"
             "'{filename}'\n"
             "for an unspecified reason.\n"
-        ).format(filename=utils.shorten_path(filepath))
+        ).format(filename=path_utils.shorten_path(filepath))
 
     info["parsing_error_source"] = f"{partial_source}\n"
 

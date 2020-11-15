@@ -21,6 +21,7 @@ from .my_gettext import current_lang
 from . import friendly_rich
 from .config import session
 from . import info_generic
+from .path_info import path_utils
 
 BANNER = "\nFriendly Console version {}. [Python version: {}]\n".format(
     friendly_traceback.__version__, platform.python_version()
@@ -431,6 +432,7 @@ def start_console(
         "python_tb": python_tb,
         "debug_tb": debug_tb,
         "debug": debug,
+        "show_paths": path_utils.show_paths,
         "_info": _info,
     }
     if not friendly_traceback.is_installed():
