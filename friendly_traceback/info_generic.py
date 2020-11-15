@@ -11,6 +11,8 @@ def get_generic_explanation(exception_name):
     """Provides a generic explanation about a particular exception."""
     if exception_name in GENERIC:
         explanation = GENERIC[exception_name]()
+    if exception_name.endswith("Warning"):
+        explanation = GENERIC["UnknownWarning"]()
     else:
         explanation = GENERIC["Unknown"]()
     return explanation
@@ -212,6 +214,12 @@ def unbound_local_error():
 def unknown():
     _ = current_lang.translate
     return _("No information is available about this exception.\n")
+
+
+@register("UnknownWarning")
+def unknown_warning():
+    _ = current_lang.translate
+    return _("No information is available about this warning.\n")
 
 
 @register("ZeroDivisionError")

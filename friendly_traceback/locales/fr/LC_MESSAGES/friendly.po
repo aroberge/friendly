@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-15 07:24-0400\n"
-"PO-Revision-Date: 2020-11-15 07:26-0400\n"
+"POT-Creation-Date: 2020-11-15 08:30-0400\n"
+"PO-Revision-Date: 2020-11-15 08:30-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -138,7 +138,7 @@ msgstr ""
 "Source: {fn_name}\n"
 "SVP, soumettez un rapport sur ce cas.\n"
 
-#: info_generic.py:36
+#: info_generic.py:38
 msgid ""
 "`ArithmeticError` is the base class for those built-in exceptions\n"
 "that are raised for various arithmetic errors.\n"
@@ -150,7 +150,7 @@ msgstr ""
 "Il est inhabituel que vous voyiez cette exception;\n"
 "normalement, une exception plus spécifique aurait dû être soulevée.\n"
 
-#: info_generic.py:47
+#: info_generic.py:49
 msgid ""
 "An `AttributeError` occurs when the code contains something like\n"
 "    `object.x`\n"
@@ -162,7 +162,7 @@ msgstr ""
 "et `x` n’est pas une méthode ou un attribut (variable) appartenant à "
 "`objet`.\n"
 
-#: info_generic.py:57
+#: info_generic.py:59
 msgid ""
 "A `FileNotFoundError` exception indicates that you\n"
 "are trying to open a file that cannot be found by Python.\n"
@@ -173,7 +173,7 @@ msgstr ""
 "Cela pourrait être parce que vous fait une faute d'orthographe en\n"
 "écrivant le nom du fichier.\n"
 
-#: info_generic.py:67
+#: info_generic.py:69
 msgid ""
 "An `ImportError` exception indicates that a certain object could not\n"
 "be imported from a module or package. Most often, this is\n"
@@ -183,7 +183,7 @@ msgstr ""
 "être importé à partir d’un module ou d’un paquet. Très souvent, c’est\n"
 "parce que le nom de l’objet n’est pas écrit correctement.\n"
 
-#: info_generic.py:77
+#: info_generic.py:79
 msgid ""
 "An `IndentationError` occurs when a given line of code is\n"
 "not indented (aligned vertically with other lines) as expected.\n"
@@ -194,7 +194,7 @@ msgstr ""
 "lignes)\n"
 "de la façon attendue.\n"
 
-#: info_generic.py:86
+#: info_generic.py:88
 msgid ""
 "An `IndexError` occurs when you are try to get an item from a list,\n"
 "a tuple, or a similar object (sequence), by using an index which\n"
@@ -210,7 +210,7 @@ msgstr ""
 "est plus grand que la longueur de la séquence.\n"
 "Rappel: le premier élément d'une séquence est à l'index 0.\n"
 
-#: info_generic.py:98
+#: info_generic.py:100
 msgid ""
 "A `KeyError` is raised when a value is not found as a\n"
 "key in a Python dict.\n"
@@ -218,7 +218,7 @@ msgstr ""
 "Une exception `KeyError` est levée lorsqu’une valeur n’est pas trouvée\n"
 "en tant que clé dans un dictionnaire (dict) Python.\n"
 
-#: info_generic.py:107
+#: info_generic.py:109
 msgid ""
 "`LookupError` is the base class for the exceptions that are raised\n"
 "when a key or index used on a mapping or sequence is invalid.\n"
@@ -229,7 +229,7 @@ msgstr ""
 "séquence est invalide.\n"
 "Elle peut également être levée directement par codecs.lookup().\n"
 
-#: info_generic.py:117
+#: info_generic.py:119
 msgid ""
 "A `ModuleNotFoundError` exception indicates that you\n"
 "are trying to import a module that cannot be found by Python.\n"
@@ -242,7 +242,7 @@ msgstr ""
 "écrivant le nom du module, ou parce qu’il n’est pas installé sur votre "
 "ordinateur.\n"
 
-#: info_generic.py:128
+#: info_generic.py:130
 msgid ""
 "A `NameError` exception indicates that a variable or\n"
 "function name is not known to Python.\n"
@@ -256,7 +256,7 @@ msgstr ""
 "Cependant, cela peut également indiquer que le nom a été\n"
 "utilisé avant qu'on ne lui ait associé une valeur.\n"
 
-#: info_generic.py:140
+#: info_generic.py:142
 msgid ""
 "An `OverflowError` is raised when the result of an arithmetic operation\n"
 "is too large to be handled by the computer's processor.\n"
@@ -265,7 +265,7 @@ msgstr ""
 "opération arithmétique\n"
 "est trop grand pour être manipulé par le processeur de l’ordinateur.\n"
 
-#: info_generic.py:149
+#: info_generic.py:151
 msgid ""
 "A `RecursionError` is raised when a function calls itself,\n"
 "directly or indirectly, too many times.\n"
@@ -279,13 +279,13 @@ msgstr ""
 "votre code\n"
 "et que votre programme ne terminerait jamais.\n"
 
-#: info_generic.py:160
+#: info_generic.py:162
 msgid "A `SyntaxError` occurs when Python cannot understand your code.\n"
 msgstr ""
 "Une exception de type `SyntaxError` se produit lorsque Python ne peut pas "
 "comprendre votre code.\n"
 
-#: info_generic.py:166
+#: info_generic.py:168
 msgid ""
 "A `TabError` indicates that you have used both spaces\n"
 "and tab characters to indent your code.\n"
@@ -303,7 +303,7 @@ msgstr ""
 "La recommandation de Python est de toujours utiliser des espaces\n"
 "pour indenter votre code.\n"
 
-#: info_generic.py:179
+#: info_generic.py:181
 msgid ""
 "A `TypeError` is usually caused by trying\n"
 "to combine two incompatible types of objects,\n"
@@ -316,7 +316,7 @@ msgstr ""
 "ou en tentant d'effectuer une opération non permise sur un type d'objet "
 "donné.\n"
 
-#: info_generic.py:190
+#: info_generic.py:192
 msgid ""
 "A `ValueError` indicates that a function or an operation\n"
 "received an argument of the right type, but an inappropriate value.\n"
@@ -324,7 +324,7 @@ msgstr ""
 "Une exception `ValueError` indique qu'une fonction ou une opération\n"
 "a reçu un argument du bon type, mais une valeur inappropriée.\n"
 
-#: info_generic.py:199
+#: info_generic.py:201
 msgid ""
 "In Python, variables that are used inside a function are known as \n"
 "local variables. Before they are used, they must be assigned a value.\n"
@@ -348,11 +348,15 @@ msgstr ""
 "qu’il s’agit d’une variable globale, sinon vous verrez une exception "
 "`UnboundLocalError`.\n"
 
-#: info_generic.py:214
+#: info_generic.py:216
 msgid "No information is available about this exception.\n"
 msgstr "Aucune information n’est disponible sur cette exception.\n"
 
-#: info_generic.py:220
+#: info_generic.py:222
+msgid "No information is available about this warning.\n"
+msgstr "Aucune information n’est disponible sur cet avertissement.\n"
+
+#: info_generic.py:228
 msgid ""
 "A `ZeroDivisionError` occurs when you are attempting to divide\n"
 "a value by zero:\n"

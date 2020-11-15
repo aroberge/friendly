@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-11-15 07:24-0400\n"
+"POT-Creation-Date: 2020-11-15 08:30-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116,7 +116,7 @@ msgid ""
 "Please report this case.\n"
 msgstr ""
 
-#: info_generic.py:36
+#: info_generic.py:38
 msgid ""
 "`ArithmeticError` is the base class for those built-in exceptions\n"
 "that are raised for various arithmetic errors.\n"
@@ -124,34 +124,34 @@ msgid ""
 "normally, a more specific exception should have been raised.\n"
 msgstr ""
 
-#: info_generic.py:47
+#: info_generic.py:49
 msgid ""
 "An `AttributeError` occurs when the code contains something like\n"
 "    `object.x`\n"
 "and `x` is not a method or attribute (variable) belonging to `object`.\n"
 msgstr ""
 
-#: info_generic.py:57
+#: info_generic.py:59
 msgid ""
 "A `FileNotFoundError` exception indicates that you\n"
 "are trying to open a file that cannot be found by Python.\n"
 "This could be because you misspelled the name of the file.\n"
 msgstr ""
 
-#: info_generic.py:67
+#: info_generic.py:69
 msgid ""
 "An `ImportError` exception indicates that a certain object could not\n"
 "be imported from a module or package. Most often, this is\n"
 "because the name of the object is not spelled correctly.\n"
 msgstr ""
 
-#: info_generic.py:77
+#: info_generic.py:79
 msgid ""
 "An `IndentationError` occurs when a given line of code is\n"
 "not indented (aligned vertically with other lines) as expected.\n"
 msgstr ""
 
-#: info_generic.py:86
+#: info_generic.py:88
 msgid ""
 "An `IndexError` occurs when you are try to get an item from a list,\n"
 "a tuple, or a similar object (sequence), by using an index which\n"
@@ -160,20 +160,20 @@ msgid ""
 "Reminder: the first item of a sequence is at index 0.\n"
 msgstr ""
 
-#: info_generic.py:98
+#: info_generic.py:100
 msgid ""
 "A `KeyError` is raised when a value is not found as a\n"
 "key in a Python dict.\n"
 msgstr ""
 
-#: info_generic.py:107
+#: info_generic.py:109
 msgid ""
 "`LookupError` is the base class for the exceptions that are raised\n"
 "when a key or index used on a mapping or sequence is invalid.\n"
 "It can also be raised directly by codecs.lookup().\n"
 msgstr ""
 
-#: info_generic.py:117
+#: info_generic.py:119
 msgid ""
 "A `ModuleNotFoundError` exception indicates that you\n"
 "are trying to import a module that cannot be found by Python.\n"
@@ -181,7 +181,7 @@ msgid ""
 "or because it is not installed on your computer.\n"
 msgstr ""
 
-#: info_generic.py:128
+#: info_generic.py:130
 msgid ""
 "A `NameError` exception indicates that a variable or\n"
 "function name is not known to Python.\n"
@@ -190,13 +190,13 @@ msgid ""
 "before being defined or given a value.\n"
 msgstr ""
 
-#: info_generic.py:140
+#: info_generic.py:142
 msgid ""
 "An `OverflowError` is raised when the result of an arithmetic operation\n"
 "is too large to be handled by the computer's processor.\n"
 msgstr ""
 
-#: info_generic.py:149
+#: info_generic.py:151
 msgid ""
 "A `RecursionError` is raised when a function calls itself,\n"
 "directly or indirectly, too many times.\n"
@@ -204,12 +204,12 @@ msgid ""
 "and that your program would never stop.\n"
 msgstr ""
 
-#: info_generic.py:160
+#: info_generic.py:162
 msgid ""
 "A `SyntaxError` occurs when Python cannot understand your code.\n"
 msgstr ""
 
-#: info_generic.py:166
+#: info_generic.py:168
 msgid ""
 "A `TabError` indicates that you have used both spaces\n"
 "and tab characters to indent your code.\n"
@@ -219,7 +219,7 @@ msgid ""
 "Python's recommendation is to always use spaces to indent your code.\n"
 msgstr ""
 
-#: info_generic.py:179
+#: info_generic.py:181
 msgid ""
 "A `TypeError` is usually caused by trying\n"
 "to combine two incompatible types of objects,\n"
@@ -227,13 +227,13 @@ msgid ""
 "or by tring to do an operation not allowed on a given type of object.\n"
 msgstr ""
 
-#: info_generic.py:190
+#: info_generic.py:192
 msgid ""
 "A `ValueError` indicates that a function or an operation\n"
 "received an argument of the right type, but an inappropriate value.\n"
 msgstr ""
 
-#: info_generic.py:199
+#: info_generic.py:201
 msgid ""
 "In Python, variables that are used inside a function are known as \n"
 "local variables. Before they are used, they must be assigned a value.\n"
@@ -245,12 +245,17 @@ msgid ""
 "an `UnboundLocalError`.\n"
 msgstr ""
 
-#: info_generic.py:214
+#: info_generic.py:216
 msgid ""
 "No information is available about this exception.\n"
 msgstr ""
 
-#: info_generic.py:220
+#: info_generic.py:222
+msgid ""
+"No information is available about this warning.\n"
+msgstr ""
+
+#: info_generic.py:228
 msgid ""
 "A `ZeroDivisionError` occurs when you are attempting to divide\n"
 "a value by zero:\n"

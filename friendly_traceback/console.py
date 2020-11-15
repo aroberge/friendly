@@ -328,7 +328,7 @@ def more():
     explain("more")
 
 
-def what(exception=None, lang="en"):
+def what(exception=None, lang="en", pre=False):
     """If known, shows the generic explanation about a given exception."""
 
     if exception is not None:
@@ -340,10 +340,13 @@ def what(exception=None, lang="en"):
         result = info_generic.get_generic_explanation(exception)
         if lang is not None:
             friendly_traceback.set_lang(old_lang)
-        if session.use_rich:
-            session.write_err(result)
+        if pre:  # for documentation
+            lines = result.split("\n")
+            for line in lines:
+                session.write_err("    " + line + "\n")
+            session.write_err("\n")
         else:
-            print(result)
+            session.write_err(result)
         return
 
     explain("what")
