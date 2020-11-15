@@ -1,6 +1,8 @@
 # friendly-traceback
 Aimed at Python beginners: replacing standard traceback by something easier to understand, translatable into various languages.
 
+![Example](https://raw.githubusercontent.com/aroberge/friendly-traceback/master/why_1.png)
+
 ## Installation
 
 ```
@@ -16,7 +18,7 @@ if your terminal console supports it.
 
 [Full documentation available here](https://aroberge.github.io/friendly-traceback-docs/docs/html/)
 
-![Example](https://raw.githubusercontent.com/aroberge/friendly-traceback/master/friendly_indexerror_en.png)
+![Example](https://raw.githubusercontent.com/aroberge/friendly-traceback/master/explain.png)
 
 
 ## State of this project
