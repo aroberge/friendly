@@ -1,8 +1,10 @@
-"""formatters.py
+"""
+formatters.py
+==============
 
 Default formatters showing all or only part of the available information.
 
-A formatter is a function that takes two arguments::
+A formatter is a function that takes two arguments:
 
 1. a dict (named ``info`` everywhere in friendly-traceback files) containing
    all the information that can be shown to the user, as well as some
@@ -11,14 +13,14 @@ A formatter is a function that takes two arguments::
 
 2. A second argument which is meant to convey what information should be shown.
    This second argument used to be a single integer ("verbosity level").
-   It is currently recently being replaced by a string. However,
+   It is currently recently being replaced by a single string. However,
    this might change as we experiment with various options prior to
    version 1.0
 
 A formatter returns a single string. By default, this string will be
 written to stderr; however this can be changed by the calling program.
 
-This module currently contains 4 formatters:
+This module currently contains 5 formatters:
 
 * ``repl()``: This is used to print the information in a traditional console,
   including that found in IDLE.  The indentation of the traceback itself

@@ -211,11 +211,7 @@ def unbound_local_error():
 @register("Unknown")
 def unknown():
     _ = current_lang.translate
-    return _(
-        "No information is known about this exception.\n"
-        "Please report this example to\n"
-        "https://github.com/aroberge/friendly-traceback/issues\n"
-    )
+    return _("No information is available about this exception.\n")
 
 
 @register("ZeroDivisionError")

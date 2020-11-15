@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-10 11:29-0400\n"
-"PO-Revision-Date: 2020-11-10 11:33-0400\n"
+"POT-Creation-Date: 2020-11-15 07:24-0400\n"
+"PO-Revision-Date: 2020-11-15 07:26-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -14,10 +14,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 2.4\n"
+"X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: console.py:50
+#: config.py:77 config.py:182
+msgid "Nothing to show: no exception recorded."
+msgstr "Rien à montrer: pas d’exception enregistrée."
+
+#: console.py:61
 msgid ""
 "\n"
 "    Rich is not installed.\n"
@@ -27,25 +31,25 @@ msgstr ""
 "    Rich n'est pas installé.\n"
 "\n"
 
-#: console.py:166
+#: console.py:177
 msgid "Warning: you added a type hint to the python builtin {name}."
 msgstr ""
 "Attention : vous avez utilisé des annotations de type pour l'identifiant "
 "Python (builtin) {name}."
 
-#: console.py:169
+#: console.py:180
 msgid ""
 "Warning: you used a type hint for a variable without assigning it a value.\n"
 msgstr ""
 "Attention : vous avez utilisé une annotation de type pour une variable sans "
 "lui attribuer une valeur.\n"
 
-#: console.py:172
+#: console.py:183
 msgid "Instead of {hint}, perhaps you meant {assignment}."
 msgstr ""
 "Au lieu de {hint}, peut-être que vous vouliez plutôt écrire : {assignment}."
 
-#: console.py:244
+#: console.py:255
 msgid "Warning: you have redefined the python builtin {name}."
 msgstr "Attention : vous avez redéfini l'identifiant Python (builtin) {name}."
 
@@ -53,11 +57,11 @@ msgstr "Attention : vous avez redéfini l'identifiant Python (builtin) {name}."
 msgid "Python exception:"
 msgstr "Exception Python:"
 
-#: core.py:191
+#: core.py:195
 msgid "More lines not shown."
 msgstr "Plus de lignes non affichées."
 
-#: core.py:310
+#: core.py:314
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
@@ -67,11 +71,11 @@ msgstr ""
 "        vous devez utiliser la console 'Friendly' et non pas une \n"
 "        console Python régulière.\n"
 
-#: core.py:316
+#: core.py:320
 msgid "Problem: source of '{filename}' is not available\n"
 msgstr "Problème : la source de '{filename}' n'est pas disponible.\n"
 
-#: core.py:334
+#: core.py:338
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -82,7 +86,7 @@ msgstr ""
 "Est-ce que vous utilisez une console Python plutôt que la console \"Friendly"
 "\" ?\n"
 
-#: core.py:346
+#: core.py:350
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
@@ -90,7 +94,7 @@ msgstr ""
 "Malheureusement, aucune information supplémentaire n’est disponible:\n"
 "le contenu du fichier '<string>' n’est pas accessible.\n"
 
-#: core.py:355 syntax_errors\message_analyzer.py:761
+#: core.py:359 syntax_errors\message_analyzer.py:761
 msgid ""
 "You used an f-string that contains invalid Python code.\n"
 "Unfortunately, no additional information is available:\n"
@@ -99,28 +103,28 @@ msgstr ""
 "Malheureusement, aucune information supplémentaire n’est disponible:\n"
 "le contenu du fichier '<fstring>' n’est pas accessible.\n"
 
-#: core.py:391
+#: core.py:395
 msgid "Known objects shown above:"
 msgstr "Objets connus mentionnés ci-dessus :"
 
-#: core.py:404
+#: core.py:408
 msgid "Exception raised on line {linenumber} of file {filename}.\n"
 msgstr "Exception levée à la ligne {linenumber} du fichier {filename}.\n"
 
-#: core.py:408
+#: core.py:412
 msgid "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
 "L'exécution s'est arrêtée à la ligne {linenumber} du fichier {filename}\n"
 
-#: formatters.py:276
+#: formatters.py:278
 msgid "I do not know."
 msgstr "Je ne sais pas."
 
-#: formatters.py:279
+#: formatters.py:281
 msgid "I have no suggestion to offer; try `why()`."
 msgstr "Je n’ai aucune suggestion à offrir; essayez `why()`."
 
-#: formatters.py:281
+#: formatters.py:283
 msgid "I have no suggestion to offer."
 msgstr "Je n’ai aucune suggestion à offrir."
 
@@ -344,19 +348,11 @@ msgstr ""
 "qu’il s’agit d’une variable globale, sinon vous verrez une exception "
 "`UnboundLocalError`.\n"
 
-#: info_generic.py:214 runtime_errors\import_error.py:39
-#: runtime_errors\module_not_found_error.py:26 runtime_errors\name_error.py:25
-#: runtime_errors\unbound_local_error.py:17
-msgid ""
-"No information is known about this exception.\n"
-"Please report this example to\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
-msgstr ""
-"Aucune information n’est connue à propos de cette exception.\n"
-"Veuillez signaler cet exemple à\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
+#: info_generic.py:214
+msgid "No information is available about this exception.\n"
+msgstr "Aucune information n’est disponible sur cette exception.\n"
 
-#: info_generic.py:224
+#: info_generic.py:220
 msgid ""
 "A `ZeroDivisionError` occurs when you are attempting to divide\n"
 "a value by zero:\n"
@@ -598,6 +594,18 @@ msgstr ""
 "Cependant, les objets `{first}` et `{second}` sont des objets connus.\n"
 "Peut-être avez-vous écrit une période pour séparer ces deux objets, \n"
 "au lieu d’utiliser une virgule.\n"
+
+#: runtime_errors\import_error.py:39
+#: runtime_errors\module_not_found_error.py:26 runtime_errors\name_error.py:25
+#: runtime_errors\unbound_local_error.py:17
+msgid ""
+"No information is known about this exception.\n"
+"Please report this example to\n"
+"https://github.com/aroberge/friendly-traceback/issues\n"
+msgstr ""
+"Aucune information n’est connue à propos de cette exception.\n"
+"Veuillez signaler cet exemple à\n"
+"https://github.com/aroberge/friendly-traceback/issues\n"
 
 #: runtime_errors\import_error.py:51
 msgid "You have a circular import.\n"
@@ -1035,10 +1043,6 @@ msgstr "Avez-vous oublié d’ajouter `{scope} {var_name}` ?\n"
 #: runtime_errors\unbound_local_error.py:89
 msgid "The similar name `{name}` was found in the local scope. "
 msgstr "Le nom semblable `{name}` a été trouvé dans la portée locale. "
-
-#: session.py:77 session.py:182
-msgid "Nothing to show: no exception recorded."
-msgstr "Rien à montrer: pas d’exception enregistrée."
 
 #: syntax_errors\analyze_syntax.py:36
 msgid ""
@@ -2147,9 +2151,6 @@ msgstr "accolade `}`"
 #~ msgstr ""
 #~ "    Cause probable : \n"
 #~ "{cause}"
-
-#~ msgid "    No information is known about this exception.\n"
-#~ msgstr "    Aucune information n'est connue au sujet de cette exception.\n"
 
 #~ msgid ""
 #~ "    A SyntaxError occurs when Python cannot understand your code.\n"

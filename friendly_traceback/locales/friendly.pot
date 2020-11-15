@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-11-10 11:29-0400\n"
+"POT-Creation-Date: 2020-11-15 07:24-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,27 +15,31 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: console.py:50
+#: config.py:77 config.py:182
+msgid "Nothing to show: no exception recorded."
+msgstr ""
+
+#: console.py:61
 msgid ""
 "\n"
 "    Rich is not installed.\n"
 "\n"
 msgstr ""
 
-#: console.py:166
+#: console.py:177
 msgid "Warning: you added a type hint to the python builtin {name}."
 msgstr ""
 
-#: console.py:169
+#: console.py:180
 msgid ""
 "Warning: you used a type hint for a variable without assigning it a value.\n"
 msgstr ""
 
-#: console.py:172
+#: console.py:183
 msgid "Instead of {hint}, perhaps you meant {assignment}."
 msgstr ""
 
-#: console.py:244
+#: console.py:255
 msgid "Warning: you have redefined the python builtin {name}."
 msgstr ""
 
@@ -43,65 +47,65 @@ msgstr ""
 msgid "Python exception:"
 msgstr ""
 
-#: core.py:191
+#: core.py:195
 msgid "More lines not shown."
 msgstr ""
 
-#: core.py:310
+#: core.py:314
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
 "        regular Python console.\n"
 msgstr ""
 
-#: core.py:316
+#: core.py:320
 msgid ""
 "Problem: source of '{filename}' is not available\n"
 msgstr ""
 
-#: core.py:334
+#: core.py:338
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
 "Are you using a regular Python console instead of a Friendly-console?\n"
 msgstr ""
 
-#: core.py:346
+#: core.py:350
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<string>' is not accessible.\n"
 msgstr ""
 
-#: core.py:355 syntax_errors\message_analyzer.py:761
+#: core.py:359 syntax_errors\message_analyzer.py:761
 msgid ""
 "You used an f-string that contains invalid Python code.\n"
 "Unfortunately, no additional information is available:\n"
 "the content of file '<fstring>' is not accessible.\n"
 msgstr ""
 
-#: core.py:391
+#: core.py:395
 msgid "Known objects shown above:"
-msgstr ""
-
-#: core.py:404
-msgid ""
-"Exception raised on line {linenumber} of file {filename}.\n"
 msgstr ""
 
 #: core.py:408
 msgid ""
+"Exception raised on line {linenumber} of file {filename}.\n"
+msgstr ""
+
+#: core.py:412
+msgid ""
 "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
 
-#: formatters.py:276
+#: formatters.py:278
 msgid "I do not know."
 msgstr ""
 
-#: formatters.py:279
+#: formatters.py:281
 msgid "I have no suggestion to offer; try `why()`."
 msgstr ""
 
-#: formatters.py:281
+#: formatters.py:283
 msgid "I have no suggestion to offer."
 msgstr ""
 
@@ -241,16 +245,12 @@ msgid ""
 "an `UnboundLocalError`.\n"
 msgstr ""
 
-#: info_generic.py:214 runtime_errors\import_error.py:39
-#: runtime_errors\module_not_found_error.py:26 runtime_errors\name_error.py:25
-#: runtime_errors\unbound_local_error.py:17
+#: info_generic.py:214
 msgid ""
-"No information is known about this exception.\n"
-"Please report this example to\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
+"No information is available about this exception.\n"
 msgstr ""
 
-#: info_generic.py:224
+#: info_generic.py:220
 msgid ""
 "A `ZeroDivisionError` occurs when you are attempting to divide\n"
 "a value by zero:\n"
@@ -429,6 +429,15 @@ msgid ""
 "However, both `{first}` and `{second}` are known objects.\n"
 "Perhaps you wrote a period to separate these two objects, \n"
 "instead of using a comma.\n"
+msgstr ""
+
+#: runtime_errors\import_error.py:39
+#: runtime_errors\module_not_found_error.py:26 runtime_errors\name_error.py:25
+#: runtime_errors\unbound_local_error.py:17
+msgid ""
+"No information is known about this exception.\n"
+"Please report this example to\n"
+"https://github.com/aroberge/friendly-traceback/issues\n"
 msgstr ""
 
 #: runtime_errors\import_error.py:51
@@ -775,10 +784,6 @@ msgstr ""
 
 #: runtime_errors\unbound_local_error.py:89
 msgid "The similar name `{name}` was found in the local scope. "
-msgstr ""
-
-#: session.py:77 session.py:182
-msgid "Nothing to show: no exception recorded."
 msgstr ""
 
 #: syntax_errors\analyze_syntax.py:36
