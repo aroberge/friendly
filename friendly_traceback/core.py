@@ -82,6 +82,116 @@ from .path_info import is_excluded_file, EXCLUDED_FILE_PATH, path_utils
 # b: 2
 
 
+class RawInfo:
+    """Raw traceback info obtained from Python.
+
+    Instances of this class are intended to include all the relevant
+    information about an exception so that a FriendlyTraceback object
+    can be created in any language.
+
+    This is work in progress, currently unused.
+    """
+
+    def __init__(self, etype, value, tb, debug=False):
+        """This object is initialized with the standard values for a
+        traceback::
+
+            etype, value, tb = sys.exc_info()
+
+        An additional debug parameter can be set to True; this is
+        useful during development.
+        """
+        self.exception_type = etype
+        self.exception_name = etype.__name__
+        self.value = value
+        self.message = str(value)
+        self.tb = tb
+        self.debug = debug
+        self.records = self.get_records()
+
+    def get_records(self):
+        """Get the traceback frame history, excluding those originating
+        from our own code that are included either at the beginning or
+        at the end of the traceback.
+        """
+        records = inspect.getinnerframes(self.tb, cache.context)
+        records = list(
+            dropwhile(lambda record: is_excluded_file(record.filename), records)
+        )
+        records.reverse()
+        records = list(
+            dropwhile(lambda record: is_excluded_file(record.filename), records)
+        )
+        records.reverse()
+        return records
+
+
+class FriendlyTraceback:
+    """Intended as a replacement to the current dict info.
+
+    See issue #117.
+
+    This is work in progress, currently unused.
+    """
+
+    def __init__(self, etype, value, tb, lang="en", debug=False):
+        """We define all the variables here for now"""
+        _ = current_lang.translate
+        self._raw_info = RawInfo(etype, value, tb, debug)
+        self._debug = debug
+        self.header = _("Python exception:")
+        self.debug_warning = ""
+
+    def __contains__(self, item):
+        """Makes instances of this class retrievable as dict items
+        for compatibility with original dict info.
+        """
+        return hasattr(self, item) and self.item
+
+    def __getitem__(self, item):
+        """Makes instances of this class retrievable as dict items
+        for compatibility with original dict info.
+        """
+        try:
+            return getattr(self, item)
+        except AttributeError as e:
+            raise KeyError from e
+
+    def get_cause(self):
+        self.suggest = ""
+        self.parsing_error = ""
+        self.parsing_error_source = ""
+        self.cause_header = ""
+        self.cause = ""
+
+    def get_generic(self):
+        exc_name = self._raw_info.exception_name
+        self.generic = info_generic.get_generic_explanation(exc_name)
+
+    def get_location(self):
+        self.last_call_header = ""
+        self.last_call_source = ""
+        self.last_call_variables_header = ""
+        self.last_call_variables = ""
+        self.exception_raised_header = ""
+        self.exception_raised_source = ""
+        self.exception_raised_variables_header = ""
+        self.exception_raised_variables = ""
+
+    def get_message(self):
+        exc_name = self._raw_info.exception_name
+        value = self._raw_info.value
+        if hasattr(value, "msg"):
+            self.message = f"{exc_name}: {value.msg}\n"
+        else:
+            self.message = f"{exc_name}: {value}\n"
+
+    def get_tracebacks(self):
+        self.original_python_traceback = ""
+        self.simulated_python_traceback = ""
+        self.shortened_tb = ""
+
+
 def get_traceback_info(etype, value, tb, debug=False):
     """Gathers the basic information related to a traceback and
     returns the result in a dict.
@@ -165,7 +275,7 @@ def process_syntax_error(etype, value, info, debug):
 
 
 def get_records(tb, cache):
-    """Get the traceback frrame history, excluding those originating
+    """Get the traceback frame history, excluding those originating
     from our own code included either at the beginning or at the
     end of the traceback.
     """
