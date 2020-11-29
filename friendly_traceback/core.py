@@ -142,20 +142,30 @@ class FriendlyTraceback:
         self.header = _("Python exception:")
         self.debug_warning = ""
 
-    def __contains__(self, item):
-        """Makes instances of this class retrievable as dict items
-        for compatibility with original dict info.
+    def __contains__(self, key):
+        """Indicates if a given 'key' corresponds to a known non-empty
+        string attribute.
         """
-        return hasattr(self, item) and self.item
+        if hasattr(self, key):
+            item = getattr(self, key)
+            if item and isinstance(item, str):
+                return True
+        else:
+            return False
 
     def __getitem__(self, item):
         """Makes instances of this class retrievable as dict items
         for compatibility with original dict info.
         """
-        try:
+        if self.__contains__(item):
             return getattr(self, item)
-        except AttributeError as e:
-            raise KeyError from e
+        else:
+            raise KeyError(f"{item} is not a known attribute of {self}.")
+
+    def get_all_info(self):
+        """Compile all the available info at once"""
+        self.get_message()
+        self.get_generic()
 
     def get_cause(self):
         self.suggest = ""
@@ -165,6 +175,14 @@ class FriendlyTraceback:
         self.cause = ""
 
     def get_generic(self):
+        """Gets the generic information about a given error. This is
+        the answer to ``what()`` as in "What is a NameError?"
+
+        Sets the value of the ``generic`` attribute which can
+        be retrieved using
+
+            instance['generic']
+        """
         exc_name = self._raw_info.exception_name
         self.generic = info_generic.get_generic_explanation(exc_name)
 
@@ -179,6 +197,15 @@ class FriendlyTraceback:
         self.exception_raised_variables = ""
 
     def get_message(self):
+        """Gets the error message; something like:
+
+            SyntaxError: Invalid syntax\\n
+
+        This sets the value of the ``message`` attribute which
+        can be retrieved using
+
+            instance['message']
+        """
         exc_name = self._raw_info.exception_name
         value = self._raw_info.value
         if hasattr(value, "msg"):

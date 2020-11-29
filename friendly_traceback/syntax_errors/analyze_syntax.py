@@ -53,7 +53,7 @@ def process_parsing_error(etype, value, info):
         filepath, linenumber, offset
     )
     if "-->" in partial_source:
-        info["generic"] += _(
+        info["parsing_error"] = _(
             "Python could not understand the code in the file\n"
             "'{filename}'\n"
             "beyond the location indicated by --> and ^.\n"

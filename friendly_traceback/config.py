@@ -207,6 +207,8 @@ class _State:
             self.write_err(str(value))
             return
 
+        self.traceback_info = core.FriendlyTraceback(etype, value, tb)
+
         if redirect is not None:
             saved_current_redirect = self.write_err
             self.set_redirect(redirect=redirect)
@@ -221,12 +223,25 @@ class _State:
             return
 
         self.write_err(explanation)
+
         # Ensures that we start on a new line; essential for the console
         if not explanation.endswith("\n"):
             self.write_err("\n")
 
         if redirect is not None:
             self.set_redirect(redirect=saved_current_redirect)
+
+        # Work on new implementation.
+        # We confirm that we can obtain the same information using
+        # the new approach.
+
+        self.traceback_info.get_message()
+        if info["message"] != self.traceback_info["message"]:
+            print("Messages are different")
+
+        self.traceback_info.get_generic()
+        if info["generic"] != self.traceback_info["generic"]:
+            print("Generic info is different")
 
 
 session = _State()
