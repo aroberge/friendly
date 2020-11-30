@@ -162,31 +162,30 @@ class FriendlyTraceback:
         else:
             raise KeyError(f"{item} is not a known attribute of {self}.")
 
-    def get_all_info(self):
-        """Compile all the available info at once"""
-        self.get_message()
-        self.get_generic()
+    def compile_all_info(self):
+        """Compile all the available info at once."""
+        self.assign_message()
+        self.assign_generic()
 
-    def get_cause(self):
+    def assign_cause(self):
         self.suggest = ""
         self.parsing_error = ""
         self.parsing_error_source = ""
         self.cause_header = ""
         self.cause = ""
 
-    def get_generic(self):
-        """Gets the generic information about a given error. This is
+    def assign_generic(self):
+        """Assigns the generic information about a given error. This is
         the answer to ``what()`` as in "What is a NameError?"
 
-        Sets the value of the ``generic`` attribute which can
-        be retrieved using
+        The value of the ``generic`` attribute can be retrieved using
 
             instance['generic']
         """
         exc_name = self._raw_info.exception_name
         self.generic = info_generic.get_generic_explanation(exc_name)
 
-    def get_location(self):
+    def assign_location(self):
         self.last_call_header = ""
         self.last_call_source = ""
         self.last_call_variables_header = ""
@@ -196,13 +195,16 @@ class FriendlyTraceback:
         self.exception_raised_variables_header = ""
         self.exception_raised_variables = ""
 
-    def get_message(self):
-        """Gets the error message; something like:
+    def assign_message(self):
+        """Assigns the error message, which is something like
 
             SyntaxError: Invalid syntax\\n
 
-        This sets the value of the ``message`` attribute which
-        can be retrieved using
+        or
+
+            NameError: name 'a' is not defined
+
+        The value of the ``message`` attribute can be retrieved using
 
             instance['message']
         """
@@ -213,7 +215,7 @@ class FriendlyTraceback:
         else:
             self.message = f"{exc_name}: {value}\n"
 
-    def get_tracebacks(self):
+    def assign_tracebacks(self):
         self.original_python_traceback = ""
         self.simulated_python_traceback = ""
         self.shortened_tb = ""

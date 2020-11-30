@@ -235,11 +235,9 @@ class _State:
         # We confirm that we can obtain the same information using
         # the new approach.
 
-        self.traceback_info.get_message()
+        self.traceback_info.compile_all_info()
         if info["message"] != self.traceback_info["message"]:
             print("Messages are different")
-
-        self.traceback_info.get_generic()
         if info["generic"] != self.traceback_info["generic"]:
             print("Generic info is different")
 
