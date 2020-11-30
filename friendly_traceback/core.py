@@ -282,15 +282,9 @@ def process_syntax_error(etype, value, info, debug):
     """
     from .syntax_errors import analyze_syntax
 
-    if value.filename == "<string>":  # Temporary cause
-        info["cause"] = cannot_analyze_string()
-        return info
-    elif value.filename == "<stdin>":
+    if value.filename == "<stdin>":
         info["cause"] = cannot_analyze_stdin()
         return info
-    # elif value.filename == "<fstring>":
-    #     info["cause"] = cannot_analyze_fstring()
-    #     return info
 
     try:
         analyze_syntax.set_cause_syntax(etype, value, info)  # [3]
@@ -409,6 +403,8 @@ def create_traceback(records, etype, value, info):
         if _line is not None:
             if info["bad_line"].strip() != _line.strip():
                 info["bad_line"] = _line
+            if not lines:
+                cache.add(filename, _line)
             _line = _line.rstrip()
             bad_line = _line.strip()
             offset = offset - (len(_line) - len(bad_line))  # removing indent
@@ -442,11 +438,6 @@ def get_partial_source(filename, linenumber, lines, index):
 
     if filename in cache.cache:
         source, line = cache.get_formatted_partial_source(filename, linenumber, None)
-    elif (
-        filename == "<string>"
-    ):  # note: Something might have been cached with this name
-        source = cannot_analyze_string()
-        line = None
     elif filename and os.path.abspath(filename):
         source, line = highlight_source(linenumber, index, lines)
         if not source:
@@ -481,27 +472,6 @@ def cannot_analyze_stdin():
         "the content of file '<stdin>' is not accessible.\n"
         "Are you using a regular Python console instead of a Friendly-console?\n"
     )
-
-
-def cannot_analyze_string():
-    """Typical case: some code is executed using exec(), and the 'filename'
-    is set to <string>.
-    """
-    _ = current_lang.translate
-    return _(
-        "Unfortunately, no additional information is available:\n"
-        "the content of file '<string>' is not accessible.\n"
-    )
-
-
-# def cannot_analyze_fstring():
-#     """Typical case: an f-string contains some code with syntax error."""
-#     _ = current_lang.translate
-#     return _(
-#         "You used an f-string that contains invalid Python code.\n"
-#         "Unfortunately, no additional information is available:\n"
-#         "the content of file '<fstring>' is not accessible.\n"
-#     )
 
 
 def set_call_info(info, header_name, filename, linenumber, lines, index, frame):

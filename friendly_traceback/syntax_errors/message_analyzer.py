@@ -748,18 +748,3 @@ def python2_print(message="", **kwargs):
         "In older version of Python, `print` was a keyword.\n"
         "Now, `print` is a function; you need to use parentheses to call it.\n"
     ).format(message=message)
-
-
-@add_python_message
-def fstring_invalid_syntax(message="", **kwargs):
-    _ = current_lang.translate
-    # Before Python 3.9, we'd simply get a generic "invalid syntax" message
-    if not message.startswith("f-string: invalid syntax"):
-        return
-
-    # Text copied from core.cannot_analyze_fstring()
-    return _(
-        "You used an f-string that contains invalid Python code.\n"
-        "Unfortunately, no additional information is available:\n"
-        "the content of file '<fstring>' is not accessible.\n"
-    )
