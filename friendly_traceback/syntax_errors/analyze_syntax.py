@@ -66,7 +66,7 @@ def process_parsing_error(etype, value, info):
         ).format(filename=path_utils.shorten_path(filepath))
     else:
         info["parsing_error"] = _(
-            "Python could not understand the code the file\n"
+            "Python could not understand the code in the file\n"
             "'{filename}'\n"
             "for an unspecified reason.\n"
         ).format(filename=path_utils.shorten_path(filepath))
@@ -120,7 +120,10 @@ def _find_likely_cause(source_lines, linenumber, message, offset, info):
     """
     _ = current_lang.translate
 
-    offending_line = source_lines[linenumber - 1]
+    if source_lines:
+        offending_line = source_lines[linenumber - 1]
+    else:
+        offending_line = info["bad_line"]
     line = offending_line.rstrip()
 
     # If Python includes a descriptive enough message, we rely
@@ -170,9 +173,10 @@ def _find_likely_cause(source_lines, linenumber, message, offset, info):
     # while we look for missing or mismatched brackets, such as (],
     # we also can sometimes identify other problems during this step.
 
-    cause = source_analyzer.scan_source(source_lines, linenumber, offset, info=info)
-    if cause:
-        return notice + cause
+    if source_lines:
+        cause = source_analyzer.scan_source(source_lines, linenumber, offset, info=info)
+        if cause:
+            return notice + cause
 
     # Eventually, we might add another step that looks at the entire code
     # For now, we just stop here

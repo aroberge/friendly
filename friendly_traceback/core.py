@@ -288,9 +288,9 @@ def process_syntax_error(etype, value, info, debug):
     elif value.filename == "<stdin>":
         info["cause"] = cannot_analyze_stdin()
         return info
-    elif value.filename == "<fstring>":
-        info["cause"] = cannot_analyze_fstring()
-        return info
+    # elif value.filename == "<fstring>":
+    #     info["cause"] = cannot_analyze_fstring()
+    #     return info
 
     try:
         analyze_syntax.set_cause_syntax(etype, value, info)  # [3]
@@ -386,6 +386,7 @@ def create_traceback(records, etype, value, info):
     """
     result = []
 
+    info["bad_line"] = " "
     for record in records:
         frame, filename, linenumber, _func, lines, index = record
         source_info = get_partial_source(filename, linenumber, lines, index)
@@ -393,8 +394,7 @@ def create_traceback(records, etype, value, info):
         bad_line = source_info["line"]
         if bad_line is not None:
             result.append("    {}".format(bad_line.strip()))
-
-        info["bad_line"] = bad_line or " "
+            info["bad_line"] = bad_line
         info["filename"] = filename or " "
         info["linenumber"] = linenumber or None
 
@@ -405,14 +405,15 @@ def create_traceback(records, etype, value, info):
         msg = value.msg
         lines = cache.get_source_lines(filename)
         result.append('  File "{}", line {}'.format(filename, linenumber))
-        try:
-            _line = lines[linenumber - 1].rstrip()
+        _line = value.text
+        if _line is not None:
+            if info["bad_line"].strip() != _line.strip():
+                info["bad_line"] = _line
+            _line = _line.rstrip()
             bad_line = _line.strip()
             offset = offset - (len(_line) - len(bad_line))  # removing indent
             result.append("    {}".format(bad_line))
             result.append(" " * (3 + offset) + "^")
-        except Exception:
-            pass
         result.append("{}: {}".format(etype.__name__, msg))
         return result
 
@@ -493,14 +494,14 @@ def cannot_analyze_string():
     )
 
 
-def cannot_analyze_fstring():
-    """Typical case: an f-string contains some code with syntax error."""
-    _ = current_lang.translate
-    return _(
-        "You used an f-string that contains invalid Python code.\n"
-        "Unfortunately, no additional information is available:\n"
-        "the content of file '<fstring>' is not accessible.\n"
-    )
+# def cannot_analyze_fstring():
+#     """Typical case: an f-string contains some code with syntax error."""
+#     _ = current_lang.translate
+#     return _(
+#         "You used an f-string that contains invalid Python code.\n"
+#         "Unfortunately, no additional information is available:\n"
+#         "the content of file '<fstring>' is not accessible.\n"
+#     )
 
 
 def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
