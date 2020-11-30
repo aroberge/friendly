@@ -120,11 +120,29 @@ def _find_likely_cause(source_lines, linenumber, message, offset, info):
     """
     _ = current_lang.translate
 
-    if source_lines:
+    # SyntaxError in f-strings are handled differently by Python
+    # than other types of errors. They are effectively handled internally
+    # as special files.  Before Python 3.9, Python will tell us
+    # that we have a
+    #   SyntaxError: invalid syntax
+    # that the error occurred in file <fstring>  (which is not a real file).
+    #
+    # Starting with Python 3.9, Python will indicates:
+    #     SyntaxError: f-string: invalid syntax
+    # but will give us the real name of the file.
+    #
+    # So, given this line with a SyntaxError:
+    #   f"{x y}"
+    # the traceback will indicate that the error is on line
+    #   (x y)
+    # which does not correspond to an actual line in the source file
+    # that we can retrieve when using Python 3.9.
+
+    if source_lines and "f-string: invalid syntax" not in message:
         offending_line = source_lines[linenumber - 1]
     else:
         offending_line = info["bad_line"]
-        source_lines = [offending_line]
+        source_lines = [offending_line]  # create a fake file for analysis
     line = offending_line.rstrip()
 
     # If Python includes a descriptive enough message, we rely
@@ -133,7 +151,7 @@ def _find_likely_cause(source_lines, linenumber, message, offset, info):
     # is to explain in simpler language what Python means when it
     # raises a particular exception.
 
-    if message != "invalid syntax":
+    if "invalid syntax" not in message:  # include f-string: invalid syntax
         cause = message_analyzer.analyze_message(
             message=message,
             line=line,

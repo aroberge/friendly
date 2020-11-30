@@ -450,3 +450,20 @@ def assign_instead_of_equal(tokens, offset=None, info=None):
                 "You used an assignment operator `=`; perhaps you meant to use \n"
                 "an equality operator, `==`, or the walrus operator `:=`.\n"
             )
+
+
+@add_line_analyzer
+def missing_comma(tokens, offset=None, info=None):
+    """Check to see if a comma is possibly missing between identifiers,
+    or numbers, or both.
+    """
+    _ = current_lang.translate
+
+    if len(tokens) < 2:
+        return False
+
+    for first, second in zip(tokens, tokens[1:]):
+        if (first.is_number() or first.is_identifier()) and (
+            second.is_number() or second.is_identifier()
+        ):
+            return _("Perhaps you forgot a comma.\n")
