@@ -479,7 +479,13 @@ def missing_comma_or_operator(tokens, offset=None, info=None):
         if (first.is_number() or first.is_identifier()) and (
             second.is_number() or second.is_identifier()
         ):
+            info["suggest"] = _(
+                "Did you forget something between `{first}` and `{second}`?"
+            ).format(first=first.string, second=second.string)
+
             return _(
-                "Perhaps you forgot a comma or an operator between "
-                "`{first}` and `{second}`."
+                "Python indicates that the error is caused by "
+                "`{second}` written just after `{first}`.\n"
+                "Perhaps you forgot a comma or an operator, like `+`, `*`, etc., "
+                "between `{first}` and `{second}`."
             ).format(first=first.string, second=second.string)
