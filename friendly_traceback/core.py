@@ -108,6 +108,7 @@ class RawInfo:
         self.tb = tb
         self.debug = debug
         self.records = self.get_records()
+        self.bad_line = self.get_bad_line(etype, value)
 
     def get_records(self):
         """Get the traceback frame history, excluding those originating
@@ -124,6 +125,17 @@ class RawInfo:
         )
         records.reverse()
         return records
+
+    def get_bad_line(self, etype, value):
+        """Retrieves the line of code where the exception was raised"""
+        if issubclass(etype, SyntaxError):
+            if value.text is not None:
+                return value.text
+        elif self.records:
+            _, filename, linenumber, _, _, _ = self.records[-1]
+            _, line = cache.get_formatted_partial_source(filename, linenumber, None)
+            return line.rstrip()
+        return " "
 
 
 class FriendlyTraceback:

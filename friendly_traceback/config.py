@@ -240,6 +240,8 @@ class _State:
             print("Messages are different")
         if info["generic"] != self.traceback_info["generic"]:
             print("Generic info is different")
+        if info["bad_line"] != self.traceback_info._raw_info.bad_line:
+            print("bad_line is different")
 
 
 session = _State()
