@@ -27,7 +27,7 @@ from friendly_traceback.friendly_exception import FriendlyException
 
 def scan_source(source_lines=None, linenumber=0, offset=0, info=None):
     """Scans the entire source, looking at possible causes of
-       SyntaxError: invalid syntax
+    SyntaxError: invalid syntax
     """
     if not source_lines:
         return
@@ -123,24 +123,24 @@ def look_for_missing_bracket(
     *, source_tokens=None, source_lines=None, max_linenumber=None, offset=None
 ):
     """This function was initially looking for missing or mismatched brackets
-        but it has expanded to include other cases.  By brackets here, we mean
-        any one of: ()[]{}.
+    but it has expanded to include other cases.  By brackets here, we mean
+    any one of: ()[]{}.
 
-        We have a few cases to consider:
+    We have a few cases to consider:
 
-        1. mismatched brackets
-        2. missing closing bracket
-        3. missing comma between items.
-        4. using = instead of : in a dict
+    1. mismatched brackets
+    2. missing closing bracket
+    3. missing comma between items.
+    4. using = instead of : in a dict
 
-        The last two cases will often result in an error being flagged at
-        a given location such that the code up to that point would have
-        an unclosed bracket.  For example, case 4 could be:
+    The last two cases will often result in an error being flagged at
+    a given location such that the code up to that point would have
+    an unclosed bracket.  For example, case 4 could be:
 
-            ages = {'Alice' = 22, ...
-                            ^
+        ages = {'Alice' = 22, ...
+                        ^
 
-        and we would have an unclosed {.
+    and we would have an unclosed {.
     """
     _ = current_lang.translate
     if source_tokens is None:

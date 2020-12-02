@@ -407,9 +407,10 @@ def create_traceback(records, etype, value, info):
                 cache.add(filename, _line)
             _line = _line.rstrip()
             bad_line = _line.strip()
-            offset = offset - (len(_line) - len(bad_line))  # removing indent
-            result.append("    {}".format(bad_line))
-            result.append(" " * (3 + offset) + "^")
+            if bad_line:
+                offset = offset - (len(_line) - len(bad_line))  # removing indent
+                result.append("    {}".format(bad_line))
+                result.append(" " * (3 + offset) + "^")
         result.append("{}: {}".format(etype.__name__, msg))
         return result
 
