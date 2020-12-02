@@ -476,8 +476,10 @@ def missing_comma_or_operator(tokens, offset=None, info=None):
         return False
 
     for first, second in zip(tokens, tokens[1:]):
-        if (first.is_number() or first.is_identifier()) and (
-            second.is_number() or second.is_identifier()
+        if (
+            (first.is_number() or first.is_identifier())
+            and (second.is_number() or second.is_identifier())
+            and second.start_col <= offset <= second.end_col
         ):
             info["suggest"] = _(
                 "Did you forget something between `{first}` and `{second}`?"
