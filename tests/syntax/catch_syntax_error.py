@@ -92,7 +92,8 @@ causes = {
     "raise_syntax_error76": "`=` instead of an equality operator `==` with an `if` statement",
     "raise_syntax_error77": "`=` instead of an equality operator `==` with an `elif` statement",
     "raise_syntax_error78": "You used an assignment operator `=`",
-    "raise_syntax_error79": "forgot a comma"
+    "raise_syntax_error79": "forgot a comma",
+    "raise_syntax_error80": "Valid names cannot begin with a number",
 }
 
 if sys.version_info < (3, 8):

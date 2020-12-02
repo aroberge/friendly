@@ -453,9 +453,22 @@ def assign_instead_of_equal(tokens, offset=None, info=None):
 
 
 @add_line_analyzer
-def missing_comma(tokens, offset=None, info=None):
-    """Check to see if a comma is possibly missing between identifiers,
-    or numbers, or both.
+def invalid_name(tokens, offset=None, info=None):
+    """Identifies invalid identifiers when a name begins with a number"""
+    _ = current_lang.translate
+
+    if len(tokens) < 2:
+        return False
+
+    for first, second in zip(tokens, tokens[1:]):
+        if first.is_number() and second.is_identifier() and first.end == second.start:
+            return _("Valid names cannot begin with a number.\n")
+
+
+@add_line_analyzer
+def missing_comma_or_operator(tokens, offset=None, info=None):
+    """Check to see if a comma or other operator
+    is possibly missing between identifiers, or numbers, or both.
     """
     _ = current_lang.translate
 
@@ -466,4 +479,7 @@ def missing_comma(tokens, offset=None, info=None):
         if (first.is_number() or first.is_identifier()) and (
             second.is_number() or second.is_identifier()
         ):
-            return _("Perhaps you forgot a comma.\n")
+            return _(
+                "Perhaps you forgot a comma or an operator between "
+                "`{first}` and `{second}`."
+            ).format(first=first.string, second=second.string)
