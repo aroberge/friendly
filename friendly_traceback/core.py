@@ -199,18 +199,91 @@ class FriendlyTraceback:
         self.generic = info_generic.get_generic_explanation(exc_name)
 
     def assign_location(self):
-        self.last_call_header = ""
-        self.last_call_source = ""
-        self.last_call_variables_header = ""
-        self.last_call_variables = ""
-        self.exception_raised_header = ""
-        self.exception_raised_source = ""
-        self.exception_raised_variables_header = ""
-        self.exception_raised_variables = ""
+        """This sets the values of the answers to 'where()', that is
+        the information about the location of the exception.
+
+        To determine which attributes will be set, consult the docstring
+        of the following methods.
+
+        For SyntaxError and subclasses: self.locate_parsin_error()
+
+        For other types of exceptions, self.locate_exception_raised(),
+        and possibly self.locate_last_call().
+        """
         if issubclass(self._raw_info.exception_type, SyntaxError):
             self.locate_parsing_error()
+            return
+
+        records = self._raw_info.records
+        if not records:
+            self.debug_warning = "debug_warning: no records found."
+            return
+        self.locate_exception_raised(records[-1])
+        if len(records) > 1:
+            self.locate_last_call(records[0])
+
+    def locate_exception_raised(self, record):
+        """Sets the values of the following attributes:
+
+        * exception_raised_header
+        * exception_raised_source
+        * exception_raised_variables_header
+        * exception_raised_variables
+        """
+        from .config import session
+
+        _ = current_lang.translate
+
+        frame, filename, linenumber, _func, lines, index = record
+        source_info = get_partial_source(filename, linenumber, lines, index)
+        filename = path_utils.shorten_path(filename)
+        if session.use_rich:
+            filename = f"`'{filename}'`"
+
+        self.exception_raised_header = _(
+            "Exception raised on line {linenumber} of file {filename}.\n"
+        ).format(linenumber=linenumber, filename=filename)
+        self.exception_raised_source = source_info["source"]
+
+        var_info = info_variables.get_var_info(source_info["line"], frame)
+        if var_info:
+            self.exception_raised_variables_header = _("Known objects shown above:")
+            self.exception_raised_variables = var_info
+
+    def locate_last_call(self, record):
+        """Sets the values of the following attributes:
+
+        * last_call_header
+        * exception_raised_source
+        * last_call_variables_header
+        * last_call_variables
+        """
+        from .config import session
+
+        _ = current_lang.translate
+
+        frame, filename, linenumber, _func, lines, index = record
+        source_info = get_partial_source(filename, linenumber, lines, index)
+        filename = path_utils.shorten_path(filename)
+        if session.use_rich:
+            filename = f"`'{filename}'`"
+
+        self.last_call_header = _(
+            "Execution stopped on line {linenumber} of file {filename}.\n"
+        ).format(linenumber=linenumber, filename=filename)
+        self.last_call_source = source_info["source"]
+
+        var_info = info_variables.get_var_info(source_info["line"], frame)
+        if var_info:
+            self.last_call_variables_header = _("Known objects shown above:")
+            self.last_call_variables = var_info
 
     def locate_parsing_error(self):
+        """Sets the values of the attributes:
+
+        * parsing_error
+        * parsing_source_error
+        """
         _ = current_lang.translate
         value = self._raw_info.value
         filepath = value.filename

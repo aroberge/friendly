@@ -236,7 +236,20 @@ class _State:
         # the new approach.
 
         self.traceback_info.compile_all_info()
-        for item in ["message", "generic", "parsing_error", "parsing_error_source"]:
+        for item in [
+            "message",
+            "generic",
+            "parsing_error",
+            "parsing_error_source",
+            "exception_raised_header",
+            "exception_raised_source",
+            "exception_raised_variables",
+            "exception_raised_variables_header",
+            "last_call_header",
+            "last_call_source",
+            "last_call_variables",
+            "last_call_variables_header",
+        ]:
             if item in info and info[item] != self.traceback_info[item]:
                 print(item, " is different")
                 print("info:", info[item])
