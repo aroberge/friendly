@@ -106,6 +106,7 @@ class RawInfo:
         self.value = value
         self.message = str(value)
         self.tb = tb
+        self.formatted_tb = traceback.format_exception(etype, value, tb)
         self.debug = debug
         self.records = self.get_records()
         self.bad_line = self.get_bad_line(etype, value)
@@ -179,6 +180,7 @@ class FriendlyTraceback:
         self.assign_message()
         self.assign_generic()
         self.assign_location()
+        self.assign_tracebacks()
 
     def assign_cause(self):
         self.suggest = ""
@@ -332,9 +334,107 @@ class FriendlyTraceback:
             self.message = f"{exc_name}: {value}\n"
 
     def assign_tracebacks(self):
-        self.original_python_traceback = ""
-        self.simulated_python_traceback = ""
-        self.shortened_tb = ""
+        """When required, a standard Python traceback might be required to be
+        included as part of the information shown to the user.
+        This function does the required formatting.
+
+        This function defines 3 traceback:
+        1. The standard Python traceback, given by Python
+        2. A "simulated" Python traceback, which is essentially the same as
+           the one given by Python, except that it excludes modules from this
+           project.  In addition, for RecursionError, this traceback is often
+           further shortened, compared with a normal Python traceback.
+        3. A potentially shortened traceback, which does not include too much
+           output so as not to overwhelm beginners. It also include information
+           about the code on any line mentioned.
+        """
+        _ = current_lang.translate
+        suppressed = ["\n       ... " + _("More lines not shown.") + " ...\n"]
+
+        python_tb = [line.rstrip() for line in self._raw_info.formatted_tb]
+
+        tb = self.create_traceback()
+        if len(tb) > 9:
+            shortened_tb = tb[0:2] + suppressed + tb[-5:]
+        else:
+            shortened_tb = tb[:]
+
+        pattern = re.compile(r'File "(.*)", ')
+        temp = []
+        for line in shortened_tb:
+            match = re.search(pattern, line)
+            if match:
+                line = line.replace(
+                    match.group(1), path_utils.shorten_path(match.group(1))
+                )
+            temp.append(line)
+        shortened_tb = temp
+
+        header = "Traceback (most recent call last):"  # not included in records
+        if python_tb[0].startswith(header):
+            tb.insert(0, header)
+            shortened_tb.insert(0, header)
+
+        if "RecursionError" in python_tb[-1]:
+            tb = []
+            exclude = False
+            for line in python_tb:  # excluding our own code
+                if exclude and line.strip() == "exec(code, self.locals)":
+                    continue
+                exclude = False
+                for filename in EXCLUDED_FILE_PATH:
+                    if filename in line:
+                        exclude = True
+                        break
+                if exclude:
+                    continue
+                tb.append(line)
+            if len(tb) > 12:
+                tb = tb[0:4] + suppressed + tb[-5:]
+
+        self.simulated_python_traceback = "\n".join(tb) + "\n"
+        self.shortened_traceback = "\n".join(shortened_tb) + "\n"
+        self.original_python_traceback = "\n".join(python_tb) + "\n"
+        return
+
+    def create_traceback(self):
+        """Using records that exclude code from certain files,
+        creates a list from which a standard-looking traceback can
+        be created.
+        """
+        result = []
+        for record in self._raw_info.records:
+            frame, filename, linenumber, _func, lines, index = record
+            source_info = get_partial_source(filename, linenumber, lines, index)
+            result.append(
+                '  File "{}", line {}, in {}'.format(filename, linenumber, _func)
+            )
+            bad_line = source_info["line"]
+            if bad_line is not None:
+                result.append("    {}".format(bad_line.strip()))
+
+        if issubclass(self._raw_info.exception_type, SyntaxError):
+            value = self._raw_info.value
+            offset = value.offset
+            msg = value.msg
+            filename = value.filename
+            lines = cache.get_source_lines(filename)
+            result.append('  File "{}", line {}'.format(filename, value.lineno))
+            _line = value.text
+            if _line is not None:
+                if not lines:
+                    cache.add(filename, _line)
+                _line = _line.rstrip()
+                bad_line = _line.strip()
+                if bad_line:
+                    offset = offset - (len(_line) - len(bad_line))  # removing indent
+                    result.append("    {}".format(bad_line))
+                    result.append(" " * (3 + offset) + "^")
+            result.append("{}: {}".format(self._raw_info.exception_name, msg))
+            return result
+
+        result.append(self.message.strip())
+        return result
 
 
 def get_traceback_info(etype, value, tb, debug=False):
@@ -505,15 +605,13 @@ def create_traceback(records, etype, value, info):
             result.append("    {}".format(bad_line.strip()))
             info["bad_line"] = bad_line
         info["filename"] = filename or " "
-        info["linenumber"] = linenumber or None
 
     if issubclass(etype, SyntaxError):
         info["filename"] = filename = value.filename
-        info["linenumber"] = linenumber = value.lineno
         offset = value.offset
         msg = value.msg
         lines = cache.get_source_lines(filename)
-        result.append('  File "{}", line {}'.format(filename, linenumber))
+        result.append('  File "{}", line {}'.format(filename, value.lineno))
         _line = value.text
         if _line is not None:
             if info["bad_line"].rstrip() != _line.rstrip():

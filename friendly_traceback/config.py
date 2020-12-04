@@ -249,9 +249,17 @@ class _State:
             "last_call_source",
             "last_call_variables",
             "last_call_variables_header",
+            "simulated_python_traceback",
+            "shortened_traceback",
+            "original_python_traceback",
         ]:
             if item in info and info[item] != self.traceback_info[item]:
-                print(item, " is different")
+                print(
+                    item,
+                    "is different",
+                    len(info[item]),
+                    len(self.traceback_info[item]),
+                )
                 print("info:", info[item])
                 print("new: ", self.traceback_info[item])
                 print("-" * 50)

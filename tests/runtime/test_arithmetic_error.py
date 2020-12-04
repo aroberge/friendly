@@ -6,7 +6,7 @@ def test_arithmetic_error():
         # I am not aware of any way in which this error is raised directly
         # Usually, a subclass such as ZeroDivisionError, etc., would
         # likely be raised.
-        raise ArithmeticError
+        raise ArithmeticError('error')
     except Exception as e:
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
