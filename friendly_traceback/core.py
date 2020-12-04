@@ -130,12 +130,12 @@ class RawInfo:
         """Retrieves the line of code where the exception was raised"""
         if issubclass(etype, SyntaxError):
             if value.text is not None:
-                return value.text
+                return value.text  # typically includes "\n"
         elif self.records:
             _, filename, linenumber, _, _, _ = self.records[-1]
             _, line = cache.get_formatted_partial_source(filename, linenumber, None)
             return line.rstrip()
-        return " "
+        return "\n"
 
 
 class FriendlyTraceback:
@@ -178,6 +178,7 @@ class FriendlyTraceback:
         """Compile all the available info at once."""
         self.assign_message()
         self.assign_generic()
+        self.assign_location()
 
     def assign_cause(self):
         self.suggest = ""
@@ -206,6 +207,38 @@ class FriendlyTraceback:
         self.exception_raised_source = ""
         self.exception_raised_variables_header = ""
         self.exception_raised_variables = ""
+        if issubclass(self._raw_info.exception_type, SyntaxError):
+            self.process_parsing_error()
+
+    def process_parsing_error(self):
+        _ = current_lang.translate
+        value = self._raw_info.value
+        filepath = value.filename
+        linenumber = value.lineno
+        offset = value.offset
+        partial_source, _ignore = cache.get_formatted_partial_source(
+            filepath, linenumber, offset
+        )
+        if "-->" in partial_source:
+            self.parsing_error = _(
+                "Python could not understand the code in the file\n"
+                "'{filename}'\n"
+                "beyond the location indicated by --> and ^.\n"
+            ).format(filename=path_utils.shorten_path(filepath))
+        elif "unexpected EOF while parsing" in repr(value):
+            self.parsing_error = _(
+                "Python could not understand the code the file\n"
+                "'{filename}'.\n"
+                "It reached the end of the file and expected more content.\n"
+            ).format(filename=path_utils.shorten_path(filepath))
+        else:
+            self.parsing_error = _(
+                "Python could not understand the code in the file\n"
+                "'{filename}'\n"
+                "for an unspecified reason.\n"
+            ).format(filename=path_utils.shorten_path(filepath))
+
+        self.parsing_error_source = f"{partial_source}\n"
 
     def assign_message(self):
         """Assigns the error message, which is something like
@@ -294,13 +327,12 @@ def process_syntax_error(etype, value, info, debug):
     """
     from .syntax_errors import analyze_syntax
 
-    if value.filename == "<stdin>":
-        info["cause"] = cannot_analyze_stdin()
-        return info
-
     try:
         analyze_syntax.set_cause_syntax(etype, value, info)  # [3]
     except Exception:
+        if value.filename == "<stdin>":
+            info["cause"] = cannot_analyze_stdin()
+            return info
         info[
             "debug_warning"
         ] = "debug_warning: Internal error caught in `process_syntax_error()`."
@@ -392,7 +424,7 @@ def create_traceback(records, etype, value, info):
     """
     result = []
 
-    info["bad_line"] = " "
+    info["bad_line"] = "\n"
     for record in records:
         frame, filename, linenumber, _func, lines, index = record
         source_info = get_partial_source(filename, linenumber, lines, index)
@@ -413,7 +445,7 @@ def create_traceback(records, etype, value, info):
         result.append('  File "{}", line {}'.format(filename, linenumber))
         _line = value.text
         if _line is not None:
-            if info["bad_line"].strip() != _line.strip():
+            if info["bad_line"].rstrip() != _line.rstrip():
                 info["bad_line"] = _line
             if not lines:
                 cache.add(filename, _line)
@@ -424,6 +456,9 @@ def create_traceback(records, etype, value, info):
                 result.append("    {}".format(bad_line))
                 result.append(" " * (3 + offset) + "^")
         result.append("{}: {}".format(etype.__name__, msg))
+
+        if not info["bad_line"]:
+            info["bad_line"] = "\n"
         return result
 
     try:
@@ -454,7 +489,7 @@ def get_partial_source(filename, linenumber, lines, index):
     elif filename and os.path.abspath(filename):
         source, line = highlight_source(linenumber, index, lines)
         if not source:
-            line = "1"
+            line = ""
             if filename == "<stdin>":
                 source = _(
                     "        To see the lines of code that cause the problem, \n"

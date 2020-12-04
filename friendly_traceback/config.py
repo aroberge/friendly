@@ -236,12 +236,19 @@ class _State:
         # the new approach.
 
         self.traceback_info.compile_all_info()
-        if info["message"] != self.traceback_info["message"]:
-            print("Messages are different")
-        if info["generic"] != self.traceback_info["generic"]:
-            print("Generic info is different")
+        for item in ["message", "generic", "parsing_error", "parsing_error_source"]:
+            if item in info and info[item] != self.traceback_info[item]:
+                print(item, " is different")
+                print("info:", info[item])
+                print("new: ", self.traceback_info[item])
+                print("-" * 50)
+
+        #
         if info["bad_line"] != self.traceback_info._raw_info.bad_line:
             print("bad_line is different")
+            print("info: |%s|" % info["bad_line"])
+            print("new: |%s|" % self.traceback_info._raw_info.bad_line)
+            print("-" * 50)
 
 
 session = _State()

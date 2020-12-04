@@ -6,6 +6,9 @@ This is especially useful when a custom REPL is used.
 
 import os.path
 
+# TODO: use the undocumented linecache.getlines  (note the final s)
+# from Python's standard library.
+
 
 class Cache:
     """Class used to store source of files and similar objects"""
@@ -35,7 +38,7 @@ class Cache:
         it was modified differs from the recorded value, a fresh copy
         is retrieved.
 
-        The contents is stored a a string and returned as a list of lines.
+        The contents is stored as a string and returned as a list of lines.
         If no source can be found, an empty list is returned.
         """
         # The main reason we care about ensuring we have the latest version
@@ -117,10 +120,7 @@ def highlight_source(linenumber, index, lines, offset=None):
     which, in this case, points to a missing colon. We use the same
     representation in this case.
     """
-    # The following if statements are left-over diagnostic
-    # from the hack to integrate into Idle.
-    # they are harmless tests which could potentially be useful.
-    if lines is None:
+    if lines is None:  # This is the case for some SyntaxError cases
         return "", ""
     if index is None:
         print("problem in highlight_source(): index is None")
