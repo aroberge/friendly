@@ -53,7 +53,7 @@ def get_definition_scope(variable_name, frame):
     return scopes
 
 
-def get_var_info(displayed_source, frame):
+def get_var_info(source, frame):
     """Given a frame object, it obtains the value (repr) of the names
     found in the logical line (which may span many lines in the file)
     where the exception occurred.
@@ -61,22 +61,14 @@ def get_var_info(displayed_source, frame):
     We ignore values found *only* in nonlocal scope as they should not
     be relevant.
 
-    We also only show the variables that appeared in the partial source
-    displayed, which looks something like this::
-
-           1: def test():
-           2:    a = b = 2
-        -->3:    c = a + b + d
-           4:
     """
     loc = frame.f_locals
     glob = frame.f_globals
     names_info = []
 
-    lines = displayed_source.split("\n")
+    lines = source.split("\n")
     names = []
     for line in lines:
-        line = ":".join(line.split(":")[1:]).strip()
         tokens = utils.tokenize_source(line)
         for tok in tokens:
             if tok.is_identifier():

@@ -208,16 +208,14 @@ class FriendlyTraceback:
         self.exception_raised_variables_header = ""
         self.exception_raised_variables = ""
         if issubclass(self._raw_info.exception_type, SyntaxError):
-            self.process_parsing_error()
+            self.locate_parsing_error()
 
-    def process_parsing_error(self):
+    def locate_parsing_error(self):
         _ = current_lang.translate
         value = self._raw_info.value
         filepath = value.filename
-        linenumber = value.lineno
-        offset = value.offset
         partial_source, _ignore = cache.get_formatted_partial_source(
-            filepath, linenumber, offset
+            filepath, value.lineno, value.offset
         )
         if "-->" in partial_source:
             self.parsing_error = _(
@@ -549,7 +547,7 @@ def set_call_info(info, header_name, filename, linenumber, lines, index, frame):
     )
     info["%s_source" % header_name] = source_info["source"]
 
-    var_info = info_variables.get_var_info(source_info["source"], frame)
+    var_info = info_variables.get_var_info(source_info["line"], frame)
     if var_info:
         info["%s_variables_header" % header_name] = _("Known objects shown above:")
         info["%s_variables" % header_name] = var_info  # [6]
