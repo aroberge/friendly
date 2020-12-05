@@ -142,15 +142,16 @@ def _find_likely_cause(source_lines, linenumber, message, offset, info):
     # raises a particular exception.
 
     if "invalid syntax" not in message:  # include f-string: invalid syntax
-        cause = message_analyzer.analyze_message(
+        cause, hint = message_analyzer.analyze_message(
             message=message,
             line=line,
             linenumber=linenumber,
             source_lines=source_lines,
             offset=offset,
-            info=info,
         )
         if cause:
+            if hint:
+                info["suggest"] = hint
             return cause, hint
         else:
             notice = _(
@@ -190,19 +191,14 @@ def _find_likely_cause(source_lines, linenumber, message, offset, info):
             hint = info["suggest"]
         return notice + cause, hint
 
-    # Eventually, we might add another step that looks at the entire code
-    # For now, we just stop here
-
-    return (
-        _(
-            "Currently, I cannot guess the likely cause of this error.\n"
-            "Try to examine closely the line indicated as well as the line\n"
-            "immediately above to see if you can identify some misspelled\n"
-            "word, or missing symbols, like (, ), [, ], :, etc.\n"
-            "\n"
-            "You might want to report this case to\n"
-            "https://github.com/aroberge/friendly-traceback/issues\n"
-            "\n"
-        ),
-        None,
+    cause = _(
+        "Currently, I cannot guess the likely cause of this error.\n"
+        "Try to examine closely the line indicated as well as the line\n"
+        "immediately above to see if you can identify some misspelled\n"
+        "word, or missing symbols, like (, ), [, ], :, etc.\n"
+        "\n"
+        "You might want to report this case to\n"
+        "https://github.com/aroberge/friendly-traceback/issues\n"
+        "\n"
     )
+    return cause, hint
