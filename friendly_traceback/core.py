@@ -109,6 +109,7 @@ class RawInfo:
         self.formatted_tb = traceback.format_exception(etype, value, tb)
         self.debug = debug
         self.records = self.get_records()
+        self.debug_warning = ""
         self.bad_line = self.get_bad_line(etype, value)
 
     def get_records(self):
@@ -142,7 +143,7 @@ class RawInfo:
             _, line = cache.get_formatted_partial_source(filename, linenumber, None)
             return line.rstrip()
         # We should never reach this stage.
-        print("Internal error in get_bad_line.")
+        self.debug_warning = "Internal error in get_bad_line."
         return "\n"
 
 
@@ -158,9 +159,9 @@ class FriendlyTraceback:
         """We define all the variables here for now"""
         _ = current_lang.translate
         self._raw_info = RawInfo(etype, value, tb, debug)
+        self.debug_warning = self._raw_info.debug_warning
         self._debug = debug
         self.header = _("Python exception:")
-        self.debug_warning = ""
 
     def __contains__(self, key):
         """Indicates if a given 'key' corresponds to a known non-empty
@@ -195,6 +196,16 @@ class FriendlyTraceback:
             self.set_cause_syntax()
 
     def set_cause_syntax(self):
+        """For SyntaxError and subclasses. Sets the value of the following
+        attributes:
+
+        * cause_header
+        * cause
+
+        and possibly:
+
+        * suggest
+        """
 
         from .syntax_errors import analyze_syntax
 
@@ -230,9 +241,9 @@ class FriendlyTraceback:
         """Assigns the generic information about a given error. This is
         the answer to ``what()`` as in "What is a NameError?"
 
-        The value of the ``generic`` attribute can be retrieved using
+        Sets the value of the following attribute:
 
-            instance['generic']
+        * generic
         """
         exc_name = self._raw_info.exception_name
         self.generic = info_generic.get_generic_explanation(exc_name)
@@ -255,7 +266,7 @@ class FriendlyTraceback:
 
         records = self._raw_info.records
         if not records:
-            self.debug_warning = "debug_warning: no records found."
+            self.debug_warning += "debug_warning: no records found."
             return
         self.locate_exception_raised(records[-1])
         if len(records) > 1:
@@ -384,6 +395,12 @@ class FriendlyTraceback:
         3. A potentially shortened traceback, which does not include too much
            output so as not to overwhelm beginners. It also include information
            about the code on any line mentioned.
+
+        These are given by the attributes:
+
+        * original_python_traceback
+        * simulated_python_traceback
+        * shortened_traceback
         """
         _ = current_lang.translate
         suppressed = ["\n       ... " + _("More lines not shown.") + " ...\n"]
@@ -432,7 +449,6 @@ class FriendlyTraceback:
         self.simulated_python_traceback = "\n".join(tb) + "\n"
         self.shortened_traceback = "\n".join(shortened_tb) + "\n"
         self.original_python_traceback = "\n".join(python_tb) + "\n"
-        return
 
     def create_traceback(self):
         """Using records that exclude code from certain files,

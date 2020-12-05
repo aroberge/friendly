@@ -12,44 +12,54 @@ def get_cause(value, info, frame):
     _ = current_lang.translate
 
     message = str(value)
+    cause = _(
+        "No information is known about this exception.\n"
+        "Please report this example to\n"
+        "https://github.com/aroberge/friendly-traceback/issues\n"
+    )
+    hint = None
 
     # Python 3.8+
     pattern1 = re.compile(
         r"cannot import name '(.*)' from partially initialized module '(.*)'"
     )
-    match = re.search(pattern1, message)
-    if match:
-        if "circular import" in message:
-            return cannot_import_name_from(
-                match.group(1), match.group(2), info, frame, add_circular_hint=False
-            )
-        return cannot_import_name_from(match.group(1), match.group(2), info, frame)
-
+    match1 = re.search(pattern1, message)
     # Python 3.7+
     pattern2 = re.compile(r"cannot import name '(.*)' from '(.*)'")
-    match = re.search(pattern2, message)
-    if match:
-        return cannot_import_name_from(match.group(1), match.group(2), info, frame)
-
+    match2 = re.search(pattern2, message)
     # Python 3.6
     pattern3 = re.compile(r"cannot import name '(.*)'")
-    match = re.search(pattern3, message)
-    if match:
-        return cannot_import_name(match.group(1), info, frame)
+    match3 = re.search(pattern3, message)
 
-    return _(
-        "No information is known about this exception.\n"
-        "Please report this example to\n"
-        "https://github.com/aroberge/friendly-traceback/issues\n"
-    )
+    if match1:
+        if "circular import" in message:
+            cause, hint = cannot_import_name_from(
+                match1.group(1), match1.group(2), info, frame, add_circular_hint=False
+            )
+        else:
+            cause, hint = cannot_import_name_from(
+                match1.group(1), match1.group(2), info, frame
+            )
+    elif match2:
+        cause, hint = cannot_import_name_from(
+            match2.group(1), match2.group(2), info, frame
+        )
+    elif match3:
+        cause, hint = cannot_import_name(match3.group(1), info, frame)
+
+    if hint:
+        info["suggest"] = hint
+
+    return cause
 
 
 def cannot_import_name_from(name, module, info, frame, add_circular_hint=True):
     _ = current_lang.translate
 
+    hint = None
     circular_info = find_circular_import(module, info)
     if circular_info and add_circular_hint:
-        info["suggest"] = _("You have a circular import.\n")
+        hint = _("You have a circular import.\n")
         # Python 3.8+ adds a similar hint on its own.
 
     cause = _(
@@ -59,31 +69,40 @@ def cannot_import_name_from(name, module, info, frame, add_circular_hint=True):
     ).format(name=name, module=module)
 
     if circular_info:
-        return cause + "\n" + circular_info
+        return cause + "\n" + circular_info, hint
     elif not add_circular_hint:
         return (
-            cause
-            + "\n"
-            + _(
-                "Python indicated that you have a circular import.\n"
-                "This can occur if executing the code in module 'A'\n"
-                "results in executing the code in module 'B' where\n"
-                "an attempt to import a name from module 'A' is made\n"
-                "before the execution of the code in module 'A' had been completed.\n"
-            )
+            (
+                cause
+                + "\n"
+                + _(
+                    "Python indicated that you have a circular import.\n"
+                    "This can occur if executing the code in module 'A'\n"
+                    "results in executing the code in module 'B' where\n"
+                    "an attempt to import a name from module 'A' is made\n"
+                    "before the execution of the code in module 'A' had been completed.\n"
+                )
+            ),
+            hint,
         )
 
     try:
         mod = sys.modules[module]
     except Exception:
-        return cause
+        return cause, hint
     similar = get_similar_words(name, dir(mod))
     if not similar:
-        return cause
+        return cause, hint
+
+    cause = _(
+        "The object that could not be imported is `{name}`.\n"
+        "The module or package where it was \n"
+        "expected to be found is `{module}`.\n"
+    ).format(name=name, module=module)
 
     if len(similar) == 1:
-        info["suggest"] = _("Did you mean `{name}`?\n").format(name=similar[0])
-        return _(
+        hint = _("Did you mean `{name}`?\n").format(name=similar[0])
+        cause = _(
             "Perhaps you meant to import `{correct}` (from `{module}`) "
             "instead of `{typo}`\n"
         ).format(correct=similar[0], typo=name, module=module)
@@ -91,21 +110,17 @@ def cannot_import_name_from(name, module, info, frame, add_circular_hint=True):
         # transform ['a', 'b', 'c'] in "[`a`, `b`, `c`]"
         candidates = ["{c}".format(c=c.replace("'", "")) for c in similar]
         candidates = ", ".join(candidates)
-        info["suggest"] = _("Did you mean one of the following: `{names}`?\n").format(
+        hint = _("Did you mean one of the following: `{names}`?\n").format(
             names=candidates
         )
-        return _(
+        cause = _(
             "Instead of trying to import `{typo}` from `{module}`, \n"
             "perhaps you meant to import one of \n"
             "the following names which are found in module `{module}`:\n"
             "`{candidates}`\n"
         ).format(candidates=candidates, typo=name, module=module)
 
-    return _(
-        "The object that could not be imported is `{name}`.\n"
-        "The module or package where it was \n"
-        "expected to be found is `{module}`.\n"
-    ).format(name=name, module=module)
+    return cause, hint
 
 
 def cannot_import_name(name, info, frame):
