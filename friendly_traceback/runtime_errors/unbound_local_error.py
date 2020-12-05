@@ -8,39 +8,41 @@ from .. import info_variables
 
 def get_cause(value, info, frame):
     _ = current_lang.translate
-
-    pattern = re.compile(r"local variable '(.*)' referenced before assignment")
-    match = re.search(pattern, str(value))
-    if match:
-        return local_variable_referenced(match.group(1), info, frame)
-
-    return _(
+    hint = None  # not used yet
+    cause = _(
         "No information is known about this exception.\n"
         "Please report this example to\n"
         "https://github.com/aroberge/friendly-traceback/issues\n"
     )
 
+    pattern = re.compile(r"local variable '(.*)' referenced before assignment")
+    match = re.search(pattern, str(value))
+    if match:
+        cause, hint = local_variable_referenced(match.group(1), info, frame)
+
+    return cause
+
 
 def local_variable_referenced(unknown_name, info, frame):
     _ = current_lang.translate
-
+    cause = hint = None
     scopes = info_variables.get_definition_scope(unknown_name, frame)
     if not scopes:
         similar = info_variables.get_similar_names(unknown_name, frame)
         if similar["best"] is not None:
             best_guess = similar["best"]
             if best_guess in similar["locals"]:
-                info["suggest"] = _("Did you mean `{name}`?").format(
-                    name=similar["best"]
-                )
-                return format_similar_names(unknown_name, similar)
+                hint = _("Did you mean `{name}`?").format(name=similar["best"])
+                info["suggest"] = hint
+                cause = format_similar_names(unknown_name, similar)
+                return cause, hint
 
         else:
-            possible_cause = info_variables.name_has_type_hint(unknown_name, frame)
-            if possible_cause:
-                info["suggest"] = _("Did you use a colon instead of an equal sign?")
-                return possible_cause
-            return None
+            cause = info_variables.name_has_type_hint(unknown_name, frame)
+            if cause:
+                hint = _("Did you use a colon instead of an equal sign?")
+                info["suggest"] = hint
+        return cause, hint
 
     if "global" in scopes and "nonlocal" in scopes:
         cause = _(
@@ -52,18 +54,19 @@ def local_variable_referenced(unknown_name, info, frame):
             "    nonlocal {var_name}\n\n"
             "as the first line inside your function.\n"
         ).format(var_name=unknown_name)
-        info["suggest"] = _(
+        hint = _(
             "Did you forget to add either `global {var_name}` or \n"
             "`nonlocal {var_name}`?\n"
         ).format(var_name=unknown_name)
-        return cause
+        info["suggest"] = hint
+        return cause, hint
 
     if "global" in scopes:
         scope = "global"
     elif "nonlocal" in scopes:
         scope = "nonlocal"
     else:
-        return
+        return cause, hint
 
     cause = _(
         "The name `{var_name}` exists in the {scope} scope.\n"
@@ -72,11 +75,12 @@ def local_variable_referenced(unknown_name, info, frame):
         "should have been included as the first line inside your function.\n"
     ).format(var_name=unknown_name, scope=scope)
 
-    info["suggest"] = _("Did you forget to add `{scope} {var_name}`?\n").format(
+    hint = _("Did you forget to add `{scope} {var_name}`?\n").format(
         var_name=unknown_name, scope=scope
     )
+    info["suggest"] = hint
 
-    return cause
+    return cause, hint
 
 
 def format_similar_names(unknown_name, similar):

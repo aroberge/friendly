@@ -28,7 +28,7 @@ def get_cause(value, info, frame):
     _ = current_lang.translate
     message = str(value)
     for parser in MESSAGES_PARSERS:
-        cause = parser(message, info, frame)
+        cause, hint = parser(message, info, frame)
         if cause is not None:
             return cause
     return _(
@@ -64,12 +64,12 @@ def convert_type(short_form):
 @add_message_parser
 def parse_can_only_concatenate(message, *args):
     _ = current_lang.translate
+    cause = hint = None
     # example: can only concatenate str (not "int") to str
     pattern = re.compile(
         r"can only concatenate (\w+) \(not [\'\"](\w+)[\'\"]\) to (\w+)"
     )
     match = re.search(pattern, message)
-    cause = None
     if match is not None:
         cause = _(
             "You tried to concatenate (add) two different types of objects:\n"
@@ -77,34 +77,34 @@ def parse_can_only_concatenate(message, *args):
         ).format(
             first=convert_type(match.group(1)), second=convert_type(match.group(2))
         )
-    return cause
+    return cause, hint
 
 
 @add_message_parser
 def parse_must_be_str(message, *args):
     _ = current_lang.translate
+    cause = hint = None
     # python 3.6 version: must be str, not int
     # example: can only concatenate str (not "int") to str
     pattern = re.compile(r"must be str, not (\w+)")
     match = re.search(pattern, message)
-    cause = None
     if match is not None:
         cause = _(
             "You tried to concatenate (add) two different types of objects:\n"
             "{first} and {second}\n"
         ).format(first=convert_type("str"), second=convert_type(match.group(1)))
-    return cause
+    return cause, hint
 
 
 @add_message_parser
 def parse_unsupported_operand_type(message, *args):
     _ = current_lang.translate
+    cause = hint = None
     # example: unsupported operand type(s) for +: 'int' and 'str'
     pattern = re.compile(
         r"unsupported operand type\(s\) for (.+): [\'\"](\w+)[\'\"] and [\'\"](\w+)[\'\"]"
     )
     match = re.search(pattern, message)
-    cause = None
     if match is not None:
         operator = match.group(1)
         if operator in ["+", "+="]:
@@ -175,12 +175,13 @@ def parse_unsupported_operand_type(message, *args):
                 first=convert_type(match.group(2)),
                 second=convert_type(match.group(3)),
             )
-    return cause
+    return cause, hint
 
 
 @add_message_parser
 def parse_order_comparison(message, *args):
     _ = current_lang.translate
+    cause = hint = None
     # example: '<' not supported between instances of 'int' and 'str'
     pattern = re.compile(
         r"[\'\"](.+)[\'\"] not supported between instances of [\'\"](\w+)[\'\"] and [\'\"](\w+)[\'\"]"  # noqa
@@ -196,15 +197,13 @@ def parse_order_comparison(message, *args):
             first=convert_type(match.group(2)),
             second=convert_type(match.group(3)),
         )
-        return cause
-    else:
-        return
+    return cause, hint
 
 
 @add_message_parser
 def bad_operand_type_for_unary(message, *args):
     _ = current_lang.translate
-
+    cause = hint = None
     # example: bad operand type for unary +: 'str'
     pattern = re.compile(r"bad operand type for unary (.+): [\'\"](\w+)[\'\"]")
     match = re.search(pattern, message)
@@ -214,14 +213,13 @@ def bad_operand_type_for_unary(message, *args):
             "with the following type of object: {obj}.\n"
             "This operation is not defined for this type of object.\n"
         ).format(operator=match.group(1), obj=convert_type(match.group(2)))
-        return cause
-    else:
-        return
+    return cause, hint
 
 
 @add_message_parser
 def does_not_support_item_asssignment(message, *args):
     _ = current_lang.translate
+    cause = hint = None
     # example: 'tuple' object does not support item assignment
     pattern = re.compile(r"[\'\"](\w+)[\'\"] object does not support item assignment")
     match = re.search(pattern, message)
@@ -232,21 +230,23 @@ def does_not_support_item_asssignment(message, *args):
             "You tried change part of such an immutable object: {obj},\n"
             "most likely by using an indexing operation.\n"
         ).format(obj=convert_type(match.group(1)))
-        return cause
-    else:
-        return
+    return cause, hint
 
 
 @add_message_parser
 def exception_derived_from_BaseException(message, *args):
     _ = current_lang.translate
+    cause = hint = None
+
     if "exceptions must derive from BaseException" in message:
-        return _("In Python 3, exceptions must be derived from BaseException.\n")
+        cause = _("In Python 3, exceptions must be derived from BaseException.\n")
+    return cause, hint
 
 
 @add_message_parser
 def incorrect_nb_positional_arguments(message, info, frame):
     _ = current_lang.translate
+    cause = hint = None
     # example: my_function() takes 0 positional arguments but x was/were given
     pattern = re.compile(r"(.*) takes (\d+) positional argument[s]* but (\d+) ")
     match = re.search(pattern, message)
@@ -274,18 +274,18 @@ def incorrect_nb_positional_arguments(message, info, frame):
             "such positional argument(s).\n"
         ).format(fn_name=fn_name, nb_given=nb_given, nb_required=nb_required)
         if missing_self:
-            info["suggest"] = _(
-                "Perhaps you forgot `self` when defining `{fn_name}`.\n"
-            ).format(fn_name=fn_name)
-            cause += info["suggest"]
-        return cause
-    else:
-        return
+            hint = _("Perhaps you forgot `self` when defining `{fn_name}`.\n").format(
+                fn_name=fn_name
+            )
+            info["suggest"] = hint
+            cause += hint
+    return cause, hint
 
 
 @add_message_parser
 def missing_positional_arguments(message, *args):
     _ = current_lang.translate
+    cause = hint = None
     # example: my_function() missing 1 required positional argument
     pattern = re.compile(r"(.*) missing (\d+) required positional argument")
     match = re.search(pattern, message)
@@ -295,40 +295,40 @@ def missing_positional_arguments(message, *args):
             "You apparently have called the function '{fn_name}' with\n"
             "fewer positional arguments than it requires ({nb_required} missing).\n"
         ).format(fn_name=match.group(1), nb_required=match.group(2))
-        return cause
-    else:
-        return
+    return cause, hint
 
 
 @add_message_parser
 def x_is_not_callable(message, info, *args):
     _ = current_lang.translate
+    cause = hint = None
     pattern = re.compile(r"'(.*)' object is not callable")
     match = re.search(pattern, message)
     if match is not None:
         obj = match.group(1)
         if obj == "tuple":
-            perhaps = _("Perhaps you had a missing comma between two tuples.\n")
+            hint = _("Perhaps you had a missing comma between two tuples.\n")
         else:
-            perhaps = _("Perhaps you had a missing comma before the tuple.\n")
+            hint = _("Perhaps you had a missing comma before the tuple.\n")
 
-        info["suggest"] = perhaps
-        return (
+        info["suggest"] = hint
+        cause = (
             _(
                 "I suspect that you had an object of this type, {obj},\n"
                 "followed by what looked like a tuple, '(...)',\n"
                 "which Python took as an indication of a function call.\n"
             ).format(obj=convert_type(obj))
-            + perhaps
+            + hint
         )
-    else:
-        return
+    return cause, hint
 
 
 @add_message_parser
 def cannot_multiply_by_str(message, *args):
     _ = current_lang.translate
-    if "can't multiply sequence by non-int of type 'str'" not in message:
-        return
-
-    return _("Perhaps you forgot to convert a string into an integer using `int()`.")
+    cause = hint = None
+    if "can't multiply sequence by non-int of type 'str'" in message:
+        cause = _(
+            "Perhaps you forgot to convert a string into an integer using `int()`."
+        )
+    return cause, hint
