@@ -9,7 +9,7 @@ from .my_gettext import current_lang
 get_cause = {}
 
 
-def get_likely_cause(etype, value, info, frame):
+def get_likely_cause(etype, value, info, frame, tb_data):
     """Gets the likely cause of a given exception based on some information
     specific to a given exception.
     """
@@ -17,12 +17,7 @@ def get_likely_cause(etype, value, info, frame):
     cause = None
     if etype.__name__ in get_cause:
         cause = get_cause[etype.__name__](value, info, frame)
-        if cause is not None:
-            info["cause_header"] = _(
-                "Likely cause based on the information given by Python:"
-            )
-            info["cause"] = cause
-    return
+    return cause
 
 
 def register(error_name):
