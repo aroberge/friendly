@@ -132,10 +132,17 @@ class RawInfo:
         if issubclass(etype, SyntaxError):
             if value.text is not None:
                 return value.text  # typically includes "\n"
+            else:  # this can happen with editors_helper.check_syntax()
+                try:
+                    return cache.get_source_lines(value.filename)[value.lineno - 1]
+                except Exception:
+                    return "\n"
         elif self.records:
             _, filename, linenumber, _, _, _ = self.records[-1]
             _, line = cache.get_formatted_partial_source(filename, linenumber, None)
             return line.rstrip()
+        # We should never reach this stage.
+        print("Internal error in get_bad_line.")
         return "\n"
 
 
@@ -620,10 +627,11 @@ def create_traceback(records, etype, value, info):
 
     if issubclass(etype, SyntaxError):
         info["filename"] = filename = value.filename
+        lineno = value.lineno
         offset = value.offset
         msg = value.msg
         lines = cache.get_source_lines(filename)
-        result.append('  File "{}", line {}'.format(filename, value.lineno))
+        result.append('  File "{}", line {}'.format(filename, lineno))
         _line = value.text
         if _line is not None:
             if info["bad_line"].rstrip() != _line.rstrip():
@@ -636,6 +644,11 @@ def create_traceback(records, etype, value, info):
                 offset = offset - (len(_line) - len(bad_line))  # removing indent
                 result.append("    {}".format(bad_line))
                 result.append(" " * (3 + offset) + "^")
+        else:
+            try:
+                info["bad_line"] = cache.get_source_lines(filename)[lineno - 1]
+            except Exception:
+                pass
         result.append("{}: {}".format(etype.__name__, msg))
 
         if not info["bad_line"]:
