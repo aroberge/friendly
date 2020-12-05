@@ -58,15 +58,10 @@ def name_not_defined(unknown_name, info, frame):
     elif type_hint:
         hint = _("Did you use a colon instead of an equal sign?")
 
-    # if hint:
-    #     info["suggest"] = hint
-
     additional = type_hint + format_similar_names(unknown_name, similar)
     try:
         more, hint = missing_self(unknown_name, frame, info, hint)
         additional += more
-        # if hint:
-        #     info["suggest"] = hint
     except Exception as e:
         print("exception raised: ", e)
     if not additional:
