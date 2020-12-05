@@ -50,10 +50,10 @@ import sys
 from friendly_traceback import set_lang
 from friendly_traceback.syntax_errors import analyze_syntax
 
+
 def find(lines=[" "], linenumber=1, message="invalid syntax", offset=1):
     return analyze_syntax._find_likely_cause(
-        source_lines=lines, linenumber=linenumber, message=message, offset=offset,
-        info={}
+        source_lines=lines, linenumber=linenumber, message=message, offset=offset
     )[0]
 
 

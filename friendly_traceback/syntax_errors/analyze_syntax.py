@@ -7,65 +7,24 @@ cause of a SyntaxError and providing a somewhat detailed explanation.
 
 from friendly_traceback.my_gettext import current_lang
 from friendly_traceback.source_cache import cache
-from friendly_traceback.path_info import path_utils
 from . import source_analyzer
 from . import line_analyzer
 from . import message_analyzer
 
 
-def set_cause_syntax(etype, value, info):
-    """Sets the cause"""
-    process_parsing_error(etype, value, info)
-    cause, hint = get_likely_cause(etype, value, info)
-    if cause:
-        if hint:
-            info["suggest"] = hint
-    return cause, hint
-
-
-def get_likely_cause(etype, value, info):
+def set_cause_syntax(etype, value, tb_data):
     """Gets the likely cause of a given exception based on some information
     specific to a given exception.
     """
     _ = current_lang.translate
     cause = hint = None
     if etype.__name__ == "IndentationError":
-        cause = indentation_error_cause(value)
+        cause = indentation_error_cause(tb_data.value)
     elif etype.__name__ == "TabError":
         pass
     else:
-        cause, hint = syntax_error_cause(value, info)
+        cause, hint = find_syntax_error_cause(tb_data)
     return cause, hint
-
-
-def process_parsing_error(etype, value, info):
-    _ = current_lang.translate
-    filepath = value.filename
-    linenumber = value.lineno
-    offset = value.offset
-    partial_source, _ignore = cache.get_formatted_partial_source(
-        filepath, linenumber, offset
-    )
-    if "-->" in partial_source:
-        info["parsing_error"] = _(
-            "Python could not understand the code in the file\n"
-            "'{filename}'\n"
-            "beyond the location indicated by --> and ^.\n"
-        ).format(filename=path_utils.shorten_path(filepath))
-    elif "unexpected EOF while parsing" in repr(value):
-        info["parsing_error"] = _(
-            "Python could not understand the code the file\n"
-            "'{filename}'.\n"
-            "It reached the end of the file and expected more content.\n"
-        ).format(filename=path_utils.shorten_path(filepath))
-    else:
-        info["parsing_error"] = _(
-            "Python could not understand the code in the file\n"
-            "'{filename}'\n"
-            "for an unspecified reason.\n"
-        ).format(filename=path_utils.shorten_path(filepath))
-
-    info["parsing_error_source"] = f"{partial_source}\n"
 
 
 def indentation_error_cause(value):
@@ -92,21 +51,22 @@ def indentation_error_cause(value):
     return this_case
 
 
-def syntax_error_cause(value, info):
-    """Given some source code as a list of lines, a linenumber
-    (starting at 1) indicating where a SyntaxError was detected,
-    a message (which follows SyntaxError:) and an offset,
-    this attempts to find a probable cause for the Syntax Error.
+def find_syntax_error_cause(tb_data):
+    """Attempts to find the cause of a SyntaxError
     """
+    value = tb_data.value
     filepath = value.filename
     linenumber = value.lineno
     offset = value.offset
     message = value.msg
     source_lines = cache.get_source_lines(filepath)
-    return _find_likely_cause(source_lines, linenumber, message, offset, info)
+
+    # We use this indirect method with explicit arguments to make easier
+    # to write unit tests.
+    return _find_likely_cause(source_lines, linenumber, message, offset, tb_data)
 
 
-def _find_likely_cause(source_lines, linenumber, message, offset, info):
+def _find_likely_cause(source_lines, linenumber, message, offset, tb_data=None):
     """Given some source code as a list of lines, a linenumber
     (starting at 1) indicating where a SyntaxError was detected,
     a message (which follows SyntaxError:) and an offset,
@@ -136,7 +96,7 @@ def _find_likely_cause(source_lines, linenumber, message, offset, info):
     if source_lines and "f-string: invalid syntax" not in message:
         offending_line = source_lines[linenumber - 1]
     else:
-        offending_line = info["bad_line"]
+        offending_line = tb_data.bad_line
         source_lines = [offending_line]  # create a fake file for analysis
     line = offending_line.rstrip()
 
@@ -186,7 +146,7 @@ def _find_likely_cause(source_lines, linenumber, message, offset, info):
     # while we look for missing or mismatched brackets, such as (],
     # we also can sometimes identify other problems during this step.
 
-    cause = source_analyzer.scan_source(source_lines, linenumber, offset, info=info)
+    cause = source_analyzer.scan_source(source_lines, linenumber, offset)
     if cause:
         return notice + cause, hint
 

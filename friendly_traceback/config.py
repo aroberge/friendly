@@ -215,7 +215,7 @@ class _State:
 
         try:
             self.saved_traceback_info = info = core.get_traceback_info(
-                etype, value, tb, self._debug
+                etype, value, tb, self._debug, self.traceback_info._raw_info
             )
             explanation = self.formatter(info, include=self.include)
         except FriendlyException as e:
@@ -236,39 +236,39 @@ class _State:
         # the new approach.
 
         self.traceback_info.compile_all_info()
+        new_info = self.traceback_info
         for item in [
+            "header",
             "message",
+            "original_python_traceback",
+            "simulated_python_traceback",
+            "shortened_traceback",
+            "suggest",
             "generic",
             "parsing_error",
             "parsing_error_source",
-            "exception_raised_header",
-            "exception_raised_source",
-            "exception_raised_variables",
-            "exception_raised_variables_header",
+            "cause_header",
+            "cause",
             "last_call_header",
             "last_call_source",
-            "last_call_variables",
             "last_call_variables_header",
-            "simulated_python_traceback",
-            "shortened_traceback",
-            "original_python_traceback",
+            "last_call_variables",
+            "exception_raised_header",
+            "exception_raised_source",
+            "exception_raised_variables_header",
+            "exception_raised_variables",
         ]:
-            if item in info and info[item] != self.traceback_info[item]:
-                print(
-                    item,
-                    "is different",
-                    len(info[item]),
-                    len(self.traceback_info[item]),
-                )
+            if item in info and item in new_info and info[item] != new_info[item]:
+                print(f"{item} is different", len(info[item]), len(new_info[item]))
                 print("info:", info[item])
-                print("new: ", self.traceback_info[item])
+                print("new: ", new_info[item])
                 print("-" * 50)
 
         #
-        if info["bad_line"] != self.traceback_info._raw_info.bad_line:
+        if info["bad_line"] != new_info._raw_info.bad_line:
             print("bad_line is different")
             print("info: |%s|" % info["bad_line"])
-            print("new: |%s|" % self.traceback_info._raw_info.bad_line)
+            print("new: |%s|" % new_info.bad_line)
             print("-" * 50)
 
 

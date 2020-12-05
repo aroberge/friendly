@@ -188,13 +188,43 @@ class FriendlyTraceback:
         self.assign_generic()
         self.assign_location()
         self.assign_tracebacks()
+        self.assign_cause()
 
     def assign_cause(self):
-        self.suggest = ""
-        self.parsing_error = ""
-        self.parsing_error_source = ""
-        self.cause_header = ""
-        self.cause = ""
+        if issubclass(self._raw_info.exception_type, SyntaxError):
+            self.set_cause_syntax()
+
+    def set_cause_syntax(self):
+
+        from .syntax_errors import analyze_syntax
+
+        _ = current_lang.translate
+        etype = self._raw_info.exception_type
+        value = self._raw_info.value
+        tb_data = self._raw_info
+
+        try:
+            cause, hint = analyze_syntax.set_cause_syntax(etype, value, tb_data)  # [3]
+            if cause is not None:
+                if "invalid syntax" in self.message:
+                    header = _(
+                        "Python's error message (invalid syntax) "
+                        "cannot be used to identify the problem:"
+                    )
+                else:
+                    header = _("Likely cause based on the information given by Python:")
+                self.cause_header = header
+                self.cause = cause
+                if hint:
+                    self.suggest = hint
+        except Exception:
+            self.debug_warning = (
+                "debug_warning: Internal error caught in `process_syntax_error()`."
+            )
+            if value.filename == "<stdin>":
+                self.cause = cannot_analyze_stdin()
+            if self._debug:
+                raise
 
     def assign_generic(self):
         """Assigns the generic information about a given error. This is
@@ -214,7 +244,7 @@ class FriendlyTraceback:
         To determine which attributes will be set, consult the docstring
         of the following methods.
 
-        For SyntaxError and subclasses: self.locate_parsin_error()
+        For SyntaxError and subclasses: self.locate_parsing_error()
 
         For other types of exceptions, self.locate_exception_raised(),
         and possibly self.locate_last_call().
@@ -444,7 +474,7 @@ class FriendlyTraceback:
         return result
 
 
-def get_traceback_info(etype, value, tb, debug=False):
+def get_traceback_info(etype, value, tb, debug=False, tb_data=None):
     """Gathers the basic information related to a traceback and
     returns the result in a dict.
     """
@@ -469,7 +499,7 @@ def get_traceback_info(etype, value, tb, debug=False):
     format_python_tracebacks(records, etype, value, python_tb, info)
 
     if issubclass(etype, SyntaxError):
-        return process_syntax_error(etype, value, info, debug)
+        return process_syntax_error(etype, value, info, debug, tb_data)
 
     if not records:
         info["debug_warning"] = "debug_warning: no records found."
@@ -499,7 +529,7 @@ def get_traceback_info(etype, value, tb, debug=False):
     return info
 
 
-def process_syntax_error(etype, value, info, debug):
+def process_syntax_error(etype, value, info, debug, tb_data):
     """Completes the information that can be obtained for a syntax error
     and its subclasses.
     """
@@ -507,8 +537,10 @@ def process_syntax_error(etype, value, info, debug):
 
     _ = current_lang.translate
 
+    process_parsing_error(etype, value, info)
+
     try:
-        cause, hint = analyze_syntax.set_cause_syntax(etype, value, info)  # [3]
+        cause, hint = analyze_syntax.set_cause_syntax(etype, value, tb_data)  # [3]
         if cause is not None:
             if "invalid syntax" in info["message"]:
                 header = _(
@@ -519,6 +551,8 @@ def process_syntax_error(etype, value, info, debug):
                 header = _("Likely cause based on the information given by Python:")
             info["cause_header"] = header
             info["cause"] = cause
+            if hint:
+                info["suggest"] = hint
     except Exception:
         if value.filename == "<stdin>":
             info["cause"] = cannot_analyze_stdin()
@@ -765,3 +799,33 @@ def get_location_header(linenumber, filename, header_name=None):
         return _("Execution stopped on line {linenumber} of file {filename}.\n").format(
             linenumber=linenumber, filename=filename
         )
+
+
+def process_parsing_error(etype, value, info):
+    _ = current_lang.translate
+    filepath = value.filename
+    linenumber = value.lineno
+    offset = value.offset
+    partial_source, _ignore = cache.get_formatted_partial_source(
+        filepath, linenumber, offset
+    )
+    if "-->" in partial_source:
+        info["parsing_error"] = _(
+            "Python could not understand the code in the file\n"
+            "'{filename}'\n"
+            "beyond the location indicated by --> and ^.\n"
+        ).format(filename=path_utils.shorten_path(filepath))
+    elif "unexpected EOF while parsing" in repr(value):
+        info["parsing_error"] = _(
+            "Python could not understand the code the file\n"
+            "'{filename}'.\n"
+            "It reached the end of the file and expected more content.\n"
+        ).format(filename=path_utils.shorten_path(filepath))
+    else:
+        info["parsing_error"] = _(
+            "Python could not understand the code in the file\n"
+            "'{filename}'\n"
+            "for an unspecified reason.\n"
+        ).format(filename=path_utils.shorten_path(filepath))
+
+    info["parsing_error_source"] = f"{partial_source}\n"
