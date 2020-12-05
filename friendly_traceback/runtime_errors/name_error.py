@@ -8,39 +8,40 @@ from .. import utils
 def get_cause(value, info, frame):
     _ = current_lang.translate
 
+    cause = _(
+        "No information is known about this exception.\n"
+        "Please report this example to\n"
+        "https://github.com/aroberge/friendly-traceback/issues\n"
+    )
+    hint = None
     message = str(value)
 
     pattern = re.compile(r"name '(.*)' is not defined")
     match = re.search(pattern, message)
     if match:
-        return name_not_defined(match.group(1), info, frame)
+        cause, hint = name_not_defined(match.group(1), info, frame)
 
     pattern2 = re.compile(
         r"free variable '(.*)' referenced before assignment in enclosing scope"
     )
     match = re.search(pattern2, message)
     if match:
-        return free_variable_referenced(match.group(1), info, frame)
+        cause, hint = free_variable_referenced(match.group(1))
 
-    return _(
-        "No information is known about this exception.\n"
-        "Please report this example to\n"
-        "https://github.com/aroberge/friendly-traceback/issues\n"
-    )
+    if hint:
+        info["suggest"] = hint
+
+    return cause
 
 
-def free_variable_referenced(unknown_name, info, frame):
+def free_variable_referenced(unknown_name):
     _ = current_lang.translate
     cause = _(
         "In your program, `{var_name}` is an unknown name\n"
         " but has been found to appear in a nonlocal scope where "
         "it had not been assigned a value.\n"
     ).format(var_name=unknown_name)
-    hint = info_variables.name_has_type_hint(unknown_name, frame)
-    if hint:  # TODO: I don't think this can ever find anything when an exception
-        return cause + hint  # is raised; I need to check this.
-    else:
-        return cause + _("I have no additional information for you.")
+    return cause, None
 
 
 def name_not_defined(unknown_name, info, frame):
@@ -48,25 +49,32 @@ def name_not_defined(unknown_name, info, frame):
     cause = _("In your program, `{var_name}` is an unknown name.\n").format(
         var_name=unknown_name
     )
+    hint = None
 
-    hint = info_variables.name_has_type_hint(unknown_name, frame)
+    type_hint = info_variables.name_has_type_hint(unknown_name, frame)
     similar = info_variables.get_similar_names(unknown_name, frame)
     if similar["best"] is not None:
-        info["suggest"] = _("Did you mean `{name}`?").format(name=similar["best"])
-    elif hint:
-        info["suggest"] = _("Did you use a colon instead of an equal sign?")
+        hint = _("Did you mean `{name}`?").format(name=similar["best"])
+    elif type_hint:
+        hint = _("Did you use a colon instead of an equal sign?")
 
-    additional = hint + format_similar_names(unknown_name, similar, hint)
+    # if hint:
+    #     info["suggest"] = hint
+
+    additional = type_hint + format_similar_names(unknown_name, similar)
     try:
-        additional += missing_self(unknown_name, frame, info)
+        more, hint = missing_self(unknown_name, frame, info, hint)
+        additional += more
+        # if hint:
+        #     info["suggest"] = hint
     except Exception as e:
         print("exception raised: ", e)
     if not additional:
         additional = _("I have no additional information for you.")
-    return cause + additional
+    return cause + additional, hint
 
 
-def format_similar_names(name, similar, hint):
+def format_similar_names(name, similar):
     """This function formats the names that were found to be similar"""
     _ = current_lang.translate
 
@@ -110,19 +118,19 @@ def format_similar_names(name, similar, hint):
     return message
 
 
-def missing_self(unknown_name, frame, info):
+def missing_self(unknown_name, frame, info, hint):
     """If the unknown name is referred to with no '.' before it,
     and is an attribute of a known object, perhaps 'self.'
     is missing."""
     _ = current_lang.translate
-
+    message = ""
     try:
         tokens = utils.get_significant_tokens(info["bad_line"])
     except Exception:
-        return ""
+        return message, hint
 
     if not tokens:
-        return ""
+        return message, hint
 
     prev_token = tokens[0]
     for token in tokens:
@@ -130,7 +138,7 @@ def missing_self(unknown_name, frame, info):
             break
         prev_token = token
     else:
-        return ""
+        return message, hint
 
     env = (("local", frame.f_locals), ("global", frame.f_globals))
 
@@ -143,11 +151,11 @@ def missing_self(unknown_name, frame, info):
                 known_attributes = dir(obj)
                 if unknown_name in known_attributes:
                     suggest = _("Did you forget to add `self`?")
-                    if "suggest" not in info:
-                        info["suggest"] = suggest
+                    if hint is None:
+                        hint = suggest
                     else:
-                        info["suggest"] += " " + suggest
-                    return _(
+                        hint += " " + suggest
+                    message = _(
                         "The {scope} object `{obj}`"
                         " has an attribute named `{unknown_name}`.\n"
                         "Perhaps you should have written `self.{unknown_name}`"
@@ -157,7 +165,8 @@ def missing_self(unknown_name, frame, info):
                         obj=info_variables.simplify_name(repr(obj)),
                         unknown_name=unknown_name,
                     )
+                    return message, hint
             except Exception:
                 pass
 
-    return ""
+    return message, hint
