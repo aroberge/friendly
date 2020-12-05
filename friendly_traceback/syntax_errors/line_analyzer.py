@@ -6,7 +6,6 @@ from keyword import kwlist
 import sys
 import tokenize
 
-
 from friendly_traceback.my_gettext import current_lang
 from friendly_traceback import utils
 from friendly_traceback.friendly_exception import FriendlyException
@@ -63,7 +62,7 @@ def add_line_analyzer(func):
     of all functions that analyze a single line of code."""
     LINE_ANALYZERS.append(func)
 
-    def wrapper(tokens, offset=None, info=None):
+    def wrapper(tokens, offset=None):
         return func(tokens, offset=offset)
 
     return wrapper
@@ -74,19 +73,19 @@ def add_line_analyzer(func):
 # ========================================================
 
 
-def analyze_last_line(line, offset=None, info=None):
+def analyze_last_line(line, offset=None):
     """Analyzes the last line of code as identified by Python as that
     on which the error occurred."""
     tokens = utils.tokenize_source(line)  # tokens do not include spaces nor comments
 
     if not tokens:
-        return
+        return None, None
 
     for analyzer in LINE_ANALYZERS:
-        cause = analyzer(tokens, offset=offset, info=info)
+        cause, hint = analyzer(tokens, offset=offset)
         if cause:
-            return cause
-    return
+            return cause, hint
+    return None, None
 
 
 # ==================
@@ -99,129 +98,147 @@ def analyze_last_line(line, offset=None, info=None):
 def copy_pasted_code(tokens, **kwargs):
     """Detecting code that starts with a Python prompt"""
     _ = current_lang.translate
+    cause = hint = None
     if len(tokens) < 2:
-        return False
+        return cause, hint
     if tokens[0].string == ">>" and tokens[1].string == ">":
-        return _(
+        cause = _(
             "It looks like you copy-pasted code from an interactive interpreter.\n"
             "The Python prompt, `>>>`, should not be included in your code.\n"
         )
+    return cause, hint
 
 
 @add_line_analyzer
-def detect_walrus(tokens, offset=None, info=None):
+def detect_walrus(tokens, offset=None):
     """Detecting if code uses named assignment operator := with an
     older version of Python.
     """
     _ = current_lang.translate
+    cause = hint = None
     if sys.version_info >= (3, 8):
-        return False
+        return cause, hint
 
     bad_token, index = find_offending_token(tokens, offset)
     if bad_token is None or bad_token != ":":
-        return False
+        return cause, hint
 
     try:
         next_token = tokens[index + 1]
     except IndexError:
-        return False
+        return cause, hint
 
     if next_token != "=":
-        return False
+        return cause, hint
 
-    return _(
+    cause = _(
         "You appear to be using the operator `:=`, sometimes called\n"
         "the walrus operator. This operator requires the use of\n"
         "Python 3.8 or newer. You are using version {version}.\n"
     ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
+    return cause, hint
 
 
 @add_line_analyzer
-def detect_backquote(tokens, offset=None, info=None):
+def detect_backquote(tokens, offset=None):
     """Detecting if the error is due to using `x` which was allowed
     in Python 2.
     """
     _ = current_lang.translate
+    cause = hint = None
     bad_token, ignore = find_offending_token(tokens, offset)
     if bad_token is None:
-        return False
+        return cause, hint
     # the token that gets flagged as problematic is the one after ""
     if bad_token == "`":
-        return _(
+        cause = _(
             "You are using the backquote character.\n"
             "Either you meant to write a single quote, ', "
             "or copied Python 2 code;\n"
             "in this latter case, use the function `repr(x)`."
         )
+    return cause, hint
 
 
 @add_line_analyzer
 def assign_to_a_keyword(tokens, **kwargs):
     """Checks to see if line is of the form 'keyword = ...'"""
     _ = current_lang.translate
+    cause = hint = None
     if len(tokens) < 2 or (tokens[0].string not in kwlist) or tokens[1].string != "=":
-        return False
+        return cause, hint
 
-    return _(
+    cause = _(
         "You were trying to assign a value to the Python keyword `{keyword}`.\n"
         "This is not allowed.\n"
         "\n"
     ).format(keyword=tokens[0].string)
+    return cause, hint
 
 
 @add_line_analyzer
 def confused_elif(tokens, **kwargs):
     _ = current_lang.translate
+    cause = hint = None
     name = None
     if tokens[0].string == "elseif":
         name = "elseif"
     elif tokens[0].string == "else" and len(tokens) > 1 and tokens[1].string == "if":
         name = "else if"
     if name:
-        return _(
+        cause = _(
             "You likely meant to use Python's `elif` keyword\n"
             "but wrote `{name}` instead\n"
             "\n"
         ).format(name=name)
+    return cause, hint
 
 
 @add_line_analyzer
 def import_from(tokens, **kwargs):
     _ = current_lang.translate
+    cause = hint = None
     if len(tokens) < 4:
-        return
+        return cause, hint
     if tokens[0].string != "import":
-        return
+        return cause, hint
     third = tokens[2].string
     if third == "from":
         function = tokens[1].string
         module = tokens[3].string
 
-        return _(
+        cause = _(
             "You wrote something like\n\n"
             "    import {function} from {module}\n"
             "instead of\n\n"
             "    from {module} import {function}\n\n"
             "\n"
         ).format(module=module, function=function)
+    return cause, hint
 
 
 @add_line_analyzer
 def keyword_as_attribute(tokens, **kwargs):
     """Will identify something like  obj.True ..."""
     _ = current_lang.translate
+    cause = hint = None
     prev_word = None
     for token in tokens:
         word = token.string
         if prev_word == ".":
             if word in kwlist:
-                return _(
+                cause = _(
                     "You cannot use the Python keyword `{word}` as an attribute.\n\n"
                 ).format(word=word)
+                break
             elif word == "__debug__":
-                return _("You cannot use the constant `__debug__` as an attribute.\n\n")
+                cause = _(
+                    "You cannot use the constant `__debug__` as an attribute.\n\n"
+                )
+                break
         else:
             prev_word = word
+    return cause, hint
 
 
 @add_line_analyzer
@@ -233,52 +250,58 @@ def misplaced_quote(tokens, **kwargs):
     followed by a NAME token (t).
     """
     _ = current_lang.translate
+    cause = hint = None
     if len(tokens) < 2:
-        return
+        return cause, hint
     prev = tokens[0]
     for token in tokens:
         if prev.type == tokenize.STRING and token.type == tokenize.NAME:
-            return _(
+            cause = _(
                 "There appears to be a Python identifier (variable name)\n"
                 "immediately following a string.\n"
                 "I suspect that you were trying to use a quote inside a string\n"
                 "that was enclosed in quotes of the same kind.\n"
             )
+            break
         prev = token
+    return cause, hint
 
 
 @add_line_analyzer
 def missing_colon(tokens, **kwargs):
     """look for missing colon at the end of statement"""
     _ = current_lang.translate
+    cause = hint = None
 
     if tokens[-1].string == ":":
-        return
+        return cause, hint
 
     if not is_potential_statement(tokens):
-        return
+        return cause, hint
 
     name = tokens[0].string
 
     if name == "class":
         name = _("a class")
-        return _(
+        cause = _(
             "You wanted to define `{class_}`\n"
             "but forgot to add a colon `:` at the end\n"
             "\n"
         ).format(class_=name)
     elif name in ["for", "while"]:
-        return _(
+        cause = _(
             "You wrote a `{for_while}` loop but\n"
             "forgot to add a colon `:` at the end\n"
             "\n"
         ).format(for_while=name)
     elif name in ["def", "elif", "else", "except", "finally", "if", "try"]:
-        return _(
+        cause = _(
             "You wrote a statement beginning with\n"
             "`{name}` but forgot to add a colon `:` at the end\n"
             "\n"
         ).format(name=name)
+
+    return cause, hint
 
 
 @add_line_analyzer
@@ -286,11 +309,12 @@ def malformed_def(tokens, **kwargs):
     """Looks for problems with defining a function, assuming that
     the information passed looks like a complete statement"""
     _ = current_lang.translate
+    cause = hint = None
     if tokens[0].string != "def":
-        return False
+        return cause, hint
 
     if not is_potential_statement(tokens):
-        return
+        return cause, hint
 
     # need at least five tokens: def name ( ) :
     if (
@@ -301,18 +325,21 @@ def malformed_def(tokens, **kwargs):
         or tokens[-1].string != ":"
     ):
         name = _("a function or method")
-        return _(
+        cause = _(
             "You tried to define {class_or_function} "
             "and did not use the correct syntax.\n"
             "The correct syntax is:\n\n"
             "    def name ( optional_arguments ):"
             "\n"
         ).format(class_or_function=name)
+        return cause, hint
+
     fn_name = tokens[1].string
     if fn_name in kwlist:
-        return _(
+        cause = _(
             "You tried to use the Python keyword `{kwd}` as a function name.\n"
         ).format(kwd=fn_name)
+        return cause, hint
 
     # Lets look at the possibility that a keyword might have been used
     # as an argument or keyword argument. The following test is admiteddly
@@ -357,123 +384,139 @@ def malformed_def(tokens, **kwargs):
                 and prev_token_str in [",", "*", "**"]
             )
         ):
-            return _(
-                "I am guessing that you tried to use the Python keyword\n"
-                "`{kwd}` as an argument in the definition of a function.\n"
-            ).format(kwd=char)
+            return (
+                _(
+                    "I am guessing that you tried to use the Python keyword\n"
+                    "`{kwd}` as an argument in the definition of a function.\n"
+                ).format(kwd=char),
+                None,
+            )
+            # break
         prev_token_str = char
+    return cause, hint
 
 
 @add_line_analyzer
 def print_as_statement(tokens, **kwargs):
     _ = current_lang.translate
+    cause = hint = None
     if tokens[0].string != "print":
-        return False
+        return cause, hint
+
     if len(tokens) == 1 or tokens[1].string != "(":
-        return _(
+        cause = _(
             "In older version of Python, `print` was a keyword.\n"
             "Now, `print` is a function; you need to use parentheses to call it.\n"
         )
+    return cause, hint
 
 
 @add_line_analyzer
 def calling_pip(tokens, **kwargs):
     _ = current_lang.translate
+    cause = hint = None
     first = tokens[0].string
     if first not in ["pip", "python"]:
-        return False
+        return cause, hint
 
-    message = _(
+    use_pip = _(
         "It looks as if you are attempting to use pip to install a module.\n"
         "`pip` is a command that needs to run in a terminal,\n"
         "not from a Python interpreter.\n"
     )
 
-    if first == "pip":
-        return message
-
     for tok in tokens:
         if tok.string == "pip":
-            return message
+            return use_pip, hint
+    return cause, hint
 
 
 @add_line_analyzer
-def dot_followed_by_bracket(tokens, offset=None, info=None):
+def dot_followed_by_bracket(tokens, offset=None):
     _ = current_lang.translate
+    cause = hint = None
     bad_token, index = find_offending_token(tokens, offset)
     if bad_token is None or index == 0:
-        return False
+        return cause, hint
     prev_token = tokens[index - 1]
     if bad_token.string in ["(", ")", "[", "]", "{", "}"] and prev_token == ".":
-        return _("You cannot have a dot `.` followed by `{bracket}`.\n").format(
+        cause = _("You cannot have a dot `.` followed by `{bracket}`.\n").format(
             bracket=bad_token.string
         )
+    return cause, hint
 
 
 @add_line_analyzer
-def raise_single_exception(tokens, offset=None, info=None):
+def raise_single_exception(tokens, offset=None):
     _ = current_lang.translate
+    cause = hint = None
     if tokens[0].string != "raise":
-        return False
+        return cause, hint
     bad_token, ignore = find_offending_token(tokens, offset)
     if bad_token is None:
-        return False
+        return cause, hint
     if bad_token == ",":
-        return _(
+        cause = _(
             "It looks like you are trying to raise an exception using Python 2 syntax.\n"
         )
+    return cause, hint
 
 
 @add_line_analyzer
-def assign_instead_of_equal(tokens, offset=None, info=None):
+def assign_instead_of_equal(tokens, offset=None):
     """Checks to see if an assignment sign, '=', has been used instead of
     an equal sign, '==', in an if or elif statement."""
     _ = current_lang.translate
+    cause = hint = None
     if tokens[0].string not in ["if", "elif", "while"]:
-        return False
+        return cause, hint
 
     bad_token, ignore = find_offending_token(tokens, offset)
     if bad_token == "=":
         statement = tokens[0].string
         if statement in ["if", "elif"]:
-            return _(
+            cause = _(
                 "You used an assignment operator `=` instead of an equality operator `==` \n"
                 "with an `{if_elif}` statement.\n"
             ).format(if_elif=statement)
         elif sys.version_info < (3, 8):
-            return _(
+            cause = _(
                 "You used an assignment operator `=` instead of an equality operator `==` \n"
                 "with a `{while_}` statement.\n"
             ).format(while_=statement)
         else:
-            return _(
+            cause = _(
                 "You used an assignment operator `=`; perhaps you meant to use \n"
                 "an equality operator, `==`, or the walrus operator `:=`.\n"
             )
+    return cause, hint
 
 
 @add_line_analyzer
-def invalid_name(tokens, offset=None, info=None):
+def invalid_name(tokens, offset=None):
     """Identifies invalid identifiers when a name begins with a number"""
     _ = current_lang.translate
+    cause = hint = None
 
     if len(tokens) < 2:
-        return False
+        return cause, hint
 
     for first, second in zip(tokens, tokens[1:]):
         if first.is_number() and second.is_identifier() and first.end == second.start:
-            return _("Valid names cannot begin with a number.\n")
+            cause = _("Valid names cannot begin with a number.\n")
+    return cause, hint
 
 
 @add_line_analyzer
-def missing_comma_or_operator(tokens, offset=None, info=None):
+def missing_comma_or_operator(tokens, offset=None):
     """Check to see if a comma or other operator
     is possibly missing between identifiers, or numbers, or both.
     """
     _ = current_lang.translate
+    cause = hint = None
 
     if len(tokens) < 2:
-        return False
+        return cause, hint
 
     for first, second in zip(tokens, tokens[1:]):
         if (
@@ -481,13 +524,15 @@ def missing_comma_or_operator(tokens, offset=None, info=None):
             and (second.is_number() or second.is_identifier())
             and second.start_col <= offset <= second.end_col
         ):
-            info["suggest"] = _(
+            hint = _(
                 "Did you forget something between `{first}` and `{second}`?"
             ).format(first=first.string, second=second.string)
 
-            return _(
+            cause = _(
                 "Python indicates that the error is caused by "
                 "`{second}` written just after `{first}`.\n"
                 "Perhaps you forgot a comma or an operator, like `+`, `*`, etc., "
                 "between `{first}` and `{second}`."
             ).format(first=first.string, second=second.string)
+            return cause, hint
+    return cause, hint

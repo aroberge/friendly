@@ -171,10 +171,10 @@ def _find_likely_cause(source_lines, linenumber, message, offset, info):
     # where the error has been found by Python, and try to find the source
     # of the error
 
-    cause = line_analyzer.analyze_last_line(line, offset=offset, info=info)
+    cause, hint = line_analyzer.analyze_last_line(line, offset=offset)
     if cause:
-        if "suggest" in info:
-            hint = info["suggest"]
+        if hint:
+            info["suggest"] = hint
         return notice + cause, hint
 
     # TODO: check to see if the offset correponds to the first token
