@@ -54,7 +54,7 @@ def find(lines=[" "], linenumber=1, message="invalid syntax", offset=1):
     return analyze_syntax._find_likely_cause(
         source_lines=lines, linenumber=linenumber, message=message, offset=offset,
         info={}
-    )
+    )[0]
 
 
 multiline_def = """def f(x,

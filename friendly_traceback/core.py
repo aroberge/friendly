@@ -498,8 +498,20 @@ def process_syntax_error(etype, value, info, debug):
     """
     from .syntax_errors import analyze_syntax
 
+    _ = current_lang.translate
+
     try:
-        analyze_syntax.set_cause_syntax(etype, value, info)  # [3]
+        cause, hint = analyze_syntax.set_cause_syntax(etype, value, info)  # [3]
+        if cause is not None:
+            if "invalid syntax" in info["message"]:
+                header = _(
+                    "Python's error message (invalid syntax) "
+                    "cannot be used to identify the problem:"
+                )
+            else:
+                header = _("Likely cause based on the information given by Python:")
+            info["cause_header"] = header
+            info["cause"] = cause
     except Exception:
         if value.filename == "<stdin>":
             info["cause"] = cannot_analyze_stdin()

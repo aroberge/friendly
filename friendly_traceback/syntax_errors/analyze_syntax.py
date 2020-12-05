@@ -16,7 +16,7 @@ from . import message_analyzer
 def set_cause_syntax(etype, value, info):
     """Sets the cause"""
     process_parsing_error(etype, value, info)
-    get_likely_cause(etype, value, info)
+    return get_likely_cause(etype, value, info)
 
 
 def get_likely_cause(etype, value, info):
@@ -24,24 +24,13 @@ def get_likely_cause(etype, value, info):
     specific to a given exception.
     """
     _ = current_lang.translate
-    header, cause = None, None
     if etype.__name__ == "IndentationError":
-        cause = indentation_error_cause(value)
+        cause, hint = indentation_error_cause(value)
     elif etype.__name__ == "TabError":
-        cause = None
+        cause, hint = None, None
     else:
-        cause = syntax_error_cause(value, info)
-    if cause is not None:
-        if "invalid syntax" in info["message"]:
-            header = _(
-                "Python's error message (invalid syntax) "
-                "cannot be used to identify the problem:"
-            )
-        else:
-            header = _("Likely cause based on the information given by Python:")
-        info["cause_header"] = header
-        info["cause"] = cause
-    return
+        cause, hint = syntax_error_cause(value, info)
+    return cause, hint
 
 
 def process_parsing_error(etype, value, info):
@@ -95,7 +84,7 @@ def indentation_error_cause(value):
             "less indented than the preceding one,\n"
             "and is not aligned vertically with another block of code.\n"
         )
-    return this_case
+    return this_case, None
 
 
 def syntax_error_cause(value, info):
@@ -119,6 +108,7 @@ def _find_likely_cause(source_lines, linenumber, message, offset, info):
     this attempts to find a probable cause for the Syntax Error.
     """
     _ = current_lang.translate
+    hint = None
 
     # SyntaxError in f-strings are handled differently by Python
     # than other types of errors. They are effectively handled internally
@@ -161,7 +151,7 @@ def _find_likely_cause(source_lines, linenumber, message, offset, info):
             info=info,
         )
         if cause:
-            return cause
+            return cause, hint
         else:
             notice = _(
                 "Python gave us the following informative message\n"
@@ -182,7 +172,9 @@ def _find_likely_cause(source_lines, linenumber, message, offset, info):
 
     cause = line_analyzer.analyze_last_line(line, offset=offset, info=info)
     if cause:
-        return notice + cause
+        if "suggest" in info:
+            hint = info["suggest"]
+        return notice + cause, hint
 
     # TODO: check to see if the offset correponds to the first token
     # of a line; if so, the error might be found by looking at the
@@ -194,18 +186,23 @@ def _find_likely_cause(source_lines, linenumber, message, offset, info):
 
     cause = source_analyzer.scan_source(source_lines, linenumber, offset, info=info)
     if cause:
-        return notice + cause
+        if "suggest" in info:
+            hint = info["suggest"]
+        return notice + cause, hint
 
     # Eventually, we might add another step that looks at the entire code
     # For now, we just stop here
 
-    return _(
-        "Currently, I cannot guess the likely cause of this error.\n"
-        "Try to examine closely the line indicated as well as the line\n"
-        "immediately above to see if you can identify some misspelled\n"
-        "word, or missing symbols, like (, ), [, ], :, etc.\n"
-        "\n"
-        "You might want to report this case to\n"
-        "https://github.com/aroberge/friendly-traceback/issues\n"
-        "\n"
+    return (
+        _(
+            "Currently, I cannot guess the likely cause of this error.\n"
+            "Try to examine closely the line indicated as well as the line\n"
+            "immediately above to see if you can identify some misspelled\n"
+            "word, or missing symbols, like (, ), [, ], :, etc.\n"
+            "\n"
+            "You might want to report this case to\n"
+            "https://github.com/aroberge/friendly-traceback/issues\n"
+            "\n"
+        ),
+        None,
     )
