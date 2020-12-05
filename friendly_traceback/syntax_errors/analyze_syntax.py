@@ -16,7 +16,11 @@ from . import message_analyzer
 def set_cause_syntax(etype, value, info):
     """Sets the cause"""
     process_parsing_error(etype, value, info)
-    return get_likely_cause(etype, value, info)
+    cause, hint = get_likely_cause(etype, value, info)
+    if cause:
+        if hint:
+            info["suggest"] = hint
+    return cause, hint
 
 
 def get_likely_cause(etype, value, info):
@@ -24,10 +28,11 @@ def get_likely_cause(etype, value, info):
     specific to a given exception.
     """
     _ = current_lang.translate
+    cause = hint = None
     if etype.__name__ == "IndentationError":
-        cause, hint = indentation_error_cause(value)
+        cause = indentation_error_cause(value)
     elif etype.__name__ == "TabError":
-        cause, hint = None, None
+        pass
     else:
         cause, hint = syntax_error_cause(value, info)
     return cause, hint
@@ -84,7 +89,7 @@ def indentation_error_cause(value):
             "less indented than the preceding one,\n"
             "and is not aligned vertically with another block of code.\n"
         )
-    return this_case, None
+    return this_case
 
 
 def syntax_error_cause(value, info):
@@ -150,8 +155,6 @@ def _find_likely_cause(source_lines, linenumber, message, offset, info):
             offset=offset,
         )
         if cause:
-            if hint:
-                info["suggest"] = hint
             return cause, hint
         else:
             notice = _(
@@ -173,8 +176,6 @@ def _find_likely_cause(source_lines, linenumber, message, offset, info):
 
     cause, hint = line_analyzer.analyze_last_line(line, offset=offset)
     if cause:
-        if hint:
-            info["suggest"] = hint
         return notice + cause, hint
 
     # TODO: check to see if the offset correponds to the first token
@@ -187,8 +188,6 @@ def _find_likely_cause(source_lines, linenumber, message, offset, info):
 
     cause = source_analyzer.scan_source(source_lines, linenumber, offset, info=info)
     if cause:
-        if "suggest" in info:
-            hint = info["suggest"]
         return notice + cause, hint
 
     cause = _(
