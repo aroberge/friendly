@@ -8,7 +8,7 @@ from ..utils import get_similar_words
 from ..path_info import path_utils
 
 
-def get_cause(value, info, frame, tb_data):
+def get_cause(value, frame, tb_data):
     _ = current_lang.translate
 
     message = str(value)
@@ -51,10 +51,10 @@ def get_cause(value, info, frame, tb_data):
     elif match3:
         cause, hint = cannot_import_name(match3.group(1), frame, tb_data)
 
-    if hint:
-        info["suggest"] = hint
+    # if hint:
+    #     info["suggest"] = hint
 
-    return cause
+    return cause, hint
 
 
 def cannot_import_name_from(name, module, frame, tb_data, add_circular_hint=True):

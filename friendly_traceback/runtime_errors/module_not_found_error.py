@@ -13,7 +13,7 @@ from . import stdlib_modules
 # ModuleNotFoundError: No module named 'os.pathh'; 'os' is not a package
 
 
-def get_cause(value, info, frame, tb_data):
+def get_cause(value, frame, tb_data):
     _ = current_lang.translate
 
     message = str(value)
@@ -29,9 +29,7 @@ def get_cause(value, info, frame, tb_data):
     match = re.search(pattern, message)
     if match:
         cause, hint = no_module_named(match.group(1))
-        if hint:
-            info["suggest"] = hint
-    return cause
+    return cause, hint
 
 
 def no_module_named(name):

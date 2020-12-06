@@ -10,7 +10,7 @@ from ..source_cache import cache
 from . import stdlib_modules
 
 
-def get_cause(value, info, frame, tb_data):
+def get_cause(value, frame, tb_data):
     _ = current_lang.translate
     message = str(value)
     cause = hint = None
@@ -38,9 +38,9 @@ def get_cause(value, info, frame, tb_data):
             cause, hint = attribute_error_in_object(
                 match3.group(1), match3.group(2), tb_data, frame
             )
-    if hint:
-        info["suggest"] = hint
-    return cause
+    # if hint:
+    #     info["suggest"] = hint
+    return cause, hint
 
 
 # ======= Attribute error in module =========

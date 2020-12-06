@@ -5,7 +5,7 @@ from .. import info_variables
 from .. import utils
 
 
-def get_cause(value, info, frame, tb_data):
+def get_cause(value, frame, tb_data):
     _ = current_lang.translate
 
     cause = _(
@@ -28,10 +28,7 @@ def get_cause(value, info, frame, tb_data):
     if match:
         cause, hint = free_variable_referenced(match.group(1))
 
-    if hint:
-        info["suggest"] = hint
-
-    return cause
+    return cause, hint
 
 
 def free_variable_referenced(unknown_name):

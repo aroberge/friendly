@@ -553,14 +553,16 @@ def get_traceback_info(etype, value, tb, debug=False, tb_data=None):
     )  # [5]
 
     try:
-        cause = info_specific.get_likely_cause(
-            etype, value, info, frame, tb_data
+        cause, hint = info_specific.get_likely_cause(
+            etype, value, frame, tb_data
         )  # [3]
         if cause is not None:
             info["cause_header"] = _(
                 "Likely cause based on the information given by Python:"
             )
             info["cause"] = cause
+            if hint:
+                info["suggest"] = hint
     except Exception:
         info[
             "debug_warning"

@@ -6,7 +6,7 @@ from ..my_gettext import current_lang
 from .. import info_variables
 
 
-def get_cause(value, info, frame, tb_data):
+def get_cause(value, frame, tb_data):
     _ = current_lang.translate
     hint = None
     cause = _(
@@ -19,10 +19,8 @@ def get_cause(value, info, frame, tb_data):
     match = re.search(pattern, str(value))
     if match:
         cause, hint = local_variable_referenced(match.group(1), frame)
-        if hint:
-            info["suggest"] = hint
 
-    return cause
+    return cause, hint
 
 
 def local_variable_referenced(unknown_name, frame):

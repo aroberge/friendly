@@ -24,19 +24,18 @@ def add_message_parser(func):
     return wrapper
 
 
-def get_cause(value, info, frame, tb_data):
+def get_cause(value, frame, tb_data):
     _ = current_lang.translate
+    unknown = _(
+        "I do not recognize this case. Please report it to\n"
+        "https://github.com/aroberge/friendly-traceback/issues\n"
+    )
     message = str(value)
     for parser in MESSAGES_PARSERS:
         cause, hint = parser(message, frame, tb_data)
         if cause is not None:
-            if hint:
-                info["suggest"] = hint
-            return cause
-    return _(
-        "I do not recognize this case. Please report it to\n"
-        "https://github.com/aroberge/friendly-traceback/issues\n"
-    )
+            return cause, hint
+    return unknown, None
 
 
 def convert_type(short_form):
