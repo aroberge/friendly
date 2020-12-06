@@ -28,10 +28,7 @@ from . import info_generic
 from . import info_specific
 from . import info_variables
 
-# from . import utils
-
 from .my_gettext import current_lang
-
 from .source_cache import cache, highlight_source
 from .path_info import is_excluded_file, EXCLUDED_FILE_PATH, path_utils
 
@@ -164,15 +161,39 @@ class TracebackData:
 
 
 class FriendlyTraceback:
-    """Intended as a replacement to the current dict info.
+    """Main class for creating a friendly traceback.
 
-    See issue #117.
+    All the information available to the end user is stored in a
+    dict called "info". The various keys of that dict are documented
+    in the docstrings of the relevant methods.
 
-    This is work in progress, currently unused.
+    To get all possible attributes set up, one needs to call
+    compile_info() after initializing this class. This is done so
+    as to allow third-party users to selectively call only one of
+
+    * assign_cause()
+    * assign_generic()
+    * assign_location()
+
+    if they so wish.
+
+    Various functions are available when using a friendly console,
+    which can show part of the information compile here.
+    Among those:
+
+    * where() shows the result of assign_location()
+    * why() shows the cause, as compiled by assign_cause()
+    * hint() is a shorter version of why(), sometimes available.
+    * what() shows the information compiled by assign_generic()
     """
 
     def __init__(self, etype, value, tb, debug=False):
-        """We define all the variables here for now"""
+        """The basic argument are those generated after a traceback
+        and obtained via::
+
+            etype, value, tb = sys.exc_info()
+
+        The "header" key for the info dict is assigned here."""
         _ = current_lang.translate
         self.tb_data = TracebackData(etype, value, tb, debug)
         self._debug = debug
