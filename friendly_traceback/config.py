@@ -90,6 +90,18 @@ class _State:
             self._captured.clear()
         return result
 
+    def set_lang(self, lang):
+        """Sets the language and, if it is not the current language
+        and a traceback exists, the information is recompiled for the
+        new target language.
+        """
+        if lang == self.lang:
+            return
+        current_lang.install(lang)
+        self.lang = lang
+        if self.saved_info is not None:
+            self.friendly_traceback.recompile_info()
+
     def install_gettext(self, lang):
         """Sets the current language for gettext."""
         current_lang.install(lang)

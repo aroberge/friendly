@@ -171,12 +171,11 @@ class FriendlyTraceback:
     This is work in progress, currently unused.
     """
 
-    def __init__(self, etype, value, tb, lang="en", debug=False):
+    def __init__(self, etype, value, tb, debug=False):
         """We define all the variables here for now"""
         _ = current_lang.translate
         self.tb_data = TracebackData(etype, value, tb, debug)
         self._debug = debug
-        self.lang = lang
         self.info = {}
         self.info["debug_warning"] = self.tb_data.debug_warning
         self.info["header"] = _("Python exception:")

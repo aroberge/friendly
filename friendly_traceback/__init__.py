@@ -34,7 +34,6 @@ del valid_version
 
 import warnings as _warnings
 
-
 from .version import __version__  # noqa
 from . import path_info
 from .config import session
@@ -248,7 +247,7 @@ def set_lang(lang):
     If no translations exist for that language, the original
     English strings will be used.
     """
-    session.install_gettext(lang)
+    session.set_lang(lang)
 
 
 def get_lang():
