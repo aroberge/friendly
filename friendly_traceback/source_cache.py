@@ -137,6 +137,7 @@ def highlight_source(linenumber, index, lines, offset=None):
     if offset is not None:
         offset_mark = " " * (8 + nb_digits + offset) + "^"
 
+    marked = False
     for i, line in enumerate(lines, linenumber - index):
         if i == linenumber:
             num = with_mark.format(i)
@@ -144,6 +145,12 @@ def highlight_source(linenumber, index, lines, offset=None):
             new_lines.append(num + line.rstrip())
             if offset is not None:
                 new_lines.append(offset_mark)
+                marked = True
+        elif marked:
+            if not line.strip():  # do not add empty line for SyntaxError
+                break
+            num = no_mark.format(i)
+            new_lines.append(num + line.rstrip())
         else:
             num = no_mark.format(i)
             new_lines.append(num + line.rstrip())
