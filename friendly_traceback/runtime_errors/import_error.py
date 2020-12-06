@@ -51,9 +51,6 @@ def get_cause(value, frame, tb_data):
     elif match3:
         cause, hint = cannot_import_name(match3.group(1), frame, tb_data)
 
-    # if hint:
-    #     info["suggest"] = hint
-
     return cause, hint
 
 

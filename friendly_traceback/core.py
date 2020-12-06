@@ -105,19 +105,18 @@ class RawInfo:
         self.exception_name = etype.__name__
         self.value = value
         self.message = str(value)
-        self.tb = tb
         self.formatted_tb = traceback.format_exception(etype, value, tb)
         self.debug = debug
-        self.records = self.get_records()
+        self.records = self.get_records(tb)
         self.debug_warning = ""
         self.get_source_info(etype, value)
 
-    def get_records(self):
+    def get_records(self, tb):
         """Get the traceback frame history, excluding those originating
         from our own code that are included either at the beginning or
         at the end of the traceback.
         """
-        records = inspect.getinnerframes(self.tb, cache.context)
+        records = inspect.getinnerframes(tb, cache.context)
         records = list(
             dropwhile(lambda record: is_excluded_file(record.filename), records)
         )
@@ -170,15 +169,17 @@ class FriendlyTraceback:
         """We define all the variables here for now"""
         _ = current_lang.translate
         self._raw_info = RawInfo(etype, value, tb, debug)
-        self.debug_warning = self._raw_info.debug_warning
+        self.info = {}
+        self.info["debug_warning"] = self._raw_info.debug_warning
         self._debug = debug
-        self.header = _("Python exception:")
+        self.info["header"] = _("Python exception:")
+        self.assign_tracebacks()
 
     def __contains__(self, key):
         """Indicates if a given 'key' corresponds to a known non-empty
         string attribute.
         """
-        if hasattr(self, key):
+        if key and hasattr(self, key):
             item = getattr(self, key)
             if item and isinstance(item, str):
                 return True
@@ -191,22 +192,68 @@ class FriendlyTraceback:
         """
         if self.__contains__(item):
             return getattr(self, item)
-        else:
-            raise KeyError(f"{item} is not a known attribute of {self}.")
 
     def compile_all_info(self):
         """Compile all the available info at once."""
         self.assign_message()
         self.assign_generic()
         self.assign_location()
-        self.assign_tracebacks()
         self.assign_cause()
 
     def assign_cause(self):
-        if not hasattr(self, "simulated_python_traceback"):
-            self.assign_tracebacks()
+        """Determine the cause of an exception, which is what is returned
+        by ``why()``.
+
+        Sets the value of the following attributes:
+
+        * cause_header
+        * cause
+
+        and possibly:
+
+        * suggest
+
+        the latter being the "hint" appended to the friendly traceback.
+        """
         if issubclass(self._raw_info.exception_type, SyntaxError):
             self.set_cause_syntax()
+        else:
+            self.set_cause_runtime()
+
+    def set_cause_runtime(self):
+        """For exceptions other than SyntaxError and subclasses.
+        Sets the value of the following attributes:
+
+        * cause_header
+        * cause
+
+        and possibly:
+
+        * suggest
+        """
+        _ = current_lang.translate
+
+        etype = self._raw_info.exception_type
+        value = self._raw_info.value
+        tb_data = self._raw_info
+        try:
+            cause, hint = info_specific.get_likely_cause(
+                etype, value, self.exception_frame, tb_data
+            )  # [3]
+            if cause is not None:
+                self.info["cause_header"] = _(
+                    "Likely cause based on the information given by Python:"
+                )
+                self.info["cause"] = cause
+                if hint:
+                    self.info["suggest"] = hint
+        except Exception:
+            self.info["debug_warning"] = (
+                "debug_warning: Internal error caught in"
+                " `info.specific.get_likely_cause()`."
+            )
+            if self._debug:
+                raise
 
     def set_cause_syntax(self):
         """For SyntaxError and subclasses. Sets the value of the following
@@ -237,16 +284,16 @@ class FriendlyTraceback:
                     )
                 else:
                     header = _("Likely cause based on the information given by Python:")
-                self.cause_header = header
-                self.cause = cause
+                self.info["cause_header"] = header
+                self.info["cause"] = cause
                 if hint:
-                    self.suggest = hint
+                    self.info["suggest"] = hint
         except Exception:
-            self.debug_warning = (
-                "debug_warning: Internal error caught in `process_syntax_error()`."
-            )
+            self.info[
+                "debug_warning"
+            ] = "debug_warning: Internal error caught in `set_cause_syntax()`."
             if value.filename == "<stdin>":
-                self.cause = cannot_analyze_stdin()
+                self.info["cause"] = cannot_analyze_stdin()
             if self._debug:
                 raise
 
@@ -259,7 +306,7 @@ class FriendlyTraceback:
         * generic
         """
         exc_name = self._raw_info.exception_name
-        self.generic = info_generic.get_generic_explanation(exc_name)
+        self.info["generic"] = info_generic.get_generic_explanation(exc_name)
 
     def assign_location(self):
         """This sets the values of the answers to 'where()', that is
@@ -279,14 +326,15 @@ class FriendlyTraceback:
 
         records = self._raw_info.records
         if not records:
-            self.debug_warning += "debug_warning: no records found."
+            self.info["debug_warning"] += "debug_warning: no records found."
             return
         self.locate_exception_raised(records[-1])
         if len(records) > 1:
             self.locate_last_call(records[0])
 
     def locate_exception_raised(self, record):
-        """Sets the values of the following attributes:
+        """Sets the values of the following attributes which are
+        part of a friendly-traceback:
 
         * exception_raised_header
         * exception_raised_source
@@ -298,20 +346,25 @@ class FriendlyTraceback:
         _ = current_lang.translate
 
         frame, filename, linenumber, _func, lines, index = record
+        # The following is needed when determining the cause
+        self.exception_frame = frame
+
         source_info = get_partial_source(filename, linenumber, lines, index)
         filename = path_utils.shorten_path(filename)
         if session.use_rich:
             filename = f"`'{filename}'`"
 
-        self.exception_raised_header = _(
+        self.info["exception_raised_header"] = _(
             "Exception raised on line {linenumber} of file {filename}.\n"
         ).format(linenumber=linenumber, filename=filename)
-        self.exception_raised_source = source_info["source"]
+        self.info["exception_raised_source"] = source_info["source"]
 
         var_info = info_variables.get_var_info(source_info["line"], frame)
         if var_info:
-            self.exception_raised_variables_header = _("Known objects shown above:")
-            self.exception_raised_variables = var_info
+            self.info["exception_raised_variables_header"] = _(
+                "Known objects shown above:"
+            )
+            self.info["exception_raised_variables"] = var_info
 
     def locate_last_call(self, record):
         """Sets the values of the following attributes:
@@ -331,15 +384,15 @@ class FriendlyTraceback:
         if session.use_rich:
             filename = f"`'{filename}'`"
 
-        self.last_call_header = _(
+        self.info["last_call_header"] = _(
             "Execution stopped on line {linenumber} of file {filename}.\n"
         ).format(linenumber=linenumber, filename=filename)
-        self.last_call_source = source_info["source"]
+        self.info["last_call_source"] = source_info["source"]
 
         var_info = info_variables.get_var_info(source_info["line"], frame)
         if var_info:
-            self.last_call_variables_header = _("Known objects shown above:")
-            self.last_call_variables = var_info
+            self.info["last_call_variables_header"] = _("Known objects shown above:")
+            self.info["last_call_variables"] = var_info
 
     def locate_parsing_error(self):
         """Sets the values of the attributes:
@@ -354,32 +407,28 @@ class FriendlyTraceback:
             filepath, value.lineno, value.offset
         )
         if "-->" in partial_source:
-            self.parsing_error = _(
+            self.info["parsing_error"] = _(
                 "Python could not understand the code in the file\n"
                 "'{filename}'\n"
                 "beyond the location indicated by --> and ^.\n"
             ).format(filename=path_utils.shorten_path(filepath))
         elif "unexpected EOF while parsing" in repr(value):
-            self.parsing_error = _(
+            self.info["parsing_error"] = _(
                 "Python could not understand the code the file\n"
                 "'{filename}'.\n"
                 "It reached the end of the file and expected more content.\n"
             ).format(filename=path_utils.shorten_path(filepath))
         else:
-            self.parsing_error = _(
+            self.info["parsing_error"] = _(
                 "Python could not understand the code in the file\n"
                 "'{filename}'\n"
                 "for an unspecified reason.\n"
             ).format(filename=path_utils.shorten_path(filepath))
 
-        self.parsing_error_source = f"{partial_source}\n"
+        self.info["parsing_error_source"] = f"{partial_source}\n"
 
     def assign_message(self):
-        """Assigns the error message, which is something like
-
-            SyntaxError: Invalid syntax\\n
-
-        or
+        """Assigns the error message, which is something like::
 
             NameError: name 'a' is not defined
 
@@ -390,9 +439,10 @@ class FriendlyTraceback:
         exc_name = self._raw_info.exception_name
         value = self._raw_info.value
         if hasattr(value, "msg"):
-            self.message = f"{exc_name}: {value.msg}\n"
+            self.info["message"] = f"{exc_name}: {value.msg}\n"
         else:
-            self.message = f"{exc_name}: {value}\n"
+            self.info["message"] = f"{exc_name}: {value}\n"
+        self.message = self.info["message"]
 
     def assign_tracebacks(self):
         """When required, a standard Python traceback might be required to be
@@ -461,12 +511,12 @@ class FriendlyTraceback:
             if len(tb) > 12:
                 tb = tb[0:4] + suppressed + tb[-5:]
 
-        self.simulated_python_traceback = "\n".join(tb) + "\n"
-        self.shortened_traceback = "\n".join(shortened_tb) + "\n"
-        self.original_python_traceback = "\n".join(python_tb) + "\n"
+        self.info["simulated_python_traceback"] = "\n".join(tb) + "\n"
+        self.info["shortened_traceback"] = "\n".join(shortened_tb) + "\n"
+        self.info["original_python_traceback"] = "\n".join(python_tb) + "\n"
         # The following is needed for some determining the cause in a few
         # cases
-        self._raw_info.simulated_python_traceback = self.simulated_python_traceback
+        self._raw_info.simulated_python_traceback = "\n".join(tb) + "\n"
 
     def create_traceback(self):
         """Using records that exclude code from certain files,
@@ -487,7 +537,6 @@ class FriendlyTraceback:
         if issubclass(self._raw_info.exception_type, SyntaxError):
             value = self._raw_info.value
             offset = value.offset
-            msg = value.msg
             filename = value.filename
             lines = cache.get_source_lines(filename)
             result.append('  File "{}", line {}'.format(filename, value.lineno))
@@ -501,10 +550,7 @@ class FriendlyTraceback:
                     offset = offset - (len(_line) - len(bad_line))  # removing indent
                     result.append("    {}".format(bad_line))
                     result.append(" " * (3 + offset) + "^")
-            result.append("{}: {}".format(self._raw_info.exception_name, msg))
-            return result
-
-        result.append(self.message.strip())
+        result.append(self.info["message"].strip())
         return result
 
 
@@ -715,6 +761,7 @@ def create_traceback(records, etype, value, info):
                 info["bad_line"] = _line
             if not lines:
                 cache.add(filename, _line)
+                print(f"adding {filename} to cache in old method")
             _line = _line.rstrip()
             bad_line = _line.strip()
             if bad_line:

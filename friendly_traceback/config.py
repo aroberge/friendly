@@ -207,18 +207,26 @@ class _State:
             self.write_err(str(value))
             return
 
-        self.traceback_info = core.FriendlyTraceback(etype, value, tb)
-        self.traceback_info.assign_tracebacks()
-
         if redirect is not None:
             saved_current_redirect = self.write_err
             self.set_redirect(redirect=redirect)
 
         try:
-            self.saved_traceback_info = info = core.get_traceback_info(
+            self.traceback_info = core.FriendlyTraceback(etype, value, tb)
+            self.traceback_info.compile_all_info()
+            new_info = {}
+            for key in self.traceback_info.info:
+                item = self.traceback_info.info[key]
+                if item:
+                    new_info[key] = item
+            self.saved_traceback_info = new_info
+
+            # old version
+            info = core.get_traceback_info(
                 etype, value, tb, self._debug, self.traceback_info._raw_info
             )
-            explanation = self.formatter(info, include=self.include)
+
+            explanation = self.formatter(new_info, include=self.include)
         except FriendlyException as e:
             self.write_err(e)
             return
@@ -236,8 +244,6 @@ class _State:
         # We confirm that we can obtain the same information using
         # the new approach.
 
-        self.traceback_info.compile_all_info()
-        new_info = self.traceback_info
         for item in [
             "header",
             "message",
@@ -264,13 +270,12 @@ class _State:
                 print("info:", info[item])
                 print("new: ", new_info[item])
                 print("-" * 50)
-
-        #
-        if info["bad_line"] != new_info._raw_info.bad_line:
-            print("bad_line is different")
-            print("info: |%s|" % info["bad_line"])
-            print("new: |%s|" % new_info.bad_line)
-            print("-" * 50)
+            if item in info and item not in new_info:
+                print("Missing item in new_info:", item)
+                print("in old: ", info[item])
+            elif item in new_info and item not in info:
+                print("Missing item in old info:", item)
+                print("in new: ", new_info[item])
 
 
 session = _State()
