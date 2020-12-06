@@ -110,7 +110,7 @@ class RawInfo:
         self.debug = debug
         self.records = self.get_records()
         self.debug_warning = ""
-        self.bad_line = self.get_bad_line(etype, value)
+        self.get_source_info(etype, value)
 
     def get_records(self):
         """Get the traceback frame history, excluding those originating
@@ -128,23 +128,34 @@ class RawInfo:
         records.reverse()
         return records
 
-    def get_bad_line(self, etype, value):
-        """Retrieves the line of code where the exception was raised"""
+    def get_source_info(self, etype, value):
+        """Retrieves the file name and the line of code where the exception
+        was raised.
+        """
         if issubclass(etype, SyntaxError):
+            self.filename = value.filename
             if value.text is not None:
-                return value.text  # typically includes "\n"
+                self.bad_line = value.text  # typically includes "\n"
+                return
             else:  # this can happen with editors_helper.check_syntax()
                 try:
-                    return cache.get_source_lines(value.filename)[value.lineno - 1]
+                    self.bad_line = cache.get_source_lines(value.filename)[
+                        value.lineno - 1
+                    ]
                 except Exception:
-                    return "\n"
+                    self.bad_line = "\n"
+                return
         elif self.records:
             _, filename, linenumber, _, _, _ = self.records[-1]
             _, line = cache.get_formatted_partial_source(filename, linenumber, None)
-            return line.rstrip()
+            self.filename = filename
+            self.bad_line = line.rstrip()
+            return
         # We should never reach this stage.
-        self.debug_warning = "Internal error in get_bad_line."
-        return "\n"
+        self.debug_warning = "Internal error in RawInfo.get_source_info."
+        self.filename = ""
+        self.bad_line = "\n"
+        return
 
 
 class FriendlyTraceback:
@@ -192,6 +203,8 @@ class FriendlyTraceback:
         self.assign_cause()
 
     def assign_cause(self):
+        if not hasattr(self, "simulated_python_traceback"):
+            self.assign_tracebacks()
         if issubclass(self._raw_info.exception_type, SyntaxError):
             self.set_cause_syntax()
 
@@ -403,6 +416,8 @@ class FriendlyTraceback:
         * shortened_traceback
         """
         _ = current_lang.translate
+        if not hasattr(self, "message"):
+            self.assign_message()
         suppressed = ["\n       ... " + _("More lines not shown.") + " ...\n"]
 
         python_tb = [line.rstrip() for line in self._raw_info.formatted_tb]
@@ -449,6 +464,9 @@ class FriendlyTraceback:
         self.simulated_python_traceback = "\n".join(tb) + "\n"
         self.shortened_traceback = "\n".join(shortened_tb) + "\n"
         self.original_python_traceback = "\n".join(python_tb) + "\n"
+        # The following is needed for some determining the cause in a few
+        # cases
+        self._raw_info.simulated_python_traceback = self.simulated_python_traceback
 
     def create_traceback(self):
         """Using records that exclude code from certain files,

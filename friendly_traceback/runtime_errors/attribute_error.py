@@ -10,7 +10,7 @@ from ..source_cache import cache
 from . import stdlib_modules
 
 
-def get_cause(value, info, frame):
+def get_cause(value, info, frame, tb_data):
     _ = current_lang.translate
     message = str(value)
     cause = hint = None
@@ -36,7 +36,7 @@ def get_cause(value, info, frame):
             ).format(attr=match3.group(2))
         else:
             cause, hint = attribute_error_in_object(
-                match3.group(1), match3.group(2), info, frame
+                match3.group(1), match3.group(2), tb_data, frame
             )
     if hint:
         info["suggest"] = hint
@@ -193,7 +193,7 @@ def handle_typo_for_type(obj_type, attribute, similar):
 # ======= Handle attribute error in object =========
 
 
-def attribute_error_in_object(obj_type, attribute, info, frame):
+def attribute_error_in_object(obj_type, attribute, tb_data, frame):
     """Attempts to find if object attribute might have been misspelled"""
     _ = current_lang.translate
     cause = hint = None
@@ -220,7 +220,7 @@ def attribute_error_in_object(obj_type, attribute, info, frame):
     # we might need to change slightly the feedback with give.
     obj_of_type = True
     true_name, index = find_true_object_name_and_position(
-        obj, obj_type, attribute, info, frame
+        obj, obj_type, attribute, tb_data, frame
     )
     if true_name != obj_type:
         obj_of_type = False
@@ -305,9 +305,9 @@ def use_builtin_function(obj_name, attribute, known_builtin):
     return cause, hint
 
 
-def find_true_object_name_and_position(obj, obj_name, attribute, info, frame):
+def find_true_object_name_and_position(obj, obj_name, attribute, tb_data, frame):
 
-    tokens = tokenize_source(info["bad_line"])
+    tokens = tokenize_source(tb_data.bad_line)
     for index, tok in enumerate(tokens):
         try:
             candidate = eval(tok.string, frame.f_globals, frame.f_locals)
@@ -326,7 +326,7 @@ def find_true_object_name_and_position(obj, obj_name, attribute, info, frame):
     #
     # So, let's try again with the complete source.
 
-    source_lines = cache.get_source_lines(info["filename"])
+    source_lines = cache.get_source_lines(tb_data.filename)
     source = "\n".join(source_lines)
     tokens = tokenize_source(source)
     for index, tok in enumerate(tokens):

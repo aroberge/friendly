@@ -208,6 +208,7 @@ class _State:
             return
 
         self.traceback_info = core.FriendlyTraceback(etype, value, tb)
+        self.traceback_info.assign_tracebacks()
 
         if redirect is not None:
             saved_current_redirect = self.write_err

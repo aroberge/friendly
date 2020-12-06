@@ -13,7 +13,7 @@ from . import stdlib_modules
 # ModuleNotFoundError: No module named 'os.pathh'; 'os' is not a package
 
 
-def get_cause(value, info, frame):
+def get_cause(value, info, frame, tb_data):
     _ = current_lang.translate
 
     message = str(value)

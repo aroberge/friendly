@@ -6,9 +6,9 @@ from ..my_gettext import current_lang
 from .. import info_variables
 
 
-def get_cause(value, info, frame):
+def get_cause(value, info, frame, tb_data):
     _ = current_lang.translate
-    hint = None  # not used yet
+    hint = None
     cause = _(
         "No information is known about this exception.\n"
         "Please report this example to\n"
@@ -18,12 +18,14 @@ def get_cause(value, info, frame):
     pattern = re.compile(r"local variable '(.*)' referenced before assignment")
     match = re.search(pattern, str(value))
     if match:
-        cause, hint = local_variable_referenced(match.group(1), info, frame)
+        cause, hint = local_variable_referenced(match.group(1), frame)
+        if hint:
+            info["suggest"] = hint
 
     return cause
 
 
-def local_variable_referenced(unknown_name, info, frame):
+def local_variable_referenced(unknown_name, frame):
     _ = current_lang.translate
     cause = hint = None
     scopes = info_variables.get_definition_scope(unknown_name, frame)
@@ -33,7 +35,6 @@ def local_variable_referenced(unknown_name, info, frame):
             best_guess = similar["best"]
             if best_guess in similar["locals"]:
                 hint = _("Did you mean `{name}`?").format(name=similar["best"])
-                info["suggest"] = hint
                 cause = format_similar_names(unknown_name, similar)
                 return cause, hint
 
@@ -41,7 +42,6 @@ def local_variable_referenced(unknown_name, info, frame):
             cause = info_variables.name_has_type_hint(unknown_name, frame)
             if cause:
                 hint = _("Did you use a colon instead of an equal sign?")
-                info["suggest"] = hint
         return cause, hint
 
     if "global" in scopes and "nonlocal" in scopes:
@@ -58,7 +58,6 @@ def local_variable_referenced(unknown_name, info, frame):
             "Did you forget to add either `global {var_name}` or \n"
             "`nonlocal {var_name}`?\n"
         ).format(var_name=unknown_name)
-        info["suggest"] = hint
         return cause, hint
 
     if "global" in scopes:
@@ -78,7 +77,6 @@ def local_variable_referenced(unknown_name, info, frame):
     hint = _("Did you forget to add `{scope} {var_name}`?\n").format(
         var_name=unknown_name, scope=scope
     )
-    info["suggest"] = hint
 
     return cause, hint
 

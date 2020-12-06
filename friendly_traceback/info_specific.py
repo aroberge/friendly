@@ -16,7 +16,7 @@ def get_likely_cause(etype, value, info, frame, tb_data):
     _ = current_lang.translate
     cause = None
     if etype.__name__ in get_cause:
-        cause = get_cause[etype.__name__](value, info, frame)
+        cause = get_cause[etype.__name__](value, info, frame, tb_data)
     return cause
 
 
@@ -26,8 +26,8 @@ def register(error_name):
     def add_exception(function):
         get_cause[error_name] = function
 
-        def wrapper(value, info, frame):
-            return function(value, info, frame)
+        def wrapper(value, info, frame, tb_data):
+            return function(value, info, frame, tb_data)
 
         return wrapper
 
@@ -35,14 +35,14 @@ def register(error_name):
 
 
 @register("AttributeError")
-def _attribute_error(value, info, frame):
+def _attribute_error(value, info, frame, tb_data):
     from .runtime_errors import attribute_error
 
-    return attribute_error.get_cause(value, info, frame)
+    return attribute_error.get_cause(value, info, frame, tb_data)
 
 
 @register("FileNotFoundError")
-def file_not_found_error(value, info, frame):
+def file_not_found_error(value, info, frame, tb_data):
     _ = current_lang.translate
     # str(value) is expected to be something like
     #
@@ -56,14 +56,14 @@ def file_not_found_error(value, info, frame):
 
 
 @register("ImportError")
-def _import_error(value, info, frame):
+def _import_error(value, info, frame, tb_data):
     from .runtime_errors import import_error
 
-    return import_error.get_cause(value, info, frame)
+    return import_error.get_cause(value, info, frame, tb_data)
 
 
 @register("KeyError")
-def key_error(value, info, frame):
+def key_error(value, info, frame, tb_data):
     _ = current_lang.translate
     # str(value) is expected to be something like
     #
@@ -74,19 +74,19 @@ def key_error(value, info, frame):
 
 
 @register("ModuleNotFoundError")
-def _module_not_found_error(value, info, frame):
+def _module_not_found_error(value, info, frame, tb_data):
 
     from .runtime_errors import module_not_found_error
 
-    return module_not_found_error.get_cause(value, info, frame)
+    return module_not_found_error.get_cause(value, info, frame, tb_data)
 
 
 @register("NameError")
-def name_error(value, info, frame):
+def name_error(value, info, frame, tb_data):
 
     from .runtime_errors import name_error
 
-    return name_error.get_cause(value, info, frame)
+    return name_error.get_cause(value, info, frame, tb_data)
 
 
 @register("OverflowError")
@@ -96,17 +96,17 @@ def overflow_error(*args):
 
 
 @register("TypeError")
-def _type_error(value, info, frame):
+def _type_error(value, info, frame, tb_data):
     from .runtime_errors import type_error
 
-    return type_error.get_cause(value, info, frame)
+    return type_error.get_cause(value, info, frame, tb_data)
 
 
 @register("UnboundLocalError")
-def _unbound_local_error(value, info, frame):
+def _unbound_local_error(value, info, frame, tb_data):
     from .runtime_errors import unbound_local_error
 
-    return unbound_local_error.get_cause(value, info, frame)
+    return unbound_local_error.get_cause(value, info, frame, tb_data)
 
 
 @register("ZeroDivisionError")

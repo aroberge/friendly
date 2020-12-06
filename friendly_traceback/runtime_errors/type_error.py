@@ -24,12 +24,14 @@ def add_message_parser(func):
     return wrapper
 
 
-def get_cause(value, info, frame):
+def get_cause(value, info, frame, tb_data):
     _ = current_lang.translate
     message = str(value)
     for parser in MESSAGES_PARSERS:
-        cause, hint = parser(message, info, frame)
+        cause, hint = parser(message, frame, tb_data)
         if cause is not None:
+            if hint:
+                info["suggest"] = hint
             return cause
     return _(
         "I do not recognize this case. Please report it to\n"
@@ -244,7 +246,7 @@ def exception_derived_from_BaseException(message, *args):
 
 
 @add_message_parser
-def incorrect_nb_positional_arguments(message, info, frame):
+def incorrect_nb_positional_arguments(message, frame, tb_data):
     _ = current_lang.translate
     cause = hint = None
     # example: my_function() takes 0 positional arguments but x was/were given
@@ -260,7 +262,7 @@ def incorrect_nb_positional_arguments(message, info, frame):
             if "." in fn_name:
                 missing_self = True
             else:
-                tokens = utils.tokenize_source(info["bad_line"])
+                tokens = utils.tokenize_source(tb_data.bad_line)
                 prev_token = tokens[0]
                 missing_self = False
                 for token in tokens:
@@ -277,7 +279,6 @@ def incorrect_nb_positional_arguments(message, info, frame):
             hint = _("Perhaps you forgot `self` when defining `{fn_name}`.\n").format(
                 fn_name=fn_name
             )
-            info["suggest"] = hint
             cause += hint
     return cause, hint
 
@@ -299,7 +300,7 @@ def missing_positional_arguments(message, *args):
 
 
 @add_message_parser
-def x_is_not_callable(message, info, *args):
+def x_is_not_callable(message, *args):
     _ = current_lang.translate
     cause = hint = None
     pattern = re.compile(r"'(.*)' object is not callable")
@@ -311,7 +312,6 @@ def x_is_not_callable(message, info, *args):
         else:
             hint = _("Perhaps you had a missing comma before the tuple.\n")
 
-        info["suggest"] = hint
         cause = (
             _(
                 "I suspect that you had an object of this type, {obj},\n"

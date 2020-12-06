@@ -8,7 +8,7 @@ from ..utils import get_similar_words
 from ..path_info import path_utils
 
 
-def get_cause(value, info, frame):
+def get_cause(value, info, frame, tb_data):
     _ = current_lang.translate
 
     message = str(value)
@@ -34,18 +34,22 @@ def get_cause(value, info, frame):
     if match1:
         if "circular import" in message:
             cause, hint = cannot_import_name_from(
-                match1.group(1), match1.group(2), info, frame, add_circular_hint=False
+                match1.group(1),
+                match1.group(2),
+                frame,
+                tb_data,
+                add_circular_hint=False,
             )
         else:
             cause, hint = cannot_import_name_from(
-                match1.group(1), match1.group(2), info, frame
+                match1.group(1), match1.group(2), frame, tb_data
             )
     elif match2:
         cause, hint = cannot_import_name_from(
-            match2.group(1), match2.group(2), info, frame
+            match2.group(1), match2.group(2), frame, tb_data
         )
     elif match3:
-        cause, hint = cannot_import_name(match3.group(1), info, frame)
+        cause, hint = cannot_import_name(match3.group(1), frame, tb_data)
 
     if hint:
         info["suggest"] = hint
@@ -53,11 +57,11 @@ def get_cause(value, info, frame):
     return cause
 
 
-def cannot_import_name_from(name, module, info, frame, add_circular_hint=True):
+def cannot_import_name_from(name, module, frame, tb_data, add_circular_hint=True):
     _ = current_lang.translate
 
     hint = None
-    circular_info = find_circular_import(module, info)
+    circular_info = find_circular_import(module, tb_data)
     if circular_info and add_circular_hint:
         hint = _("You have a circular import.\n")
         # Python 3.8+ adds a similar hint on its own.
@@ -123,18 +127,21 @@ def cannot_import_name_from(name, module, info, frame, add_circular_hint=True):
     return cause, hint
 
 
-def cannot_import_name(name, info, frame):
+def cannot_import_name(name, frame, tb_data):
     # Python 3.6 does not give us the name of the module
     _ = current_lang.translate
     pattern = re.compile(r"from (.*) import")
-    match = re.search(pattern, info["bad_line"])
+    match = re.search(pattern, tb_data.bad_line)
     if match:
-        return cannot_import_name_from(name, match.group(1), info, frame)
+        return cannot_import_name_from(name, match.group(1), frame, tb_data)
 
-    return _("The object that could not be imported is `{name}`.\n").format(name=name)
+    return (
+        _("The object that could not be imported is `{name}`.\n").format(name=name),
+        None,
+    )
 
 
-def find_circular_import(name, info):
+def find_circular_import(name, tb_data):
     """This attempts to find circular imports."""
     _ = current_lang.translate
 
@@ -142,7 +149,7 @@ def find_circular_import(name, info):
     pattern_from = re.compile(r"^from (.*) import", re.M)
     pattern_import = re.compile(r"^import (.*)", re.M)
     modules_imported = []
-    tb_lines = info["simulated_python_traceback"].split("\n")
+    tb_lines = tb_data.simulated_python_traceback.split("\n")
     current_file = ""
     for line in tb_lines:
         line = line.strip()

@@ -5,7 +5,7 @@ from .. import info_variables
 from .. import utils
 
 
-def get_cause(value, info, frame):
+def get_cause(value, info, frame, tb_data):
     _ = current_lang.translate
 
     cause = _(
@@ -19,7 +19,7 @@ def get_cause(value, info, frame):
     pattern = re.compile(r"name '(.*)' is not defined")
     match = re.search(pattern, message)
     if match:
-        cause, hint = name_not_defined(match.group(1), info, frame)
+        cause, hint = name_not_defined(match.group(1), frame, tb_data)
 
     pattern2 = re.compile(
         r"free variable '(.*)' referenced before assignment in enclosing scope"
@@ -44,7 +44,7 @@ def free_variable_referenced(unknown_name):
     return cause, None
 
 
-def name_not_defined(unknown_name, info, frame):
+def name_not_defined(unknown_name, frame, tb_data):
     _ = current_lang.translate
     cause = _("In your program, `{var_name}` is an unknown name.\n").format(
         var_name=unknown_name
@@ -60,7 +60,7 @@ def name_not_defined(unknown_name, info, frame):
 
     additional = type_hint + format_similar_names(unknown_name, similar)
     try:
-        more, hint = missing_self(unknown_name, frame, info, hint)
+        more, hint = missing_self(unknown_name, frame, tb_data, hint)
         additional += more
     except Exception as e:
         print("exception raised: ", e)
@@ -113,14 +113,14 @@ def format_similar_names(name, similar):
     return message
 
 
-def missing_self(unknown_name, frame, info, hint):
+def missing_self(unknown_name, frame, tb_data, hint):
     """If the unknown name is referred to with no '.' before it,
     and is an attribute of a known object, perhaps 'self.'
     is missing."""
     _ = current_lang.translate
     message = ""
     try:
-        tokens = utils.get_significant_tokens(info["bad_line"])
+        tokens = utils.get_significant_tokens(tb_data.bad_line)
     except Exception:
         return message, hint
 
