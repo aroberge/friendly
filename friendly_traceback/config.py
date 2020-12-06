@@ -20,7 +20,7 @@ def _write_err(text):
             text, inline_code_lexer="python", code_theme="brunante"
         )
         if formatters.RICH_HEADER:
-            info = session.saved_traceback_info
+            info = session.saved_info
             if info and "header" in info and info["header"]:
                 title = info["header"].replace(":", "")
             else:
@@ -48,7 +48,7 @@ class _State:
         self.write_err = _write_err
         self.installed = False
         self.running_script = False
-        self.saved_traceback_info = None
+        self.saved_info = None
         self.formatter = formatters.repl
         self._debug = False
         self.console = None
@@ -73,10 +73,10 @@ class _State:
         to execute the code again.
         """
         _ = current_lang.translate
-        if self.saved_traceback_info is None:
+        if self.saved_info is None:
             print(_("Nothing to show: no exception recorded."))
             return
-        explanation = self.formatter(self.saved_traceback_info, include=self.include)
+        explanation = self.formatter(self.saved_info, include=self.include)
         self.write_err(explanation + "\n")
 
     def capture(self, txt):
@@ -212,21 +212,10 @@ class _State:
             self.set_redirect(redirect=redirect)
 
         try:
-            self.traceback_info = core.FriendlyTraceback(etype, value, tb)
-            self.traceback_info.compile_all_info()
-            new_info = {}
-            for key in self.traceback_info.info:
-                item = self.traceback_info.info[key]
-                if item:
-                    new_info[key] = item
-            self.saved_traceback_info = new_info
-
-            # old version
-            info = core.get_traceback_info(
-                etype, value, tb, self._debug, self.traceback_info._raw_info
-            )
-
-            explanation = self.formatter(new_info, include=self.include)
+            self.friendly_traceback = core.FriendlyTraceback(etype, value, tb)
+            self.friendly_traceback.compile_info()
+            self.saved_info = info = self.friendly_traceback.info
+            explanation = self.formatter(info, include=self.include)
         except FriendlyException as e:
             self.write_err(e)
             return
@@ -239,43 +228,6 @@ class _State:
 
         if redirect is not None:
             self.set_redirect(redirect=saved_current_redirect)
-
-        # Work on new implementation.
-        # We confirm that we can obtain the same information using
-        # the new approach.
-
-        for item in [
-            "header",
-            "message",
-            "original_python_traceback",
-            "simulated_python_traceback",
-            "shortened_traceback",
-            "suggest",
-            "generic",
-            "parsing_error",
-            "parsing_error_source",
-            "cause_header",
-            "cause",
-            "last_call_header",
-            "last_call_source",
-            "last_call_variables_header",
-            "last_call_variables",
-            "exception_raised_header",
-            "exception_raised_source",
-            "exception_raised_variables_header",
-            "exception_raised_variables",
-        ]:
-            if item in info and item in new_info and info[item] != new_info[item]:
-                print(f"{item} is different", len(info[item]), len(new_info[item]))
-                print("info:", info[item])
-                print("new: ", new_info[item])
-                print("-" * 50)
-            if item in info and item not in new_info:
-                print("Missing item in new_info:", item)
-                print("in old: ", info[item])
-            elif item in new_info and item not in info:
-                print("Missing item in old info:", item)
-                print("in new: ", new_info[item])
 
 
 session = _State()

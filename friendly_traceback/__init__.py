@@ -243,7 +243,7 @@ def start_console(
 
 
 def set_lang(lang):
-    """Sets the language to be used by gettext.
+    """Sets the language to be used for the display.
 
     If no translations exist for that language, the original
     English strings will be used.

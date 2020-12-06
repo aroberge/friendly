@@ -310,15 +310,15 @@ def explain(include="explain"):
 
 def _info():
     """Debugging tool: shows the complete content of traceback info."""
-    if session.saved_traceback_info is None:
+    if session.saved_info is None:
         print("No recorded traceback\n")
         return
     print("Recorded traceback information:\n")
     if session.use_rich:  # will automatically pretty print
-        return session.saved_traceback_info
+        return session.saved_info
 
-    for item in session.saved_traceback_info:
-        print(f"{item}: {session.saved_traceback_info[item]}")
+    for item in session.saved_info:
+        print(f"{item}: {session.saved_info[item]}")
 
 
 def more():
