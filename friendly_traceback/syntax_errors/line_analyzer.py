@@ -321,7 +321,7 @@ def missing_colon(tokens, **kwargs):
 
     name = tokens[0].string
 
-    forgot_a_colon = _("You forgot a colon, `:`.\n")
+    forgot_a_colon = _("Perhaps you forgot a colon `:`.\n")
 
     if name == "class":
         name = _("a class")

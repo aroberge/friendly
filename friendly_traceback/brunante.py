@@ -78,7 +78,7 @@ my_style = {
     "code": colours["beige"],
     "comments": colours["gray"],
     "keywords": colours["yellow"],
-    "numbers": colours["orange"],
+    "numbers": colours["white"],
     "operators": colours["blue"],
     "string": colours["green"],
     "text": colours["white"],

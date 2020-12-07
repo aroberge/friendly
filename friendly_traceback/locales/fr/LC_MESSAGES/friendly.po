@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-06 22:04-0400\n"
-"PO-Revision-Date: 2020-12-06 22:10-0400\n"
+"POT-Creation-Date: 2020-12-07 11:03-0400\n"
+"PO-Revision-Date: 2020-12-07 11:05-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1265,15 +1265,50 @@ msgstr ""
 "Je soupçonne que vous essayiez d'utiliser un apostrophe ou un guillemet\n"
 "à l'intérieur d'une chaîne qui était délimitée par ces mêmes caractères.\n"
 
-#: syntax_errors\line_analyzer.py:289
-msgid "You forgot a colon, `:`.\n"
-msgstr "Vous avez oublié les deux points, `:`.\n"
+#: syntax_errors\line_analyzer.py:285
+msgid "Perhaps you needed `==` instead of `=`.\n"
+msgstr "Peut-être que vous aviez besoin de `==` au lieu de `=`.\n"
 
-#: syntax_errors\line_analyzer.py:292
+#: syntax_errors\line_analyzer.py:286
+msgid "Perhaps you needed `==` or `:=` instead of `=`.\n"
+msgstr "Peut-être que vous aviez besoin de `==` ou `:=` au lieu de `=`.\n"
+
+#: syntax_errors\line_analyzer.py:290
+msgid ""
+"You used an assignment operator `=` instead of an equality operator `==` \n"
+"with an `{if_elif}` statement.\n"
+msgstr ""
+"Vous avez utilisé un opérateur d’affectation `=` au lieu d’un opérateur "
+"d'égalité `==` \n"
+"avec un énoncé `{if_elif}`.\n"
+
+#: syntax_errors\line_analyzer.py:296
+msgid ""
+"You used an assignment operator `=` instead of an equality operator `==` \n"
+"with a `{while_}` statement.\n"
+msgstr ""
+"Vous avez utilisé un opérateur d’affectation `=` au lieu d’un opérateur "
+"d'égalité `==` \n"
+"avec un énoncé `{while_}`.\n"
+
+#: syntax_errors\line_analyzer.py:302
+msgid ""
+"You used an assignment operator `=`; perhaps you meant to use \n"
+"an equality operator, `==`, or the walrus operator `:=`.\n"
+msgstr ""
+"Vous avez utilisé un opérateur d’affectation `=`; vous vouliez peut-être "
+"utiliser \n"
+"un opérateur d'égalité, `==`, ou l'opérateur `:=`.\n"
+
+#: syntax_errors\line_analyzer.py:324
+msgid "Perhaps you forgot a colon `:`.\n"
+msgstr "Vous avez peut-être oublié les deux points, `:`.\n"
+
+#: syntax_errors\line_analyzer.py:327
 msgid "a class"
 msgstr "une classe"
 
-#: syntax_errors\line_analyzer.py:293
+#: syntax_errors\line_analyzer.py:328
 msgid ""
 "You wanted to define `{class_}`\n"
 "but forgot to add a colon `:` at the end\n"
@@ -1283,7 +1318,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points `:` à la fin.\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:300
+#: syntax_errors\line_analyzer.py:335
 msgid ""
 "You wrote a `{for_while}` loop but\n"
 "forgot to add a colon `:` at the end\n"
@@ -1293,7 +1328,7 @@ msgstr ""
 "mais vous avez oublié d’ajouter deux points `:` à la fin.\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:307
+#: syntax_errors\line_analyzer.py:342
 msgid ""
 "You wrote a statement beginning with\n"
 "`{name}` but forgot to add a colon `:` at the end\n"
@@ -1303,15 +1338,15 @@ msgstr ""
 "`{name}` mais vous avez oublié d’ajouter deux points `:` à la fin.\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:330
+#: syntax_errors\line_analyzer.py:365
 msgid "Perhaps you forgot parentheses.\n"
 msgstr "Vous avez peut-être oublié d'écrire des parenthèses.\n"
 
-#: syntax_errors\line_analyzer.py:339
+#: syntax_errors\line_analyzer.py:374
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: syntax_errors\line_analyzer.py:340
+#: syntax_errors\line_analyzer.py:375
 msgid ""
 "You tried to define {class_or_function} and did not use the correct syntax.\n"
 "The correct syntax is:\n"
@@ -1325,14 +1360,14 @@ msgstr ""
 "    def nom ( arguments_optionnels ):\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:351
+#: syntax_errors\line_analyzer.py:386
 msgid "You tried to use the Python keyword `{kwd}` as a function name.\n"
 msgstr ""
 "Vous avez tenté d'utiliser le mot clé Python `{kwd}` comme nom de fonction.\n"
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:400
+#: syntax_errors\line_analyzer.py:435
 msgid ""
 "I am guessing that you tried to use the Python keyword\n"
 "`{kwd}` as an argument in the definition of a function.\n"
@@ -1342,7 +1377,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:419
+#: syntax_errors\line_analyzer.py:454
 msgid ""
 "In older version of Python, `print` was a keyword.\n"
 "Now, `print` is a function; you need to use parentheses to call it.\n"
@@ -1351,7 +1386,7 @@ msgstr ""
 "Maintenant, `print` est une fonction; vous devez utiliser des parenthèses "
 "pour l'invoquer.\n"
 
-#: syntax_errors\line_analyzer.py:434
+#: syntax_errors\line_analyzer.py:469
 msgid ""
 "It looks as if you are attempting to use pip to install a module.\n"
 "`pip` is a command that needs to run in a terminal,\n"
@@ -1361,55 +1396,20 @@ msgstr ""
 "`pip` est une commande qui doit être invoquée dans un terminal,\n"
 "pas dans un interprète Python.\n"
 
-#: syntax_errors\line_analyzer.py:442
+#: syntax_errors\line_analyzer.py:477
 msgid "Pip cannot be used in a Python interpreter.\n"
 msgstr "Pip ne peut pas être utilisé dans un interprète Python.\n"
 
-#: syntax_errors\line_analyzer.py:456
+#: syntax_errors\line_analyzer.py:491
 msgid "You cannot have a dot `.` followed by `{bracket}`.\n"
 msgstr "Vous ne pouvez pas avoir un point `.` suivi de `{bracket}`.\n"
 
-#: syntax_errors\line_analyzer.py:472
+#: syntax_errors\line_analyzer.py:507
 msgid ""
 "It looks like you are trying to raise an exception using Python 2 syntax.\n"
 msgstr ""
 "Je crois que vous essayez de lever une exception en utilisant la syntaxe de "
 "Python 2.\n"
-
-#: syntax_errors\line_analyzer.py:488
-msgid "Perhaps you needed `==` instead of `=`.\n"
-msgstr "Peut-être que vous aviez besoin de `==` au lieu de `=`.\n"
-
-#: syntax_errors\line_analyzer.py:489
-msgid "Perhaps you needed `==` or `:=` instead of `=`.\n"
-msgstr "Peut-être que vous aviez besoin de `==` ou `:=` au lieu de `=`.\n"
-
-#: syntax_errors\line_analyzer.py:493
-msgid ""
-"You used an assignment operator `=` instead of an equality operator `==` \n"
-"with an `{if_elif}` statement.\n"
-msgstr ""
-"Vous avez utilisé un opérateur d’affectation `=` au lieu d’un opérateur "
-"d'égalité `==` \n"
-"avec un énoncé `{if_elif}`.\n"
-
-#: syntax_errors\line_analyzer.py:499
-msgid ""
-"You used an assignment operator `=` instead of an equality operator `==` \n"
-"with a `{while_}` statement.\n"
-msgstr ""
-"Vous avez utilisé un opérateur d’affectation `=` au lieu d’un opérateur "
-"d'égalité `==` \n"
-"avec un énoncé `{while_}`.\n"
-
-#: syntax_errors\line_analyzer.py:505
-msgid ""
-"You used an assignment operator `=`; perhaps you meant to use \n"
-"an equality operator, `==`, or the walrus operator `:=`.\n"
-msgstr ""
-"Vous avez utilisé un opérateur d’affectation `=`; vous vouliez peut-être "
-"utiliser \n"
-"un opérateur d'égalité, `==`, ou l'opérateur `:=`.\n"
 
 #: syntax_errors\line_analyzer.py:524
 msgid "Valid names cannot begin with a number.\n"
@@ -2105,6 +2105,9 @@ msgstr "accolade `{`"
 #: syntax_errors\source_analyzer.py:269
 msgid "curly bracket `}`"
 msgstr "accolade `}`"
+
+#~ msgid "You forgot a colon, `:`.\n"
+#~ msgstr "Vous avez oublié les deux points, `:`.\n"
 
 #~ msgid ""
 #~ "Unfortunately, no additional information is available:\n"
