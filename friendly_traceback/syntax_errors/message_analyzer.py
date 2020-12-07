@@ -405,6 +405,7 @@ def eol_while_scanning_string_literal(message="", **kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "EOL while scanning string literal" in message:
+        hint = _("Did you forget a closing quote?\n")
         cause = _(
             "You starting writing a string with a single or double quote\n"
             "but never ended the string with another quote on that line.\n"
@@ -579,6 +580,7 @@ def unterminated_f_string(message="", **kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "f-string: unterminated string" in message:
+        hint = _("Perhaps you forgot a closing quote.\n")
         cause = _(
             "Inside an f-string, which is a string prefixed by the letter f, \n"
             "you have another string, which starts with either a\n"

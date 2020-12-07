@@ -106,6 +106,7 @@ def copy_pasted_code(tokens, **kwargs):
             "It looks like you copy-pasted code from an interactive interpreter.\n"
             "The Python prompt, `>>>`, should not be included in your code.\n"
         )
+        hint = _("Did you use copy-paste?\n")
     return cause, hint
 
 
@@ -131,6 +132,7 @@ def detect_walrus(tokens, offset=None):
     if next_token != "=":
         return cause, hint
 
+    hint = _("Your Python version might be too old.\n")
     cause = _(
         "You appear to be using the operator `:=`, sometimes called\n"
         "the walrus operator. This operator requires the use of\n"
@@ -151,6 +153,7 @@ def detect_backquote(tokens, offset=None):
         return cause, hint
     # the token that gets flagged as problematic is the one after ""
     if bad_token == "`":
+        hint = _("You should not use the backquote character.\n")
         cause = _(
             "You are using the backquote character.\n"
             "Either you meant to write a single quote, ', "
@@ -186,6 +189,7 @@ def confused_elif(tokens, **kwargs):
     elif tokens[0].string == "else" and len(tokens) > 1 and tokens[1].string == "if":
         name = "else if"
     if name:
+        hint = _("Perhaps you meant to write `elif`.\n")
         cause = _(
             "You likely meant to use Python's `elif` keyword\n"
             "but wrote `{name}` instead\n"
@@ -256,6 +260,7 @@ def misplaced_quote(tokens, **kwargs):
     prev = tokens[0]
     for token in tokens:
         if prev.type == tokenize.STRING and token.type == tokenize.NAME:
+            hint = _("Perhaps you misplaced a quote.\n")
             cause = _(
                 "There appears to be a Python identifier (variable name)\n"
                 "immediately following a string.\n"
@@ -264,6 +269,41 @@ def misplaced_quote(tokens, **kwargs):
             )
             break
         prev = token
+    return cause, hint
+
+
+@add_line_analyzer
+def assign_instead_of_equal(tokens, offset=None):
+    """Checks to see if an assignment sign, '=', has been used instead of
+    an equal sign, '==', in an if or elif statement."""
+    _ = current_lang.translate
+    cause = hint = None
+    if tokens[0].string not in ["if", "elif", "while"]:
+        return cause, hint
+
+    bad_token, ignore = find_offending_token(tokens, offset)
+    equal = _("Perhaps you needed `==` instead of `=`.\n")
+    equal_or_walrus = _("Perhaps you needed `==` or `:=` instead of `=`.\n")
+    if bad_token == "=":
+        statement = tokens[0].string
+        if statement in ["if", "elif"]:
+            cause = _(
+                "You used an assignment operator `=` instead of an equality operator `==` \n"
+                "with an `{if_elif}` statement.\n"
+            ).format(if_elif=statement)
+            hint = equal
+        elif sys.version_info < (3, 8):
+            cause = _(
+                "You used an assignment operator `=` instead of an equality operator `==` \n"
+                "with a `{while_}` statement.\n"
+            ).format(while_=statement)
+            hint = equal
+        else:
+            cause = _(
+                "You used an assignment operator `=`; perhaps you meant to use \n"
+                "an equality operator, `==`, or the walrus operator `:=`.\n"
+            )
+            hint = equal_or_walrus
     return cause, hint
 
 
@@ -281,6 +321,8 @@ def missing_colon(tokens, **kwargs):
 
     name = tokens[0].string
 
+    forgot_a_colon = _("You forgot a colon, `:`.\n")
+
     if name == "class":
         name = _("a class")
         cause = _(
@@ -288,18 +330,21 @@ def missing_colon(tokens, **kwargs):
             "but forgot to add a colon `:` at the end\n"
             "\n"
         ).format(class_=name)
+        hint = forgot_a_colon
     elif name in ["for", "while"]:
         cause = _(
             "You wrote a `{for_while}` loop but\n"
             "forgot to add a colon `:` at the end\n"
             "\n"
         ).format(for_while=name)
+        hint = forgot_a_colon
     elif name in ["def", "elif", "else", "except", "finally", "if", "try"]:
         cause = _(
             "You wrote a statement beginning with\n"
             "`{name}` but forgot to add a colon `:` at the end\n"
             "\n"
         ).format(name=name)
+        hint = forgot_a_colon
 
     return cause, hint
 
@@ -316,6 +361,8 @@ def malformed_def(tokens, **kwargs):
     if not is_potential_statement(tokens):
         return cause, hint
 
+    if len(tokens) >= 3 and tokens[1].is_identifier() and tokens[2].string == ":":
+        hint = _("Perhaps you forgot parentheses.\n")
     # need at least five tokens: def name ( ) :
     if (
         len(tokens) < 5
@@ -427,6 +474,7 @@ def calling_pip(tokens, **kwargs):
 
     for tok in tokens:
         if tok.string == "pip":
+            hint = _("Pip cannot be used in a Python interpreter.\n")
             return use_pip, hint
     return cause, hint
 
@@ -463,36 +511,6 @@ def raise_single_exception(tokens, offset=None):
 
 
 @add_line_analyzer
-def assign_instead_of_equal(tokens, offset=None):
-    """Checks to see if an assignment sign, '=', has been used instead of
-    an equal sign, '==', in an if or elif statement."""
-    _ = current_lang.translate
-    cause = hint = None
-    if tokens[0].string not in ["if", "elif", "while"]:
-        return cause, hint
-
-    bad_token, ignore = find_offending_token(tokens, offset)
-    if bad_token == "=":
-        statement = tokens[0].string
-        if statement in ["if", "elif"]:
-            cause = _(
-                "You used an assignment operator `=` instead of an equality operator `==` \n"
-                "with an `{if_elif}` statement.\n"
-            ).format(if_elif=statement)
-        elif sys.version_info < (3, 8):
-            cause = _(
-                "You used an assignment operator `=` instead of an equality operator `==` \n"
-                "with a `{while_}` statement.\n"
-            ).format(while_=statement)
-        else:
-            cause = _(
-                "You used an assignment operator `=`; perhaps you meant to use \n"
-                "an equality operator, `==`, or the walrus operator `:=`.\n"
-            )
-    return cause, hint
-
-
-@add_line_analyzer
 def invalid_name(tokens, offset=None):
     """Identifies invalid identifiers when a name begins with a number"""
     _ = current_lang.translate
@@ -503,7 +521,7 @@ def invalid_name(tokens, offset=None):
 
     for first, second in zip(tokens, tokens[1:]):
         if first.is_number() and second.is_identifier() and first.end == second.start:
-            cause = _("Valid names cannot begin with a number.\n")
+            hint = cause = _("Valid names cannot begin with a number.\n")
     return cause, hint
 
 
