@@ -93,11 +93,6 @@ def highlight_source(linenumber, index, lines, offset=None):
     which, in this case, points to a missing colon. We use the same
     representation in this case.
     """
-    if lines is None:  # This is the case for some SyntaxError cases
-        return "", ""
-    if index is None:
-        print("problem in highlight_source(): index is None")
-        index = 0
 
     # The weird index arithmetic below is based on the information returned
     # by Python's inspect.getinnerframes()

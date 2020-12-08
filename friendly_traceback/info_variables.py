@@ -62,29 +62,46 @@ def get_var_info(source, frame):
     be relevant.
 
     """
-    loc = frame.f_locals
-    glob = frame.f_globals
+
+    loc = dict(frame.f_locals)
+    glob = dict(frame.f_globals)
     names_info = []
 
     lines = source.split("\n")
     names = []
+    prev_token = utils.tokenize_source("3")[0]
+    dot_found = False
     for line in lines:
         tokens = utils.tokenize_source(line)
         for tok in tokens:
+            if tok.string == ".":
+                dot_found = True
+                continue
             if tok.is_identifier():
-                if tok.string not in names:
-                    names.append(tok.string)
+                if prev_token.is_identifier() and dot_found:
+                    previous_name = names[-1]
+                    names.append(previous_name + "." + tok.string)
+                    dot_found = False
+                    continue
+                names.append(tok.string)
+            prev_token = tok
+            dot_found = False
 
+    # remove duplicate; do not attempt to do it above
+    new_names = []
     for name in names:
-        result = ""
-        if name in loc:
-            result = format_var_info(name, loc)
-        elif name in glob:
-            result = format_var_info(name, glob, _global=True)
-        elif name in dir(builtins):
-            result = format_var_info(name, builtins, _builtins=True)
-        if result:
-            names_info.append(result)
+        if name not in new_names:
+            new_names.append(name)
+
+    values = []
+    for name in new_names:
+        val = get_value(name, loc, glob)
+        if val:
+            values.append(val)
+
+    for name, value, obj, _global in values:
+        result = format_var_info(name, value, obj, _global)
+        names_info.append(result)
 
     if names_info:
         names_info.append("")
@@ -114,7 +131,27 @@ def simplify_name(name):
     return name.replace("<__main__.", "<")
 
 
-def format_var_info(name, _dict, _global="", _builtins=""):
+def get_value(name, loc, glob):
+
+    obj = None
+    try:
+        if name in loc:
+            obj = loc[name]
+        value = repr(eval(name, loc))
+        return name, value, obj, ""
+    except Exception:
+        pass
+
+    try:
+        if name in glob:
+            obj = glob[name]
+        value = repr(eval(name, glob))
+        return name, value, obj, "globals"
+    except Exception:
+        return
+
+
+def format_var_info(name, value, obj, _global):
     """Formats the variable information so that it fits on a single line
     for each variable.
 
@@ -132,15 +169,6 @@ def format_var_info(name, _dict, _global="", _builtins=""):
     length_info = ""
     if _global:
         _global = "global "
-
-    if _builtins:
-        obj = getattr(_dict, name)
-    else:
-        obj = _dict[name]
-    try:
-        value = repr(obj)
-    except Exception:
-        return ""
 
     if value.startswith("<") and value.endswith(">"):
         value = simplify_name(value)
