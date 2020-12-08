@@ -6,7 +6,7 @@ import subprocess
 def run(lang):
     proc = subprocess.run(
         [
-            "python",
+            "venv-friendly3.8/scripts/python",
             "-m",
             "friendly_traceback",
             "--formatter",
