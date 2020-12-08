@@ -165,7 +165,7 @@ def tokenize_source_lines(source_lines):
     """Makes a list of tokens from a source (list of lines),
     ignoring spaces and comments.
     """
-    source = "\n".join(source_lines)
+    source = "".join(source_lines)
     return tokenize_source(source)
 
 

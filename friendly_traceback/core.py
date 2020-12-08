@@ -534,8 +534,8 @@ class FriendlyTraceback:
         self.info["simulated_python_traceback"] = "\n".join(tb) + "\n"
         self.info["shortened_traceback"] = "\n".join(shortened_tb) + "\n"
         self.info["original_python_traceback"] = "\n".join(python_tb) + "\n"
-        # The following is needed for some determining the cause in a few
-        # cases
+        # The following is needed for some determining the cause in at
+        # least one case.
         self.tb_data.copy_simulated("\n".join(tb) + "\n")
 
     def create_traceback(self):
@@ -562,7 +562,10 @@ class FriendlyTraceback:
             result.append('  File "{}", line {}'.format(filename, value.lineno))
             _line = value.text
             if _line is not None:
-                if not lines:
+                if filename == "<fstring>" and lines == ["\n"]:
+                    # Before Python 3.9, the traceback included a fake
+                    # file for f-strings which only included parts of
+                    # the f-string content.
                     cache.add(filename, _line)
                 _line = _line.rstrip()
                 bad_line = _line.strip()

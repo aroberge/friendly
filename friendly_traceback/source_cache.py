@@ -2,12 +2,15 @@
 
 Used to cache and retrieve source code.
 This is especially useful when a custom REPL is used.
+
+Note that we monkeypatch Python's linecache.getlines.
 """
 
-import os.path
+import linecache
+import time
 
-# TODO: use the undocumented linecache.getlines  (note the final s)
-# from Python's standard library.
+
+old_getlines = linecache.getlines
 
 
 class Cache:
@@ -15,22 +18,23 @@ class Cache:
 
     def __init__(self):
         self.cache = {}
-        self.context = 3
-        self.ages = {}  # only for physical files
+        self.context = 4
 
     def add(self, filename, source):
-        """Adds a source (as a string) corresponding to a filename in the cache.
+        """Adds a source (received as a string) corresponding to a filename
+        in the cache.
 
         The filename can be a true file name, or a fake one, like
-        <console:42>, used for saving an REPL entry.
-
-        If it is a true file, we record the last time it was modified.
+        <friendly-console:42>, used for saving an REPL entry.
+        These fake filenames might not be retrieved by Python's linecache
+        which is why we keep a duplicate of anything we add to linecache.cache
         """
-        self.cache[filename] = source
-        if os.path.isfile(filename):
-            self.ages[filename] = os.path.getmtime(filename)  # modification time
+        lines = [line + "\n" for line in source.splitlines()]
+        entry = (len(source), time.time(), lines, filename)
+        linecache.cache[filename] = entry
+        self.cache[filename] = lines
 
-    def get_source_lines(self, filename):
+    def get_source_lines(self, filename, module_globals=None):
         """Given a filename, returns the corresponding source, either
         from the cache or from actually opening the file.
 
@@ -38,49 +42,15 @@ class Cache:
         it was modified differs from the recorded value, a fresh copy
         is retrieved.
 
-        The contents is stored as a string and returned as a list of lines.
-        If no source can be found, an empty list is returned.
+        The contents is stored as a string and returned as a list of lines,
+        each line ending with a newline character.
         """
-        # The main reason we care about ensuring we have the latest version
-        # of a given file is situations where we could
-        # 'edit and run' multiple times a given file. We need to ensure that
-        # the content shown by the traceback is accurate.
 
-        if os.path.isfile(filename):
-            last_modified = os.path.getmtime(filename)  # modification time
-            if filename not in self.cache:
-                source, lines = self._get_file_source(filename)
-                if source is not None:
-                    self.add(filename, source)
-            elif filename in self.ages and last_modified != self.ages[filename]:
-                # modified; get fresh copy
-                source, lines = self._get_file_source(filename)
-                if source is not None:
-                    self.add(filename, source)
-                else:  # had problems retrieving fresh copy
-                    source = self.cache[filename]
-                    lines = source.split("\n")
-            else:
-                source = self.cache[filename]
-                lines = source.split("\n")
-        elif filename in self.cache:
-            source = self.cache[filename]
-            lines = source.split("\n")
-        else:
-            lines = []
-
+        lines = old_getlines(filename, module_globals=module_globals)
+        if not lines and filename in self.cache:
+            lines = self.cache[filename]
+        lines.append("\n")  # required when dealing with EOF errors
         return lines
-
-    def _get_file_source(self, filename):
-        """Helper function to retrieve a file"""
-        try:
-            with open(filename, encoding="utf8") as f:
-                lines = f.readlines()
-                source = "".join(lines)
-        except Exception:
-            lines = []
-            source = None
-        return source, lines
 
     def get_formatted_partial_source(self, filename, linenumber, offset):
         """Formats a few lines around a 'bad line', and returns
@@ -103,6 +73,9 @@ class Cache:
 
 
 cache = Cache()
+
+# Monkeypatch linecache to make our own cached content available to Python.
+linecache.getlines = cache.get_source_lines
 
 
 def highlight_source(linenumber, index, lines, offset=None):
@@ -145,9 +118,9 @@ def highlight_source(linenumber, index, lines, offset=None):
             new_lines.append(num + line.rstrip())
             if offset is not None:
                 new_lines.append(offset_mark)
-                marked = True
+            marked = True
         elif marked:
-            if not line.strip():  # do not add empty line for SyntaxError
+            if not line.strip():  # do not add empty line if last line
                 break
             num = no_mark.format(i)
             new_lines.append(num + line.rstrip())

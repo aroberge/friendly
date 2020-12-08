@@ -224,7 +224,9 @@ class _State:
             self.set_redirect(redirect=redirect)
 
         try:
-            self.friendly_traceback = core.FriendlyTraceback(etype, value, tb)
+            self.friendly_traceback = core.FriendlyTraceback(
+                etype, value, tb, self._debug
+            )
             self.friendly_traceback.compile_info()
             self.saved_info = info = self.friendly_traceback.info
             explanation = self.formatter(info, include=self.include)

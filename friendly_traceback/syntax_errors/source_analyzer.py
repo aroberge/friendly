@@ -77,7 +77,7 @@ def look_for_mismatched_brackets(
             if not brackets:
                 bracket = name_bracket(token.string)
                 _lineno = token.start_row
-                _source = f"\n    {_lineno}: {source_lines[_lineno-1]}\n"
+                _source = f"\n    {_lineno}: {source_lines[_lineno-1]}"
                 shift = len(str(_lineno)) + token.start_col + 6
                 _source += " " * shift + "^\n"
                 return (
@@ -92,7 +92,7 @@ def look_for_mismatched_brackets(
                 if not matching_brackets(open_bracket, token.string):
                     bracket = name_bracket(token.string)
                     open_bracket = name_bracket(open_bracket)
-                    _source = f"\n    {open_lineno}: {source_lines[open_lineno-1]}\n"
+                    _source = f"\n    {open_lineno}: {source_lines[open_lineno-1]}"
                     shift = len(str(open_lineno)) + open_col + 6
                     if open_lineno == token.start_row:
                         _source += " " * shift + "^"
@@ -101,7 +101,7 @@ def look_for_mismatched_brackets(
                     else:
                         _source += " " * shift + "^\n"
                         _lineno = token.start_row
-                        _source += f"    {_lineno}: {source_lines[_lineno-1]}\n"
+                        _source += f"    {_lineno}: {source_lines[_lineno-1]}"
                         shift = len(str(_lineno)) + token.start_col + 6
                         _source += " " * shift + "^\n"
                     return (
@@ -232,7 +232,7 @@ def look_for_missing_bracket(
                     )
 
         bracket = name_bracket(bracket)
-        _source = f"\n    {linenumber}: {source_lines[linenumber-1]}\n"
+        _source = f"\n    {linenumber}: {source_lines[linenumber-1]}"
         shift = len(str(linenumber)) + start_col + 6
         _source += " " * shift + "^\n"
         return (
