@@ -32,6 +32,13 @@ from .my_gettext import current_lang
 from .source_cache import cache, highlight_source
 from .path_info import is_excluded_file, EXCLUDED_FILE_PATH, path_utils
 
+try:
+    import executing
+
+    executing_available = True
+except ImportError:
+    executing_available = False
+
 
 class TracebackData:
     """Raw traceback info obtained from Python.
@@ -55,11 +62,16 @@ class TracebackData:
         self.exception_name = etype.__name__
         self.value = value
         self.message = str(value)
+        self.tb = tb
         self.formatted_tb = traceback.format_exception(etype, value, tb)
         self.debug = debug
         self.records = self.get_records(tb)
         self.debug_warning = ""
         self.get_source_info(etype, value)
+        self.node_text = ""
+        self.node_range = None
+        if not issubclass(etype, SyntaxError):
+            self.use_executing()
 
     def get_records(self, tb):
         """Get the traceback frame history, excluding those originating
@@ -95,7 +107,7 @@ class TracebackData:
                     self.bad_line = "\n"
                 return
         elif self.records:
-            _, filename, linenumber, _, _, _ = self.records[-1]
+            self.exception_frame, filename, linenumber, _, _, _ = self.records[-1]
             _, line = cache.get_formatted_partial_source(filename, linenumber, None)
             self.filename = filename
             self.bad_line = line.rstrip()
@@ -113,6 +125,29 @@ class TracebackData:
         Such a case is when we have a circular import.
         """
         self.simulated_python_traceback = tb
+
+    def use_executing(self):
+        """If executing is present, try to use it to extract
+        potentially useful information about the specific location
+        where the exception was raised."""
+        self.node_text = ""
+        self.node_range = None
+        if not self.records:
+            return
+
+        tb = self.tb
+        while True:
+            if tb.tb_frame == self.exception_frame:
+                break
+            tb = tb.tb_next
+            if not tb:
+                return
+        try:
+            ex = executing.Source.executing(tb)
+            self.node_text = ex.text()
+            self.node_range = ex.text_range()
+        except Exception:
+            pass
 
 
 # ====================
@@ -382,10 +417,15 @@ class FriendlyTraceback:
         ).format(linenumber=linenumber, filename=filename)
         self.info["exception_raised_source"] = source_info["source"]
 
-        var_info = info_variables.get_var_info(source_info["line"], frame)
+        if self.tb_data.node_text:
+            source = self.tb_data.node_text
+        else:
+            source = source_info["line"]
+
+        var_info = info_variables.get_var_info(source, frame)
         if var_info:
             self.info["exception_raised_variables_header"] = _(
-                "Known objects shown above:"
+                "Known objects of interest shown above:"
             )
             self.info["exception_raised_variables"] = var_info
 
