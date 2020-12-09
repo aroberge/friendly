@@ -70,7 +70,7 @@ class TracebackData:
         self.get_source_info(etype, value)
         self.node_text = ""
         self.node_range = None
-        if not issubclass(etype, SyntaxError):
+        if not issubclass(etype, SyntaxError) and executing_available:
             self.use_executing()
 
     def get_records(self, tb):
@@ -145,7 +145,14 @@ class TracebackData:
         try:
             ex = executing.Source.executing(tb)
             self.node_text = ex.text()
-            self.node_range = ex.text_range()
+            if (
+                self.node_text
+                and self.node_text in self.bad_line
+                and self.node_text.strip() != self.bad_line.strip()
+            ):
+                begin = self.bad_line.find(self.node_text)
+                end = begin + len(self.node_text)
+                self.node_range = begin, end
         except Exception:
             pass
 
@@ -407,7 +414,9 @@ class FriendlyTraceback:
         # The following is needed when determining the cause
         self.exception_frame = frame
 
-        source_info = get_partial_source(filename, linenumber, lines, index)
+        source_info = get_partial_source(
+            filename, linenumber, lines, index, self.tb_data.node_range
+        )
         filename = path_utils.shorten_path(filename)
         if session.use_rich:
             filename = f"`'{filename}'`"
@@ -418,11 +427,11 @@ class FriendlyTraceback:
         self.info["exception_raised_source"] = source_info["source"]
 
         if self.tb_data.node_text:
-            source = self.tb_data.node_text
+            line = self.tb_data.node_text
         else:
-            source = source_info["line"]
+            line = source_info["line"]
 
-        var_info = info_variables.get_var_info(source, frame)
+        var_info = info_variables.get_var_info(line, frame)
         if var_info:
             self.info["exception_raised_variables_header"] = _(
                 "Known objects of interest shown above:"
@@ -617,7 +626,7 @@ class FriendlyTraceback:
         return result
 
 
-def get_partial_source(filename, linenumber, lines, index):
+def get_partial_source(filename, linenumber, lines, index, text_range=None):
     """Gets the part of the source where an exception occurred,
     formatted in a pre-determined way, as well as the content
     of the specific line where the exception occurred.
@@ -625,9 +634,13 @@ def get_partial_source(filename, linenumber, lines, index):
     _ = current_lang.translate
 
     if filename in cache.cache:
-        source, line = cache.get_formatted_partial_source(filename, linenumber, None)
+        source, line = cache.get_formatted_partial_source(
+            filename, linenumber, offset=None, text_range=text_range
+        )
     elif filename and os.path.abspath(filename):
-        source, line = highlight_source(linenumber, index, lines)
+        source, line = highlight_source(
+            linenumber, index, lines, offset=None, text_range=text_range
+        )
         if not source:
             line = ""
             if filename == "<stdin>":

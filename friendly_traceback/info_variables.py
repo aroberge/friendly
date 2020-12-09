@@ -10,6 +10,14 @@ from .path_info import path_utils
 from .my_gettext import current_lang
 from .friendly_exception import FriendlyException
 
+# third-party
+try:
+    from asttokens import ASTTokens
+    from pure_eval import Evaluator
+except ImportError:
+    pass  # ignore errors when processed by Sphinx
+
+
 INDENT = "        "
 MAX_LENGTH = 65
 
@@ -53,7 +61,7 @@ def get_definition_scope(variable_name, frame):
     return scopes
 
 
-def get_var_info(source, frame):
+def get_var_info(line, frame):
     """Given a frame object, it obtains the value (repr) of the names
     found in the logical line (which may span many lines in the file)
     where the exception occurred.
@@ -63,44 +71,16 @@ def get_var_info(source, frame):
 
     """
 
-    loc = dict(frame.f_locals)
-    glob = dict(frame.f_globals)
     names_info = []
 
-    lines = source.split("\n")
-    names = []
-    prev_token = utils.tokenize_source("3")[0]
-    dot_found = False
-    for line in lines:
-        tokens = utils.tokenize_source(line)
-        for tok in tokens:
-            if tok.string == ".":
-                dot_found = True
-                continue
-            if tok.is_identifier():
-                if prev_token.is_identifier() and dot_found:
-                    previous_name = names[-1]
-                    names.append(previous_name + "." + tok.string)
-                    dot_found = False
-                    continue
-                names.append(tok.string)
-            prev_token = tok
-            dot_found = False
+    objects = get_objects(line.strip(), frame.f_locals, frame.f_globals)
 
-    # remove duplicate; do not attempt to do it above
-    new_names = []
-    for name in names:
-        if name not in new_names:
-            new_names.append(name)
+    for name, value, obj in objects["locals"]:
+        result = format_var_info(name, value, obj)
+        names_info.append(result)
 
-    values = []
-    for name in new_names:
-        val = get_value(name, loc, glob)
-        if val:
-            values.append(val)
-
-    for name, value, obj, _global in values:
-        result = format_var_info(name, value, obj, _global)
+    for name, value, obj in objects["globals"]:
+        result = format_var_info(name, value, obj, "globals")
         names_info.append(result)
 
     if names_info:
@@ -131,27 +111,43 @@ def simplify_name(name):
     return name.replace("<__main__.", "<")
 
 
-def get_value(name, loc, glob):
+def get_objects(line, loc, glob):
+    objects = {}
+    objects["locals"] = []
+    objects["globals"] = []
+    names = set([])
+    atok = ASTTokens(line, parse=True)
+    for nodes, obj in Evaluator(loc).interesting_expressions_grouped(atok.tree):
+        name = atok.get_text(nodes[0])
+        if name in names:
+            continue
+        names.add(name)
+        objects["locals"].append((name, repr(obj), obj))
+    for nodes, obj in Evaluator(glob).interesting_expressions_grouped(atok.tree):
+        name = atok.get_text(nodes[0])
+        if name in names:
+            continue
+        names.add(name)
+        objects["globals"].append((name, repr(obj), obj))
 
-    obj = None
-    try:
-        if name in loc:
-            obj = loc[name]
-        value = repr(eval(name, loc))
-        return name, value, obj, ""
-    except Exception:
-        pass
+    tokens = utils.tokenize_source(line)
+    for tok in tokens:
+        if tok.is_identifier():
+            name = tok.string
+            if name in names:
+                continue
+            if name in loc:
+                names.add(name)
+                obj = loc[name]
+                objects["locals"].append((name, repr(obj), obj))
+            elif name in glob:
+                names.add(name)
+                obj = glob[name]
+                objects["globals"].append((name, repr(obj), obj))
+    return objects
 
-    try:
-        if name in glob:
-            obj = glob[name]
-        value = repr(eval(name, glob))
-        return name, value, obj, "globals"
-    except Exception:
-        return
 
-
-def format_var_info(name, value, obj, _global):
+def format_var_info(name, value, obj, _global=""):
     """Formats the variable information so that it fits on a single line
     for each variable.
 

@@ -52,7 +52,9 @@ class Cache:
         lines.append("\n")  # required when dealing with EOF errors
         return lines
 
-    def get_formatted_partial_source(self, filename, linenumber, offset):
+    def get_formatted_partial_source(
+        self, filename, linenumber, offset=None, text_range=None
+    ):
         """Formats a few lines around a 'bad line', and returns
         the formatted source as well as the content of the 'bad line'.
         """
@@ -68,6 +70,7 @@ class Cache:
             # continues beyond the current line.
             lines[begin : linenumber + 1],
             offset=offset,
+            text_range=text_range,
         )
         return partial_source, bad_line
 
@@ -78,7 +81,7 @@ cache = Cache()
 linecache.getlines = cache.get_source_lines
 
 
-def highlight_source(linenumber, index, lines, offset=None):
+def highlight_source(linenumber, index, lines, offset=None, text_range=None):
     """Extracts a few relevant lines from a file content given as a list
     of lines, adding line number information and identifying
     a particular line.
@@ -96,7 +99,6 @@ def highlight_source(linenumber, index, lines, offset=None):
 
     # The weird index arithmetic below is based on the information returned
     # by Python's inspect.getinnerframes()
-
     new_lines = []
     problem_line = ""
     nb_digits = len(str(linenumber + index))
@@ -104,6 +106,9 @@ def highlight_source(linenumber, index, lines, offset=None):
     with_mark = "    -->{:%d}: " % nb_digits
     if offset is not None:
         offset_mark = " " * (8 + nb_digits + offset) + "^"
+    if text_range is not None:
+        begin, end = text_range
+        text_range_mark = " " * (8 + nb_digits + begin + 1) + "^" * (end - begin)
 
     marked = False
     for i, line in enumerate(lines, linenumber - index):
@@ -113,6 +118,8 @@ def highlight_source(linenumber, index, lines, offset=None):
             new_lines.append(num + line.rstrip())
             if offset is not None:
                 new_lines.append(offset_mark)
+            elif text_range is not None:
+                new_lines.append(text_range_mark)
             marked = True
         elif marked:
             if not line.strip():  # do not add empty line if last line
