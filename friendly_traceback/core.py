@@ -27,6 +27,7 @@ import traceback
 from . import info_generic
 from . import info_specific
 from . import info_variables
+from . import utils
 
 from .my_gettext import current_lang
 from .source_cache import cache, highlight_source
@@ -142,13 +143,15 @@ class TracebackData:
             tb = tb.tb_next
             if not tb:
                 return
+
         try:
             ex = executing.Source.executing(tb)
             self.node_text = ex.text()
+            _bad_line = utils.strip_comment(self.bad_line)
             if (
                 self.node_text
                 and self.node_text in self.bad_line
-                and self.node_text.strip() != self.bad_line.strip()
+                and self.node_text.strip() != _bad_line.strip()
             ):
                 begin = self.bad_line.find(self.node_text)
                 end = begin + len(self.node_text)
