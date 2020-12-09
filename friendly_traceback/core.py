@@ -144,6 +144,9 @@ class TracebackData:
             if not tb:
                 return
 
+        # TODO: for name error, use tokenize to find out the
+        # location of the unkown name
+
         try:
             ex = executing.Source.executing(tb)
             self.node_text = ex.text()

@@ -1,4 +1,3 @@
 executing
-stack_data
 pure_eval
 asttokens
