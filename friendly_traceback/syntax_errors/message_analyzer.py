@@ -273,6 +273,9 @@ def assign_to_literal(message="", line="", **kwargs):
                 "    {name} = {literal}\n"
                 "\n"
             ).format(literal=literal, name=name)
+            hint = _(
+                "Perhaps you meant to write `{name} = {literal}`"
+            ).format(literal=literal, name=name)
             # fmt: on
         else:
             suggest = "\n"
