@@ -17,14 +17,13 @@ from friendly_traceback import (
 from friendly_traceback.console import (
     explain,
     friendly_tb,
+    hint,
     more,
     python_tb,
     what,
     where,
     why,
 )
-
-from friendly_traceback import friendly_rich
 
 shell.InteractiveShell.showtraceback = lambda self, *args, **kwargs: explain_traceback()
 shell.InteractiveShell.showsyntaxerror = (
@@ -41,6 +40,7 @@ install(include="friendly_tb")
 __all__ = [
     "explain",
     "friendly_tb",
+    "hint",
     "more",
     "python_tb",
     "set_lang",
@@ -49,8 +49,6 @@ __all__ = [
     "where",
     "why",
 ]
+set_formatter("repl")
 
-if friendly_rich.rich_available:
-    print("Friendly-traceback installed; Rich is available.")
-else:
-    print("Friendly-traceback installed.")
+print("Friendly-traceback installed.")

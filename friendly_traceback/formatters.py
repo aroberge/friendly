@@ -20,7 +20,7 @@ A formatter is a function that takes two arguments:
 A formatter returns a single string. By default, this string will be
 written to stderr; however this can be changed by the calling program.
 
-This module currently contains 5 formatters:
+This module currently contains 6 formatters:
 
 * ``repl()``: This is used to print the information in a traditional console,
   including that found in IDLE.  The indentation of the traceback itself
@@ -30,6 +30,8 @@ This module currently contains 5 formatters:
   embedded as a code-block in a file (such as .rst). It can also be used
   to print the information in a traditional console, including that
   found in IDLE.
+
+* ``jupyter()``: experimental formatter for Jupyter notebooks
 
 * ``markdown()``: This produces an output formatted with markdown syntax.
 
@@ -42,6 +44,17 @@ This module currently contains 5 formatters:
     in colour in a console using Rich (https://github.com/willmcgugan/rich).
 """
 from .my_gettext import current_lang
+
+try:
+    from pygments import highlight
+    from pygments.lexers import PythonLexer
+    from pygments.formatters import HtmlFormatter
+    from IPython.display import display, HTML
+
+    INSERTED_CSS = False
+    ipython_available = True
+except ImportError:
+    ipython_available = False
 
 RICH_HEADER = False
 
@@ -128,6 +141,67 @@ def repl(info, include="friendly_tb"):
         return _no_result(info, include)
 
     return "\n".join(result)
+
+
+def html_escape(text):
+    text = (
+        text.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace("\n\n", "<br>")
+    )
+    while "`" in text:
+        text = text.replace("`", "<code>", 1)
+        text = text.replace("`", "</code>", 1)
+    return text
+
+
+def jupyter(info, include="friendly_tb"):
+    """Jupyter formatter using pygments and html format."""
+    global INSERTED_CSS
+    if not INSERTED_CSS:
+        display(HTML(f"<style>{HtmlFormatter().get_style_defs('.highlight')}</style>"))
+        INSERTED_CSS = True
+    _ = current_lang.translate
+    items_to_show = select_items(include)
+    result = False
+    for item in items_to_show:
+        if item in info:
+            result = True
+            if (
+                "source" in item
+                or "traceback" in item
+                or "message" in item
+                or ("variable" in item and "header" not in item)
+            ):
+                text = info[item]
+                text = highlight(text, PythonLexer(), HtmlFormatter())
+                display(HTML(text))
+            elif item == "suggest":
+                text = html_escape(info[item])
+                display(HTML(f"<p><i>{text}<i><p>"))
+            else:
+                text = html_escape(info[item])
+                if "header" in item and "variables" not in item:
+                    display(HTML(f"<p><b>{text}</b></p>"))
+                else:
+                    display(HTML(f'<p style="width: 70ch;">{text}</p>'))
+    if not result:
+        if include == "why":
+            text = _("I do not know.")
+        elif include == "hint":
+            if info["cause"]:
+                text = _("I have no suggestion to offer; try `why()`.")
+            else:
+                text = _("I have no suggestion to offer.")
+        text = html_escape(text)
+        display(HTML(f'<p style="width: 70ch;">{text}</p>'))
+
+    return ""
+
+
+if not ipython_available:
+    jupyter = repl  # noqa
 
 
 def pre(info, include="friendly_tb"):

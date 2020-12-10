@@ -14,6 +14,8 @@ from .friendly_exception import FriendlyException
 
 def _write_err(text):
     """Default writer"""
+    if not text.strip() and session.use_jupyter:
+        return
     if session.use_rich:
         session.console.print()
         md = friendly_rich.Markdown(
@@ -53,6 +55,7 @@ class _State:
         self._debug = False
         self.console = None
         self.use_rich = False
+        self.use_jupyter = False
         self.markdown = False
         self.set_defaults()
         self.set_formatter()
@@ -120,11 +123,15 @@ class _State:
         formatter is used.
         """
         self.use_rich = False
+        self.use_jupyter = False
         self.markdown = markdown
         if formatter is None or formatter == "repl":
             self.formatter = formatters.repl
         elif formatter == "pre":
             self.formatter = formatters.pre
+        elif formatter == "jupyter":
+            self.formatter = formatters.jupyter
+            self.use_jupyter = True
         elif formatter == "rich":
             self.formatter = formatters.rich_markdown
             self.console = friendly_rich.init_console(theme)
