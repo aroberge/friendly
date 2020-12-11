@@ -132,9 +132,6 @@ class _State:
         elif formatter == "jupyter":
             self.formatter = formatters.jupyter
             self.use_jupyter = True
-        elif formatter == "colab":
-            self.formatter = formatters.jupyter
-            self.use_jupyter = True
         elif formatter == "rich":
             theme.set_theme(style)
             self.formatter = formatters.rich_markdown
@@ -147,8 +144,11 @@ class _State:
         elif formatter == "markdown_docs":
             self.formatter = formatters.markdown_docs
             self.markdown = True
+        elif isinstance(formatter, str):
+            print("Unknown formatter", formatter)
+            self.formatter = formatters.repl
         else:
-            self.formatter = formatter
+            self.formatter = formatter  # could be provided as a function
 
     def quote(self, text):
         """Surrounds text by single quote, or by backquote if formatter

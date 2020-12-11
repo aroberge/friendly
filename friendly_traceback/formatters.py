@@ -158,12 +158,9 @@ def html_escape(text):
 
 def jupyter(info, include="friendly_tb"):
     """Jupyter formatter using pygments and html format."""
-    global INSERTED_CSS
     _ = current_lang.translate
-    if not INSERTED_CSS:
-        css = HtmlFormatter().get_style_defs()
-        display(HTML(f"<style>{css}</style>"))
-        INSERTED_CSS = True
+    css = HtmlFormatter().get_style_defs(".highlight")
+    display(HTML(f"<style>{css}</style>"))
     items_to_show = select_items(include)
     result = False
     for item in items_to_show:
@@ -217,15 +214,8 @@ def jupyter(info, include="friendly_tb"):
     return ""
 
 
-def colab(info, include="friendly_tb"):
-    global INSERTED_CSS
-    INSERTED_CSS = False
-    return jupyter(info, include=include)
-
-
 if not ipython_available:
     jupyter = repl  # noqa
-    colab = repl  # noqa
 
 
 def pre(info, include="friendly_tb"):
