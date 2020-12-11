@@ -3,9 +3,6 @@
 All Rich-related imports and redefinitions are done here.
 
 """
-import sys
-
-rich_available = True
 try:
     from rich import pretty
     from rich.console import Console
@@ -15,23 +12,14 @@ try:
     from rich.text import Text
     from rich.theme import Theme
     from . import brunante
-    import pygments.styles
 
-    # Monkeypatching pygments; inspired by
-    # https://gist.github.com/crowsonkb/4e2eb4439e3fe514cc4755b217f164d5
-    sys.modules["pygments.styles.brunante"] = brunante
-    pygments.styles.STYLE_MAP["brunante"] = "brunante::BrunanteStyle"
 except ImportError:
-    rich_available = False
     Markdown = None
     Console = None
     brunante = None
 
 
-def init_console(theme="dark"):
-    if not rich_available:
-        return None
-
+def init_console(style="dark"):
     def _patch_heading(self, console, options):
         """By default, all headings are centered by Rich; I prefer to have
         them left-justified, except for <h3>
@@ -49,10 +37,10 @@ def init_console(theme="dark"):
         code = str(self.text).rstrip()
         if self.lexer_name == "default":
             self.lexer_name = "python"
-        if theme == "light":
+        if style == "light":
             syntax = Syntax(code, self.lexer_name, theme="tango")
         else:
-            syntax = Syntax(code, self.lexer_name, theme="brunante")
+            syntax = Syntax(code, self.lexer_name, theme=style)
         yield syntax
 
     CodeBlock.__rich_console__ = _patch_code_block
@@ -80,7 +68,7 @@ def init_console(theme="dark"):
             "markdown.code": "#0000cf",
         }
     )
-    if theme == "light":
+    if style == "light":
         console = Console(theme=light_background_theme)
     else:
         console = Console(theme=dark_background_theme)

@@ -5,10 +5,10 @@ Keeps tabs of all settings.
 import os.path
 import sys
 
-from .my_gettext import current_lang
-from . import formatters
-from . import friendly_rich
 from . import core
+from . import formatters
+from . import theme
+from .my_gettext import current_lang
 from .friendly_exception import FriendlyException
 
 
@@ -18,7 +18,7 @@ def _write_err(text):
         return
     if session.use_rich:
         session.console.print()
-        md = friendly_rich.Markdown(
+        md = theme.friendly_rich.Markdown(
             text, inline_code_lexer="python", code_theme="brunante"
         )
         if formatters.RICH_HEADER:
@@ -27,7 +27,7 @@ def _write_err(text):
                 title = info["header"].replace(":", "")
             else:
                 title = "Traceback"
-            md = friendly_rich.Panel(md, title=title)
+            md = theme.friendly_rich.Panel(md, title=title)
             formatters.RICH_HEADER = False
         session.console.print(md)
     else:
@@ -118,7 +118,7 @@ class _State:
     def get_include(self):
         return self.include
 
-    def set_formatter(self, formatter=None, theme="dark", markdown=False):
+    def set_formatter(self, formatter=None, style="dark", markdown=False):
         """Sets the default formatter. If no argument is given, the default
         formatter is used.
         """
@@ -130,11 +130,13 @@ class _State:
         elif formatter == "pre":
             self.formatter = formatters.pre
         elif formatter == "jupyter":
+            theme.set_theme(style)
             self.formatter = formatters.jupyter
             self.use_jupyter = True
         elif formatter == "rich":
+            theme.set_theme(style)
             self.formatter = formatters.rich_markdown
-            self.console = friendly_rich.init_console(theme)
+            self.console = theme.init_rich_console()
             self.use_rich = True
             self.markdown = True
         elif formatter == "markdown":

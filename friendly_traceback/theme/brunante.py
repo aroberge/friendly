@@ -28,38 +28,6 @@ from pygments.token import (
     Literal,
 )
 
-# As a reference, here is a list that includes most of the colours
-# found in SublimeText's Twilight theme.
-#
-# The names chosen and grouping by categories is very subjective
-#
-# yellow: #F9EE98 #E9C062 #E0C589 #DDF2A4 #DAEFA3
-# orange -> brown: #CF7D34 #CF6A4C #9B5C2E
-# beige -> brown: #CDA869 #AC885B #9B703F
-# pink/mauve: #D2A8A1 #9B859D
-# red/pink: #F92672
-# green: #8F9D6A
-# grey -> blue: #5F5A60 #A7A7A7 #8A9A95 #7587A6
-#
-# Note that the actual look of a given colour might greatly depend
-# on the editor/terminal in which it is
-#
-# Rather than using these specific values, let's choose some
-# somewhat similar ones from the standard named colors
-# https://en.wikipedia.org/wiki/List_of_colors:_A%E2%80%93F A to F
-# https://en.wikipedia.org/wiki/List_of_colors:_G%E2%80%93M G to M
-# https://en.wikipedia.org/wiki/List_of_colors:_N%E2%80%93Z N to Z
-# using some primary classification
-
-# Yellow: "#F0E68C"  Khaki
-# Orange: #FF8243 Mango tango
-# Red: #D92121 Maximum red
-# Green: #87A96B Asparagus
-# White: #F4F0EC Isabelline
-# Beige: #DEB887 Burleywood
-# Brown:
-# Blue: #87CEEB Skyblue
-# Gray: #555555
 
 colours = {
     "yellow": "#F0E68C",
@@ -70,7 +38,7 @@ colours = {
     "blue": "#87CEEB",
     "gray": "#555555",
     "green": "#87A96B",
-    "small-heading": "#9370DB",
+    "mauve": "#9370DB",
 }
 
 my_style = {
@@ -88,7 +56,6 @@ my_style = {
 }
 
 
-#
 # Since we use Rich's pretty(), we try to ensure that the colours
 # are consistent.  pretty() highlight objects based on their repr name
 # with the following choices:
@@ -98,11 +65,11 @@ rich_style = {
     "repr.tag_name": my_style["code"],  # for consistency with Python
     "markdown.h1": my_style["diagnostics"],
     # Exception message; location header H2
-    "markdown.h2": f"underline {colours['red']}",
-    "markdown.h3": colours["small-heading"],  # likely cause
+    "markdown.h2": f"{colours['red']}",
+    "markdown.h3": colours["mauve"],  # likely cause
     "markdown.h4": colours["orange"],  # warning header
-    "markdown.link": f"not underline {my_style['keywords']}",
-    "repr.url": my_style["string"],
+    "markdown.link": f"underline {my_style['keywords']}",
+    "repr.url": my_style["keywords"],
     "repr.number": my_style["numbers"],
     # The next three are identical for pygments, so we keep them identical
     "repr.bool_false": my_style["TrueFalseNone"],
@@ -149,7 +116,7 @@ class BrunanteStyle(Style):
         Generic.Subheading: my_style["text"],  # class: 'gu'
         Generic.Traceback: my_style["Exception"],  # class: 'gt'
         #
-        Keyword: my_style["keywords"],  # class: 'k' #FADA5E Royal yellow #FFFF66
+        Keyword: my_style["keywords"],  # class: 'k'
         Keyword.Constant: my_style["TrueFalseNone"],  # class: 'kc'
         Keyword.Declaration: my_style["keywords"],  # class: 'kd'
         Keyword.Namespace: my_style["keywords"],  # class: 'kn'

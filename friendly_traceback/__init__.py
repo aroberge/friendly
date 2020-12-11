@@ -39,7 +39,8 @@ from . import path_info
 from .config import session
 
 from . import editors_helper
-from . import friendly_rich
+
+from .theme import rich_available
 
 # Ensure that warnings are not shown to the end user, as they could
 # cause confusion.  Eventually, we might want to interpret them like
@@ -130,7 +131,7 @@ def run(
     args=None,
     console=True,
     use_rich=False,
-    theme="dark",
+    style="dark",
     redirect=None,
 ):
     """Given a filename (relative or absolute path) ending with the ".py"
@@ -167,9 +168,9 @@ def run(
     """
     session.install(lang=lang, include=include, redirect=redirect)
     if use_rich:
-        if friendly_rich.rich_available:
+        if rich_available:
             session.use_rich = True
-            session.set_formatter("rich", theme=theme)
+            session.set_formatter("rich")
 
     if args is not None:
         sys.argv = [filename]
@@ -180,7 +181,7 @@ def run(
             local_vars=module_globals,
             use_rich=use_rich,
             banner="",
-            theme=theme,
+            style=style,
             include=include,
         )
     else:
@@ -214,7 +215,7 @@ def start_console(
     include="friendly_tb",
     lang="en",
     banner=None,
-    theme="dark",
+    style="dark",
 ):
     """Starts a Friendly console."""
     from . import console
@@ -225,7 +226,7 @@ def start_console(
         include=include,
         lang=lang,
         banner=banner,
-        theme=theme,
+        style=style,
     )
 
 

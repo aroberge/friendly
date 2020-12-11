@@ -45,16 +45,20 @@ This module currently contains 6 formatters:
 """
 from .my_gettext import current_lang
 
-try:
-    from pygments import highlight
-    from pygments.lexers import PythonLexer
-    from pygments.formatters import HtmlFormatter
-    from IPython.display import display, HTML
+from .theme import pygments_available
 
-    INSERTED_CSS = False
-    ipython_available = True
-except ImportError:
-    ipython_available = False
+ipython_available = False
+if pygments_available:
+    try:
+        from pygments import highlight
+        from pygments.lexers import PythonLexer, PythonTracebackLexer
+        from pygments.formatters import HtmlFormatter
+        from IPython.display import display, HTML
+
+        INSERTED_CSS = False
+        ipython_available = True
+    except ImportError:
+        pass
 
 RICH_HEADER = False
 
@@ -164,14 +168,30 @@ def jupyter(info, include="friendly_tb"):
     for item in items_to_show:
         if item in info:
             result = True
-            if (
-                "source" in item
-                or "traceback" in item
-                or "message" in item
-                or "variable" in item
-            ):
+            if "source" in item or "variable" in item:
                 text = info[item]
                 text = highlight(text, PythonLexer(), HtmlFormatter())
+                display(HTML(text))
+            elif "traceback" in item:
+                text = info[item]
+                text = highlight(text, PythonTracebackLexer(), HtmlFormatter())
+                display(HTML(text))
+            elif item == "message":  # format like last line of traceback
+                content = info[item].split(":")
+                error_name = content[0]
+                if len(content) > 1:
+                    message = ":".join(content[1:])
+                else:
+                    message = ""
+                text = "".join(
+                    [
+                        '<div class="highlight"><pre><span class="gr">',
+                        error_name,
+                        '</span>: <span class="n">',
+                        message,
+                        "</span></pre></div>",
+                    ]
+                )
                 display(HTML(text))
             elif item == "suggest":
                 text = html_escape(info[item])
@@ -180,6 +200,8 @@ def jupyter(info, include="friendly_tb"):
                 text = html_escape(info[item])
                 if "header" in item:
                     display(HTML(f"<p><b>{text}</b></p>"))
+                else:
+                    display(HTML(f'<p style="width: 70ch">{text}</p>'))
     if not result:
         if include == "why":
             text = _("I do not know.")

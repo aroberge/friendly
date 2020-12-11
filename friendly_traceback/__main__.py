@@ -18,7 +18,8 @@ from importlib import import_module
 
 # Importing modules
 from . import console
-from . import friendly_rich
+from . import theme
+
 
 # Importing objects from __init__.py
 from . import explain_traceback, exclude_file_from_traceback, install
@@ -115,10 +116,11 @@ parser.add_argument(
 parser.add_argument("--debug", help="""For developer use.""", action="store_true")
 
 parser.add_argument(
-    "--theme",
+    "--style",
     help="""To use with 'rich' --format option.
     Indicates if the background colour of the console is 'dark' or 'light'.
     The default is 'dark'. The light theme is just a proof of concept.
+    You could also try to specify a pygments style - it might work.
     """,
 )
 
@@ -160,31 +162,27 @@ def main():
 
     install(lang=args.lang, include=include)
 
+    if args.style:
+        style = theme.set_theme(args.style)
+    else:
+        style = "dark"
+
     use_rich = False
     if args.format:
         format = args.format
         if format in ["repl", "pre", "markdown"]:
             set_formatter(format)
         elif format == "rich":
-            if not friendly_rich.rich_available:
+            if not theme.rich_available:
                 warn("Rich is not installed.")
+                set_formatter("rich", style=style)
             else:
                 use_rich = True
         else:
             set_formatter(import_function(args.format))
-    elif friendly_rich.rich_available:
+    elif theme.rich_available:
         use_rich = True
-
-    theme = "dark"
-    if use_rich:
-        if args.theme == "light":
-            theme = "light"
-            warn("light theme is just a proof of concept.")
-        elif args.theme not in [None, "dark"]:
-            warn(f"unknown theme '{args.theme}'.")
-        session.set_formatter("rich", theme=theme)
-    elif args.theme is not None:
-        warn("theme argument ignored.")
+        set_formatter("rich", style=style)  # use by default when available.
 
     console_defaults = {}
     if args.source is not None:
@@ -195,16 +193,12 @@ def main():
                 console_defaults.update(module_dict)
             except Exception:
                 explain_traceback()
-            console.start_console(
-                local_vars=console_defaults, use_rich=use_rich, theme=theme
-            )
+            console.start_console(local_vars=console_defaults, use_rich=use_rich)
         else:
             sys.argv = [args.source, *args.args]
             runpy.run_path(args.source, run_name="__main__")
     else:
-        console.start_console(
-            local_vars=console_defaults, use_rich=use_rich, theme=theme
-        )
+        console.start_console(local_vars=console_defaults, use_rich=use_rich)
 
 
 main()

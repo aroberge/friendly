@@ -16,12 +16,13 @@ import codeop  # need to import to exclude from tracebacks
 import friendly_traceback
 
 from . import source_cache
-from .my_gettext import current_lang
-
-from . import friendly_rich
-from .config import session
 from . import info_generic
+from . import theme
+
+from .config import session
+from .my_gettext import current_lang
 from .path_info import path_utils
+
 
 BANNER = "\nFriendly Console version {}. [Python version: {}]\n".format(
     friendly_traceback.__version__, platform.python_version()
@@ -41,7 +42,7 @@ def _quote(text):
 
 
 class FriendlyConsole(InteractiveConsole):
-    def __init__(self, locals=None, use_rich=False, theme="dark"):
+    def __init__(self, locals=None, use_rich=False):
         """This class builds upon Python's code.InteractiveConsole
         so as to provide friendly tracebacks. It keeps track
         of code fragment executed by treating each of them as
@@ -56,8 +57,8 @@ class FriendlyConsole(InteractiveConsole):
         for name in dir(builtins):
             self.saved_builtins[name] = getattr(builtins, name)
         self.rich_console = False
-        if friendly_rich.rich_available and use_rich:
-            self.rich_console = friendly_rich.init_console(theme)
+        if theme.rich_available and use_rich:
+            self.rich_console = theme.init_rich_console()
         elif use_rich:
             print(_("\n    Rich is not installed.\n\n"))
 
@@ -189,7 +190,7 @@ class FriendlyConsole(InteractiveConsole):
                 warning = warning_builtins.format(name=_quote(name))
                 if self.rich_console:
                     warning = "#### " + warning
-                    warning = friendly_rich.Markdown(warning)
+                    warning = theme.friendly_rich.Markdown(warning)
                     self.rich_console.print(warning)
                     self.rich_console.print(please_comment)
                 else:
@@ -226,7 +227,7 @@ class FriendlyConsole(InteractiveConsole):
 
         if warning:
             if self.rich_console:
-                warning = friendly_rich.Markdown(warning)
+                warning = theme.friendly_rich.Markdown(warning)
                 self.rich_console.print(warning)
                 self.rich_console.print(please_comment)
             else:
@@ -257,7 +258,7 @@ class FriendlyConsole(InteractiveConsole):
                     "Warning: you have redefined the python builtin {name}."
                 ).format(name=_quote(name))
                 if self.rich_console:
-                    warning = friendly_rich.Markdown("#### " + warning)
+                    warning = theme.friendly_rich.Markdown("#### " + warning)
                     self.rich_console.print(warning)
                     self.rich_console.print(please_comment)
                 else:
@@ -400,22 +401,13 @@ def debug():
 
 
 def start_console(
-    local_vars=None,
-    use_rich=False,
-    include="friendly_tb",
-    lang="en",
-    banner=None,
-    theme="dark",
+    local_vars=None, use_rich=False, include="friendly_tb", lang="en", banner=None
 ):
     """Starts a console; modified from code.interact"""
-    from . import config
+    # from . import config
 
     if banner is None:
         banner = BANNER
-    if theme != "light":
-        theme = "dark"
-    if use_rich:
-        config.session.set_formatter("rich", theme=theme)
 
     console_defaults = {
         "explain": explain,
@@ -442,5 +434,5 @@ def start_console(
     else:
         local_vars.update(console_defaults)
 
-    console = FriendlyConsole(locals=local_vars, use_rich=use_rich, theme=theme)
+    console = FriendlyConsole(locals=local_vars, use_rich=use_rich)
     console.interact(banner=banner)
