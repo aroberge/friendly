@@ -409,7 +409,6 @@ class FriendlyTraceback:
 
         * exception_raised_header
         * exception_raised_source
-        * exception_raised_variables_header
         * exception_raised_variables
         """
         from .config import session
@@ -439,9 +438,6 @@ class FriendlyTraceback:
 
         var_info = info_variables.get_var_info(line, frame)
         if var_info:
-            self.info["exception_raised_variables_header"] = _(
-                "Known objects of interest shown above:"
-            )
             self.info["exception_raised_variables"] = var_info
 
     def locate_last_call(self, record):
@@ -449,7 +445,6 @@ class FriendlyTraceback:
 
         * last_call_header
         * exception_raised_source
-        * last_call_variables_header
         * last_call_variables
         """
         from .config import session
@@ -469,7 +464,6 @@ class FriendlyTraceback:
 
         var_info = info_variables.get_var_info(source_info["line"], frame)
         if var_info:
-            self.info["last_call_variables_header"] = _("Known objects shown above:")
             self.info["last_call_variables"] = var_info
 
     def locate_parsing_error(self):

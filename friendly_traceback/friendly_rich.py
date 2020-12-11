@@ -59,7 +59,7 @@ def init_console(theme="dark"):
 
     _theme = {
         "markdown.h1": "bold #B22518",
-        "markdown.h2": "bold #009999 underline",  # Exception message; location header
+        "markdown.h2": "bold #009999",  # Exception message; location header
         "markdown.h3": "bold #CF6A4C",  # likely cause
         "markdown.h4": "bold #CF6A4C",  # warning header
         "markdown.link": "bold #DAEFA3 underline",
@@ -72,7 +72,7 @@ def init_console(theme="dark"):
     light_background_theme = Theme(
         {
             "markdown.h1": "bold #B22518",
-            "markdown.h2": "bold #B22518 underline",  # Exception message; location header
+            "markdown.h2": "bold #B22518",  # Exception message; location header
             "markdown.h3": "bold #0000cf",  # likely cause
             "markdown.h4": "bold #CF6A4C",  # warning header
             "markdown.link": "bold #3465a4 underline",

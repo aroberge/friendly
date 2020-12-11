@@ -78,11 +78,9 @@ items_in_order = [
     "cause",
     "last_call_header",
     "last_call_source",
-    "last_call_variables_header",
     "last_call_variables",
     "exception_raised_header",
     "exception_raised_source",
-    "exception_raised_variables_header",
     "exception_raised_variables",
 ]
 
@@ -98,11 +96,9 @@ default_indentation = {  # used with repl and pre formatters.
     "cause": "double",
     "last_call_header": "single",
     "last_call_source": "none",
-    "last_call_variables_header": "double",
     "last_call_variables": "double",
     "exception_raised_header": "single",
     "exception_raised_source": "none",
-    "exception_raised_variables_header": "double",
     "exception_raised_variables": "double",
 }
 
@@ -172,7 +168,7 @@ def jupyter(info, include="friendly_tb"):
                 "source" in item
                 or "traceback" in item
                 or "message" in item
-                or ("variable" in item and "header" not in item)
+                or "variable" in item
             ):
                 text = info[item]
                 text = highlight(text, PythonLexer(), HtmlFormatter())
@@ -182,10 +178,8 @@ def jupyter(info, include="friendly_tb"):
                 display(HTML(f"<p><i>{text}<i><p>"))
             else:
                 text = html_escape(info[item])
-                if "header" in item and "variables" not in item:
+                if "header" in item:
                     display(HTML(f"<p><b>{text}</b></p>"))
-                else:
-                    display(HTML(f'<p style="width: 70ch;">{text}</p>'))
     if not result:
         if include == "why":
             text = _("I do not know.")
@@ -291,11 +285,9 @@ def _markdown(info, include, rich=False, docs=False):
         "cause": ("", ""),
         "last_call_header": ("## ", ""),
         "last_call_source": ("```python\n", "\n```"),
-        "last_call_variables_header": ("### ", ""),
         "last_call_variables": ("```python\n", "\n```"),
         "exception_raised_header": ("## ", ""),
         "exception_raised_source": ("```python\n", "\n```"),
-        "exception_raised_variables_header": ("### ", ""),
         "exception_raised_variables": ("```python\n", "\n```"),
         "simulated_python_traceback": ("```pytb\n", "\n```"),
         "original_python_traceback": ("```pytb\n", "\n```"),
@@ -320,11 +312,7 @@ def _markdown(info, include, rich=False, docs=False):
                 if not rich:
                     content = content.rstrip(":")
                 else:
-                    if item not in [
-                        "cause_header",
-                        "last_call_variables_header",
-                        "exception_raised_variables_header",
-                    ]:
+                    if item != "cause_header":
                         content = content.rstrip(":")
             if item == "message" and rich:
                 # Ensure that the exception name is highlighted.
@@ -371,11 +359,9 @@ items_groups = {
         "parsing_error_source",
         "last_call_header",
         "last_call_source",
-        "last_call_variables_header",
         "last_call_variables",
         "exception_raised_header",
         "exception_raised_source",
-        "exception_raised_variables_header",
         "exception_raised_variables",
     },
     "friendly_tb": {"shortened_traceback", "suggest", "debug_warning"},
