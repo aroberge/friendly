@@ -130,7 +130,9 @@ class _State:
         elif formatter == "pre":
             self.formatter = formatters.pre
         elif formatter == "jupyter":
-            theme.set_theme(style)
+            self.formatter = formatters.jupyter
+            self.use_jupyter = True
+        elif formatter == "colab":
             self.formatter = formatters.jupyter
             self.use_jupyter = True
         elif formatter == "rich":
