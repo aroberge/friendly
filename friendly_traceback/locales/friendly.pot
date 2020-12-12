@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-11 21:38-0400\n"
+"POT-Creation-Date: 2020-12-12 08:11-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1060,11 +1060,16 @@ msgid ""
 "Valid names cannot begin with a number.\n"
 msgstr ""
 
-#: syntax_errors\line_analyzer.py:545
+#: syntax_errors\line_analyzer.py:537
+msgid ""
+"Perhaps you forgot a multiplication operator, `{first} * {second}`.\n"
+msgstr ""
+
+#: syntax_errors\line_analyzer.py:565
 msgid "Did you forget something between `{first}` and `{second}`?"
 msgstr ""
 
-#: syntax_errors\line_analyzer.py:549
+#: syntax_errors\line_analyzer.py:569
 msgid ""
 "Python indicates that the error is caused by `{second}` written just after `{first}`.\n"
 "Perhaps you forgot a comma or an operator, like `+`, `*`, etc., between `{first}` and `{second}`."
@@ -1480,58 +1485,58 @@ msgid ""
 "The closing {bracket} on line {close_lineno} does not match the opening {open_bracket} on line {open_lineno}.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:171
+#: syntax_errors\source_analyzer.py:169
 msgid ""
 "It is possible that you used an equal sign `=` instead of a colon `:`\n"
 "to assign values to keys in a dict\n"
 "before or at the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:206
+#: syntax_errors\source_analyzer.py:204
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:218
+#: syntax_errors\source_analyzer.py:216
 msgid ""
 "It is also possible that you forgot a comma between items in a tuple, \n"
 "or between function arguments, \n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:225
+#: syntax_errors\source_analyzer.py:223
 msgid ""
 "It is also possible that you forgot a comma between items in a list\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:231
+#: syntax_errors\source_analyzer.py:229
 msgid ""
 "It is also possible that you forgot a comma between items in a set or dict\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:252
+#: syntax_errors\source_analyzer.py:250
 msgid "parenthesis `(`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:254
+#: syntax_errors\source_analyzer.py:252
 msgid "parenthesis `)`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:256
+#: syntax_errors\source_analyzer.py:254
 msgid "square bracket `[`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:258
+#: syntax_errors\source_analyzer.py:256
 msgid "square bracket `]`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:260
+#: syntax_errors\source_analyzer.py:258
 msgid "curly bracket `{`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:262
+#: syntax_errors\source_analyzer.py:260
 msgid "curly bracket `}`"
 msgstr ""
 

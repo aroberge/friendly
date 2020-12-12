@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-11 21:38-0400\n"
-"PO-Revision-Date: 2020-12-11 21:40-0400\n"
+"POT-Creation-Date: 2020-12-12 08:11-0400\n"
+"PO-Revision-Date: 2020-12-12 08:12-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1411,11 +1411,17 @@ msgstr ""
 msgid "Valid names cannot begin with a number.\n"
 msgstr "Les noms valides ne peuvent pas commencer par un chiffre.\n"
 
-#: syntax_errors\line_analyzer.py:545
+#: syntax_errors\line_analyzer.py:537
+msgid "Perhaps you forgot a multiplication operator, `{first} * {second}`.\n"
+msgstr ""
+"Peut-être avez-vous oublié un opérateur de multiplication, `{first} * "
+"{second}`.\n"
+
+#: syntax_errors\line_analyzer.py:565
 msgid "Did you forget something between `{first}` and `{second}`?"
 msgstr "Avez-vous oublié quelque chose entre `{first}` et `{second}` ?"
 
-#: syntax_errors\line_analyzer.py:549
+#: syntax_errors\line_analyzer.py:569
 msgid ""
 "Python indicates that the error is caused by `{second}` written just after "
 "`{first}`.\n"
@@ -2036,7 +2042,7 @@ msgstr ""
 "Le symbole {bracket} à la ligne {close_lineno} ne correspond pas au symbole "
 "{open_bracket} à la ligne {open_lineno}.\n"
 
-#: syntax_errors\source_analyzer.py:171
+#: syntax_errors\source_analyzer.py:169
 msgid ""
 "It is possible that you used an equal sign `=` instead of a colon `:`\n"
 "to assign values to keys in a dict\n"
@@ -2047,13 +2053,13 @@ msgstr ""
 "pour attribuer des valeurs à une clé d'un dictionnaire\n"
 "avant ou exactement à la position indiquée par --> et ^.\n"
 
-#: syntax_errors\source_analyzer.py:206
+#: syntax_errors\source_analyzer.py:204
 msgid "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'est pas fermé par le symbole "
 "correspondant.\n"
 
-#: syntax_errors\source_analyzer.py:218
+#: syntax_errors\source_analyzer.py:216
 msgid ""
 "It is also possible that you forgot a comma between items in a tuple, \n"
 "or between function arguments, \n"
@@ -2064,7 +2070,7 @@ msgstr ""
 "ou entre les arguments d'une fonction, avant la position indiquée par --> et "
 "^.\n"
 
-#: syntax_errors\source_analyzer.py:225
+#: syntax_errors\source_analyzer.py:223
 msgid ""
 "It is also possible that you forgot a comma between items in a list\n"
 "before the position indicated by --> and ^.\n"
@@ -2073,7 +2079,7 @@ msgstr ""
 "éléments d'une liste\n"
 "avant la position indiquée par --> et ^.\n"
 
-#: syntax_errors\source_analyzer.py:231
+#: syntax_errors\source_analyzer.py:229
 msgid ""
 "It is also possible that you forgot a comma between items in a set or dict\n"
 "before the position indicated by --> and ^.\n"
@@ -2082,27 +2088,27 @@ msgstr ""
 "éléments d'un ensemble (set)\n"
 "ou un dict avant la position indiquée par --> et ^.\n"
 
-#: syntax_errors\source_analyzer.py:252
+#: syntax_errors\source_analyzer.py:250
 msgid "parenthesis `(`"
 msgstr "parenthèse `(`"
 
-#: syntax_errors\source_analyzer.py:254
+#: syntax_errors\source_analyzer.py:252
 msgid "parenthesis `)`"
 msgstr "parenthèse `)`"
 
-#: syntax_errors\source_analyzer.py:256
+#: syntax_errors\source_analyzer.py:254
 msgid "square bracket `[`"
 msgstr "crochet `[`"
 
-#: syntax_errors\source_analyzer.py:258
+#: syntax_errors\source_analyzer.py:256
 msgid "square bracket `]`"
 msgstr "crochet `]`"
 
-#: syntax_errors\source_analyzer.py:260
+#: syntax_errors\source_analyzer.py:258
 msgid "curly bracket `{`"
 msgstr "accolade `{`"
 
-#: syntax_errors\source_analyzer.py:262
+#: syntax_errors\source_analyzer.py:260
 msgid "curly bracket `}`"
 msgstr "accolade `}`"
 

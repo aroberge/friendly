@@ -521,7 +521,27 @@ def invalid_name(tokens, offset=None):
 
     for first, second in zip(tokens, tokens[1:]):
         if first.is_number() and second.is_identifier() and first.end == second.start:
-            hint = cause = _("Valid names cannot begin with a number.\n")
+            cause = _("Valid names cannot begin with a number.\n")
+            break
+
+    # Try to distinguish between  "2x = ... and y = ... 2x ..."
+    if cause:
+        tokens.append(first)
+        for first, second, third in zip(tokens, tokens[1:], tokens[2:]):
+            if (
+                first.is_number()
+                and second.is_identifier()
+                and first.end == second.start
+            ):
+                if third.string != "=":
+                    hint = _(
+                        "Perhaps you forgot a multiplication operator,"
+                        " `{first} * {second}`.\n"
+                    ).format(first=first.string, second=second.string)
+                    cause = cause + hint
+                else:
+                    hint = cause
+                break
     return cause, hint
 
 

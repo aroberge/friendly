@@ -112,7 +112,7 @@ all_imports = {
     "SyntaxError - forgot a comma in an f-string": "raise_syntax_error79",
     "SyntaxError - Valid names cannot begin with a number": "raise_syntax_error80",
     "SyntaxError - unclosed parenthesis - 3": "raise_syntax_error81",
-
+    "SyntaxError - forgot a multiplication operator": "raise_syntax_error82",
 }
 
 if sys.version_info < (3, 8):

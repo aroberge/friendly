@@ -37,7 +37,7 @@ def init_console(style="dark"):
         code = str(self.text).rstrip()
         if self.lexer_name == "default":
             self.lexer_name = "python"
-        if style == "light":
+        if style == "light" or style == "tango":
             syntax = Syntax(code, self.lexer_name, theme="tango")
         else:
             syntax = Syntax(code, self.lexer_name, theme=style)
@@ -68,7 +68,7 @@ def init_console(style="dark"):
             "markdown.code": "#0000cf",
         }
     )
-    if style == "light":
+    if style == "light" or style == "tango":
         console = Console(theme=light_background_theme)
     else:
         console = Console(theme=dark_background_theme)
