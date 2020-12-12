@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-10 12:44-0400\n"
-"PO-Revision-Date: 2020-12-10 12:50-0400\n"
+"POT-Creation-Date: 2020-12-11 21:38-0400\n"
+"PO-Revision-Date: 2020-12-11 21:40-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -17,11 +17,11 @@ msgstr ""
 "X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: config.py:80 config.py:201
+#: config.py:80 config.py:205
 msgid "Nothing to show: no exception recorded."
 msgstr "Rien à montrer: pas d’exception enregistrée."
 
-#: console.py:62
+#: console.py:63
 msgid ""
 "\n"
 "    Rich is not installed.\n"
@@ -31,25 +31,25 @@ msgstr ""
 "    Rich n'est pas installé.\n"
 "\n"
 
-#: console.py:178
+#: console.py:179
 msgid "Warning: you added a type hint to the python builtin {name}."
 msgstr ""
 "Attention : vous avez utilisé des annotations de type pour l'identifiant "
 "Python (builtin) {name}."
 
-#: console.py:181
+#: console.py:182
 msgid ""
 "Warning: you used a type hint for a variable without assigning it a value.\n"
 msgstr ""
 "Attention : vous avez utilisé une annotation de type pour une variable sans "
 "lui attribuer une valeur.\n"
 
-#: console.py:184
+#: console.py:185
 msgid "Instead of {hint}, perhaps you meant {assignment}."
 msgstr ""
 "Au lieu de {hint}, peut-être que vous vouliez plutôt écrire : {assignment}."
 
-#: console.py:256
+#: console.py:257
 msgid "Warning: you have redefined the python builtin {name}."
 msgstr "Attention : vous avez redéfini l'identifiant Python (builtin) {name}."
 
@@ -69,24 +69,16 @@ msgstr ""
 "Le message d’erreur de Python (invalid syntax) ne peut pas être utilisé pour "
 "identifier le problème :"
 
-#: core.py:430
+#: core.py:429
 msgid "Exception raised on line {linenumber} of file {filename}.\n"
 msgstr "Exception levée à la ligne {linenumber} du fichier {filename}.\n"
 
-#: core.py:442
-msgid "Known objects of interest shown above:"
-msgstr "Objets d’intérêt connus montrés ci-dessus:"
-
-#: core.py:465
+#: core.py:460
 msgid "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
 "L'exécution s'est arrêtée à la ligne {linenumber} du fichier {filename}\n"
 
-#: core.py:472
-msgid "Known objects shown above:"
-msgstr "Objets connus mentionnés ci-dessus :"
-
-#: core.py:488
+#: core.py:482
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -96,7 +88,7 @@ msgstr ""
 "'{filename}'\n"
 "jusqu'à l'endroit indiqué par --> et ^.\n"
 
-#: core.py:494
+#: core.py:488
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
@@ -107,7 +99,7 @@ msgstr ""
 "La fin du fichier a été atteinte et Python s'attendait à voir plus de code.\n"
 "\n"
 
-#: core.py:500
+#: core.py:494
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -117,11 +109,11 @@ msgstr ""
 "'{filename}'\n"
 "pour une raison non spécifiée.\n"
 
-#: core.py:546
+#: core.py:540
 msgid "More lines not shown."
 msgstr "Plus de lignes non affichées."
 
-#: core.py:653
+#: core.py:647
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
@@ -131,11 +123,11 @@ msgstr ""
 "        vous devez utiliser la console 'Friendly' et non pas une \n"
 "        console Python régulière.\n"
 
-#: core.py:659
+#: core.py:653
 msgid "Problem: source of '{filename}' is not available\n"
 msgstr "Problème : la source de '{filename}' n'est pas disponible.\n"
 
-#: core.py:677
+#: core.py:671
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -146,15 +138,15 @@ msgstr ""
 "Est-ce que vous utilisez une console Python plutôt que la console \"Friendly"
 "\" ?\n"
 
-#: formatters.py:191 formatters.py:352
+#: formatters.py:205 formatters.py:360
 msgid "I do not know."
 msgstr "Je ne sais pas."
 
-#: formatters.py:194 formatters.py:355
+#: formatters.py:208 formatters.py:363
 msgid "I have no suggestion to offer; try `why()`."
 msgstr "Je n’ai aucune suggestion à offrir; essayez `why()`."
 
-#: formatters.py:196 formatters.py:357
+#: formatters.py:210 formatters.py:365
 msgid "I have no suggestion to offer."
 msgstr "Je n’ai aucune suggestion à offrir."
 
@@ -412,7 +404,7 @@ msgstr "Dans votre programme, le nom du fichier inconnu est `{filename}`.\n"
 msgid "In your program, the key that cannot be found is `{key_name!r}`.\n"
 msgstr "Dans votre programme, la clé inconnue est `{key_name!r}`.\n"
 
-#: info_variables.py:254
+#: info_variables.py:253
 msgid ""
 "A type hint found for `{name}` in the {scope} scope.\n"
 "Perhaps you had used a colon instead of an equal sign and written\n"
@@ -2055,64 +2047,70 @@ msgstr ""
 "pour attribuer des valeurs à une clé d'un dictionnaire\n"
 "avant ou exactement à la position indiquée par --> et ^.\n"
 
-#: syntax_errors\source_analyzer.py:215
-msgid ""
-"It is possible that you forgot a comma between items in a tuple, \n"
-"or between function arguments, \n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-"Il est possible que vous ayez oublié une virgule entre les éléments d'un "
-"tuple,\n"
-"ou entre les arguments d'une fonction, avant la position indiquée par --> et "
-"^.\n"
-
-#: syntax_errors\source_analyzer.py:222
-msgid ""
-"It is possible that you forgot a comma between items in a list\n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-"Il est possible que vous ayez oublié une virgule entre les éléments d'une "
-"liste\n"
-"avant la position indiquée par --> et ^.\n"
-
-#: syntax_errors\source_analyzer.py:228
-msgid ""
-"It is possible that you forgot a comma between items in a set or dict\n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-"Il est possible que vous ayez oublié une virgule entre les éléments d'un "
-"ensemble (set)\n"
-"ou un dict avant la position indiquée par --> et ^.\n"
-
-#: syntax_errors\source_analyzer.py:239
+#: syntax_errors\source_analyzer.py:206
 msgid "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'est pas fermé par le symbole "
 "correspondant.\n"
 
-#: syntax_errors\source_analyzer.py:259
+#: syntax_errors\source_analyzer.py:218
+msgid ""
+"It is also possible that you forgot a comma between items in a tuple, \n"
+"or between function arguments, \n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+"Il est également possible que vous ayez oublié une virgule entre les "
+"éléments d'un tuple,\n"
+"ou entre les arguments d'une fonction, avant la position indiquée par --> et "
+"^.\n"
+
+#: syntax_errors\source_analyzer.py:225
+msgid ""
+"It is also possible that you forgot a comma between items in a list\n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+"Il est également possible que vous ayez oublié une virgule entre les "
+"éléments d'une liste\n"
+"avant la position indiquée par --> et ^.\n"
+
+#: syntax_errors\source_analyzer.py:231
+msgid ""
+"It is also possible that you forgot a comma between items in a set or dict\n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+"Il est également possible que vous ayez oublié une virgule entre les "
+"éléments d'un ensemble (set)\n"
+"ou un dict avant la position indiquée par --> et ^.\n"
+
+#: syntax_errors\source_analyzer.py:252
 msgid "parenthesis `(`"
 msgstr "parenthèse `(`"
 
-#: syntax_errors\source_analyzer.py:261
+#: syntax_errors\source_analyzer.py:254
 msgid "parenthesis `)`"
 msgstr "parenthèse `)`"
 
-#: syntax_errors\source_analyzer.py:263
+#: syntax_errors\source_analyzer.py:256
 msgid "square bracket `[`"
 msgstr "crochet `[`"
 
-#: syntax_errors\source_analyzer.py:265
+#: syntax_errors\source_analyzer.py:258
 msgid "square bracket `]`"
 msgstr "crochet `]`"
 
-#: syntax_errors\source_analyzer.py:267
+#: syntax_errors\source_analyzer.py:260
 msgid "curly bracket `{`"
 msgstr "accolade `{`"
 
-#: syntax_errors\source_analyzer.py:269
+#: syntax_errors\source_analyzer.py:262
 msgid "curly bracket `}`"
 msgstr "accolade `}`"
+
+#~ msgid "Known objects of interest shown above:"
+#~ msgstr "Objets d’intérêt connus montrés ci-dessus:"
+
+#~ msgid "Known objects shown above:"
+#~ msgstr "Objets connus mentionnés ci-dessus :"
 
 #~ msgid "You forgot a colon, `:`.\n"
 #~ msgstr "Vous avez oublié les deux points, `:`.\n"

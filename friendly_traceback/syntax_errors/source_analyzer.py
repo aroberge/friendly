@@ -146,18 +146,16 @@ def look_for_missing_bracket(
     if source_tokens is None:
         source_tokens = utils.tokenize_source_lines(source_lines)
     brackets = []
-    beyond_brackets = []
-    end_bracket = None
     will_be_previous = None
-    previous_token_string = None
+    previous_token = None
 
     for token in source_tokens:
         if will_be_previous is not None:
-            previous_token_string = will_be_previous
+            previous_token = will_be_previous
 
         if not token.string:
             continue
-        will_be_previous = token.string
+        will_be_previous = token
 
         if (
             token.start_row == max_linenumber
@@ -165,7 +163,7 @@ def look_for_missing_bracket(
             or token.start_row > max_linenumber
         ):
             # We are beyond the location flagged by Python;
-            if previous_token_string == "=" and brackets:
+            if (previous_token.string == "=" or token.string == "=") and brackets:
                 _open_bracket, _start_row, _start_col = brackets.pop()
                 if _open_bracket == "{":
                     return _(
@@ -176,20 +174,7 @@ def look_for_missing_bracket(
                     )
                 else:
                     brackets.append((_open_bracket, _start_row, _start_col))
-            # Perhaps we are simply missing a comma between items.
-            # If so, we should be able to find a closing bracket.
-            if token.string in "([{":
-                beyond_brackets.append(token.string)
-            elif token.string in ")]}":
-                if len(beyond_brackets) % 2 == 0:
-                    end_bracket = token.string
-                    break
-                else:
-                    end_bracket = None
-                    open_bracket = beyond_brackets.pop()
-                    if not matching_brackets(open_bracket, token.string):
-                        break
-            continue
+            break
 
         # We are not beyond the location flagged by Python
         if token.string not in "()[]}{":
@@ -209,38 +194,44 @@ def look_for_missing_bracket(
 
     if brackets:
         bracket, linenumber, start_col = brackets.pop()
-        if end_bracket is not None:
-            if matching_brackets(bracket, end_bracket):
-                if bracket == "(":
-                    return _(
-                        "It is possible that you "
-                        "forgot a comma between items in a tuple, \n"
-                        "or between function arguments, \n"
-                        "before the position indicated by --> and ^.\n"
-                    )
-                elif bracket == "[":
-                    return _(
-                        "It is possible that you "
-                        "forgot a comma between items in a list\n"
-                        "before the position indicated by --> and ^.\n"
-                    )
-                else:
-                    return _(
-                        "It is possible that you "
-                        "forgot a comma between items in a set or dict\n"
-                        "before the position indicated by --> and ^.\n"
-                    )
 
-        bracket = name_bracket(bracket)
+        bracket_name = name_bracket(bracket)
         _source = f"\n    {linenumber}: {source_lines[linenumber-1]}"
         shift = len(str(linenumber)) + start_col + 6
-        _source += " " * shift + "^\n"
-        return (
+        _source += " " * shift + "|\n"
+
+        cause = (
             _("The opening {bracket} on line {linenumber} is not closed.\n").format(
-                bracket=bracket, linenumber=linenumber
+                bracket=bracket_name, linenumber=linenumber
             )
             + _source
         )
+
+        if (
+            previous_token.is_number()
+            or previous_token.is_identifier()
+            or previous_token.is_string()
+        ):
+            if bracket == "(":
+                return cause + _(
+                    "It is also possible that you "
+                    "forgot a comma between items in a tuple, \n"
+                    "or between function arguments, \n"
+                    "before the position indicated by --> and ^.\n"
+                )
+            elif bracket == "[":
+                return cause + _(
+                    "It is also possible that you "
+                    "forgot a comma between items in a list\n"
+                    "before the position indicated by --> and ^.\n"
+                )
+            else:
+                return cause + _(
+                    "It is also possible that you "
+                    "forgot a comma between items in a set or dict\n"
+                    "before the position indicated by --> and ^.\n"
+                )
+        return cause
     else:
         return False
 

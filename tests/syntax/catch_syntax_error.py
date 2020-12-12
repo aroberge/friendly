@@ -94,6 +94,7 @@ causes = {
     "raise_syntax_error78": "You used an assignment operator `=`",
     "raise_syntax_error79": "forgot a comma",
     "raise_syntax_error80": "Valid names cannot begin with a number",
+    "raise_syntax_error81": "The opening parenthesis `(` on line 5 is not closed",
 }
 
 if sys.version_info < (3, 8):

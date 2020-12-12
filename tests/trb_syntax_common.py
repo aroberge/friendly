@@ -109,6 +109,10 @@ all_imports = {
     "SyntaxError - single = instead of double == with if": "raise_syntax_error76",
     "SyntaxError - single = instead of double == with elif": "raise_syntax_error77",
     "SyntaxError - single = instead of double == with while": "raise_syntax_error78",
+    "SyntaxError - forgot a comma in an f-string": "raise_syntax_error79",
+    "SyntaxError - Valid names cannot begin with a number": "raise_syntax_error80",
+    "SyntaxError - unclosed parenthesis - 3": "raise_syntax_error81",
+
 }
 
 if sys.version_info < (3, 8):

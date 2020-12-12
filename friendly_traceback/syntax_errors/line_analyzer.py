@@ -538,8 +538,8 @@ def missing_comma_or_operator(tokens, offset=None):
 
     for first, second in zip(tokens, tokens[1:]):
         if (
-            (first.is_number() or first.is_identifier())
-            and (second.is_number() or second.is_identifier())
+            (first.is_number() or first.is_identifier() or first.is_string())
+            and (second.is_number() or second.is_identifier() or second.is_string())
             and second.start_col <= offset <= second.end_col
         ):
             hint = _(

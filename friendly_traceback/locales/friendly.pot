@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-10 12:44-0400\n"
+"POT-Creation-Date: 2020-12-11 21:38-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,31 +15,31 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: config.py:80 config.py:201
+#: config.py:80 config.py:205
 msgid "Nothing to show: no exception recorded."
 msgstr ""
 
-#: console.py:62
+#: console.py:63
 msgid ""
 "\n"
 "    Rich is not installed.\n"
 "\n"
 msgstr ""
 
-#: console.py:178
+#: console.py:179
 msgid "Warning: you added a type hint to the python builtin {name}."
 msgstr ""
 
-#: console.py:181
+#: console.py:182
 msgid ""
 "Warning: you used a type hint for a variable without assigning it a value.\n"
 msgstr ""
 
-#: console.py:184
+#: console.py:185
 msgid "Instead of {hint}, perhaps you meant {assignment}."
 msgstr ""
 
-#: console.py:256
+#: console.py:257
 msgid "Warning: you have redefined the python builtin {name}."
 msgstr ""
 
@@ -55,77 +55,69 @@ msgstr ""
 msgid "Python's error message (invalid syntax) cannot be used to identify the problem:"
 msgstr ""
 
-#: core.py:430
+#: core.py:429
 msgid ""
 "Exception raised on line {linenumber} of file {filename}.\n"
 msgstr ""
 
-#: core.py:442
-msgid "Known objects of interest shown above:"
-msgstr ""
-
-#: core.py:465
+#: core.py:460
 msgid ""
 "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
 
-#: core.py:472
-msgid "Known objects shown above:"
-msgstr ""
-
-#: core.py:488
+#: core.py:482
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "beyond the location indicated by --> and ^.\n"
 msgstr ""
 
-#: core.py:494
+#: core.py:488
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
 "It reached the end of the file and expected more content.\n"
 msgstr ""
 
-#: core.py:500
+#: core.py:494
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "for an unspecified reason.\n"
 msgstr ""
 
-#: core.py:546
+#: core.py:540
 msgid "More lines not shown."
 msgstr ""
 
-#: core.py:653
+#: core.py:647
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
 "        regular Python console.\n"
 msgstr ""
 
-#: core.py:659
+#: core.py:653
 msgid ""
 "Problem: source of '{filename}' is not available\n"
 msgstr ""
 
-#: core.py:677
+#: core.py:671
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
 "Are you using a regular Python console instead of a Friendly-console?\n"
 msgstr ""
 
-#: formatters.py:191 formatters.py:352
+#: formatters.py:205 formatters.py:360
 msgid "I do not know."
 msgstr ""
 
-#: formatters.py:194 formatters.py:355
+#: formatters.py:208 formatters.py:363
 msgid "I have no suggestion to offer; try `why()`."
 msgstr ""
 
-#: formatters.py:196 formatters.py:357
+#: formatters.py:210 formatters.py:365
 msgid "I have no suggestion to offer."
 msgstr ""
 
@@ -296,7 +288,7 @@ msgid ""
 "In your program, the key that cannot be found is `{key_name!r}`.\n"
 msgstr ""
 
-#: info_variables.py:254
+#: info_variables.py:253
 msgid ""
 "A type hint found for `{name}` in the {scope} scope.\n"
 "Perhaps you had used a colon instead of an equal sign and written\n"
@@ -1495,51 +1487,51 @@ msgid ""
 "before or at the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:215
-msgid ""
-"It is possible that you forgot a comma between items in a tuple, \n"
-"or between function arguments, \n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-
-#: syntax_errors\source_analyzer.py:222
-msgid ""
-"It is possible that you forgot a comma between items in a list\n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-
-#: syntax_errors\source_analyzer.py:228
-msgid ""
-"It is possible that you forgot a comma between items in a set or dict\n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-
-#: syntax_errors\source_analyzer.py:239
+#: syntax_errors\source_analyzer.py:206
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:259
+#: syntax_errors\source_analyzer.py:218
+msgid ""
+"It is also possible that you forgot a comma between items in a tuple, \n"
+"or between function arguments, \n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+
+#: syntax_errors\source_analyzer.py:225
+msgid ""
+"It is also possible that you forgot a comma between items in a list\n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+
+#: syntax_errors\source_analyzer.py:231
+msgid ""
+"It is also possible that you forgot a comma between items in a set or dict\n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+
+#: syntax_errors\source_analyzer.py:252
 msgid "parenthesis `(`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:261
+#: syntax_errors\source_analyzer.py:254
 msgid "parenthesis `)`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:263
+#: syntax_errors\source_analyzer.py:256
 msgid "square bracket `[`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:265
+#: syntax_errors\source_analyzer.py:258
 msgid "square bracket `]`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:267
+#: syntax_errors\source_analyzer.py:260
 msgid "curly bracket `{`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:269
+#: syntax_errors\source_analyzer.py:262
 msgid "curly bracket `}`"
 msgstr ""
 
