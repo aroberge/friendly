@@ -6,6 +6,8 @@ Functions that can be used in a friendly console or in other interactive
 environments such as in a Jupyter notebook.
 
 """
+# TODO: add unit tests for each of these
+
 import friendly_traceback
 from .config import session
 from .info_generic import get_generic_explanation

@@ -35,8 +35,8 @@ def free_variable_referenced(unknown_name):
     _ = current_lang.translate
     cause = _(
         "In your program, `{var_name}` is an unknown name\n"
-        " but has been found to appear in a nonlocal scope where "
-        "it had not been assigned a value.\n"
+        "that had been declared as belonging in a nonlocal scope;\n"
+        "however, no such name could not be found.\n"
     ).format(var_name=unknown_name)
     return cause, None
 

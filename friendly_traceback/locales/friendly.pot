@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-12 08:11-0400\n"
+"POT-Creation-Date: 2020-12-13 07:31-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,6 +14,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
+
+#: __init__.py:184
+msgid "The file {filename} does not exist"
+msgstr ""
 
 #: config.py:80 config.py:205
 msgid "Nothing to show: no exception recorded."
@@ -43,66 +47,66 @@ msgstr ""
 msgid "Warning: you have redefined the python builtin {name}."
 msgstr ""
 
-#: core.py:250 core.py:271
+#: core.py:256 core.py:277
 msgid "Python exception:"
 msgstr ""
 
-#: core.py:315 core.py:356
+#: core.py:322 core.py:363
 msgid "Likely cause based on the information given by Python:"
 msgstr ""
 
-#: core.py:351
+#: core.py:358
 msgid "Python's error message (invalid syntax) cannot be used to identify the problem:"
 msgstr ""
 
-#: core.py:429
+#: core.py:436
 msgid ""
 "Exception raised on line {linenumber} of file {filename}.\n"
 msgstr ""
 
-#: core.py:460
+#: core.py:467
 msgid ""
 "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
 
-#: core.py:482
+#: core.py:489
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "beyond the location indicated by --> and ^.\n"
 msgstr ""
 
-#: core.py:488
+#: core.py:495
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
 "It reached the end of the file and expected more content.\n"
 msgstr ""
 
-#: core.py:494
+#: core.py:501
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "for an unspecified reason.\n"
 msgstr ""
 
-#: core.py:540
+#: core.py:547
 msgid "More lines not shown."
 msgstr ""
 
-#: core.py:647
+#: core.py:654
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
 "        regular Python console.\n"
 msgstr ""
 
-#: core.py:653
+#: core.py:660
 msgid ""
 "Problem: source of '{filename}' is not available\n"
 msgstr ""
 
-#: core.py:671
+#: core.py:678
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -524,7 +528,8 @@ msgstr ""
 #: runtime_errors\name_error.py:36
 msgid ""
 "In your program, `{var_name}` is an unknown name\n"
-" but has been found to appear in a nonlocal scope where it had not been assigned a value.\n"
+"that had been declared as belonging in a nonlocal scope;\n"
+"however, no such name could not be found.\n"
 msgstr ""
 
 #: runtime_errors\name_error.py:46
