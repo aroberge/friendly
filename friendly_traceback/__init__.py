@@ -19,7 +19,6 @@ or newer.
 If you find that some additional functionality would be useful to
 have as part of the public API, please let us know.
 """
-
 import sys
 
 valid_version = sys.version_info.major >= 3 and sys.version_info.minor >= 6
@@ -32,15 +31,16 @@ del valid_version
 
 # ===========================================
 
+import inspect
 import warnings as _warnings
+from pathlib import Path
 
-from .version import __version__  # noqa
+from . import editors_helpers
 from . import path_info
 from .config import session
-
-from . import editors_helper
-
+from .my_gettext import current_lang
 from .theme import rich_available
+from .version import __version__  # noqa
 
 # Ensure that warnings are not shown to the end user, as they could
 # cause confusion.  Eventually, we might want to interpret them like
@@ -61,6 +61,7 @@ def explain(redirect=None):
     """Deprecated: Use explain_traceback() instead."""
     # The reason for removing this is to avoid confusion with
     # explain() used in the console.
+    print("explain() is deprecated; please use explain_traceback().")
     session.explain_traceback(redirect=redirect)
 
 
@@ -166,23 +167,35 @@ def run(
     the default, and ``light`` are available. ``light`` is meant for
     light coloured background and has not been extensively tested.
     """
+    _ = current_lang.translate
+    if args is not None:
+        sys.argv = [filename]
+        sys.argv.extend(list(args))
+    else:
+        filename = Path(filename)
+        if not filename.is_absolute():
+            frame = inspect.stack()[1]
+            # This is the file from which run() is called
+            run_filename = Path(frame[0].f_code.co_filename)
+            run_dir = run_filename.parent.absolute()
+            filename = run_dir.joinpath(filename)
+
+        if not filename.exists():
+            print(_("The file {filename} does not exist").format(filename=filename))
+            return
+
     session.install(lang=lang, include=include, redirect=redirect)
     if use_rich:
         if rich_available:
             session.use_rich = True
-            session.set_formatter("rich")
+            session.set_formatter("rich", style=style)
 
-    if args is not None:
-        sys.argv = [filename]
-        sys.argv.extend(list(args))
-    module_globals = editors_helper.exec_code(path=filename, lang=lang, include=include)
+    module_globals = editors_helpers.exec_code(
+        path=filename, lang=lang, include=include
+    )
     if console:
         start_console(
-            local_vars=module_globals,
-            use_rich=use_rich,
-            banner="",
-            style=style,
-            include=include,
+            local_vars=module_globals, use_rich=use_rich, banner="", include=include
         )
     else:
         return module_globals
@@ -210,12 +223,7 @@ def show_again():
 
 
 def start_console(
-    local_vars=None,
-    use_rich=False,
-    include="friendly_tb",
-    lang="en",
-    banner=None,
-    style="dark",
+    local_vars=None, use_rich=False, include="friendly_tb", lang="en", banner=None
 ):
     """Starts a Friendly console."""
     from . import console
@@ -226,7 +234,6 @@ def start_console(
         include=include,
         lang=lang,
         banner=banner,
-        style=style,
     )
 
 
