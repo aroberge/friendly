@@ -29,10 +29,23 @@ class Cache:
         These fake filenames might not be retrieved by Python's linecache
         which is why we keep a duplicate of anything we add to linecache.cache
         """
+        # filename could be a Path object,
+        # which does not have a startswith() method used below
+        filename = str(filename)
         lines = [line + "\n" for line in source.splitlines()]
         entry = (len(source), time.time(), lines, filename)
-        linecache.cache[filename] = entry
+        if not filename.startswith("<"):
+            # Linecache never allows retrieving of such values,
+            # so it is pointless to attempt to store them there.
+            linecache.cache[filename] = entry
         self.cache[filename] = lines
+
+    def remove(self, filename):
+        """Removes an entry from the cache if it can be found."""
+        if filename in self.cache:
+            del self.cache[filename]
+        if filename in linecache.cache:
+            del linecache.cache[filename]
 
     def get_source_lines(self, filename, module_globals=None):
         """Given a filename, returns the corresponding source, either

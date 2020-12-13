@@ -19,10 +19,11 @@ and locate a particular message, instead of attempting to follow
 function call after function call.
 """
 import inspect
-from itertools import dropwhile
 import os
 import re
 import traceback
+
+from itertools import dropwhile
 
 from . import info_generic
 from . import info_specific
@@ -59,6 +60,7 @@ class TracebackData:
         An additional debug parameter can be set to True; this is
         useful during development.
         """
+        cache.remove("<fstring>")
         self.exception_type = etype
         self.exception_name = etype.__name__
         self.value = value
@@ -66,7 +68,10 @@ class TracebackData:
         self.tb = tb
         self.formatted_tb = traceback.format_exception(etype, value, tb)
         self.debug = debug
-        self.records = self.get_records(tb)
+        if not issubclass(etype, SyntaxError):
+            self.records = self.get_records(tb)
+        else:
+            self.records = []
         self.debug_warning = ""
         self.get_source_info(etype, value)
         self.node_text = ""
@@ -241,7 +246,7 @@ class FriendlyTraceback:
     * what() shows the information compiled by assign_generic()
     """
 
-    def __init__(self, etype, value, tb, debug=True):
+    def __init__(self, etype, value, tb, debug=False):
         """The basic argument are those generated after a traceback
         and obtained via::
 
