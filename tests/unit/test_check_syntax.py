@@ -22,7 +22,7 @@ def test_check_syntax():
 
     # When a SyntaxError is raised, check_syntax returns False
 
-    assert not friendly.editors_helper.check_syntax(source=bad_code_syntax)
+    assert not friendly.editors_helpers.check_syntax(source=bad_code_syntax)
     result = friendly.get_output()  # content is flushed
     assert "SyntaxError" in result
 
@@ -30,8 +30,8 @@ def test_check_syntax():
 
     # When no SyntaxError is raised, check_syntax returns a tuple
     # containing a code object and a file name
-    assert friendly.editors_helper.check_syntax(source=bad_code_exec)
-    assert friendly.editors_helper.check_syntax(source=good_code)
+    assert friendly.editors_helpers.check_syntax(source=bad_code_exec)
+    assert friendly.editors_helpers.check_syntax(source=good_code)
     assert not friendly.get_output()  # no new exceptions recorded
 
     try:
@@ -43,9 +43,9 @@ def test_check_syntax():
     # if it was not installed before.
 
     friendly.uninstall()
-    friendly.editors_helper.check_syntax(source=bad_code_syntax)
+    friendly.editors_helpers.check_syntax(source=bad_code_syntax)
     assert not friendly.is_installed()
-    friendly.editors_helper.check_syntax(source=bad_code_syntax, include="python_tb")
+    friendly.editors_helpers.check_syntax(source=bad_code_syntax, include="python_tb")
     assert not friendly.is_installed()
 
     # When friendly-traceback is "installed", a call to check_syntax
@@ -53,16 +53,16 @@ def test_check_syntax():
     friendly.install(redirect="capture")
 
     friendly.set_include("explain")
-    friendly.editors_helper.check_syntax(source=bad_code_syntax)
+    friendly.editors_helpers.check_syntax(source=bad_code_syntax)
     assert friendly.get_include() == "explain"
-    friendly.editors_helper.check_syntax(source=bad_code_syntax, include="python_tb")
+    friendly.editors_helpers.check_syntax(source=bad_code_syntax, include="python_tb")
     assert friendly.get_include() == "explain"
 
     # A call to advanced_code_syntax, with a language specified as an argument
     # should leave the previous language unchanged.
 
     friendly.set_lang("en")
-    assert not friendly.editors_helper.check_syntax(source=bad_code_syntax, lang="fr")
+    assert not friendly.editors_helpers.check_syntax(source=bad_code_syntax, lang="fr")
     result = friendly.get_output()
     assert "Une exception de type `SyntaxError`" in result
     assert friendly.get_lang() == "en"

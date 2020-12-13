@@ -88,6 +88,11 @@ class TracebackData:
             dropwhile(lambda record: is_excluded_file(record.filename), records)
         )
         records.reverse()
+        # If a user tries to run a file that cannot be found using run(),
+        # all the records will be from our code and will be stripped,
+        # preventing any kind of analysis
+        if not records:
+            return inspect.getinnerframes(tb, cache.context)
         return records
 
     def get_source_info(self, etype, value):
@@ -99,7 +104,7 @@ class TracebackData:
             if value.text is not None:
                 self.bad_line = value.text  # typically includes "\n"
                 return
-            else:  # this can happen with editors_helper.check_syntax()
+            else:  # this can happen with editors_helpers.check_syntax()
                 try:
                     self.bad_line = cache.get_source_lines(value.filename)[
                         value.lineno - 1
@@ -113,8 +118,9 @@ class TracebackData:
             self.filename = filename
             self.bad_line = line.rstrip()
             return
+
         # We should never reach this stage.
-        self.debug_warning = "Internal error in TracebackData.get_source_info."
+        self.debug_warning += "Internal error in TracebackData.get_source_info."
         self.filename = ""
         self.bad_line = "\n"
         return
@@ -235,7 +241,7 @@ class FriendlyTraceback:
     * what() shows the information compiled by assign_generic()
     """
 
-    def __init__(self, etype, value, tb, debug=False):
+    def __init__(self, etype, value, tb, debug=True):
         """The basic argument are those generated after a traceback
         and obtained via::
 
@@ -307,6 +313,7 @@ class FriendlyTraceback:
 
         etype = self.tb_data.exception_type
         value = self.tb_data.value
+        self._debug = True
         try:
             cause, hint = info_specific.get_likely_cause(
                 etype, value, self.exception_frame, self.tb_data

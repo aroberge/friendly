@@ -7,7 +7,7 @@ from contextlib import redirect_stdout
 
 def test_run_error_en():
     friendly_traceback.run(
-        "tests/name_error.py",
+        "../name_error.py",
         include="explain",  # comprehensive
         console=False,
         redirect="capture",
@@ -19,7 +19,7 @@ def test_run_error_en():
 
 def test_run_error_fr():
     friendly_traceback.run(
-        "tests/name_error.py",
+        "../name_error.py",
         lang="fr",
         include="why",  # more restricted than the English test
         console=False,
@@ -38,7 +38,7 @@ def test_run_get_mod_dict():
     file_capture = StringIO()
     with redirect_stdout(file_capture):
         mod_dict = friendly_traceback.run(
-            "tests/adder.py",
+            "tests/adder.py",  # run from where pytest is run
             console=False,
             args=("1", "2.5", "3")
         )

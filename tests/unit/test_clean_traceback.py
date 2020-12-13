@@ -14,7 +14,7 @@ def test_uncleaned_traceback():
     try:
         from . import raise_exception
     except ValueError:
-        friendly.explain()
+        friendly.explain_traceback()
 
     output = friendly.get_output()
     assert "test_clean_traceback" in output
@@ -34,7 +34,7 @@ def test_cleaned_traceback():
     try:
         from . import raise_exception
     except ValueError:
-        friendly.explain()
+        friendly.explain_traceback()
 
     output = friendly.get_output()
     assert "test_clean_traceback" not in output

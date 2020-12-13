@@ -86,15 +86,19 @@ class PathUtil:
             path = "HOME:" + path[len(self.home) :]
         return path
 
-    def show_paths(self):
-        paths = {}
-        paths["CWD"] = self.cwd
-        paths["HOME"] = self.home
-        paths["FRIENDLY"] = self.friendly
-        if self.tests is not None:
-            paths["TESTS"] = self.tests
-        paths["PYTHON_LIB"] = self.python
-        return paths
-
 
 path_utils = PathUtil()
+
+
+def show_paths():
+    """To avoid displaying very long file paths to the user,
+    Friendly-traceback tries to shorten them using some easily
+    recognized synonyms. This function shows the path synonyms
+    currently used.
+    """
+    print("CWD =", path_utils.cwd)
+    print("HOME =", path_utils.home)
+    print("FRIENDLY =", path_utils.friendly)
+    if path_utils.tests is not None:
+        print("TESTS =", path_utils.tests)
+    print("PYTHON_LIB =", path_utils.python)

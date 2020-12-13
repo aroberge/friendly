@@ -1,5 +1,5 @@
 """
-editors_helper.py
+editors_helpers.py
 -----------------
 
 The functions in this module have been created so that user editors/IDEs
@@ -63,6 +63,7 @@ def check_syntax(
                 source = f.read()
                 filename = path
         except Exception:
+            print("Exception caught")
             # Do not show the Python traceback which would include
             #  the call to open() in the traceback
             if include is None:

@@ -20,8 +20,8 @@ from . import info_generic
 from . import theme
 
 from .config import session
+from .console_helpers import helpers
 from .my_gettext import current_lang
-from .path_info import path_utils
 
 
 BANNER = "\nFriendly Console version {}. [Python version: {}]\n".format(
@@ -409,30 +409,11 @@ def start_console(
     if banner is None:
         banner = BANNER
 
-    console_defaults = {
-        "explain": explain,
-        "what": what,
-        "where": where,
-        "why": why,
-        "more": more,
-        "get_lang": friendly_traceback.get_lang,
-        "set_lang": friendly_traceback.set_lang,
-        "get_include": friendly_traceback.get_include,
-        "set_include": friendly_traceback.set_include,
-        "hint": hint,
-        "friendly_tb": friendly_tb,
-        "python_tb": python_tb,
-        "debug_tb": debug_tb,
-        "debug": debug,
-        "show_paths": path_utils.show_paths,
-        "_info": _info,
-    }
     if not friendly_traceback.is_installed():
         friendly_traceback.install(include=include, lang=lang)
-    if local_vars is None:
-        local_vars = console_defaults
-    else:
-        local_vars.update(console_defaults)
+    if local_vars is not None:
+        # Make sure we don't overwrite with our own functions
+        helpers.update(local_vars)
 
-    console = FriendlyConsole(locals=local_vars, use_rich=use_rich)
+    console = FriendlyConsole(locals=helpers, use_rich=use_rich)
     console.interact(banner=banner)
