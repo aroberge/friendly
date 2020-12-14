@@ -178,8 +178,9 @@ def simplify_name(name):
     # The following is done so that, when using rich, pygments
     # does not style the - and 'in' in a weird way.
     name = name.replace("built-in", "builtin")
-    if ".<locals>." in name:
+    if name.startswith("<"):
         name = name.replace("'", "")
+    if ".<locals>." in name:
         file_name, obj_name = name.split(".<locals>.")
         if name.startswith("<function "):
             start = "<function "
@@ -189,8 +190,9 @@ def simplify_name(name):
             start = "<"
         file_name = file_name.replace(start, "")
         name = start + obj_name + " from " + file_name
+    if "__main__." in name:
+        name = name.replace("__main__.", "") + " from __main__"
     return name
-    # return name.replace("<__main__.", "<")  ?? still needed
 
 
 def format_var_info(name, value, obj, _global=""):
