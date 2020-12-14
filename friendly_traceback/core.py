@@ -68,10 +68,7 @@ class TracebackData:
         self.tb = tb
         self.formatted_tb = traceback.format_exception(etype, value, tb)
         self.debug = debug
-        if not issubclass(etype, SyntaxError):
-            self.records = self.get_records(tb)
-        else:
-            self.records = []
+        self.records = self.get_records(tb)
         self.debug_warning = ""
         self.get_source_info(etype, value)
         self.node_text = ""
@@ -93,9 +90,10 @@ class TracebackData:
             dropwhile(lambda record: is_excluded_file(record.filename), records)
         )
         records.reverse()
-        # If a user tries to run a file that cannot be found using run(),
-        # all the records will be from our code and will be stripped,
-        # preventing any kind of analysis
+        # If all the records are removed, it means that all the error
+        # is in our own code - or that of the user who chose to exclude
+        # some files. If so, we make sure to have something to analyze
+        # and help identify the problem.
         if not records:
             return inspect.getinnerframes(tb, cache.context)
         return records

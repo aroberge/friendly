@@ -1,6 +1,6 @@
 """
 editors_helpers.py
------------------
+------------------
 
 The functions in this module have been created so that user editors/IDEs
 could use Friendly-traceback without having to change the content of

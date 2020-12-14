@@ -22,6 +22,76 @@ INDENT = "        "
 MAX_LENGTH = 65
 
 
+def get_all_objects(line, frame):
+    """Given a (partial) line of code and a frame,
+    obtains a dict containing all the relevant information about objects
+    found on that line so that they can be formatted as part of the
+    answer to "where()" or they can be used during the analysis
+    of the cause of the exception.
+
+    The dict returnes has three keys, 'locals', 'globals', 'nonlocals',
+    each containing a list of tuples, each tuple being of the form
+    (name, repr(obj), obj) where name --> obj.
+    """
+    objects = {}
+    objects["locals"] = []
+    objects["globals"] = []
+    locals_ = frame.f_locals
+    globals_ = frame.f_globals
+
+    names = set([])
+    atok = ASTTokens(line, parse=True)
+    for nodes, obj in Evaluator(locals_).interesting_expressions_grouped(atok.tree):
+        name = atok.get_text(nodes[0])
+        if name in names:
+            continue
+        names.add(name)
+        objects["locals"].append((name, repr(obj), obj))
+    for nodes, obj in Evaluator(globals_).interesting_expressions_grouped(atok.tree):
+        name = atok.get_text(nodes[0])
+        if name in names:
+            continue
+        names.add(name)
+        objects["globals"].append((name, repr(obj), obj))
+
+    tokens = utils.tokenize_source(line)
+    for tok in tokens:
+        if tok.is_identifier():
+            name = tok.string
+            if name in names:
+                continue
+            if name in locals_:
+                names.add(name)
+                obj = locals_[name]
+                objects["locals"].append((name, repr(obj), obj))
+            elif name in globals_:
+                names.add(name)
+                obj = globals_[name]
+                objects["globals"].append((name, repr(obj), obj))
+
+    objects["nonlocals"] = get_nonlocal_objects(frame)
+    return objects
+
+
+def get_nonlocal_objects(frame):
+    """Identifies objects found in a nonlocal scope, and return
+    a list of tuples of the form (name, repr(obj), obj) for each
+    such object found.
+    """
+    globals_ = frame.f_globals
+    nonlocals_ = []
+    while frame.f_back is not None:
+        frame = frame.f_back
+        # By creating a new list here, we prevent a failure when
+        # running with pytest.
+        for name in list(frame.f_locals):
+            if name in globals_ or name in nonlocals_:
+                continue
+            obj = frame.f_locals[name]
+            nonlocals_.append((name, repr(obj), obj))
+    return nonlocals_
+
+
 def get_variables_in_frame_by_scope(frame, scope):
     """Returns a list of variables based on the provided scope, which must
     be one of 'local', 'global', or 'nonlocal'.
@@ -73,7 +143,7 @@ def get_var_info(line, frame):
 
     names_info = []
 
-    objects = get_objects(line.strip(), frame.f_locals, frame.f_globals)
+    objects = get_all_objects(line.strip(), frame)
 
     for name, value, obj in objects["locals"]:
         result = format_var_info(name, value, obj)
@@ -109,42 +179,6 @@ def simplify_name(name):
     # does not style the - and 'in' in a weird way.
     name = name.replace("built-in", "builtin")
     return name.replace("<__main__.", "<")
-
-
-def get_objects(line, loc, glob):
-    objects = {}
-    objects["locals"] = []
-    objects["globals"] = []
-    names = set([])
-    atok = ASTTokens(line, parse=True)
-    for nodes, obj in Evaluator(loc).interesting_expressions_grouped(atok.tree):
-        name = atok.get_text(nodes[0])
-        if name in names:
-            continue
-        names.add(name)
-        objects["locals"].append((name, repr(obj), obj))
-    for nodes, obj in Evaluator(glob).interesting_expressions_grouped(atok.tree):
-        name = atok.get_text(nodes[0])
-        if name in names:
-            continue
-        names.add(name)
-        objects["globals"].append((name, repr(obj), obj))
-
-    tokens = utils.tokenize_source(line)
-    for tok in tokens:
-        if tok.is_identifier():
-            name = tok.string
-            if name in names:
-                continue
-            if name in loc:
-                names.add(name)
-                obj = loc[name]
-                objects["locals"].append((name, repr(obj), obj))
-            elif name in glob:
-                names.add(name)
-                obj = glob[name]
-                objects["globals"].append((name, repr(obj), obj))
-    return objects
 
 
 def format_var_info(name, value, obj, _global=""):
