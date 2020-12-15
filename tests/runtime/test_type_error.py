@@ -16,10 +16,7 @@ def test_type_error1():
     assert py37 or py36
     if friendly_traceback.get_lang() == "en":
         assert "a string (`str`) and an integer (`int`)" in result
-    return result, message
 
-
-def test_type_error1a():
     try:
         a = "a"
         a_list = [1, 2, 3]
@@ -34,10 +31,7 @@ def test_type_error1a():
     assert py37 or py36
     if friendly_traceback.get_lang() == "en":
         assert "a string (`str`) and a `list`" in result
-    return result, message
 
-
-def test_type_error1b():
     try:
         a_tuple = (1, 2, 3)
         a_list = [1, 2, 3]
@@ -68,10 +62,7 @@ def test_type_error2():
         assert (
             "an integer (`int`) and a variable equal to `None` (`NoneType`)" in result
         )
-    return result, message
 
-
-def test_type_error2a():
     try:
         one = 1
         two = "two"
@@ -84,10 +75,7 @@ def test_type_error2a():
     assert "TypeError: unsupported operand type(s) for +=:" in result
     if friendly_traceback.get_lang() == "en":
         assert "an integer (`int`) and a string (`str`)" in result
-    return result, message
 
-
-def test_type_error3():
     try:
         a = (1, 2)
         b = [3, 4]
@@ -100,10 +88,7 @@ def test_type_error3():
     assert "TypeError: unsupported operand type(s) for -:" in result
     if friendly_traceback.get_lang() == "en":
         assert "a `tuple` and a `list`" in result
-    return result, message
 
-
-def test_type_error3a():
     try:
         a = (1, 2)
         b = [3, 4]
@@ -132,10 +117,7 @@ def test_type_error4():
     assert "TypeError: unsupported operand type(s) for *:" in result
     if friendly_traceback.get_lang() == "en":
         assert "a complex number and a `set`" in result
-    return result, message
 
-
-def test_type_error4a():
     try:
         a = 1j
         b = {2, 3}
@@ -164,10 +146,7 @@ def test_type_error5():
     assert "TypeError: unsupported operand type(s) for /:" in result
     if friendly_traceback.get_lang() == "en":
         assert "a dictionary (`dict`) and a number (`float`)" in result
-    return result, message
 
-
-def test_type_error5a():
     try:
         a = {1: 1, 2: 2}
         b = 3.1416
@@ -180,10 +159,7 @@ def test_type_error5a():
     assert "TypeError: unsupported operand type(s) for /=:" in result
     if friendly_traceback.get_lang() == "en":
         assert "a number (`float`) and a dictionary (`dict`)" in result
-    return result, message
 
-
-def test_type_error5b():
     try:
         a = {1: 1, 2: 2}
         b = 1
@@ -196,10 +172,7 @@ def test_type_error5b():
     assert "TypeError: unsupported operand type(s) for //:" in result
     if friendly_traceback.get_lang() == "en":
         assert "a dictionary (`dict`) and an integer (`int`)" in result
-    return result, message
 
-
-def test_type_error5c():
     try:
         a = {1: 1, 2: 2}
         b = 3.1416
@@ -228,10 +201,7 @@ def test_type_error6():
     assert "TypeError: unsupported operand type(s) for &:" in result
     if friendly_traceback.get_lang() == "en":
         assert "a string (`str`) and an integer (`int`)" in result
-    return result, message
 
-
-def test_type_error6a():
     try:
         a = "a"
         b = 2
@@ -260,10 +230,7 @@ def test_type_error7():
     assert "TypeError: unsupported operand type(s) for ** or pow():" in result
     if friendly_traceback.get_lang() == "en":
         assert "You tried to exponentiate (raise to a power)" in result
-    return result, message
 
-
-def test_type_error7a():
     try:
         a = {1: 1, 2: 2}
         b = 3.1416
@@ -292,10 +259,7 @@ def test_type_error8():
     assert "TypeError: unsupported operand type(s) for >>:" in result
     if friendly_traceback.get_lang() == "en":
         assert "You tried to perform the bit shifting operation >>" in result
-    return result, message
 
-
-def test_type_error8a():
     try:
         a = "a"
         b = 42
@@ -324,10 +288,7 @@ def test_type_error9():
     assert "TypeError: unsupported operand type(s) for @:" in result
     if friendly_traceback.get_lang() == "en":
         assert "You tried to use the operator @" in result
-    return result, message
 
-
-def test_type_error9a():
     try:
         a = "a"
         b = 2
@@ -371,10 +332,7 @@ def test_type_error11():
     assert "TypeError: bad operand type for unary +: 'str'" in result
     if friendly_traceback.get_lang() == "en":
         assert "You tried to use the unary operator '+'" in result
-    return result, message
 
-
-def test_type_error11a():
     try:
         a = -[1, 2, 3]
         print(a)
@@ -386,10 +344,7 @@ def test_type_error11a():
     assert "TypeError: bad operand type for unary -: 'list'" in result
     if friendly_traceback.get_lang() == "en":
         assert "You tried to use the unary operator '-'" in result
-    return result, message
 
-
-def test_type_error11b():
     try:
         a = ~(1, 2, 3)
         print(a)
@@ -434,10 +389,7 @@ def test_type_error13():
     assert "fn() takes 0 positional arguments but 1 was given" in result
     if friendly_traceback.get_lang() == "en":
         assert "1 positional argument(s) while it requires 0" in result
-    return result, message
 
-
-def test_type_error13a():
     class A:
         def f(x):
             pass
@@ -486,10 +438,7 @@ def test_type_error15():
     assert "TypeError: 'tuple' object is not callable" in result
     if friendly_traceback.get_lang() == "en":
         assert "I suspect that you had an object of this type, a `tuple`," in result
-    return result, message
 
-
-def test_type_error15a():
     try:
         _ = [1, 2](3, 4)
     except Exception as e:
@@ -533,4 +482,4 @@ def test_type_error17():
 
 
 if __name__ == "__main__":
-    print(test_type_error1a()[0])
+    print(test_type_error1()[0])
