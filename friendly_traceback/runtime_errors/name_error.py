@@ -138,8 +138,8 @@ def missing_self(unknown_name, frame, tb_data, hint):
         names = info_variables.get_variables_in_frame_by_scope(frame, scope)
         dict_copy = dict(dict_)
         for name in names:
-            try:
-                obj = eval(name, dict_copy)  # Can raise SyntaxError and possibly others
+            if name in dict_copy:
+                obj = dict_copy[name]
                 known_attributes = dir(obj)
                 if unknown_name in known_attributes:
                     suggest = _("Did you forget to add `self`?")
@@ -158,7 +158,5 @@ def missing_self(unknown_name, frame, tb_data, hint):
                         unknown_name=unknown_name,
                     )
                     return message, hint
-            except Exception:
-                pass
 
     return message, hint
