@@ -95,7 +95,7 @@ class TracebackData:
         # is in our own code - or that of the user who chose to exclude
         # some files. If so, we make sure to have something to analyze
         # and help identify the problem.
-        if not records:
+        if not records and not issubclass(self.exception_type, SyntaxError):
             return inspect.getinnerframes(tb, cache.context)
         return records
 
