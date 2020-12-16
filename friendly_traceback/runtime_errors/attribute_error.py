@@ -4,7 +4,7 @@ import sys
 import re
 
 from ..my_gettext import current_lang
-from ..utils import get_similar_words, tokenize_source
+from ..utils import get_similar_words, tokenize_source, get_object_by_type
 from ..path_info import path_utils
 from . import stdlib_modules
 
@@ -200,26 +200,12 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
     """Attempts to find if object attribute might have been misspelled"""
     _ = current_lang.translate
     cause = hint = None
-    standard_types = {
-        "bool": bool,
-        "dict": dict,
-        "list": list,
-        "set": set,
-        "str": str,
-        "tuple": tuple,
-    }
 
-    if obj_type in standard_types:
-        obj = standard_types[obj_type]
-        known_attributes = dir(obj)
-    elif obj_type in frame.f_locals:
-        obj = frame.f_locals[obj_type]
-        known_attributes = dir(obj)
-    elif obj_type in frame.f_globals:
-        obj = frame.f_globals[obj_type]
-        known_attributes = dir(obj)
-    else:
+    obj = get_object_by_type(obj_type, frame)
+    if obj is None:
         return cause, hint
+
+    known_attributes = dir(obj)
 
     # The error message gives us the type of object instead of the true object
     # name. Depending on whether or not we can identify the true object name,

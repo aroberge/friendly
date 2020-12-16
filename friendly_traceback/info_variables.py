@@ -3,6 +3,7 @@
 Used to provide basic variable information in a way that
 can be useful for beginners without overwhelming them.
 """
+import ast
 import builtins
 
 from . import utils
@@ -13,13 +14,39 @@ from .friendly_exception import FriendlyException
 # third-party
 try:
     from asttokens import ASTTokens
-    from pure_eval import Evaluator
+    from pure_eval import Evaluator, group_expressions
 except ImportError:
     pass  # ignore errors when processed by Sphinx
 
 
 INDENT = "        "
 MAX_LENGTH = 65
+
+
+# pure_eval is primarily designed to find "interesting" expressions,
+# which do not include literals. However, when trying to determine
+# the cause of an object, we sometimes might want to find literals
+# that are in a given line where an exception is raised.
+# For this reason, we monkeypatch pure_eval to add one method
+# and one very simple function.
+
+
+def literal_expressions_grouped(self, root):
+    """Find all literal in the given tree parsed by ASTTokens.
+    It returns a list of pairs (tuples) containing the text of a node
+    that is a literal and its actual value.
+    """
+    # Except for the inner function is_literal
+    # this is modeled after interesting_expressions_grouped
+    def is_literal(node, value):
+        try:
+            return ast.literal_eval(node)
+        except ValueError:
+            pass
+
+    return group_expressions(
+        pair for pair in self.find_expressions(root) if is_literal(*pair)
+    )
 
 
 def get_all_objects(line, frame):
@@ -29,19 +56,29 @@ def get_all_objects(line, frame):
     answer to "where()" or they can be used during the analysis
     of the cause of the exception.
 
-    The dict returnes has three keys, 'locals', 'globals', 'nonlocals',
+    The dict returned has four keys.
+    The first three, 'locals', 'globals', 'nonlocals',
     each containing a list of tuples, each tuple being of the form
     (name, repr(obj), obj) where name --> obj.
+
+    The fourth key, 'literals', contains a list of tuples of the form
+    ('name', obj). It is only occasionally used in helping to make
+    suggestions regarding the cause of some exception.
     """
     objects = {}
     objects["locals"] = []
     objects["globals"] = []
+    objects["literals"] = []
     locals_ = frame.f_locals
     globals_ = frame.f_globals
 
     names = set([])
     try:
         atok = ASTTokens(line, parse=True)
+    except SyntaxError:  # this should not happen
+        atok = None
+
+    if atok is not None:
         for nodes, obj in Evaluator(locals_).interesting_expressions_grouped(atok.tree):
             name = atok.get_text(nodes[0])
             if name in names:
@@ -56,8 +93,11 @@ def get_all_objects(line, frame):
                 continue
             names.add(name)
             objects["globals"].append((name, repr(obj), obj))
-    except SyntaxError:  # This should no longer happen
-        pass
+
+        Evaluator.literal_expressions_grouped = literal_expressions_grouped
+        for nodes, obj in Evaluator({}).literal_expressions_grouped(atok.tree):
+            name = atok.get_text(nodes[0])
+            objects["literals"].append((name, obj))
 
     tokens = utils.tokenize_source(line)
     for tok in tokens:

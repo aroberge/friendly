@@ -305,3 +305,29 @@ def get_similar_words(word_with_typo, words):
     else:
         result = get(word_with_typo.upper(), words, n=1, cutoff=cutoff)
     return result
+
+
+def get_object_by_type(name, frame):
+    """Given the name of an object, for example 'str', or 'A' for
+    class A, returns a basic object of that type found in a frame,
+    or None.
+    """
+    standard_types = {
+        "bool": bool,
+        "dict": dict,
+        "list": list,
+        "set": set,
+        "str": str,
+        "tuple": tuple,
+    }
+
+    # We must guard against people defining their own type with a
+    # standard name
+
+    if name in frame.f_locals:
+        return frame.f_locals[name]
+    elif name in frame.f_globals:
+        return frame.f_globals[name]
+    elif name in standard_types:  # Do this last
+        return standard_types[name]
+    return None
