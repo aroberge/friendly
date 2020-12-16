@@ -6,7 +6,6 @@ import re
 from ..my_gettext import current_lang
 from ..utils import get_similar_words, tokenize_source
 from ..path_info import path_utils
-from ..source_cache import cache
 from . import stdlib_modules
 
 
@@ -38,8 +37,6 @@ def get_cause(value, frame, tb_data):
             cause, hint = attribute_error_in_object(
                 match3.group(1), match3.group(2), tb_data, frame
             )
-    # if hint:
-    #     info["suggest"] = hint
     return cause, hint
 
 
@@ -71,7 +68,7 @@ def attribute_error_in_module(module, attribute, frame):
             ).format(correct=similar_attributes[0], typo=attribute, module=module)
             return cause, hint
         else:
-            # transform ['a', 'b', 'c'] in "[`a`, `b`, `c`]"
+            # transform ['a', 'b', 'c'] in `"a, b, c"`
             candidates = [
                 "{c}".format(c=c.replace("'", "")) for c in similar_attributes
             ]
@@ -131,26 +128,31 @@ def attribute_error_in_module(module, attribute, frame):
 def handle_type_object_case(obj_type, attribute, frame):
     _ = current_lang.translate
     cause = hint = None
-    try:
-        obj = eval(obj_type, frame.f_globals, frame.f_locals)
-        known_attributes = dir(obj)
-    except Exception:
-        try:
-            obj = eval(attribute, frame.f_globals, frame.f_locals)
 
-            hint = _("Did you use a period instead of a comma?")
-            cause = _(
-                "`{attribute}` is a known object,"
-                " and is not an attribute of objects of type `{obj_type}`.\n"
-                "Perhaps you wrote a period where you meant to write a comma.\n"
-            ).format(attribute=attribute, obj_type=obj_type)
+    if obj_type in frame.f_locals:
+        obj = frame.f_locals[obj_type]
+        known_attributes = dir(obj)
+    elif obj_type in frame.f_globals:
+        obj = frame.f_globals[obj_type]
+        known_attributes = dir(obj)
+    else:
+        obj = None
+        if attribute in frame.f_locals:
+            obj = frame.f_locals[attribute]
+        elif attribute in frame.f_globals:
+            obj = frame.f_globals[attribute]
+        else:
             return cause, hint
-        except Exception:
-            return cause, hint
+        hint = _("Did you use a period instead of a comma?")
+        cause = _(
+            "`{attribute}` is a known object,"
+            " and is not an attribute of objects of type `{obj_type}`.\n"
+            "Perhaps you wrote a period where you meant to write a comma.\n"
+        ).format(attribute=attribute, obj_type=obj_type)
 
     similar = get_similar_words(attribute, known_attributes)
     if similar:
-        cause, hint = handle_typo_for_type(obj_type, attribute, similar)
+        cause, hint = handle_attribute_typo_for_type(obj_type, attribute, similar)
     else:
         # All we can do is rephrase the message, so that it can also
         # be translated.
@@ -160,8 +162,9 @@ def handle_type_object_case(obj_type, attribute, frame):
     return cause, hint
 
 
-def handle_typo_for_type(obj_type, attribute, similar):
-    """Takes care of misspelling of existing attribute of object of a given type"""
+def handle_attribute_typo_for_type(obj_type, attribute, similar):
+    """Takes care of misspelling of existing attribute of object of a given type,
+    whose name could not be identified."""
     _ = current_lang.translate
 
     cause = hint = None
@@ -207,42 +210,42 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
     }
 
     if obj_type in standard_types:
-        pass
-
-    try:
-        obj = eval(obj_type, frame.f_globals, frame.f_locals)
+        obj = standard_types[obj_type]
         known_attributes = dir(obj)
-    except Exception:
+    elif obj_type in frame.f_locals:
+        obj = frame.f_locals[obj_type]
+        known_attributes = dir(obj)
+    elif obj_type in frame.f_globals:
+        obj = frame.f_globals[obj_type]
+        known_attributes = dir(obj)
+    else:
         return cause, hint
 
     # The error message gives us the type of object instead of the true object
     # name. Depending on whether or not we can identify the true object name,
     # we might need to change slightly the feedback with give.
-    obj_of_type = True
+    found_name = True
     true_name, index = find_true_object_name_and_position(
         obj, obj_type, attribute, tb_data, frame
     )
     if true_name != obj_type:
-        obj_of_type = False
+        found_name = False
 
     similar = get_similar_words(attribute, known_attributes)
     if similar:
-        return handle_typo(true_name, attribute, similar)
+        return handle_attribute_typo_for_object(true_name, attribute, similar)
 
     known_builtin = perhaps_builtin(attribute, known_attributes)
     if known_builtin:
         return use_builtin_function(true_name, attribute, known_builtin)
 
-    if not obj_of_type:
+    if not found_name:
         # We have identified the first object; is the attribute a second object
-        try:
-            if eval(attribute, frame.f_globals, frame.f_locals):
-                cause, hint = missing_comma(true_name, attribute)
-                return cause, hint
-        except Exception:
-            pass
+        if attribute in frame.f_globals or attribute in frame.f_locals:
+            cause, hint = missing_comma(true_name, attribute)
+            return cause, hint
 
-    if obj_of_type:
+    if found_name:
         cause = _(
             "The object of type `{obj}` has no attribute named `{attr}`.\n"
         ).format(obj=obj_type, attr=attribute)
@@ -260,8 +263,10 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
     return cause, hint
 
 
-def handle_typo(obj_name, attribute, similar):
-    """Takes care of misspelling of existing attribute of object"""
+def handle_attribute_typo_for_object(obj_name, attribute, similar):
+    """Takes care of misspelling of existing attribute of object whose
+       name could be identified.
+    """
     _ = current_lang.translate
 
     if len(similar) == 1:
@@ -308,27 +313,6 @@ def use_builtin_function(obj_name, attribute, known_builtin):
 def find_true_object_name_and_position(obj, obj_name, attribute, tb_data, frame):
 
     tokens = tokenize_source(tb_data.bad_line)
-    for index, tok in enumerate(tokens):
-        try:
-            candidate = eval(tok.string, frame.f_globals, frame.f_locals)
-            if (
-                isinstance(candidate, obj)
-                and tokens[index + 1] == "."
-                and tokens[index + 2] == attribute
-            ):
-                return tok.string, index
-        except Exception:
-            pass
-
-    # Perhaps we had a situation like the following:
-    #  a = [ obj
-    #           . attribute]  <-- bad line
-    #
-    # So, let's try again with the complete source.
-
-    source_lines = cache.get_source_lines(tb_data.filename)
-    source = "\n".join(source_lines)
-    tokens = tokenize_source(source)
     for index, tok in enumerate(tokens):
         try:
             candidate = eval(tok.string, frame.f_globals, frame.f_locals)

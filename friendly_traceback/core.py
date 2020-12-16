@@ -33,6 +33,7 @@ from . import utils
 from .my_gettext import current_lang
 from .source_cache import cache, highlight_source
 from .path_info import is_excluded_file, EXCLUDED_FILE_PATH, path_utils
+from .utils import get_significant_tokens
 
 try:
     import executing
@@ -156,9 +157,38 @@ class TracebackData:
         # TODO: for name error, use tokenize to find out the
         # location of the unkown name
 
+        # The code below does the following:
+        #
+        # 1) If we can find the node causing the exception as part
+        # of the line where the exception is found, we note this location
+        # so that we can indicate it later with something like:
+        #    20:     b = tuple(range(50))
+        #    21:     try:
+        # -->22:         print(a[50], b[0])
+        #                      ^^^^^
+        #    23:     except Exception as e:
+        # If the node spans the entire line, we do not bother to indicate
+        # its specific location.
+        #
+        # 2) Sometimes, a node will span multiple lines. For example,
+        # line 22 shown above might have been written as:
+        #     print(a[
+        #            50], b[0])
+        #
+        # If that is the case, we rewrite the node as a single line.
+        #
+        # In both cases, we replace our definition (text) of the line that
+        # caused the exception by that of the node itself, to be used
+        # later for processing.
+
         try:
             ex = executing.Source.executing(tb)
             self.node_text = ex.text()
+            # \n could be a valid newline token or a character within
+            # a string; we only want to replace newline tokens.
+            if "\n" in self.node_text:
+                tokens = get_significant_tokens(self.node_text)
+                self.node_text = "".join(tok.string for tok in tokens)
             _bad_line = utils.strip_comment(self.bad_line)
             if (
                 self.node_text
@@ -168,6 +198,8 @@ class TracebackData:
                 begin = self.bad_line.find(self.node_text)
                 end = begin + len(self.node_text)
                 self.node_range = begin, end
+            if self.node_text.strip():
+                self.bad_line = self.node_text
         except Exception:
             pass
 

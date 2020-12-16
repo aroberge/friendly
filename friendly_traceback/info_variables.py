@@ -40,19 +40,24 @@ def get_all_objects(line, frame):
     globals_ = frame.f_globals
 
     names = set([])
-    atok = ASTTokens(line, parse=True)
-    for nodes, obj in Evaluator(locals_).interesting_expressions_grouped(atok.tree):
-        name = atok.get_text(nodes[0])
-        if name in names:
-            continue
-        names.add(name)
-        objects["locals"].append((name, repr(obj), obj))
-    for nodes, obj in Evaluator(globals_).interesting_expressions_grouped(atok.tree):
-        name = atok.get_text(nodes[0])
-        if name in names:
-            continue
-        names.add(name)
-        objects["globals"].append((name, repr(obj), obj))
+    try:
+        atok = ASTTokens(line, parse=True)
+        for nodes, obj in Evaluator(locals_).interesting_expressions_grouped(atok.tree):
+            name = atok.get_text(nodes[0])
+            if name in names:
+                continue
+            names.add(name)
+            objects["locals"].append((name, repr(obj), obj))
+        for nodes, obj in Evaluator(globals_).interesting_expressions_grouped(
+            atok.tree
+        ):
+            name = atok.get_text(nodes[0])
+            if name in names:
+                continue
+            names.add(name)
+            objects["globals"].append((name, repr(obj), obj))
+    except SyntaxError:  # This should no longer happen
+        pass
 
     tokens = utils.tokenize_source(line)
     for tok in tokens:
