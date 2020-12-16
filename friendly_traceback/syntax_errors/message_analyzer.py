@@ -3,10 +3,12 @@
 Collection of functions that examine SyntaxError messages and
 return relevant information to users.
 """
-from keyword import kwlist
+import ast
 import re
 import sys
 import tokenize
+
+from keyword import kwlist
 
 from friendly_traceback.my_gettext import current_lang
 from friendly_traceback import utils
@@ -214,7 +216,7 @@ def what_kind_of_literal(literal):
     _ = current_lang.translate
 
     try:
-        a = eval(literal)
+        a = ast.literal_eval(literal)
     except Exception:
         return None
 

@@ -313,17 +313,20 @@ def use_builtin_function(obj_name, attribute, known_builtin):
 def find_true_object_name_and_position(obj, obj_name, attribute, tb_data, frame):
 
     tokens = tokenize_source(tb_data.bad_line)
-    for index, tok in enumerate(tokens):
-        try:
-            candidate = eval(tok.string, frame.f_globals, frame.f_locals)
-            if (
-                isinstance(candidate, obj)
-                and tokens[index + 1] == "."
-                and tokens[index + 2] == attribute
-            ):
-                return tok.string, index
-        except Exception:
-            pass
+    for index, tok in enumerate(tokens[:-2]):
+        candidate = None
+        if tok.string in frame.f_locals:
+            candidate = frame.f_locals[tok.string]
+        elif tok.string in frame.f_globals:
+            candidate = frame.f_globals[tok.string]
+        if candidate is None:
+            continue
+        elif (
+            isinstance(candidate, obj)
+            and tokens[index + 1] == "."
+            and tokens[index + 2] == attribute
+        ):
+            return tok.string, index
 
     return obj_name, None
 
