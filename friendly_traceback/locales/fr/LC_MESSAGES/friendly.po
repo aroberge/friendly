@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-13 07:31-0400\n"
-"PO-Revision-Date: 2020-12-13 07:32-0400\n"
+"POT-Creation-Date: 2020-12-16 12:35-0400\n"
+"PO-Revision-Date: 2020-12-16 12:36-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -57,15 +57,15 @@ msgstr ""
 msgid "Warning: you have redefined the python builtin {name}."
 msgstr "Attention : vous avez redéfini l'identifiant Python (builtin) {name}."
 
-#: core.py:256 core.py:277
+#: core.py:293 core.py:314
 msgid "Python exception:"
 msgstr "Exception Python:"
 
-#: core.py:322 core.py:363
+#: core.py:359 core.py:400
 msgid "Likely cause based on the information given by Python:"
 msgstr "Cause probable basée sur les informations données par Python :"
 
-#: core.py:358
+#: core.py:395
 msgid ""
 "Python's error message (invalid syntax) cannot be used to identify the "
 "problem:"
@@ -73,16 +73,16 @@ msgstr ""
 "Le message d’erreur de Python (invalid syntax) ne peut pas être utilisé pour "
 "identifier le problème :"
 
-#: core.py:436
+#: core.py:473
 msgid "Exception raised on line {linenumber} of file {filename}.\n"
 msgstr "Exception levée à la ligne {linenumber} du fichier {filename}.\n"
 
-#: core.py:467
+#: core.py:504
 msgid "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
 "L'exécution s'est arrêtée à la ligne {linenumber} du fichier {filename}\n"
 
-#: core.py:489
+#: core.py:526
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -92,7 +92,7 @@ msgstr ""
 "'{filename}'\n"
 "jusqu'à l'endroit indiqué par --> et ^.\n"
 
-#: core.py:495
+#: core.py:532
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
@@ -103,7 +103,7 @@ msgstr ""
 "La fin du fichier a été atteinte et Python s'attendait à voir plus de code.\n"
 "\n"
 
-#: core.py:501
+#: core.py:538
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -113,11 +113,11 @@ msgstr ""
 "'{filename}'\n"
 "pour une raison non spécifiée.\n"
 
-#: core.py:547
+#: core.py:584
 msgid "More lines not shown."
 msgstr "Plus de lignes non affichées."
 
-#: core.py:654
+#: core.py:691
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
@@ -127,11 +127,11 @@ msgstr ""
 "        vous devez utiliser la console 'Friendly' et non pas une \n"
 "        console Python régulière.\n"
 
-#: core.py:660
+#: core.py:697
 msgid "Problem: source of '{filename}' is not available\n"
 msgstr "Problème : la source de '{filename}' n'est pas disponible.\n"
 
-#: core.py:678
+#: core.py:715
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -408,7 +408,7 @@ msgstr "Dans votre programme, le nom du fichier inconnu est `{filename}`.\n"
 msgid "In your program, the key that cannot be found is `{key_name!r}`.\n"
 msgstr "Dans votre programme, la clé inconnue est `{key_name!r}`.\n"
 
-#: info_variables.py:253
+#: info_variables.py:306
 msgid ""
 "A type hint found for `{name}` in the {scope} scope.\n"
 "Perhaps you had used a colon instead of an equal sign and written\n"
@@ -429,7 +429,7 @@ msgstr ""
 "\n"
 "    {name} = {hint}\n"
 
-#: runtime_errors\attribute_error.py:33
+#: runtime_errors\attribute_error.py:32
 msgid ""
 "You are attempting to access the attribute `{attr}`\n"
 "for a variable whose value is `None`."
@@ -437,7 +437,7 @@ msgstr ""
 "Vous tentez d’accéder à l’attribut `{attar}`\n"
 "pour une variable dont la valeur est `None`."
 
-#: runtime_errors\attribute_error.py:56
+#: runtime_errors\attribute_error.py:53
 msgid ""
 "This should not happen:\n"
 "Python tells us that module `{module}` does not have an attribute named "
@@ -449,14 +449,14 @@ msgstr ""
 "`{attribute}`.\n"
 "Toutefois, il ne semble pas que le module `{module}` ait été importé.\n"
 
-#: runtime_errors\attribute_error.py:67 runtime_errors\attribute_error.py:114
-#: runtime_errors\attribute_error.py:169 runtime_errors\attribute_error.py:268
+#: runtime_errors\attribute_error.py:64 runtime_errors\attribute_error.py:111
+#: runtime_errors\attribute_error.py:172 runtime_errors\attribute_error.py:273
 #: runtime_errors\import_error.py:105
 #: runtime_errors\module_not_found_error.py:46
 msgid "Did you mean `{name}`?\n"
 msgstr "Vouliez-vous dire `{name}` ?\n"
 
-#: runtime_errors\attribute_error.py:68
+#: runtime_errors\attribute_error.py:65
 msgid ""
 "Perhaps you meant to write `{module}.{correct}` instead of `{module}.{typo}"
 "`\n"
@@ -464,11 +464,11 @@ msgstr ""
 "Peut-être que vous vouliez plutôt écrire : `{module}.{correct}` au lieu de "
 "`{module}.{typo}`.\n"
 
-#: runtime_errors\attribute_error.py:79 runtime_errors\import_error.py:114
+#: runtime_errors\attribute_error.py:76 runtime_errors\import_error.py:114
 msgid "Did you mean one of the following: `{names}`?\n"
 msgstr "Vouliez-vous dire l’un des éléments suivants: `{names}` ?\n"
 
-#: runtime_errors\attribute_error.py:82
+#: runtime_errors\attribute_error.py:79
 msgid ""
 "Instead of writing `{module}.{typo}`, perhaps you meant to write one of \n"
 "the following names which are attributes of module `{module}`:\n"
@@ -478,11 +478,11 @@ msgstr ""
 "l'un des attributs suivants du module `{module}` :\n"
 "{candidates}\n"
 
-#: runtime_errors\attribute_error.py:95
+#: runtime_errors\attribute_error.py:92
 msgid "Did you give your program the same name as a Python module?"
 msgstr "Avez-vous donné à votre programme le même nom qu’un module Python ?"
 
-#: runtime_errors\attribute_error.py:96
+#: runtime_errors\attribute_error.py:93
 msgid ""
 "You imported a module named `{module}` from `{mod_path}`.\n"
 "There is also a module named `{module}` in Python's standard library.\n"
@@ -493,7 +493,7 @@ msgstr ""
 "Python.\n"
 "Peut-être avez-vous besoin de renommer votre module.\n"
 
-#: runtime_errors\attribute_error.py:115
+#: runtime_errors\attribute_error.py:112
 msgid ""
 "Perhaps you meant to use the attribute `{attribute}` of \n"
 "module `{mod_name}` instead of module `{module}`.\n"
@@ -501,7 +501,7 @@ msgstr ""
 "Peut-être vouliez-vous utiliser l’attribut `{attribute}` du \n"
 "module `{mod_name}` au lieu du module `{module}`.\n"
 
-#: runtime_errors\attribute_error.py:121
+#: runtime_errors\attribute_error.py:118
 msgid ""
 "Python tells us that no object with name `{attribute}` is\n"
 "found in module `{module}`.\n"
@@ -509,11 +509,11 @@ msgstr ""
 "Python nous dit qu’aucun objet avec le nom `{attribute}` n’est\n"
 "dans le module `{module}`.\n"
 
-#: runtime_errors\attribute_error.py:141
+#: runtime_errors\attribute_error.py:146
 msgid "Did you use a period instead of a comma?"
 msgstr "Vouliez-vous séparer les noms d’objets par une virgule ?"
 
-#: runtime_errors\attribute_error.py:142
+#: runtime_errors\attribute_error.py:147
 msgid ""
 "`{attribute}` is a known object, and is not an attribute of objects of type "
 "`{obj_type}`.\n"
@@ -523,11 +523,11 @@ msgstr ""
 "`{obj_type}`.\n"
 "Peut-être avez-vous écrit un point où vous vouliez écrire une virgule.\n"
 
-#: runtime_errors\attribute_error.py:157
+#: runtime_errors\attribute_error.py:159
 msgid "The object of type `{obj_type}` has no attribute named `{attribute}`."
 msgstr "L’objet de type `{obj_type}` n’a pas d’attribut nommé `{attribute}`."
 
-#: runtime_errors\attribute_error.py:170
+#: runtime_errors\attribute_error.py:173
 msgid ""
 "You wrote `{attribute}` which is not a valid attribute for objects of type "
 "`{obj_type}`\n"
@@ -539,11 +539,11 @@ msgstr ""
 "Toutefois, les objets de type `{obj_type}` ont un attribut nommé `{correct}` "
 "qui est similaire à ce que vous avez écrit.\n"
 
-#: runtime_errors\attribute_error.py:180 runtime_errors\attribute_error.py:277
+#: runtime_errors\attribute_error.py:183 runtime_errors\attribute_error.py:282
 msgid "Did you mean one of the following: `{name}`?\n"
 msgstr "Vouliez-vous dire l’un des éléments suivants: `{name}` ?\n"
 
-#: runtime_errors\attribute_error.py:183
+#: runtime_errors\attribute_error.py:186
 msgid ""
 "You wrote `{attribute}` which is not a valid attribute for objects of type "
 "`{obj_type}`\n"
@@ -557,15 +557,15 @@ msgstr ""
 "sont similaires à ce que vous avez écrit:\n"
 "`{candidates}`\n"
 
-#: runtime_errors\attribute_error.py:246
+#: runtime_errors\attribute_error.py:249
 msgid "The object of type `{obj}` has no attribute named `{attr}`.\n"
 msgstr "L’objet de type `{obj}` n’a pas d’attribut nommé `{attr}`.\n"
 
-#: runtime_errors\attribute_error.py:250
+#: runtime_errors\attribute_error.py:253
 msgid "The object `{obj}` has no attribute named `{attr}`.\n"
 msgstr "L’objet `{obj}` n’a pas d’attribut nommé `{attr}`.\n"
 
-#: runtime_errors\attribute_error.py:257
+#: runtime_errors\attribute_error.py:260
 msgid ""
 "The following are some of its known attributes:\n"
 "`{names}`."
@@ -573,14 +573,14 @@ msgstr ""
 "Voici quelques-uns de ses attributs connus :\n"
 "`{names}`."
 
-#: runtime_errors\attribute_error.py:269
+#: runtime_errors\attribute_error.py:274
 msgid ""
 "Perhaps you meant to write `{obj}.{correct}` instead of `{obj}.{typo}`\n"
 msgstr ""
 "Peut-être que vous vouliez plutôt écrire : `{obj}.{correct}` au lieu de "
 "`{obj}.{typo}`.\n"
 
-#: runtime_errors\attribute_error.py:280
+#: runtime_errors\attribute_error.py:285
 msgid ""
 "Instead of writing `{obj}.{typo}`, perhaps you meant to write one of \n"
 "the following names which are attributes of object `{obj}`:\n"
@@ -590,11 +590,11 @@ msgstr ""
 "l'un des attributs suivants de l'objet `{obj}` :\n"
 "{candidates}\n"
 
-#: runtime_errors\attribute_error.py:297
+#: runtime_errors\attribute_error.py:302
 msgid "Did you mean to use `{known_builtin}({obj_name})`?"
 msgstr "Vouliez-vous utiliser `{known_builtin}({obj_name})` ?"
 
-#: runtime_errors\attribute_error.py:300
+#: runtime_errors\attribute_error.py:305
 msgid ""
 "The object `{obj_name}` has no attribute named `{attribute}`.\n"
 "Perhaps you can use the Python builtin function `{known_builtin}` instead:\n"
@@ -605,11 +605,11 @@ msgstr ""
 "à la place:\n"
 "`{known_builtin}({obj_name})`."
 
-#: runtime_errors\attribute_error.py:350
+#: runtime_errors\attribute_error.py:334
 msgid "Did you mean to separate object names by a comma?"
 msgstr "Vouliez-vous séparer les noms d’objets par une virgule ?"
 
-#: runtime_errors\attribute_error.py:352
+#: runtime_errors\attribute_error.py:336
 msgid ""
 "`{second}` is not an attribute of `{first}`.\n"
 "However, both `{first}` and `{second}` are known objects.\n"
@@ -937,7 +937,13 @@ msgstr ""
 "deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: runtime_errors\type_error.py:212
+#: runtime_errors\type_error.py:222
+msgid "Perhaps you meant to write `{operator}=` instead of `={operator}`"
+msgstr ""
+"Peut-être que vous vouliez plutôt écrire `{operator}=` au lieu de "
+"`={operator}`"
+
+#: runtime_errors\type_error.py:226
 msgid ""
 "You tried to use the unary operator '{operator}'\n"
 "with the following type of object: {obj}.\n"
@@ -947,7 +953,7 @@ msgstr ""
 "avec le type d’objet suivant: {obj}.\n"
 "Cette opération n’est pas définie pour ce type d’objet.\n"
 
-#: runtime_errors\type_error.py:228
+#: runtime_errors\type_error.py:244
 msgid ""
 "In Python, some objects are known as immutable:\n"
 "once defined, their value cannot be changed.\n"
@@ -959,12 +965,12 @@ msgstr ""
 "Vous avez essayé de modifier une partie d’un tel objet immuable: {obj},\n"
 "probablement en utilisant une opération d’indexation.\n"
 
-#: runtime_errors\type_error.py:243
+#: runtime_errors\type_error.py:259
 msgid "In Python 3, exceptions must be derived from BaseException.\n"
 msgstr ""
 "Dans Python 3, les exceptions doivent être dérivées de BaseException.\n"
 
-#: runtime_errors\type_error.py:272
+#: runtime_errors\type_error.py:291
 msgid ""
 "You apparently have called the function `{fn_name}` with\n"
 "{nb_given} positional argument(s) while it requires {nb_required}\n"
@@ -973,12 +979,12 @@ msgstr ""
 "Vous avez apparemment invoqué la fonction `{fn_name}` avec\n"
 "{nb_given} arguments positionnels alors qu'elle en requiert {nb_required}.\n"
 
-#: runtime_errors\type_error.py:278
+#: runtime_errors\type_error.py:297
 msgid "Perhaps you forgot `self` when defining `{fn_name}`.\n"
 msgstr ""
 "Peut-être avez-vous oublié `self` lors de la définition de `{fn_name}`.\n"
 
-#: runtime_errors\type_error.py:294
+#: runtime_errors\type_error.py:313
 msgid ""
 "You apparently have called the function '{fn_name}' with\n"
 "fewer positional arguments than it requires ({nb_required} missing).\n"
@@ -986,15 +992,15 @@ msgstr ""
 "Vous avez apparemment invoqué la fonction '{fn_name}' avec\n"
 "moins d'arguments positionnels qu'il n'en faut ({nb_required} manquent).\n"
 
-#: runtime_errors\type_error.py:310
+#: runtime_errors\type_error.py:329
 msgid "Perhaps you had a missing comma between two tuples.\n"
 msgstr "Peut-être que vous aviez une virgule manquante entre deux tuples.\n"
 
-#: runtime_errors\type_error.py:312
+#: runtime_errors\type_error.py:331
 msgid "Perhaps you had a missing comma before the tuple.\n"
 msgstr "Peut-être que vous aviez une virgule manquante avant le tuple.\n"
 
-#: runtime_errors\type_error.py:315
+#: runtime_errors\type_error.py:334
 msgid ""
 "I suspect that you had an object of this type, {obj},\n"
 "followed by what looked like a tuple, '(...)',\n"
@@ -1004,7 +1010,7 @@ msgstr ""
 "suivi de ce qui ressemblait à un tuple, '(...) ',\n"
 "que Python a pris comme indiquant une invocation de fonction.\n"
 
-#: runtime_errors\type_error.py:330
+#: runtime_errors\type_error.py:349
 msgid "Perhaps you forgot to convert a string into an integer using `int()`."
 msgstr ""
 "Peut-être avez-vous oublié de convertir une chaîne à un entier à l’aide de "
