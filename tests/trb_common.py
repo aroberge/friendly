@@ -105,7 +105,7 @@ all_imports = {
         "test_type_error",
         "test_type_error10",
     ),
-    "TypeError - 11: bad operand type for unary ~": (
+    "TypeError - 11: bad operand type for unary +": (
         "test_type_error",
         "test_type_error11",
     ),

@@ -183,6 +183,24 @@ def tokenize_source_lines(source_lines):
     return tokenize_source(source)
 
 
+# TODO: add unit test for this
+def find_substring_index(main, substring):
+    """Somewhat similar to the find() method for strings,
+    this function determines if the tokens for substring appear
+    as a subsequence of the tokens for main. If so, the index
+    of the first token in returned, otherwise -1 is returned.
+    """
+    main_tokens = [tok.string for tok in get_significant_tokens(main)]
+    sub_tokens = [tok.string for tok in get_significant_tokens(substring)]
+    for index, token in enumerate(main_tokens):
+        if (
+            token == sub_tokens[0]
+            and main_tokens[index : index + len(sub_tokens)] == sub_tokens
+        ):
+            return index
+    return -1
+
+
 def untokenize(tokens):
     """Return source code based on tokens.
 

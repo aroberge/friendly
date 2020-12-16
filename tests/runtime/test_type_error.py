@@ -330,6 +330,7 @@ def test_type_error11():
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
     assert "TypeError: bad operand type for unary +: 'str'" in result
+    assert not "+=" in result
     if friendly_traceback.get_lang() == "en":
         assert "You tried to use the unary operator '+'" in result
 
@@ -356,6 +357,20 @@ def test_type_error11():
     assert "TypeError: bad operand type for unary ~: 'tuple'" in result
     if friendly_traceback.get_lang() == "en":
         assert "You tried to use the unary operator '~'" in result
+
+    try:
+        a = "abc"
+        a =+ "def"
+        print(a)
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "TypeError: bad operand type for unary +: 'str'" in result
+    assert "Perhaps you meant to write `+=`" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "You tried to use the unary operator '+'" in result
     return result, message
 
 

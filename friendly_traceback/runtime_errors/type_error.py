@@ -202,18 +202,34 @@ def parse_order_comparison(message, *args):
 
 
 @add_message_parser
-def bad_operand_type_for_unary(message, *args):
+def bad_operand_type_for_unary(message, frame, tb_data):
     _ = current_lang.translate
     cause = hint = None
     # example: bad operand type for unary +: 'str'
     pattern = re.compile(r"bad operand type for unary (.+): [\'\"](\w+)[\'\"]")
     match = re.search(pattern, message)
     if match is not None:
+        # The user might have written something like "=+" instead of
+        # "+="
+        operator = match.group(1)
+        index = utils.find_substring_index(tb_data.original_bad_line, tb_data.bad_line)
+        if index > 0:
+            tokens = utils.tokenize_source(tb_data.original_bad_line)
+            if (
+                tokens[index - 1].string == "="
+                and tokens[index - 1].end_col == tokens[index].start_col
+            ):
+                hint = _(
+                    "Perhaps you meant to write `{operator}=` instead of `={operator}`"
+                ).format(operator=operator)
+
         cause = _(
             "You tried to use the unary operator '{operator}'\n"
             "with the following type of object: {obj}.\n"
             "This operation is not defined for this type of object.\n"
-        ).format(operator=match.group(1), obj=convert_type(match.group(2)))
+        ).format(operator=operator, obj=convert_type(match.group(2)))
+        if hint is not None:
+            cause += "\n" + hint + "\n"
     return cause, hint
 
 

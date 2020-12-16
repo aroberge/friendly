@@ -74,6 +74,7 @@ class TracebackData:
         self.get_source_info(etype, value)
         self.node_text = ""
         self.node_range = None
+        self.original_bad_line = ""
         if not issubclass(etype, SyntaxError) and executing_available:
             self.use_executing()
 
@@ -199,6 +200,7 @@ class TracebackData:
                 end = begin + len(self.node_text)
                 self.node_range = begin, end
             if self.node_text.strip():
+                self.original_bad_line = self.bad_line
                 self.bad_line = self.node_text
         except Exception:
             pass
