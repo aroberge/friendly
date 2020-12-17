@@ -4,7 +4,7 @@ import sys
 import re
 
 from ..my_gettext import current_lang
-from ..utils import get_similar_words, tokenize_source, get_object_by_type
+from ..utils import get_similar_words, tokenize_source, get_object_from_type_name
 from ..path_info import path_utils
 from . import stdlib_modules
 
@@ -201,7 +201,7 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
     _ = current_lang.translate
     cause = hint = None
 
-    obj = get_object_by_type(obj_type, frame)
+    obj = get_object_from_type_name(obj_type, frame)
     if obj is None:
         return cause, hint
 

@@ -353,25 +353,17 @@ def cannot_multiply_by_str(message, frame, tb_data):
     return cause, hint
 
 
-def find_possible_integers(obj, frame, line):
+def find_possible_integers(object_of_type, frame, line):
     all_objects = info_variables.get_all_objects(line, frame)
-
-    candidates = []
-    for name, value in all_objects["literals"]:
-        if isinstance(value, obj):
-            candidates.append((name, value))
-    for scope in ["locals", "globals", "nonlocals"]:
-        for name, _repr, value in all_objects[scope]:
-            if isinstance(value, obj):
-                candidates.append((name, value))
-
     names = []
-    for name, value in candidates:
-        try:
-            int(value)
-            names.append(name)
-        except Exception:
-            pass
+    for name, obj in all_objects["name, obj"]:
+        if isinstance(obj, object_of_type):
+            try:
+                int(obj)
+                names.append(name)
+            except Exception:
+                pass
+
     return names
 
 
@@ -383,11 +375,11 @@ def object_cannot_be_interpreted_as_an_integer(message, frame, tb_data):
     match = re.search(pattern, message)
     if match is not None:
         obj_name = match.group(1)
-        obj = utils.get_object_by_type(obj_name, frame)
-        if obj is None:
+        object_of_type = utils.get_object_from_type_name(obj_name, frame)
+        if object_of_type is None:
             return cause, hint
 
-        names = find_possible_integers(obj, frame, tb_data.bad_line)
+        names = find_possible_integers(object_of_type, frame, tb_data.bad_line)
 
         cause = _(
             "You wrote an object of type `{obj}` where an integer was expected.\n"

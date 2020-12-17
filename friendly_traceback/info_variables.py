@@ -69,6 +69,7 @@ def get_all_objects(line, frame):
     objects["locals"] = []
     objects["globals"] = []
     objects["literals"] = []
+    objects["name, obj"] = []
     locals_ = frame.f_locals
     globals_ = frame.f_globals
 
@@ -85,6 +86,7 @@ def get_all_objects(line, frame):
                 continue
             names.add(name)
             objects["locals"].append((name, repr(obj), obj))
+            objects["name, obj"].append((name, obj))
         for nodes, obj in Evaluator(globals_).interesting_expressions_grouped(
             atok.tree
         ):
@@ -93,11 +95,13 @@ def get_all_objects(line, frame):
                 continue
             names.add(name)
             objects["globals"].append((name, repr(obj), obj))
+            objects["name, obj"].append((name, obj))
 
         Evaluator.literal_expressions_grouped = literal_expressions_grouped
         for nodes, obj in Evaluator({}).literal_expressions_grouped(atok.tree):
             name = atok.get_text(nodes[0])
             objects["literals"].append((name, obj))
+            objects["name, obj"].append((name, obj))
 
     tokens = utils.tokenize_source(line)
     for tok in tokens:
@@ -109,10 +113,12 @@ def get_all_objects(line, frame):
                 names.add(name)
                 obj = locals_[name]
                 objects["locals"].append((name, repr(obj), obj))
+                objects["name, obj"].append((name, obj))
             elif name in globals_:
                 names.add(name)
                 obj = globals_[name]
                 objects["globals"].append((name, repr(obj), obj))
+                objects["name, obj"].append((name, obj))
 
     objects["nonlocals"] = get_nonlocal_objects(frame)
     return objects

@@ -2,6 +2,7 @@
 
 A few useful objects which do not naturally fit anywhere else.
 """
+import builtins
 import difflib
 import keyword
 import tokenize as py_tokenize
@@ -307,21 +308,11 @@ def get_similar_words(word_with_typo, words):
     return result
 
 
-def get_object_by_type(name, frame):
+def get_object_from_type_name(name, frame):
     """Given the name of an object, for example 'str', or 'A' for
     class A, returns a basic object of that type found in a frame,
     or None.
     """
-    standard_types = {
-        "bool": bool,
-        "dict": dict,
-        "float": float,
-        "int": int,
-        "list": list,
-        "set": set,
-        "str": str,
-        "tuple": tuple,
-    }
 
     # We must guard against people defining their own type with a
     # standard name by checking standard types last.
@@ -330,6 +321,6 @@ def get_object_by_type(name, frame):
         return frame.f_locals[name]
     elif name in frame.f_globals:
         return frame.f_globals[name]
-    elif name in standard_types:  # Do this last
-        return standard_types[name]
+    elif name in dir(builtins):  # Do this last
+        return getattr(builtins, name)
     return None
