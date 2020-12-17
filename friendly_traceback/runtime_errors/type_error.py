@@ -343,7 +343,7 @@ def x_is_not_callable(message, *args):
 
 
 @add_message_parser
-def cannot_multiply_by_str(message, *args):
+def cannot_multiply_by_str(message, frame, tb_data):
     _ = current_lang.translate
     cause = hint = None
     if "can't multiply sequence by non-int of type 'str'" in message:
@@ -351,6 +351,28 @@ def cannot_multiply_by_str(message, *args):
             "Perhaps you forgot to convert a string into an integer using `int()`."
         )
     return cause, hint
+
+
+def find_possible_integers(obj, frame, line):
+    all_objects = info_variables.get_all_objects(line, frame)
+
+    candidates = []
+    for name, value in all_objects["literals"]:
+        if isinstance(value, obj):
+            candidates.append((name, value))
+    for scope in ["locals", "globals", "nonlocals"]:
+        for name, _repr, value in all_objects[scope]:
+            if isinstance(value, obj):
+                candidates.append((name, value))
+
+    names = []
+    for name, value in candidates:
+        try:
+            int(value)
+            names.append(name)
+        except Exception:
+            pass
+    return names
 
 
 @add_message_parser
@@ -365,28 +387,7 @@ def object_cannot_be_interpreted_as_an_integer(message, frame, tb_data):
         if obj is None:
             return cause, hint
 
-        all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)
-
-        # A not so simple example
-        # c = "2"
-        # range(c + "3")  # both c and literal "3" can be converted
-
-        candidates = []
-        for name, value in all_objects["literals"]:
-            if isinstance(value, obj):
-                candidates.append((name, value))
-        for scope in ["locals", "globals", "nonlocals"]:
-            for name, _repr, value in all_objects[scope]:
-                if isinstance(value, obj):
-                    candidates.append((name, value))
-
-        names = []
-        for name, value in candidates:
-            try:
-                int(value)
-                names.append(name)
-            except Exception:
-                pass
+        names = find_possible_integers(obj, frame, tb_data.bad_line)
 
         cause = _(
             "You wrote an object of type `{obj}` where an integer was expected.\n"
@@ -399,7 +400,7 @@ def object_cannot_be_interpreted_as_an_integer(message, frame, tb_data):
                     name=name
                 )
                 cause += _(
-                    "Perhaps you forgot to convert `{name}` into an integer?"
+                    "Perhaps you forgot to convert `{name}` into an integer."
                 ).format(name=name)
             else:
                 names = [name for name in names]
@@ -408,7 +409,7 @@ def object_cannot_be_interpreted_as_an_integer(message, frame, tb_data):
                     names=names
                 )
                 cause += _(
-                    "Perhaps you forgot to convert `{names}` into integers?"
+                    "Perhaps you forgot to convert `{names}` into integers."
                 ).format(names=names)
 
     return cause, hint

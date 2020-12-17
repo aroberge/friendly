@@ -7,7 +7,6 @@ def test_type_error1():
         one = 1
         result = a + one
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -22,7 +21,6 @@ def test_type_error1():
         a_list = [1, 2, 3]
         result = a + a_list
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -53,7 +51,6 @@ def test_type_error2():
         none = None
         result = one + none
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -68,7 +65,6 @@ def test_type_error2():
         two = "two"
         one += two
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -81,7 +77,6 @@ def test_type_error2():
         b = [3, 4]
         result = a - b
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -110,7 +105,6 @@ def test_type_error4():
         b = {2, 3}
         result = a * b
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -139,7 +133,6 @@ def test_type_error5():
         b = 3.1416
         result = a / b
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -152,7 +145,6 @@ def test_type_error5():
         b = 3.1416
         b /= a
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -165,7 +157,6 @@ def test_type_error5():
         b = 1
         result = a // b
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -194,7 +185,6 @@ def test_type_error6():
         b = 2
         result = a & b
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -223,7 +213,6 @@ def test_type_error7():
         b = 3.1416
         result = a ** b
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -252,7 +241,6 @@ def test_type_error8():
         b = 42
         result = a >> b
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -281,7 +269,6 @@ def test_type_error9():
         b = 2
         result = a @ b
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -325,7 +312,6 @@ def test_type_error11():
         a = +"abc"
         print(a)
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -338,7 +324,6 @@ def test_type_error11():
         a = -[1, 2, 3]
         print(a)
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -350,7 +335,6 @@ def test_type_error11():
         a = ~(1, 2, 3)
         print(a)
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -359,8 +343,10 @@ def test_type_error11():
         assert "You tried to use the unary operator '~'" in result
 
     try:
+        # fmt: off
         a = "abc"
         a =+ "def"
+        # fmt: on
         print(a)
     except Exception as e:
         message = str(e)
@@ -396,7 +382,6 @@ def test_type_error13():
     try:
         fn(1)
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -446,7 +431,6 @@ def test_type_error15():
     try:
         _ = (1, 2)(3, 4)
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -494,6 +478,52 @@ def test_type_error17():
             "Perhaps you forgot to convert a string into an integer using `int()`."
             in result
         )
+    return result, message
+
+
+def test_type_error18():
+    try:
+        range([1, 2])
+    except Exception as e:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "TypeError: 'list' object cannot be interpreted as an integer" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Perhaps you forgot to convert " not in result
+
+    try:
+        range("2")
+    except Exception as e:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "TypeError: 'str' object cannot be interpreted as an integer" in result
+    if friendly_traceback.get_lang() == "en":
+        assert 'Perhaps you forgot to convert `"2"` into an integer.' in result
+
+    try:
+        range(1.0)
+    except Exception as e:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "TypeError: 'float' object cannot be interpreted as an integer" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Perhaps you forgot to convert `1.0" in result
+
+    c, d = "2", "3"
+    try:
+        range(c, d)
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "TypeError: 'str' object cannot be interpreted as an integer" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Perhaps you forgot to convert `c, d` into integers." in result
+    return result, message
 
 
 if __name__ == "__main__":

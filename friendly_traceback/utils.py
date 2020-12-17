@@ -315,6 +315,8 @@ def get_object_by_type(name, frame):
     standard_types = {
         "bool": bool,
         "dict": dict,
+        "float": float,
+        "int": int,
         "list": list,
         "set": set,
         "str": str,
@@ -322,7 +324,7 @@ def get_object_by_type(name, frame):
     }
 
     # We must guard against people defining their own type with a
-    # standard name
+    # standard name by checking standard types last.
 
     if name in frame.f_locals:
         return frame.f_locals[name]

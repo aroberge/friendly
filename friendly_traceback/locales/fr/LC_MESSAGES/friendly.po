@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-16 17:04-0400\n"
-"PO-Revision-Date: 2020-12-16 17:08-0400\n"
+"POT-Creation-Date: 2020-12-17 07:37-0400\n"
+"PO-Revision-Date: 2020-12-17 07:37-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1016,25 +1016,25 @@ msgstr ""
 "Peut-être avez-vous oublié de convertir une chaîne à un entier à l’aide de "
 "`int()`."
 
-#: runtime_errors\type_error.py:391
+#: runtime_errors\type_error.py:415
 msgid "You wrote an object of type `{obj}` where an integer was expected.\n"
 msgstr ""
 "Vous avez écrit un objet de type `{obj}` là où un entier était attendu.\n"
 
-#: runtime_errors\type_error.py:398
+#: runtime_errors\type_error.py:422
 msgid "Did you forget to convert `{name}` into an integer?"
 msgstr "Avez-vous oublié de convertir `{name}` en un entier?"
 
-#: runtime_errors\type_error.py:401
-msgid "Perhaps you forgot to convert `{name}` into an integer?"
+#: runtime_errors\type_error.py:425
+msgid "Perhaps you forgot to convert `{name}` into an integer."
 msgstr "Peut-être avez-vous oublié de convertir `{names}` en un entier."
 
-#: runtime_errors\type_error.py:407
+#: runtime_errors\type_error.py:431
 msgid "Did you forget to convert `{names}` into integers?"
 msgstr "Avez-vous oublié de convertir `{names}` en entiers?"
 
-#: runtime_errors\type_error.py:410
-msgid "Perhaps you forgot to convert `{names}` into integers?"
+#: runtime_errors\type_error.py:434
+msgid "Perhaps you forgot to convert `{names}` into integers."
 msgstr "Peut-être avez-vous oublié de convertir `{names}` en entiers?"
 
 #: runtime_errors\unbound_local_error.py:46

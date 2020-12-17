@@ -129,6 +129,14 @@ all_imports = {
         "test_type_error",
         "test_type_error16",
     ),
+        "TypeError - 17: can't multiply sequence by non-int": (
+        "test_type_error",
+        "test_type_error17",
+    ),
+    "TypeError - 18: object cannot be interpreted as an integer": (
+        "test_type_error",
+        "test_type_error18",
+    ),
     "UnboundLocalError - 1: missing global": (
         "test_unbound_local_error",
         "test_unbound_local_error_missing_global",
