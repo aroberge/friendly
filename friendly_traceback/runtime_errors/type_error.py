@@ -348,8 +348,27 @@ def cannot_multiply_by_str(message, frame, tb_data):
     cause = hint = None
     if "can't multiply sequence by non-int of type 'str'" in message:
         cause = _(
-            "Perhaps you forgot to convert a string into an integer using `int()`."
+            "You can only multiply sequences, such as list, tuples,\n "
+            "strings, etc., by integers.\n"
         )
+        names = find_possible_integers(str, frame, tb_data.bad_line)
+        if names:
+            tokens = utils.tokenize_source(tb_data.bad_line)
+            for prev_token, token in zip(tokens, tokens[1:]):
+                if prev_token == "*" and token.string in names:
+                    name = token.string
+                elif prev_token.string in names and token == "*":
+                    name = prev_token.string
+                else:
+                    continue
+                hint = _("Did you forget to convert `{name}` into an integer?").format(
+                    name=name
+                )
+                cause += _(
+                    "Perhaps you forgot to convert `{name}` into an integer.\n"
+                ).format(name=name)
+                return cause, hint
+
     return cause, hint
 
 

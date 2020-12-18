@@ -181,7 +181,7 @@ def run(
             filename = run_dir.joinpath(filename)
 
         if not filename.exists():
-            print(_("The file {filename} does not exist").format(filename=filename))
+            print(_("The file {filename} does not exist.").format(filename=filename))
             return
 
     session.install(lang=lang, include=include, redirect=redirect)

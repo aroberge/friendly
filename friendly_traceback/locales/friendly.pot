@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-17 07:37-0400\n"
+"POT-Creation-Date: 2020-12-18 07:33-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 
 #: __init__.py:184
-msgid "The file {filename} does not exist"
+msgid "The file {filename} does not exist."
 msgstr ""
 
 #: config.py:80 config.py:205
@@ -292,7 +292,7 @@ msgid ""
 "In your program, the key that cannot be found is `{key_name!r}`.\n"
 msgstr ""
 
-#: info_variables.py:346
+#: info_variables.py:352
 msgid ""
 "A type hint found for `{name}` in the {scope} scope.\n"
 "Perhaps you had used a colon instead of an equal sign and written\n"
@@ -765,27 +765,34 @@ msgid ""
 msgstr ""
 
 #: runtime_errors\type_error.py:350
-msgid "Perhaps you forgot to convert a string into an integer using `int()`."
+msgid ""
+"You can only multiply sequences, such as list, tuples,\n"
+" strings, etc., by integers.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:415
+#: runtime_errors\type_error.py:364 runtime_errors\type_error.py:410
+msgid "Did you forget to convert `{name}` into an integer?"
+msgstr ""
+
+#: runtime_errors\type_error.py:367
+msgid ""
+"Perhaps you forgot to convert `{name}` into an integer.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:403
 msgid ""
 "You wrote an object of type `{obj}` where an integer was expected.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:422
-msgid "Did you forget to convert `{name}` into an integer?"
-msgstr ""
-
-#: runtime_errors\type_error.py:425
+#: runtime_errors\type_error.py:413
 msgid "Perhaps you forgot to convert `{name}` into an integer."
 msgstr ""
 
-#: runtime_errors\type_error.py:431
+#: runtime_errors\type_error.py:419
 msgid "Did you forget to convert `{names}` into integers?"
 msgstr ""
 
-#: runtime_errors\type_error.py:434
+#: runtime_errors\type_error.py:422
 msgid "Perhaps you forgot to convert `{names}` into integers."
 msgstr ""
 

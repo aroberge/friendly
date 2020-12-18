@@ -465,6 +465,33 @@ def test_type_error16():
 
 
 def test_type_error17():
+
+    try:
+        "b" * "a"
+    except Exception as e:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "TypeError: can't multiply sequence by non-int of type 'str'" in result
+    if friendly_traceback.get_lang() == "en":
+        assert (
+            'You can only multiply sequences, such as'
+            in result
+        )
+
+    try:
+        "3" * "a"
+    except Exception as e:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "TypeError: can't multiply sequence by non-int of type 'str'" in result
+    if friendly_traceback.get_lang() == "en":
+        assert (
+            'Did you forget to convert `"3"` into an integer?'
+            in result
+        )
+
     try:
         "a" * "2"
     except Exception as e:
@@ -475,7 +502,7 @@ def test_type_error17():
     assert "TypeError: can't multiply sequence by non-int of type 'str'" in result
     if friendly_traceback.get_lang() == "en":
         assert (
-            "Perhaps you forgot to convert a string into an integer using `int()`."
+            'Did you forget to convert `"2"` into an integer?'
             in result
         )
     return result, message
