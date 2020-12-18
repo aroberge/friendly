@@ -492,6 +492,20 @@ def test_type_error17():
             in result
         )
 
+    a = b = c = "2"
+    try:
+        d = a * b * c
+    except Exception as e:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "TypeError: can't multiply sequence by non-int of type 'str'" in result
+    if friendly_traceback.get_lang() == "en":
+        assert (
+            'Did you forget to convert `a` and `b` into integers?'
+            in result
+        )
+
     try:
         "a" * "2"
     except Exception as e:

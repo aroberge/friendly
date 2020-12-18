@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-18 07:33-0400\n"
+"POT-Creation-Date: 2020-12-18 11:50-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -770,29 +770,38 @@ msgid ""
 " strings, etc., by integers.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:364 runtime_errors\type_error.py:410
+#: runtime_errors\type_error.py:369 runtime_errors\type_error.py:422
 msgid "Did you forget to convert `{name}` into an integer?"
 msgstr ""
 
-#: runtime_errors\type_error.py:367
+#: runtime_errors\type_error.py:372
 msgid ""
 "Perhaps you forgot to convert `{name}` into an integer.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:403
+#: runtime_errors\type_error.py:376
+msgid "Did you forget to convert `{name1}` and `{name2}` into integers?"
+msgstr ""
+
+#: runtime_errors\type_error.py:379
+msgid ""
+"Perhaps you forgot to convert `{name1}` and `{name2}` into integers.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:415
 msgid ""
 "You wrote an object of type `{obj}` where an integer was expected.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:413
+#: runtime_errors\type_error.py:425
 msgid "Perhaps you forgot to convert `{name}` into an integer."
 msgstr ""
 
-#: runtime_errors\type_error.py:419
+#: runtime_errors\type_error.py:431
 msgid "Did you forget to convert `{names}` into integers?"
 msgstr ""
 
-#: runtime_errors\type_error.py:422
+#: runtime_errors\type_error.py:434
 msgid "Perhaps you forgot to convert `{names}` into integers."
 msgstr ""
 

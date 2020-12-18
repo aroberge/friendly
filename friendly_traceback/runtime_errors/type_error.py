@@ -354,20 +354,32 @@ def cannot_multiply_by_str(message, frame, tb_data):
         names = find_possible_integers(str, frame, tb_data.bad_line)
         if names:
             tokens = utils.tokenize_source(tb_data.bad_line)
+            int_vars = []
             for prev_token, token in zip(tokens, tokens[1:]):
                 if prev_token == "*" and token.string in names:
-                    name = token.string
+                    int_vars.append(token.string)
                 elif prev_token.string in names and token == "*":
-                    name = prev_token.string
+                    int_vars.append(prev_token.string)
                 else:
                     continue
+            if not int_vars:  # should not happen, but better be safe
+                return cause, hint
+            elif len(int_vars) == 1:
+                name = int_vars[0]
                 hint = _("Did you forget to convert `{name}` into an integer?").format(
                     name=name
                 )
                 cause += _(
                     "Perhaps you forgot to convert `{name}` into an integer.\n"
                 ).format(name=name)
-                return cause, hint
+            else:
+                hint = _(
+                    "Did you forget to convert `{name1}` and `{name2}` into integers?"
+                ).format(name1=int_vars[0], name2=int_vars[1])
+                cause += _(
+                    "Perhaps you forgot to convert `{name1}` and `{name2}` into integers.\n"
+                ).format(name1=int_vars[0], name2=int_vars[1])
+            return cause, hint
 
     return cause, hint
 

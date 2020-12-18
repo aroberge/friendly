@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-18 07:33-0400\n"
-"PO-Revision-Date: 2020-12-18 07:34-0400\n"
+"POT-Creation-Date: 2020-12-18 11:50-0400\n"
+"PO-Revision-Date: 2020-12-18 11:56-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1018,28 +1018,37 @@ msgstr ""
 "Vous ne pouvez multiplier les séquences, telles que\n"
 "les listes, les tuples, les chaînes, etc., que par des entiers.\n"
 
-#: runtime_errors\type_error.py:364 runtime_errors\type_error.py:410
+#: runtime_errors\type_error.py:369 runtime_errors\type_error.py:422
 msgid "Did you forget to convert `{name}` into an integer?"
 msgstr "Avez-vous oublié de convertir `{name}` en un entier?"
 
-#: runtime_errors\type_error.py:367
+#: runtime_errors\type_error.py:372
 msgid "Perhaps you forgot to convert `{name}` into an integer.\n"
 msgstr "Peut-être avez-vous oublié de convertir `{name}` en un entier.\n"
 
-#: runtime_errors\type_error.py:403
+#: runtime_errors\type_error.py:376
+msgid "Did you forget to convert `{name1}` and `{name2}` into integers?"
+msgstr "Avez-vous oublié de convertir `{name1}` et `{name2}` en entiers?"
+
+#: runtime_errors\type_error.py:379
+msgid "Perhaps you forgot to convert `{name1}` and `{name2}` into integers.\n"
+msgstr ""
+"Peut-être avez-vous oublié de convertir `{name1}` et `{name2}` en entiers.\n"
+
+#: runtime_errors\type_error.py:415
 msgid "You wrote an object of type `{obj}` where an integer was expected.\n"
 msgstr ""
 "Vous avez écrit un objet de type `{obj}` là où un entier était attendu.\n"
 
-#: runtime_errors\type_error.py:413
+#: runtime_errors\type_error.py:425
 msgid "Perhaps you forgot to convert `{name}` into an integer."
 msgstr "Peut-être avez-vous oublié de convertir `{name}` en un entier."
 
-#: runtime_errors\type_error.py:419
+#: runtime_errors\type_error.py:431
 msgid "Did you forget to convert `{names}` into integers?"
 msgstr "Avez-vous oublié de convertir `{names}` en entiers?"
 
-#: runtime_errors\type_error.py:422
+#: runtime_errors\type_error.py:434
 msgid "Perhaps you forgot to convert `{names}` into integers."
 msgstr "Peut-être avez-vous oublié de convertir `{names}` en entiers?"
 
