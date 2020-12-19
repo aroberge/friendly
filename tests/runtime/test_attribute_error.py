@@ -28,7 +28,7 @@ def test_attribute_error():
     assert not "debug_warning" in result, "Internal error found."
     assert "AttributeError: type object 'A' has no attribute 'x'" in result
     if friendly_traceback.get_lang() == "en":
-        assert "The object of type `A` has no attribute" in result
+        assert "The object `A` has no attribute" in result
 
     try:
         a = A()
@@ -152,8 +152,11 @@ def test_perhaps_comma2():
     # same as previous, but objects on separate lines
     abcd = "hello"
     defg = "world"
+    # fmt: off
     try:
-        a = [abcd.defg]
+        a = [abcd
+        .defg]
+    # fmt: on
     except Exception as e:
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
@@ -180,6 +183,7 @@ def test_builtin_module_with_no_file():
     if friendly_traceback.get_lang() == "en":
         assert "Python tells us" in result
     return result, message
+
 
 if __name__ == "__main__":
     print(test_attribute_error()[0])
