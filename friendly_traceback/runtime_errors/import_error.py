@@ -4,7 +4,7 @@ import re
 import sys
 
 from ..my_gettext import current_lang
-from ..utils import get_similar_words
+from ..utils import get_similar_words, list_to_string
 from ..path_info import path_utils
 
 
@@ -108,9 +108,7 @@ def cannot_import_name_from(name, module, frame, tb_data, add_circular_hint=True
             "instead of `{typo}`\n"
         ).format(correct=similar[0], typo=name, module=module)
     else:
-        # transform ['a', 'b', 'c'] in "[`a`, `b`, `c`]"
-        candidates = ["{c}".format(c=c.replace("'", "")) for c in similar]
-        candidates = ", ".join(candidates)
+        candidates = list_to_string(similar)
         hint = _("Did you mean one of the following: `{names}`?\n").format(
             names=candidates
         )

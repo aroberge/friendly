@@ -4,7 +4,7 @@ import sys
 import re
 
 from ..my_gettext import current_lang
-from ..utils import get_similar_words, get_object_from_type_name
+from ..utils import get_similar_words, list_to_string
 from ..path_info import path_utils
 from .. import info_variables
 from . import stdlib_modules
@@ -79,23 +79,16 @@ def attribute_error_in_module(module, attribute, frame):
             ).format(correct=similar_attributes[0], typo=attribute, module=module)
             return cause, hint
         else:
-            # transform ['a', 'b', 'c'] in `"a, b, c"`
-            candidates = [
-                "{c}".format(c=c.replace("'", "")) for c in similar_attributes
-            ]
-            candidates = ", ".join(candidates)
+            names = list_to_string(similar_attributes)
             hint = _("Did you mean one of the following: `{names}`?\n").format(
-                names=candidates
+                names=names
             )
             cause = _(
                 "Instead of writing `{module}.{typo}`, perhaps you meant to write one of \n"
                 "the following names which are attributes of module `{module}`:\n"
-                "`{candidates}`\n"
-            ).format(candidates=candidates, typo=attribute, module=module)
+                "`{names}`\n"
+            ).format(names=names, typo=attribute, module=module)
             return cause, hint
-
-    # TODO: check to see if module shadows a standard library module;
-    # perhaps use turtle as a good case.
 
     if module in stdlib_modules.names and hasattr(mod, "__file__"):
         mod_path = path_utils.shorten_path(mod.__file__)
@@ -141,7 +134,7 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
     _ = current_lang.translate
     cause = hint = None
 
-    obj = get_object_from_type_name(obj_type, frame)
+    obj = info_variables.get_object_from_name(obj_type, frame)
     if obj is None:
         print("object is None")
         return cause, hint  # TODO: provide message
@@ -194,17 +187,13 @@ def handle_attribute_typo_for_object(obj_name, attribute, similar):
             "instead of `{obj}.{typo}`\n"
         ).format(correct=similar[0], typo=attribute, obj=obj_name)
     else:
-        # transform ['a', 'b', 'c'] in "[`a`, `b`, `c`]"
-        candidates = ["{c}".format(c=c.replace("'", "")) for c in similar]
-        candidates = ", ".join(candidates)
-        hint = _("Did you mean one of the following: `{name}`?\n").format(
-            name=candidates
-        )
+        names = list_to_string(similar)
+        hint = _("Did you mean one of the following: `{names}`?\n").format(names=names)
         cause = _(
             "Instead of writing `{obj}.{typo}`, perhaps you meant to write one of \n"
             "the following names which are attributes of object `{obj}`:\n"
-            "`{candidates}`\n"
-        ).format(candidates=candidates, typo=attribute, obj=obj_name)
+            "`{names}`\n"
+        ).format(names=names, typo=attribute, obj=obj_name)
     return cause, hint
 
 

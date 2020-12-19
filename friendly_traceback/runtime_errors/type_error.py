@@ -406,7 +406,7 @@ def object_cannot_be_interpreted_as_an_integer(message, frame, tb_data):
     match = re.search(pattern, message)
     if match is not None:
         obj_name = match.group(1)
-        object_of_type = utils.get_object_from_type_name(obj_name, frame)
+        object_of_type = info_variables.get_object_from_name(obj_name, frame)
         if object_of_type is None:
             return cause, hint
 

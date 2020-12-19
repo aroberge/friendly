@@ -143,6 +143,24 @@ def get_nonlocal_objects(frame):
     return nonlocals_
 
 
+def get_object_from_name(name, frame):
+    """Given the name of an object, for example 'str', or 'A' for
+    class A, returns a basic object of that type found in a frame,
+    or None.
+    """
+
+    # We must guard against people defining their own type with a
+    # standard name by checking standard types last.
+
+    if name in frame.f_locals:
+        return frame.f_locals[name]
+    elif name in frame.f_globals:
+        return frame.f_globals[name]
+    elif name in dir(builtins):  # Do this last
+        return getattr(builtins, name)
+    return None
+
+
 def get_variables_in_frame_by_scope(frame, scope):
     """Returns a list of variables based on the provided scope, which must
     be one of 'local', 'global', or 'nonlocal'.
