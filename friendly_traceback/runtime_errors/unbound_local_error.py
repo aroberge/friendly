@@ -32,14 +32,14 @@ def local_variable_referenced(unknown_name, frame):
         if similar["best"] is not None:
             best_guess = similar["best"]
             if best_guess in similar["locals"]:
-                hint = _("Did you mean `{name}`?").format(name=similar["best"])
+                hint = _("Did you mean `{name}`?\n").format(name=similar["best"])
                 cause = format_similar_names(unknown_name, similar)
                 return cause, hint
 
         else:
             cause = info_variables.name_has_type_hint(unknown_name, frame)
             if cause:
-                hint = _("Did you use a colon instead of an equal sign?")
+                hint = _("Did you use a colon instead of an equal sign?\n")
         return cause, hint
 
     if "global" in scopes and "nonlocal" in scopes:

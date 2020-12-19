@@ -65,13 +65,17 @@ def test_type_error2():
         two = "two"
         one += two
     except Exception as e:
+        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for +=:" in result
     if friendly_traceback.get_lang() == "en":
         assert "an integer (`int`) and a string (`str`)" in result
+    return result, message
 
+
+def test_type_error3():
     try:
         a = (1, 2)
         b = [3, 4]

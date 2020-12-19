@@ -51,9 +51,9 @@ def name_not_defined(unknown_name, frame, tb_data):
     type_hint = info_variables.name_has_type_hint(unknown_name, frame)
     similar = info_variables.get_similar_names(unknown_name, frame)
     if similar["best"] is not None:
-        hint = _("Did you mean `{name}`?").format(name=similar["best"])
+        hint = _("Did you mean `{name}`?\n").format(name=similar["best"])
     elif type_hint:
-        hint = _("Did you use a colon instead of an equal sign?")
+        hint = _("Did you use a colon instead of an equal sign?\n")
 
     additional = type_hint + format_similar_names(unknown_name, similar)
     try:

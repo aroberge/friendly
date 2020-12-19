@@ -35,7 +35,7 @@ def test_unbound_local_error_missing_global():
     )
     if friendly_traceback.get_lang() == "en":
         assert (
-            "Did you forget to add `global spam_missing_global`?"
+            "Did you forget to add `global spam_missing_global`?\n"
             in result
         )
     return result, message
@@ -56,7 +56,7 @@ def test_unbound_local_error_missing_nonlocal():
     )
     if friendly_traceback.get_lang() == "en":
         assert (
-            "Did you forget to add `nonlocal spam_missing_nonlocal`?"
+            "Did you forget to add `nonlocal spam_missing_nonlocal`?\n"
             in result
         )
     return result, message

@@ -15,7 +15,8 @@ import friendly_traceback
 # a.b -> a, b ?
 
 
-def test_attribute_error():
+def test_generic():
+    # Generic - no additional explanation
     class A:
         pass
 
@@ -44,7 +45,8 @@ def test_attribute_error():
     return result, message
 
 
-def test_attribute_error2():
+def test_object_attribute_typo():
+    #
     try:
         a = [1, 2, 3]
         a.appendh(4)
@@ -59,23 +61,52 @@ def test_attribute_error2():
     return result, message
 
 
-def test_misspelled_module_attribute():
+def test_use_builtin():
+    #
+    try:
+        a = [1, 2, 3]
+        a.length()
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "AttributeError: 'list' object has no attribute 'length'" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Did you mean `len(a)`" in result
+    return result, message
+
+
+def test_use_synonym():
+    #
+    try:
+        a = [1, 2, 3]
+        a.add(4)
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "AttributeError: 'list' object has no attribute 'add'" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Did you mean `append`" in result
+    return result, message
+
+
+
+def test_module_attribute_typo():
     import string
 
     try:
         string.ascii_lowecase
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
     assert "AttributeError: module 'string' has no attribute 'ascii_lowecase'" in result
     if friendly_traceback.get_lang() == "en":
         assert "Did you mean `ascii_lowercase`" in result
-    return result, message
 
-
-def test_misspelled_module_attribute_2():
     import math
 
     try:
@@ -131,27 +162,10 @@ def test_nonetype():
     return result, message
 
 
-def test_perhaps_comma1():
+def test_perhaps_comma():
     abcd = "hello"
     defg = "world"
-    try:
-        a = [abcd.defg]
-    except Exception as e:
-        message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
-    assert not "debug_warning" in result, "Internal error found."
-    assert "'str' object has no attribute 'defg'" in result
-    if friendly_traceback.get_lang() == "en":
-        assert "Did you mean to separate object names by a comma" in result
 
-    return result, message
-
-
-def test_perhaps_comma2():
-    # same as previous, but objects on separate lines
-    abcd = "hello"
-    defg = "world"
     # fmt: off
     try:
         a = [abcd
@@ -186,4 +200,4 @@ def test_builtin_module_with_no_file():
 
 
 if __name__ == "__main__":
-    print(test_attribute_error()[0])
+    print(test_generic()[0])

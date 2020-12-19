@@ -366,15 +366,15 @@ def cannot_multiply_by_str(message, frame, tb_data):
                 return cause, hint
             elif len(int_vars) == 1:
                 name = int_vars[0]
-                hint = _("Did you forget to convert `{name}` into an integer?").format(
-                    name=name
-                )
+                hint = _(
+                    "Did you forget to convert `{name}` into an integer?\n"
+                ).format(name=name)
                 cause += _(
                     "Perhaps you forgot to convert `{name}` into an integer.\n"
                 ).format(name=name)
             else:
                 hint = _(
-                    "Did you forget to convert `{name1}` and `{name2}` into integers?"
+                    "Did you forget to convert `{name1}` and `{name2}` into integers?\n"
                 ).format(name1=int_vars[0], name2=int_vars[1])
                 cause += _(
                     "Perhaps you forgot to convert `{name1}` and `{name2}` into integers.\n"
@@ -419,16 +419,16 @@ def object_cannot_be_interpreted_as_an_integer(message, frame, tb_data):
         if names:
             if len(names) == 1:
                 name = names[0]
-                hint = _("Did you forget to convert `{name}` into an integer?").format(
-                    name=name
-                )
+                hint = _(
+                    "Did you forget to convert `{name}` into an integer?\n"
+                ).format(name=name)
                 cause += _(
                     "Perhaps you forgot to convert `{name}` into an integer."
                 ).format(name=name)
             else:
                 names = [name for name in names]
                 names = ", ".join(names)
-                hint = _("Did you forget to convert `{names}` into integers?").format(
+                hint = _("Did you forget to convert `{names}` into integers?\n").format(
                     names=names
                 )
                 cause += _(

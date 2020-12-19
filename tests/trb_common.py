@@ -39,15 +39,31 @@ all_imports = {
     "ArithmeticError": ("test_arithmetic_error", "test_arithmetic_error"),
     "AttributeError - class attribute": (
         "test_attribute_error",
+        "test_generic",
+    ),
+    "AttributeError - typo in object attribute": (
         "test_attribute_error",
+        "test_object_attribute_typo",
+    ),
+    "AttributeError - using builtin": (
+        "test_attribute_error",
+        "test_use_builtin",
+    ),
+    "AttributeError - use synonym": (
+        "test_attribute_error",
+        "test_use_synonym",
     ),
     "AttributeError - typo in module attribute": (
         "test_attribute_error",
-        "test_misspelled_module_attribute",
+        "test_module_attribute_typo",
     ),
-    "AttributeError - typo in module attribute 2": (
+    "AttributeError - shadowning stdlib module": (
         "test_attribute_error",
-        "test_misspelled_module_attribute_2",
+        "test_shadow_stdlib_module",
+    ),
+    "AttributeError - using . instead of ,": (
+        "test_attribute_error",
+        "test_perhaps_comma",
     ),
     "FileNotFoundError": ("test_file_not_found_error", "test_file_not_found_error"),
     "ImportError": ("test_import_error", "test_import_error"),

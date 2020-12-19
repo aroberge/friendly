@@ -93,7 +93,7 @@ def attribute_error_in_module(module, attribute, frame):
     if module in stdlib_modules.names and hasattr(mod, "__file__"):
         mod_path = path_utils.shorten_path(mod.__file__)
         if not mod_path.startswith("PYTHON_LIB:"):
-            hint = _("Did you give your program the same name as a Python module?")
+            hint = _("Did you give your program the same name as a Python module?\n")
             cause = _(
                 "You imported a module named `{module}` from `{mod_path}`.\n"
                 "There is also a module named `{module}` in Python's standard library.\n"
@@ -101,6 +101,7 @@ def attribute_error_in_module(module, attribute, frame):
             ).format(module=module, mod_path=mod_path)
             return cause, hint
 
+    # TODO: test this
     # the following is untested
     # We look for another module currently known for which such an attribute exists.
     relevant_modules = []
@@ -147,20 +148,28 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
         print("object is not on bad_line")
         return cause, hint  # TODO: provide message
 
-    if attribute in frame.f_globals or attribute in frame.f_locals:
-        cause, hint = missing_comma(obj_name, attribute)
-        return cause, hint
-
     known_attributes = dir(instance)
 
+    # Example: this.len -> len(this)
     known_builtin = perhaps_builtin(attribute, known_attributes)
     if known_builtin:
         return use_builtin_function(obj_name, attribute, known_builtin)
 
+    # Example: both "this" and "that" are known objects
+    # this.that -> this, that
+    if attribute in frame.f_globals or attribute in frame.f_locals:
+        return missing_comma(obj_name, attribute)
+
+    known_synonyms = perhaps_synonym(attribute, known_attributes)
+    if known_synonyms:
+        return use_synonym(obj_name, attribute, known_synonyms)
+
+    # Example: list.apend -> list.append
     similar = get_similar_words(attribute, known_attributes)
     if similar:
-        return handle_attribute_typo_for_object(obj_name, attribute, similar)
+        return handle_attribute_typo(obj_name, attribute, similar)
 
+    # We have not been able to find a useful suggestion
     cause = _("The object `{obj}` has no attribute named `{attr}`.\n").format(
         obj=obj_name, attr=attribute
     )
@@ -174,7 +183,7 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
     return cause, hint
 
 
-def handle_attribute_typo_for_object(obj_name, attribute, similar):
+def handle_attribute_typo(obj_name, attribute, similar):
     """Takes care of misspelling of existing attribute of object whose
     name could be identified.
     """
@@ -198,15 +207,15 @@ def handle_attribute_typo_for_object(obj_name, attribute, similar):
 
 
 def perhaps_builtin(attribute, known_attributes):
-    if attribute in ["min", "max"]:
+    if attribute in ["min", "max", "sorted", "reversed", "sum"]:
         return attribute
-    if attribute in ["len", "length"] and "__len__" in known_attributes:
+    if attribute in ["len", "length", "lenght"] and "__len__" in known_attributes:
         return "len"
 
 
 def use_builtin_function(obj_name, attribute, known_builtin):
     _ = current_lang.translate
-    hint = _("Did you mean to use `{known_builtin}({obj_name})`?").format(
+    hint = _("Did you mean `{known_builtin}({obj_name})`?\n").format(
         known_builtin=known_builtin, obj_name=obj_name
     )
     cause = _(
@@ -217,10 +226,47 @@ def use_builtin_function(obj_name, attribute, known_builtin):
     return cause, hint
 
 
+def perhaps_synonym(attribute, known_attributes):
+    synonyms = [
+        ["add", "append", "extend", "insert", "push", "update", "union"],
+        ["remove", "discard", "pop"],
+    ]
+    for syn_list in synonyms:
+        if attribute in syn_list:
+            result = []
+            for attr in syn_list:
+                if attr in known_attributes:
+                    result.append(attr)
+            if result:
+                return result
+
+
+def use_synonym(obj_name, attribute, synonyms):
+    _ = current_lang.translate
+
+    hint = _("Did you mean `{attr}`?\n").format(attr=synonyms[0])
+
+    cause = _("The object `{name}` has no attribute named `{attribute}`.\n").format(
+        name=obj_name, attribute=attribute
+    )
+
+    if len(synonyms) == 1:
+        cause += _(
+            "However, `{attr}` is an attribute of `{name}` with a similar meaning.\n"
+        ).format(name=obj_name, attribute=attribute)
+    else:
+        cause += _(
+            "However, `{name}` has the following attributes with similar meanings:\n"
+            "`{attributes}`.\n"
+        ).format(name=obj_name, attributes=list_to_string(synonyms))
+
+    return cause, hint
+
+
 def missing_comma(first, second):
     _ = current_lang.translate
 
-    hint = _("Did you mean to separate object names by a comma?")
+    hint = _("Did you mean to separate object names by a comma?\n")
 
     cause = _(
         "`{second}` is not an attribute of `{first}`.\n"

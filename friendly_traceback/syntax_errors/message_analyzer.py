@@ -494,7 +494,7 @@ def invalid_character_in_identifier(message="", line="", **kwargs):
                 ).format(bad_character=bad_character)
                 if bad_character in bad_quotation_marks:
                     hint = _(
-                        "Did you mean to use a normal quote character, `'` or `\"`?"
+                        "Did you mean to use a normal quote character, `'` or `\"`?\n"
                     )
                     cause = (
                         copy_paste
@@ -511,7 +511,7 @@ def invalid_character_in_identifier(message="", line="", **kwargs):
 
         for quote in bad_quotation_marks:
             if quote in line:
-                hint = _("Did you mean to use a normal quote character, `'` or `\"`?")
+                hint = _("Did you mean to use a normal quote character, `'` or `\"`?\n")
                 cause = _(
                     "Python indicates that you used some unicode characters not allowed\n"
                     "as part of a variable name; this includes many emojis.\n"
@@ -651,7 +651,7 @@ def name_assigned_to_prior_nonlocal(message="", **kwargs):
     cause = hint = None
     if "is assigned to before nonlocal declaration" in message:
         name = message.split("'")[1]
-        hint = _("Did you forget to add `nonlocal`?")
+        hint = _("Did you forget to add `nonlocal`?\n")
         cause = _(
             "You assigned a value to the variable `{name}`\n"
             "before declaring it as a nonlocal variable.\n"
@@ -679,7 +679,7 @@ def name_used_prior_nonlocal(message="", **kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "is used prior to nonlocal declaration" in message:
-        hint = _("Did you forget to write `nonlocal` first?")
+        hint = _("Did you forget to write `nonlocal` first?\n")
         name = message.split("'")[1]
         cause = _(
             "You used the variable `{name}`\n"

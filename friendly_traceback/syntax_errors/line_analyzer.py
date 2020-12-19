@@ -563,7 +563,7 @@ def missing_comma_or_operator(tokens, offset=None):
             and second.start_col <= offset <= second.end_col
         ):
             hint = _(
-                "Did you forget something between `{first}` and `{second}`?"
+                "Did you forget something between `{first}` and `{second}`?\n"
             ).format(first=first.string, second=second.string)
 
             cause = _(
