@@ -319,26 +319,87 @@ def missing_positional_arguments(message, *args):
 
 
 @add_message_parser
-def x_is_not_callable(message, *args):
+def x_is_not_callable(message, frame, tb_data):
     _ = current_lang.translate
     cause = hint = None
     pattern = re.compile(r"'(.*)' object is not callable")
     match = re.search(pattern, message)
-    if match is not None:
-        obj = match.group(1)
-        if obj == "tuple":
-            hint = _("Perhaps you had a missing comma between two tuples.\n")
-        else:
-            hint = _("Perhaps you had a missing comma before the tuple.\n")
+    if match is None:
+        return cause, hint
 
-        cause = (
-            _(
-                "I suspect that you had an object of this type, {obj},\n"
-                "followed by what looked like a tuple, '(...)',\n"
-                "which Python took as an indication of a function call.\n"
-            ).format(obj=convert_type(obj))
-            + hint
+    obj_type = match.group(1)
+
+    # Start with default cause, in case we cannot do better
+    cause = _(
+        "Python indicates that you have an object of type `{obj_type}`,\n"
+        "followed by something surrounded by parentheses, `(...)`,\n"
+        "which Python took as an indication of a function call.\n"
+        "Either the object of type {obj_type} was meant to be a function,\n"
+        "or you forgot a comma before `(...)`.\n"
+    ).format(obj_type=obj_type)
+
+    obj = info_variables.get_object_from_name(obj_type, frame)
+    all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
+    for obj_name, instance in all_objects:
+        if isinstance(instance, obj) or instance == obj:
+            fn_call = tb_data.bad_line.replace(obj_name, "").strip()
+            if fn_call.startswith("(") and fn_call.endswith(")"):
+                break
+    else:
+        return cause, hint
+
+    cause = _(
+        "Because of the surrounding parenthesis, `{fn_call}` \n"
+        "is interpreted by Python as indicating a function call for \n"
+        "`{obj_name}`, which is an object of type `{obj_type}`\n"
+        "which cannot be called.\n\n"
+    ).format(fn_call=fn_call, obj_name=obj_name, obj_type=obj_type)
+
+    try:
+        can_eval = eval(fn_call, frame.f_globals, frame.f_locals)
+    except Exception:
+        return cause, hint
+
+    if isinstance(can_eval, tuple):
+        cause = cause + _(
+            "However, `{fn_call}` is a `tuple`.\n"
+            "Either the object `{obj_name}` was meant to be a function\n"
+            "or you have a missing comma between the object `{obj_name}`\n"
+            "and the tuple `{fn_call}` and meant to write\n"
+            "`{obj_name}, {fn_call}`.\n"
+        ).format(fn_call=fn_call, obj_name=obj_name)
+        hint = _(
+            "Did you forget a comma between `{obj_name}` and `{fn_call}`?\n"
+        ).format(fn_call=fn_call, obj_name=obj_name)
+        return cause, hint
+
+    elif hasattr(obj, "__getitem__") and isinstance(can_eval, int):
+        cause = cause + _(
+            "However, `{obj_name}` is a sequence.\n"
+            "Perhaps you meant to use `[]` instead of `()` and write\n"
+            "`{obj_name}[{slice}]`\n"
+        ).format(obj_name=obj_name, slice=fn_call[1:-1])
+        hint = _("Did you mean `{obj_name}[{slice}]`?\n").format(
+            obj_name=obj_name, slice=fn_call[1:-1]
         )
+        return cause, hint
+
+    elif (  # Many objects can be multipled, but only numbers should have __abs__
+        hasattr(obj, "__abs__")  # Should identify numbers: int, float, ...
+        and hasattr(can_eval, "__abs__")  # complex, Fractions, Decimals, ...
+        and hasattr(obj, "__mul__")  # Confirming that they can be multiplied
+        and hasattr(can_eval, "__mul__")
+    ):
+        cause = cause + _(
+            "However, both `{obj_name}` and `{fn_call}` are numbers.\n"
+            "Perhaps you forgot a multiplication operator, `*`,\n"
+            "and meant to write `{obj_name} * {fn_call}`\n."
+        ).format(fn_call=fn_call, obj_name=obj_name)
+        hint = _("Did you mean `{obj_name} * {fn_call}`?\n").format(
+            fn_call=fn_call, obj_name=obj_name
+        )
+        return cause, hint
+
     return cause, hint
 
 

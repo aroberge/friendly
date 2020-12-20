@@ -10,14 +10,6 @@ from .. import info_variables
 from . import stdlib_modules
 
 
-# Potential synonyms e.g. X.add() might have been used by mistake
-# instead of X.append()
-SYNONYMS = [
-    ["add", "append", "extend", "insert", "push", "update", "union"],
-    ["remove", "discard", "pop"],
-]
-
-
 def get_cause(value, frame, tb_data):
     _ = current_lang.translate
     message = str(value)

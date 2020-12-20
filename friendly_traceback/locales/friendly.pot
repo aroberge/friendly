@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-19 09:39-0400\n"
+"POT-Creation-Date: 2020-12-20 09:28-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -304,131 +304,131 @@ msgid ""
 "    {name} = {hint}\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:43
+#: runtime_errors\attribute_error.py:35
 msgid ""
 "You are attempting to access the attribute `{attr}`\n"
 "for a variable whose value is `None`."
 msgstr ""
 
-#: runtime_errors\attribute_error.py:64
+#: runtime_errors\attribute_error.py:56
 msgid ""
 "This should not happen:\n"
 "Python tells us that module `{module}` does not have an attribute named `{attribute}`.\n"
 "However, it does not appear that module `{module}` was imported.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:75 runtime_errors\attribute_error.py:116
-#: runtime_errors\attribute_error.py:193 runtime_errors\import_error.py:105
+#: runtime_errors\attribute_error.py:67 runtime_errors\attribute_error.py:108
+#: runtime_errors\attribute_error.py:185 runtime_errors\import_error.py:105
 #: runtime_errors\module_not_found_error.py:46 runtime_errors\name_error.py:54
 #: runtime_errors\unbound_local_error.py:35
 msgid ""
 "Did you mean `{name}`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:76
+#: runtime_errors\attribute_error.py:68
 msgid ""
 "Perhaps you meant to write `{module}.{correct}` instead of `{module}.{typo}`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:83 runtime_errors\attribute_error.py:200
+#: runtime_errors\attribute_error.py:75 runtime_errors\attribute_error.py:192
 #: runtime_errors\import_error.py:112
 msgid ""
 "Did you mean one of the following: `{names}`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:86
+#: runtime_errors\attribute_error.py:78
 msgid ""
 "Instead of writing `{module}.{typo}`, perhaps you meant to write one of \n"
 "the following names which are attributes of module `{module}`:\n"
 "`{names}`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:96
+#: runtime_errors\attribute_error.py:88
 msgid ""
 "Did you give your program the same name as a Python module?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:97
+#: runtime_errors\attribute_error.py:89
 msgid ""
 "You imported a module named `{module}` from `{mod_path}`.\n"
 "There is also a module named `{module}` in Python's standard library.\n"
 "Perhaps you need to rename your module.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:117
+#: runtime_errors\attribute_error.py:109
 msgid ""
 "Perhaps you meant to use the attribute `{attribute}` of \n"
 "module `{mod_name}` instead of module `{module}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:123
+#: runtime_errors\attribute_error.py:115
 msgid ""
 "Python tells us that no object with name `{attribute}` is\n"
 "found in module `{module}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:173
+#: runtime_errors\attribute_error.py:165
 msgid ""
 "The object `{obj}` has no attribute named `{attr}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:180
+#: runtime_errors\attribute_error.py:172
 msgid ""
 "The following are some of its known attributes:\n"
 "`{names}`."
 msgstr ""
 
-#: runtime_errors\attribute_error.py:194
+#: runtime_errors\attribute_error.py:186
 msgid ""
 "Perhaps you meant to write `{obj}.{correct}` instead of `{obj}.{typo}`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:201
+#: runtime_errors\attribute_error.py:193
 msgid ""
 "Instead of writing `{obj}.{typo}`, perhaps you meant to write one of \n"
 "the following names which are attributes of object `{obj}`:\n"
 "`{names}`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:218
+#: runtime_errors\attribute_error.py:210
 msgid ""
 "Did you mean `{known_builtin}({obj_name})`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:221
+#: runtime_errors\attribute_error.py:213
 msgid ""
 "The object `{obj_name}` has no attribute named `{attribute}`.\n"
 "Perhaps you can use the Python builtin function `{known_builtin}` instead:\n"
 "`{known_builtin}({obj_name})`."
 msgstr ""
 
-#: runtime_errors\attribute_error.py:247
+#: runtime_errors\attribute_error.py:239
 msgid ""
 "Did you mean `{attr}`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:249
+#: runtime_errors\attribute_error.py:241
 msgid ""
 "The object `{name}` has no attribute named `{attribute}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:254
+#: runtime_errors\attribute_error.py:246
 msgid ""
 "However, `{attr}` is an attribute of `{name}` with a similar meaning.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:258
+#: runtime_errors\attribute_error.py:250
 msgid ""
 "However, `{name}` has the following attributes with similar meanings:\n"
 "`{attributes}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:269
+#: runtime_errors\attribute_error.py:261
 msgid ""
 "Did you mean to separate object names by a comma?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:271
+#: runtime_errors\attribute_error.py:263
 msgid ""
 "`{second}` is not an attribute of `{first}`.\n"
 "However, both `{first}` and `{second}` are known objects.\n"
@@ -732,64 +732,104 @@ msgid ""
 "fewer positional arguments than it requires ({nb_required} missing).\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:330
+#: runtime_errors\type_error.py:333
 msgid ""
-"Perhaps you had a missing comma between two tuples.\n"
-msgstr ""
-
-#: runtime_errors\type_error.py:332
-msgid ""
-"Perhaps you had a missing comma before the tuple.\n"
-msgstr ""
-
-#: runtime_errors\type_error.py:335
-msgid ""
-"I suspect that you had an object of this type, {obj},\n"
-"followed by what looked like a tuple, '(...)',\n"
+"Python indicates that you have an object of type `{obj_type}`,\n"
+"followed by something surrounded by parentheses, `(...)`,\n"
 "which Python took as an indication of a function call.\n"
+"Either the object of type {obj_type} was meant to be a function,\n"
+"or you forgot a comma before `(...)`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:350
+#: runtime_errors\type_error.py:351
+msgid ""
+"Because of the surrounding parenthesis, `{fn_call}` \n"
+"is interpreted by Python as indicating a function call for \n"
+"`{obj_name}`, which is an object of type `{obj_type}`\n"
+"which cannot be called.\n"
+"\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:364
+msgid ""
+"However, `{fn_call}` is a `tuple`.\n"
+"Either the object `{obj_name}` was meant to be a function\n"
+"or you have a missing comma between the object `{obj_name}`\n"
+"and the tuple `{fn_call}` and meant to write\n"
+"`{obj_name}, {fn_call}`.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:371
+msgid ""
+"Did you forget a comma between `{obj_name}` and `{fn_call}`?\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:377
+msgid ""
+"However, `{obj_name}` is a sequence.\n"
+"Perhaps you meant to use `[]` instead of `()` and write\n"
+"`{obj_name}[{slice}]`\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:382
+msgid ""
+"Did you mean `{obj_name}[{slice}]`?\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:393
+msgid ""
+"However, both `{obj_name}` and `{fn_call}` are numbers.\n"
+"Perhaps you forgot a multiplication operator, `*`,\n"
+"and meant to write `{obj_name} * {fn_call}`\n"
+"."
+msgstr ""
+
+#: runtime_errors\type_error.py:398
+msgid ""
+"Did you mean `{obj_name} * {fn_call}`?\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:411
 msgid ""
 "You can only multiply sequences, such as list, tuples,\n"
 " strings, etc., by integers.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:369 runtime_errors\type_error.py:422
+#: runtime_errors\type_error.py:430 runtime_errors\type_error.py:483
 msgid ""
 "Did you forget to convert `{name}` into an integer?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:372
+#: runtime_errors\type_error.py:433
 msgid ""
 "Perhaps you forgot to convert `{name}` into an integer.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:376
+#: runtime_errors\type_error.py:437
 msgid ""
 "Did you forget to convert `{name1}` and `{name2}` into integers?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:379
+#: runtime_errors\type_error.py:440
 msgid ""
 "Perhaps you forgot to convert `{name1}` and `{name2}` into integers.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:415
+#: runtime_errors\type_error.py:476
 msgid ""
 "You wrote an object of type `{obj}` where an integer was expected.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:425
+#: runtime_errors\type_error.py:486
 msgid "Perhaps you forgot to convert `{name}` into an integer."
 msgstr ""
 
-#: runtime_errors\type_error.py:431
+#: runtime_errors\type_error.py:492
 msgid ""
 "Did you forget to convert `{names}` into integers?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:434
+#: runtime_errors\type_error.py:495
 msgid "Perhaps you forgot to convert `{names}` into integers."
 msgstr ""
 

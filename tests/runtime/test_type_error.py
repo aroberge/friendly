@@ -440,7 +440,29 @@ def test_type_error15():
     assert not "debug_warning" in result, "Internal error found."
     assert "TypeError: 'tuple' object is not callable" in result
     if friendly_traceback.get_lang() == "en":
-        assert "I suspect that you had an object of this type, a `tuple`," in result
+        assert "you have a missing comma between the object" in result
+
+    try:
+        _ = 3(4 + 4)
+    except Exception as e:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "TypeError: 'int' object is not callable" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Perhaps you forgot a multiplication operator" in result
+
+    try:
+        _ = [1, 2](3 + 4)
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "TypeError: 'list' object is not callable" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Perhaps you meant to use `[]` instead of `()`" in result
+    return result, message
+
 
     try:
         _ = [1, 2](3, 4)
@@ -450,7 +472,7 @@ def test_type_error15():
     result = friendly_traceback.get_output()
     assert "TypeError: 'list' object is not callable" in result
     if friendly_traceback.get_lang() == "en":
-        assert "I suspect that you had an object of this type, a `list`," in result
+        assert "you have a missing comma between the object" in result
     return result, message
 
 
