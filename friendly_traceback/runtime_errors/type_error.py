@@ -342,7 +342,7 @@ def x_is_not_callable(message, frame, tb_data):
     all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
     for obj_name, instance in all_objects:
         if isinstance(instance, obj) or instance == obj:
-            fn_call = tb_data.bad_line.replace(obj_name, "").strip()
+            fn_call = tb_data.bad_line.replace(obj_name, "", 1).strip()
             if fn_call.startswith("(") and fn_call.endswith(")"):
                 break
     else:
