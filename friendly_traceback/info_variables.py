@@ -5,6 +5,7 @@ can be useful for beginners without overwhelming them.
 """
 import ast
 import builtins
+import sys
 
 from . import utils
 from .path_info import path_utils
@@ -385,7 +386,11 @@ def name_has_type_hint(name, frame):
     for scope, scope_dict in scopes:
         if "__annotations__" in scope_dict and name in scope_dict["__annotations__"]:
             hint = scope_dict["__annotations__"][name]
-            if isinstance(hint, str):
+            if (
+                isinstance(hint, str)
+                and sys.version_info.major == 3
+                and sys.version_info.minor < 10
+            ):
                 hint = f"'{hint}'"
             return type_hint_found_in_scope.format(name=name, scope=scope, hint=hint)
 
