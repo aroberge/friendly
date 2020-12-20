@@ -1,7 +1,8 @@
 """Getting specific information for AttributeError"""
+import builtins
+import re
 import sys
 
-import re
 
 from ..my_gettext import current_lang
 from ..utils import get_similar_words, list_to_string
@@ -126,6 +127,25 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
     """Attempts to find if object attribute might have been misspelled"""
     _ = current_lang.translate
     cause = hint = None
+
+    if obj_type == "builtin_function_or_method":
+        obj_name = tb_data.bad_line.replace("." + attribute, "")
+        # Confirm we have the right one
+        if obj_name in dir(builtins):
+            cause = _(
+                "`{obj_name}` is a function. Perhaps you meant to write\n"
+                "`{obj_name}({attribute})`\n"
+            ).format(obj_name=obj_name, attribute=attribute)
+            hint = _("Did you mean `{obj_name}({attribute})`?\n").format(
+                obj_name=obj_name, attribute=attribute
+            )
+            return cause, hint
+        else:
+            cause = _(
+                "`{obj_name}` is a Python built-in function or method\n"
+                "which does not have an attribute named `{attribute}.`\n"
+            ).format(obj_name=obj_name, attribute=attribute)
+            return cause, hint
 
     obj = info_variables.get_object_from_name(obj_type, frame)
     if obj is None:

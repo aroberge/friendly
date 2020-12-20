@@ -182,6 +182,21 @@ def test_perhaps_comma():
     return result, message
 
 
+def test_builtin_function():
+    text = 'Hello world!'
+    try:
+        len.text
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "'builtin_function_or_method'" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Did you mean `len(text)`" in result
+    return result, message
+
+
 def test_builtin_module_with_no_file():
     """Issue 116"""
     import sys

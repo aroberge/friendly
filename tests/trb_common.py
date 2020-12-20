@@ -65,6 +65,14 @@ all_imports = {
         "test_attribute_error",
         "test_perhaps_comma",
     ),
+    "AttributeError - builtin function with no attribute": (
+        "test_attribute_error",
+        "test_builtin_function",
+    ),
+    "AttributeError - builtin module with no file": (
+        "test_attribute_error",
+        "test_builtin_module_with_no_file",
+    ),
     "FileNotFoundError": ("test_file_not_found_error", "test_file_not_found_error"),
     "ImportError": ("test_import_error", "test_import_error"),
     "KeyError": ("test_key_error", "test_key_error"),
