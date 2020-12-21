@@ -108,6 +108,13 @@ def _type_error(value, frame, tb_data):
     return type_error.get_cause(value, frame, tb_data)
 
 
+@register("ValueError")
+def _value_error(value, frame, tb_data):
+    from .runtime_errors import value_error
+
+    return value_error.get_cause(value, frame, tb_data)
+
+
 @register("UnboundLocalError")
 def _unbound_local_error(value, frame, tb_data):
     from .runtime_errors import unbound_local_error

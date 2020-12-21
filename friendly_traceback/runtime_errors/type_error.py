@@ -1,4 +1,4 @@
-"""analyze_type_error.py
+"""type_error.py
 
 Collection of functions useful in parsing TypeError messages and
 providing a more detailed explanation.
@@ -11,6 +11,7 @@ from .. import utils
 from .. import info_variables
 
 
+convert_type = info_variables.convert_type
 MESSAGES_PARSERS = []
 
 
@@ -37,30 +38,6 @@ def get_cause(value, frame, tb_data):
         if cause is not None:
             return cause, hint
     return unknown, None
-
-
-def convert_type(short_form):
-    _ = current_lang.translate
-    if short_form == "complex":
-        return _("a complex number")
-    elif short_form == "dict":
-        return _("a dictionary (`dict`)")
-    elif short_form == "float":
-        return _("a number (`float`)")
-    elif short_form == "int":
-        return _("an integer (`int`)")
-    elif short_form == "list":
-        return _("a `list`")
-    elif short_form == "NoneType":
-        return _("a variable equal to `None` (`NoneType`)")
-    elif short_form == "set":
-        return _("a `set`")
-    elif short_form == "str":
-        return _("a string (`str`)")
-    elif short_form == "tuple":
-        return _("a `tuple`")
-    else:
-        return short_form
 
 
 @add_message_parser

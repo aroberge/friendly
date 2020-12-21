@@ -24,6 +24,32 @@ INDENT = "        "
 MAX_LENGTH = 65
 
 
+def convert_type(short_form):
+    _ = current_lang.translate
+    if short_form == "complex":
+        return _("a complex number")
+    elif short_form == "dict":
+        return _("a dictionary (`dict`)")
+    elif short_form == "float":
+        return _("a number (`float`)")
+    elif short_form == "int":
+        return _("an integer (`int`)")
+    elif short_form == "list":
+        return _("a `list`")
+    elif short_form == "NoneType":
+        return _("a variable equal to `None` (`NoneType`)")
+    elif short_form == "set":
+        return _("a `set`")
+    elif short_form == "str":
+        return _("a string (`str`)")
+    elif short_form == "tuple":
+        return _("a `tuple`")
+    elif short_form == "an_unknown_type":
+        return _("an unknown type")
+    else:
+        return short_form
+
+
 # pure_eval is primarily designed to find "interesting" expressions,
 # which do not include literals. However, when trying to determine
 # the cause of an object, we sometimes might want to find literals
