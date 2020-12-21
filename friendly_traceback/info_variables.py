@@ -147,7 +147,7 @@ def get_all_objects(line, frame):
 
     dotted_names = get_dotted_names(line)
     for name in dotted_names:
-        try:
+        try:  # TODO: see if pure_eval could not be used instead of eval
             obj = eval(name, frame.f_locals)
             objects["locals"].append((name, repr(obj), obj))
             objects["name, obj"].append((name, obj))
@@ -164,7 +164,13 @@ def get_all_objects(line, frame):
 
 
 def get_dotted_names(line):
-    """Retrieve dotted names, i.e. something like A.x or A.x.y, etc."""
+    """Retrieve dotted names, i.e. something like A.x or A.x.y, etc.
+
+    In principle, pure_eval used above should be able to retrieve dotted
+    names. However, if they are used for the first time on a line
+    that raises an exception, pure_eval does not seem to be able
+    to retrieve them.
+    """
     names = []
     prev_token = utils.tokenize_source("3")[0]  # convenient guard
     dot_found = False

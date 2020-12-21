@@ -56,6 +56,6 @@ Python version: {python}
     name=__file__,
 )
 
-print(f"Python version: {platform.python_version()}; ", end="")
+print(f"Python version: {platform.python_version()}; --- markdown format")
 
 trb_common.create_tracebacks(target, intro_text, format="markdown_docs")

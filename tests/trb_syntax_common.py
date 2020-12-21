@@ -145,4 +145,4 @@ def create_tracebacks(target, intro_text, format="pre"):
                     friendly_traceback.explain_traceback()
 
 
-print("Number of cases in trb_syntax_common.py: ", len(all_imports))
+print("    Number of cases in trb_syntax_common.py: ", len(all_imports))
