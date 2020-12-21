@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-20 14:02-0400\n"
+"POT-Creation-Date: 2020-12-21 08:35-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -292,7 +292,43 @@ msgid ""
 "In your program, the key that cannot be found is `{key_name!r}`.\n"
 msgstr ""
 
-#: info_variables.py:370
+#: info_variables.py:30
+msgid "a complex number"
+msgstr ""
+
+#: info_variables.py:32
+msgid "a dictionary (`dict`)"
+msgstr ""
+
+#: info_variables.py:34
+msgid "a number (`float`)"
+msgstr ""
+
+#: info_variables.py:36
+msgid "an integer (`int`)"
+msgstr ""
+
+#: info_variables.py:38
+msgid "a `list`"
+msgstr ""
+
+#: info_variables.py:40
+msgid "a variable equal to `None` (`NoneType`)"
+msgstr ""
+
+#: info_variables.py:42
+msgid "a `set`"
+msgstr ""
+
+#: info_variables.py:44
+msgid "a string (`str`)"
+msgstr ""
+
+#: info_variables.py:46
+msgid "a `tuple`"
+msgstr ""
+
+#: info_variables.py:395
 msgid ""
 "A type hint found for `{name}` in the {scope} scope.\n"
 "Perhaps you had used a colon instead of an equal sign and written\n"
@@ -598,100 +634,64 @@ msgid ""
 "Perhaps you should have written `self.{unknown_name}` instead of `{unknown_name}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:30
+#: runtime_errors\type_error.py:31 runtime_errors\value_error.py:29
 msgid ""
 "I do not recognize this case. Please report it to\n"
 "https://github.com/aroberge/friendly-traceback/issues\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:45
-msgid "a complex number"
-msgstr ""
-
-#: runtime_errors\type_error.py:47
-msgid "a dictionary (`dict`)"
-msgstr ""
-
-#: runtime_errors\type_error.py:49
-msgid "a number (`float`)"
-msgstr ""
-
-#: runtime_errors\type_error.py:51
-msgid "an integer (`int`)"
-msgstr ""
-
-#: runtime_errors\type_error.py:53
-msgid "a `list`"
-msgstr ""
-
-#: runtime_errors\type_error.py:55
-msgid "a variable equal to `None` (`NoneType`)"
-msgstr ""
-
-#: runtime_errors\type_error.py:57
-msgid "a `set`"
-msgstr ""
-
-#: runtime_errors\type_error.py:59
-msgid "a string (`str`)"
-msgstr ""
-
-#: runtime_errors\type_error.py:61
-msgid "a `tuple`"
-msgstr ""
-
-#: runtime_errors\type_error.py:76 runtime_errors\type_error.py:94
+#: runtime_errors\type_error.py:53 runtime_errors\type_error.py:71
 msgid ""
 "You tried to concatenate (add) two different types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:113
+#: runtime_errors\type_error.py:90
 msgid ""
 "You tried to add two incompatible types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:120
+#: runtime_errors\type_error.py:97
 msgid ""
 "You tried to subtract two incompatible types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:127
+#: runtime_errors\type_error.py:104
 msgid ""
 "You tried to multiply two incompatible types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:134
+#: runtime_errors\type_error.py:111
 msgid ""
 "You tried to divide two incompatible types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:141
+#: runtime_errors\type_error.py:118
 msgid ""
 "You tried to perform the bitwise operation {operator}\n"
 "on two incompatible types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:151
+#: runtime_errors\type_error.py:128
 msgid ""
 "You tried to perform the bit shifting operation {operator}\n"
 "on two incompatible types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:161
+#: runtime_errors\type_error.py:138
 msgid ""
 "You tried to exponentiate (raise to a power)\n"
 "using two incompatible types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:169
+#: runtime_errors\type_error.py:146
 msgid ""
 "You tried to use the operator {operator}\n"
 "using two incompatible types of objects:\n"
@@ -700,25 +700,25 @@ msgid ""
 "for multiplication of matrices.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:193
+#: runtime_errors\type_error.py:170
 msgid ""
 "You tried to do an order comparison ({operator})\n"
 "between two incompatible types of objects:\n"
 "{first} and {second}\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:223
+#: runtime_errors\type_error.py:200
 msgid "Perhaps you meant to write `{operator}=` instead of `={operator}`"
 msgstr ""
 
-#: runtime_errors\type_error.py:227
+#: runtime_errors\type_error.py:204
 msgid ""
 "You tried to use the unary operator '{operator}'\n"
 "with the following type of object: {obj}.\n"
 "This operation is not defined for this type of object.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:245
+#: runtime_errors\type_error.py:222
 msgid ""
 "In Python, some objects are known as immutable:\n"
 "once defined, their value cannot be changed.\n"
@@ -726,30 +726,30 @@ msgid ""
 "most likely by using an indexing operation.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:260
+#: runtime_errors\type_error.py:237
 msgid ""
 "In Python 3, exceptions must be derived from BaseException.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:292
+#: runtime_errors\type_error.py:269
 msgid ""
 "You apparently have called the function `{fn_name}` with\n"
 "{nb_given} positional argument(s) while it requires {nb_required}\n"
 "such positional argument(s).\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:298
+#: runtime_errors\type_error.py:275
 msgid ""
 "Perhaps you forgot `self` when defining `{fn_name}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:314
+#: runtime_errors\type_error.py:291
 msgid ""
 "You apparently have called the function '{fn_name}' with\n"
 "fewer positional arguments than it requires ({nb_required} missing).\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:333
+#: runtime_errors\type_error.py:310
 msgid ""
 "Python indicates that you have an object of type `{obj_type}`,\n"
 "followed by something surrounded by parentheses, `(...)`,\n"
@@ -758,7 +758,7 @@ msgid ""
 "or you forgot a comma before `(...)`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:351
+#: runtime_errors\type_error.py:328
 msgid ""
 "Because of the surrounding parenthesis, `{fn_call}` \n"
 "is interpreted by Python as indicating a function call for \n"
@@ -767,7 +767,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:364
+#: runtime_errors\type_error.py:341
 msgid ""
 "However, `{fn_call}` is a `tuple`.\n"
 "Either the object `{obj_name}` was meant to be a function\n"
@@ -776,24 +776,24 @@ msgid ""
 "`{obj_name}, {fn_call}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:371
+#: runtime_errors\type_error.py:348
 msgid ""
 "Did you forget a comma between `{obj_name}` and `{fn_call}`?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:377
+#: runtime_errors\type_error.py:354
 msgid ""
 "However, `{obj_name}` is a sequence.\n"
 "Perhaps you meant to use `[]` instead of `()` and write\n"
 "`{obj_name}[{slice}]`\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:382
+#: runtime_errors\type_error.py:359
 msgid ""
 "Did you mean `{obj_name}[{slice}]`?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:393
+#: runtime_errors\type_error.py:370
 msgid ""
 "However, both `{obj_name}` and `{fn_call}` are numbers.\n"
 "Perhaps you forgot a multiplication operator, `*`,\n"
@@ -801,52 +801,52 @@ msgid ""
 "."
 msgstr ""
 
-#: runtime_errors\type_error.py:398
+#: runtime_errors\type_error.py:375
 msgid ""
 "Did you mean `{obj_name} * {fn_call}`?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:411
+#: runtime_errors\type_error.py:388
 msgid ""
 "You can only multiply sequences, such as list, tuples,\n"
 " strings, etc., by integers.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:430 runtime_errors\type_error.py:483
+#: runtime_errors\type_error.py:407 runtime_errors\type_error.py:460
 msgid ""
 "Did you forget to convert `{name}` into an integer?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:433
+#: runtime_errors\type_error.py:410
 msgid ""
 "Perhaps you forgot to convert `{name}` into an integer.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:437
+#: runtime_errors\type_error.py:414
 msgid ""
 "Did you forget to convert `{name1}` and `{name2}` into integers?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:440
+#: runtime_errors\type_error.py:417
 msgid ""
 "Perhaps you forgot to convert `{name1}` and `{name2}` into integers.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:476
+#: runtime_errors\type_error.py:453
 msgid ""
 "You wrote an object of type `{obj}` where an integer was expected.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:486
+#: runtime_errors\type_error.py:463
 msgid "Perhaps you forgot to convert `{name}` into an integer."
 msgstr ""
 
-#: runtime_errors\type_error.py:492
+#: runtime_errors\type_error.py:469
 msgid ""
 "Did you forget to convert `{names}` into integers?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:495
+#: runtime_errors\type_error.py:472
 msgid "Perhaps you forgot to convert `{names}` into integers."
 msgstr ""
 
@@ -888,6 +888,36 @@ msgstr ""
 
 #: runtime_errors\unbound_local_error.py:89
 msgid "The similar name `{name}` was found in the local scope. "
+msgstr ""
+
+#: runtime_errors\value_error.py:43
+msgid ""
+"Unpacking is a convenient way to assign a name,\n"
+"to each item of an iterable.\n"
+msgstr ""
+
+#: runtime_errors\value_error.py:90 runtime_errors\value_error.py:99
+msgid ""
+"In this instance, there are more names ({nb_names})\n"
+"than {length}, the length of the iterable.\n"
+msgstr ""
+
+#: runtime_errors\value_error.py:105
+msgid ""
+"In this instance, there are more names ({nb_names})\n"
+"than the length of the iterable, {iter_type} of length {length}.\n"
+msgstr ""
+
+#: runtime_errors\value_error.py:124 runtime_errors\value_error.py:134
+msgid ""
+"In this instance, there are fewer names ({nb_names})\n"
+"than the length of the iterable.\n"
+msgstr ""
+
+#: runtime_errors\value_error.py:140
+msgid ""
+"In this instance, there are fewer names ({nb_names})\n"
+"than the length of the iterable, {iter_type} of length {length}.\n"
 msgstr ""
 
 #: syntax_errors\analyze_syntax.py:35

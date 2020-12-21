@@ -169,6 +169,14 @@ all_imports = {
         "test_unbound_local_error",
         "test_unbound_local_error_missing_nonlocal",
     ),
+    "ValueError - 1: not enough to unpack": (
+        "test_value_error",
+        "test_not_enough_values_to_unpack",
+    ),
+    "ValueError - 2: too many to unpack": (
+        "test_value_error",
+        "test_too_many_values_to_unpack",
+    ),
     "Unknown exception": ("test_unknown_error", "test_function_unknown_error"),
     "ZeroDivisionError - 1": ("test_zero_division_error", "test_zero_division_error"),
     "ZeroDivisionError - 2": ("test_zero_division_error", "test_zero_division_error2"),

@@ -44,8 +44,6 @@ def convert_type(short_form):
         return _("a string (`str`)")
     elif short_form == "tuple":
         return _("a `tuple`")
-    elif short_form == "an_unknown_type":
-        return _("an unknown type")
     else:
         return short_form
 

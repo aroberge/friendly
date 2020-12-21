@@ -46,6 +46,69 @@ def _unpacking():
     )
 
 
+def get_iterable(code, frame):
+    """gets an iterable object and its type as a string."""
+    try:
+        obj = eval(code, frame.f_globals, frame.f_locals)
+    except Exception:
+        return None, None
+
+    if isinstance(obj, dict):
+        iterable = "dict"
+    elif isinstance(obj, list):
+        iterable = "list"
+    elif isinstance(obj, set):
+        iterable = "set"
+    elif isinstance(obj, str):
+        iterable = "str"
+    elif isinstance(obj, tuple):
+        iterable = "tuple"
+    else:
+        iterable = None
+    return obj, iterable
+
+
+@add_message_parser
+def not_enough_values_to_unpack(message, frame, tb_data):
+    _ = current_lang.translate
+    cause = hint = None
+    pattern1 = re.compile(r"not enough values to unpack \(expected (\d+), got (\d+)\)")
+    match1 = re.search(pattern1, message)
+    pattern2 = re.compile(
+        r"not enough values to unpack \(expected at least (\d+), got (\d+)\)"
+    )
+    match2 = re.search(pattern2, message)
+    if match1 is None and match2 is None:
+        return cause, hint
+
+    match = match1 if match2 is None else match2
+
+    nb_names = match.group(1)
+    length = match.group(2)
+
+    if tb_data.bad_line.count("=") != 1:
+        cause = _unpacking() + _(
+            "In this instance, there are more names ({nb_names})\n"
+            "than {length}, the length of the iterable.\n"
+        ).format(nb_names=nb_names)
+        return cause, hint
+
+    _lhs, rhs = tb_data.bad_line.split("=")
+    obj, iterable = get_iterable(rhs, frame)
+    if obj is None or iterable is None:
+        cause = _unpacking() + _(
+            "In this instance, there are more names ({nb_names})\n"
+            "than {length}, the length of the iterable.\n"
+        ).format(nb_names=nb_names)
+        return cause, hint
+
+    cause = _unpacking() + _(
+        "In this instance, there are more names ({nb_names})\n"
+        "than the length of the iterable, {iter_type} of length {length}.\n"
+    ).format(nb_names=nb_names, iter_type=convert_type(iterable), length=length)
+    return cause, hint
+
+
 @add_message_parser
 def too_many_values_to_unpack(message, frame, tb_data):
     _ = current_lang.translate
@@ -59,37 +122,23 @@ def too_many_values_to_unpack(message, frame, tb_data):
 
     if tb_data.bad_line.count("=") != 1:
         cause = _unpacking() + _(
-            "In this instance, you have fewer names (`{nb_names}`)\n"
+            "In this instance, there are fewer names ({nb_names})\n"
             "than the length of the iterable.\n"
         ).format(nb_names=nb_names)
         return cause, hint
 
-    lhs, rhs = tb_data.bad_line.split("=")
-    try:
-        rhs = eval(rhs, frame.f_globals, frame.f_locals)
-        length = len(rhs)
-    except Exception:
+    _lhs, rhs = tb_data.bad_line.split("=")
+
+    obj, iterable = get_iterable(rhs, frame)
+    if obj is None or iterable is None or not hasattr(obj, "__len__"):
         cause = _unpacking() + _(
-            "In this instance, you have fewer names (`{nb_names}`)\n"
+            "In this instance, there are fewer names ({nb_names})\n"
             "than the length of the iterable.\n"
         ).format(nb_names=nb_names)
         return cause, hint
-
-    if isinstance(rhs, dict):
-        iterable = "dict"
-    elif isinstance(rhs, list):
-        iterable = "list"
-    elif isinstance(rhs, set):
-        iterable = "set"
-    elif isinstance(rhs, str):
-        iterable = "str"
-    elif isinstance(rhs, tuple):
-        iterable = "tuple"
-    else:
-        iterable = "an_unknown_type"
 
     cause = _unpacking() + _(
-        "In this instance, you have fewer names (`{nb_names}`)\n"
-        "than the length of the iterable, {iter_type} of length `{length}`.\n"
-    ).format(nb_names=nb_names, iter_type=convert_type(iterable), length=length)
+        "In this instance, there are fewer names ({nb_names})\n"
+        "than the length of the iterable, {iter_type} of length {length}.\n"
+    ).format(nb_names=nb_names, iter_type=convert_type(iterable), length=len(obj))
     return cause, hint
