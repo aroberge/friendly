@@ -145,8 +145,50 @@ def get_all_objects(line, frame):
                 objects["globals"].append((name, repr(obj), obj))
                 objects["name, obj"].append((name, obj))
 
+    dotted_names = get_dotted_names(line)
+    for name in dotted_names:
+        try:
+            obj = eval(name, frame.f_locals)
+            objects["locals"].append((name, repr(obj), obj))
+            objects["name, obj"].append((name, obj))
+        except Exception:
+            try:
+                obj = eval(name, frame.f_globals)
+                objects["globals"].append((name, repr(obj), obj))
+                objects["name, obj"].append((name, obj))
+            except Exception:
+                pass
+
     objects["nonlocals"] = get_nonlocal_objects(frame)
     return objects
+
+
+def get_dotted_names(line):
+    """Retrieve dotted names, i.e. something like A.x or A.x.y, etc."""
+    names = []
+    prev_token = utils.tokenize_source("3")[0]  # convenient guard
+    dot_found = False
+    tokens = utils.tokenize_source(line)
+    for tok in tokens:
+        if tok.string == ".":
+            dot_found = True
+            continue
+        if tok.is_identifier():
+            if prev_token.is_identifier() and dot_found:
+                previous_name = names[-1]
+                names.append(previous_name + "." + tok.string)
+                dot_found = False
+                continue
+            names.append(tok.string)
+        prev_token = tok
+        dot_found = False
+
+    # remove duplicate and names without "."
+    dotted_names = []
+    for name in names:
+        if name not in dotted_names and "." in name:
+            dotted_names.append(name)
+    return dotted_names
 
 
 def get_nonlocal_objects(frame):
