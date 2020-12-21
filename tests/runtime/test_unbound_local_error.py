@@ -20,7 +20,7 @@ def outer_missing_nonlocal():
     inner()
 
 
-def test_unbound_local_error_missing_global():
+def test_Missing_global():
     """Should raise UnboundLocalError"""
 
     try:
@@ -41,7 +41,7 @@ def test_unbound_local_error_missing_global():
     return result, message
 
 
-def test_unbound_local_error_missing_nonlocal():
+def test_Missing_nonlocal():
     """Should raise UnboundLocalError"""
 
     try:
@@ -63,4 +63,4 @@ def test_unbound_local_error_missing_nonlocal():
 
 
 if __name__ == "__main__":
-    print(test_unbound_local_error_missing_global()[0])
+    print(test_Missing_global()[0])

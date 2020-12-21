@@ -1,7 +1,7 @@
 import friendly_traceback
 
 
-def test_module_not_found_error():
+def test_Standard_library_module():
     try:
         import Tkinter
     except Exception as e:
@@ -16,4 +16,4 @@ def test_module_not_found_error():
 
 
 if __name__ == "__main__":
-    print(test_module_not_found_error()[0])
+    print(test_Standard_library_module()[0])

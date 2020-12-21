@@ -1,7 +1,7 @@
 import friendly_traceback
 
 
-def test_overflow_error():
+def test_Generic():
     try:
         2.0 ** 1600
     except Exception as e:
@@ -19,4 +19,4 @@ def test_overflow_error():
 
 
 if __name__ == "__main__":
-    print(test_overflow_error()[0])
+    print(test_Generic()[0])

@@ -1,7 +1,7 @@
 import friendly_traceback
 
 
-def test_type_error1():
+def test_Can_only_concatenate():
     try:
         a = "a"
         one = 1
@@ -45,7 +45,7 @@ def test_type_error1():
     return result, message
 
 
-def test_type_error2():
+def test_Unsupported_operand_types():
     try:
         one = 1
         none = None
@@ -65,17 +65,13 @@ def test_type_error2():
         two = "two"
         one += two
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for +=:" in result
     if friendly_traceback.get_lang() == "en":
         assert "an integer (`int`) and a string (`str`)" in result
-    return result, message
 
-
-def test_type_error3():
     try:
         a = (1, 2)
         b = [3, 4]
@@ -93,17 +89,13 @@ def test_type_error3():
         b = [3, 4]
         b -= a
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for -=:" in result
     if friendly_traceback.get_lang() == "en":
         assert "a `list` and a `tuple`" in result
-    return result, message
 
-
-def test_type_error4():
     try:
         a = 1j
         b = {2, 3}
@@ -121,17 +113,13 @@ def test_type_error4():
         b = {2, 3}
         b *= a
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for *=:" in result
     if friendly_traceback.get_lang() == "en":
         assert "a `set` and a complex number" in result
-    return result, message
 
-
-def test_type_error5():
     try:
         a = {1: 1, 2: 2}
         b = 3.1416
@@ -173,17 +161,13 @@ def test_type_error5():
         b = 3.1416
         b //= a
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for //=:" in result
     if friendly_traceback.get_lang() == "en":
         assert "an integer (`int`) and a dictionary (`dict`)"
-    return result, message
 
-
-def test_type_error6():
     try:
         a = "a"
         b = 2
@@ -201,17 +185,13 @@ def test_type_error6():
         b = 2
         b &= a
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for &=:" in result
     if friendly_traceback.get_lang() == "en":
         assert "an integer (`int`) and a string (`str`)" in result
-    return result, message
 
-
-def test_type_error7():
     try:
         a = {1: 1, 2: 2}
         b = 3.1416
@@ -229,17 +209,13 @@ def test_type_error7():
         b = 3.1416
         a **= b
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for ** or pow():" in result
     if friendly_traceback.get_lang() == "en":
         assert "You tried to exponentiate (raise to a power)" in result
-    return result, message
 
-
-def test_type_error8():
     try:
         a = "a"
         b = 42
@@ -257,17 +233,13 @@ def test_type_error8():
         b = 42
         a >>= b
     except Exception as e:
-        message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
     assert "TypeError: unsupported operand type(s) for >>=:" in result
     if friendly_traceback.get_lang() == "en":
         assert "You tried to perform the bit shifting operation >>" in result
-    return result, message
 
-
-def test_type_error9():
     try:
         a = "a"
         b = 2
@@ -295,7 +267,7 @@ def test_type_error9():
     return result, message
 
 
-def test_type_error10():
+def test_Comparison_not_supported():
     try:
         a = "a"
         b = 42
@@ -311,7 +283,7 @@ def test_type_error10():
     return result, message
 
 
-def test_type_error11():
+def test_Bad_type_for_unary_operator():
     try:
         a = +"abc"
         print(a)
@@ -364,7 +336,7 @@ def test_type_error11():
     return result, message
 
 
-def test_type_error12():
+def test_Tuple_no_item_assignment():
     a = (1, 2, 3)
     try:
         a[0] = 0
@@ -379,7 +351,7 @@ def test_type_error12():
     return result, message
 
 
-def test_type_error13():
+def test_Too_many_positional_argument():
     def fn(*, b=1):
         pass
 
@@ -413,7 +385,7 @@ def test_type_error13():
     return result, message
 
 
-def test_type_error14():
+def test_Too_few_positional_argument():
     def fn(a, b, c):
         pass
 
@@ -431,7 +403,7 @@ def test_type_error14():
     return result, message
 
 
-def test_type_error15():
+def test_Not_callable():
     try:
         _ = (1, 2)(3, 4)
     except Exception as e:
@@ -486,7 +458,7 @@ def test_type_error15():
     return result, message
 
 
-def test_type_error16():
+def test_Derive_from_BaseException():
     try:
         raise "exception"
     except Exception as e:
@@ -500,7 +472,7 @@ def test_type_error16():
     return result, message
 
 
-def test_type_error17():
+def test_Cannot_multiply_by_non_int():
 
     try:
         "b" * "a"
@@ -572,7 +544,7 @@ def test_type_error17():
     return result, message
 
 
-def test_type_error18():
+def test_Not_an_integer():
     try:
         range([1, 2])
     except Exception as e:
@@ -618,4 +590,4 @@ def test_type_error18():
 
 
 if __name__ == "__main__":
-    print(test_type_error1()[0])
+    print(test_Not_an_integer()[0])

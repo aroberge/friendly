@@ -15,7 +15,7 @@ import friendly_traceback
 # a.b -> a, b ?
 
 
-def test_generic():
+def test_Generic():
     # Generic - no additional explanation
     class A:
         pass
@@ -45,7 +45,7 @@ def test_generic():
     return result, message
 
 
-def test_object_attribute_typo():
+def test_Object_attribute_typo():
     #
     try:
         a = [1, 2, 3]
@@ -61,7 +61,7 @@ def test_object_attribute_typo():
     return result, message
 
 
-def test_use_builtin():
+def test_Use_builtin():
     #
     try:
         a = [1, 2, 3]
@@ -77,7 +77,7 @@ def test_use_builtin():
     return result, message
 
 
-def test_use_synonym():
+def test_Use_synonym():
     #
     try:
         a = [1, 2, 3]
@@ -94,7 +94,7 @@ def test_use_synonym():
 
 
 
-def test_module_attribute_typo():
+def test_Module_attribute_typo():
     import string
 
     try:
@@ -127,7 +127,7 @@ def test_module_attribute_typo():
     return result, message
 
 
-def test_shadow_stdlib_module():
+def test_Shadow_stdlib_module():
     import turtle
 
     try:
@@ -146,7 +146,7 @@ def test_shadow_stdlib_module():
     return result, message
 
 
-def test_nonetype():
+def test_Nonetype():
     a = None
     try:
         a.b
@@ -162,7 +162,7 @@ def test_nonetype():
     return result, message
 
 
-def test_perhaps_comma():
+def test_Perhaps_comma():
     abcd = "hello"
     defg = "world"
 
@@ -182,7 +182,7 @@ def test_perhaps_comma():
     return result, message
 
 
-def test_builtin_function():
+def test_Builtin_function():
     text = 'Hello world!'
     try:
         len.text
@@ -197,7 +197,7 @@ def test_builtin_function():
     return result, message
 
 
-def test_builtin_module_with_no_file():
+def test_Builtin_module_with_no_file():
     """Issue 116"""
     import sys
 
@@ -215,4 +215,4 @@ def test_builtin_module_with_no_file():
 
 
 if __name__ == "__main__":
-    print(test_generic()[0])
+    print(test_Generic()[0])

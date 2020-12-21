@@ -1,7 +1,7 @@
 import friendly_traceback
 
 
-def test_index_error1():
+def test_Short_tuple():
     a = (1, 2, 3)
     b = [1, 2, 3]
     try:
@@ -15,7 +15,7 @@ def test_index_error1():
     return result, message
 
 
-def test_index_error2():
+def test_Long_list():
     a = list(range(40))
     b = tuple(range(50))
     try:

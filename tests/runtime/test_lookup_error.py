@@ -1,7 +1,7 @@
 import friendly_traceback
 
 
-def test_lookup_error():
+def test_Generic():
     try:
         # LookupError is the base class for KeyError and IndexError.
         # It should normally not be raised by user code,
@@ -20,4 +20,4 @@ def test_lookup_error():
 
 
 if __name__ == "__main__":
-    print(test_lookup_error()[0])
+    print(test_Generic()[0])

@@ -1,7 +1,7 @@
 import friendly_traceback
 
 
-def test_import_error():
+def test_Simple_import_error():
     try:
         from math import Pi
     except Exception as e:
@@ -15,7 +15,7 @@ def test_import_error():
     return result, message
 
 
-def test_circular_import():
+def test_Circular_import():
     try:
         import circular_a
     except Exception as e:
@@ -32,4 +32,4 @@ def test_circular_import():
 
 
 if __name__ == "__main__":
-    print(test_import_error()[0])
+    print(test_Simple_import_error()[0])

@@ -1,7 +1,7 @@
 import friendly_traceback
 
 
-def test_function_recursion_error():
+def test_Generic():
     def a():
         return a()
     try:
@@ -18,4 +18,4 @@ def test_function_recursion_error():
 
 
 if __name__ == "__main__":
-    print(test_function_recursion_error()[0])
+    print(test_Generic()[0])

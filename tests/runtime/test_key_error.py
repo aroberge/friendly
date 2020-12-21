@@ -1,7 +1,7 @@
 import friendly_traceback
 
 
-def test_key_error():
+def test_Generic():
     d = {"a": 1, "b": 2}
     try:
         d["c"]
@@ -17,4 +17,4 @@ def test_key_error():
 
 
 if __name__ == "__main__":
-    print(test_key_error()[0])
+    print(test_Generic()[0])

@@ -1,7 +1,7 @@
 import friendly_traceback
 
 
-def test_file_not_found_error():
+def test_Generic():
     try:
         open("does_not_exist")
     except Exception as e:

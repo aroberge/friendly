@@ -1,7 +1,7 @@
 import friendly_traceback
 
 
-def test_zero_division_error():
+def test_Division_operator():
     try:
         1 / 0
     except Exception as e:
@@ -15,7 +15,7 @@ def test_zero_division_error():
     return result, message
 
 
-def test_zero_division_error2():
+def test_Modulo_operator():
     zero = 0
     try:
         1 % zero
@@ -31,6 +31,5 @@ def test_zero_division_error2():
 
 
 if __name__ == "__main__":
-    print(test_zero_division_error()[0])
-    print("-" * 60)
-    print(test_zero_division_error2()[0])
+    print(test_Divison_operator()[0])
+

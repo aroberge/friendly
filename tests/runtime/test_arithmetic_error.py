@@ -1,7 +1,7 @@
 import friendly_traceback
 
 
-def test_arithmetic_error():
+def test_Generic():
     try:
         # I am not aware of any way in which this error is raised directly
         # Usually, a subclass such as ZeroDivisionError, etc., would
@@ -19,4 +19,4 @@ def test_arithmetic_error():
 
 
 if __name__ == "__main__":
-    print(test_arithmetic_error()[0])
+    print(test_Generic()[0])

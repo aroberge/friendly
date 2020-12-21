@@ -1,7 +1,7 @@
 import friendly_traceback
 
 
-def test_not_enough_values_to_unpack():
+def test_Not_enough_values_to_unpack():
     d = (1,)
     try:
         a, b, *c = d
@@ -29,7 +29,7 @@ def test_not_enough_values_to_unpack():
     return result, message
 
 
-def test_too_many_values_to_unpack():
+def test_Too_many_values_to_unpack():
     c = [1, 2, 3]
     try:
         a, b = c
@@ -45,4 +45,4 @@ def test_too_many_values_to_unpack():
 
 
 if __name__ == "__main__":
-    print(test_too_many_values_to_unpack()[0])
+    print(test_Too_many_values_to_unpack()[0])
