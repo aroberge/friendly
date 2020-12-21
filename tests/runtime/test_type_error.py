@@ -453,6 +453,28 @@ def test_type_error15():
         assert "Perhaps you forgot a multiplication operator" in result
 
     try:
+        _ = [1, 2](3, 4)
+    except Exception as e:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "TypeError: 'list' object is not callable" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "you have a missing comma between the object" in result
+
+    # Test with dotted name
+    class A:
+        a_list = [1, 2, 3]
+    try:
+        b = A()
+        b.a_list(3)
+    except Exception as e:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "TypeError: 'list' object is not callable" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "b.a_list[3]" in result
+
+    try:
         _ = [1, 2](3 + 4)
     except Exception as e:
         message = str(e)
@@ -461,18 +483,6 @@ def test_type_error15():
     assert "TypeError: 'list' object is not callable" in result
     if friendly_traceback.get_lang() == "en":
         assert "Perhaps you meant to use `[]` instead of `()`" in result
-    return result, message
-
-
-    try:
-        _ = [1, 2](3, 4)
-    except Exception as e:
-        message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
-    assert "TypeError: 'list' object is not callable" in result
-    if friendly_traceback.get_lang() == "en":
-        assert "you have a missing comma between the object" in result
     return result, message
 
 
