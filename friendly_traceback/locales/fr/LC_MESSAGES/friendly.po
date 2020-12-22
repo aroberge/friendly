@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-22 09:06-0400\n"
-"PO-Revision-Date: 2020-12-22 09:08-0400\n"
+"POT-Creation-Date: 2020-12-22 10:52-0400\n"
+"PO-Revision-Date: 2020-12-22 10:55-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -117,7 +117,7 @@ msgstr ""
 msgid "More lines not shown."
 msgstr "Plus de lignes non affichées."
 
-#: core.py:691
+#: core.py:696
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
@@ -127,11 +127,11 @@ msgstr ""
 "        vous devez utiliser la console 'Friendly' et non pas une \n"
 "        console Python régulière.\n"
 
-#: core.py:697
+#: core.py:702
 msgid "Problem: source of '{filename}' is not available\n"
 msgstr "Problème : la source de '{filename}' n'est pas disponible.\n"
 
-#: core.py:715
+#: core.py:720
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -1578,12 +1578,20 @@ msgid ""
 "Python indicates that the error is caused by `{second}` written just after "
 "`{first}`.\n"
 "Perhaps you forgot a comma or an operator, like `+`, `*`, `in`, etc., "
-"between `{first}` and `{second}`."
+"between `{first}` and `{second}`.\n"
 msgstr ""
 "Python indique que l’erreur est causée par `{second}` écrit tout juste après "
 "`{first}`.\n"
 "Peut-être avez-vous oublié une virgule ou un opérateur, comme `+`, `*`, "
-"`in`, etc., entre `{first}` et `{second}`."
+"`in`, etc., entre `{first}` et `{second}`.\n"
+
+#: syntax_errors\line_analyzer.py:579
+msgid ""
+"Or perhaps you forgot that you cannot have spaces\n"
+"in variable names.\n"
+msgstr ""
+"Ou peut-être avez-vous oublié que vous ne pouvez pas\n"
+"avoir d'espaces dans des noms variables.\n"
 
 #: syntax_errors\message_analyzer.py:116
 msgid "You cannot assign a value to `{keyword}`."
@@ -1710,12 +1718,12 @@ msgstr "nom_de_variable"
 
 #: syntax_errors\message_analyzer.py:273
 msgid ""
-" Perhaps you meant to write:\n"
+"Perhaps you meant to write:\n"
 "\n"
 "    {name} = {literal}\n"
 "\n"
 msgstr ""
-"  Peut-être que vous vouliez plutôt écrire :\n"
+"Peut-être que vous vouliez plutôt écrire :\n"
 "\n"
 "    {name} = {literal}\n"
 "\n"
@@ -2102,7 +2110,7 @@ msgstr ""
 "et s'attendait à plus de contenu.\n"
 "\n"
 
-#: syntax_errors\message_analyzer.py:793 syntax_errors\source_analyzer.py:84
+#: syntax_errors\message_analyzer.py:793 syntax_errors\source_analyzer.py:99
 msgid "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'a pas de symbole ouvrant qui "
@@ -2195,7 +2203,7 @@ msgstr ""
 "Maintenant, `print` est une fonction; vous devez utiliser des parenthèses "
 "pour l'invoquer.\n"
 
-#: syntax_errors\source_analyzer.py:108
+#: syntax_errors\source_analyzer.py:123
 msgid ""
 "The closing {bracket} on line {close_lineno} does not match the opening "
 "{open_bracket} on line {open_lineno}.\n"
@@ -2203,7 +2211,7 @@ msgstr ""
 "Le symbole {bracket} à la ligne {close_lineno} ne correspond pas au symbole "
 "{open_bracket} à la ligne {open_lineno}.\n"
 
-#: syntax_errors\source_analyzer.py:169
+#: syntax_errors\source_analyzer.py:184
 msgid ""
 "It is possible that you used an equal sign `=` instead of a colon `:`\n"
 "to assign values to keys in a dict\n"
@@ -2214,13 +2222,13 @@ msgstr ""
 "pour attribuer des valeurs à une clé d'un dictionnaire\n"
 "avant ou exactement à la position indiquée par --> et ^.\n"
 
-#: syntax_errors\source_analyzer.py:204
+#: syntax_errors\source_analyzer.py:219
 msgid "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'est pas fermé par le symbole "
 "correspondant.\n"
 
-#: syntax_errors\source_analyzer.py:216
+#: syntax_errors\source_analyzer.py:231
 msgid ""
 "It is also possible that you forgot a comma between items in a tuple, \n"
 "or between function arguments, \n"
@@ -2231,7 +2239,7 @@ msgstr ""
 "ou entre les arguments d'une fonction, avant la position indiquée par --> et "
 "^.\n"
 
-#: syntax_errors\source_analyzer.py:223
+#: syntax_errors\source_analyzer.py:238
 msgid ""
 "It is also possible that you forgot a comma between items in a list\n"
 "before the position indicated by --> and ^.\n"
@@ -2240,7 +2248,7 @@ msgstr ""
 "éléments d'une liste\n"
 "avant la position indiquée par --> et ^.\n"
 
-#: syntax_errors\source_analyzer.py:229
+#: syntax_errors\source_analyzer.py:244
 msgid ""
 "It is also possible that you forgot a comma between items in a set or dict\n"
 "before the position indicated by --> and ^.\n"
@@ -2249,27 +2257,27 @@ msgstr ""
 "éléments d'un ensemble (set)\n"
 "ou un dict avant la position indiquée par --> et ^.\n"
 
-#: syntax_errors\source_analyzer.py:250
+#: syntax_errors\source_analyzer.py:265
 msgid "parenthesis `(`"
 msgstr "parenthèse `(`"
 
-#: syntax_errors\source_analyzer.py:252
+#: syntax_errors\source_analyzer.py:267
 msgid "parenthesis `)`"
 msgstr "parenthèse `)`"
 
-#: syntax_errors\source_analyzer.py:254
+#: syntax_errors\source_analyzer.py:269
 msgid "square bracket `[`"
 msgstr "crochet `[`"
 
-#: syntax_errors\source_analyzer.py:256
+#: syntax_errors\source_analyzer.py:271
 msgid "square bracket `]`"
 msgstr "crochet `]`"
 
-#: syntax_errors\source_analyzer.py:258
+#: syntax_errors\source_analyzer.py:273
 msgid "curly bracket `{`"
 msgstr "accolade `{`"
 
-#: syntax_errors\source_analyzer.py:260
+#: syntax_errors\source_analyzer.py:275
 msgid "curly bracket `}`"
 msgstr "accolade `}`"
 

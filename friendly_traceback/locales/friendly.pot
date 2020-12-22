@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-22 09:06-0400\n"
+"POT-Creation-Date: 2020-12-22 10:52-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,19 +94,19 @@ msgstr ""
 msgid "More lines not shown."
 msgstr ""
 
-#: core.py:691
+#: core.py:696
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
 "        regular Python console.\n"
 msgstr ""
 
-#: core.py:697
+#: core.py:702
 msgid ""
 "Problem: source of '{filename}' is not available\n"
 msgstr ""
 
-#: core.py:715
+#: core.py:720
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -1219,7 +1219,13 @@ msgstr ""
 #: syntax_errors\line_analyzer.py:569
 msgid ""
 "Python indicates that the error is caused by `{second}` written just after `{first}`.\n"
-"Perhaps you forgot a comma or an operator, like `+`, `*`, `in`, etc., between `{first}` and `{second}`."
+"Perhaps you forgot a comma or an operator, like `+`, `*`, `in`, etc., between `{first}` and `{second}`.\n"
+msgstr ""
+
+#: syntax_errors\line_analyzer.py:579
+msgid ""
+"Or perhaps you forgot that you cannot have spaces\n"
+"in variable names.\n"
 msgstr ""
 
 #: syntax_errors\message_analyzer.py:116
@@ -1320,7 +1326,7 @@ msgstr ""
 
 #: syntax_errors\message_analyzer.py:273
 msgid ""
-" Perhaps you meant to write:\n"
+"Perhaps you meant to write:\n"
 "\n"
 "    {name} = {literal}\n"
 "\n"
@@ -1587,7 +1593,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:793 syntax_errors\source_analyzer.py:84
+#: syntax_errors\message_analyzer.py:793 syntax_errors\source_analyzer.py:99
 msgid ""
 "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
@@ -1638,63 +1644,63 @@ msgid ""
 "Now, `print` is a function; you need to use parentheses to call it.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:108
+#: syntax_errors\source_analyzer.py:123
 msgid ""
 "The closing {bracket} on line {close_lineno} does not match the opening {open_bracket} on line {open_lineno}.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:169
+#: syntax_errors\source_analyzer.py:184
 msgid ""
 "It is possible that you used an equal sign `=` instead of a colon `:`\n"
 "to assign values to keys in a dict\n"
 "before or at the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:204
+#: syntax_errors\source_analyzer.py:219
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:216
+#: syntax_errors\source_analyzer.py:231
 msgid ""
 "It is also possible that you forgot a comma between items in a tuple, \n"
 "or between function arguments, \n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:223
+#: syntax_errors\source_analyzer.py:238
 msgid ""
 "It is also possible that you forgot a comma between items in a list\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:229
+#: syntax_errors\source_analyzer.py:244
 msgid ""
 "It is also possible that you forgot a comma between items in a set or dict\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:250
+#: syntax_errors\source_analyzer.py:265
 msgid "parenthesis `(`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:252
+#: syntax_errors\source_analyzer.py:267
 msgid "parenthesis `)`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:254
+#: syntax_errors\source_analyzer.py:269
 msgid "square bracket `[`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:256
+#: syntax_errors\source_analyzer.py:271
 msgid "square bracket `]`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:258
+#: syntax_errors\source_analyzer.py:273
 msgid "curly bracket `{`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:260
+#: syntax_errors\source_analyzer.py:275
 msgid "curly bracket `}`"
 msgstr ""
 

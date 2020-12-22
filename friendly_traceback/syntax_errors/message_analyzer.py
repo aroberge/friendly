@@ -271,7 +271,7 @@ def assign_to_literal(message="", line="", **kwargs):
         if len(info) == 2 and name.isidentifier():
             # fmt: off
             suggest = _(
-                " Perhaps you meant to write:\n\n"
+                "Perhaps you meant to write:\n\n"
                 "    {name} = {literal}\n"
                 "\n"
             ).format(literal=literal, name=name)

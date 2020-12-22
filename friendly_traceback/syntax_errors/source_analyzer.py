@@ -25,6 +25,23 @@ from friendly_traceback import utils
 from friendly_traceback.friendly_exception import FriendlyException
 
 
+def count_char(tokens, char):
+    """Counts how many times a given character appears in a list of tokens"""
+    return sum(1 for token in tokens if token == char)
+
+
+def no_unclosed_brackets(tokens):
+    """Returns True if the number of opening bracket of types (, [, and {,
+    match their closing counterpart.
+    """
+
+    return (
+        (count_char(tokens, "(") == count_char(tokens, ")"))
+        and (count_char(tokens, "[") == count_char(tokens, "]"))
+        and (count_char(tokens, "{") == count_char(tokens, "}"))
+    )
+
+
 def scan_source(source_lines=None, linenumber=0, offset=0):
     """Scans the entire source, looking at possible causes of
     SyntaxError: invalid syntax
@@ -207,7 +224,7 @@ def look_for_missing_bracket(
             + _source
         )
 
-        if (
+        if no_unclosed_brackets(source_tokens) and (
             previous_token.is_number()
             or previous_token.is_identifier()
             or previous_token.is_string()

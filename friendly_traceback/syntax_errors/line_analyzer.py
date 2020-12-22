@@ -570,7 +570,16 @@ def missing_comma_or_operator(tokens, offset=None):
                 "Python indicates that the error is caused by "
                 "`{second}` written just after `{first}`.\n"
                 "Perhaps you forgot a comma or an operator, like `+`, `*`, `in`, etc., "
-                "between `{first}` and `{second}`."
+                "between `{first}` and `{second}`.\n"
             ).format(first=first.string, second=second.string)
+
+            if first == tokens[0]:
+                for tok in tokens:
+                    if tok == "=":
+                        cause += _(
+                            "Or perhaps you forgot that you cannot have spaces\n"
+                            "in variable names.\n"
+                        )
+                        break
             return cause, hint
     return cause, hint
