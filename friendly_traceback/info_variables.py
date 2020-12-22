@@ -95,8 +95,11 @@ def get_all_objects(line, frame):
     objects["globals"] = []
     objects["literals"] = []
     objects["name, obj"] = []
-    locals_ = frame.f_locals
-    globals_ = frame.f_globals
+
+    scopes = (
+        ("locals", frame.f_locals),  # always have locals before globals
+        ("globals", frame.f_globals),
+    )
 
     names = set([])
     try:
@@ -105,22 +108,16 @@ def get_all_objects(line, frame):
         atok = None
 
     if atok is not None:
-        for nodes, obj in Evaluator(locals_).interesting_expressions_grouped(atok.tree):
-            name = atok.get_text(nodes[0])
-            if name in names:
-                continue
-            names.add(name)
-            objects["locals"].append((name, repr(obj), obj))
-            objects["name, obj"].append((name, obj))
-        for nodes, obj in Evaluator(globals_).interesting_expressions_grouped(
-            atok.tree
-        ):
-            name = atok.get_text(nodes[0])
-            if name in names:
-                continue
-            names.add(name)
-            objects["globals"].append((name, repr(obj), obj))
-            objects["name, obj"].append((name, obj))
+        for scope, scope_dict in scopes:
+            for nodes, obj in Evaluator(scope_dict).interesting_expressions_grouped(
+                atok.tree
+            ):
+                name = atok.get_text(nodes[0])
+                if name in names:
+                    continue
+                names.add(name)
+                objects[scope].append((name, repr(obj), obj))
+                objects["name, obj"].append((name, obj))
 
         Evaluator.literal_expressions_grouped = literal_expressions_grouped
         for nodes, obj in Evaluator({}).literal_expressions_grouped(atok.tree):
@@ -134,27 +131,19 @@ def get_all_objects(line, frame):
             name = tok.string
             if name in names:
                 continue
-            if name in locals_:
-                names.add(name)
-                obj = locals_[name]
-                objects["locals"].append((name, repr(obj), obj))
-                objects["name, obj"].append((name, obj))
-            elif name in globals_:
-                names.add(name)
-                obj = globals_[name]
-                objects["globals"].append((name, repr(obj), obj))
-                objects["name, obj"].append((name, obj))
+            for scope, scope_dict in scopes:
+                if name in scope_dict:
+                    names.add(name)
+                    obj = scope_dict[name]
+                    objects[scope].append((name, repr(obj), obj))
+                    objects["name, obj"].append((name, obj))
 
     dotted_names = get_dotted_names(line)
     for name in dotted_names:
-        try:  # TODO: see if pure_eval could not be used instead of eval
-            obj = eval(name, frame.f_locals)
-            objects["locals"].append((name, repr(obj), obj))
-            objects["name, obj"].append((name, obj))
-        except Exception:
-            try:
-                obj = eval(name, frame.f_globals)
-                objects["globals"].append((name, repr(obj), obj))
+        for scope, scope_dict in scopes:
+            try:  # TODO: see if pure_eval could not be used instead of eval
+                obj = eval(name, scope_dict)
+                objects[scope].append((name, repr(obj), obj))
                 objects["name, obj"].append((name, obj))
             except Exception:
                 pass
@@ -166,10 +155,9 @@ def get_all_objects(line, frame):
 def get_dotted_names(line):
     """Retrieve dotted names, i.e. something like A.x or A.x.y, etc.
 
-    In principle, pure_eval used above should be able to retrieve dotted
-    names. However, if they are used for the first time on a line
-    that raises an exception, pure_eval does not seem to be able
-    to retrieve them.
+    In principle, pure_eval/ASTTokens used above should be able to
+    retrieve dotted names. However, I have not (yet) been able to do so
+    without this hack.
     """
     names = []
     prev_token = utils.tokenize_source("3")[0]  # convenient guard
@@ -458,12 +446,13 @@ def name_has_type_hint(name, frame):
     for scope, scope_dict in scopes:
         if "__annotations__" in scope_dict and name in scope_dict["__annotations__"]:
             hint = scope_dict["__annotations__"][name]
+            # For Python 3.10+, all type hints are strings
             if (
                 isinstance(hint, str)
                 and sys.version_info.major == 3
                 and sys.version_info.minor < 10
             ):
-                hint = f"'{hint}'"
+                hint = repr(hint)
             return type_hint_found_in_scope.format(name=name, scope=scope, hint=hint)
 
     return ""
