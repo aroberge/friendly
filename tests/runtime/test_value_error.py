@@ -5,7 +5,7 @@ def test_Not_enough_values_to_unpack():
     d = (1,)
     try:
         a, b, *c = d
-    except Exception as e:
+    except Exception:
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
@@ -14,6 +14,14 @@ def test_Not_enough_values_to_unpack():
     )
     if friendly_traceback.get_lang() == "en":
         assert "a `tuple` of length 1" in result
+
+    try:
+        for x, y, z in enumerate(range(3)):
+            pass
+    except Exception:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert "ValueError: not enough values to unpack (expected 3, got 2)" in result
 
     d = "ab"
     try:
