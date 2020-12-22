@@ -569,7 +569,7 @@ def missing_comma_or_operator(tokens, offset=None):
             cause = _(
                 "Python indicates that the error is caused by "
                 "`{second}` written just after `{first}`.\n"
-                "Perhaps you forgot a comma or an operator, like `+`, `*`, etc., "
+                "Perhaps you forgot a comma or an operator, like `+`, `*`, `in`, etc., "
                 "between `{first}` and `{second}`."
             ).format(first=first.string, second=second.string)
             return cause, hint

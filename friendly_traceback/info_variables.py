@@ -94,6 +94,7 @@ def get_all_objects(line, frame):
     objects["locals"] = []
     objects["globals"] = []
     objects["literals"] = []
+    objects["builtins"] = []
     objects["name, obj"] = []
 
     scopes = (
@@ -136,6 +137,12 @@ def get_all_objects(line, frame):
                     names.add(name)
                     obj = scope_dict[name]
                     objects[scope].append((name, repr(obj), obj))
+                    objects["name, obj"].append((name, obj))
+                    break
+            else:
+                if name in dir(builtins):
+                    obj = getattr(builtins, name)
+                    objects["builtins"].append((name, repr(obj), obj))
                     objects["name, obj"].append((name, obj))
 
     dotted_names = get_dotted_names(line)
@@ -281,6 +288,10 @@ def get_var_info(line, frame):
 
     for name, value, obj in objects["globals"]:
         result = format_var_info(name, value, obj, "globals")
+        names_info.append(result)
+
+    for name, value, obj in objects["builtins"]:
+        result = format_var_info(name, value, obj)
         names_info.append(result)
 
     if names_info:

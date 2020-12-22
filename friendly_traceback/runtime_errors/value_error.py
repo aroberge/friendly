@@ -90,7 +90,7 @@ def not_enough_values_to_unpack(message, frame, tb_data):
         cause = _unpacking() + _(
             "In this instance, there are more names ({nb_names})\n"
             "than {length}, the length of the iterable.\n"
-        ).format(nb_names=nb_names)
+        ).format(nb_names=nb_names, length=length)
         return cause, hint
 
     _lhs, rhs = tb_data.bad_line.split("=")
@@ -99,7 +99,7 @@ def not_enough_values_to_unpack(message, frame, tb_data):
         cause = _unpacking() + _(
             "In this instance, there are more names ({nb_names})\n"
             "than {length}, the length of the iterable.\n"
-        ).format(nb_names=nb_names)
+        ).format(nb_names=nb_names, length=length)
         return cause, hint
 
     cause = _unpacking() + _(
