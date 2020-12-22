@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-21 08:35-0400\n"
-"PO-Revision-Date: 2020-12-21 08:36-0400\n"
+"POT-Creation-Date: 2020-12-22 07:35-0400\n"
+"PO-Revision-Date: 2020-12-22 07:38-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -444,7 +444,7 @@ msgstr "une chaîne de caractères (`str`)"
 msgid "a `tuple`"
 msgstr "un `tuple`"
 
-#: info_variables.py:395
+#: info_variables.py:442
 msgid ""
 "A type hint found for `{name}` in the {scope} scope.\n"
 "Perhaps you had used a colon instead of an equal sign and written\n"
@@ -837,7 +837,7 @@ msgstr ""
 "différents:\n"
 "{first} et {second}\n"
 
-#: runtime_errors\type_error.py:90
+#: runtime_errors\type_error.py:93
 msgid ""
 "You tried to add two incompatible types of objects:\n"
 "{first} and {second}\n"
@@ -845,7 +845,7 @@ msgstr ""
 "Vous avez essayé d’additionner deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: runtime_errors\type_error.py:97
+#: runtime_errors\type_error.py:100
 msgid ""
 "You tried to subtract two incompatible types of objects:\n"
 "{first} and {second}\n"
@@ -853,7 +853,7 @@ msgstr ""
 "Vous avez tenté de soustraire deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: runtime_errors\type_error.py:104
+#: runtime_errors\type_error.py:107
 msgid ""
 "You tried to multiply two incompatible types of objects:\n"
 "{first} and {second}\n"
@@ -861,7 +861,7 @@ msgstr ""
 "Vous avez essayé de multiplier deux types d’objets différents:\n"
 "{first} et {second}\n"
 
-#: runtime_errors\type_error.py:111
+#: runtime_errors\type_error.py:114
 msgid ""
 "You tried to divide two incompatible types of objects:\n"
 "{first} and {second}\n"
@@ -869,7 +869,7 @@ msgstr ""
 "Vous avez essayé de diviser deux types d’objets différents:\n"
 "{first} et {second}\n"
 
-#: runtime_errors\type_error.py:118
+#: runtime_errors\type_error.py:121
 msgid ""
 "You tried to perform the bitwise operation {operator}\n"
 "on two incompatible types of objects:\n"
@@ -879,7 +879,21 @@ msgstr ""
 "sur deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: runtime_errors\type_error.py:128
+#: runtime_errors\type_error.py:138
+msgid "Did you mean `{line}`?\n"
+msgstr "Vouliez-vous dire `{line}` ?\n"
+
+#: runtime_errors\type_error.py:139
+msgid "Outside of Python, `^` is often used to indicate exponentiation.\n"
+msgstr ""
+"Ailleurs que dans Python, `^` est souvent utilisé pour indiquer "
+"l’exponentiation.\n"
+
+#: runtime_errors\type_error.py:142
+msgid "Perhaps you meant `{line}`.\n"
+msgstr "Peut-être que vous vouliez plutôt `{line}`.\n"
+
+#: runtime_errors\type_error.py:145
 msgid ""
 "You tried to perform the bit shifting operation {operator}\n"
 "on two incompatible types of objects:\n"
@@ -889,7 +903,7 @@ msgstr ""
 "sur deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: runtime_errors\type_error.py:138
+#: runtime_errors\type_error.py:155
 msgid ""
 "You tried to exponentiate (raise to a power)\n"
 "using two incompatible types of objects:\n"
@@ -899,7 +913,7 @@ msgstr ""
 "en utilisant deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: runtime_errors\type_error.py:146
+#: runtime_errors\type_error.py:163
 msgid ""
 "You tried to use the operator {operator}\n"
 "using two incompatible types of objects:\n"
@@ -913,7 +927,7 @@ msgstr ""
 "Cet opérateur est normalement utilisé uniquement\n"
 "pour la multiplication des matrices.\n"
 
-#: runtime_errors\type_error.py:170
+#: runtime_errors\type_error.py:187
 msgid ""
 "You tried to do an order comparison ({operator})\n"
 "between two incompatible types of objects:\n"
@@ -923,13 +937,13 @@ msgstr ""
 "deux types d’objets incompatibles:\n"
 "{first} et {second}\n"
 
-#: runtime_errors\type_error.py:200
+#: runtime_errors\type_error.py:217
 msgid "Perhaps you meant to write `{operator}=` instead of `={operator}`"
 msgstr ""
 "Peut-être que vous vouliez plutôt écrire `{operator}=` au lieu de "
 "`={operator}`"
 
-#: runtime_errors\type_error.py:204
+#: runtime_errors\type_error.py:221
 msgid ""
 "You tried to use the unary operator '{operator}'\n"
 "with the following type of object: {obj}.\n"
@@ -939,7 +953,7 @@ msgstr ""
 "avec le type d’objet suivant: {obj}.\n"
 "Cette opération n’est pas définie pour ce type d’objet.\n"
 
-#: runtime_errors\type_error.py:222
+#: runtime_errors\type_error.py:239
 msgid ""
 "In Python, some objects are known as immutable:\n"
 "once defined, their value cannot be changed.\n"
@@ -951,12 +965,12 @@ msgstr ""
 "Vous avez essayé de modifier une partie d’un tel objet immuable: {obj},\n"
 "probablement en utilisant une opération d’indexation.\n"
 
-#: runtime_errors\type_error.py:237
+#: runtime_errors\type_error.py:254
 msgid "In Python 3, exceptions must be derived from BaseException.\n"
 msgstr ""
 "Dans Python 3, les exceptions doivent être dérivées de BaseException.\n"
 
-#: runtime_errors\type_error.py:269
+#: runtime_errors\type_error.py:286
 msgid ""
 "You apparently have called the function `{fn_name}` with\n"
 "{nb_given} positional argument(s) while it requires {nb_required}\n"
@@ -965,12 +979,12 @@ msgstr ""
 "Vous avez apparemment invoqué la fonction `{fn_name}` avec\n"
 "{nb_given} arguments positionnels alors qu'elle en requiert {nb_required}.\n"
 
-#: runtime_errors\type_error.py:275
+#: runtime_errors\type_error.py:292
 msgid "Perhaps you forgot `self` when defining `{fn_name}`.\n"
 msgstr ""
 "Peut-être avez-vous oublié `self` lors de la définition de `{fn_name}`.\n"
 
-#: runtime_errors\type_error.py:291
+#: runtime_errors\type_error.py:308
 msgid ""
 "You apparently have called the function '{fn_name}' with\n"
 "fewer positional arguments than it requires ({nb_required} missing).\n"
@@ -978,7 +992,7 @@ msgstr ""
 "Vous avez apparemment invoqué la fonction '{fn_name}' avec\n"
 "moins d'arguments positionnels qu'il n'en faut ({nb_required} manquent).\n"
 
-#: runtime_errors\type_error.py:310
+#: runtime_errors\type_error.py:327
 msgid ""
 "Python indicates that you have an object of type `{obj_type}`,\n"
 "followed by something surrounded by parentheses, `(...)`,\n"
@@ -992,7 +1006,7 @@ msgstr ""
 "Soit que l’objet du type `{obj_type}` était censé être une fonction,\n"
 "ou soit que vous avez oublié une virgule avant `(...)`.\n"
 
-#: runtime_errors\type_error.py:328
+#: runtime_errors\type_error.py:345
 msgid ""
 "Because of the surrounding parenthesis, `{fn_call}` \n"
 "is interpreted by Python as indicating a function call for \n"
@@ -1006,7 +1020,7 @@ msgstr ""
 "ne pouvant pas être invoqué.\n"
 "\n"
 
-#: runtime_errors\type_error.py:341
+#: runtime_errors\type_error.py:358
 msgid ""
 "However, `{fn_call}` is a `tuple`.\n"
 "Either the object `{obj_name}` was meant to be a function\n"
@@ -1020,11 +1034,11 @@ msgstr ""
 "et le tuple `{fn_call}` et auriez dû écrire\n"
 "`{obj_name}, {fn_call}`.\n"
 
-#: runtime_errors\type_error.py:348
+#: runtime_errors\type_error.py:365
 msgid "Did you forget a comma between `{obj_name}` and `{fn_call}`?\n"
 msgstr "Avez-vous oublié une virgule entre `{obj_name}` et `{fn_call}` ?\n"
 
-#: runtime_errors\type_error.py:354
+#: runtime_errors\type_error.py:371
 msgid ""
 "However, `{obj_name}` is a sequence.\n"
 "Perhaps you meant to use `[]` instead of `()` and write\n"
@@ -1034,11 +1048,11 @@ msgstr ""
 "Peut-être que vous vouliez utiliser `[]` au lieu de `()` et écrire\n"
 "`{obj_name}[{slice}]`\n"
 
-#: runtime_errors\type_error.py:359
+#: runtime_errors\type_error.py:376
 msgid "Did you mean `{obj_name}[{slice}]`?\n"
 msgstr "Vouliez-vous dire `{obj_name}[{slice}]` ?\n"
 
-#: runtime_errors\type_error.py:370
+#: runtime_errors\type_error.py:387
 msgid ""
 "However, both `{obj_name}` and `{fn_call}` are numbers.\n"
 "Perhaps you forgot a multiplication operator, `*`,\n"
@@ -1050,11 +1064,11 @@ msgstr ""
 "et auriez dû écrire `{obj_name} * {fn_call}`\n"
 "."
 
-#: runtime_errors\type_error.py:375
+#: runtime_errors\type_error.py:392
 msgid "Did you mean `{obj_name} * {fn_call}`?\n"
 msgstr "Vouliez-vous dire `{obj_name} * {fn_call}` ?\n"
 
-#: runtime_errors\type_error.py:388
+#: runtime_errors\type_error.py:405
 msgid ""
 "You can only multiply sequences, such as list, tuples,\n"
 " strings, etc., by integers.\n"
@@ -1062,37 +1076,37 @@ msgstr ""
 "Vous ne pouvez multiplier les séquences, telles que\n"
 "les listes, les tuples, les chaînes, etc., que par des entiers.\n"
 
-#: runtime_errors\type_error.py:407 runtime_errors\type_error.py:460
+#: runtime_errors\type_error.py:424 runtime_errors\type_error.py:477
 msgid "Did you forget to convert `{name}` into an integer?\n"
 msgstr "Avez-vous oublié de convertir `{name}` en un entier ?\n"
 
-#: runtime_errors\type_error.py:410
+#: runtime_errors\type_error.py:427
 msgid "Perhaps you forgot to convert `{name}` into an integer.\n"
 msgstr "Peut-être avez-vous oublié de convertir `{name}` en un entier.\n"
 
-#: runtime_errors\type_error.py:414
+#: runtime_errors\type_error.py:431
 msgid "Did you forget to convert `{name1}` and `{name2}` into integers?\n"
 msgstr "Avez-vous oublié de convertir `{name1}` et `{name2}` en entiers ?\n"
 
-#: runtime_errors\type_error.py:417
+#: runtime_errors\type_error.py:434
 msgid "Perhaps you forgot to convert `{name1}` and `{name2}` into integers.\n"
 msgstr ""
 "Peut-être avez-vous oublié de convertir `{name1}` et `{name2}` en entiers.\n"
 
-#: runtime_errors\type_error.py:453
+#: runtime_errors\type_error.py:470
 msgid "You wrote an object of type `{obj}` where an integer was expected.\n"
 msgstr ""
 "Vous avez écrit un objet de type `{obj}` là où un entier était attendu.\n"
 
-#: runtime_errors\type_error.py:463
+#: runtime_errors\type_error.py:480
 msgid "Perhaps you forgot to convert `{name}` into an integer."
 msgstr "Peut-être avez-vous oublié de convertir `{name}` en un entier."
 
-#: runtime_errors\type_error.py:469
+#: runtime_errors\type_error.py:486
 msgid "Did you forget to convert `{names}` into integers?\n"
 msgstr "Avez-vous oublié de convertir `{names}` en entiers ?\n"
 
-#: runtime_errors\type_error.py:472
+#: runtime_errors\type_error.py:489
 msgid "Perhaps you forgot to convert `{names}` into integers."
 msgstr "Peut-être avez-vous oublié de convertir `{names}` en entiers."
 
@@ -1555,13 +1569,13 @@ msgstr "Avez-vous oublié quelque chose entre `{first}` et `{second}` ?\n"
 msgid ""
 "Python indicates that the error is caused by `{second}` written just after "
 "`{first}`.\n"
-"Perhaps you forgot a comma or an operator, like `+`, `*`, etc., between "
-"`{first}` and `{second}`."
+"Perhaps you forgot a comma or an operator, like `+`, `*`, `in`, etc., "
+"between `{first}` and `{second}`."
 msgstr ""
 "Python indique que l’erreur est causée par `{second}` écrit tout juste après "
 "`{first}`.\n"
-"Peut-être avez-vous oublié une virgule ou un opérateur, comme '+', '*', "
-"etc., entre `{first}` et `{second}`."
+"Peut-être avez-vous oublié une virgule ou un opérateur, comme `+`, `*`, "
+"`in`, etc., entre `{first}` et `{second}`."
 
 #: syntax_errors\message_analyzer.py:116
 msgid "You cannot assign a value to `{keyword}`."

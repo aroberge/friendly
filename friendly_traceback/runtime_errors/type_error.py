@@ -76,7 +76,7 @@ def parse_must_be_str(message, *args):
 
 
 @add_message_parser
-def parse_unsupported_operand_type(message, *args):
+def parse_unsupported_operand_type(message, frame, tb_data):
     _ = current_lang.translate
     cause = hint = None
     # example: unsupported operand type(s) for +: 'int' and 'str'
@@ -84,76 +84,93 @@ def parse_unsupported_operand_type(message, *args):
         r"unsupported operand type\(s\) for (.+): [\'\"](\w+)[\'\"] and [\'\"](\w+)[\'\"]"
     )
     match = re.search(pattern, message)
-    if match is not None:
-        operator = match.group(1)
-        if operator in ["+", "+="]:
-            cause = _(
-                "You tried to add two incompatible types of objects:\n"
-                "{first} and {second}\n"
-            ).format(
-                first=convert_type(match.group(2)), second=convert_type(match.group(3))
-            )
-        elif operator in ["-", "-="]:
-            cause = _(
-                "You tried to subtract two incompatible types of objects:\n"
-                "{first} and {second}\n"
-            ).format(
-                first=convert_type(match.group(2)), second=convert_type(match.group(3))
-            )
-        elif operator in ["*", "*="]:
-            cause = _(
-                "You tried to multiply two incompatible types of objects:\n"
-                "{first} and {second}\n"
-            ).format(
-                first=convert_type(match.group(2)), second=convert_type(match.group(3))
-            )
-        elif operator in ["/", "//", "/=", "//="]:
-            cause = _(
-                "You tried to divide two incompatible types of objects:\n"
-                "{first} and {second}\n"
-            ).format(
-                first=convert_type(match.group(2)), second=convert_type(match.group(3))
-            )
-        elif operator in ["&", "|", "^", "&=", "|", "^="]:
-            cause = _(
-                "You tried to perform the bitwise operation {operator}\n"
-                "on two incompatible types of objects:\n"
-                "{first} and {second}\n"
-            ).format(
-                operator=operator,
-                first=convert_type(match.group(2)),
-                second=convert_type(match.group(3)),
-            )
-        elif operator in [">>", "<<", ">>=", "<<="]:
-            cause = _(
-                "You tried to perform the bit shifting operation {operator}\n"
-                "on two incompatible types of objects:\n"
-                "{first} and {second}\n"
-            ).format(
-                operator=operator,
-                first=convert_type(match.group(2)),
-                second=convert_type(match.group(3)),
-            )
-        elif operator == "** or pow()":
-            cause = _(
-                "You tried to exponentiate (raise to a power)\n"
-                "using two incompatible types of objects:\n"
-                "{first} and {second}\n"
-            ).format(
-                first=convert_type(match.group(2)), second=convert_type(match.group(3))
-            )
-        elif operator in ["@", "@="]:
-            cause = _(
-                "You tried to use the operator {operator}\n"
-                "using two incompatible types of objects:\n"
-                "{first} and {second}.\n"
-                "This operator is normally used only\n"
-                "for multiplication of matrices.\n"
-            ).format(
-                operator=operator,
-                first=convert_type(match.group(2)),
-                second=convert_type(match.group(3)),
-            )
+    if match is None:
+        return cause, hint
+
+    all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
+    operator = match.group(1)
+    if operator in ["+", "+="]:
+        cause = _(
+            "You tried to add two incompatible types of objects:\n"
+            "{first} and {second}\n"
+        ).format(
+            first=convert_type(match.group(2)), second=convert_type(match.group(3))
+        )
+    elif operator in ["-", "-="]:
+        cause = _(
+            "You tried to subtract two incompatible types of objects:\n"
+            "{first} and {second}\n"
+        ).format(
+            first=convert_type(match.group(2)), second=convert_type(match.group(3))
+        )
+    elif operator in ["*", "*="]:
+        cause = _(
+            "You tried to multiply two incompatible types of objects:\n"
+            "{first} and {second}\n"
+        ).format(
+            first=convert_type(match.group(2)), second=convert_type(match.group(3))
+        )
+    elif operator in ["/", "//", "/=", "//="]:
+        cause = _(
+            "You tried to divide two incompatible types of objects:\n"
+            "{first} and {second}\n"
+        ).format(
+            first=convert_type(match.group(2)), second=convert_type(match.group(3))
+        )
+    elif operator in ["&", "|", "^", "&=", "|", "^="]:
+        cause = _(
+            "You tried to perform the bitwise operation {operator}\n"
+            "on two incompatible types of objects:\n"
+            "{first} and {second}\n"
+        ).format(
+            operator=operator,
+            first=convert_type(match.group(2)),
+            second=convert_type(match.group(3)),
+        )
+        if "^" in operator:
+            can_exponentiate = True
+            for name, obj in all_objects:
+                if not hasattr(obj, "__pow__"):
+                    can_exponentiate = False
+                    break
+            if can_exponentiate:
+                line = tb_data.bad_line.replace("^", "**").strip()
+                hint = _("Did you mean `{line}`?\n").format(line=line)
+                cause += _(
+                    "Outside of Python, `^` is often used to indicate exponentiation.\n"
+                )
+                cause += _("Perhaps you meant `{line}`.\n").format(line=line)
+
+    elif operator in [">>", "<<", ">>=", "<<="]:
+        cause = _(
+            "You tried to perform the bit shifting operation {operator}\n"
+            "on two incompatible types of objects:\n"
+            "{first} and {second}\n"
+        ).format(
+            operator=operator,
+            first=convert_type(match.group(2)),
+            second=convert_type(match.group(3)),
+        )
+    elif operator == "** or pow()":
+        cause = _(
+            "You tried to exponentiate (raise to a power)\n"
+            "using two incompatible types of objects:\n"
+            "{first} and {second}\n"
+        ).format(
+            first=convert_type(match.group(2)), second=convert_type(match.group(3))
+        )
+    elif operator in ["@", "@="]:
+        cause = _(
+            "You tried to use the operator {operator}\n"
+            "using two incompatible types of objects:\n"
+            "{first} and {second}.\n"
+            "This operator is normally used only\n"
+            "for multiplication of matrices.\n"
+        ).format(
+            operator=operator,
+            first=convert_type(match.group(2)),
+            second=convert_type(match.group(3)),
+        )
     return cause, hint
 
 

@@ -217,6 +217,30 @@ def test_Unsupported_operand_types():
         assert "You tried to exponentiate (raise to a power)" in result
 
     try:
+        a = 3.0
+        b = 42
+        result = a ^ b
+    except Exception as e:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "TypeError: unsupported operand type(s) for ^:" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Did you mean `a ** b`" in result
+
+    try:
+        a = 3.0
+        b = 42
+        a ^= b
+    except Exception as e:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "TypeError: unsupported operand type(s) for ^=:" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Did you mean `a **= b`" in result
+
+    try:
         a = "a"
         b = 42
         result = a >> b
