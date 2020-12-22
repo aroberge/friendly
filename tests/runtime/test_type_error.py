@@ -372,6 +372,7 @@ def test_Tuple_no_item_assignment():
     assert "TypeError: 'tuple' object does not support item assignment" in result
     if friendly_traceback.get_lang() == "en":
         assert "In Python, some objects are known as immutable:" in result
+        assert "Perhaps you meant to use a list" in result
     return result, message
 
 

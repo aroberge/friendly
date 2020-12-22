@@ -117,7 +117,7 @@ def parse_unsupported_operand_type(message, frame, tb_data):
         ).format(
             first=convert_type(match.group(2)), second=convert_type(match.group(3))
         )
-    elif operator in ["&", "|", "^", "&=", "|", "^="]:
+    elif operator in ["&", "|", "^", "&=", "|=", "^="]:
         cause = _(
             "You tried to perform the bitwise operation {operator}\n"
             "on two incompatible types of objects:\n"
@@ -236,12 +236,16 @@ def does_not_support_item_asssignment(message, *args):
     pattern = re.compile(r"[\'\"](\w+)[\'\"] object does not support item assignment")
     match = re.search(pattern, message)
     if match is not None:
+        name = match.group(1)
         cause = _(
             "In Python, some objects are known as immutable:\n"
             "once defined, their value cannot be changed.\n"
             "You tried change part of such an immutable object: {obj},\n"
             "most likely by using an indexing operation.\n"
-        ).format(obj=convert_type(match.group(1)))
+        ).format(obj=convert_type(name))
+        if name == "tuple" or name == "set":
+            hint = _("Did you mean to use a list?\n")
+            cause += _("Perhaps you meant to use a list instead.\n")
     return cause, hint
 
 
