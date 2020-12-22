@@ -58,7 +58,6 @@ class Cache:
         The contents is stored as a string and returned as a list of lines,
         each line ending with a newline character.
         """
-
         lines = old_getlines(filename, module_globals=module_globals)
         if not lines and filename in self.cache:
             lines = self.cache[filename]
@@ -72,7 +71,7 @@ class Cache:
         the formatted source as well as the content of the 'bad line'.
         """
         lines = self.get_source_lines(filename)
-        if not lines:
+        if not lines or not "".join(lines).strip():
             return "", ""
 
         begin = max(0, linenumber - self.context)

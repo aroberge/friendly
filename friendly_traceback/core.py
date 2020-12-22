@@ -34,6 +34,7 @@ from .my_gettext import current_lang
 from .source_cache import cache, highlight_source
 from .path_info import is_excluded_file, EXCLUDED_FILE_PATH, path_utils
 from .utils import get_significant_tokens
+from .syntax_errors import analyze_syntax
 
 try:
     import executing
@@ -156,7 +157,7 @@ class TracebackData:
                 return
 
         # TODO: for name error, use tokenize to find out the
-        # location of the unkown name
+        # location of the unknown name
 
         # The code below does the following:
         #
@@ -381,13 +382,11 @@ class FriendlyTraceback:
 
         * suggest
         """
-
-        from .syntax_errors import analyze_syntax
-
         _ = current_lang.translate
         etype = self.tb_data.exception_type
         value = self.tb_data.value
-
+        if self.tb_data.filename in ["<unknown>", "<string>"]:
+            return
         try:
             cause, hint = analyze_syntax.set_cause_syntax(etype, value, self.tb_data)
             if cause is not None:
@@ -519,6 +518,12 @@ class FriendlyTraceback:
         _ = current_lang.translate
         value = self.tb_data.value
         filepath = value.filename
+        if filepath in ["<unknown>", "<string>"]:
+            self.info["parsing_error"] = _(
+                "`{filename}` is not a regular Python file whose contents\n"
+                "can be analyzed.\n"
+            ).format(filename=filepath)
+            return
         partial_source, _ignore = cache.get_formatted_partial_source(
             filepath, value.lineno, value.offset
         )
@@ -586,8 +591,8 @@ class FriendlyTraceback:
         python_tb = [line.rstrip() for line in self.tb_data.formatted_tb]
 
         tb = self.create_traceback()
-        if len(tb) > 9:
-            shortened_tb = tb[0:2] + suppressed + tb[-5:]
+        if len(tb) > 10:
+            shortened_tb = tb[0:2] + suppressed + tb[-6:]
         else:
             shortened_tb = tb[:]
 
