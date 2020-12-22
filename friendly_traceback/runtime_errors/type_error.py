@@ -271,6 +271,8 @@ def incorrect_nb_positional_arguments(message, frame, tb_data):
         fn_name = match.group(1)[:-2]
         nb_required = match.group(2)
         nb_given = match.group(3)
+        if ".<locals>." in fn_name:
+            fn_name = fn_name.split(".<locals>.")[1]
         if int(nb_given) - int(nb_required) == 1:
             # Python 3.10
             if "." in fn_name:
@@ -284,9 +286,6 @@ def incorrect_nb_positional_arguments(message, frame, tb_data):
                         missing_self = True
                         break
                     prev_token = token
-
-        if ".<locals>." in fn_name:
-            fn_name = fn_name.split(".<locals>.")[1]
         cause = _(
             "You apparently have called the function `{fn_name}` with\n"
             "{nb_given} positional argument(s) while it requires {nb_required}\n"

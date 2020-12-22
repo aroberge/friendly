@@ -96,6 +96,7 @@ causes = {
     "raise_syntax_error80": "Valid names cannot begin with a number",
     "raise_syntax_error81": "The opening parenthesis `(` on line 5 is not closed",
     "raise_syntax_error82": "Perhaps you forgot a multiplication operator",
+    "raise_syntax_error83": "Did you mean `a_b`",
 }
 
 if sys.version_info < (3, 8):

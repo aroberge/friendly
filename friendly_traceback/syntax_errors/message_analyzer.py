@@ -301,7 +301,7 @@ def assign_to_literal(message="", line="", **kwargs):
                 "    {literal} = {name}\n"
                 "where `{literal}`, on the left-hand side of the equal sign,\n"
                 "is or includes an actual object {of_type}\n"
-                "and is not simply the name of a variable."
+                "and is not simply the name of a variable.\n"
             ).format(literal=literal, name=name, of_type=of_type)
             + suggest
         )
@@ -309,7 +309,7 @@ def assign_to_literal(message="", line="", **kwargs):
 
 
 @add_python_message
-def assign_to_operator(message="", **kwargs):
+def assign_to_operator(message="", line=None, **kwargs):
     _ = current_lang.translate
     cause = hint = None
     if (
@@ -319,9 +319,30 @@ def assign_to_operator(message="", **kwargs):
         cause = _(
             "You wrote an expression that includes some mathematical operations\n"
             "on the left-hand side of the equal sign which should be\n"
-            "only used to assign a value to a variable."
+            "only used to assign a value to a variable.\n"
         )
+        name = could_be_identifier(line)
+        if name:
+            hint = _("Did you mean `{name}`?").format(name=name)
+            cause += _(
+                "Perhaps you meant to write `{name}` instead of `{original}`"
+            ).format(name=name, original=name.replace("_", "-"))
+
     return cause, hint
+
+
+def could_be_identifier(line):
+    try:
+        if "=" in line and "-" in line:
+            lhs, *rhs = line.split("=")
+            if "-" in lhs:
+                lhs = lhs.replace("-", "_").strip()
+                if lhs.isidentifier():
+                    return lhs
+        return False
+    except Exception:
+        print("exception raised")
+        return False
 
 
 @add_python_message
