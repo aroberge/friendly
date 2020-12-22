@@ -323,9 +323,9 @@ def assign_to_operator(message="", line=None, **kwargs):
         )
         name = could_be_identifier(line)
         if name:
-            hint = _("Did you mean `{name}`?").format(name=name)
+            hint = _("Did you mean `{name}`?\n").format(name=name)
             cause += _(
-                "Perhaps you meant to write `{name}` instead of `{original}`"
+                "Perhaps you meant to write `{name}` instead of `{original}`\n"
             ).format(name=name, original=name.replace("_", "-"))
 
     return cause, hint
