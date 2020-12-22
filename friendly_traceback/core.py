@@ -654,6 +654,11 @@ class FriendlyTraceback:
             lines = cache.get_source_lines(filename)
             result.append('  File "{}", line {}'.format(filename, value.lineno))
             _line = value.text
+            if _line is None:
+                try:
+                    _line = lines[value.lineno - 1]
+                except Exception:
+                    pass
             if _line is not None:
                 if filename == "<fstring>" and lines == ["\n"]:
                     # Before Python 3.9, the traceback included a fake
