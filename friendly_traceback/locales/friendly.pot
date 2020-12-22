@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-22 10:52-0400\n"
+"POT-Creation-Date: 2020-12-22 15:11-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -355,7 +355,7 @@ msgstr ""
 
 #: runtime_errors\attribute_error.py:68 runtime_errors\attribute_error.py:109
 #: runtime_errors\attribute_error.py:205 runtime_errors\import_error.py:105
-#: runtime_errors\module_not_found_error.py:46 runtime_errors\name_error.py:54
+#: runtime_errors\module_not_found_error.py:48 runtime_errors\name_error.py:54
 #: runtime_errors\unbound_local_error.py:35
 msgid ""
 "Did you mean `{name}`?\n"
@@ -490,7 +490,7 @@ msgid ""
 msgstr ""
 
 #: runtime_errors\import_error.py:15
-#: runtime_errors\module_not_found_error.py:21 runtime_errors\name_error.py:11
+#: runtime_errors\module_not_found_error.py:17 runtime_errors\name_error.py:11
 #: runtime_errors\unbound_local_error.py:12
 msgid ""
 "No information is known about this exception.\n"
@@ -550,20 +550,70 @@ msgid ""
 "a second time, before Python had completed the first import.\n"
 msgstr ""
 
-#: runtime_errors\module_not_found_error.py:40
+#: runtime_errors\module_not_found_error.py:42
 msgid ""
 "The name of the module that could not be imported is `{name}`.\n"
 msgstr ""
 
-#: runtime_errors\module_not_found_error.py:49
+#: runtime_errors\module_not_found_error.py:51
 msgid ""
 "The following existing modules have names that are similar \n"
 "to the module you tried to import: `{names}`\n"
 msgstr ""
 
-#: runtime_errors\module_not_found_error.py:54
+#: runtime_errors\module_not_found_error.py:56
 msgid ""
 "`{name}` is an existing module that has a similar name.\n"
+msgstr ""
+
+#: runtime_errors\module_not_found_error.py:75
+msgid ""
+"No additional information available since `{name}` cannot be imported.\n"
+msgstr ""
+
+#: runtime_errors\module_not_found_error.py:83
+msgid ""
+"Did you mean `from {name} import {rest}`?\n"
+msgstr ""
+
+#: runtime_errors\module_not_found_error.py:86
+msgid ""
+"`{rest}` is not a separate module but an object that is part of `{name}`.\n"
+msgstr ""
+
+#: runtime_errors\module_not_found_error.py:96
+msgid ""
+"Did you mean `import {name}.{attr}`?\n"
+msgstr ""
+
+#: runtime_errors\module_not_found_error.py:99
+msgid ""
+"Perhaps you meant `import {name}.{attr}`.\n"
+"`{attr}` is a name similar to `{rest}` and is a module that\n"
+"can be imported from `{name}`.\n"
+msgstr ""
+
+#: runtime_errors\module_not_found_error.py:106
+msgid ""
+"Did you mean `from {name} import {attr}`?\n"
+msgstr ""
+
+#: runtime_errors\module_not_found_error.py:109
+msgid ""
+"Perhaps you meant `from {name} import {attr}`.\n"
+"`{attr}` is a name similar to `{rest}` and is an object that\n"
+"can be imported from `{name}`.\n"
+msgstr ""
+
+#: runtime_errors\module_not_found_error.py:116
+msgid ""
+"Other objects with similar names that are part of\n"
+" `{name}` include `{others}`.\n"
+msgstr ""
+
+#: runtime_errors\module_not_found_error.py:121
+msgid ""
+"`{rest}` cannot be imported from `{name}`.\n"
 msgstr ""
 
 #: runtime_errors\name_error.py:36
@@ -1593,7 +1643,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:793 syntax_errors\source_analyzer.py:99
+#: syntax_errors\message_analyzer.py:793 syntax_errors\source_analyzer.py:101
 msgid ""
 "The closing {bracket} on line {linenumber} does not match anything.\n"
 msgstr ""
@@ -1644,63 +1694,63 @@ msgid ""
 "Now, `print` is a function; you need to use parentheses to call it.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:123
+#: syntax_errors\source_analyzer.py:125
 msgid ""
 "The closing {bracket} on line {close_lineno} does not match the opening {open_bracket} on line {open_lineno}.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:184
+#: syntax_errors\source_analyzer.py:186
 msgid ""
 "It is possible that you used an equal sign `=` instead of a colon `:`\n"
 "to assign values to keys in a dict\n"
 "before or at the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:219
+#: syntax_errors\source_analyzer.py:221
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:231
+#: syntax_errors\source_analyzer.py:233
 msgid ""
 "It is also possible that you forgot a comma between items in a tuple, \n"
 "or between function arguments, \n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:238
+#: syntax_errors\source_analyzer.py:240
 msgid ""
 "It is also possible that you forgot a comma between items in a list\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:244
+#: syntax_errors\source_analyzer.py:246
 msgid ""
 "It is also possible that you forgot a comma between items in a set or dict\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:265
+#: syntax_errors\source_analyzer.py:267
 msgid "parenthesis `(`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:267
+#: syntax_errors\source_analyzer.py:269
 msgid "parenthesis `)`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:269
+#: syntax_errors\source_analyzer.py:271
 msgid "square bracket `[`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:271
+#: syntax_errors\source_analyzer.py:273
 msgid "square bracket `]`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:273
+#: syntax_errors\source_analyzer.py:275
 msgid "curly bracket `{`"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:275
+#: syntax_errors\source_analyzer.py:277
 msgid "curly bracket `}`"
 msgstr ""
 

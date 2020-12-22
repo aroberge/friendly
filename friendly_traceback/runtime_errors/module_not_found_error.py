@@ -3,14 +3,9 @@
 import re
 
 from ..my_gettext import current_lang
-from ..utils import get_similar_words
+from ..utils import get_similar_words, list_to_string
 
 from . import stdlib_modules
-
-# TODO: case to consider
-
-#     import os.pathh
-# ModuleNotFoundError: No module named 'os.pathh'; 'os' is not a package
 
 
 def get_cause(value, frame, tb_data):
@@ -29,6 +24,12 @@ def get_cause(value, frame, tb_data):
     match = re.search(pattern, message)
     if match:
         cause, hint = no_module_named(match.group(1))
+
+    pattern = re.compile(r"No module named '(.*)'; '(.*)' is not a package")
+    match = re.search(pattern, message)
+    if match:
+        cause, hint = is_not_a_package(match.group(1), match.group(2))
+
     return cause, hint
 
 
@@ -53,6 +54,71 @@ def no_module_named(name):
     else:
         cause += _("`{name}` is an existing module that has a similar name.\n").format(
             name=similar[0]
+        )
+
+    return cause, hint
+
+
+def is_not_a_package(dotted_path, name):
+    _ = current_lang.translate
+    cause = hint = None
+
+    rest = dotted_path.replace(name + ".", "")
+
+    # This specific exception should not have been raised if name was not a module.
+    # Still, better safe than sorry.
+    try:
+        module = __import__(name)
+    except ImportError:  # This should not happen.
+        # TODO: add this to debug warning
+        cause = _(
+            "No additional information available since `{name}` cannot be imported.\n"
+        ).format(name=name)
+        return cause, hint
+
+    attributes = dir(module)
+
+    if rest in attributes:
+        hint = _("Did you mean `from {name} import {rest}`?\n").format(
+            name=name, rest=rest
+        )
+        cause = _(
+            "`{rest}` is not a separate module but an object that is part of `{name}`.\n"
+        ).format(name=name, rest=rest)
+        return cause, hint
+
+    similar = get_similar_words(rest, attributes)
+    if similar:
+        for attr in similar:
+            obj = getattr(module, attr)
+            if isinstance(obj, type(module)):
+                hint = _("Did you mean `import {name}.{attr}`?\n").format(
+                    name=name, attr=attr
+                )
+                cause = _(
+                    "Perhaps you meant `import {name}.{attr}`.\n"
+                    "`{attr}` is a name similar to `{rest}` and is a module that\n"
+                    "can be imported from `{name}`.\n"
+                ).format(name=name, attr=attr, rest=rest)
+                break
+        else:
+            hint = _("Did you mean `from {name} import {attr}`?\n").format(
+                name=name, attr=attr
+            )
+            cause = _(
+                "Perhaps you meant `from {name} import {attr}`.\n"
+                "`{attr}` is a name similar to `{rest}` and is an object that\n"
+                "can be imported from `{name}`.\n"
+            ).format(name=name, attr=attr, rest=rest)
+
+        if len(similar) > 1:
+            cause += _(
+                "Other objects with similar names that are part of\n"
+                " `{name}` include `{others}`.\n"
+            ).format(name=name, others=list_to_string(similar[1:]))
+    else:
+        cause = _("`{rest}` cannot be imported from `{name}`.\n").format(
+            rest=rest, name=name
         )
 
     return cause, hint
