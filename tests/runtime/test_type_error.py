@@ -461,6 +461,7 @@ def test_Not_callable():
     # Test with dotted name
     class A:
         a_list = [1, 2, 3]
+
     try:
         b = A()
         b.a_list(3)
@@ -507,10 +508,7 @@ def test_Cannot_multiply_by_non_int():
     assert not "debug_warning" in result, "Internal error found."
     assert "TypeError: can't multiply sequence by non-int of type 'str'" in result
     if friendly_traceback.get_lang() == "en":
-        assert (
-            'You can only multiply sequences, such as'
-            in result
-        )
+        assert "You can only multiply sequences, such as" in result
 
     try:
         "3" * "a"
@@ -520,10 +518,7 @@ def test_Cannot_multiply_by_non_int():
     assert not "debug_warning" in result, "Internal error found."
     assert "TypeError: can't multiply sequence by non-int of type 'str'" in result
     if friendly_traceback.get_lang() == "en":
-        assert (
-            'Did you forget to convert `"3"` into an integer?'
-            in result
-        )
+        assert 'Did you forget to convert `"3"` into an integer?' in result
 
     a = b = c = "2"
     try:
@@ -534,10 +529,7 @@ def test_Cannot_multiply_by_non_int():
     assert not "debug_warning" in result, "Internal error found."
     assert "TypeError: can't multiply sequence by non-int of type 'str'" in result
     if friendly_traceback.get_lang() == "en":
-        assert (
-            'Did you forget to convert `a` and `b` into integers?'
-            in result
-        )
+        assert "Did you forget to convert `a` and `b` into integers?" in result
 
     a = "abc"
     try:
@@ -548,10 +540,7 @@ def test_Cannot_multiply_by_non_int():
     assert not "debug_warning" in result, "Internal error found."
     assert "TypeError: can't multiply sequence by non-int of type 'str'" in result
     if friendly_traceback.get_lang() == "en":
-        assert (
-            'Did you forget to convert `c` into an integer?'
-            in result
-        )
+        assert "Did you forget to convert `c` into an integer?" in result
 
     try:
         "a" * "2"
@@ -562,10 +551,7 @@ def test_Cannot_multiply_by_non_int():
     assert not "debug_warning" in result, "Internal error found."
     assert "TypeError: can't multiply sequence by non-int of type 'str'" in result
     if friendly_traceback.get_lang() == "en":
-        assert (
-            'Did you forget to convert `"2"` into an integer?'
-            in result
-        )
+        assert 'Did you forget to convert `"2"` into an integer?' in result
     return result, message
 
 
@@ -648,6 +634,23 @@ def test_Indices_must_be_integers_or_slices():
     assert "TypeError: list indices must be integers or slices" in result
     if friendly_traceback.get_lang() == "en":
         assert 'Perhaps you forgot to convert `"2"` into an integer.' in result
+    return result, message
+
+
+def test_Slice_indices_must_be_integers_or_None():
+    try:
+        [1, 2, 3][1.0:2.0]
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert (
+        "TypeError: slice indices must be integers or None "
+        "or have an __index__ method"
+    ) in result
+    if friendly_traceback.get_lang() == "en":
+        assert "When using a slice to extract a range of elements" in result
     return result, message
 
 

@@ -575,3 +575,22 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
             return cause, hint
 
     return cause, hint
+
+
+@add_message_parser
+def slice_indices_must_be_integers_or_None(message, *args):
+    _ = current_lang.translate
+    cause = hint = None
+    if message != (
+        "slice indices must be integers or None or have an __index__ method"
+    ):
+        return cause, hint
+
+    cause = _(
+        "When using a slice to extract a range of elements\n"
+        "from a sequence, that is something like\n"
+        "`[start:stop]` or `[start:stop:step]`\n"
+        "each of `start`, `stop`, `step` must be either an integer, `None`,\n"
+        "or possibly some other object having an `__index__` method.\n"
+    )
+    return cause, hint

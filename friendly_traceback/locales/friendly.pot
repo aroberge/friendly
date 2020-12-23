@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-23 07:21-0400\n"
+"POT-Creation-Date: 2020-12-23 07:37-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -942,6 +942,15 @@ msgid ""
 "must be either an integer or a slice\n"
 "(`start:stop` or `start:stop:step`) \n"
 "and you have used {obj_type} instead.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:589
+msgid ""
+"When using a slice to extract a range of elements\n"
+"from a sequence, that is something like\n"
+"`[start:stop]` or `[start:stop:step]`\n"
+"each of `start`, `stop`, `step` must be either an integer, `None`,\n"
+"or possibly some other object having an `__index__` method.\n"
 msgstr ""
 
 #: runtime_errors\unbound_local_error.py:46
