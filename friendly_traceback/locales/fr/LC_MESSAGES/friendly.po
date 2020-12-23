@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-23 14:31-0400\n"
-"PO-Revision-Date: 2020-12-23 14:33-0400\n"
+"POT-Creation-Date: 2020-12-23 15:07-0400\n"
+"PO-Revision-Date: 2020-12-23 15:09-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -2363,6 +2363,20 @@ msgstr ""
 "Dans le cas où il s’agit d’une erreur dans un vrai programme, s’il vous "
 "plaît\n"
 "songez à réduire le nombre de blocs de code imbriqués.\n"
+
+#: syntax_errors\message_analyzer.py:907
+msgid "Did you forget something after `*`?\n"
+msgstr "Avez-vous oublié d’ajouter quelque chose après `*` ?\n"
+
+#: syntax_errors\message_analyzer.py:909
+msgid ""
+"Assuming you were defining a function, you need\n"
+"to replace `*` by either `*arguments` or\n"
+"by `*, named_argument=value`.\n"
+msgstr ""
+"En supposant que vous définissiez une fonction, vous avez besoin\n"
+"de remplacer `*` soit par `*arguments` ou\n"
+"par `*, argument=valeur`.\n"
 
 #: syntax_errors\source_analyzer.py:125
 msgid ""

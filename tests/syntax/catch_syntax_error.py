@@ -101,6 +101,7 @@ causes = {
     "raise_syntax_error85": "The double star operator",
     "raise_syntax_error86": "You can only use a `return`",
     "raise_syntax_error87": "Seriously",
+    "raise_syntax_error88": "replace `*` by either `*arguments` or ",
 }
 
 if sys.version_info < (3, 8):

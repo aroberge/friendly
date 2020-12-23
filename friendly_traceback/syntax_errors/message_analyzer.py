@@ -896,3 +896,21 @@ def too_many_nested_blocks(message="", **kwargs):
     )
 
     return cause, hint
+
+
+@add_python_message
+def named_arguments_must_follow_bare_star(message="", **kwargs):
+    _ = current_lang.translate
+    cause = hint = None
+    if not message == "named arguments must follow bare *":
+        return cause, hint
+
+    hint = _("Did you forget something after `*`?\n")
+
+    cause = _(
+        "Assuming you were defining a function, you need\n"
+        "to replace `*` by either `*arguments` or\n"
+        "by `*, named_argument=value`.\n"
+    )
+
+    return cause, hint
