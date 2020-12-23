@@ -530,13 +530,13 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
 
     all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)
     for name, obj in all_objects["name, obj"]:
-        if isinstance(obj, container_type):
+        if isinstance(obj, container_type) and tb_data.bad_line.startswith(name):
             container = name
             break
     else:
         return cause, hint
 
-    index = tb_data.bad_line.replace(container, "")
+    index = tb_data.bad_line.replace(container, "", 1)
     if not (index.startswith("[") and index.endswith("]")):
         return cause, hint
 
@@ -552,7 +552,7 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
 
     if isinstance(index, tuple):
         # container[a, b] --> [][a: b]
-        newline = tb_data.bad_line.replace(container, "[]").replace(",", ":")
+        newline = tb_data.bad_line.replace(container, "[]", 1).replace(",", ":")
         try:
             result = [] == eval(newline, frame.f_globals, frame.f_locals)
         except Exception:
@@ -562,10 +562,10 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
             return cause, hint
 
         hint = _("Did you mean `{line}`?\n").format(
-            line=tb_data.bad_line.replace(",", ":")
+            line=container + newline.replace("[]", "", 1)
         )
         cause += "\n" + _("Perhaps you meant `{line}`.\n").format(
-            line=tb_data.bad_line.replace(",", ":")
+            line=container + newline.replace("[]", "", 1)
         )
     elif isinstance(index, index_type):
         names = find_possible_integers(index_type, frame, tb_data.bad_line)

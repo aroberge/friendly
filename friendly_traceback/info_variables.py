@@ -70,7 +70,11 @@ def literal_expressions_grouped(self, root):
             pass
 
     return group_expressions(
-        pair for pair in self.find_expressions(root) if is_literal(*pair)
+        pair
+        for pair in self.find_expressions(root)
+        if (
+            is_literal(*pair) or is_literal(*pair) in [list(), tuple(), dict(), set([])]
+        )
     )
 
 
