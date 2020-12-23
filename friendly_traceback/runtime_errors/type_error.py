@@ -400,6 +400,18 @@ def x_is_not_callable(message, frame, tb_data):
     return cause, hint
 
 
+def forgot_to_convert_name_to_int(name):
+    """Explanations common to many cases about converting a single
+    name to an integer.
+    """
+    _ = current_lang.translate
+    hint = _("Did you forget to convert `{name}` into an integer?\n").format(name=name)
+    additional_cause = _(
+        "Perhaps you forgot to convert `{name}` into an integer.\n"
+    ).format(name=name)
+    return additional_cause, hint
+
+
 @add_message_parser
 def cannot_multiply_by_str(message, frame, tb_data):
     _ = current_lang.translate
@@ -423,13 +435,8 @@ def cannot_multiply_by_str(message, frame, tb_data):
             if not int_vars:  # should not happen, but better be safe
                 return cause, hint
             elif len(int_vars) == 1:
-                name = int_vars[0]
-                hint = _(
-                    "Did you forget to convert `{name}` into an integer?\n"
-                ).format(name=name)
-                cause += _(
-                    "Perhaps you forgot to convert `{name}` into an integer.\n"
-                ).format(name=name)
+                more_cause, hint = forgot_to_convert_name_to_int(int_vars[0])
+                cause += more_cause
             else:
                 hint = _(
                     "Did you forget to convert `{name1}` and `{name2}` into integers?\n"
@@ -476,13 +483,8 @@ def object_cannot_be_interpreted_as_an_integer(message, frame, tb_data):
 
         if names:
             if len(names) == 1:
-                name = names[0]
-                hint = _(
-                    "Did you forget to convert `{name}` into an integer?\n"
-                ).format(name=name)
-                cause += _(
-                    "Perhaps you forgot to convert `{name}` into an integer."
-                ).format(name=name)
+                more_cause, hint = forgot_to_convert_name_to_int(names[0])
+                cause += more_cause
             else:
                 names = [name for name in names]
                 names = ", ".join(names)
@@ -492,5 +494,84 @@ def object_cannot_be_interpreted_as_an_integer(message, frame, tb_data):
                 cause += _(
                     "Perhaps you forgot to convert `{names}` into integers."
                 ).format(names=names)
+
+    return cause, hint
+
+
+@add_message_parser
+def indices_must_be_integers_or_slices(message, frame, tb_data):
+    _ = current_lang.translate
+    cause = hint = None
+    pattern = re.compile(r"(.*) indices must be integers or slices, not (.*)")
+    match = re.search(pattern, message)
+    if match is None:
+        return
+
+    container_type = match.group(1)
+    index_type = match.group(2)
+    cause = _(
+        "In the expression `{line}`\n"
+        "what is included between the square brackets, `[...]`,\n"
+        "must be either an integer or a slice\n"
+        "(`start:stop` or `start:stop:step`) \n"
+        "and you have used {obj_type} instead.\n"
+    ).format(line=tb_data.bad_line, obj_type=convert_type(index_type))
+
+    # To see if we can get more specific info,
+    # we assume we have container[...]
+    # and we look for two cases:
+    # 1. if ... is a tuple, if we replace commas by colons (, --> :)
+    #    do we get a valid expression.
+    # 2. if ... is something of another type that can be converted into an integer
+    try:
+        container_type = eval(container_type, frame.f_globals, frame.f_locals)
+    except Exception:
+        return cause, hint
+
+    all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)
+    for name, obj in all_objects["name, obj"]:
+        if isinstance(obj, container_type):
+            container = name
+            break
+    else:
+        return cause, hint
+
+    index = tb_data.bad_line.replace(container, "")
+    if not (index.startswith("[") and index.endswith("]")):
+        return cause, hint
+
+    index = index[1:-1]
+    try:
+        index = eval(index, frame.f_globals, frame.f_locals)
+        index_type = eval(index_type)
+    except Exception:
+        return cause, hint
+
+    if not isinstance(index, index_type):
+        return cause, hint
+
+    if isinstance(index, tuple):
+        # container[a, b] --> [][a: b]
+        newline = tb_data.bad_line.replace(container, "[]").replace(",", ":")
+        try:
+            result = [] == eval(newline, frame.f_globals, frame.f_locals)
+        except Exception:
+            result = False
+
+        if not result:
+            return cause, hint
+
+        hint = _("Did you mean `{line}`?\n").format(
+            line=tb_data.bad_line.replace(",", ":")
+        )
+        cause += "\n" + _("Perhaps you meant `{line}`.\n").format(
+            line=tb_data.bad_line.replace(",", ":")
+        )
+    elif isinstance(index, index_type):
+        names = find_possible_integers(index_type, frame, tb_data.bad_line)
+        if len(names) == 1:  # This should usually be the case
+            more_cause, hint = forgot_to_convert_name_to_int(names[0])
+            cause += "\n" + more_cause
+            return cause, hint
 
     return cause, hint

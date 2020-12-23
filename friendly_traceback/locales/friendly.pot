@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-22 18:03-0400\n"
+"POT-Creation-Date: 2020-12-23 07:02-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -734,7 +734,7 @@ msgid ""
 "{first} and {second}\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:138
+#: runtime_errors\type_error.py:138 runtime_errors\type_error.py:564
 msgid ""
 "Did you mean `{line}`?\n"
 msgstr ""
@@ -744,7 +744,7 @@ msgid ""
 "Outside of Python, `^` is often used to indicate exponentiation.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:142
+#: runtime_errors\type_error.py:142 runtime_errors\type_error.py:567
 msgid ""
 "Perhaps you meant `{line}`.\n"
 msgstr ""
@@ -890,46 +890,51 @@ msgstr ""
 
 #: runtime_errors\type_error.py:408
 msgid ""
-"You can only multiply sequences, such as list, tuples,\n"
-" strings, etc., by integers.\n"
-msgstr ""
-
-#: runtime_errors\type_error.py:427 runtime_errors\type_error.py:480
-msgid ""
 "Did you forget to convert `{name}` into an integer?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:430
+#: runtime_errors\type_error.py:409
 msgid ""
 "Perhaps you forgot to convert `{name}` into an integer.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:434
+#: runtime_errors\type_error.py:420
+msgid ""
+"You can only multiply sequences, such as list, tuples,\n"
+" strings, etc., by integers.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:441
 msgid ""
 "Did you forget to convert `{name1}` and `{name2}` into integers?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:437
+#: runtime_errors\type_error.py:444
 msgid ""
 "Perhaps you forgot to convert `{name1}` and `{name2}` into integers.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:473
+#: runtime_errors\type_error.py:480
 msgid ""
 "You wrote an object of type `{obj}` where an integer was expected.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:483
-msgid "Perhaps you forgot to convert `{name}` into an integer."
-msgstr ""
-
-#: runtime_errors\type_error.py:489
+#: runtime_errors\type_error.py:491
 msgid ""
 "Did you forget to convert `{names}` into integers?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:492
+#: runtime_errors\type_error.py:494
 msgid "Perhaps you forgot to convert `{names}` into integers."
+msgstr ""
+
+#: runtime_errors\type_error.py:512
+msgid ""
+"In the expression `{line}`\n"
+"what is included between the square brackets, `[...]`,\n"
+"must be either an integer or a slice\n"
+"(`start:stop` or `start:stop:step`) \n"
+"and you have used {obj_type} instead.\n"
 msgstr ""
 
 #: runtime_errors\unbound_local_error.py:46

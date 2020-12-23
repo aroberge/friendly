@@ -614,5 +614,42 @@ def test_Not_an_integer():
     return result, message
 
 
+def test_Indices_must_be_integers_or_slices():
+    a = [1, 2, 3]
+
+    try:
+        a[1, 2]
+    except Exception as e:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "TypeError: list indices must be integers or slices" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Did you mean `a[1: 2]`" in result
+
+    a = (1, 2, 3)
+    try:
+        a[2.0]
+    except Exception as e:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "TypeError: tuple indices must be integers or slices" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Perhaps you forgot to convert `2.0` into an integer." in result
+
+    try:
+        [1, 2, 3]["2"]
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "TypeError: list indices must be integers or slices" in result
+    if friendly_traceback.get_lang() == "en":
+        assert 'Perhaps you forgot to convert `"2"` into an integer.' in result
+    return result, message
+
+
 if __name__ == "__main__":
     print(test_Not_an_integer()[0])
