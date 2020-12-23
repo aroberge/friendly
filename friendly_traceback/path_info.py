@@ -70,6 +70,8 @@ class PathUtil:
         self.cwd = os.getcwd()
 
     def shorten_path(self, path):
+        if path is None:  # can happen in some rare cases
+            return path
         path = path.replace("'", "")  # We might get passed a path repr
         path = os.path.normpath(path)
         path_lower = path.lower()

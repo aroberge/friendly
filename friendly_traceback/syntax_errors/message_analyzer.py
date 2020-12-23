@@ -878,3 +878,21 @@ def return_outside_function(message="", **kwargs):
     cause = _("You can only use a `return` statement inside a function or method.\n")
 
     return cause, hint
+
+
+@add_python_message
+def too_many_nested_blocks(message="", **kwargs):
+    _ = current_lang.translate
+    cause = hint = None
+    if not message == "too many statically nested blocks":
+        return cause, hint
+
+    hint = _("Seriously?\n")
+
+    cause = _(
+        "You cannot be serious!\n\n"
+        "In case this is a mistake in a real program, please\n"
+        "consider reducing the number of nested code blocks.\n"
+    )
+
+    return cause, hint

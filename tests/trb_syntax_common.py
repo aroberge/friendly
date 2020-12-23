@@ -113,6 +113,11 @@ all_imports = {
     "SyntaxError - Valid names cannot begin with a number": "raise_syntax_error80",
     "SyntaxError - unclosed parenthesis - 3": "raise_syntax_error81",
     "SyntaxError - forgot a multiplication operator": "raise_syntax_error82",
+    "SyntaxError - space between names": "raise_syntax_error83",
+    "SyntaxError - can't use star operator": "raise_syntax_error84",
+    "SyntaxError - can't use double star operator": "raise_syntax_error85",
+    "SyntaxError - can't use return outside function": "raise_syntax_error86",
+    "SyntaxError - too many nested blocks": "raise_syntax_error87",
 }
 
 if sys.version_info < (3, 8):

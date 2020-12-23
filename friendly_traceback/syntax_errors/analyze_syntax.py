@@ -101,7 +101,11 @@ def _find_likely_cause(source_lines, linenumber, message, offset, tb_data=None):
     # that we can retrieve when using Python 3.9.
 
     if source_lines and "f-string: invalid syntax" not in message:
-        offending_line = source_lines[linenumber - 1]
+        if linenumber is None:  # can happen in some rare cases
+            offending_line = "\n"
+            source_lines = ["\n"]
+        else:
+            offending_line = source_lines[linenumber - 1]
     else:
         offending_line = tb_data.bad_line
         source_lines = [offending_line]  # create a fake file for analysis

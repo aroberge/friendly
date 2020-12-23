@@ -239,7 +239,7 @@ def pre(info, include="friendly_tb"):
     spacing = {"single": " " * 4, "double": " " * 8, "none": ""}
     result = [""]
     for item in items_to_show:
-        if item in info:
+        if item in info and info[item].strip():
             indentation = spacing[pre_items[item]]
             for line in info[item].split("\n"):
                 result.append(indentation + line)
@@ -322,7 +322,7 @@ def _markdown(info, include, rich=False, docs=False):
         if rich and item == "header":  # Skip it here; handled by session.py
             RICH_HEADER = True
             continue
-        if item in info:
+        if item in info and info[item].strip():
             # With normal markdown formatting, it does not make sense to have a
             # header end with a colon.
             # However, we style headers differently with Rich; see

@@ -385,19 +385,23 @@ class FriendlyTraceback:
         _ = current_lang.translate
         etype = self.tb_data.exception_type
         value = self.tb_data.value
-        if self.tb_data.filename in ["<unknown>", "<string>"]:
+        if self.tb_data.filename == "<unknown>":
             return
         try:
             cause, hint = analyze_syntax.set_cause_syntax(etype, value, self.tb_data)
             if cause is not None:
                 if "invalid syntax" in self.message:
-                    header = _(
-                        "Python's error message (invalid syntax) "
-                        "cannot be used to identify the problem:"
-                    )
+                    if self.tb_data.filename == "<string>":
+                        header = ""
+                    else:
+                        header = _(
+                            "Python's error message (invalid syntax) "
+                            "cannot be used to identify the problem:"
+                        )
                 else:
                     header = _("Likely cause based on the information given by Python:")
-                self.info["cause_header"] = header
+                if header:
+                    self.info["cause_header"] = header
                 self.info["cause"] = cause
                 if hint:
                     self.info["suggest"] = hint
@@ -539,7 +543,7 @@ class FriendlyTraceback:
                 "'{filename}'.\n"
                 "It reached the end of the file and expected more content.\n"
             ).format(filename=path_utils.shorten_path(filepath))
-        else:
+        elif filepath:  # could be None
             self.info["parsing_error"] = _(
                 "Python could not understand the code in the file\n"
                 "'{filename}'\n"

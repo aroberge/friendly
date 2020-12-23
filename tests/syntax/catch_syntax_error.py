@@ -100,6 +100,7 @@ causes = {
     "raise_syntax_error84": "The star operator",
     "raise_syntax_error85": "The double star operator",
     "raise_syntax_error86": "You can only use a `return`",
+    "raise_syntax_error87": "Seriously",
 }
 
 if sys.version_info < (3, 8):
