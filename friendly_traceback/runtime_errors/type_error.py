@@ -594,3 +594,31 @@ def slice_indices_must_be_integers_or_None(message, *args):
         "or possibly some other object having an `__index__` method.\n"
     )
     return cause, hint
+
+
+@add_message_parser
+def unhashable_type(message, *args):
+    _ = current_lang.translate
+    cause = hint = None
+    pattern = re.compile(r"unhashable type: '(.*)'")
+    match = re.search(pattern, message)
+    if match is None:
+        return cause, hint
+
+    cause = _(
+        "Unhashable objects are objects that do not change value\n"
+        "once they are created. Only unhashable objects can be used\n"
+        "as elements of `set` or keys of `dict`.\n"
+    )
+
+    original = match.group(1)
+    replacements = {"list": "tuple", "set": "frozenset"}
+    if original in replacements:
+        cause += _(
+            "Instead of using {original}, consider using {replacement}.\n"
+        ).format(
+            original=convert_type(original),
+            replacement=convert_type(replacements[original]),
+        )
+
+    return cause, hint

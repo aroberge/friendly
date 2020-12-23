@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-23 07:37-0400\n"
-"PO-Revision-Date: 2020-12-23 07:40-0400\n"
+"POT-Creation-Date: 2020-12-23 08:30-0400\n"
+"PO-Revision-Date: 2020-12-23 08:33-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -462,7 +462,11 @@ msgstr "une chaîne de caractères (`str`)"
 msgid "a `tuple`"
 msgstr "un `tuple`"
 
-#: info_variables.py:442
+#: info_variables.py:48
+msgid "a `frozenset`"
+msgstr "un ensemble de type `frozenset`"
+
+#: info_variables.py:448
 msgid ""
 "A type hint found for `{name}` in the {scope} scope.\n"
 "Perhaps you had used a colon instead of an equal sign and written\n"
@@ -1221,6 +1225,21 @@ msgstr ""
 "chacune des variables `start`, `stop`, et `step` doit être soit un entier, "
 "soit `None`,\n"
 "ou possiblement un autre objet ayant une méthode `__index__`.\n"
+
+#: runtime_errors\type_error.py:608
+msgid ""
+"Unhashable objects are objects that do not change value\n"
+"once they are created. Only unhashable objects can be used\n"
+"as elements of `set` or keys of `dict`.\n"
+msgstr ""
+"Les objets non hachables sont des objets qui ne changent pas de valeur\n"
+"une fois qu’ils sont créés. Seuls les objets non hachables peuvent être "
+"utilisés\n"
+"comme éléments de `set` ou des clés de `dict`.\n"
+
+#: runtime_errors\type_error.py:617
+msgid "Instead of using {original}, consider using {replacement}.\n"
+msgstr "Au lieu d’utiliser {original}, envisagez d’utiliser {replacement}.\n"
 
 #: runtime_errors\unbound_local_error.py:46
 msgid ""

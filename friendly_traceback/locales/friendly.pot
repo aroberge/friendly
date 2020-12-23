@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-23 07:37-0400\n"
+"POT-Creation-Date: 2020-12-23 08:30-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -341,7 +341,11 @@ msgstr ""
 msgid "a `tuple`"
 msgstr ""
 
-#: info_variables.py:442
+#: info_variables.py:48
+msgid "a `frozenset`"
+msgstr ""
+
+#: info_variables.py:448
 msgid ""
 "A type hint found for `{name}` in the {scope} scope.\n"
 "Perhaps you had used a colon instead of an equal sign and written\n"
@@ -951,6 +955,18 @@ msgid ""
 "`[start:stop]` or `[start:stop:step]`\n"
 "each of `start`, `stop`, `step` must be either an integer, `None`,\n"
 "or possibly some other object having an `__index__` method.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:608
+msgid ""
+"Unhashable objects are objects that do not change value\n"
+"once they are created. Only unhashable objects can be used\n"
+"as elements of `set` or keys of `dict`.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:617
+msgid ""
+"Instead of using {original}, consider using {replacement}.\n"
 msgstr ""
 
 #: runtime_errors\unbound_local_error.py:46
