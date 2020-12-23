@@ -99,6 +99,7 @@ causes = {
     "raise_syntax_error83": "Did you mean `a_b`",
     "raise_syntax_error84": "The star operator",
     "raise_syntax_error85": "The double star operator",
+    "raise_syntax_error86": "You can only use a `return`",
 }
 
 if sys.version_info < (3, 8):

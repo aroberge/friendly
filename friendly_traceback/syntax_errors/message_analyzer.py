@@ -866,3 +866,15 @@ def cannot_use_starred_expression(message="", **kwargs):
     )
 
     return cause, hint
+
+
+@add_python_message
+def return_outside_function(message="", **kwargs):
+    _ = current_lang.translate
+    cause = hint = None
+    if not message == "'return' outside function":
+        return cause, hint
+
+    cause = _("You can only use a `return` statement inside a function or method.\n")
+
+    return cause, hint

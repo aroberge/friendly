@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-23 10:29-0400\n"
-"PO-Revision-Date: 2020-12-23 10:30-0400\n"
+"POT-Creation-Date: 2020-12-23 13:48-0400\n"
+"PO-Revision-Date: 2020-12-23 13:50-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -2340,6 +2340,12 @@ msgstr ""
 "L’opérateur astérisque `*` est interprété comme signifiant que\n"
 "le déballage itérable doit être utilisé pour attribuer un nom\n"
 "à chaque élément d’un itérable, ce qui n’a pas de sens ici.\n"
+
+#: syntax_errors\message_analyzer.py:878
+msgid "You can only use a `return` statement inside a function or method.\n"
+msgstr ""
+"Vous ne pouvez utiliser un énoncé `return` qu'à l’intérieur d’une fonction "
+"ou d’une méthode.\n"
 
 #: syntax_errors\source_analyzer.py:125
 msgid ""
