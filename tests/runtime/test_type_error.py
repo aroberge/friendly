@@ -662,10 +662,37 @@ def test_Unhachable_type():
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
-    assert ("unhashable type: 'list'") in result
+    assert "unhashable type: 'list'" in result
     if friendly_traceback.get_lang() == "en":
         assert "consider using a `tuple`" in result
     return result, message
+
+
+def test_Object_is_not_subscriptable():
+    try:
+        a = 2[1]
+    except Exception as e:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "TypeError: 'int' object is not subscriptable" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "from `2`, an object of type `int`" in result
+
+    def f():
+        pass
+    try:
+        a = f[1]
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "TypeError: 'function' object is not subscriptable" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Did you mean `f(1)`" in result
+    return result, message
+
 
 
 if __name__ == "__main__":

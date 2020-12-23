@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-23 15:07-0400\n"
-"PO-Revision-Date: 2020-12-23 15:09-0400\n"
+"POT-Creation-Date: 2020-12-23 15:52-0400\n"
+"PO-Revision-Date: 2020-12-23 15:58-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -963,6 +963,7 @@ msgstr ""
 "{first} et {second}\n"
 
 #: runtime_errors\type_error.py:138 runtime_errors\type_error.py:564
+#: runtime_errors\type_error.py:658
 msgid "Did you mean `{line}`?\n"
 msgstr "Vouliez-vous dire `{line}` ?\n"
 
@@ -1240,6 +1241,34 @@ msgstr ""
 #: runtime_errors\type_error.py:617
 msgid "Instead of using {original}, consider using {replacement}.\n"
 msgstr "Au lieu d’utiliser {original}, envisagez d’utiliser {replacement}.\n"
+
+#: runtime_errors\type_error.py:638
+msgid ""
+"Subscriptable objects are typically containers from which\n"
+"you can retrieve item using the notation `[...]`.\n"
+msgstr ""
+"Les objets subscriptibles sont généralement des conteneurs à partir\n"
+"desquels on peut tirer des éléments en utilisant la notation '[...] `.\n"
+
+#: runtime_errors\type_error.py:650
+msgid ""
+"Using this notation, you attempted to retrieve an item\n"
+"from an object of type `{obj_type}` which is not allowed.\n"
+msgstr ""
+"À l’aide de cette notation, vous avez tenté de tirer un élément\n"
+"d’un objet de type `{obj_type}`, ce qui n’est pas permis.\n"
+
+#: runtime_errors\type_error.py:659
+msgid "Perhaps you meant to write `{line}`.\n"
+msgstr "Peut-être que vous vouliez plutôt écrire `{line}`.\n"
+
+#: runtime_errors\type_error.py:662
+msgid ""
+"Using this notation, you attempted to retrieve an item\n"
+"from `{name}`, an object of type `{obj_type}`. This is not allowed.\n"
+msgstr ""
+"À l’aide de cette notation, vous avez tenté de tirer un élément\n"
+"de `{name}`, un objet de type `{obj_type}`. Ceci n’est pas permis.\n"
 
 #: runtime_errors\unbound_local_error.py:46
 msgid ""
@@ -2364,11 +2393,11 @@ msgstr ""
 "plaît\n"
 "songez à réduire le nombre de blocs de code imbriqués.\n"
 
-#: syntax_errors\message_analyzer.py:907
+#: syntax_errors\message_analyzer.py:908
 msgid "Did you forget something after `*`?\n"
 msgstr "Avez-vous oublié d’ajouter quelque chose après `*` ?\n"
 
-#: syntax_errors\message_analyzer.py:909
+#: syntax_errors\message_analyzer.py:910
 msgid ""
 "Assuming you were defining a function, you need\n"
 "to replace `*` by either `*arguments` or\n"

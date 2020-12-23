@@ -622,3 +622,46 @@ def unhashable_type(message, *args):
         )
 
     return cause, hint
+
+
+@add_message_parser
+def object_is_not_subscriptable(message, frame, tb_data):
+    _ = current_lang.translate
+    cause = hint = None
+    pattern = re.compile(r"'(.*)' object is not subscriptable")
+    match = re.search(pattern, message)
+    if match is None:
+        return cause, hint
+
+    obj_type = match.group(1)
+
+    cause = _(
+        "Subscriptable objects are typically containers from which\n"
+        "you can retrieve item using the notation `[...]`.\n"
+    )
+
+    # first, try to identify object
+    all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)
+    for name, obj in all_objects["name, obj"]:
+        truncated = tb_data.bad_line.replace(name, "", 1)
+        if truncated.startswith("[") and truncated.endswith("]"):
+            break
+    else:
+        cause += _(
+            "Using this notation, you attempted to retrieve an item\n"
+            "from an object of type `{obj_type}` which is not allowed.\n"
+        ).format(obj_type=obj_type)
+        return cause, hint
+
+    if callable(obj):
+        line = name + "(" + truncated[1:-1] + ")"
+        hint = _("Did you mean `{line}`?\n").format(line=line)
+        cause += "\n" + _("Perhaps you meant to write `{line}`.\n").format(line=line)
+        return cause, hint
+
+    cause += _(
+        "Using this notation, you attempted to retrieve an item\n"
+        "from `{name}`, an object of type `{obj_type}`. This is not allowed.\n"
+    ).format(obj_type=obj_type, name=name)
+
+    return cause, hint

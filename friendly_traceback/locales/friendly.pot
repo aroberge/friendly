@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-23 15:07-0400\n"
+"POT-Creation-Date: 2020-12-23 15:52-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -746,6 +746,7 @@ msgid ""
 msgstr ""
 
 #: runtime_errors\type_error.py:138 runtime_errors\type_error.py:564
+#: runtime_errors\type_error.py:658
 msgid ""
 "Did you mean `{line}`?\n"
 msgstr ""
@@ -967,6 +968,29 @@ msgstr ""
 #: runtime_errors\type_error.py:617
 msgid ""
 "Instead of using {original}, consider using {replacement}.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:638
+msgid ""
+"Subscriptable objects are typically containers from which\n"
+"you can retrieve item using the notation `[...]`.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:650
+msgid ""
+"Using this notation, you attempted to retrieve an item\n"
+"from an object of type `{obj_type}` which is not allowed.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:659
+msgid ""
+"Perhaps you meant to write `{line}`.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:662
+msgid ""
+"Using this notation, you attempted to retrieve an item\n"
+"from `{name}`, an object of type `{obj_type}`. This is not allowed.\n"
 msgstr ""
 
 #: runtime_errors\unbound_local_error.py:46
@@ -1766,12 +1790,12 @@ msgid ""
 "consider reducing the number of nested code blocks.\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:907
+#: syntax_errors\message_analyzer.py:908
 msgid ""
 "Did you forget something after `*`?\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:909
+#: syntax_errors\message_analyzer.py:910
 msgid ""
 "Assuming you were defining a function, you need\n"
 "to replace `*` by either `*arguments` or\n"
