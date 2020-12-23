@@ -113,7 +113,7 @@ def _find_likely_cause(source_lines, linenumber, message, offset, tb_data=None):
     # is to explain in simpler language what Python means when it
     # raises a particular exception.
 
-    if "invalid syntax" not in message:  # include f-string: invalid syntax
+    if "invalid syntax" not in message:
         cause, hint = message_analyzer.analyze_message(
             message=message,
             line=line,

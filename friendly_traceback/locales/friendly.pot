@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-23 08:30-0400\n"
+"POT-Creation-Date: 2020-12-23 10:29-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1322,6 +1322,12 @@ msgid ""
 "in variable names.\n"
 msgstr ""
 
+#: syntax_errors\line_analyzer.py:593
+msgid ""
+"The double star operator `**` is likely interpreted to mean that\n"
+"dict unpacking is to be used which does not make sense here.\n"
+msgstr ""
+
 #: syntax_errors\message_analyzer.py:116
 msgid "You cannot assign a value to `{keyword}`."
 msgstr ""
@@ -1733,6 +1739,13 @@ msgid ""
 "\n"
 "In older version of Python, `print` was a keyword.\n"
 "Now, `print` is a function; you need to use parentheses to call it.\n"
+msgstr ""
+
+#: syntax_errors\message_analyzer.py:862
+msgid ""
+"The star operator `*` is interpreted to mean that\n"
+"iterable unpacking is to be used to assign a name\n"
+"to each item of an iterable, which does not make sense here.\n"
 msgstr ""
 
 #: syntax_errors\source_analyzer.py:125

@@ -850,3 +850,19 @@ def python2_print(message="", **kwargs):
         "Now, `print` is a function; you need to use parentheses to call it.\n"
     ).format(message=message)
     return cause, hint
+
+
+@add_python_message
+def cannot_use_starred_expression(message="", **kwargs):
+    _ = current_lang.translate
+    cause = hint = None
+    if not message == "can't use starred expression here":
+        return cause, hint
+
+    cause = _(
+        "The star operator `*` is interpreted to mean that\n"
+        "iterable unpacking is to be used to assign a name\n"
+        "to each item of an iterable, which does not make sense here.\n"
+    )
+
+    return cause, hint

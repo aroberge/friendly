@@ -583,3 +583,28 @@ def missing_comma_or_operator(tokens, offset=None):
                         break
             return cause, hint
     return cause, hint
+
+
+@add_line_analyzer
+def invalid_double_star_operator(tokens, offset=None):
+    _ = current_lang.translate
+    cause = hint = None
+
+    possible_cause = _(
+        "The double star operator `**` is likely interpreted to mean that\n"
+        "dict unpacking is to be used which does not make sense here.\n"
+    )
+
+    if tokens[0] == "**":
+        return possible_cause, hint
+
+    if sys.version_info < (3, 8):  # not getting the right info from fstrings
+        for prev_token, token in zip(tokens, tokens[1:]):
+            if prev_token == "(" and token == "**":
+                return possible_cause, hint
+
+    bad_token, index = find_offending_token(tokens, offset)
+    if bad_token == "**":
+        return possible_cause, hint
+
+    return cause, hint
