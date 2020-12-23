@@ -15,8 +15,15 @@ def get_likely_cause(etype, value, frame, tb_data):
     """
     _ = current_lang.translate
     cause = hint = None
-    if etype.__name__ in get_cause:
-        cause, hint = get_cause[etype.__name__](value, frame, tb_data)
+    try:
+        if etype.__name__ in get_cause:
+            cause, hint = get_cause[etype.__name__](value, frame, tb_data)
+    except Exception:
+        cause = _(
+            "Exception raised by Friendly-traceback itself.\n"
+            "Please report this example to\n"
+            "https://github.com/aroberge/friendly-traceback/issues\n"
+        )
     return cause, hint
 
 

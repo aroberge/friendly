@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-23 07:02-0400\n"
-"PO-Revision-Date: 2020-12-23 07:02-0400\n"
+"POT-Creation-Date: 2020-12-23 07:21-0400\n"
+"PO-Revision-Date: 2020-12-23 07:22-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -406,13 +406,23 @@ msgstr ""
 "à l’aide de l’opérateur modulo '%'\n"
 "    `résultat = ma_variable % 0`\n"
 
-#: info_specific.py:53
+#: info_specific.py:22 syntax_errors\analyze_syntax.py:29
+msgid ""
+"Exception raised by Friendly-traceback itself.\n"
+"Please report this example to\n"
+"https://github.com/aroberge/friendly-traceback/issues\n"
+msgstr ""
+"Exception soulevée par Friendly-traceback.\n"
+"Veuillez signaler cet exemple à\n"
+"https://github.com/aroberge/friendly-traceback/issues\n"
+
+#: info_specific.py:60
 msgid ""
 "In your program, the name of the\n"
 "file that cannot be found is `{filename}`.\n"
 msgstr "Dans votre programme, le nom du fichier inconnu est `{filename}`.\n"
 
-#: info_specific.py:75
+#: info_specific.py:82
 msgid "In your program, the key that cannot be found is `{key_name!r}`.\n"
 msgstr "Dans votre programme, la clé inconnue est `{key_name!r}`.\n"
 
@@ -1297,7 +1307,7 @@ msgstr ""
 "Dans ce cas-ci, il y a moins de noms ({nb_names})\n"
 "que la longueur de l’itérable, {iter_type} de longueur {length}.\n"
 
-#: syntax_errors\analyze_syntax.py:35
+#: syntax_errors\analyze_syntax.py:42
 msgid ""
 "In this case, the line identified above\n"
 "is more indented than expected and \n"
@@ -1307,7 +1317,7 @@ msgstr ""
 "est plus indentée que ce qui était attendu et ne\n"
 "correspond pas à l'indentation de la ligne précédente.\n"
 
-#: syntax_errors\analyze_syntax.py:41
+#: syntax_errors\analyze_syntax.py:48
 msgid ""
 "In this case, the line identified above\n"
 "was expected to begin a new indented block.\n"
@@ -1315,7 +1325,7 @@ msgstr ""
 "Dans ce cas-ci, la ligne indiquée ci-dessus par --> devrait\n"
 "normalement commencer un nouveau bloc de code indenté.\n"
 
-#: syntax_errors\analyze_syntax.py:46
+#: syntax_errors\analyze_syntax.py:53
 msgid ""
 "In this case, the line identified above is\n"
 "less indented than the preceding one,\n"
@@ -1325,7 +1335,7 @@ msgstr ""
 "est moins indentée que la ligne précédente\n"
 "et n’est pas alignée verticalement avec un autre bloc de code.\n"
 
-#: syntax_errors\analyze_syntax.py:120
+#: syntax_errors\analyze_syntax.py:127
 msgid ""
 "Python gave us the following informative message\n"
 "about the possible cause of the error:\n"
@@ -1346,7 +1356,7 @@ msgstr ""
 "mais il est possible que me trompe.\n"
 "\n"
 
-#: syntax_errors\analyze_syntax.py:128
+#: syntax_errors\analyze_syntax.py:135
 msgid ""
 "I make an effort below to guess what caused the problem\n"
 "but I might guess incorrectly.\n"
@@ -1356,7 +1366,7 @@ msgstr ""
 "tromper.\n"
 "\n"
 
-#: syntax_errors\analyze_syntax.py:153
+#: syntax_errors\analyze_syntax.py:160
 msgid ""
 "Currently, I cannot guess the likely cause of this error.\n"
 "Try to examine closely the line indicated as well as the line\n"

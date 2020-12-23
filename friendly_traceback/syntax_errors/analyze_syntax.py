@@ -18,12 +18,19 @@ def set_cause_syntax(etype, value, tb_data):
     """
     _ = current_lang.translate
     cause = hint = None
-    if etype.__name__ == "IndentationError":
-        cause = indentation_error_cause(tb_data.value)
-    elif etype.__name__ == "TabError":
-        pass
-    else:
-        cause, hint = find_syntax_error_cause(tb_data)
+    try:
+        if etype.__name__ == "IndentationError":
+            cause = indentation_error_cause(tb_data.value)
+        elif etype.__name__ == "TabError":
+            pass  # No need to provide additional information
+        else:
+            cause, hint = find_syntax_error_cause(tb_data)
+    except Exception:
+        cause = _(
+            "Exception raised by Friendly-traceback itself.\n"
+            "Please report this example to\n"
+            "https://github.com/aroberge/friendly-traceback/issues\n"
+        )
     return cause, hint
 
 

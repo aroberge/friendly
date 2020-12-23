@@ -505,7 +505,7 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
     pattern = re.compile(r"(.*) indices must be integers or slices, not (.*)")
     match = re.search(pattern, message)
     if match is None:
-        return
+        return cause, hint
 
     container_type = match.group(1)
     index_type = match.group(2)

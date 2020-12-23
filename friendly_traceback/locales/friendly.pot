@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-23 07:02-0400\n"
+"POT-Creation-Date: 2020-12-23 07:21-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -287,13 +287,20 @@ msgid ""
 "    `result = my_variable % 0`\n"
 msgstr ""
 
-#: info_specific.py:53
+#: info_specific.py:22 syntax_errors\analyze_syntax.py:29
+msgid ""
+"Exception raised by Friendly-traceback itself.\n"
+"Please report this example to\n"
+"https://github.com/aroberge/friendly-traceback/issues\n"
+msgstr ""
+
+#: info_specific.py:60
 msgid ""
 "In your program, the name of the\n"
 "file that cannot be found is `{filename}`.\n"
 msgstr ""
 
-#: info_specific.py:75
+#: info_specific.py:82
 msgid ""
 "In your program, the key that cannot be found is `{key_name!r}`.\n"
 msgstr ""
@@ -1007,27 +1014,27 @@ msgid ""
 "than the length of the iterable, {iter_type} of length {length}.\n"
 msgstr ""
 
-#: syntax_errors\analyze_syntax.py:35
+#: syntax_errors\analyze_syntax.py:42
 msgid ""
 "In this case, the line identified above\n"
 "is more indented than expected and \n"
 "does not match the indentation of the previous line.\n"
 msgstr ""
 
-#: syntax_errors\analyze_syntax.py:41
+#: syntax_errors\analyze_syntax.py:48
 msgid ""
 "In this case, the line identified above\n"
 "was expected to begin a new indented block.\n"
 msgstr ""
 
-#: syntax_errors\analyze_syntax.py:46
+#: syntax_errors\analyze_syntax.py:53
 msgid ""
 "In this case, the line identified above is\n"
 "less indented than the preceding one,\n"
 "and is not aligned vertically with another block of code.\n"
 msgstr ""
 
-#: syntax_errors\analyze_syntax.py:120
+#: syntax_errors\analyze_syntax.py:127
 msgid ""
 "Python gave us the following informative message\n"
 "about the possible cause of the error:\n"
@@ -1039,14 +1046,14 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\analyze_syntax.py:128
+#: syntax_errors\analyze_syntax.py:135
 msgid ""
 "I make an effort below to guess what caused the problem\n"
 "but I might guess incorrectly.\n"
 "\n"
 msgstr ""
 
-#: syntax_errors\analyze_syntax.py:153
+#: syntax_errors\analyze_syntax.py:160
 msgid ""
 "Currently, I cannot guess the likely cause of this error.\n"
 "Try to examine closely the line indicated as well as the line\n"
