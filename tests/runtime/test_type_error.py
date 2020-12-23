@@ -354,8 +354,8 @@ def test_Bad_type_for_unary_operator():
     result = friendly_traceback.get_output()
     assert not "debug_warning" in result, "Internal error found."
     assert "TypeError: bad operand type for unary +: 'str'" in result
-    assert "Perhaps you meant to write `+=`" in result
     if friendly_traceback.get_lang() == "en":
+        assert "Perhaps you meant to write `+=`" in result
         assert "You tried to use the unary operator '+'" in result
     return result, message
 
