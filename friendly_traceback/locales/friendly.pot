@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-23 20:19-0400\n"
+"POT-Creation-Date: 2020-12-23 20:51-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1002,6 +1002,13 @@ msgstr ""
 msgid ""
 "Using this notation, you attempted to retrieve an item\n"
 "from `{name}`, an object of type `{obj_type}`. This is not allowed.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:688
+msgid ""
+"An iterable is an object capable of returning its members one at a time.\n"
+"Python containers (`list, tuple, dict`, etc.) are iterables.\n"
+"An iterable is required here.\n"
 msgstr ""
 
 #: runtime_errors\unbound_local_error.py:46

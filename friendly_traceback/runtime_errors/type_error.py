@@ -674,3 +674,20 @@ def object_is_not_subscriptable(message, frame, tb_data):
     ).format(obj_type=obj_type, name=name)
 
     return cause, hint
+
+
+@add_message_parser
+def object_is_not_iterable(message, frame, tb_data):
+    _ = current_lang.translate
+    cause = hint = None
+    pattern = re.compile(r"'(.*)' object is not iterable")
+    match = re.search(pattern, message)
+    if match is None:
+        return cause, hint
+
+    cause = _(
+        "An iterable is an object capable of returning its members one at a time.\n"
+        "Python containers (`list, tuple, dict`, etc.) are iterables.\n"
+        "An iterable is required here.\n"
+    )
+    return cause, hint

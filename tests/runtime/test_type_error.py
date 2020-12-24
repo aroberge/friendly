@@ -679,6 +679,16 @@ def test_Object_is_not_subscriptable():
     if friendly_traceback.get_lang() == "en":
         assert "from `2`, an object of type `int`" in result
 
+    try:
+        a = i
+    except Exception:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "NameError: name 'i' is not defined" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Did you mean `1j`" in result
+
     def f():
         pass
     try:
@@ -693,6 +703,19 @@ def test_Object_is_not_subscriptable():
         assert "Did you mean `f(1)`" in result
     return result, message
 
+
+def test_Object_is_not_iterable():
+    try:
+        list(42)
+    except Exception as e:
+        friendly_traceback.explain_traceback(redirect="capture")
+        message = str(e)
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "TypeError: 'int' object is not iterable" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "An iterable is required here." in result
+    return result, message
 
 
 if __name__ == "__main__":

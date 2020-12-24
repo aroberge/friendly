@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-23 20:19-0400\n"
-"PO-Revision-Date: 2020-12-23 20:23-0400\n"
+"POT-Creation-Date: 2020-12-23 20:51-0400\n"
+"PO-Revision-Date: 2020-12-23 20:52-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1281,6 +1281,16 @@ msgid ""
 msgstr ""
 "À l’aide de cette notation, vous avez tenté de tirer un élément\n"
 "de `{name}`, un objet de type `{obj_type}`. Ceci n’est pas permis.\n"
+
+#: runtime_errors\type_error.py:688
+msgid ""
+"An iterable is an object capable of returning its members one at a time.\n"
+"Python containers (`list, tuple, dict`, etc.) are iterables.\n"
+"An iterable is required here.\n"
+msgstr ""
+"Un itérable est un objet capable de renvoyer ses membres un à la fois.\n"
+"Les contenants python (`list, tuple, dict`, etc.) sont itérables.\n"
+"Une itérable est requis ici.\n"
 
 #: runtime_errors\unbound_local_error.py:46
 msgid ""
