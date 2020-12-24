@@ -15,13 +15,13 @@ import sys
 
 from importlib import import_module
 
-# Importing modules
+# Modules
 from . import console
-from . import theme
 from . import debug_helper
+from . import formatters
+from . import theme
 
-
-# Importing objects from __init__.py
+# Objects from __init__.py
 from . import explain_traceback, exclude_file_from_traceback, install
 from . import set_formatter, __version__
 
@@ -129,8 +129,13 @@ parser.add_argument(
     help="""Specifies what content to include by default in the traceback.
     The defaults are 'friendly_tb' if the friendly-console is going to be shown,
     otherwise it is 'explain'.
-    See the documentation for more details.
     """,
+)
+
+parser.add_argument(
+    "--show-include",
+    help="List some available choices for the --include parameter and quits.",
+    action="store_true",
 )
 
 
@@ -146,6 +151,10 @@ def main():
         print(f"\nFriendly-traceback version {__version__}")
         if not args.source:
             sys.exit()
+
+    if args.show_include:
+        show_include_choices()
+        sys.exit()
 
     include = "friendly_tb"
     if args.include:
@@ -196,6 +205,36 @@ def main():
             runpy.run_path(args.source, run_name="__main__")
     else:
         console.start_console(local_vars=console_defaults, use_rich=use_rich)
+
+
+include_choices = """
+The main choices for the --include parameter are:
+
+what:    Explain what a given exception means.
+where:   Shows the location of the exception and values of variables
+why:     Attempts to explain the cause of an exception
+explain: Combines most useful information in a single display
+
+friendly_tb, python_tb, debug_tb: three different choices for the traceback.
+
+The defaults are *friendly_tb* if the friendly-console is going to be shown,
+otherwise it is *explain*.
+
+The following lists all the available choices, automatically extracted
+from the source code.
+"""
+
+third_party_choices = """
+Third-party users interested in writing their own formatters
+should consult the detailed *items_in_order* list in formatters.py
+"""
+
+
+def show_include_choices():
+    print(include_choices)
+    for key in formatters.items_groups:
+        print(key)
+    print(third_party_choices)
 
 
 main()

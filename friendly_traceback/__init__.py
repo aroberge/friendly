@@ -36,6 +36,7 @@ import warnings as _warnings
 from pathlib import Path
 
 from . import editors_helpers
+from . import formatters
 from . import path_info
 from .config import session
 from .my_gettext import current_lang
@@ -272,9 +273,15 @@ def set_include(include):
     """Specifies the information to include in the traceback.
 
     Currently allowed values include "explain", "what", "where", "why",
-    "hint", "friendly_tb", "python_tb", "debug_tb"
+    "hint", "friendly_tb", "python_tb", "debug_tb".
 
-    This will likely change in the near future.
+    The full list of available values is available from the command line::
+
+        python -m friendly_traceback --show-include
+
+    or, when using a friendly-console::
+
+        show_include_choices()
     """
     session.set_include(include)
 
@@ -284,6 +291,12 @@ def get_include():
     traceback. See ``set_include()`` for details.
     """
     return session.get_include()
+
+
+def show_include_choices():
+    """Prints the available choices for arguments to set_include()"""
+    for key in formatters.items_groups:
+        print(repr(key))
 
 
 def set_stream(redirect=None):
