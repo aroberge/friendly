@@ -9,10 +9,6 @@ Aimed at Python beginners: replacing standard traceback by something easier to u
 pip install friendly-traceback
 ```
 
-In some terminal console, friendly-traceback can make use of [Rich](https://github.com/willmcgugan/rich) if it is installed; this must be done separately
-since Rich is not required for this project, although it is **strongly recommended**
-if your terminal console supports it.
-
 ## Documentation
 
 
@@ -20,13 +16,6 @@ if your terminal console supports it.
 
 ![Example](https://raw.githubusercontent.com/aroberge/friendly-traceback/master/explain.png)
 
-
-## State of this project
-
-Friendly-traceback is alpha. The current focus is on quickly increasing
-the number of exceptions covered.  We strive to test the code as new additions
-are made: everything included should work.  However, the code itself
-could probably be refactored and could definitely be better documented.
 
 ## Contribute
 
