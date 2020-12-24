@@ -8,7 +8,7 @@ def test_Generic():
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "debug_warning" in result, "Internal error found."
+    
     assert "NameError: name 'something' is not defined" in result
     if friendly_traceback.get_lang() == "en":
         assert "In your program, `something` is an unknown name." in result
@@ -23,7 +23,7 @@ def test_Annotated_variable():
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "debug_warning" in result, "Internal error found."
+    
     assert "NameError: name 'x' is not defined" in result
     if friendly_traceback.get_lang() == "en":
         assert "x = 3" in result
@@ -36,7 +36,7 @@ def test_Synonym():
     except Exception:
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "debug_warning" in result, "Internal error found."
+    
     assert "NameError: name 'i' is not defined" in result
     if friendly_traceback.get_lang() == "en":
         assert "Did you mean `1j`" in result
@@ -46,7 +46,7 @@ def test_Synonym():
     except Exception:
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "debug_warning" in result, "Internal error found."
+    
     assert "NameError: name 'j' is not defined" in result
     if friendly_traceback.get_lang() == "en":
         assert "Did you mean `1j`" in result
@@ -57,7 +57,7 @@ def test_Synonym():
     except Exception as e:
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "debug_warning" in result, "Internal error found."
+    
     assert "NameError: name 'babs' is not defined" in result
     if friendly_traceback.get_lang() == "en":
         assert "perhaps you meant one of the following" in result
@@ -68,7 +68,7 @@ def test_Synonym():
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "debug_warning" in result, "Internal error found."
+    
     assert "NameError: name 'cost' is not defined" in result
     if friendly_traceback.get_lang() == "en":
         assert "perhaps you meant one of the following" in result

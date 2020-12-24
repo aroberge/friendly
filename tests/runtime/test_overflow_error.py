@@ -8,7 +8,7 @@ def test_Generic():
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "debug_warning" in result, "Internal error found."
+    
     assert (
         "OverflowError: (34, 'Result too large')" in result
         or "OverflowError: (34, 'Numerical result out of range')" in result

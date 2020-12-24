@@ -2,10 +2,10 @@
 
 import re
 
+from . import stdlib_modules
+from .. import debug_helper
 from ..my_gettext import current_lang
 from ..utils import get_similar_words, list_to_string
-
-from . import stdlib_modules
 
 
 def get_cause(value, frame, tb_data):
@@ -66,14 +66,16 @@ def is_not_a_package(dotted_path, name):
     rest = dotted_path.replace(name + ".", "")
 
     # This specific exception should not have been raised if name was not a module.
-    # Still, better safe than sorry.
+    # Still, when dealing with imports, better safe than sorry.
     try:
         module = __import__(name)
-    except ImportError:  # This should not happen.
-        # TODO: add this to debug warning
+    except ImportError as e:  # This should not happen.
         cause = _(
             "No additional information available since `{name}` cannot be imported.\n"
         ).format(name=name)
+        debug_helper.log("Problem in is_not_a_package()")
+        debug_helper.log(str(e))
+        debug_helper.log(cause)
         return cause, hint
 
     attributes = dir(module)

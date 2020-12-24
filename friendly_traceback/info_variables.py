@@ -8,9 +8,10 @@ import builtins
 import sys
 
 from . import utils
+from . import debug_helper
+
 from .path_info import path_utils
 from .my_gettext import current_lang
-from .friendly_exception import FriendlyException
 
 # third-party
 try:
@@ -256,10 +257,9 @@ def get_variables_in_frame_by_scope(frame, scope):
                 nonlocals_[key] = frame.f_locals[key]
         return nonlocals_
     else:
-        raise FriendlyException(
-            "Internal error: unknown scope '{scope}' "
-            + "in get_variable_in_frame_by_scope()."
-        )
+        debug_helper.log("Internal error in get_variable_in_frame_by_scope()")
+        debug_helper.log(f"unknown scope '{scope}'")
+        return {}
 
 
 def get_definition_scope(variable_name, frame):

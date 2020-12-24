@@ -10,7 +10,7 @@ def test_Short_tuple():
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "debug_warning" in result, "Internal error found."
+    
     assert "IndexError: tuple index out of range" in result
     return result, message
 
@@ -24,7 +24,7 @@ def test_Long_list():
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "debug_warning" in result, "Internal error found."
+    
     assert "IndexError: list index out of range" in result
     return result, message
 

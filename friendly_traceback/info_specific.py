@@ -4,7 +4,9 @@ Attempts to provide some specific information about the likely cause
 of a given exception.
 """
 
+from . import debug_helper
 from .my_gettext import current_lang
+
 
 get_cause = {}
 
@@ -18,7 +20,9 @@ def get_likely_cause(etype, value, frame, tb_data):
     try:
         if etype.__name__ in get_cause:
             cause, hint = get_cause[etype.__name__](value, frame, tb_data)
-    except Exception:
+    except Exception as e:
+        debug_helper.log("Exception caught in get_likely_cause().")
+        debug_helper.log(str(e))
         cause = _(
             "Exception raised by Friendly-traceback itself.\n"
             "Please report this example to\n"

@@ -16,7 +16,6 @@ import codeop  # need to import to exclude from tracebacks
 import friendly_traceback
 
 from . import source_cache
-from . import info_generic
 from . import theme
 
 from .config import session
@@ -290,114 +289,6 @@ class FriendlyConsole(InteractiveConsole):
         if self.rich_console:
             return self.rich_console.input("[bold #009999]" + prompt)
         return input(prompt)
-
-
-# ============================================
-#
-# Functions defined to be used in the console
-#
-# ============================================
-
-
-def explain(include="explain"):
-    """Shows the previously recorded traceback info again,
-    with the specified verbosity level.
-    """
-    old_include = friendly_traceback.get_include()
-    friendly_traceback.set_include(include)
-    session.show_traceback_info_again()
-    friendly_traceback.set_include(old_include)
-
-
-def _info():
-    """Debugging tool: shows the complete content of traceback info."""
-    if session.saved_info is None:
-        print("No recorded traceback\n")
-        return
-    print("Recorded traceback information:\n")
-    if session.use_rich:  # will automatically pretty print
-        return session.saved_info
-
-    for item in session.saved_info:
-        print(f"{item}: {session.saved_info[item]}")
-
-
-def more():
-    """Used to display information additional to the minimal traceback,
-    with the exception of the generic information.
-    Potentially useful for advanced users.
-    """
-    explain("more")
-
-
-def what(exception=None, lang="en", pre=False):
-    """If known, shows the generic explanation about a given exception."""
-
-    if exception is not None:
-        if hasattr(exception, "__name__"):
-            exception = exception.__name__
-        if lang is not None:
-            old_lang = friendly_traceback.get_lang()
-            friendly_traceback.set_lang(lang)
-        result = info_generic.get_generic_explanation(exception)
-        if lang is not None:
-            friendly_traceback.set_lang(old_lang)
-        if pre:  # for documentation
-            lines = result.split("\n")
-            for line in lines:
-                session.write_err("    " + line + "\n")
-            session.write_err("\n")
-        else:
-            session.write_err(result)
-        return
-
-    explain("what")
-
-
-def where():
-    """Shows the information about where the exception occurred"""
-    explain("where")
-
-
-def why():
-    """Shows the likely cause of the exception."""
-    explain("why")
-
-
-def hint():
-    """Shows hint/suggestion if available."""
-    explain("hint")
-
-
-def friendly_tb():
-    """Shows the friendly traceback, which includes the hint/suggestion
-    if available.
-    """
-    explain("friendly_tb")
-
-
-def python_tb():
-    """Shows the Python traceback, excluding files from friendly-traceback
-    itself.
-    """
-    explain("python_tb")
-
-
-def debug_tb():
-    """Shows the true Python traceback, which includes
-    files from friendly-traceback itself.
-    """
-    explain("debug_tb")
-
-
-def debug():
-    """This functions displays the true traceback recorded, that
-    includes friendly-traceback's own code.
-    It also adds the suggestion/hint from friendly-traceback
-    and sets a debug flag for the current session.
-    """
-    session._debug = True
-    explain("debug_tb")
 
 
 def start_console(

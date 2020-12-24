@@ -20,9 +20,10 @@ In the interest of simplicity, extensibility and maintainability,
 we now have multiple functions, some of which have almost identical
 chunks of code.
 """
-from friendly_traceback.my_gettext import current_lang
-from friendly_traceback import utils
-from friendly_traceback.friendly_exception import FriendlyException
+
+from .. import debug_helper
+from .. import utils
+from ..my_gettext import current_lang
 
 
 def count_char(tokens, char):
@@ -203,11 +204,15 @@ def look_for_missing_bracket(
             # bottom of the error message as they might not be shown in the
             # partial source included in the traceback.
             if not brackets:
-                raise FriendlyException("source_analyzer.look_for_missing_bracket")
+                debug_helper.log("source_analyzer.look_for_missing_bracket()")
+                debug_helper.log("No brackets remain.")
+                return False
             else:
                 open_bracket, open_lineno, open_col = brackets.pop()
                 if not matching_brackets(open_bracket, token.string):
-                    raise FriendlyException("source_analyzer.look_for_missing_bracket")
+                    debug_helper.log("source_analyzer.look_for_missing_bracket()")
+                    debug_helper.log("No matching bracket.")
+                    return False
 
     if brackets:
         bracket, linenumber, start_col = brackets.pop()
@@ -273,7 +278,5 @@ def name_bracket(bracket):
         return _("square bracket `]`")
     elif bracket == "{":
         return _("curly bracket `{`")
-    elif bracket == "}":
+    else:
         return _("curly bracket `}`")
-    else:  # Should never happen - help for diagnostic
-        raise FriendlyException("source_analyzer.name_bracket")

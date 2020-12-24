@@ -8,7 +8,7 @@ def test_Not_enough_values_to_unpack():
     except Exception:
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "debug_warning" in result, "Internal error found."
+    
     assert (
         "ValueError: not enough values to unpack (expected at least 2, got 1)" in result
     )
@@ -30,7 +30,7 @@ def test_Not_enough_values_to_unpack():
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "debug_warning" in result, "Internal error found."
+    
     assert "ValueError: not enough values to unpack (expected 3, got 2)" in result
     if friendly_traceback.get_lang() == "en":
         assert "a string (`str`) of length 2" in result
@@ -45,7 +45,7 @@ def test_Too_many_values_to_unpack():
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "debug_warning" in result, "Internal error found."
+    
     assert "ValueError: too many values to unpack (expected 2)" in result
     if friendly_traceback.get_lang() == "en":
         assert "a `list` of length 3" in result

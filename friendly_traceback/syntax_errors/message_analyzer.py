@@ -10,10 +10,10 @@ import tokenize
 
 from keyword import kwlist
 
-from friendly_traceback.my_gettext import current_lang
-from friendly_traceback import utils
 from . import source_analyzer
-from friendly_traceback.friendly_exception import FriendlyException
+from .. import debug_helper
+from .. import utils
+from ..my_gettext import current_lang
 
 
 MESSAGE_ANALYZERS = []
@@ -104,14 +104,16 @@ def assign_to_keyword(message="", line="", **kwargs):
         word = "Ellipsis (...)"
     else:
         tokens = utils.tokenize_source(line)
-        while True:
-            for token in tokens:
-                word = token.string
-                if word in kwlist or word == "__debug__":
-                    break
-            else:
-                raise FriendlyException("analyze_syntax.assign_to_keyword")
-            break
+        for token in tokens:
+            word = token.string
+            if word in kwlist or word == "__debug__":
+                break
+        else:
+            debug_helper.log("Problem in analyze_syntax.assign_to_keyword")
+            for tok in tokens:
+                debug_helper.log(tok)
+            cause = "Friendly-traceback internal problem: please report this case"
+            return cause, hint
 
     hint = _("You cannot assign a value to `{keyword}`.").format(keyword=word)
 

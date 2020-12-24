@@ -8,7 +8,7 @@ import tokenize as py_tokenize
 
 from io import StringIO
 
-from .friendly_exception import FriendlyException
+from . import debug_helper
 
 _token_format = "type={type}  string={string}  start={start}  end={end}  line={line}"
 
@@ -172,7 +172,8 @@ def tokenize_source(source):
     try:
         return get_significant_tokens(source)
     except Exception as e:
-        raise FriendlyException("%s --> utils.tokenize_source" % repr(e))
+        debug_helper.log("Problem in utils.tokenize_source().")
+        debug_helper.log(str(e))
 
 
 def tokenize_source_lines(source_lines):

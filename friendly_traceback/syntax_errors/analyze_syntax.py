@@ -10,6 +10,7 @@ from friendly_traceback.source_cache import cache
 from . import source_analyzer
 from . import line_analyzer
 from . import message_analyzer
+from .. import debug_helper
 
 
 def set_cause_syntax(etype, value, tb_data):
@@ -25,7 +26,9 @@ def set_cause_syntax(etype, value, tb_data):
             pass  # No need to provide additional information
         else:
             cause, hint = find_syntax_error_cause(tb_data)
-    except Exception:
+    except Exception as e:
+        debug_helper.log("Exception caught in set_cause_syntax().")
+        debug_helper.log(str(e))
         cause = _(
             "Exception raised by Friendly-traceback itself.\n"
             "Please report this example to\n"

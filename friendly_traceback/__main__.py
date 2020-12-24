@@ -9,7 +9,6 @@ command line. You can find more details by doing::
 
 """
 import argparse
-import os.path
 import platform
 import runpy
 import sys
@@ -19,11 +18,12 @@ from importlib import import_module
 # Importing modules
 from . import console
 from . import theme
+from . import debug_helper
 
 
 # Importing objects from __init__.py
 from . import explain_traceback, exclude_file_from_traceback, install
-from . import session, set_formatter, __version__
+from . import set_formatter, __version__
 
 
 versions = "Friendly-traceback version {}. [Python version: {}]\n".format(
@@ -154,10 +154,7 @@ def main():
         include = "explain"
 
     if args.debug:
-        session._debug = True
-        log_file = os.path.join(os.path.expanduser("~"), "friendly.log")
-        with open(log_file, "w", encoding="utf8") as out:
-            out.write("Friendly log\n\n")
+        debug_helper.DEBUG = True
         include = "debug_tb"
 
     install(lang=args.lang, include=include)

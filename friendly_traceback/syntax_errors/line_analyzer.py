@@ -6,9 +6,9 @@ from keyword import kwlist
 import sys
 import tokenize
 
-from friendly_traceback.my_gettext import current_lang
-from friendly_traceback import utils
-from friendly_traceback.friendly_exception import FriendlyException
+from .. import debug_helper
+from .. import utils
+from ..my_gettext import current_lang
 
 
 def count_char(tokens, char):
@@ -42,7 +42,9 @@ def is_potential_statement(tokens):
 
     # All tokens passed should come from the same line of code
     if tokens[-1].line != line:
-        raise FriendlyException("line_analyzer.is_potential_statement")
+        debug_helper.log("In line_analyzer.is_potential_statement()")
+        debug_helper.log("Not all tokens came from the same line.")
+        return False
 
     if line.endswith("\\"):
         return False
@@ -138,6 +140,29 @@ def detect_walrus(tokens, offset=None):
         "the walrus operator. This operator requires the use of\n"
         "Python 3.8 or newer. You are using version {version}.\n"
     ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
+    return cause, hint
+
+
+@add_line_analyzer
+def debug_f_string(tokens, offset=None):
+    """detect debug feature of f-string introduced in Python 3.8"""
+    _ = current_lang.translate
+    cause = hint = None
+    if sys.version_info >= (3, 8):
+        return cause, hint
+    if len(tokens) != 4:
+        return cause, hint
+
+    if (
+        tokens[0] == "("
+        and tokens[1].is_identifier()
+        and tokens[2] == "="
+        and tokens[3] == ")"
+    ):
+        cause = _(
+            "You are likely using a syntax of f-strings introduced\n"
+            "in Python version 3.8. You are using version {version}."
+        ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
     return cause, hint
 
 

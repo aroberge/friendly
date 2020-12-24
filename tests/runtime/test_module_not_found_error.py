@@ -8,7 +8,7 @@ def test_Standard_library_module():
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "debug_warning" in result, "Internal error found."
+    
     assert "ModuleNotFoundError: No module named 'Tkinter'" in result
     if friendly_traceback.get_lang() == "en":
         assert "Did you mean `tkinter`" in result
@@ -22,7 +22,7 @@ def test_Not_a_package():
     except Exception as e:
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "debug_warning" in result, "Internal error found."
+    
     assert "ModuleNotFoundError: No module named 'os.xxx'" in result
     if friendly_traceback.get_lang() == "en":
         assert "`xxx` cannot be imported" in result
@@ -32,7 +32,7 @@ def test_Not_a_package():
     except Exception as e:
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "debug_warning" in result, "Internal error found."
+    
     assert "ModuleNotFoundError: No module named 'os.open'" in result
     if friendly_traceback.get_lang() == "en":
         assert "`from os import open`" in result
@@ -43,7 +43,7 @@ def test_Not_a_package():
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
-    assert not "debug_warning" in result, "Internal error found."
+    
     assert "ModuleNotFoundError: No module named 'os.pathh'" in result
     if friendly_traceback.get_lang() == "en":
         assert "Did you mean `import os.path`" in result

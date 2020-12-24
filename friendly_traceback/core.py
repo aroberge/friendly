@@ -29,6 +29,7 @@ from . import info_generic
 from . import info_specific
 from . import info_variables
 from . import utils
+from . import debug_helper
 
 from .my_gettext import current_lang
 from .source_cache import cache, highlight_source
@@ -53,14 +54,11 @@ class TracebackData:
 
     """
 
-    def __init__(self, etype, value, tb, debug=False):
+    def __init__(self, etype, value, tb):
         """This object is initialized with the standard values for a
         traceback::
 
             etype, value, tb = sys.exc_info()
-
-        An additional debug parameter can be set to True; this is
-        useful during development.
         """
         cache.remove("<fstring>")
         self.exception_type = etype
@@ -69,9 +67,7 @@ class TracebackData:
         self.message = str(value)
         self.tb = tb
         self.formatted_tb = traceback.format_exception(etype, value, tb)
-        self.debug = debug
         self.records = self.get_records(tb)
-        self.debug_warning = ""
         self.get_source_info(etype, value)
         self.node_text = ""
         self.node_range = None
@@ -126,7 +122,10 @@ class TracebackData:
             return
 
         # We should never reach this stage.
-        self.debug_warning += "Internal error in TracebackData.get_source_info."
+        debug_helper.log("Internal error in TracebackData.get_source_info.")
+        debug_helper.log("No records found.")
+        debug_helper.log("etype:", str(etype))
+        debug_helper.log("value:", str(value))
         self.filename = ""
         self.bad_line = "\n"
         return
@@ -203,8 +202,9 @@ class TracebackData:
             if self.node_text.strip():
                 self.original_bad_line = self.bad_line
                 self.bad_line = self.node_text
-        except Exception:
-            pass
+        except Exception as e:
+            debug_helper.log("Exception raised in TracebackData.use_executing.")
+            debug_helper.log(str(e))
 
 
 # ====================
@@ -279,7 +279,7 @@ class FriendlyTraceback:
     * what() shows the information compiled by assign_generic()
     """
 
-    def __init__(self, etype, value, tb, debug=False):
+    def __init__(self, etype, value, tb):
         """The basic argument are those generated after a traceback
         and obtained via::
 
@@ -287,10 +287,15 @@ class FriendlyTraceback:
 
         The "header" key for the info dict is assigned here."""
         _ = current_lang.translate
-        self.tb_data = TracebackData(etype, value, tb, debug)
-        self._debug = debug
+        try:
+            self.tb_data = TracebackData(etype, value, tb)
+        except Exception as e:
+            debug_helper.log("Uncaught exception in TracebackData.")
+            debug_helper.log(str(e))
+            print("Internal problem in Friendly-traceback.")
+            print("Please report this issue.")
+            raise SystemExit
         self.info = {}
-        self.info["debug_warning"] = self.tb_data.debug_warning
         self.info["header"] = _("Python exception:")
         self.assign_message()  # language independent
         self.assign_tracebacks()
@@ -351,25 +356,20 @@ class FriendlyTraceback:
 
         etype = self.tb_data.exception_type
         value = self.tb_data.value
-        self._debug = True
-        try:
-            cause, hint = info_specific.get_likely_cause(
-                etype, value, self.exception_frame, self.tb_data
-            )  # [3]
-            if cause is not None:
-                self.info["cause_header"] = _(
-                    "Likely cause based on the information given by Python:"
-                )
-                self.info["cause"] = cause
-                if hint:
-                    self.info["suggest"] = hint
-        except Exception:
-            self.info["debug_warning"] = (
-                "debug_warning: Internal error caught in"
-                " `info.specific.get_likely_cause()`."
+        if self.tb_data.filename == "<stdin>":
+            self.info["cause"] = cannot_analyze_stdin()
+            return
+
+        cause, hint = info_specific.get_likely_cause(
+            etype, value, self.exception_frame, self.tb_data
+        )  # [3]
+        if cause is not None:
+            self.info["cause_header"] = _(
+                "Likely cause based on the information given by Python:"
             )
-            if self._debug:
-                raise
+            self.info["cause"] = cause
+            if hint:
+                self.info["suggest"] = hint
 
     def set_cause_syntax(self):
         """For SyntaxError and subclasses. Sets the value of the following
@@ -387,32 +387,27 @@ class FriendlyTraceback:
         value = self.tb_data.value
         if self.tb_data.filename == "<unknown>":
             return
-        try:
-            cause, hint = analyze_syntax.set_cause_syntax(etype, value, self.tb_data)
-            if cause is not None:
-                if "invalid syntax" in self.message:
-                    if self.tb_data.filename == "<string>":
-                        header = ""
-                    else:
-                        header = _(
-                            "Python's error message (invalid syntax) "
-                            "cannot be used to identify the problem:"
-                        )
+        elif self.tb_data.filename == "<stdin>":
+            self.info["cause"] = cannot_analyze_stdin()
+            return
+
+        cause, hint = analyze_syntax.set_cause_syntax(etype, value, self.tb_data)
+        if cause is not None:
+            if "invalid syntax" in self.message:
+                if self.tb_data.filename == "<string>":
+                    header = ""
                 else:
-                    header = _("Likely cause based on the information given by Python:")
-                if header:
-                    self.info["cause_header"] = header
-                self.info["cause"] = cause
-                if hint:
-                    self.info["suggest"] = hint
-        except Exception:
-            self.info[
-                "debug_warning"
-            ] = "debug_warning: Internal error caught in `set_cause_syntax()`."
-            if value.filename == "<stdin>":
-                self.info["cause"] = cannot_analyze_stdin()
-            if self._debug:
-                raise
+                    header = _(
+                        "Python's error message (invalid syntax) "
+                        "cannot be used to identify the problem:"
+                    )
+            else:
+                header = _("Likely cause based on the information given by Python:")
+            if header:
+                self.info["cause_header"] = header
+            self.info["cause"] = cause
+            if hint:
+                self.info["suggest"] = hint
 
     def assign_generic(self):
         """Assigns the generic information about a given error. This is
@@ -444,7 +439,7 @@ class FriendlyTraceback:
 
         records = self.tb_data.records
         if not records:
-            self.info["debug_warning"] += "debug_warning: no records found."
+            debug_helper.log("No record in assign_location().")
             return
         self.locate_exception_raised(records[-1])
         if len(records) > 1:
@@ -691,6 +686,9 @@ def get_partial_source(filename, linenumber, lines, index, text_range=None):
     """
     _ = current_lang.translate
 
+    file_not_found = _("Problem: source of `{filename}` is not available\n").format(
+        filename=filename
+    )
     if filename in cache.cache:
         source, line = cache.get_formatted_partial_source(
             filename, linenumber, offset=None, text_range=text_range
@@ -708,11 +706,15 @@ def get_partial_source(filename, linenumber, lines, index, text_range=None):
                     "        regular Python console.\n"
                 )
             else:
-                source = _("Problem: source of '{filename}' is not available\n").format(
-                    filename=filename
-                )
+                source = file_not_found
+                line = ""
+                debug_helper.log("Problem in get_partial_source().")
+                debug_helper.log(file_not_found)
     elif not filename:
-        raise FileNotFoundError("Cannot find %s" % filename)
+        source = file_not_found
+        line = ""
+        debug_helper.log("Problem in get_partial_source().")
+        debug_helper.log(file_not_found)
 
     if not source.endswith("\n"):
         source += "\n"

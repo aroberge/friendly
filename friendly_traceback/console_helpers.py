@@ -9,6 +9,8 @@ environments such as in a Jupyter notebook.
 # TODO: add unit tests for each of these
 
 import friendly_traceback
+
+from . import debug_helper
 from .config import session
 from .info_generic import get_generic_explanation
 from .path_info import show_paths
@@ -98,7 +100,7 @@ def debug():
     It also adds the suggestion/hint from friendly-traceback
     and sets a debug flag for the current session.
     """
-    session._debug = True
+    debug_helper.DEBUG = True
     explain("debug_tb")
 
 

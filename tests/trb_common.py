@@ -77,8 +77,6 @@ def create_tracebacks(target, intro_text, format="pre", messages=None):
                                 make_title(title, format=format, underline="~")
                                 write(result)
                                 nb_cases += 1
-                                if "debug_warning" in result:
-                                    print("debug_warning in ", name, function)
                 except Exception as e:
                     friendly_traceback.explain_traceback()
 
