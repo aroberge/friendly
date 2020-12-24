@@ -210,7 +210,9 @@ def import_from(tokens, **kwargs):
     if third == "from":
         function = tokens[1].string
         module = tokens[3].string
-
+        hint = _("Did you mean `from {module} import {function}`?\n").format(
+            module=module, function=function
+        )
         cause = _(
             "You wrote something like\n\n"
             "    import {function} from {module}\n"
@@ -450,6 +452,7 @@ def print_as_statement(tokens, **kwargs):
     if tokens[0].string != "print":
         return cause, hint
 
+    # TODO: add hint
     if len(tokens) == 1 or tokens[1].string != "(":
         cause = _(
             "In older version of Python, `print` was a keyword.\n"
@@ -522,18 +525,26 @@ def invalid_name(tokens, offset=None):
     for first, second in zip(tokens, tokens[1:]):
         if first.is_number() and second.is_identifier() and first.end == second.start:
             cause = _("Valid names cannot begin with a number.\n")
+            if second == "i" and first != tokens[0]:
+                hint = _("Did you mean `{number}j`?\n").format(number=first.string)
+                cause += (
+                    "Perhaps you thought that `i` could be used to represent\n"
+                    "the square root of -1. In Python, `j` (or `1j`) is used for this\n"
+                    "and perhaps you meant to write `{number}j`.\n"
+                )
+                return cause, hint
             break
 
     # Try to distinguish between  "2x = ... and y = ... 2x ..."
     if cause:
-        tokens.append(first)
+        tokens.append(";")
         for first, second, third in zip(tokens, tokens[1:], tokens[2:]):
             if (
                 first.is_number()
                 and second.is_identifier()
                 and first.end == second.start
             ):
-                if third.string != "=":
+                if third != "=":
                     hint = _(
                         "Perhaps you forgot a multiplication operator,"
                         " `{first} * {second}`.\n"
@@ -557,11 +568,20 @@ def missing_comma_or_operator(tokens, offset=None):
         return cause, hint
 
     for first, second in zip(tokens, tokens[1:]):
+        if first.is_number() and second == "i":
+            hint = _("Did you mean `{number} j`?\n").format(number=first.string)
+            cause = (
+                "Perhaps you thought that `i` could be used to represent\n"
+                "the square root of -1. In Python, `j` (or `1j`) is used for this\n"
+                "and perhaps you meant to write `{number} j`.\n"
+            ).format(number=first.string)
+            return cause, hint
         if (
             (first.is_number() or first.is_identifier() or first.is_string())
             and (second.is_number() or second.is_identifier() or second.is_string())
             and second.start_col <= offset <= second.end_col
         ):
+
             hint = _(
                 "Did you forget something between `{first}` and `{second}`?\n"
             ).format(first=first.string, second=second.string)

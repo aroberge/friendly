@@ -49,6 +49,7 @@ def parse_can_only_concatenate(message, *args):
         r"can only concatenate (\w+) \(not [\'\"](\w+)[\'\"]\) to (\w+)"
     )
     match = re.search(pattern, message)
+    # TODO: add hint if one of them could be converted to make this possible
     if match is not None:
         cause = _(
             "You tried to concatenate (add) two different types of objects:\n"
@@ -65,6 +66,10 @@ def parse_must_be_str(message, *args):
     cause = hint = None
     # python 3.6 version: must be str, not int
     # example: can only concatenate str (not "int") to str
+
+    # TODO: add hint if one of them could be converted to make this possible
+    # also see if can be generalized
+
     pattern = re.compile(r"must be str, not (\w+)")
     match = re.search(pattern, message)
     if match is not None:
@@ -86,6 +91,9 @@ def parse_unsupported_operand_type(message, frame, tb_data):
     match = re.search(pattern, message)
     if match is None:
         return cause, hint
+
+    # TODO: look if can be done by converting from str to other type.
+    # think of adding hint if that is the case.
 
     all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
     operator = match.group(1)
@@ -182,6 +190,7 @@ def parse_order_comparison(message, *args):
     pattern = re.compile(
         r"[\'\"](.+)[\'\"] not supported between instances of [\'\"](\w+)[\'\"] and [\'\"](\w+)[\'\"]"  # noqa
     )
+    # TODO: check if one is string that could be converted to number
     match = re.search(pattern, message)
     if match is not None:
         cause = _(

@@ -31,6 +31,26 @@ def test_Annotated_variable():
 
 
 def test_Synonym():
+    try:
+        a = i
+    except Exception:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "NameError: name 'i' is not defined" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Did you mean `1j`" in result
+
+    try:
+        a = j
+    except Exception:
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert "NameError: name 'j' is not defined" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Did you mean `1j`" in result
+
     nabs = 1
     try:
         x = babs(-1)
