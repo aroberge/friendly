@@ -57,7 +57,10 @@ class FriendlyConsole(InteractiveConsole):
             self.saved_builtins[name] = getattr(builtins, name)
         self.rich_console = False
         if theme.rich_available and use_rich:
-            self.rich_console = theme.init_rich_console()
+            try:
+                self.rich_console = theme.init_rich_console()
+            except Exception:
+                print(_("\n    Installed version of Rich is too old.\n\n"))
         elif use_rich:
             print(_("\n    Rich is not installed.\n\n"))
 
