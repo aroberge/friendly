@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-23 20:51-0400\n"
-"PO-Revision-Date: 2020-12-23 20:52-0400\n"
+"POT-Creation-Date: 2020-12-23 21:11-0400\n"
+"PO-Revision-Date: 2020-12-23 21:13-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1292,6 +1292,24 @@ msgstr ""
 "Les contenants python (`list, tuple, dict`, etc.) sont itérables.\n"
 "Une itérable est requis ici.\n"
 
+#: runtime_errors\type_error.py:705 runtime_errors\value_error.py:43
+msgid ""
+"Unpacking is a convenient way to assign a name,\n"
+"to each item of an iterable.\n"
+msgstr ""
+"Le dépaquetage ('unpack') est un moyen pratique d’attribuer un nom\n"
+"à chaque élément d’un itérable.\n"
+
+#: runtime_errors\type_error.py:709
+msgid ""
+"An iterable is an object capable of returning its members one at a time.\n"
+"Python containers (`list, tuple, dict`, etc.) are iterables,\n"
+"but not objects of type `{obj_type}`.\n"
+msgstr ""
+"Un itérable est un objet capable de renvoyer ses membres un à la fois.\n"
+"Les contenants python (`list, tuple, dict`, etc.) sont itérables,\n"
+"mais pas les objets de type `{obj_type}`.\n"
+
 #: runtime_errors\unbound_local_error.py:46
 msgid ""
 "The name `{var_name}` exists in both the global and nonlocal scope.\n"
@@ -1351,14 +1369,6 @@ msgstr "Avez-vous oublié d’ajouter `{scope} {var_name}` ?\n"
 #: runtime_errors\unbound_local_error.py:89
 msgid "The similar name `{name}` was found in the local scope. "
 msgstr "Le nom semblable `{name}` a été trouvé dans la portée locale. "
-
-#: runtime_errors\value_error.py:43
-msgid ""
-"Unpacking is a convenient way to assign a name,\n"
-"to each item of an iterable.\n"
-msgstr ""
-"Le dépaquetage ('unpack') est un moyen pratique d’attribuer un nom\n"
-"à chaque élément d’un itérable.\n"
 
 #: runtime_errors\value_error.py:90 runtime_errors\value_error.py:99
 msgid ""

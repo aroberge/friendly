@@ -691,3 +691,24 @@ def object_is_not_iterable(message, frame, tb_data):
         "An iterable is required here.\n"
     )
     return cause, hint
+
+
+@add_message_parser
+def cannot_unpack_non_iterable(message, *args):
+    _ = current_lang.translate
+    cause = hint = None
+    pattern = re.compile(r"cannot unpack non-iterable (.*) object")
+    match = re.search(pattern, message)
+    if match is None:
+        return cause, hint
+
+    cause = _(  # reusing definition from elsewhere
+        "Unpacking is a convenient way to assign a name,\n"
+        "to each item of an iterable.\n"
+    )
+    cause += _(
+        "An iterable is an object capable of returning its members one at a time.\n"
+        "Python containers (`list, tuple, dict`, etc.) are iterables,\n"
+        "but not objects of type `{obj_type}`.\n"
+    ).format(obj_type=match.group(1))
+    return cause, hint

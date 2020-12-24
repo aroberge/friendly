@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-23 20:51-0400\n"
+"POT-Creation-Date: 2020-12-23 21:11-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1011,6 +1011,19 @@ msgid ""
 "An iterable is required here.\n"
 msgstr ""
 
+#: runtime_errors\type_error.py:705 runtime_errors\value_error.py:43
+msgid ""
+"Unpacking is a convenient way to assign a name,\n"
+"to each item of an iterable.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:709
+msgid ""
+"An iterable is an object capable of returning its members one at a time.\n"
+"Python containers (`list, tuple, dict`, etc.) are iterables,\n"
+"but not objects of type `{obj_type}`.\n"
+msgstr ""
+
 #: runtime_errors\unbound_local_error.py:46
 msgid ""
 "The name `{var_name}` exists in both the global and nonlocal scope.\n"
@@ -1049,12 +1062,6 @@ msgstr ""
 
 #: runtime_errors\unbound_local_error.py:89
 msgid "The similar name `{name}` was found in the local scope. "
-msgstr ""
-
-#: runtime_errors\value_error.py:43
-msgid ""
-"Unpacking is a convenient way to assign a name,\n"
-"to each item of an iterable.\n"
 msgstr ""
 
 #: runtime_errors\value_error.py:90 runtime_errors\value_error.py:99

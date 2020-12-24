@@ -691,6 +691,7 @@ def test_Object_is_not_subscriptable():
 
     def f():
         pass
+
     try:
         a = f[1]
     except Exception as e:
@@ -715,6 +716,23 @@ def test_Object_is_not_iterable():
     assert "TypeError: 'int' object is not iterable" in result
     if friendly_traceback.get_lang() == "en":
         assert "An iterable is required here." in result
+    return result, message
+
+
+def test_Cannot_unpack_non_iterable_object():
+    try:
+        a, b = 42.0
+    except Exception as e:
+        friendly_traceback.explain_traceback(redirect="capture")
+        message = str(e)
+    result = friendly_traceback.get_output()
+    assert not "debug_warning" in result, "Internal error found."
+    assert (
+        "TypeError: cannot unpack non-iterable float object" in result
+        or "TypeError: 'float' object is not iterable" in result
+    )
+    if friendly_traceback.get_lang() == "en":
+        assert "An iterable is an object capable" in result
     return result, message
 
 
