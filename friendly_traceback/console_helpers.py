@@ -5,8 +5,9 @@ console_helpers.py
 Functions that can be used in a friendly console or in other interactive
 environments such as in a Jupyter notebook.
 
+We suggest to use ``dir()`` to see all possible choices as some might
+not be listed here.
 """
-# TODO: add unit tests for each of these
 
 import friendly_traceback
 
@@ -31,12 +32,13 @@ def show_info():
     if session.saved_info is None:
         print("No recorded traceback\n")
         return
-    print("Recorded traceback information:\n")
-    if session.use_rich:  # will automatically pretty print
-        return session.saved_info
 
     for item in session.saved_info:
-        print(f"{item}: {session.saved_info[item]}")
+        if session.saved_info[item].strip():
+            print(f"{item}:")
+            for line in session.saved_info[item].split("\n"):
+                print("   ", line)
+            print()
 
 
 def more():

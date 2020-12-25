@@ -226,7 +226,9 @@ from the source code.
 
 third_party_choices = """
 Third-party users interested in writing their own formatters
-should consult the detailed *items_in_order* list in formatters.py
+should consult the detailed *items_in_order* list in formatters.py.
+They might also find it useful to type `show_info()` in a
+friendly-console after an exception has been raised.
 """
 
 

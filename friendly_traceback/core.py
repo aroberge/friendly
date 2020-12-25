@@ -32,17 +32,17 @@ from . import utils
 from . import debug_helper
 
 from .my_gettext import current_lang
-from .source_cache import cache, highlight_source
 from .path_info import is_excluded_file, EXCLUDED_FILE_PATH, path_utils
-from .utils import get_significant_tokens
+from .source_cache import cache, highlight_source
 from .syntax_errors import analyze_syntax
+from .utils import get_significant_tokens
+
+from .runtime_errors import name_error
 
 try:
     import executing
-
-    executing_available = True
 except ImportError:
-    executing_available = False
+    pass  # ignore errors when processed by Sphinx
 
 
 class TracebackData:
@@ -72,8 +72,8 @@ class TracebackData:
         self.node_text = ""
         self.node_range = None
         self.original_bad_line = ""
-        if not issubclass(etype, SyntaxError) and executing_available:
-            self.use_executing()
+        if not issubclass(etype, SyntaxError):
+            self.locate_error()
 
     def get_records(self, tb):
         """Get the traceback frame history, excluding those originating
@@ -138,14 +138,40 @@ class TracebackData:
         """
         self.simulated_python_traceback = tb
 
-    def use_executing(self):
-        """If executing is present, try to use it to extract
-        potentially useful information about the specific location
-        where the exception was raised."""
+    def locate_error(self):
+        """Attempts to narrow down the location of the error."""
         self.node_text = ""
         self.node_range = None
         if not self.records:
             return
+
+        # 1) If we can find the precise location (node) on a line of code
+        #    causing the exception, we note this location
+        #    so that we can indicate it later with ^^^^^, something like:
+        #
+        #    20:     b = tuple(range(50))
+        #    21:     try:
+        # -->22:         print(a[50], b[0])
+        #                      ^^^^^
+        #    23:     except Exception as e:
+        #
+        # If the node spans the entire line, we do not bother to indicate
+        # its specific location.
+        #
+        # 2) Sometimes, a node will span multiple lines. For example,
+        #    line 22 shown above might have been written as:
+        #
+        #    print(a[
+        #            50], b[0])
+        #
+        # If that is the case, we rewrite the node as a single line.
+        #
+        # Other than for NameError, we replace our definition (text) of
+        # the line that caused the exception by that of the node itself,
+        # to be used later for processing.
+        if self.exception_name == "NameError":
+            # `executing` cannot give us location in this case
+            return self.locate_name_error()
 
         tb = self.tb
         while True:
@@ -154,33 +180,6 @@ class TracebackData:
             tb = tb.tb_next
             if not tb:
                 return
-
-        # TODO: for name error, use tokenize to find out the
-        # location of the unknown name
-
-        # The code below does the following:
-        #
-        # 1) If we can find the node causing the exception as part
-        # of the line where the exception is found, we note this location
-        # so that we can indicate it later with something like:
-        #    20:     b = tuple(range(50))
-        #    21:     try:
-        # -->22:         print(a[50], b[0])
-        #                      ^^^^^
-        #    23:     except Exception as e:
-        # If the node spans the entire line, we do not bother to indicate
-        # its specific location.
-        #
-        # 2) Sometimes, a node will span multiple lines. For example,
-        # line 22 shown above might have been written as:
-        #     print(a[
-        #            50], b[0])
-        #
-        # If that is the case, we rewrite the node as a single line.
-        #
-        # In both cases, we replace our definition (text) of the line that
-        # caused the exception by that of the node itself, to be used
-        # later for processing.
 
         try:
             ex = executing.Source.executing(tb)
@@ -205,6 +204,15 @@ class TracebackData:
         except Exception as e:
             debug_helper.log("Exception raised in TracebackData.use_executing.")
             debug_helper.log(str(e))
+
+    def locate_name_error(self):
+        """Finds the location of an unknown name"""
+        name, _ignore = name_error.get_unknown_name(self.message)
+
+        if name is not None and name in self.bad_line:
+            begin = self.bad_line.find(name)
+            end = begin + len(name)
+            self.node_range = begin, end
 
 
 # ====================

@@ -14,24 +14,36 @@ def get_cause(value, frame, tb_data):
         "https://github.com/aroberge/friendly-traceback/issues\n"
     )
     hint = None
-    message = str(value)
 
+    name, fn = get_unknown_name(str(value))
+    if name is not None:
+        return fn(name, frame, tb_data)
+
+    return cause, hint
+
+
+def get_unknown_name(message):
+    """Retrieves the value of the unknown name from a message and identifies
+    which function must be called for further processing.
+
+    Note that this function is also used in core.py, for a different purpose.
+    """
     pattern = re.compile(r"name '(.*)' is not defined")
     match = re.search(pattern, message)
     if match:
-        cause, hint = name_not_defined(match.group(1), frame, tb_data)
+        return match.group(1), name_not_defined
 
     pattern2 = re.compile(
         r"free variable '(.*)' referenced before assignment in enclosing scope"
     )
     match = re.search(pattern2, message)
     if match:
-        cause, hint = free_variable_referenced(match.group(1))
+        return match.group(1), free_variable_referenced
 
-    return cause, hint
+    return None, None
 
 
-def free_variable_referenced(unknown_name):
+def free_variable_referenced(unknown_name, *args):
     _ = current_lang.translate
     cause = _(
         "In your program, `{var_name}` is an unknown name\n"
