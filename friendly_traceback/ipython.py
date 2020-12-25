@@ -11,44 +11,23 @@ from friendly_traceback import (
     install,
     exclude_file_from_traceback,
     explain_traceback,
-    set_lang,
     set_formatter,
 )
-from friendly_traceback.console import (
-    explain,
-    friendly_tb,
-    hint,
-    more,
-    python_tb,
-    what,
-    where,
-    why,
-)
+from friendly_traceback.console_helpers import *  # noqa
+from friendly_traceback.console_helpers import helpers  # noqa
+
+
+__all__ = list(helpers.keys())
+__all__.append("set_formatter")
 
 shell.InteractiveShell.showtraceback = lambda self, *args, **kwargs: explain_traceback()
 shell.InteractiveShell.showsyntaxerror = (
     lambda self, *args, **kwargs: explain_traceback()
 )
 
-
 exclude_file_from_traceback(shell.__file__)
 exclude_file_from_traceback(compilerop.__file__)
-
 install(include="friendly_tb")
 
-
-__all__ = [
-    "explain",
-    "friendly_tb",
-    "hint",
-    "more",
-    "python_tb",
-    "set_lang",
-    "set_formatter",
-    "what",
-    "where",
-    "why",
-]
 set_formatter("repl")
-
-print("Friendly-traceback installed.")
+print("Friendly-traceback installed; using 'repl' formatter.")
