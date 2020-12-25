@@ -30,4 +30,4 @@ exclude_file_from_traceback(compilerop.__file__)
 install(include="friendly_tb")
 
 set_formatter("repl")
-print("Friendly-traceback installed; using 'repl' formatter.")
+print("Friendly-traceback installed.")
