@@ -49,15 +49,24 @@ def more():
     explain("more")
 
 
-def what(exception=None):
+def what(exception=None, pre=False):
     """If known, shows the generic explanation about a given exception."""
-    if exception is not None:
-        if hasattr(exception, "__name__"):
-            exception = exception.__name__
-        result = get_generic_explanation(exception)
-        session.write_err(result)
+    if exception is None:
+        explain("what")
         return
-    explain("what")
+
+    if hasattr(exception, "__name__"):
+        exception = exception.__name__
+    result = get_generic_explanation(exception)
+
+    if pre:  # for documentation
+        lines = result.split("\n")
+        for line in lines:
+            session.write_err("    " + line + "\n")
+        session.write_err("\n")
+    else:
+        session.write_err(result)
+    return
 
 
 def where():

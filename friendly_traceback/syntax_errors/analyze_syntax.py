@@ -28,7 +28,7 @@ def set_cause_syntax(etype, value, tb_data):
             cause, hint = find_syntax_error_cause(tb_data)
     except Exception as e:
         debug_helper.log("Exception caught in set_cause_syntax().")
-        debug_helper.log(str(e))
+        debug_helper.log(repr(e))
         cause = _(
             "Exception raised by Friendly-traceback itself.\n"
             "Please report this example to\n"

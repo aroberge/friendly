@@ -9,7 +9,7 @@ from contextlib import redirect_stderr
 
 import friendly_traceback
 
-from friendly_traceback import console
+from friendly_traceback import console_helpers
 
 
 # Make it possible to find docs
@@ -103,7 +103,7 @@ with open(target, "w", encoding="utf8") as out:
             except Exception:
                 continue
             make_title(item)
-            console.what(item, pre=True)
+            console_helpers.what(item, pre=True)
 
 
         write("\n")
@@ -121,4 +121,4 @@ with open(target, "w", encoding="utf8") as out:
             except Exception:
                 continue
             make_title(item)
-            console.what(item, pre=True)
+            console_helpers.what(item, pre=True)

@@ -90,7 +90,6 @@ def index_error():
         "a tuple, or a similar object (sequence), by using an index which\n"
         "does not exists; typically, this is because the index you give\n"
         "is greater than the length of the sequence.\n"
-        "Reminder: the first item of a sequence is at index 0.\n"
     )
 
 

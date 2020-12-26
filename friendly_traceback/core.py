@@ -69,6 +69,7 @@ class TracebackData:
         self.formatted_tb = traceback.format_exception(etype, value, tb)
         self.records = self.get_records(tb)
         self.get_source_info(etype, value)
+        self.node = None
         self.node_text = ""
         self.node_range = None
         self.original_bad_line = ""
@@ -182,7 +183,8 @@ class TracebackData:
                 return
 
         try:
-            ex = executing.Source.executing(tb)
+            self.executing = ex = executing.Source.executing(tb)
+            self.node = ex.node
             self.node_text = ex.text()
             # \n could be a valid newline token or a character within
             # a string; we only want to replace newline tokens.

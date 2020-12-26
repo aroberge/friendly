@@ -712,3 +712,7 @@ def cannot_unpack_non_iterable(message, *args):
         "but not objects of type `{obj_type}`.\n"
     ).format(obj_type=match.group(1))
     return cause, hint
+
+
+# TODO      d = dict(a_list)                                                                                 │
+# │ TypeError: cannot convert dictionary update sequence element #0 to a sequence

@@ -12,6 +12,8 @@ def test_Short_tuple():
     result = friendly_traceback.get_output()
     
     assert "IndexError: tuple index out of range" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "The largest valid index of" in result
     return result, message
 
 
@@ -26,6 +28,8 @@ def test_Long_list():
     result = friendly_traceback.get_output()
     
     assert "IndexError: list index out of range" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "The largest valid index of" not in result  # only if off by 1
     return result, message
 
 

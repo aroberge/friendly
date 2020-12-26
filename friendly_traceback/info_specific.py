@@ -22,7 +22,7 @@ def get_likely_cause(etype, value, frame, tb_data):
             cause, hint = get_cause[etype.__name__](value, frame, tb_data)
     except Exception as e:
         debug_helper.log("Exception caught in get_likely_cause().")
-        debug_helper.log(str(e))
+        debug_helper.log(repr(e))
         cause = _(
             "Exception raised by Friendly-traceback itself.\n"
             "Please report this example to\n"
@@ -74,6 +74,13 @@ def _import_error(value, frame, tb_data):
     from .runtime_errors import import_error
 
     return import_error.get_cause(value, frame, tb_data)
+
+
+@register("IndexError")
+def _index_error(value, frame, tb_data):
+    from .runtime_errors import index_error
+
+    return index_error.get_cause(value, frame, tb_data)
 
 
 @register("KeyError")

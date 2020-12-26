@@ -161,7 +161,7 @@ def debug_f_string(tokens, offset=None):
     ):
         cause = _(
             "You are likely using a syntax of f-strings introduced\n"
-            "in Python version 3.8. You are using version {version}."
+            "in Python version 3.8. You are using version {version}.\n"
         ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
     return cause, hint
 
