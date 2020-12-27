@@ -53,7 +53,7 @@ def parse_can_only_concatenate(message, *args):
     if match is not None:
         cause = _(
             "You tried to concatenate (add) two different types of objects:\n"
-            "{first} and {second}\n"
+            "{first} and {second}.\n"
         ).format(
             first=convert_type(match.group(1)), second=convert_type(match.group(2))
         )
@@ -75,15 +75,43 @@ def parse_must_be_str(message, *args):
     if match is not None:
         cause = _(
             "You tried to concatenate (add) two different types of objects:\n"
-            "{first} and {second}\n"
+            "{first} and {second}.\n"
         ).format(first=convert_type("str"), second=convert_type(match.group(1)))
+    return cause, hint
+
+
+def _convert_str_to_number(obj_type1, obj_type2, operator):
+    """Determines if a suggestion should be made to convert a string to a
+    number type; potentially useful for beginners that write programs
+    that use input() and ask for numbers.
+
+    So, we want to give hints in cases like 'number + string',
+    'string + number', 'number += string', but not 'string += number'
+    """
+    _ = current_lang.translate
+    cause = hint = None
+    types = obj_type1, obj_type2
+    if "str" not in types or obj_type1 == "str" and "=" in operator:
+        return cause, hint
+
+    if not ("int" in types or "float" in types):
+        return cause, hint
+
+    number_type = "int" if "int" in types else "float"
+
+    hint = _("Did you forget to convert {str_type} into {number_type}?\n").format(
+        str_type=convert_type("str"), number_type=convert_type(number_type)
+    )
+    cause = _("Perhaps you forgot to convert {str_type} into {number_type}.\n").format(
+        str_type=convert_type("str"), number_type=convert_type(number_type)
+    )
     return cause, hint
 
 
 @add_message_parser
 def parse_unsupported_operand_type(message, frame, tb_data):
     _ = current_lang.translate
-    cause = hint = None
+    more_cause = cause = hint = None
     # example: unsupported operand type(s) for +: 'int' and 'str'
     pattern = re.compile(
         r"unsupported operand type\(s\) for (.+): [\'\"](\w+)[\'\"] and [\'\"](\w+)[\'\"]"
@@ -97,43 +125,49 @@ def parse_unsupported_operand_type(message, frame, tb_data):
 
     all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
     operator = match.group(1)
+    obj_type1 = match.group(2)
+    obj_type2 = match.group(3)
     if operator in ["+", "+="]:
         cause = _(
             "You tried to add two incompatible types of objects:\n"
-            "{first} and {second}\n"
-        ).format(
-            first=convert_type(match.group(2)), second=convert_type(match.group(3))
+            "{first} and {second}.\n"
+        ).format(first=convert_type(obj_type1), second=convert_type(obj_type2))
+        more_cause, possible_hint = _convert_str_to_number(
+            obj_type1, obj_type2, operator
         )
     elif operator in ["-", "-="]:
         cause = _(
             "You tried to subtract two incompatible types of objects:\n"
-            "{first} and {second}\n"
-        ).format(
-            first=convert_type(match.group(2)), second=convert_type(match.group(3))
+            "{first} and {second}.\n"
+        ).format(first=convert_type(obj_type1), second=convert_type(obj_type2))
+        more_cause, possible_hint = _convert_str_to_number(
+            obj_type1, obj_type2, operator
         )
     elif operator in ["*", "*="]:
         cause = _(
             "You tried to multiply two incompatible types of objects:\n"
-            "{first} and {second}\n"
-        ).format(
-            first=convert_type(match.group(2)), second=convert_type(match.group(3))
+            "{first} and {second}.\n"
+        ).format(first=convert_type(obj_type1), second=convert_type(obj_type2))
+        more_cause, possible_hint = _convert_str_to_number(
+            obj_type1, obj_type2, operator
         )
     elif operator in ["/", "//", "/=", "//="]:
         cause = _(
             "You tried to divide two incompatible types of objects:\n"
-            "{first} and {second}\n"
-        ).format(
-            first=convert_type(match.group(2)), second=convert_type(match.group(3))
+            "{first} and {second}.\n"
+        ).format(first=convert_type(obj_type1), second=convert_type(obj_type2))
+        more_cause, possible_hint = _convert_str_to_number(
+            obj_type1, obj_type2, operator
         )
     elif operator in ["&", "|", "^", "&=", "|=", "^="]:
         cause = _(
             "You tried to perform the bitwise operation {operator}\n"
             "on two incompatible types of objects:\n"
-            "{first} and {second}\n"
+            "{first} and {second}.\n"
         ).format(
             operator=operator,
-            first=convert_type(match.group(2)),
-            second=convert_type(match.group(3)),
+            first=convert_type(obj_type1),
+            second=convert_type(obj_type2),
         )
         if "^" in operator:
             can_exponentiate = True
@@ -153,19 +187,20 @@ def parse_unsupported_operand_type(message, frame, tb_data):
         cause = _(
             "You tried to perform the bit shifting operation {operator}\n"
             "on two incompatible types of objects:\n"
-            "{first} and {second}\n"
+            "{first} and {second}.\n"
         ).format(
             operator=operator,
-            first=convert_type(match.group(2)),
-            second=convert_type(match.group(3)),
+            first=convert_type(obj_type1),
+            second=convert_type(obj_type2),
         )
     elif operator == "** or pow()":
         cause = _(
             "You tried to exponentiate (raise to a power)\n"
             "using two incompatible types of objects:\n"
-            "{first} and {second}\n"
-        ).format(
-            first=convert_type(match.group(2)), second=convert_type(match.group(3))
+            "{first} and {second}.\n"
+        ).format(first=convert_type(obj_type1), second=convert_type(obj_type2))
+        more_cause, possible_hint = _convert_str_to_number(
+            obj_type1, obj_type2, operator
         )
     elif operator in ["@", "@="]:
         cause = _(
@@ -176,9 +211,13 @@ def parse_unsupported_operand_type(message, frame, tb_data):
             "for multiplication of matrices.\n"
         ).format(
             operator=operator,
-            first=convert_type(match.group(2)),
-            second=convert_type(match.group(3)),
+            first=convert_type(obj_type1),
+            second=convert_type(obj_type2),
         )
+
+    if more_cause is not None:
+        cause += more_cause
+        hint = possible_hint
     return cause, hint
 
 
@@ -196,7 +235,7 @@ def parse_order_comparison(message, *args):
         cause = _(
             "You tried to do an order comparison ({operator})\n"
             "between two incompatible types of objects:\n"
-            "{first} and {second}\n"
+            "{first} and {second}.\n"
         ).format(
             operator=match.group(1),
             first=convert_type(match.group(2)),
