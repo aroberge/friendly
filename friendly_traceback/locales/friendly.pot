@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-26 08:04-0400\n"
+"POT-Creation-Date: 2020-12-27 08:39-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -567,18 +567,18 @@ msgid ""
 "a second time, before Python had completed the first import.\n"
 msgstr ""
 
-#: runtime_errors\index_error.py:72
+#: runtime_errors\index_error.py:63
 msgid ""
 "You have tried to get the item with index `{index}` of `{name}`,\n"
 "{obj_type} of length `{length}`.\n"
 msgstr ""
 
-#: runtime_errors\index_error.py:83
+#: runtime_errors\index_error.py:74
 msgid ""
 "The largest valid index of `{name}` is `{index}`.\n"
 msgstr ""
 
-#: runtime_errors\index_error.py:86
+#: runtime_errors\index_error.py:77
 msgid ""
 "Remember: the first item of {obj_type} is at index 0.\n"
 msgstr ""
@@ -1037,6 +1037,18 @@ msgid ""
 "An iterable is an object capable of returning its members one at a time.\n"
 "Python containers (`list, tuple, dict`, etc.) are iterables,\n"
 "but not objects of type `{obj_type}`.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:724
+msgid ""
+"{function} does not accept a sequence as an argument.\n"
+"Instead of writing `{line}`\n"
+"perhaps you should use the `dict.fromkeys()` method: `{new_line}`.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:729
+msgid ""
+"Perhaps you need to use the `dict.fromkeys()` method.\n"
 msgstr ""
 
 #: runtime_errors\unbound_local_error.py:46

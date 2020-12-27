@@ -55,19 +55,10 @@ def index_out_of_range(obj_type, frame, tb_data):
 
     length = len(sequence)
     evaluator = pure_eval.Evaluator.from_frame(frame)
-
     try:
         index = evaluator[node.slice.value]
     except TypeError:  # Python 3.10.0a3
         index = evaluator[node.slice]
-
-    # if isinstance(node.slice, ast.Constant):  # Python 3.10(.0a3)
-    #     index = evaluator[node.slice]
-    # elif isinstance(node.slice.value, ast.Constant):  # Python 3.6-3.9
-    #     index = evaluator[node.slice.value]
-    # else:
-    #     debug_helper.log("cannot get ast.Constant from node in index_out_of_range().")
-    #     return cause, hint
 
     cause = _(
         "You have tried to get the item with index `{index}` of `{name}`,\n"

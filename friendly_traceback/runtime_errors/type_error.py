@@ -714,5 +714,34 @@ def cannot_unpack_non_iterable(message, *args):
     return cause, hint
 
 
-# TODO      d = dict(a_list)                                                                                 │
-# │ TypeError: cannot convert dictionary update sequence element #0 to a sequence
+@add_message_parser
+def cannot_convert_dictionary_update_sequence(message, frame, tb_data):
+    _ = current_lang.translate
+    cause = hint = None
+    if "cannot convert dictionary update sequence element" not in message:
+        return cause, hint
+
+    possible_cause = _(
+        "{function} does not accept a sequence as an argument.\n"
+        "Instead of writing `{line}`\n"
+        "perhaps you should use the `dict.fromkeys()` method: `{new_line}`.\n"
+    )
+    possible_hint = _("Perhaps you need to use the `dict.fromkeys()` method.\n")
+
+    bad_line = tb_data.bad_line
+    if bad_line.startswith("dict("):
+        cause = possible_cause.format(
+            function="`dict()`",
+            line=bad_line,
+            new_line=bad_line.replace("dict(", "dict.fromkeys(", 1),
+        )
+        hint = possible_hint
+    elif ".update(" in bad_line:
+        cause = possible_cause.format(
+            function="`dict.update()`",
+            line=bad_line,
+            new_line=bad_line.replace(".update(", ".update( dict.fromkeys(", 1) + " )",
+        )
+        hint = possible_hint
+
+    return cause, hint
