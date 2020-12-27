@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-27 10:10-0400\n"
-"PO-Revision-Date: 2020-12-27 10:12-0400\n"
+"POT-Creation-Date: 2020-12-27 12:00-0400\n"
+"PO-Revision-Date: 2020-12-27 12:02-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -404,7 +404,7 @@ msgstr ""
 "à l’aide de l’opérateur modulo '%'\n"
 "    `résultat = ma_variable % 0`\n"
 
-#: info_specific.py:26 syntax_errors\analyze_syntax.py:32
+#: info_specific.py:26 syntax_errors\analyze_syntax.py:36
 msgid ""
 "Exception raised by Friendly-traceback itself.\n"
 "Please report this example to\n"
@@ -629,11 +629,11 @@ msgstr ""
 "Vous vouliez peut-être plutôt écrire quelque chose comme `'...'."
 "join({obj_name})`.\n"
 
-#: runtime_errors\attribute_error.py:245
+#: runtime_errors\attribute_error.py:246
 msgid "Did you mean `{known_builtin}({obj_name})`?\n"
 msgstr "Vouliez-vous utiliser `{known_builtin}({obj_name})` ?\n"
 
-#: runtime_errors\attribute_error.py:248
+#: runtime_errors\attribute_error.py:249
 msgid ""
 "The object `{obj_name}` has no attribute named `{attribute}`.\n"
 "Perhaps you can use the Python builtin function `{known_builtin}` instead:\n"
@@ -644,20 +644,20 @@ msgstr ""
 "à la place:\n"
 "`{known_builtin}({obj_name})`."
 
-#: runtime_errors\attribute_error.py:281
+#: runtime_errors\attribute_error.py:282
 msgid "Did you mean `{attr}`?\n"
 msgstr "Vouliez-vous dire `{attr}` ?\n"
 
-#: runtime_errors\attribute_error.py:283
+#: runtime_errors\attribute_error.py:284
 msgid "The object `{name}` has no attribute named `{attribute}`.\n"
 msgstr "L’objet `{name}` n’a pas d’attribut nommé `{attribute}`.\n"
 
-#: runtime_errors\attribute_error.py:288
+#: runtime_errors\attribute_error.py:289
 msgid "However, `{attr}` is an attribute of `{name}` with a similar meaning.\n"
 msgstr ""
 "Cependant, `{attr}` est un attribut de `{name}` avec une sens similaire.\n"
 
-#: runtime_errors\attribute_error.py:292
+#: runtime_errors\attribute_error.py:293
 msgid ""
 "However, `{name}` has the following attributes with similar meanings:\n"
 "`{attributes}`.\n"
@@ -665,11 +665,11 @@ msgstr ""
 "Toutefois, `{name}` a les attributs suivants avec des sens similaires:\n"
 "'{attributes}'.\n"
 
-#: runtime_errors\attribute_error.py:303
+#: runtime_errors\attribute_error.py:304
 msgid "Did you mean to separate object names by a comma?\n"
 msgstr "Vouliez-vous séparer les noms d’objets par une virgule ?\n"
 
-#: runtime_errors\attribute_error.py:305
+#: runtime_errors\attribute_error.py:306
 msgid ""
 "`{second}` is not an attribute of `{first}`.\n"
 "However, both `{first}` and `{second}` are known objects.\n"
@@ -1455,7 +1455,7 @@ msgstr ""
 "Dans ce cas-ci, il y a moins de noms ({nb_names})\n"
 "que la longueur de l’itérable, {iter_type} de longueur {length}.\n"
 
-#: syntax_errors\analyze_syntax.py:45
+#: syntax_errors\analyze_syntax.py:49
 msgid ""
 "In this case, the line identified above\n"
 "is more indented than expected and \n"
@@ -1465,7 +1465,7 @@ msgstr ""
 "est plus indentée que ce qui était attendu et ne\n"
 "correspond pas à l'indentation de la ligne précédente.\n"
 
-#: syntax_errors\analyze_syntax.py:51
+#: syntax_errors\analyze_syntax.py:55
 msgid ""
 "In this case, the line identified above\n"
 "was expected to begin a new indented block.\n"
@@ -1473,7 +1473,7 @@ msgstr ""
 "Dans ce cas-ci, la ligne indiquée ci-dessus par --> devrait\n"
 "normalement commencer un nouveau bloc de code indenté.\n"
 
-#: syntax_errors\analyze_syntax.py:56
+#: syntax_errors\analyze_syntax.py:60
 msgid ""
 "In this case, the line identified above is\n"
 "less indented than the preceding one,\n"
@@ -1483,7 +1483,7 @@ msgstr ""
 "est moins indentée que la ligne précédente\n"
 "et n’est pas alignée verticalement avec un autre bloc de code.\n"
 
-#: syntax_errors\analyze_syntax.py:134
+#: syntax_errors\analyze_syntax.py:138
 msgid ""
 "Python gave us the following informative message\n"
 "about the possible cause of the error:\n"
@@ -1504,7 +1504,7 @@ msgstr ""
 "mais il est possible que me trompe.\n"
 "\n"
 
-#: syntax_errors\analyze_syntax.py:142
+#: syntax_errors\analyze_syntax.py:146
 msgid ""
 "I make an effort below to guess what caused the problem\n"
 "but I might guess incorrectly.\n"
@@ -1514,7 +1514,7 @@ msgstr ""
 "tromper.\n"
 "\n"
 
-#: syntax_errors\analyze_syntax.py:167
+#: syntax_errors\analyze_syntax.py:171
 msgid ""
 "Currently, I cannot guess the likely cause of this error.\n"
 "Try to examine closely the line indicated as well as the line\n"
@@ -1808,29 +1808,43 @@ msgstr ""
 "Je crois que vous essayez de lever une exception en utilisant la syntaxe de "
 "Python 2.\n"
 
-#: syntax_errors\line_analyzer.py:552
+#: syntax_errors\line_analyzer.py:553
 msgid "Valid names cannot begin with a number.\n"
 msgstr "Les noms valides ne peuvent pas commencer par un chiffre.\n"
 
-#: syntax_errors\line_analyzer.py:554
+#: syntax_errors\line_analyzer.py:555
+msgid "[Note: `{first}` is a complex number.]\n"
+msgstr "[N.B.: `{first}` est un nombre complexe.]\n"
+
+#: syntax_errors\line_analyzer.py:561
 msgid "Did you mean `{number}j`?\n"
 msgstr "Vouliez-vous dire `{number}j` ?\n"
 
-#: syntax_errors\line_analyzer.py:573
+#: syntax_errors\line_analyzer.py:562
+msgid ""
+"Perhaps you thought that `i` could be used to represent\n"
+"the square root of -1. In Python, `j` (or `1j`) is used for this\n"
+"and perhaps you meant to write `{number}j`.\n"
+msgstr ""
+"Peut-être pensiez-vous que `i` pouvait être utilisé pour représenter\n"
+"la racine carrée de -1. Dans Python, `j` (ou `1j`) est utilisé pour ceci\n"
+"et peut-être que vous vouliez écrire `{number}j`.\n"
+
+#: syntax_errors\line_analyzer.py:580
 msgid "Perhaps you forgot a multiplication operator, `{first} * {second}`.\n"
 msgstr ""
 "Peut-être avez-vous oublié un opérateur de multiplication, `{first} * "
 "{second}`.\n"
 
-#: syntax_errors\line_analyzer.py:597
+#: syntax_errors\line_analyzer.py:606
 msgid "Did you mean `{number} j`?\n"
 msgstr "Vouliez-vous dire `{number} j` ?\n"
 
-#: syntax_errors\line_analyzer.py:610
+#: syntax_errors\line_analyzer.py:619
 msgid "Did you forget something between `{first}` and `{second}`?\n"
 msgstr "Avez-vous oublié quelque chose entre `{first}` et `{second}` ?\n"
 
-#: syntax_errors\line_analyzer.py:614
+#: syntax_errors\line_analyzer.py:623
 msgid ""
 "Python indicates that the error is caused by `{second}` written just after "
 "`{first}`.\n"
@@ -1842,7 +1856,7 @@ msgstr ""
 "Peut-être avez-vous oublié une virgule ou un opérateur, comme `+`, `*`, "
 "`in`, etc., entre `{first}` et `{second}`.\n"
 
-#: syntax_errors\line_analyzer.py:624
+#: syntax_errors\line_analyzer.py:633
 msgid ""
 "Or perhaps you forgot that you cannot have spaces\n"
 "in variable names.\n"
@@ -1850,7 +1864,7 @@ msgstr ""
 "Ou peut-être avez-vous oublié que vous ne pouvez pas\n"
 "avoir d'espaces dans des noms variables.\n"
 
-#: syntax_errors\line_analyzer.py:638
+#: syntax_errors\line_analyzer.py:647
 msgid ""
 "The double star operator `**` is likely interpreted to mean that\n"
 "dict unpacking is to be used which does not make sense here.\n"

@@ -547,16 +547,23 @@ def invalid_name(tokens, offset=None):
     if len(tokens) < 2:
         return cause, hint
 
+    note = None
     for first, second in zip(tokens, tokens[1:]):
         if first.is_number() and second.is_identifier() and first.end == second.start:
             cause = _("Valid names cannot begin with a number.\n")
+            if first.string.lower().endswith("j"):
+                note = _("[Note: `{first}` is a complex number.]\n").format(
+                    first=first.string
+                )
+                second.string = first.string[-1] + second.string
+                first.string = first.string[:-1]
             if second == "i" and first != tokens[0]:
                 hint = _("Did you mean `{number}j`?\n").format(number=first.string)
-                cause += (
+                cause += _(
                     "Perhaps you thought that `i` could be used to represent\n"
                     "the square root of -1. In Python, `j` (or `1j`) is used for this\n"
                     "and perhaps you meant to write `{number}j`.\n"
-                )
+                ).format(number=first.string)
                 return cause, hint
             break
 
@@ -578,6 +585,8 @@ def invalid_name(tokens, offset=None):
                 else:
                     hint = cause
                 break
+    if note is not None:
+        cause += "\n" + note
     return cause, hint
 
 
