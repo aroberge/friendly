@@ -4,6 +4,10 @@ Collection of functions useful attempting to determine the
 cause of a SyntaxError and providing a somewhat detailed explanation.
 """
 
+# TODO:  2.join(...) is interpreted as 2.j oin
+# need to check for this case and to not suggest to add a multiplication
+# operator.
+
 
 from friendly_traceback.my_gettext import current_lang
 from friendly_traceback.source_cache import cache

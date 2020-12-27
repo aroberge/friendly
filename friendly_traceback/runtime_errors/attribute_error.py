@@ -8,6 +8,7 @@ from ..my_gettext import current_lang
 from ..utils import get_similar_words, list_to_string
 from ..path_info import path_utils
 from .. import info_variables
+from .. import debug_helper
 from . import stdlib_modules
 
 
@@ -149,16 +150,16 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
 
     obj = info_variables.get_object_from_name(obj_type, frame)
     if obj is None:
-        print("object is None")
-        return cause, hint  # TODO: provide message
+        debug_helper.log("obj is None in attribute_error_in_object.")
+        return cause, hint
 
     all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
     for obj_name, instance in all_objects:
         if isinstance(instance, obj) or instance == obj:
             break
     else:
-        print("object is not on bad_line")
-        return cause, hint  # TODO: provide message
+        debug_helper.log("object is not on bad_line in attribute_error_in_object.")
+        return cause, hint
 
     known_attributes = dir(instance)
 
@@ -166,6 +167,11 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
     known_builtin = perhaps_builtin(attribute, known_attributes)
     if known_builtin:
         return use_builtin_function(obj_name, attribute, known_builtin)
+
+    if attribute == "join":
+        join = perhaps_join(obj)
+        if join:
+            return use_str_join(obj_name)
 
     # Example: both "this" and "that" are known objects
     # this.that -> this, that
@@ -225,6 +231,16 @@ def perhaps_builtin(attribute, known_attributes):
         return "len"
 
 
+def use_str_join(obj_name):
+    _ = current_lang.translate
+    hint = _("Did you mean `'...'.join({obj_name})`?\n").format(obj_name=obj_name)
+    cause = _(
+        "The object `{obj_name}` has no attribute named `join`.\n"
+        "Perhaps you wanted something like `'...'.join({obj_name})`.\n"
+    ).format(obj_name=obj_name)
+    return cause, hint
+
+
 def use_builtin_function(obj_name, attribute, known_builtin):
     _ = current_lang.translate
     hint = _("Did you mean `{known_builtin}({obj_name})`?\n").format(
@@ -236,6 +252,13 @@ def use_builtin_function(obj_name, attribute, known_builtin):
         "`{known_builtin}({obj_name})`."
     ).format(known_builtin=known_builtin, obj_name=obj_name, attribute=attribute)
     return cause, hint
+
+
+def perhaps_join(obj):
+    if hasattr(obj, "__iter__") or (
+        hasattr(obj, "__getitem__") and hasattr(obj, "__len__")
+    ):
+        return True
 
 
 def perhaps_synonym(attribute, known_attributes):
