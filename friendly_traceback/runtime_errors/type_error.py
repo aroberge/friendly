@@ -10,8 +10,7 @@ from ..my_gettext import current_lang
 from .. import utils
 from .. import info_variables
 
-# To be replaced by external dependency
-from .. import token_utils
+import token_utils
 
 convert_type = info_variables.convert_type
 MESSAGES_PARSERS = []

@@ -38,8 +38,7 @@ from .runtime_errors import name_error
 from .source_cache import cache, highlight_source
 from .syntax_errors import analyze_syntax
 
-# To be replaced by external dependency
-from . import token_utils
+import token_utils
 
 try:
     import executing

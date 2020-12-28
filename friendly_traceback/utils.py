@@ -6,8 +6,7 @@ import difflib
 
 from . import debug_helper
 
-# To be replaced by external dependency
-from . import token_utils
+import token_utils
 
 
 def tokenize_source(source):

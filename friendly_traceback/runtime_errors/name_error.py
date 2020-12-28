@@ -3,8 +3,7 @@ import re
 from ..my_gettext import current_lang
 from .. import info_variables
 
-# To be replaced by external dependency
-from .. import token_utils
+import token_utils
 
 
 def get_cause(value, frame, tb_data):
