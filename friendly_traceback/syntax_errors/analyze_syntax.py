@@ -2,6 +2,18 @@
 
 Collection of functions useful attempting to determine the
 cause of a SyntaxError and providing a somewhat detailed explanation.
+
+In an ideal world, one would write a custom parser for Python, extending
+the existing one with enhanced error messages about where in the parsing
+process a SyntaxError occurred, what kind of token was expected, etc.,
+and use that information to give feedback to users.
+
+Unfortunately, we do not live in such a world.
+
+Friendly-traceback uses some ad-hoc heuristics to analyze the information
+given by Python or the code itself and makes an attempt at guessing
+as often as possible what went wrong while trying to avoid giving
+incorrect information.
 """
 
 

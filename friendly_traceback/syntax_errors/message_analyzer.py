@@ -3,6 +3,7 @@
 Collection of functions that examine SyntaxError messages and
 return relevant information to users.
 """
+import __future__
 import ast
 import re
 import sys
@@ -926,5 +927,75 @@ def you_found_it(message="", **kwargs):
         "This is a message that was added in Python 3.9\n"
         "to prevent redefining `__peg_parser__`.\n"
         "It should not be present in other versions.\n"
+    )
+    return cause, hint
+
+
+@add_python_message
+def from__future__not_defined(message="", **kwargs):
+    _ = current_lang.translate
+    cause = hint = None
+    pattern = re.compile(r"future feature (.*) is not defined")
+    match = re.search(pattern, message)
+    if match is None:
+        return cause, hint
+
+    names = __future__.all_feature_names
+    available = _("The available features are `{names}`.\n").format(
+        names=utils.list_to_string(names)
+    )
+    feature = match.group(1)
+    if feature == "*":
+        cause = _(
+            "When using a `from __future__ import` statement,\n"
+            "you must import specific named features.\n"
+        )
+        cause += "\n" + available
+
+    else:
+        names = __future__.all_feature_names
+        similar = utils.get_similar_words(feature, names)
+        if similar:
+            hint = _("Did you mean `{name}`?\n").format(name=similar[0])
+            cause = _(
+                "Instead of `{feature}`, perhaps you meant to import `{name}`.\n"
+            ).format(feature=feature, name=similar[0])
+        else:
+            cause = _(
+                "`{feature}` is not a valid feature of module `__future__`.\n"
+            ).format(feature=feature)
+            cause += "\n" + available
+
+    return cause, hint
+
+
+@add_python_message
+def from__future__at_begin(message="", **kwargs):
+    _ = current_lang.translate
+    cause = hint = None
+    if message != "from __future__ imports must occur at the beginning of the file":
+        return cause, hint
+
+    cause = _(
+        "A `from __future__ import` statement changes the way Python\n"
+        "interprets the code in a file.\n"
+        "It must appear at the beginning of the file."
+    )
+
+    return cause, hint
+
+
+@add_python_message
+def import_braces(message="", **kwargs):
+    _ = current_lang.translate
+    cause = hint = None
+    if message != "not a chance":
+        return cause, hint
+
+    cause = _(
+        "I suspect you wrote `from __future__ import braces` following\n"
+        "someone else's suggestion. This will never work.\n\n"
+        "Unlike other programming languages, Python's code block are defined by\n"
+        "their indentation level, and not by using some curly braces, like `{...}`.\n"
     )
     return cause, hint

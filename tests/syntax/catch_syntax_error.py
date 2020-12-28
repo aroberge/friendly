@@ -103,6 +103,11 @@ causes = {
     "raise_syntax_error87": "Seriously",
     "raise_syntax_error88": "replace `*` by either `*arguments` or ",
     "raise_syntax_error89": "Did you mean `3.0 j`",
+    "raise_syntax_error90": "you must import specific named features",
+    "raise_syntax_error91": "Did you mean `division`",
+    "raise_syntax_error92": "print_function",
+    "raise_syntax_error93": "from __future__ import braces",
+    "raise_syntax_error94": "It must appear at the beginning of the file.",
 }
 
 if sys.version_info < (3, 8):
