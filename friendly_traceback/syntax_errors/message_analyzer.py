@@ -6,7 +6,6 @@ return relevant information to users.
 import ast
 import re
 import sys
-import tokenize
 
 from keyword import kwlist
 
@@ -395,10 +394,10 @@ def delete_function_call(message="", line=None, **kwargs):
     ):
         tokens = utils.tokenize_source(line)
         if (
-            tokens[0].string == "del"
-            and tokens[1].type == tokenize.NAME
-            and tokens[2].string == "("
-            and tokens[-1].string == ")"
+            tokens[0] == "del"
+            and tokens[1].is_name()
+            and tokens[2] == "("
+            and tokens[-1] == ")"
         ):
             correct = "del {name}".format(name=tokens[1].string)
         else:

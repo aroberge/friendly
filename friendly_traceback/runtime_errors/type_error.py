@@ -263,7 +263,7 @@ def bad_operand_type_for_unary(message, frame, tb_data):
         if index > 0:
             tokens = utils.tokenize_source(tb_data.original_bad_line)
             if (
-                tokens[index - 1].string == "="
+                tokens[index - 1] == "="
                 and tokens[index - 1].end_col == tokens[index].start_col
             ):
                 hint = _(

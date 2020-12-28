@@ -178,7 +178,7 @@ def get_dotted_names(line):
     dot_found = False
     tokens = utils.tokenize_source(line)
     for tok in tokens:
-        if tok.string == ".":
+        if tok == ".":
             dot_found = True
             continue
         if tok.is_identifier():

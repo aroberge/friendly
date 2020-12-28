@@ -188,10 +188,13 @@ class TracebackData:
             self.executing = ex = executing.Source.executing(tb)
             self.node = ex.node
             self.node_text = ex.text()
+            # We want to transform logical line (or parts thereof) into
+            # something that fits on a single physical line.
             # \n could be a valid newline token or a character within
             # a string; we only want to replace newline tokens.
             if "\n" in self.node_text:
-                tokens = token_utils.get_significant_tokens(self.node_text)
+                tokens = token_utils.tokenize(self.node_text)
+                tokens = [tok for tok in tokens if tok != "\n"]
                 self.node_text = "".join(tok.string for tok in tokens)
             _bad_line = token_utils.strip_comment(self.bad_line)
             if (

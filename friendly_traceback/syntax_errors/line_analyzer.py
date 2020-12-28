@@ -4,7 +4,6 @@
 """
 from keyword import kwlist
 import sys
-import tokenize
 
 from .. import debug_helper
 from .. import utils
@@ -103,7 +102,7 @@ def copy_pasted_code(tokens, **kwargs):
     cause = hint = None
     if len(tokens) < 2:
         return cause, hint
-    if tokens[0].string == ">>" and tokens[1].string == ">":
+    if tokens[0] == ">>" and tokens[1] == ">":
         cause = _(
             "It looks like you copy-pasted code from an interactive interpreter.\n"
             "The Python prompt, `>>>`, should not be included in your code.\n"
@@ -193,7 +192,7 @@ def assign_to_a_keyword(tokens, **kwargs):
     """Checks to see if line is of the form 'keyword = ...'"""
     _ = current_lang.translate
     cause = hint = None
-    if len(tokens) < 2 or (tokens[0].string not in kwlist) or tokens[1].string != "=":
+    if len(tokens) < 2 or (tokens[0].string not in kwlist) or tokens[1] != "=":
         return cause, hint
 
     cause = _(
@@ -209,9 +208,9 @@ def confused_elif(tokens, **kwargs):
     _ = current_lang.translate
     cause = hint = None
     name = None
-    if tokens[0].string == "elseif":
+    if tokens[0] == "elseif":
         name = "elseif"
-    elif tokens[0].string == "else" and len(tokens) > 1 and tokens[1].string == "if":
+    elif tokens[0] == "else" and len(tokens) > 1 and tokens[1] == "if":
         name = "else if"
     if name:
         hint = _("Perhaps you meant to write `elif`.\n")
@@ -229,10 +228,9 @@ def import_from(tokens, **kwargs):
     cause = hint = None
     if len(tokens) < 4:
         return cause, hint
-    if tokens[0].string != "import":
+    if tokens[0] != "import":
         return cause, hint
-    third = tokens[2].string
-    if third == "from":
+    if tokens[2] == "from":
         function = tokens[1].string
         module = tokens[3].string
         hint = _("Did you mean `from {module} import {function}`?\n").format(
@@ -286,7 +284,7 @@ def misplaced_quote(tokens, **kwargs):
         return cause, hint
     prev = tokens[0]
     for token in tokens:
-        if prev.type == tokenize.STRING and token.type == tokenize.NAME:
+        if prev.is_string() and token.is_name():
             hint = _("Perhaps you misplaced a quote.\n")
             cause = _(
                 "There appears to be a Python identifier (variable name)\n"
@@ -340,7 +338,7 @@ def missing_colon(tokens, **kwargs):
     _ = current_lang.translate
     cause = hint = None
 
-    if tokens[-1].string == ":":
+    if tokens[-1] == ":":
         return cause, hint
 
     if not is_potential_statement(tokens):
@@ -382,18 +380,18 @@ def malformed_def(tokens, **kwargs):
     the information passed looks like a complete statement"""
     _ = current_lang.translate
     cause = hint = None
-    if tokens[0].string != "def":
+    if tokens[0] != "def":
         return cause, hint
 
     if not is_potential_statement(tokens):
         return cause, hint
 
-    if len(tokens) >= 3 and tokens[1].is_identifier() and tokens[2].string == ":":
+    if len(tokens) >= 3 and tokens[1].is_identifier() and tokens[2] == ":":
         hint = _("Perhaps you forgot parentheses.\n")
     # need at least five tokens: def name ( ) :
     if (
         len(tokens) < 5
-        or tokens[1].type != tokenize.NAME
+        or not tokens[1].is_name()
         or tokens[2].string != "("
         or tokens[-2].string != ")"
         or tokens[-1].string != ":"
@@ -474,11 +472,11 @@ def malformed_def(tokens, **kwargs):
 def print_as_statement(tokens, **kwargs):
     _ = current_lang.translate
     cause = hint = None
-    if tokens[0].string != "print":
+    if tokens[0] != "print":
         return cause, hint
 
     # TODO: add hint
-    if len(tokens) == 1 or tokens[1].string != "(":
+    if len(tokens) == 1 or tokens[1] != "(":
         cause = _(
             "In older version of Python, `print` was a keyword.\n"
             "Now, `print` is a function; you need to use parentheses to call it.\n"
@@ -490,8 +488,7 @@ def print_as_statement(tokens, **kwargs):
 def calling_pip(tokens, **kwargs):
     _ = current_lang.translate
     cause = hint = None
-    first = tokens[0].string
-    if first not in ["pip", "python"]:
+    if tokens[0].string not in ["pip", "python"]:
         return cause, hint
 
     use_pip = _(
@@ -501,7 +498,7 @@ def calling_pip(tokens, **kwargs):
     )
 
     for tok in tokens:
-        if tok.string == "pip":
+        if tok == "pip":
             hint = _("Pip cannot be used in a Python interpreter.\n")
             return use_pip, hint
     return cause, hint
@@ -526,7 +523,7 @@ def dot_followed_by_bracket(tokens, offset=None):
 def raise_single_exception(tokens, offset=None):
     _ = current_lang.translate
     cause = hint = None
-    if tokens[0].string != "raise":
+    if tokens[0] != "raise":
         return cause, hint
     bad_token, ignore = find_offending_token(tokens, offset)
     if bad_token is None:

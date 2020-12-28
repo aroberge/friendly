@@ -84,6 +84,10 @@ class Token:
         """
         return self.string.isidentifier() and not self.is_keyword()
 
+    def is_name(self):
+        """Returns ``True`` if the token is a type NAME"""
+        return self.type == py_tokenize.NAME
+
     def is_keyword(self):
         """Returns True if the token represents a Python keyword."""
         return keyword.iskeyword(self.string)
