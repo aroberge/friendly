@@ -86,16 +86,16 @@ def look_for_mismatched_brackets(
         ):
             return
 
-        if token.string not in "()[]}{":
+        if token.is_not_in("()[]}{"):
             continue
-        if token.string in "([{":
+        if token.is_in("([{"):
             brackets.append((token.string, token.start_row, token.start_col))
-        elif token.string in ")]}":
+        elif token.is_in(")]}"):
             # In some of the cases below, we include the offending lines at the
             # bottom of the error message as they might not be shown in the
             # partial source included in the traceback.
             if not brackets:
-                bracket = name_bracket(token.string)
+                bracket = name_bracket(token)
                 _lineno = token.start_row
                 _source = f"\n    {_lineno}: {source_lines[_lineno-1]}"
                 shift = len(str(_lineno)) + token.start_col + 6
@@ -109,8 +109,8 @@ def look_for_mismatched_brackets(
                 )
             else:
                 open_bracket, open_lineno, open_col = brackets.pop()
-                if not matching_brackets(open_bracket, token.string):
-                    bracket = name_bracket(token.string)
+                if not matching_brackets(open_bracket, token):
+                    bracket = name_bracket(token)
                     open_bracket = name_bracket(open_bracket)
                     _source = f"\n    {open_lineno}: {source_lines[open_lineno-1]}"
                     shift = len(str(open_lineno)) + open_col + 6
@@ -184,7 +184,7 @@ def look_for_missing_bracket(
             or token.start_row > max_linenumber
         ):
             # We are beyond the location flagged by Python;
-            if (previous_token.string == "=" or token.string == "=") and brackets:
+            if (previous_token == "=" or token == "=") and brackets:
                 _open_bracket, _start_row, _start_col = brackets.pop()
                 if _open_bracket == "{":
                     return _(
@@ -198,11 +198,11 @@ def look_for_missing_bracket(
             break
 
         # We are not beyond the location flagged by Python
-        if token.string not in "()[]}{":
+        if token.is_not_in("()[]}{"):
             continue
-        if token.string in "([{":
+        if token.is_in("([{"):
             brackets.append((token.string, token.start_row, token.start_col))
-        elif token.string in ")]}":
+        elif token.is_in(")]}"):
             # In some of the cases below, we include the offending lines at the
             # bottom of the error message as they might not be shown in the
             # partial source included in the traceback.
@@ -212,7 +212,7 @@ def look_for_missing_bracket(
                 return False
             else:
                 open_bracket, open_lineno, open_col = brackets.pop()
-                if not matching_brackets(open_bracket, token.string):
+                if not matching_brackets(open_bracket, token):
                     debug_helper.log("source_analyzer.look_for_missing_bracket()")
                     debug_helper.log("No matching bracket.")
                     return False

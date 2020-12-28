@@ -2,7 +2,6 @@
    analyze a single line of code which has been identified
    as containing a syntax error with the message "invalid syntax".
 """
-from keyword import kwlist
 import sys
 
 from .. import debug_helper
@@ -192,14 +191,14 @@ def assign_to_a_keyword(tokens, **kwargs):
     """Checks to see if line is of the form 'keyword = ...'"""
     _ = current_lang.translate
     cause = hint = None
-    if len(tokens) < 2 or (tokens[0].string not in kwlist) or tokens[1] != "=":
+    if len(tokens) < 2 or (not tokens[0].is_keyword()) or tokens[1] != "=":
         return cause, hint
 
     cause = _(
         "You were trying to assign a value to the Python keyword `{keyword}`.\n"
         "This is not allowed.\n"
         "\n"
-    ).format(keyword=tokens[0].string)
+    ).format(keyword=tokens[0])
     return cause, hint
 
 
@@ -231,8 +230,8 @@ def import_from(tokens, **kwargs):
     if tokens[0] != "import":
         return cause, hint
     if tokens[2] == "from":
-        function = tokens[1].string
-        module = tokens[3].string
+        function = tokens[1]
+        module = tokens[3]
         hint = _("Did you mean `from {module} import {function}`?\n").format(
             module=module, function=function
         )
@@ -252,10 +251,9 @@ def keyword_as_attribute(tokens, **kwargs):
     _ = current_lang.translate
     cause = hint = None
     prev_word = None
-    for token in tokens:
-        word = token.string
+    for word in tokens:
         if prev_word == ".":
-            if word in kwlist:
+            if word.is_keyword():
                 cause = _(
                     "You cannot use the Python keyword `{word}` as an attribute.\n\n"
                 ).format(word=word)
@@ -303,15 +301,15 @@ def assign_instead_of_equal(tokens, offset=None):
     an equal sign, '==', in an if or elif statement."""
     _ = current_lang.translate
     cause = hint = None
-    if tokens[0].string not in ["if", "elif", "while"]:
+    if not tokens[0].is_in(["if", "elif", "while"]):
         return cause, hint
 
     bad_token, ignore = find_offending_token(tokens, offset)
     equal = _("Perhaps you needed `==` instead of `=`.\n")
     equal_or_walrus = _("Perhaps you needed `==` or `:=` instead of `=`.\n")
     if bad_token == "=":
-        statement = tokens[0].string
-        if statement in ["if", "elif"]:
+        statement = tokens[0]
+        if statement.is_in(["if", "elif"]):
             cause = _(
                 "You used an assignment operator `=` instead of an equality operator `==` \n"
                 "with an `{if_elif}` statement.\n"
@@ -344,7 +342,7 @@ def missing_colon(tokens, **kwargs):
     if not is_potential_statement(tokens):
         return cause, hint
 
-    name = tokens[0].string
+    name = tokens[0]
 
     forgot_a_colon = _("Perhaps you forgot a colon `:`.\n")
 
@@ -356,14 +354,14 @@ def missing_colon(tokens, **kwargs):
             "\n"
         ).format(class_=name)
         hint = forgot_a_colon
-    elif name in ["for", "while"]:
+    elif name.is_in(["for", "while"]):
         cause = _(
             "You wrote a `{for_while}` loop but\n"
             "forgot to add a colon `:` at the end\n"
             "\n"
         ).format(for_while=name)
         hint = forgot_a_colon
-    elif name in ["def", "elif", "else", "except", "finally", "if", "try"]:
+    elif name.is_in(["def", "elif", "else", "except", "finally", "if", "try"]):
         cause = _(
             "You wrote a statement beginning with\n"
             "`{name}` but forgot to add a colon `:` at the end\n"
@@ -392,9 +390,9 @@ def malformed_def(tokens, **kwargs):
     if (
         len(tokens) < 5
         or not tokens[1].is_name()
-        or tokens[2].string != "("
-        or tokens[-2].string != ")"
-        or tokens[-1].string != ":"
+        or tokens[2] != "("
+        or tokens[-2] != ")"
+        or tokens[-1] != ":"
     ):
         name = _("a function or method")
         cause = _(
@@ -406,8 +404,8 @@ def malformed_def(tokens, **kwargs):
         ).format(class_or_function=name)
         return cause, hint
 
-    fn_name = tokens[1].string
-    if fn_name in kwlist:
+    fn_name = tokens[1]
+    if fn_name.is_keyword():
         cause = _(
             "You tried to use the Python keyword `{kwd}` as a function name.\n"
         ).format(kwd=fn_name)
@@ -433,21 +431,20 @@ def malformed_def(tokens, **kwargs):
         # def test(a=None ...) nor
         # def test(a=(None,...)) nor
         # def test(a = [1, None])
-        char = tok.string
-        if char == "(":
+        if tok == "(":
             parens += 1
-        elif char == ")":
+        elif tok == ")":
             parens -= 1
-        elif char == "[":
+        elif tok == "[":
             brackets += 1
-        elif char == "]":
+        elif tok == "]":
             brackets -= 1
-        elif char == "{":
+        elif tok == "{":
             curly += 1
-        elif char == "}":
+        elif tok == "}":
             curly -= 1
 
-        elif char in kwlist and (
+        elif tok.is_keyword() and (
             (prev_token_str == "(" and index == 3)  # first argument
             or (
                 parens % 2 == 1
@@ -460,11 +457,11 @@ def malformed_def(tokens, **kwargs):
                 _(
                     "I am guessing that you tried to use the Python keyword\n"
                     "`{kwd}` as an argument in the definition of a function.\n"
-                ).format(kwd=char),
+                ).format(kwd=tok),
                 None,
             )
             # break
-        prev_token_str = char
+        prev_token_str = tok
     return cause, hint
 
 
@@ -488,7 +485,7 @@ def print_as_statement(tokens, **kwargs):
 def calling_pip(tokens, **kwargs):
     _ = current_lang.translate
     cause = hint = None
-    if tokens[0].string not in ["pip", "python"]:
+    if not tokens[0].is_in(["pip", "python"]):
         return cause, hint
 
     use_pip = _(
@@ -512,9 +509,9 @@ def dot_followed_by_bracket(tokens, offset=None):
     if bad_token is None or index == 0:
         return cause, hint
     prev_token = tokens[index - 1]
-    if bad_token.string in ["(", ")", "[", "]", "{", "}"] and prev_token == ".":
+    if bad_token.is_in(["(", ")", "[", "]", "{", "}"]) and prev_token == ".":
         cause = _("You cannot have a dot `.` followed by `{bracket}`.\n").format(
-            bracket=bad_token.string
+            bracket=bad_token
         )
     return cause, hint
 
@@ -548,19 +545,17 @@ def invalid_name(tokens, offset=None):
     for first, second in zip(tokens, tokens[1:]):
         if first.is_number() and second.is_identifier() and first.end == second.start:
             cause = _("Valid names cannot begin with a number.\n")
-            if first.string.lower().endswith("j"):
-                note = _("[Note: `{first}` is a complex number.]\n").format(
-                    first=first.string
-                )
+            if first.is_complex():
+                note = _("[Note: `{first}` is a complex number.]\n").format(first=first)
                 second.string = first.string[-1] + second.string
                 first.string = first.string[:-1]
             if second == "i" and first != tokens[0]:
-                hint = _("Did you mean `{number}j`?\n").format(number=first.string)
+                hint = _("Did you mean `{number}j`?\n").format(number=first)
                 cause += _(
                     "Perhaps you thought that `i` could be used to represent\n"
                     "the square root of -1. In Python, `j` (or `1j`) is used for this\n"
                     "and perhaps you meant to write `{number}j`.\n"
-                ).format(number=first.string)
+                ).format(number=first)
                 return cause, hint
             break
 
@@ -577,7 +572,7 @@ def invalid_name(tokens, offset=None):
                     hint = _(
                         "Perhaps you forgot a multiplication operator,"
                         " `{first} * {second}`.\n"
-                    ).format(first=first.string, second=second.string)
+                    ).format(first=first, second=second)
                     cause = cause + hint
                 else:
                     hint = cause
@@ -600,12 +595,12 @@ def missing_comma_or_operator(tokens, offset=None):
 
     for first, second in zip(tokens, tokens[1:]):
         if first.is_number() and second == "i":
-            hint = _("Did you mean `{number} j`?\n").format(number=first.string)
+            hint = _("Did you mean `{number} j`?\n").format(number=first)
             cause = (
                 "Perhaps you thought that `i` could be used to represent\n"
                 "the square root of -1. In Python, `j` (or `1j`) is used for this\n"
                 "and perhaps you meant to write `{number} j`.\n"
-            ).format(number=first.string)
+            ).format(number=first)
             return cause, hint
         if (
             (first.is_number() or first.is_identifier() or first.is_string())
@@ -615,14 +610,14 @@ def missing_comma_or_operator(tokens, offset=None):
 
             hint = _(
                 "Did you forget something between `{first}` and `{second}`?\n"
-            ).format(first=first.string, second=second.string)
+            ).format(first=first, second=second)
 
             cause = _(
                 "Python indicates that the error is caused by "
                 "`{second}` written just after `{first}`.\n"
                 "Perhaps you forgot a comma or an operator, like `+`, `*`, `in`, etc., "
                 "between `{first}` and `{second}`.\n"
-            ).format(first=first.string, second=second.string)
+            ).format(first=first, second=second)
 
             if first == tokens[0]:
                 for tok in tokens:

@@ -7,8 +7,6 @@ import ast
 import re
 import sys
 
-from keyword import kwlist
-
 from . import source_analyzer
 from .. import debug_helper
 from .. import utils
@@ -104,8 +102,8 @@ def assign_to_keyword(message="", line="", **kwargs):
     else:
         tokens = utils.tokenize_source(line)
         for token in tokens:
-            word = token.string
-            if word in kwlist or word == "__debug__":
+            if token.is_keyword() or token == "__debug__":
+                word = token.string
                 break
         else:
             debug_helper.log("Problem in analyze_syntax.assign_to_keyword")
@@ -399,7 +397,7 @@ def delete_function_call(message="", line=None, **kwargs):
             and tokens[2] == "("
             and tokens[-1] == ")"
         ):
-            correct = "del {name}".format(name=tokens[1].string)
+            correct = "del {name}".format(name=tokens[1])
         else:
             line = "del function()"
             correct = "del function"

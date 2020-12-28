@@ -128,6 +128,14 @@ class Token:
         """Returns True if the token is a string"""
         return self.type == py_tokenize.STRING
 
+    def is_in(self, iterable):
+        """Returns True if the string attribute is found as an item of iterable."""
+        return self.string in iterable
+
+    def is_not_in(self, iterable):
+        """Returns True if the string attribute is found as an item of iterable."""
+        return self.string not in iterable
+
 
 def find_token_by_position(tokens, row, column):
     """Given a list of tokens, a specific row (linenumber) and column,
