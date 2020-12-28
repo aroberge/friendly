@@ -916,3 +916,18 @@ def named_arguments_must_follow_bare_star(message="", **kwargs):
     )
 
     return cause, hint
+
+
+@add_python_message
+def you_found_it(message="", **kwargs):
+    _ = current_lang.translate
+    cause = hint = None
+    if not message == "You found it!":
+        return cause, hint
+
+    cause = _(
+        "This is a message that was added in Python 3.9\n"
+        "to prevent redefining `__peg_parser__`.\n"
+        "It should not be present in other versions.\n"
+    )
+    return cause, hint

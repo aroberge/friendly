@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-12-27 12:00-0400\n"
+"POT-Creation-Date: 2020-12-28 07:21-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -286,7 +286,7 @@ msgid ""
 "    `result = my_variable % 0`\n"
 msgstr ""
 
-#: info_specific.py:26 syntax_errors\analyze_syntax.py:36
+#: info_specific.py:26 syntax_errors\analyze_syntax.py:32
 msgid ""
 "Exception raised by Friendly-traceback itself.\n"
 "Please report this example to\n"
@@ -1136,27 +1136,27 @@ msgid ""
 "than the length of the iterable, {iter_type} of length {length}.\n"
 msgstr ""
 
-#: syntax_errors\analyze_syntax.py:49
+#: syntax_errors\analyze_syntax.py:45
 msgid ""
 "In this case, the line identified above\n"
 "is more indented than expected and \n"
 "does not match the indentation of the previous line.\n"
 msgstr ""
 
-#: syntax_errors\analyze_syntax.py:55
+#: syntax_errors\analyze_syntax.py:51
 msgid ""
 "In this case, the line identified above\n"
 "was expected to begin a new indented block.\n"
 msgstr ""
 
-#: syntax_errors\analyze_syntax.py:60
+#: syntax_errors\analyze_syntax.py:56
 msgid ""
 "In this case, the line identified above is\n"
 "less indented than the preceding one,\n"
 "and is not aligned vertically with another block of code.\n"
 msgstr ""
 
-#: syntax_errors\analyze_syntax.py:138
+#: syntax_errors\analyze_syntax.py:134
 msgid ""
 "Python gave us the following informative message\n"
 "about the possible cause of the error:\n"
@@ -1168,14 +1168,14 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\analyze_syntax.py:146
+#: syntax_errors\analyze_syntax.py:142
 msgid ""
 "I make an effort below to guess what caused the problem\n"
 "but I might guess incorrectly.\n"
 "\n"
 msgstr ""
 
-#: syntax_errors\analyze_syntax.py:171
+#: syntax_errors\analyze_syntax.py:167
 msgid ""
 "Currently, I cannot guess the likely cause of this error.\n"
 "Try to examine closely the line indicated as well as the line\n"
@@ -1906,6 +1906,13 @@ msgid ""
 "Assuming you were defining a function, you need\n"
 "to replace `*` by either `*arguments` or\n"
 "by `*, named_argument=value`.\n"
+msgstr ""
+
+#: syntax_errors\message_analyzer.py:928
+msgid ""
+"This is a message that was added in Python 3.9\n"
+"to prevent redefining `__peg_parser__`.\n"
+"It should not be present in other versions.\n"
 msgstr ""
 
 #: syntax_errors\source_analyzer.py:126

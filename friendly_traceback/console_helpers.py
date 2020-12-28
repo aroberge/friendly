@@ -13,6 +13,7 @@ import friendly_traceback
 
 from . import debug_helper
 from .config import session
+from .formatters import items_in_order
 from .info_generic import get_generic_explanation
 from .path_info import show_paths
 
@@ -28,17 +29,20 @@ def explain(include="explain"):
 
 
 def show_info():
-    """Debugging tool: shows the complete content of traceback info."""
-    if session.saved_info is None:
-        print("No recorded traceback\n")
-        return
+    """Debugging tool: shows the complete content of traceback info.
 
-    for item in session.saved_info:
-        if session.saved_info[item].strip():
+    Prints ``None`` for a given item if it is not present.
+    """
+    info = session.saved_info if session.saved_info is not None else []
+
+    for item in items_in_order:
+        if item in info and info[item].strip():
             print(f"{item}:")
-            for line in session.saved_info[item].split("\n"):
+            for line in info[item].split("\n"):
                 print("   ", line)
             print()
+        else:
+            print(f"{item}: None")
 
 
 def more():

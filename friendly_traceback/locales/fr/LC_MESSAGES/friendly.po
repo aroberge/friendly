@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-27 12:00-0400\n"
-"PO-Revision-Date: 2020-12-27 12:02-0400\n"
+"POT-Creation-Date: 2020-12-28 07:21-0400\n"
+"PO-Revision-Date: 2020-12-28 07:22-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -404,7 +404,7 @@ msgstr ""
 "à l’aide de l’opérateur modulo '%'\n"
 "    `résultat = ma_variable % 0`\n"
 
-#: info_specific.py:26 syntax_errors\analyze_syntax.py:36
+#: info_specific.py:26 syntax_errors\analyze_syntax.py:32
 msgid ""
 "Exception raised by Friendly-traceback itself.\n"
 "Please report this example to\n"
@@ -1455,7 +1455,7 @@ msgstr ""
 "Dans ce cas-ci, il y a moins de noms ({nb_names})\n"
 "que la longueur de l’itérable, {iter_type} de longueur {length}.\n"
 
-#: syntax_errors\analyze_syntax.py:49
+#: syntax_errors\analyze_syntax.py:45
 msgid ""
 "In this case, the line identified above\n"
 "is more indented than expected and \n"
@@ -1465,7 +1465,7 @@ msgstr ""
 "est plus indentée que ce qui était attendu et ne\n"
 "correspond pas à l'indentation de la ligne précédente.\n"
 
-#: syntax_errors\analyze_syntax.py:55
+#: syntax_errors\analyze_syntax.py:51
 msgid ""
 "In this case, the line identified above\n"
 "was expected to begin a new indented block.\n"
@@ -1473,7 +1473,7 @@ msgstr ""
 "Dans ce cas-ci, la ligne indiquée ci-dessus par --> devrait\n"
 "normalement commencer un nouveau bloc de code indenté.\n"
 
-#: syntax_errors\analyze_syntax.py:60
+#: syntax_errors\analyze_syntax.py:56
 msgid ""
 "In this case, the line identified above is\n"
 "less indented than the preceding one,\n"
@@ -1483,7 +1483,7 @@ msgstr ""
 "est moins indentée que la ligne précédente\n"
 "et n’est pas alignée verticalement avec un autre bloc de code.\n"
 
-#: syntax_errors\analyze_syntax.py:138
+#: syntax_errors\analyze_syntax.py:134
 msgid ""
 "Python gave us the following informative message\n"
 "about the possible cause of the error:\n"
@@ -1504,7 +1504,7 @@ msgstr ""
 "mais il est possible que me trompe.\n"
 "\n"
 
-#: syntax_errors\analyze_syntax.py:146
+#: syntax_errors\analyze_syntax.py:142
 msgid ""
 "I make an effort below to guess what caused the problem\n"
 "but I might guess incorrectly.\n"
@@ -1514,7 +1514,7 @@ msgstr ""
 "tromper.\n"
 "\n"
 
-#: syntax_errors\analyze_syntax.py:171
+#: syntax_errors\analyze_syntax.py:167
 msgid ""
 "Currently, I cannot guess the likely cause of this error.\n"
 "Try to examine closely the line indicated as well as the line\n"
@@ -2525,6 +2525,16 @@ msgstr ""
 "En supposant que vous définissiez une fonction, vous avez besoin\n"
 "de remplacer `*` soit par `*arguments` ou\n"
 "par `*, argument=valeur`.\n"
+
+#: syntax_errors\message_analyzer.py:928
+msgid ""
+"This is a message that was added in Python 3.9\n"
+"to prevent redefining `__peg_parser__`.\n"
+"It should not be present in other versions.\n"
+msgstr ""
+"Ceci est un message qui a été ajouté dans la version 3.9 de Python\n"
+"pour éviter de redéfinir `__peg_parser__`.\n"
+"Il ne devrait pas être présent dans les autres versions.\n"
 
 #: syntax_errors\source_analyzer.py:126
 msgid ""
