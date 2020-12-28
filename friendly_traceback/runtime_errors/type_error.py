@@ -10,6 +10,8 @@ from ..my_gettext import current_lang
 from .. import utils
 from .. import info_variables
 
+# To be replaced by external dependency
+from .. import token_utils
 
 convert_type = info_variables.convert_type
 MESSAGES_PARSERS = []
@@ -255,7 +257,9 @@ def bad_operand_type_for_unary(message, frame, tb_data):
         # The user might have written something like "=+" instead of
         # "+="
         operator = match.group(1)
-        index = utils.find_substring_index(tb_data.original_bad_line, tb_data.bad_line)
+        index = token_utils.find_substring_index(
+            tb_data.original_bad_line, tb_data.bad_line
+        )
         if index > 0:
             tokens = utils.tokenize_source(tb_data.original_bad_line)
             if (

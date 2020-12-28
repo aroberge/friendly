@@ -49,7 +49,8 @@ def scan_source(source_lines=None, linenumber=0, offset=0):
     """
     if not source_lines:
         return
-    source_tokens = utils.tokenize_source_lines(source_lines)
+    source = "".join(source_lines)
+    source_tokens = utils.tokenize_source(source)
     cause = look_for_mismatched_brackets(
         source_tokens=source_tokens,
         source_lines=source_lines,
@@ -73,7 +74,8 @@ def look_for_mismatched_brackets(
 ):
     _ = current_lang.translate
     if source_tokens is None:
-        source_tokens = utils.tokenize_source_lines(source_lines)
+        source = "".join(source_lines)
+        source_tokens = utils.tokenize_source(source)
 
     brackets = []
     for token in source_tokens:
@@ -162,7 +164,8 @@ def look_for_missing_bracket(
     """
     _ = current_lang.translate
     if source_tokens is None:
-        source_tokens = utils.tokenize_source_lines(source_lines)
+        source = "".join(source_lines)
+        source_tokens = utils.tokenize_source(source)
     brackets = []
     will_be_previous = None
     previous_token = None

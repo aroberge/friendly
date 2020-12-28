@@ -28,16 +28,18 @@ from itertools import dropwhile
 from . import info_generic
 from . import info_specific
 from . import info_variables
-from . import utils
 from . import debug_helper
 
 from .my_gettext import current_lang
+
+# TODO: see if EXCLUDED_FILE_PATH can be removed
 from .path_info import is_excluded_file, EXCLUDED_FILE_PATH, path_utils
+from .runtime_errors import name_error
 from .source_cache import cache, highlight_source
 from .syntax_errors import analyze_syntax
-from .utils import get_significant_tokens
 
-from .runtime_errors import name_error
+# To be replaced by external dependency
+from . import token_utils
 
 try:
     import executing
@@ -189,9 +191,9 @@ class TracebackData:
             # \n could be a valid newline token or a character within
             # a string; we only want to replace newline tokens.
             if "\n" in self.node_text:
-                tokens = get_significant_tokens(self.node_text)
+                tokens = token_utils.get_significant_tokens(self.node_text)
                 self.node_text = "".join(tok.string for tok in tokens)
-            _bad_line = utils.strip_comment(self.bad_line)
+            _bad_line = token_utils.strip_comment(self.bad_line)
             if (
                 self.node_text
                 and self.node_text in self.bad_line
