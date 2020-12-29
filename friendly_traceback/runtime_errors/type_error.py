@@ -81,7 +81,7 @@ def parse_must_be_str(message, *args):
     return cause, hint
 
 
-def _convert_str_to_number(obj_type1, obj_type2, operator):
+def _convert_str_to_number(obj_type1, obj_type2, operator, frame, tb_data):
     """Determines if a suggestion should be made to convert a string to a
     number type; potentially useful for beginners that write programs
     that use input() and ask for numbers.
@@ -95,17 +95,30 @@ def _convert_str_to_number(obj_type1, obj_type2, operator):
     if "str" not in types or obj_type1 == "str" and "=" in operator:
         return cause, hint
 
-    if not ("int" in types or "float" in types):
+    if not ("int" in types or "float" in types or "complex" in types):
         return cause, hint
 
-    number_type = "int" if "int" in types else "float"
+    types_str = ["int", "float", "complex"]
+    types_fn = [int, float, complex]
 
-    hint = _("Did you forget to convert {str_type} into {number_type}?\n").format(
-        str_type=convert_type("str"), number_type=convert_type(number_type)
-    )
-    cause = _("Perhaps you forgot to convert {str_type} into {number_type}.\n").format(
-        str_type=convert_type("str"), number_type=convert_type(number_type)
-    )
+    all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
+    for name, obj in all_objects:
+        if isinstance(obj, str):
+            for number_type, fn in zip(types_str, types_fn):
+                try:
+                    fn(obj)
+                    break
+                except Exception:
+                    pass
+            else:
+                return cause, hint
+
+    hint = _(
+        "Did you forget to convert the string `{name}` into {number_type}?\n"
+    ).format(name=name, number_type=convert_type(number_type))
+    cause = _(
+        "Perhaps you forgot to convert the string `{name}` into {number_type}.\n"
+    ).format(name=name, number_type=convert_type(number_type))
     return cause, hint
 
 
@@ -134,7 +147,7 @@ def parse_unsupported_operand_type(message, frame, tb_data):
             "{first} and {second}.\n"
         ).format(first=convert_type(obj_type1), second=convert_type(obj_type2))
         more_cause, possible_hint = _convert_str_to_number(
-            obj_type1, obj_type2, operator
+            obj_type1, obj_type2, operator, frame, tb_data
         )
     elif operator in ["-", "-="]:
         cause = _(
@@ -142,7 +155,7 @@ def parse_unsupported_operand_type(message, frame, tb_data):
             "{first} and {second}.\n"
         ).format(first=convert_type(obj_type1), second=convert_type(obj_type2))
         more_cause, possible_hint = _convert_str_to_number(
-            obj_type1, obj_type2, operator
+            obj_type1, obj_type2, operator, frame, tb_data
         )
     elif operator in ["*", "*="]:
         cause = _(
@@ -150,7 +163,7 @@ def parse_unsupported_operand_type(message, frame, tb_data):
             "{first} and {second}.\n"
         ).format(first=convert_type(obj_type1), second=convert_type(obj_type2))
         more_cause, possible_hint = _convert_str_to_number(
-            obj_type1, obj_type2, operator
+            obj_type1, obj_type2, operator, frame, tb_data
         )
     elif operator in ["/", "//", "/=", "//="]:
         cause = _(
@@ -158,7 +171,7 @@ def parse_unsupported_operand_type(message, frame, tb_data):
             "{first} and {second}.\n"
         ).format(first=convert_type(obj_type1), second=convert_type(obj_type2))
         more_cause, possible_hint = _convert_str_to_number(
-            obj_type1, obj_type2, operator
+            obj_type1, obj_type2, operator, frame, tb_data
         )
     elif operator in ["&", "|", "^", "&=", "|=", "^="]:
         cause = _(
@@ -201,7 +214,7 @@ def parse_unsupported_operand_type(message, frame, tb_data):
             "{first} and {second}.\n"
         ).format(first=convert_type(obj_type1), second=convert_type(obj_type2))
         more_cause, possible_hint = _convert_str_to_number(
-            obj_type1, obj_type2, operator
+            obj_type1, obj_type2, operator, frame, tb_data
         )
     elif operator in ["@", "@="]:
         cause = _(

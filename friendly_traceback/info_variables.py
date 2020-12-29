@@ -447,7 +447,7 @@ def name_has_type_hint(name, frame):
 
     type_hint_found_in_scope = _(
         "A type hint found for `{name}` in the {scope} scope.\n"
-        "Perhaps you had used a colon instead of an equal sign and written\n\n"
+        "Perhaps you had used a colon instead of an equal sign and wrote\n\n"
         "    {name} : {hint}\n\n"
         "instead of\n\n"
         "    {name} = {hint}\n"

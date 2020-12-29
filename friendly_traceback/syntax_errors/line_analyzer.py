@@ -8,6 +8,8 @@ from .. import debug_helper
 from .. import utils
 from ..my_gettext import current_lang
 
+import token_utils
+
 
 def count_char(tokens, char):
     """Counts how many times a given character appears in a list of tokens"""
@@ -582,6 +584,40 @@ def invalid_name(tokens, offset=None):
     return cause, hint
 
 
+def _add_operator(tokens, first):
+    first_string = first.string
+    results = []
+    for operator in ",", " +", " -", " *", " in":
+        if operator == " in" and results:
+            break
+        new_tokens = []
+        for tok in tokens:
+            if tok == first:
+                tok.string = tok.string + operator
+            new_tokens.append(tok)
+        line = token_utils.untokenize(new_tokens).strip()
+        add_pass = False
+        try:
+            if line.endswith(":"):
+                line += " pass"
+                add_pass = True
+            compile(line, "fake-file", "exec")
+            if add_pass:
+                line = line[:-5]
+            if operator == ",":
+                operator = '","'
+            results.append((operator.strip(), line))
+        except Exception:
+            pass
+        first.string = first_string
+
+    return results
+
+
+def perhaps_misspelled_keyword(tokens, first, second):
+    pass
+
+
 @add_line_analyzer
 def missing_comma_or_operator(tokens, offset=None):
     """Check to see if a comma or other operator
@@ -614,29 +650,71 @@ def missing_comma_or_operator(tokens, offset=None):
             and (second.is_number() or second.is_identifier() or second.is_string())
             and second.start_col <= offset <= second.end_col
         ):
-
-            hint = _(
-                "Did you forget something between `{first}` and `{second}`?\n"
-            ).format(first=first, second=second)
-
             cause = _(
                 "Python indicates that the error is caused by "
-                "`{second}` written just after `{first}`.\n"
-                "Perhaps you forgot a comma or an operator, like `+`, `*`, `in`, etc., "
-                "between `{first}` and `{second}`.\n"
+                "`{second}` written immediately after `{first}`.\n"
             ).format(first=first, second=second)
+            results = _add_operator(tokens, first)
+            if results:
+                if len(results) == 1:
+                    operator, line = results[0]
+                    hint = _("Did you mean `{line}`?\n").format(line=line)
+                    cause += _(
+                        "Perhaps you meant to write `{operator}` between\n"
+                        "`{first}` and `{second}`:\n\n"
+                        "    {line}\n"
+                        "which would not cause a `SyntaxError`.\n"
+                    ).format(first=first, second=second, line=line, operator=operator)
+                else:
+                    operators = [operator for operator, line in results]
+                    lines = [line for operator, line in results]
 
-            # User might want to define "my name = 'Python'"
+                    hint = _(
+                        "Did you forget something between `{first}` and `{second}`?\n"
+                    ).format(first=first, second=second)
+
+                    cause += _(
+                        "Perhaps you meant to insert an operator like `{operators}`\n"
+                        "between `{first}` and `{second}`.\n"
+                        "The following lines of code would not cause any `SyntaxError`:\n\n"
+                    ).format(
+                        first=first,
+                        second=second,
+                        operators=utils.list_to_string(operators),
+                    )
+                    for line in lines:
+                        cause += f"    {line}\n"
+
+                    cause += _("Note: these are just some of the possible choices.\n")
+            else:
+                # Add case here where we replace either first or second by a Python keyword
+                cause = _(
+                    "Perhaps you forgot to write something between `{first}` and `{second}`\n"
+                ).format(first=first, second=second)
+
             if first == tokens[0]:
+                first_tokens = []
+                line = None
                 for tok in tokens:
                     if tok == "=":
-                        cause += _(
-                            "Or perhaps you forgot that you cannot have spaces\n"
-                            "in variable names.\n"
+                        line = token_utils.untokenize(tokens)
+                        begin, end = line.split("=", 1)
+                        line = "_".join(first_tokens) + " =" + end
+                        cause += (
+                            "\n"
+                            + _(
+                                "Or perhaps you forgot that you cannot have spaces\n"
+                                "in variable names.\n"
+                            )
+                            + f"\n\n    {line}\n"
                         )
                         break
                     elif not tok.is_identifier():
                         break
+                    else:
+                        first_tokens.append(tok.string)
+                if line:
+                    hint = _("Did you mean `{line}`?\n").format(line=line)
             return cause, hint
     return cause, hint
 

@@ -130,19 +130,19 @@ descriptions = {
         title: "Missing comma in a dict",
     },
     "raise_syntax_error26": {
-        cause: "forgot a comma",
+        cause: "The following lines of code",
         title: "Missing comma in a set",
     },
     "raise_syntax_error27": {
-        cause: "forgot a comma",
+        cause: "The following lines of code",
         title: "Missing comma in a list",
     },
     "raise_syntax_error28": {
-        cause: "forgot a comma",
+        cause: "The following lines of code",
         title: "Missing comma in a tuple",
     },
     "raise_syntax_error29": {
-        cause: "forgot a comma",
+        cause: "Did you mean `def a(b, c, d):`",
         title: "Missing comma between function args",
     },
     "raise_syntax_error30": {
@@ -342,8 +342,8 @@ descriptions = {
         title: "Single = instead of double == with while",
     },
     "raise_syntax_error79": {
-        cause: "forgot a comma",
-        title: "Forgot a comma in an f-string",
+        cause: "(x + y)",
+        title: "Forgot an operator in an f-string",
     },
     "raise_syntax_error80": {
         cause: "Valid names cannot begin with a number",

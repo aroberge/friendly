@@ -172,9 +172,9 @@ def test_misplaced_quote():
 
 def test_missing_comma():
     # inside look_for_missing_bracket
-    assert "forgot a comma" in find(lines=["a =[1, 2 3, 4]"], linenumber=1, offset=10)
-    assert "forgot a comma" in find(lines=["a =(1, 2 3, 4)"], linenumber=1, offset=10)
-    assert "forgot a comma" in find(
+    assert "a =[1, 2, 3, 4]" in find(lines=["a =[1, 2 3, 4]"], linenumber=1, offset=10)
+    assert "a =(1, 2, 3, 4)" in find(lines=["a =(1, 2 3, 4)"], linenumber=1, offset=10)
+    assert "def fn(a, b):" in find(
         lines=["def fn(a b):", "pass"], linenumber=1, offset=10
     )
 
