@@ -3,6 +3,11 @@
 import pprint
 import sys
 import friendly_traceback
+import os
+
+cur_dir = os.getcwd()
+sys.path.append(os.path.join(cur_dir, ".."))
+
 import catch_syntax_error
 
 major = sys.version_info.major
@@ -27,7 +32,7 @@ friendly_traceback.set_formatter(formatter=_formatter)
 
 info = {}
 
-for filename in catch_syntax_error.causes:
+for filename in catch_syntax_error.descriptions:
     try:
         exec("import %s" % filename)
     except Exception:

@@ -594,12 +594,19 @@ def missing_comma_or_operator(tokens, offset=None):
         return cause, hint
 
     for first, second in zip(tokens, tokens[1:]):
-        if first.is_number() and second == "i":
-            hint = _("Did you mean `{number} j`?\n").format(number=first)
+        if (
+            first.is_number()
+            and not first.is_complex()  # should not be needed as the preceding
+            # function should have caught this.
+            and second == "i"
+            and first.end == second.start
+        ):
+            hint = _("Did you mean `{number}j`?\n").format(number=first)
             cause = (
                 "Perhaps you thought that `i` could be used to represent\n"
-                "the square root of -1. In Python, `j` (or `1j`) is used for this\n"
-                "and perhaps you meant to write `{number} j`.\n"
+                "the square root of -1.\n"
+                "In Python, `j` immediately following a number is used for this.\n"
+                "Perhaps you meant to write `{number}j`.\n"
             ).format(number=first)
             return cause, hint
         if (
@@ -619,6 +626,7 @@ def missing_comma_or_operator(tokens, offset=None):
                 "between `{first}` and `{second}`.\n"
             ).format(first=first, second=second)
 
+            # User might want to define "my name = 'Python'"
             if first == tokens[0]:
                 for tok in tokens:
                     if tok == "=":
@@ -626,6 +634,8 @@ def missing_comma_or_operator(tokens, offset=None):
                             "Or perhaps you forgot that you cannot have spaces\n"
                             "in variable names.\n"
                         )
+                        break
+                    elif not tok.is_identifier():
                         break
             return cause, hint
     return cause, hint

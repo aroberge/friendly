@@ -8,11 +8,6 @@ from contextlib import redirect_stderr
 import friendly_traceback
 from syntax_errors_descriptions import descriptions
 
-if sys.version_info < (3, 8):
-    descriptions["raise_syntax_error_walrus"][
-        "cause"
-    ] = "Walrus operator does not exist - yet"
-
 
 def write(text):
     sys.stderr.write(text + "\n")
@@ -33,7 +28,6 @@ def make_title(text, format="pre"):
 
 cur_dir = os.getcwd()
 sys.path.append(os.path.join(cur_dir, "syntax"))
-
 
 def create_tracebacks(target, intro_text, format="pre"):
     with open(target, "w", encoding="utf8") as out:
