@@ -2,6 +2,7 @@
    analyze a single line of code which has been identified
    as containing a syntax error with the message "invalid syntax".
 """
+import keyword
 import sys
 
 from .. import debug_helper
@@ -584,10 +585,30 @@ def invalid_name(tokens, offset=None):
     return cause, hint
 
 
+def _compile_line(line):
+    add_pass = False
+    add_def = False
+    try:
+        if line.endswith(":"):
+            line += " pass"
+            add_pass = True
+        elif line.startswith("return") or line.startswith("yield"):
+            add_def = True
+            line = "def test(): " + line
+        compile(line, "fake-file", "exec")
+    except Exception:
+        return False
+    if add_pass:
+        line = line[:-5]
+    elif add_def:
+        line = line[12:]
+    return line
+
+
 def _add_operator(tokens, first):
     first_string = first.string
     results = []
-    for operator in ",", " +", " -", " *", " in":
+    for operator in " +", " -", " *", ",", " in":
         if operator == " in" and results:
             break
         new_tokens = []
@@ -596,26 +617,41 @@ def _add_operator(tokens, first):
                 tok.string = tok.string + operator
             new_tokens.append(tok)
         line = token_utils.untokenize(new_tokens).strip()
-        add_pass = False
-        try:
-            if line.endswith(":"):
-                line += " pass"
-                add_pass = True
-            compile(line, "fake-file", "exec")
-            if add_pass:
-                line = line[:-5]
-            if operator == ",":
+        line = _compile_line(line)
+        if line:
+            if operator == "," and results:  # So that it prints correctly
                 operator = '","'
             results.append((operator.strip(), line))
-        except Exception:
-            pass
         first.string = first_string
 
     return results
 
 
 def perhaps_misspelled_keyword(tokens, first, second):
-    pass
+    kwlist = keyword.kwlist
+    results = []
+    similar = utils.get_similar_words(first.string, kwlist)
+    similar += utils.get_similar_words(second.string, kwlist)
+    words = [word for word in kwlist if word not in similar]
+    similar.extend(words)
+    results = []
+    for wrong in (first, second):
+        for word in similar:
+            if results:
+                continue
+            new_tokens = []
+            for tok in tokens:
+                if tok == wrong:
+                    tok.string = word
+                new_tokens.append(tok)
+            line = token_utils.untokenize(new_tokens).strip()
+            line = _compile_line(line)
+            if line:
+                results.append((word, line))
+    # The with keyword can appear in similar situations as for/in and others.
+    if len(results) > 1:
+        results = [(word, line) for word, line in results if word != "with"]
+    return results
 
 
 @add_line_analyzer
@@ -688,9 +724,32 @@ def missing_comma_or_operator(tokens, offset=None):
                     cause += _("Note: these are just some of the possible choices.\n")
             else:
                 # Add case here where we replace either first or second by a Python keyword
-                cause = _(
-                    "Perhaps you forgot to write something between `{first}` and `{second}`\n"
-                ).format(first=first, second=second)
+                results = perhaps_misspelled_keyword(tokens, first, second)
+                if results:
+                    if len(results) == 1:
+                        keyword, line = results[0]
+                        hint = _("Did you mean `{line}`?\n").format(line=line)
+
+                        cause += _(
+                            "Perhaps you meant to write `{keyword}` and made a typo.\n"
+                            "The correct line would then be `{line}`\n"
+                        ).format(keyword=keyword, line=line)
+                    else:
+                        lines = [line for keyword, line in results]
+                        hint = _("Did you mean `{line}`?\n").format(line=lines[0])
+
+                        cause += _(
+                            "Perhaps you wrote another word instead of a Python keyword.\n"
+                            "If that is the case, perhaps you meant to write one of\n"
+                            "the following lines of code which would not raise a `SyntaxError`:\n\n"
+                        )
+                        for line in lines:
+                            cause += f"    {line}\n"
+
+                else:
+                    cause = _(
+                        "Perhaps you forgot to write something between `{first}` and `{second}`\n"
+                    ).format(first=first, second=second)
 
             if first == tokens[0]:
                 first_tokens = []

@@ -74,8 +74,7 @@ def indentation_error_cause(value):
 
 
 def find_syntax_error_cause(tb_data):
-    """Attempts to find the cause of a SyntaxError
-    """
+    """Attempts to find the cause of a SyntaxError"""
     value = tb_data.value
     filepath = value.filename
     linenumber = value.lineno
