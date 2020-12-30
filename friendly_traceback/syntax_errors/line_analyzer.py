@@ -5,16 +5,12 @@
 import keyword
 import sys
 
+from . import syntax_utils
 from .. import debug_helper
 from .. import utils
 from ..my_gettext import current_lang
 
 import token_utils
-
-
-def count_char(tokens, char):
-    """Counts how many times a given character appears in a list of tokens"""
-    return sum(1 for token in tokens if token == char)
 
 
 def find_offending_token(tokens, offset):
@@ -37,7 +33,7 @@ def is_potential_statement(tokens):
 
        A complete Python statement would have brackets,
        including (), [], and {}, matched in pairs,
-       and would not end with the continuation character \\
+       and would not end with the continuation character.
     """
     line = tokens[0].line
 
@@ -47,14 +43,10 @@ def is_potential_statement(tokens):
         debug_helper.log("Not all tokens came from the same line.")
         return False
 
-    if line.endswith("\\"):
+    if line.endswith("\\") or line.endswith("\\\n"):
         return False
 
-    return (
-        (count_char(tokens, "(") == count_char(tokens, ")"))
-        and (count_char(tokens, "[") == count_char(tokens, "]"))
-        and (count_char(tokens, "{") == count_char(tokens, "}"))
-    )
+    return syntax_utils.no_unclosed_brackets(tokens)
 
 
 LINE_ANALYZERS = []
@@ -272,20 +264,37 @@ def keyword_as_attribute(tokens, **kwargs):
 
 
 @add_line_analyzer
-def misplaced_quote(tokens, **kwargs):
+def misplaced_quote(tokens, offset=None):
     """This looks for a misplaced quote, something like
-       info = 'don't' ...
+       info = 'don't ...
 
     The clue we are looking for is a STRING token ('don')
     followed by a NAME token (t).
     """
+
+    # TODO: check to confirm it is a single quote, and that the
+    # string does not evaluaate to a number.
+    # TODO: confirm that we are looking at the token causing a problem.
+
     _ = current_lang.translate
     cause = hint = None
     if len(tokens) < 2:
         return cause, hint
     prev = tokens[0]
     for token in tokens:
-        if prev.is_string() and token.is_name():
+        if (
+            prev.is_string()
+            and prev.string.endswith("'")
+            and token.is_name()
+            and token.start_col <= offset <= token.end_col
+        ):
+            for fn in [int, float, complex]:
+                try:
+                    fn(prev.string)  # Definitely not a word!
+                    return cause, hint
+                except Exception:
+                    pass
+
             hint = _("Perhaps you misplaced a quote.\n")
             cause = _(
                 "There appears to be a Python identifier (variable name)\n"
@@ -330,6 +339,296 @@ def assign_instead_of_equal(tokens, offset=None):
                 "an equality operator, `==`, or the walrus operator `:=`.\n"
             )
             hint = equal_or_walrus
+    return cause, hint
+
+
+@add_line_analyzer
+def print_as_statement(tokens, **kwargs):
+    _ = current_lang.translate
+    cause = hint = None
+    if tokens[0] != "print":
+        return cause, hint
+
+    # TODO: add hint
+    if len(tokens) == 1 or tokens[1] != "(":
+        cause = _(
+            "In older version of Python, `print` was a keyword.\n"
+            "Now, `print` is a function; you need to use parentheses to call it.\n"
+        )
+    return cause, hint
+
+
+@add_line_analyzer
+def calling_pip(tokens, **kwargs):
+    _ = current_lang.translate
+    cause = hint = None
+    if not tokens[0].is_in(["pip", "python"]):
+        return cause, hint
+
+    use_pip = _(
+        "It looks as if you are attempting to use pip to install a module.\n"
+        "`pip` is a command that needs to run in a terminal,\n"
+        "not from a Python interpreter.\n"
+    )
+
+    for tok in tokens:
+        if tok == "pip":
+            hint = _("Pip cannot be used in a Python interpreter.\n")
+            return use_pip, hint
+    return cause, hint
+
+
+@add_line_analyzer
+def dot_followed_by_bracket(tokens, offset=None):
+    _ = current_lang.translate
+    cause = hint = None
+    bad_token, index = find_offending_token(tokens, offset)
+    if bad_token is None or index == 0:
+        return cause, hint
+    prev_token = tokens[index - 1]
+    if bad_token.is_in(["(", ")", "[", "]", "{", "}"]) and prev_token == ".":
+        cause = _("You cannot have a dot `.` followed by `{bracket}`.\n").format(
+            bracket=bad_token
+        )
+    return cause, hint
+
+
+@add_line_analyzer
+def raise_single_exception(tokens, offset=None):
+    _ = current_lang.translate
+    cause = hint = None
+    if tokens[0] != "raise":
+        return cause, hint
+    bad_token, ignore = find_offending_token(tokens, offset)
+    if bad_token is None:
+        return cause, hint
+    if bad_token == ",":
+        cause = _(
+            "It looks like you are trying to raise an exception using Python 2 syntax.\n"
+        )
+    return cause, hint
+
+
+@add_line_analyzer
+def invalid_name(tokens, offset=None):
+    """Identifies invalid identifiers when a name begins with a number"""
+    _ = current_lang.translate
+    cause = hint = None
+
+    if len(tokens) < 2:
+        return cause, hint
+
+    note = None
+    for first, second in zip(tokens, tokens[1:]):
+        if first.is_number() and second.is_identifier() and first.end == second.start:
+            cause = _("Valid names cannot begin with a number.\n")
+            if first.is_complex():
+                note = _("[Note: `{first}` is a complex number.]\n").format(first=first)
+                second.string = first.string[-1] + second.string
+                first.string = first.string[:-1]
+            if second == "i" and first != tokens[0]:
+                hint = _("Did you mean `{number}j`?\n").format(number=first)
+                cause += _(
+                    "Perhaps you thought that `i` could be used to represent\n"
+                    "the square root of -1. In Python, `j` (or `1j`) is used for this\n"
+                    "and perhaps you meant to write `{number}j`.\n"
+                ).format(number=first)
+                return cause, hint
+            break
+
+    # Try to distinguish between  "2x = ... and y = ... 2x ..."
+    if cause:
+        tokens.append(";")
+        for first, second, third in zip(tokens, tokens[1:], tokens[2:]):
+            if (
+                first.is_number()
+                and second.is_identifier()
+                and first.end == second.start
+            ):
+                if third != "=":
+                    hint = _(
+                        "Perhaps you forgot a multiplication operator,"
+                        " `{first} * {second}`.\n"
+                    ).format(first=first, second=second)
+                    cause = cause + hint
+                else:
+                    hint = cause
+                break
+    if note is not None:
+        cause += "\n" + note
+    return cause, hint
+
+
+def _add_operator(tokens, first):
+    first_string = first.string
+    results = []
+    for operator in " +", " -", " *", ",", " in":
+        if operator == " in" and results:
+            break
+        new_tokens = []
+        for tok in tokens:
+            if tok == first:
+                tok.string = tok.string + operator
+            new_tokens.append(tok)
+        line = token_utils.untokenize(new_tokens).strip()
+        if syntax_utils.check_statement(line):
+            if operator == "," and results:  # So that it prints correctly
+                operator = '","'
+            results.append((operator.strip(), line))
+        first.string = first_string
+
+    return results
+
+
+def perhaps_misspelled_keyword(tokens, first, second):
+    kwlist = keyword.kwlist
+    results = []
+    similar = utils.get_similar_words(first.string, kwlist)
+    similar += utils.get_similar_words(second.string, kwlist)
+    words = [word for word in kwlist if word not in similar]
+    similar.extend(words)
+    results = []
+    for wrong in (first, second):
+        original_string = wrong.string
+        for word in similar:
+            if results:
+                continue
+            new_tokens = []
+            for tok in tokens:
+                if tok == wrong:
+                    tok.string = word
+                new_tokens.append(tok)
+            line = token_utils.untokenize(new_tokens).strip()
+            if syntax_utils.check_statement(line):
+                results.append((word, line))
+            wrong.string = original_string
+    # The with keyword can appear in similar situations as for/in and others.
+    if len(results) > 1:
+        results = [(word, line) for word, line in results if word != "with"]
+    return results
+
+
+@add_line_analyzer
+def missing_comma_or_operator(tokens, offset=None):
+    """Check to see if a comma or other operator
+    is possibly missing between identifiers, or numbers, or both.
+    """
+    _ = current_lang.translate
+    cause = hint = None
+
+    if len(tokens) < 2:
+        return cause, hint
+
+    for first, second in zip(tokens, tokens[1:]):
+        if (
+            first.is_number()
+            and not first.is_complex()  # should not be needed as the preceding
+            # function should have caught this.
+            and second == "i"
+            and first.end == second.start
+        ):
+            hint = _("Did you mean `{number}j`?\n").format(number=first)
+            cause = (
+                "Perhaps you thought that `i` could be used to represent\n"
+                "the square root of -1.\n"
+                "In Python, `j` immediately following a number is used for this.\n"
+                "Perhaps you meant to write `{number}j`.\n"
+            ).format(number=first)
+            return cause, hint
+        if (
+            (first.is_number() or first.is_identifier() or first.is_string())
+            and (second.is_number() or second.is_identifier() or second.is_string())
+            and second.start_col <= offset <= second.end_col
+        ):
+            cause = _(
+                "Python indicates that the error is caused by "
+                "`{second}` written immediately after `{first}`.\n"
+            ).format(first=first, second=second)
+            results = _add_operator(tokens, first)
+            if results:
+                if len(results) == 1:
+                    operator, line = results[0]
+                    hint = _("Did you mean `{line}`?\n").format(line=line)
+                    cause += _(
+                        "Perhaps you meant to write `{operator}` between\n"
+                        "`{first}` and `{second}`:\n\n"
+                        "    {line}\n"
+                        "which would not cause a `SyntaxError`.\n"
+                    ).format(first=first, second=second, line=line, operator=operator)
+                else:
+                    operators = [operator for operator, line in results]
+                    lines = [line for operator, line in results]
+
+                    hint = _(
+                        "Did you forget something between `{first}` and `{second}`?\n"
+                    ).format(first=first, second=second)
+
+                    cause += _(
+                        "Perhaps you meant to insert an operator like `{operators}`\n"
+                        "between `{first}` and `{second}`.\n"
+                        "The following lines of code would not cause any `SyntaxError`:\n\n"
+                    ).format(
+                        first=first,
+                        second=second,
+                        operators=utils.list_to_string(operators),
+                    )
+                    for line in lines:
+                        cause += f"    {line}\n"
+
+                    cause += _("Note: these are just some of the possible choices.\n")
+            else:
+                # Add case here where we replace either first or second by a Python keyword
+                results = perhaps_misspelled_keyword(tokens, first, second)
+                if results:
+                    if len(results) == 1:
+                        keyword, line = results[0]
+                        hint = _("Did you mean `{line}`?\n").format(line=line)
+
+                        cause += _(
+                            "Perhaps you meant to write `{keyword}` and made a typo.\n"
+                            "The correct line would then be `{line}`\n"
+                        ).format(keyword=keyword, line=line)
+                    else:
+                        lines = [line for keyword, line in results]
+                        hint = _("Did you mean `{line}`?\n").format(line=lines[0])
+
+                        cause += _(
+                            "Perhaps you wrote another word instead of a Python keyword.\n"
+                            "If that is the case, perhaps you meant to write one of\n"
+                            "the following lines of code which would not raise a `SyntaxError`:\n\n"
+                        )
+                        for line in lines:
+                            cause += f"    {line}\n"
+
+                else:
+                    cause = _(
+                        "Perhaps you forgot to write something between `{first}` and `{second}`\n"
+                    ).format(first=first, second=second)
+
+            if first == tokens[0]:
+                first_tokens = []
+                line = None
+                for tok in tokens:
+                    if tok == "=":
+                        line = token_utils.untokenize(tokens)
+                        begin, end = line.split("=", 1)
+                        line = "_".join(first_tokens) + " =" + end
+                        cause += (
+                            "\n"
+                            + _(
+                                "Or perhaps you forgot that you cannot have spaces\n"
+                                "in variable names.\n"
+                            )
+                            + f"\n\n    {line}\n"
+                        )
+                        break
+                    elif not tok.is_identifier():
+                        break
+                    else:
+                        first_tokens.append(tok.string)
+                if line:
+                    hint = _("Did you mean `{line}`?\n").format(line=line)
+            return cause, hint
     return cause, hint
 
 
@@ -465,316 +764,6 @@ def malformed_def(tokens, **kwargs):
             )
             # break
         prev_token_str = tok
-    return cause, hint
-
-
-@add_line_analyzer
-def print_as_statement(tokens, **kwargs):
-    _ = current_lang.translate
-    cause = hint = None
-    if tokens[0] != "print":
-        return cause, hint
-
-    # TODO: add hint
-    if len(tokens) == 1 or tokens[1] != "(":
-        cause = _(
-            "In older version of Python, `print` was a keyword.\n"
-            "Now, `print` is a function; you need to use parentheses to call it.\n"
-        )
-    return cause, hint
-
-
-@add_line_analyzer
-def calling_pip(tokens, **kwargs):
-    _ = current_lang.translate
-    cause = hint = None
-    if not tokens[0].is_in(["pip", "python"]):
-        return cause, hint
-
-    use_pip = _(
-        "It looks as if you are attempting to use pip to install a module.\n"
-        "`pip` is a command that needs to run in a terminal,\n"
-        "not from a Python interpreter.\n"
-    )
-
-    for tok in tokens:
-        if tok == "pip":
-            hint = _("Pip cannot be used in a Python interpreter.\n")
-            return use_pip, hint
-    return cause, hint
-
-
-@add_line_analyzer
-def dot_followed_by_bracket(tokens, offset=None):
-    _ = current_lang.translate
-    cause = hint = None
-    bad_token, index = find_offending_token(tokens, offset)
-    if bad_token is None or index == 0:
-        return cause, hint
-    prev_token = tokens[index - 1]
-    if bad_token.is_in(["(", ")", "[", "]", "{", "}"]) and prev_token == ".":
-        cause = _("You cannot have a dot `.` followed by `{bracket}`.\n").format(
-            bracket=bad_token
-        )
-    return cause, hint
-
-
-@add_line_analyzer
-def raise_single_exception(tokens, offset=None):
-    _ = current_lang.translate
-    cause = hint = None
-    if tokens[0] != "raise":
-        return cause, hint
-    bad_token, ignore = find_offending_token(tokens, offset)
-    if bad_token is None:
-        return cause, hint
-    if bad_token == ",":
-        cause = _(
-            "It looks like you are trying to raise an exception using Python 2 syntax.\n"
-        )
-    return cause, hint
-
-
-@add_line_analyzer
-def invalid_name(tokens, offset=None):
-    """Identifies invalid identifiers when a name begins with a number"""
-    _ = current_lang.translate
-    cause = hint = None
-
-    if len(tokens) < 2:
-        return cause, hint
-
-    note = None
-    for first, second in zip(tokens, tokens[1:]):
-        if first.is_number() and second.is_identifier() and first.end == second.start:
-            cause = _("Valid names cannot begin with a number.\n")
-            if first.is_complex():
-                note = _("[Note: `{first}` is a complex number.]\n").format(first=first)
-                second.string = first.string[-1] + second.string
-                first.string = first.string[:-1]
-            if second == "i" and first != tokens[0]:
-                hint = _("Did you mean `{number}j`?\n").format(number=first)
-                cause += _(
-                    "Perhaps you thought that `i` could be used to represent\n"
-                    "the square root of -1. In Python, `j` (or `1j`) is used for this\n"
-                    "and perhaps you meant to write `{number}j`.\n"
-                ).format(number=first)
-                return cause, hint
-            break
-
-    # Try to distinguish between  "2x = ... and y = ... 2x ..."
-    if cause:
-        tokens.append(";")
-        for first, second, third in zip(tokens, tokens[1:], tokens[2:]):
-            if (
-                first.is_number()
-                and second.is_identifier()
-                and first.end == second.start
-            ):
-                if third != "=":
-                    hint = _(
-                        "Perhaps you forgot a multiplication operator,"
-                        " `{first} * {second}`.\n"
-                    ).format(first=first, second=second)
-                    cause = cause + hint
-                else:
-                    hint = cause
-                break
-    if note is not None:
-        cause += "\n" + note
-    return cause, hint
-
-
-def _compile_line(line):
-    add_pass = False
-    add_def = False
-    try:
-        if line.endswith(":"):
-            line += " pass"
-            add_pass = True
-        elif line.startswith("return") or line.startswith("yield"):
-            add_def = True
-            line = "def test(): " + line
-        compile(line, "fake-file", "exec")
-    except Exception:
-        return False
-    if add_pass:
-        line = line[:-5]
-    elif add_def:
-        line = line[12:]
-    return line
-
-
-def _add_operator(tokens, first):
-    first_string = first.string
-    results = []
-    for operator in " +", " -", " *", ",", " in":
-        if operator == " in" and results:
-            break
-        new_tokens = []
-        for tok in tokens:
-            if tok == first:
-                tok.string = tok.string + operator
-            new_tokens.append(tok)
-        line = token_utils.untokenize(new_tokens).strip()
-        line = _compile_line(line)
-        if line:
-            if operator == "," and results:  # So that it prints correctly
-                operator = '","'
-            results.append((operator.strip(), line))
-        first.string = first_string
-
-    return results
-
-
-def perhaps_misspelled_keyword(tokens, first, second):
-    kwlist = keyword.kwlist
-    results = []
-    similar = utils.get_similar_words(first.string, kwlist)
-    similar += utils.get_similar_words(second.string, kwlist)
-    words = [word for word in kwlist if word not in similar]
-    similar.extend(words)
-    results = []
-    for wrong in (first, second):
-        for word in similar:
-            if results:
-                continue
-            new_tokens = []
-            for tok in tokens:
-                if tok == wrong:
-                    tok.string = word
-                new_tokens.append(tok)
-            line = token_utils.untokenize(new_tokens).strip()
-            line = _compile_line(line)
-            if line:
-                results.append((word, line))
-    # The with keyword can appear in similar situations as for/in and others.
-    if len(results) > 1:
-        results = [(word, line) for word, line in results if word != "with"]
-    return results
-
-
-@add_line_analyzer
-def missing_comma_or_operator(tokens, offset=None):
-    """Check to see if a comma or other operator
-    is possibly missing between identifiers, or numbers, or both.
-    """
-    _ = current_lang.translate
-    cause = hint = None
-
-    if len(tokens) < 2:
-        return cause, hint
-
-    for first, second in zip(tokens, tokens[1:]):
-        if (
-            first.is_number()
-            and not first.is_complex()  # should not be needed as the preceding
-            # function should have caught this.
-            and second == "i"
-            and first.end == second.start
-        ):
-            hint = _("Did you mean `{number}j`?\n").format(number=first)
-            cause = (
-                "Perhaps you thought that `i` could be used to represent\n"
-                "the square root of -1.\n"
-                "In Python, `j` immediately following a number is used for this.\n"
-                "Perhaps you meant to write `{number}j`.\n"
-            ).format(number=first)
-            return cause, hint
-        if (
-            (first.is_number() or first.is_identifier() or first.is_string())
-            and (second.is_number() or second.is_identifier() or second.is_string())
-            and second.start_col <= offset <= second.end_col
-        ):
-            cause = _(
-                "Python indicates that the error is caused by "
-                "`{second}` written immediately after `{first}`.\n"
-            ).format(first=first, second=second)
-            results = _add_operator(tokens, first)
-            if results:
-                if len(results) == 1:
-                    operator, line = results[0]
-                    hint = _("Did you mean `{line}`?\n").format(line=line)
-                    cause += _(
-                        "Perhaps you meant to write `{operator}` between\n"
-                        "`{first}` and `{second}`:\n\n"
-                        "    {line}\n"
-                        "which would not cause a `SyntaxError`.\n"
-                    ).format(first=first, second=second, line=line, operator=operator)
-                else:
-                    operators = [operator for operator, line in results]
-                    lines = [line for operator, line in results]
-
-                    hint = _(
-                        "Did you forget something between `{first}` and `{second}`?\n"
-                    ).format(first=first, second=second)
-
-                    cause += _(
-                        "Perhaps you meant to insert an operator like `{operators}`\n"
-                        "between `{first}` and `{second}`.\n"
-                        "The following lines of code would not cause any `SyntaxError`:\n\n"
-                    ).format(
-                        first=first,
-                        second=second,
-                        operators=utils.list_to_string(operators),
-                    )
-                    for line in lines:
-                        cause += f"    {line}\n"
-
-                    cause += _("Note: these are just some of the possible choices.\n")
-            else:
-                # Add case here where we replace either first or second by a Python keyword
-                results = perhaps_misspelled_keyword(tokens, first, second)
-                if results:
-                    if len(results) == 1:
-                        keyword, line = results[0]
-                        hint = _("Did you mean `{line}`?\n").format(line=line)
-
-                        cause += _(
-                            "Perhaps you meant to write `{keyword}` and made a typo.\n"
-                            "The correct line would then be `{line}`\n"
-                        ).format(keyword=keyword, line=line)
-                    else:
-                        lines = [line for keyword, line in results]
-                        hint = _("Did you mean `{line}`?\n").format(line=lines[0])
-
-                        cause += _(
-                            "Perhaps you wrote another word instead of a Python keyword.\n"
-                            "If that is the case, perhaps you meant to write one of\n"
-                            "the following lines of code which would not raise a `SyntaxError`:\n\n"
-                        )
-                        for line in lines:
-                            cause += f"    {line}\n"
-
-                else:
-                    cause = _(
-                        "Perhaps you forgot to write something between `{first}` and `{second}`\n"
-                    ).format(first=first, second=second)
-
-            if first == tokens[0]:
-                first_tokens = []
-                line = None
-                for tok in tokens:
-                    if tok == "=":
-                        line = token_utils.untokenize(tokens)
-                        begin, end = line.split("=", 1)
-                        line = "_".join(first_tokens) + " =" + end
-                        cause += (
-                            "\n"
-                            + _(
-                                "Or perhaps you forgot that you cannot have spaces\n"
-                                "in variable names.\n"
-                            )
-                            + f"\n\n    {line}\n"
-                        )
-                        break
-                    elif not tok.is_identifier():
-                        break
-                    else:
-                        first_tokens.append(tok.string)
-                if line:
-                    hint = _("Did you mean `{line}`?\n").format(line=line)
-            return cause, hint
     return cause, hint
 
 

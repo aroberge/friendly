@@ -167,7 +167,7 @@ def test_keyword_as_attribute():
 
 
 def test_misplaced_quote():
-    assert "trying to use a quote inside a string" in find(lines=["info = 'don't"])
+    assert "trying to use a quote inside a string" in find(lines=["info = 'don't"], offset=13)
 
 
 def test_missing_comma():

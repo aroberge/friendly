@@ -18,6 +18,7 @@ def tokenize_source(source):
     except Exception as e:
         debug_helper.log("Problem in token_utils.get_significant_tokens().")
         debug_helper.log(str(e))
+        return []
 
 
 def get_similar_words(word_with_typo, words):

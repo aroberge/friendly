@@ -20,27 +20,11 @@ In the interest of simplicity, extensibility and maintainability,
 we now have multiple functions, some of which have almost identical
 chunks of code.
 """
+from .syntax_utils import matching_brackets, name_bracket, no_unclosed_brackets
 
 from .. import debug_helper
 from .. import utils
 from ..my_gettext import current_lang
-
-
-def count_char(tokens, char):
-    """Counts how many times a given character appears in a list of tokens"""
-    return sum(1 for token in tokens if token == char)
-
-
-def no_unclosed_brackets(tokens):
-    """Returns True if the number of opening bracket of types (, [, and {,
-    match their closing counterpart.
-    """
-
-    return (
-        (count_char(tokens, "(") == count_char(tokens, ")"))
-        and (count_char(tokens, "[") == count_char(tokens, "]"))
-        and (count_char(tokens, "{") == count_char(tokens, "}"))
-    )
 
 
 def scan_source(source_lines=None, linenumber=0, offset=0):
@@ -259,27 +243,3 @@ def look_for_missing_bracket(
         return cause
     else:
         return False
-
-
-def matching_brackets(bra, ket):
-    return (
-        (bra == "(" and ket == ")")
-        or (bra == "[" and ket == "]")
-        or (bra == "{" and ket == "}")
-    )
-
-
-def name_bracket(bracket):
-    _ = current_lang.translate
-    if bracket == "(":
-        return _("parenthesis `(`")
-    elif bracket == ")":
-        return _("parenthesis `)`")
-    elif bracket == "[":
-        return _("square bracket `[`")
-    elif bracket == "]":
-        return _("square bracket `]`")
-    elif bracket == "{":
-        return _("curly bracket `{`")
-    else:
-        return _("curly bracket `}`")

@@ -33,7 +33,7 @@ def set_cause_syntax(etype, value, tb_data):
     cause = hint = None
     try:
         if etype.__name__ == "IndentationError":
-            cause = indentation_error_cause(tb_data.value)
+            cause = indentation_error_cause(value)
         elif etype.__name__ == "TabError":
             pass  # No need to provide additional information
         else:
@@ -55,18 +55,18 @@ def indentation_error_cause(value):
     value = str(value)
     if "unexpected indent" in value:
         this_case = _(
-            "In this case, the line identified above\n"
+            "The line identified above\n"
             "is more indented than expected and \n"
             "does not match the indentation of the previous line.\n"
         )
     elif "expected an indented block" in value:
         this_case = _(
-            "In this case, the line identified above\n"
+            "The line identified above\n"
             "was expected to begin a new indented block.\n"
         )
     else:
         this_case = _(
-            "In this case, the line identified above is\n"
+            "The line identified above is\n"
             "less indented than the preceding one,\n"
             "and is not aligned vertically with another block of code.\n"
         )
