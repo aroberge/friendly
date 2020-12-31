@@ -37,7 +37,7 @@ def set_cause_syntax(etype, value, tb_data):
         elif etype.__name__ == "TabError":
             pass  # No need to provide additional information
         else:
-            cause, hint = find_syntax_error_cause(tb_data)
+            cause, hint = find_syntax_error_cause(value, tb_data)
     except Exception as e:
         debug_helper.log("Exception caught in set_cause_syntax().")
         debug_helper.log(repr(e))
@@ -73,28 +73,17 @@ def indentation_error_cause(value):
     return this_case
 
 
-def find_syntax_error_cause(tb_data):
+def find_syntax_error_cause(value, tb_data):
     """Attempts to find the cause of a SyntaxError"""
-    value = tb_data.value
+    # value = tb_data.value
+    _ = current_lang.translate
+    cause = hint = None
+
     filepath = value.filename
     linenumber = value.lineno
     offset = value.offset
     message = value.msg
     source_lines = cache.get_source_lines(filepath)
-
-    # We use this indirect method with explicit arguments to make easier
-    # to write unit tests.
-    return _find_likely_cause(source_lines, linenumber, message, offset, tb_data)
-
-
-def _find_likely_cause(source_lines, linenumber, message, offset, tb_data=None):
-    """Given some source code as a list of lines, a linenumber
-    (starting at 1) indicating where a SyntaxError was detected,
-    a message (which follows SyntaxError:) and an offset,
-    this attempts to find a probable cause for the Syntax Error.
-    """
-    _ = current_lang.translate
-    hint = None
 
     # SyntaxError in f-strings are handled differently by Python
     # than other types of errors. They are effectively handled internally
@@ -115,7 +104,12 @@ def _find_likely_cause(source_lines, linenumber, message, offset, tb_data=None):
     # that we can retrieve when using Python 3.9.
 
     if source_lines and "f-string: invalid syntax" not in message:
-        if linenumber is None:  # can happen in some rare cases
+        if linenumber is None:  # can happen in some rare cases where Python
+            # apparently gives up processing a file
+            if "too many statically nested blocks" not in message:
+                debug_helper.log(
+                    "linenumber is None in analyze_syntax._find_likely_cause"
+                )
             offending_line = "\n"
             source_lines = ["\n"]
         else:
