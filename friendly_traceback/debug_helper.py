@@ -9,10 +9,15 @@ printed only when debugging mode is activated.
 
 # DEBUG can also be set to True from __main__ or when
 # using the debug() command in the console.
+import sys
 
-DEBUG = r"Users\andre\github\friendly-traceback" in __file__
+DEBUG = r"users\andre\github\friendly-traceback" in __file__.lower()
 
 
 def log(text):
     if DEBUG:
+        from . import explain_traceback
+
         print(text)
+        explain_traceback()
+        sys.exit()
