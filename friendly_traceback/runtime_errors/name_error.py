@@ -2,8 +2,7 @@ import re
 
 from ..my_gettext import current_lang
 from .. import info_variables
-
-import token_utils
+from .. import utils
 
 
 def get_cause(value, frame, tb_data):
@@ -137,7 +136,7 @@ def missing_self(unknown_name, frame, tb_data, hint):
     _ = current_lang.translate
     message = ""
     try:
-        tokens = token_utils.get_significant_tokens(tb_data.bad_line)
+        tokens = utils.get_significant_tokens(tb_data.bad_line)
     except Exception:
         return message, hint
 

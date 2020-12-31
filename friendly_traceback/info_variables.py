@@ -133,7 +133,7 @@ def get_all_objects(line, frame):
             objects["literals"].append((name, obj))
             objects["name, obj"].append((name, obj))
 
-    tokens = utils.tokenize_source(line)
+    tokens = utils.get_significant_tokens(line)
     for tok in tokens:
         if tok.is_identifier():
             name = tok.string
@@ -174,9 +174,9 @@ def get_dotted_names(line):
     without this hack.
     """
     names = []
-    prev_token = utils.tokenize_source("3")[0]  # convenient guard
+    prev_token = utils.get_significant_tokens("3")[0]  # convenient guard
     dot_found = False
-    tokens = utils.tokenize_source(line)
+    tokens = utils.get_significant_tokens(line)
     for tok in tokens:
         if tok == ".":
             dot_found = True

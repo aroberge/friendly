@@ -85,6 +85,10 @@ def find_syntax_error_cause(value, tb_data):
     message = value.msg
     source_lines = cache.get_source_lines(filepath)
 
+    # tokens, brackets, end_bracket = source_analyzer.isolate_bad_statement(
+    #     source_lines=source_lines, linenumber=linenumber
+    # )
+
     # SyntaxError in f-strings are handled differently by Python
     # than other types of errors. They are effectively handled internally
     # as special files.  Before Python 3.9, Python will tell us

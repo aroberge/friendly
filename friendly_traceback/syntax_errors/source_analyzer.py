@@ -26,6 +26,8 @@ from .. import debug_helper
 from .. import utils
 from ..my_gettext import current_lang
 
+import token_utils
+
 
 def scan_source(source_lines=None, linenumber=0, offset=0):
     """Scans the entire source, looking at possible causes of
@@ -34,7 +36,7 @@ def scan_source(source_lines=None, linenumber=0, offset=0):
     if not source_lines:
         return
     source = "".join(source_lines)
-    source_tokens = utils.tokenize_source(source)
+    source_tokens = utils.get_significant_tokens(source)
     cause = look_for_mismatched_brackets(
         source_tokens=source_tokens,
         source_lines=source_lines,
@@ -59,7 +61,7 @@ def look_for_mismatched_brackets(
     _ = current_lang.translate
     if source_tokens is None:
         source = "".join(source_lines)
-        source_tokens = utils.tokenize_source(source)
+        source_tokens = utils.get_significant_tokens(source)
 
     brackets = []
     for token in source_tokens:
@@ -149,7 +151,7 @@ def look_for_missing_bracket(
     _ = current_lang.translate
     if source_tokens is None:
         source = "".join(source_lines)
-        source_tokens = utils.tokenize_source(source)
+        source_tokens = utils.get_significant_tokens(source)
     brackets = []
     will_be_previous = None
     previous_token = None
@@ -243,3 +245,54 @@ def look_for_missing_bracket(
         return cause
     else:
         return False
+
+
+def isolate_bad_statement(*, source_tokens=None, source_lines=None, linenumber=None):
+    """This function scans the source searching for the statement that
+    caused the problem. Most often, it will be a single line of code. However,
+    sometimes it might be a multiline statement that includes code surrounded
+    by some brackets spanning multiple lines.
+
+    linenumber is the line number identified by Python as containing the error.
+
+    It returns a tuple containing three items:
+    1. a list of tokens for that statement
+    2. a list of opening brackets that are part of that statement and have
+       not yet been closed
+    3. an unmatched closing bracket or None
+    """
+    _ = current_lang.translate
+    if source_tokens is None:
+        source = "".join(source_lines)
+        source_tokens = token_utils.tokenize(source)
+
+    begin_brackets = []
+    previous_linenumber = -1
+
+    for token in source_tokens:
+        # is this a new statement?
+        if token.start_row > previous_linenumber:
+            if token.start_row <= linenumber and not begin_brackets:
+                statement_tokens = []
+            previous_linenumber = token.start_row
+
+        # Did we collect all the tokens belonging to the statement?
+        if token.start_row > linenumber and not begin_brackets:
+            return statement_tokens, begin_brackets, None
+
+        statement_tokens.append(token)
+        if token.is_not_in("()[]}{"):
+            continue
+
+        if token.is_in("([{"):
+            begin_brackets.append(token)
+        elif token.is_in(")]}"):  # Does it match or not
+            if not begin_brackets:
+                return statement_tokens, begin_brackets, token
+            else:
+                open_bracket = begin_brackets.pop()
+                if not matching_brackets(open_bracket, token):
+                    begin_brackets.append(open_bracket)
+                    return statement_tokens, begin_brackets, token
+
+    return statement_tokens, begin_brackets, None

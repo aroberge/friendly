@@ -71,7 +71,9 @@ def add_line_analyzer(func):
 def analyze_last_line(line, offset=None):
     """Analyzes the last line of code as identified by Python as that
     on which the error occurred."""
-    tokens = utils.tokenize_source(line)  # tokens do not include spaces nor comments
+    tokens = utils.get_significant_tokens(
+        line
+    )  # tokens do not include spaces nor comments
 
     if not tokens:
         return None, None
