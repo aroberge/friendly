@@ -128,6 +128,7 @@ class TracebackData:
         debug_helper.log("No records found.")
         debug_helper.log("etype:", str(etype))
         debug_helper.log("value:", str(value))
+        debug_helper.log_error()
         self.filename = ""
         self.bad_line = "\n"
         return
@@ -306,6 +307,7 @@ class FriendlyTraceback:
         except Exception as e:
             debug_helper.log("Uncaught exception in TracebackData.")
             debug_helper.log(str(e))
+            debug_helper.log_error()
             print("Internal problem in Friendly-traceback.")
             print("Please report this issue.")
             raise SystemExit

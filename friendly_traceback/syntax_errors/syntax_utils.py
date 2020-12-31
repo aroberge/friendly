@@ -65,6 +65,7 @@ def modify_source(tokens, bad_token, string, add=False):
     if not tokens:
         debug_helper.log("Problem in token_utils.modify_source().")
         debug_helper.log("Empty token list was received")
+        debug_helper.log_error()
         return ""
 
     try:
@@ -85,6 +86,7 @@ def modify_source(tokens, bad_token, string, add=False):
     except Exception as e:
         debug_helper.log("Problem in token_utils.modify_source().")
         debug_helper.log(str(e))
+        debug_helper.log_error()
         return ""
 
 
@@ -118,6 +120,7 @@ def check_statement(statement):
     except Exception as e:
         debug_helper.log("Problem in token_utils.check_statement().")
         debug_helper.log(str(e))
+        debug_helper.log_error()
         return False
 
 

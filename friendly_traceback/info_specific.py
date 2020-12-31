@@ -23,6 +23,7 @@ def get_likely_cause(etype, value, frame, tb_data):
     except Exception as e:
         debug_helper.log("Exception caught in get_likely_cause().")
         debug_helper.log(repr(e))
+        debug_helper.log_error()
         cause = _(
             "Exception raised by Friendly-traceback itself.\n"
             "Please report this example to\n"

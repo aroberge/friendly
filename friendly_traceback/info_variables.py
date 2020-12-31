@@ -259,6 +259,7 @@ def get_variables_in_frame_by_scope(frame, scope):
     else:
         debug_helper.log("Internal error in get_variable_in_frame_by_scope()")
         debug_helper.log(f"unknown scope '{scope}'")
+        debug_helper.log_error()
         return {}
 
 

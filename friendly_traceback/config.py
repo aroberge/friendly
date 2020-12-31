@@ -233,6 +233,7 @@ class _State:
             debug_helper.log("Exception raised in exception_hook().")
             debug_helper.log(str(e))
             self.write_err(e)
+            debug_helper.log_error()
             return
 
         self.write_err(explanation)
