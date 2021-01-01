@@ -22,8 +22,7 @@ from . import source_analyzer
 from . import line_analyzer
 from . import message_analyzer
 from .. import debug_helper
-
-import token_utils
+from .. import token_utils
 
 # TODO invalid digit '8' in octal literal
 

@@ -26,7 +26,7 @@ from .. import debug_helper
 from .. import utils
 from ..my_gettext import current_lang
 
-import token_utils
+from .. import token_utils
 
 
 def scan_source(source_lines=None, linenumber=0, offset=0):
@@ -267,7 +267,7 @@ def isolate_bad_statement(*, source_lines=None, linenumber=None, offset=0):
 
     offset -= 1  # shift for proper comparison
     source = "".join(source_lines)
-    source_tokens = token_utils.tokenize(source, warning=False)
+    source_tokens = token_utils.tokenize(source)
 
     bad_token = None
     end_bracket = None

@@ -5,8 +5,7 @@ A few useful objects which do not naturally fit anywhere else.
 import difflib
 
 from . import debug_helper
-
-import token_utils
+from . import token_utils
 
 
 def tokenize_source(source):
@@ -14,7 +13,7 @@ def tokenize_source(source):
     and comments.
     """
     try:
-        return token_utils.tokenize(source, warning=False)
+        return token_utils.tokenize(source)
     except Exception as e:
         debug_helper.log("Problem in token_utils.tokenize().")
         debug_helper.log(str(e))

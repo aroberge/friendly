@@ -38,8 +38,7 @@ from .runtime_errors import name_error
 from .source_cache import cache, highlight_source
 from .syntax_errors import analyze_syntax
 from .syntax_errors import indentation_error
-
-import token_utils
+from . import token_utils
 
 try:
     import executing

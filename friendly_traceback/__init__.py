@@ -38,6 +38,7 @@ from pathlib import Path
 from . import editors_helpers
 from . import formatters
 from . import path_info
+from . import token_utils  # noqa
 from .config import session
 from .my_gettext import current_lang
 from .theme import rich_available

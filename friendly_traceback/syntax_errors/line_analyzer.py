@@ -10,7 +10,7 @@ from .. import debug_helper
 from .. import utils
 from ..my_gettext import current_lang
 
-import token_utils
+from .. import token_utils
 
 
 def find_offending_token(tokens, offset):

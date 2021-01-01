@@ -3,7 +3,7 @@ exec_code is as expected. The tests we do here
 are almost identical to those for check_syntax,
 found in test_check_syntax.py
 
-We also test to ensure that exec_code does not accidently
+We also test to ensure that exec_code does not accidentally
 change any existing error handling settings.
 
 """
