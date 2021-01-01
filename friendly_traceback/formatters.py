@@ -199,6 +199,7 @@ def jupyter(info, include="friendly_tb"):
                 else:
                     display(HTML(f'<p style="width: 70ch">{text}</p>'))
     if not result:
+        text = ""
         if include == "why":
             text = _("I do not know.")
         elif include == "hint":
@@ -206,7 +207,8 @@ def jupyter(info, include="friendly_tb"):
                 text = _("I have no suggestion to offer; try `why()`.")
             else:
                 text = _("I have no suggestion to offer.")
-        text = html_escape(text)
+        if not text:
+            return ""
         display(HTML(f'<p style="width: 70ch;">{text}</p>'))
 
     return ""
@@ -288,7 +290,6 @@ def _markdown(info, include, rich=False, docs=False):
     """Traceback formatted with with markdown syntax."""
     global RICH_HEADER
     RICH_HEADER = False
-    result = []
 
     markdown_items = {
         "header": ("# ", ""),

@@ -54,13 +54,14 @@ def _attribute_error(value, frame, tb_data):
 
 
 @register("FileNotFoundError")
-def file_not_found_error(value, frame, tb_data):
+def file_not_found_error(value, *_args):
     _ = current_lang.translate
     # str(value) is expected to be something like
     #
     # fileNotFoundError: No module named 'does_not_exist'
     #
     # By splitting value using ', we can extract the module name.
+    # TODO: use re instead for added robustness
     return (
         _(
             "In your program, the name of the\n"
@@ -85,11 +86,12 @@ def _index_error(value, frame, tb_data):
 
 
 @register("KeyError")
-def key_error(value, frame, tb_data):
+def key_error(value, *_args):
     _ = current_lang.translate
     # str(value) is expected to be something like
     #
     # KeyError: 'c'
+    # TODO: extract to separate file and see if similar keys can be found.
     return (
         _("In your program, the key that cannot be found is `{key_name!r}`.\n").format(
             key_name=value.args[0]
@@ -115,7 +117,7 @@ def name_error(value, frame, tb_data):
 
 
 @register("OverflowError")
-def overflow_error(*args):
+def overflow_error(*_args):
     return None, None  # TODO: check to see if additional information
     # can be provided for real test cases
 
@@ -142,5 +144,5 @@ def _unbound_local_error(value, frame, tb_data):
 
 
 @register("ZeroDivisionError")
-def zero_division_error(*args):
+def zero_division_error(*_args):
     return None, None  # No additional information can be provided

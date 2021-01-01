@@ -154,7 +154,7 @@ class FriendlyConsole(InteractiveConsole):
         try:
             exec(code, self.locals)
         except SystemExit:
-            os._exit(1)
+            os._exit(1)  # noqa -pycharm
         except Exception:
             try:
                 friendly_traceback.explain_traceback()

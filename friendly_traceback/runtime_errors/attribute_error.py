@@ -59,7 +59,7 @@ def _get_cause(value, frame, tb_data):
 def attribute_error_in_module(module, attribute, frame):
     """Attempts to find if a module attribute or module name might have been misspelled"""
     _ = current_lang.translate
-    cause = hint = None
+    hint = None
     try:
         mod = sys.modules[module]
     except Exception:
