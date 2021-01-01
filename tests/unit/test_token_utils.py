@@ -98,27 +98,6 @@ tokens2 = token_utils.tokenize(source2)
 lines3 = token_utils.get_lines(source3)
 
 
-def test_first():
-    assert token_utils.get_first(tokens1) == token_utils.get_first(tokens2)
-    assert token_utils.get_first(tokens1) == "a"
-    assert token_utils.get_first(tokens2, exclude_comment=False) == "a"
-    assert token_utils.get_first_index(tokens1) == 0
-
-    assert token_utils.get_first(lines3[2]) == "a"
-    assert token_utils.get_first_index(lines3[2]) == 1
-
-
-def test_last():
-    assert token_utils.get_last(tokens1) == token_utils.get_last(tokens2)
-    assert token_utils.get_last(tokens1) == "b"
-    assert token_utils.get_last(tokens2, exclude_comment=False) == "# comment"
-    assert token_utils.get_last_index(tokens1) == 2
-
-    assert token_utils.get_last(lines3[2]) == "b"
-    assert token_utils.get_last_index(lines3[2]) == 3
-    assert token_utils.get_last_index(lines3[2], exclude_comment=False) == 4
-
-
 def test_dedent():
     new_tokens = token_utils.dedent(lines3[2], 4)
     assert new_tokens == tokens2

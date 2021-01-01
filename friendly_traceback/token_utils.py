@@ -248,65 +248,6 @@ def strip_comment(line):
     return untokenize(tokens)
 
 
-def get_first(tokens, exclude_comment=True):
-    """Given a list of tokens, find the first token which is not a space token
-    (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) and,
-    by default, also not a ``COMMMENT``.
-
-    ``COMMMENT`` tokens can be included by setting ``exclude_comment`` to ``False``.
-
-    Returns ``None`` if none is found.
-    """
-    for token in tokens:
-        if token.is_space() or (exclude_comment and token.is_comment()):
-            continue
-        return token
-    return None
-
-
-def get_first_index(tokens, exclude_comment=True):
-    """Given a list of tokens, find the index of the first token which is
-    not a space token (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) nor
-    a ``COMMMENT``. If it is desired to include COMMENT, set ``exclude_comment``
-    to ``True``.
-
-    Returns ``None`` if none is found.
-    """
-    for index, token in enumerate(tokens):
-        if token.is_space() or (exclude_comment and token.is_comment()):
-            continue
-        return index
-    return None
-
-
-def get_last(tokens, exclude_comment=True):
-    """Given a list of tokens, find the last token which is not a space token
-    (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) and, by default,
-    also not a ``COMMMENT``.
-
-    ``COMMMENT`` tokens can be included by setting``exclude_comment``
-    to ``False``.
-
-    Returns ``None`` if none is found.
-    """
-    return get_first(reversed(tokens), exclude_comment=exclude_comment)
-
-
-def get_last_index(tokens, exclude_comment=True):
-    """Given a list of tokens, find the index of the last token which is
-    not a space token (such as a ``NEWLINE``, ``INDENT``, ``DEDENT``, etc.) nor
-    a ``COMMMENT``. If it is desired to include COMMENT, set ``exclude_comment``
-    to True.
-
-    Returns ``None`` if none is found.
-    """
-    return (
-        len(tokens)
-        - 1
-        - get_first_index(reversed(tokens), exclude_comment=exclude_comment)
-    )
-
-
 def dedent(tokens, nb):
     """Given a list of tokens, produces an equivalent list corresponding
     to a line of code with the first nb characters removed.
