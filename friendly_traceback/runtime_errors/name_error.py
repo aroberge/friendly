@@ -3,9 +3,18 @@ import re
 from ..my_gettext import current_lang
 from .. import info_variables
 from .. import utils
+from .. import debug_helper
 
 
 def get_cause(value, frame, tb_data):
+    try:
+        return _get_cause(value, frame, tb_data)
+    except Exception:
+        debug_helper.log_error()
+        return None, None
+
+
+def _get_cause(value, frame, tb_data):
     _ = current_lang.translate
 
     cause = _(
