@@ -83,7 +83,7 @@ def look_for_mismatched_brackets(
             if not brackets:
                 bracket = name_bracket(token)
                 _lineno = token.start_row
-                _source = f"\n    {_lineno}: {source_lines[_lineno-1]}"
+                _source = f"\n    {_lineno}: {source_lines[_lineno - 1]}"
                 shift = len(str(_lineno)) + token.start_col + 6
                 _source += " " * shift + "^\n"
                 return (
@@ -98,7 +98,7 @@ def look_for_mismatched_brackets(
                 if not matching_brackets(open_bracket, token):
                     bracket = name_bracket(token)
                     open_bracket = name_bracket(open_bracket)
-                    _source = f"\n    {open_lineno}: {source_lines[open_lineno-1]}"
+                    _source = f"\n    {open_lineno}: {source_lines[open_lineno - 1]}"
                     shift = len(str(open_lineno)) + open_col + 6
                     if open_lineno == token.start_row:
                         _source += " " * shift + "^"
@@ -107,7 +107,7 @@ def look_for_mismatched_brackets(
                     else:
                         _source += " " * shift + "^\n"
                         _lineno = token.start_row
-                        _source += f"    {_lineno}: {source_lines[_lineno-1]}"
+                        _source += f"    {_lineno}: {source_lines[_lineno - 1]}"
                         shift = len(str(_lineno)) + token.start_col + 6
                         _source += " " * shift + "^\n"
                     return (
@@ -207,7 +207,7 @@ def look_for_missing_bracket(
         bracket, linenumber, start_col = brackets.pop()
 
         bracket_name = name_bracket(bracket)
-        _source = f"\n    {linenumber}: {source_lines[linenumber-1]}"
+        _source = f"\n    {linenumber}: {source_lines[linenumber - 1]}"
         shift = len(str(linenumber)) + start_col + 6
         _source += " " * shift + "|\n"
 
@@ -247,7 +247,7 @@ def look_for_missing_bracket(
         return False
 
 
-def isolate_bad_statement(*, source_tokens=None, source_lines=None, linenumber=None):
+def isolate_bad_statement(*, source_lines=None, linenumber=None, offset=0):
     """This function scans the source searching for the statement that
     caused the problem. Most often, it will be a single line of code. However,
     sometimes it might be a multiline statement that includes code surrounded
@@ -262,37 +262,64 @@ def isolate_bad_statement(*, source_tokens=None, source_lines=None, linenumber=N
     3. an unmatched closing bracket or None
     """
     _ = current_lang.translate
-    if source_tokens is None:
-        source = "".join(source_lines)
-        source_tokens = token_utils.tokenize(source)
+    if linenumber is None:  # can happen with Too many nested blocks error
+        return [], [], None, None
 
+    offset -= 1  # shift for proper comparison
+    source = "".join(source_lines)
+    source_tokens = token_utils.tokenize(source, warning=False)
+
+    bad_token = None
+    end_bracket = None
     begin_brackets = []
-    previous_linenumber = -1
+    statement_tokens = []
+    previous_row = -1
+    previous_token = None
+    continuation_line = False
 
     for token in source_tokens:
         # is this a new statement?
-        if token.start_row > previous_linenumber:
+        if token.start_row > previous_row:
+            if previous_token is not None:
+                continuation_line = previous_token.line.endswith("\\\n")
             if token.start_row <= linenumber and not begin_brackets:
                 statement_tokens = []
-            previous_linenumber = token.start_row
+            previous_row = token.start_row
 
         # Did we collect all the tokens belonging to the statement?
-        if token.start_row > linenumber and not begin_brackets:
-            return statement_tokens, begin_brackets, None
+        if (
+            token.start_row > linenumber
+            and not begin_brackets
+            and not continuation_line
+        ):
+            break
 
         statement_tokens.append(token)
+        # TODO: check to ensure that this works with all Python versions.
+        # The offset seems to be different depending on Python versions, something matching
+        # the beginning of a token, sometimes the end.
+        if (
+            token.start_row == linenumber
+            and token.start_col >= offset
+            and bad_token is not None
+        ):
+            bad_token = token
+        previous_token = token
         if token.is_not_in("()[]}{"):
             continue
 
         if token.is_in("([{"):
             begin_brackets.append(token)
         elif token.is_in(")]}"):  # Does it match or not
+            end_bracket = token
             if not begin_brackets:
-                return statement_tokens, begin_brackets, token
+                break
             else:
                 open_bracket = begin_brackets.pop()
                 if not matching_brackets(open_bracket, token):
                     begin_brackets.append(open_bracket)
-                    return statement_tokens, begin_brackets, token
+                    break
+                else:
+                    end_bracket = None
 
-    return statement_tokens, begin_brackets, None
+    return statement_tokens, begin_brackets, end_bracket, bad_token

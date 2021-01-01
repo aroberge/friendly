@@ -92,7 +92,7 @@ def analyze_last_line(line, offset=None):
 
 
 @add_line_analyzer
-def copy_pasted_code(tokens, **kwargs):
+def copy_pasted_code(tokens, **_kwargs):
     """Detecting code that starts with a Python prompt"""
     _ = current_lang.translate
     cause = hint = None
@@ -139,7 +139,7 @@ def detect_walrus(tokens, offset=None):
 
 
 @add_line_analyzer
-def debug_f_string(tokens, offset=None):
+def debug_f_string(tokens, **_kwargs):
     """detect debug feature of f-string introduced in Python 3.8"""
     _ = current_lang.translate
     cause = hint = None
@@ -184,7 +184,7 @@ def detect_backquote(tokens, offset=None):
 
 
 @add_line_analyzer
-def assign_to_a_keyword(tokens, **kwargs):
+def assign_to_a_keyword(tokens, **_kwargs):
     """Checks to see if line is of the form 'keyword = ...'"""
     _ = current_lang.translate
     cause = hint = None
@@ -200,7 +200,7 @@ def assign_to_a_keyword(tokens, **kwargs):
 
 
 @add_line_analyzer
-def confused_elif(tokens, **kwargs):
+def confused_elif(tokens, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     name = None
@@ -219,7 +219,7 @@ def confused_elif(tokens, **kwargs):
 
 
 @add_line_analyzer
-def import_from(tokens, **kwargs):
+def import_from(tokens, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if len(tokens) < 4:
@@ -243,7 +243,7 @@ def import_from(tokens, **kwargs):
 
 
 @add_line_analyzer
-def keyword_as_attribute(tokens, **kwargs):
+def keyword_as_attribute(tokens, **_kwargs):
     """Will identify something like  obj.True ..."""
     _ = current_lang.translate
     cause = hint = None
@@ -275,7 +275,7 @@ def misplaced_quote(tokens, offset=None):
     """
 
     # TODO: check to confirm it is a single quote, and that the
-    # string does not evaluaate to a number.
+    # string does not evaluate to a number.
     # TODO: confirm that we are looking at the token causing a problem.
 
     _ = current_lang.translate
@@ -345,7 +345,7 @@ def assign_instead_of_equal(tokens, offset=None):
 
 
 @add_line_analyzer
-def print_as_statement(tokens, **kwargs):
+def print_as_statement(tokens, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if tokens[0] != "print":
@@ -361,7 +361,7 @@ def print_as_statement(tokens, **kwargs):
 
 
 @add_line_analyzer
-def calling_pip(tokens, **kwargs):
+def calling_pip(tokens, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if not tokens[0].is_in(["pip", "python"]):
@@ -412,7 +412,7 @@ def raise_single_exception(tokens, offset=None):
 
 
 @add_line_analyzer
-def invalid_name(tokens, offset=None):
+def invalid_name(tokens, **_kwargs):
     """Identifies invalid identifiers when a name begins with a number"""
     _ = current_lang.translate
     cause = hint = None
@@ -484,7 +484,6 @@ def _add_operator(tokens, first):
 
 def perhaps_misspelled_keyword(tokens, first, second):
     kwlist = keyword.kwlist
-    results = []
     similar = utils.get_similar_words(first.string, kwlist)
     similar += utils.get_similar_words(second.string, kwlist)
     words = [word for word in kwlist if word not in similar]
@@ -583,15 +582,15 @@ def missing_comma_or_operator(tokens, offset=None):
                 results = perhaps_misspelled_keyword(tokens, first, second)
                 if results:
                     if len(results) == 1:
-                        keyword, line = results[0]
+                        word, line = results[0]
                         hint = _("Did you mean `{line}`?\n").format(line=line)
 
                         cause += _(
                             "Perhaps you meant to write `{keyword}` and made a typo.\n"
                             "The correct line would then be `{line}`\n"
-                        ).format(keyword=keyword, line=line)
+                        ).format(keyword=word, line=line)
                     else:
-                        lines = [line for keyword, line in results]
+                        lines = [line for _word, line in results]
                         hint = _("Did you mean `{line}`?\n").format(line=lines[0])
 
                         cause += _(
@@ -635,7 +634,7 @@ def missing_comma_or_operator(tokens, offset=None):
 
 
 @add_line_analyzer
-def missing_colon(tokens, **kwargs):
+def missing_colon(tokens, **_kwargs):
     """look for missing colon at the end of statement"""
     _ = current_lang.translate
     cause = hint = None
@@ -677,7 +676,7 @@ def missing_colon(tokens, **kwargs):
 
 
 @add_line_analyzer
-def malformed_def(tokens, **kwargs):
+def malformed_def(tokens, **_kwargs):
     """Looks for problems with defining a function, assuming that
     the information passed looks like a complete statement"""
     _ = current_lang.translate
@@ -716,7 +715,7 @@ def malformed_def(tokens, **kwargs):
         return cause, hint
 
     # Lets look at the possibility that a keyword might have been used
-    # as an argument or keyword argument. The following test is admiteddly
+    # as an argument or keyword argument. The following test is admittedly
     # crude and imperfect, but it is the last one we do.
 
     prev_token_str = None
@@ -782,7 +781,7 @@ def invalid_double_star_operator(tokens, offset=None):
     if tokens[0] == "**":
         return possible_cause, hint
 
-    if sys.version_info < (3, 8):  # not getting the right info from fstrings
+    if sys.version_info < (3, 8):  # not getting the right info from fstring
         for prev_token, token in zip(tokens, tokens[1:]):
             if prev_token == "(" and token == "**":
                 return possible_cause, hint

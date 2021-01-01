@@ -36,8 +36,8 @@ bad_quotation_marks = [
     "〞",
     "＂",
     "‚",
-    "‘",
     "‛",
+    "‘",
     "❛",
     "❜",
     "❟",
@@ -54,7 +54,6 @@ def analyze_message(
             linenumber=linenumber,
             source_lines=source_lines,
             offset=offset,
-            # info=info,
         )
         if cause:
             return cause, hint

@@ -16,7 +16,6 @@ as often as possible what went wrong while trying to avoid giving
 incorrect information.
 """
 
-
 from friendly_traceback.my_gettext import current_lang
 from friendly_traceback.source_cache import cache
 from . import source_analyzer
@@ -24,20 +23,19 @@ from . import line_analyzer
 from . import message_analyzer
 from .. import debug_helper
 
+import token_utils
 
-def set_cause_syntax(etype, value, tb_data):
+# TODO invalid digit '8' in octal literal
+
+
+def set_cause_syntax(value, tb_data):
     """Gets the likely cause of a given exception based on some information
     specific to a given exception.
     """
     _ = current_lang.translate
     cause = hint = None
     try:
-        if etype.__name__ == "IndentationError":
-            cause = indentation_error_cause(value)
-        elif etype.__name__ == "TabError":
-            pass  # No need to provide additional information
-        else:
-            cause, hint = find_syntax_error_cause(value, tb_data)
+        cause, hint = find_syntax_error_cause(value, tb_data)
     except Exception as e:
         debug_helper.log("Exception caught in set_cause_syntax().")
         debug_helper.log(repr(e))
@@ -47,30 +45,6 @@ def set_cause_syntax(etype, value, tb_data):
             "https://github.com/aroberge/friendly-traceback/issues\n"
         )
     return cause, hint
-
-
-def indentation_error_cause(value):
-    _ = current_lang.translate
-
-    value = str(value)
-    if "unexpected indent" in value:
-        this_case = _(
-            "The line identified above\n"
-            "is more indented than expected and \n"
-            "does not match the indentation of the previous line.\n"
-        )
-    elif "expected an indented block" in value:
-        this_case = _(
-            "The line identified above\n"
-            "was expected to begin a new indented block.\n"
-        )
-    else:
-        this_case = _(
-            "The line identified above is\n"
-            "less indented than the preceding one,\n"
-            "and is not aligned vertically with another block of code.\n"
-        )
-    return this_case
 
 
 def find_syntax_error_cause(value, tb_data):
@@ -84,10 +58,6 @@ def find_syntax_error_cause(value, tb_data):
     offset = value.offset
     message = value.msg
     source_lines = cache.get_source_lines(filepath)
-
-    # tokens, brackets, end_bracket = source_analyzer.isolate_bad_statement(
-    #     source_lines=source_lines, linenumber=linenumber
-    # )
 
     # SyntaxError in f-strings are handled differently by Python
     # than other types of errors. They are effectively handled internally
@@ -153,6 +123,14 @@ def find_syntax_error_cause(value, tb_data):
             "but I might guess incorrectly.\n\n"
         )
 
+    try:
+        tokens, brackets, end_bracket, bad_token = source_analyzer.isolate_bad_statement(
+            source_lines=source_lines, linenumber=linenumber, offset=offset
+        )
+        statement = token_utils.untokenize(tokens)  # noqa
+    except Exception:
+        debug_helper.log_error()
+
     # If not cause has been identified, we look at a single line
     # where the error has been found by Python, and try to find the source
     # of the error
@@ -161,7 +139,7 @@ def find_syntax_error_cause(value, tb_data):
     if cause:
         return notice + cause, hint
 
-    # TODO: check to see if the offset correponds to the first token
+    # TODO: check to see if the offset corresponds to the first token
     # of a line; if so, the error might be found by looking at the
     # previous line.
 

@@ -37,6 +37,7 @@ from .path_info import is_excluded_file, EXCLUDED_FILE_PATH, path_utils
 from .runtime_errors import name_error
 from .source_cache import cache, highlight_source
 from .syntax_errors import analyze_syntax
+from .syntax_errors import indentation_error
 
 import token_utils
 
@@ -126,8 +127,8 @@ class TracebackData:
         # We should never reach this stage.
         debug_helper.log("Internal error in TracebackData.get_source_info.")
         debug_helper.log("No records found.")
-        debug_helper.log("etype:", str(etype))
-        debug_helper.log("value:", str(value))
+        debug_helper.log("etype:" + str(etype))
+        debug_helper.log("value:" + str(value))
         debug_helper.log_error()
         self.filename = ""
         self.bad_line = "\n"
@@ -255,7 +256,7 @@ class TracebackData:
 #    13:     try:
 # -->14:         inner()
 #
-# inner: <function test_unbound_local_error.<loca... >
+# inner: <function test_unbound_local_error.<location... >
 
 # [exception_raised_ ...]
 # Exception raised on line 11 of file 'C:\Users\...\test_unbound_local_error.py'.
@@ -311,8 +312,7 @@ class FriendlyTraceback:
             print("Internal problem in Friendly-traceback.")
             print("Please report this issue.")
             raise SystemExit
-        self.info = {}
-        self.info["header"] = _("Python exception:")
+        self.info = {"header": _("Python exception:")}
         self.assign_message()  # language independent
         self.assign_tracebacks()
 
@@ -401,13 +401,19 @@ class FriendlyTraceback:
         _ = current_lang.translate
         etype = self.tb_data.exception_type
         value = self.tb_data.value
+
         if self.tb_data.filename == "<unknown>":
             return
         elif self.tb_data.filename == "<stdin>":
             self.info["cause"] = cannot_analyze_stdin()
             return
+        if etype.__name__ == "IndentationError":
+            self.info["cause"] = indentation_error.set_cause_indentation_error(value)
+            return
+        elif etype.__name__ == "TabError":
+            return
 
-        cause, hint = analyze_syntax.set_cause_syntax(etype, value, self.tb_data)
+        cause, hint = analyze_syntax.set_cause_syntax(value, self.tb_data)
         if cause is not None:
             if "invalid syntax" in self.message:
                 if self.tb_data.filename == "<string>":
@@ -731,6 +737,11 @@ def get_partial_source(filename, linenumber, lines, index, text_range=None):
         line = ""
         debug_helper.log("Problem in get_partial_source().")
         debug_helper.log(file_not_found)
+    else:
+        source = line = ""
+        debug_helper.log("Problem in get_partial_source().")
+        debug_helper.log("Should not have reached this option")
+        debug_helper.log_error()
 
     if not source.endswith("\n"):
         source += "\n"
