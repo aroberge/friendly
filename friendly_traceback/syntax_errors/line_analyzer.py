@@ -92,49 +92,6 @@ def analyze_last_line(line, offset=None):
 
 
 @add_line_analyzer
-def confused_elif(tokens, **_kwargs):
-    _ = current_lang.translate
-    cause = hint = None
-    name = None
-    if tokens[0] == "elseif":
-        name = "elseif"
-    elif tokens[0] == "else" and len(tokens) > 1 and tokens[1] == "if":
-        name = "else if"
-    if name:
-        hint = _("Perhaps you meant to write `elif`.\n")
-        cause = _(
-            "You likely meant to use Python's `elif` keyword\n"
-            "but wrote `{name}` instead\n"
-            "\n"
-        ).format(name=name)
-    return cause, hint
-
-
-@add_line_analyzer
-def import_from(tokens, **_kwargs):
-    _ = current_lang.translate
-    cause = hint = None
-    if len(tokens) < 4:
-        return cause, hint
-    if tokens[0] != "import":
-        return cause, hint
-    if tokens[2] == "from":
-        function = tokens[1]
-        module = tokens[3]
-        hint = _("Did you mean `from {module} import {function}`?\n").format(
-            module=module, function=function
-        )
-        cause = _(
-            "You wrote something like\n\n"
-            "    import {function} from {module}\n"
-            "instead of\n\n"
-            "    from {module} import {function}\n\n"
-            "\n"
-        ).format(module=module, function=function)
-    return cause, hint
-
-
-@add_line_analyzer
 def keyword_as_attribute(tokens, **_kwargs):
     """Will identify something like  obj.True ..."""
     _ = current_lang.translate

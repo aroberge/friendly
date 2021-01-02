@@ -93,13 +93,13 @@ def detect_walrus(statement):
 
 
 @add_statement_analyzer
-def debug_f_string(statement):
+def debug_fstring(statement):
     """detect debug feature of f-string introduced in Python 3.8"""
     _ = current_lang.translate
     cause = hint = None
     if sys.version_info >= (3, 8):
         return cause, hint
-    if not (statement.filename == "<fstring>" or "f-string" in statement.message):
+    if not statement.fstring_error:
         return cause, hint
 
     if statement.bad_token == "=" and statement.prev_token.is_identifier():
@@ -146,4 +146,46 @@ def assign_to_a_keyword(statement):
             "This is not allowed.\n"
             "\n"
         ).format(keyword=statement.prev_token)
+    return cause, hint
+
+
+@add_statement_analyzer
+def confused_elif(statement):
+    _ = current_lang.translate
+    cause = hint = None
+    name = None
+    if statement.bad_token == "elseif" or statement.prev_token == "elseif":
+        name = "elseif"
+    elif statement.bad_token == "if" and statement.prev_token == "else":
+        name = "else if"
+    if name:
+        hint = _("Perhaps you meant to write `elif`.\n")
+        cause = _(
+            "You likely meant to use Python's `elif` keyword\n"
+            "but wrote `{name}` instead\n"
+            "\n"
+        ).format(name=name)
+    return cause, hint
+
+
+@add_statement_analyzer
+def import_from(statement):
+    _ = current_lang.translate
+    cause = hint = None
+    if statement.bad_token != "from" or statement.tokens[0] != "import":
+        return cause, hint
+
+    function = statement.prev_token
+    module = statement.next_token
+
+    hint = _("Did you mean `from {module} import {function}`?\n").format(
+        module=module, function=function
+    )
+    cause = _(
+        "You wrote something like\n\n"
+        "    import {function} from {module}\n"
+        "instead of\n\n"
+        "    from {module} import {function}\n\n"
+        "\n"
+    ).format(module=module, function=function)
     return cause, hint

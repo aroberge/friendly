@@ -27,7 +27,7 @@ class Statement:
     removing all space-like and comment tokens, which are the only
     meaningful tokens needed to do the analysis.
 
-    To simplify the code doing the error analysis, we precompute various
+    To simplify the code doing the error analysis itself, we precompute various
     parameters (e.g. does the statement fits on a single line, how many
     meaningful tokens are included, what are the first and last tokens
     on that statement, etc.) which are needed for some functions.
@@ -38,6 +38,8 @@ class Statement:
         self.message = value.msg
         self.filename = value.filename
         self.bad_line = tb_data.bad_line  # previously obtained from the traceback
+
+        self.fstring_error = self.filename == "<fstring>" or "f-string" in self.message
 
         self.all_statement_tokens = []  # include newlines, comments, etc.
         self.tokens = []  # meaningful tokens
