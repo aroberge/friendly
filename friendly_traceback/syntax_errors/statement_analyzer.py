@@ -79,7 +79,7 @@ def detect_walrus(statement):
     prev = statement.prev_token
     next_token = statement.next_token
 
-    if (bad == "=" and prev == ":" and prev.immediately_before(bad)) or (
+    if (prev == ":" and bad == "=" and bad.immediately_after(prev)) or (
         bad == ":" and next_token == "=" and bad.immediately_before(next_token)
     ):
         hint = _("Your Python version might be too old.\n")

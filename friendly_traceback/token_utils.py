@@ -137,10 +137,20 @@ class Token:
         return self.string not in iterable
 
     def immediately_before(self, other):
-        """Return True if other self is immediately before other,
+        """Return True if the current token is immediately before other,
         without any intervening space in between the two tokens.
         """
+        if other is None:
+            return False
         return self.end_row == other.start_row and self.end_col == other.start_col
+
+    def immediately_after(self, other):
+        """Return True if the current token is immediately after other,
+        without any intervening space in between the two tokens.
+        """
+        if other is None:
+            return False
+        return other.immediately_before(self)
 
 
 def find_token_by_position(tokens, row, column):
