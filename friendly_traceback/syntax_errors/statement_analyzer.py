@@ -266,6 +266,8 @@ def assign_instead_of_equal(statement):
     if not statement.first_token.is_in(["if", "elif", "while"]):
         return cause, hint
 
+    # TODO: see if we can replace = by == and get valid syntax.
+
     equal = _("Perhaps you needed `==` instead of `=`.\n")
     equal_or_walrus = _("Perhaps you needed `==` or `:=` instead of `=`.\n")
     if sys.version_info < (3, 8):
@@ -279,4 +281,56 @@ def assign_instead_of_equal(statement):
             "an equality operator, `==`, or the walrus operator `:=`.\n"
         )
         hint = equal_or_walrus
+    return cause, hint
+
+
+@add_statement_analyzer
+def print_as_statement(statement):
+    _ = current_lang.translate
+    cause = hint = None
+
+    if statement.prev_token != "print":
+        return cause, hint
+
+    # TODO: add hint
+    # TODO: check to see if perhaps [] were used instead of ()
+    if statement.bad_token != "(":
+        cause = _(
+            "In older version of Python, `print` was a keyword.\n"
+            "Now, `print` is a function; you need to use parentheses to call it.\n"
+        )
+    return cause, hint
+
+
+@add_statement_analyzer
+def calling_pip(statement):
+    _ = current_lang.translate
+    cause = hint = None
+    # TODO: check if we cover other cases of using Python from an interpreter.
+    if not statement.first_token.is_in(["pip", "python"]):
+        return cause, hint
+
+    use_pip = _(
+        "It looks as if you are attempting to use pip to install a module.\n"
+        "`pip` is a command that needs to run in a terminal,\n"
+        "not from a Python interpreter.\n"
+    )
+
+    for tok in statement.tokens:
+        if tok == "pip":
+            hint = _("Pip cannot be used in a Python interpreter.\n")
+            return use_pip, hint
+    return cause, hint
+
+
+@add_statement_analyzer
+def dot_followed_by_bracket(statement):
+    _ = current_lang.translate
+    cause = hint = None
+
+    if statement.bad_token.is_in("()[]{}") and statement.prev_token == ".":
+        cause = _("You cannot have a dot `.` followed by `{bracket}`.\n").format(
+            bracket=statement.bad_token
+        )
+    # TODO: see if replacing the dot by a comma would fix the problem.
     return cause, hint

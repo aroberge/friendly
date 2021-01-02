@@ -92,57 +92,6 @@ def analyze_last_line(line, offset=None):
 
 
 @add_line_analyzer
-def print_as_statement(tokens, **_kwargs):
-    _ = current_lang.translate
-    cause = hint = None
-    if tokens[0] != "print":
-        return cause, hint
-
-    # TODO: add hint
-    if len(tokens) == 1 or tokens[1] != "(":
-        cause = _(
-            "In older version of Python, `print` was a keyword.\n"
-            "Now, `print` is a function; you need to use parentheses to call it.\n"
-        )
-    return cause, hint
-
-
-@add_line_analyzer
-def calling_pip(tokens, **_kwargs):
-    _ = current_lang.translate
-    cause = hint = None
-    if not tokens[0].is_in(["pip", "python"]):
-        return cause, hint
-
-    use_pip = _(
-        "It looks as if you are attempting to use pip to install a module.\n"
-        "`pip` is a command that needs to run in a terminal,\n"
-        "not from a Python interpreter.\n"
-    )
-
-    for tok in tokens:
-        if tok == "pip":
-            hint = _("Pip cannot be used in a Python interpreter.\n")
-            return use_pip, hint
-    return cause, hint
-
-
-@add_line_analyzer
-def dot_followed_by_bracket(tokens, offset=None):
-    _ = current_lang.translate
-    cause = hint = None
-    bad_token, index = find_offending_token(tokens, offset)
-    if bad_token is None or index == 0:
-        return cause, hint
-    prev_token = tokens[index - 1]
-    if bad_token.is_in(["(", ")", "[", "]", "{", "}"]) and prev_token == ".":
-        cause = _("You cannot have a dot `.` followed by `{bracket}`.\n").format(
-            bracket=bad_token
-        )
-    return cause, hint
-
-
-@add_line_analyzer
 def raise_single_exception(tokens, offset=None):
     _ = current_lang.translate
     cause = hint = None

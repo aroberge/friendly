@@ -69,12 +69,16 @@ class Statement:
                 self.first_token.start_row == self.last_token.end_row
                 and self.is_complete
             )
+            if self.bad_token is None:
+                self.bad_token = self.tokens[-1]
+                self.bad_token_index = self.nb_tokens - 1
+                if self.nb_tokens == 1:
+                    self.prev_token = token_utils.tokenize(" ")[0]  # fake
+                else:
+                    self.prev_token = self.tokens[-2]
 
-        if self.bad_token is not None:  # this should always be ok
-            try:
-                self.next_token = self.tokens[self.bad_token_index + 1]
-            except Exception:
-                self.next_token = None
+        if self.last_token != self.bad_token:
+            self.next_token = self.tokens[self.bad_token_index + 1]
 
     def get_source_tokens(self, value):
         """Returns a list containing all the tokens from the source."""
