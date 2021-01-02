@@ -92,22 +92,6 @@ def analyze_last_line(line, offset=None):
 
 
 @add_line_analyzer
-def raise_single_exception(tokens, offset=None):
-    _ = current_lang.translate
-    cause = hint = None
-    if tokens[0] != "raise":
-        return cause, hint
-    bad_token, ignore = find_offending_token(tokens, offset)
-    if bad_token is None:
-        return cause, hint
-    if bad_token == ",":
-        cause = _(
-            "It looks like you are trying to raise an exception using Python 2 syntax.\n"
-        )
-    return cause, hint
-
-
-@add_line_analyzer
 def invalid_name(tokens, **_kwargs):
     """Identifies invalid identifiers when a name begins with a number"""
     _ = current_lang.translate

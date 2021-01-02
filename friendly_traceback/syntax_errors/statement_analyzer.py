@@ -334,3 +334,17 @@ def dot_followed_by_bracket(statement):
         )
     # TODO: see if replacing the dot by a comma would fix the problem.
     return cause, hint
+
+
+@add_statement_analyzer
+def raise_single_exception(statement):
+    _ = current_lang.translate
+    cause = hint = None
+    if statement.first_token != "raise":
+        return cause, hint
+
+    if statement.bad_token == "," and statement.prev_token.is_identifier():
+        cause = _(
+            "It looks like you are trying to raise an exception using Python 2 syntax.\n"
+        )
+    return cause, hint
