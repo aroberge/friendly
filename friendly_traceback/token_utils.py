@@ -136,6 +136,12 @@ class Token:
         """Returns True if the string attribute is found as an item of iterable."""
         return self.string not in iterable
 
+    def immediately_before(self, other):
+        """Return True if other self is immediately before other,
+        without any intervening space in between the two tokens.
+        """
+        return self.end_row == other.start_row and self.end_col == other.start_col
+
 
 def find_token_by_position(tokens, row, column):
     """Given a list of tokens, a specific row (linenumber) and column,
@@ -215,23 +221,6 @@ def get_lines(source):
     if source.endswith((" ", "\t")):
         fix_empty_line(source, lines[-1])
     return lines
-
-
-def get_number(tokens, exclude_comment=True):
-    """Given a list of tokens, gives a count of the number of
-    tokens which are not space tokens (such as ``NEWLINE``, ``INDENT``,
-    ``DEDENT``, etc.)
-
-    By default, ``COMMMENT`` tokens are not included in the count.
-    If you wish to include them, set ``exclude_comment`` to ``False``.
-    """
-    nb = len(tokens)
-    for token in tokens:
-        if token.is_space():
-            nb -= 1
-        elif exclude_comment and token.is_comment():
-            nb -= 1
-    return nb
 
 
 def strip_comment(line):

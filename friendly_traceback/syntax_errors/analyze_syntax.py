@@ -20,6 +20,8 @@ from friendly_traceback.my_gettext import current_lang
 from friendly_traceback.source_cache import cache
 from . import source_analyzer
 from . import line_analyzer
+from . import source_info
+from . import statement_analyzer
 from . import message_analyzer
 from .. import debug_helper
 from .. import token_utils
@@ -56,6 +58,12 @@ def find_syntax_error_cause(value, tb_data):
     offset = value.offset
     message = value.msg
     source_lines = cache.get_source_lines(filepath)
+
+    statement = source_info.Statement(value, tb_data)
+    if "invalid syntax" in message:
+        cause, hint = statement_analyzer.analyze_statement(statement)
+        if cause is not None:
+            return cause, hint
 
     # SyntaxError in f-strings are handled differently by Python
     # than other types of errors. They are effectively handled internally

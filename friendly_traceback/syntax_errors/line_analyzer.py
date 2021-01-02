@@ -91,51 +91,51 @@ def analyze_last_line(line, offset=None):
 # ==================
 
 
-@add_line_analyzer
-def copy_pasted_code(tokens, **_kwargs):
-    """Detecting code that starts with a Python prompt"""
-    _ = current_lang.translate
-    cause = hint = None
-    if len(tokens) < 2:
-        return cause, hint
-    if tokens[0] == ">>" and tokens[1] == ">":
-        cause = _(
-            "It looks like you copy-pasted code from an interactive interpreter.\n"
-            "The Python prompt, `>>>`, should not be included in your code.\n"
-        )
-        hint = _("Did you use copy-paste?\n")
-    return cause, hint
+# @add_line_analyzer
+# def copy_pasted_code(tokens, **_kwargs):
+#     """Detecting code that starts with a Python prompt"""
+#     _ = current_lang.translate
+#     cause = hint = None
+#     if len(tokens) < 2:
+#         return cause, hint
+#     if tokens[0] == ">>" and tokens[1] == ">":
+#         cause = _(
+#             "It looks like you copy-pasted code from an interactive interpreter.\n"
+#             "The Python prompt, `>>>`, should not be included in your code.\n"
+#         )
+#         hint = _("Did you use copy-paste?\n")
+#     return cause, hint
 
 
-@add_line_analyzer
-def detect_walrus(tokens, offset=None):
-    """Detecting if code uses named assignment operator := with an
-    older version of Python.
-    """
-    _ = current_lang.translate
-    cause = hint = None
-    if sys.version_info >= (3, 8):
-        return cause, hint
-
-    bad_token, index = find_offending_token(tokens, offset)
-    if bad_token is None or bad_token != ":":
-        return cause, hint
-
-    try:
-        next_token = tokens[index + 1]
-    except IndexError:
-        return cause, hint
-
-    if next_token != "=":
-        return cause, hint
-
-    hint = _("Your Python version might be too old.\n")
-    cause = _(
-        "You appear to be using the operator `:=`, sometimes called\n"
-        "the walrus operator. This operator requires the use of\n"
-        "Python 3.8 or newer. You are using version {version}.\n"
-    ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
-    return cause, hint
+# @add_line_analyzer
+# def detect_walrus(tokens, offset=None):
+#     """Detecting if code uses named assignment operator := with an
+#     older version of Python.
+#     """
+#     _ = current_lang.translate
+#     cause = hint = None
+#     if sys.version_info >= (3, 8):
+#         return cause, hint
+#
+#     bad_token, index = find_offending_token(tokens, offset)
+#     if bad_token is None or bad_token != ":":
+#         return cause, hint
+#
+#     try:
+#         next_token = tokens[index + 1]
+#     except IndexError:
+#         return cause, hint
+#
+#     if next_token != "=":
+#         return cause, hint
+#
+#     hint = _("Your Python version might be too old.\n")
+#     cause = _(
+#         "You appear to be using the operator `:=`, sometimes called\n"
+#         "the walrus operator. This operator requires the use of\n"
+#         "Python 3.8 or newer. You are using version {version}.\n"
+#     ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
+#     return cause, hint
 
 
 @add_line_analyzer

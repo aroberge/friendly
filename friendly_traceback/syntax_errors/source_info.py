@@ -38,12 +38,14 @@ class Statement:
         self.message = value.msg
         self.bad_line = tb_data.bad_line  # previously obtained from the traceback
 
-        self.statement_tokens = []
+        self.all_statement_tokens = []  # include newlines, comments, etc.
         self.tokens = []  # meaningful tokens
         self.begin_brackets = []
         self.end_bracket = None
         self.bad_token = None
-        self.bad_token_index = None
+        self.prev_token = None  # meaningful token preceding bad token
+        self.next_token = None  # meaningful token following bad token
+        self.bad_token_index = 0
         self.first_token = None
         self.last_token = None
         self.single_line = True
@@ -56,6 +58,7 @@ class Statement:
             debug_helper.log("linenumber is None in analyze_syntax._find_likely_cause")
 
         self.nb_tokens = len(self.tokens)
+        self.is_complete = not (self.begin_brackets or self.end_bracket)
         if self.nb_tokens >= 1:
             self.first_token = self.tokens[0]
             self.last_token = self.tokens[-1]
@@ -64,14 +67,17 @@ class Statement:
                 and self.is_complete
             )
 
-        self.is_complete = not (self.begin_brackets or self.end_bracket)
+        if self.bad_token is not None:  # this should always be ok
+            try:
+                self.next_token = self.tokens[self.bad_token_index + 1]
+            except Exception:
+                self.next_token = None
 
     def get_source_tokens(self, value):
         """Returns a list containing all the tokens from the source."""
         source_lines = cache.get_source_lines(value.filename)
-        if source_lines.strip():
-            source = "".join(source_lines)
-        else:
+        source = "".join(source_lines)
+        if not source.strip():
             source = self.bad_line or "\n"
         return token_utils.tokenize(source)
 
@@ -81,13 +87,12 @@ class Statement:
         However, it might occasionally be a multiline statement that
         includes code surrounded by some brackets spanning multiple lines.
 
-        linenumber is the line number identified by Python as containing the error.
+        It will set the following:
 
-        It returns a list of tokens for:
-        1. a list of tokens for that statement
-        2. a list of opening brackets that are part of that statement and have
-           not yet been closed
-        3. an unmatched closing bracket or None
+        - self.all_statement_tokens: a list of all the tokens in the statement
+        - self.bad_token: the token identified as causing the problem based on offset.
+        - self.begin_brackets: a list of open brackets '([{' not yet closed
+        - self.end_bracket: an unmatched closing bracket ')]}' signaling an error
         """
 
         # The offset value given by Python for a SyntaxError is off by 1 compared
@@ -96,7 +101,7 @@ class Statement:
 
         previous_row = -1
         previous_token = None
-        previous_meaningful_token = None
+        self.prev_token = None
         continuation_line = False
 
         for token in source_tokens:
@@ -105,7 +110,7 @@ class Statement:
                 if previous_token is not None:
                     continuation_line = previous_token.line.endswith("\\\n")
                 if token.start_row <= self.linenumber and not self.begin_brackets:
-                    self.statement_tokens = []
+                    self.all_statement_tokens = []
                 previous_row = token.start_row
 
             # Did we collect all the tokens belonging to the statement?
@@ -116,7 +121,7 @@ class Statement:
             ):
                 break
 
-            self.statement_tokens.append(token)
+            self.all_statement_tokens.append(token)
             # The offset seems to be different depending on Python versions,
             # sometimes matching the beginning of a token, sometimes the end.
             # Furthermore, the end of a token (end_col) might be equal to
@@ -125,14 +130,18 @@ class Statement:
             if (
                 token.start_row == self.linenumber
                 and token.start_col >= offset
-                and self.bad_token is not None
+                and self.bad_token is None
                 and token.string.strip()
             ):
                 self.bad_token = token
                 if self.bad_token.is_comment():
-                    self.bad_token = previous_meaningful_token
-            elif token.string.strip() and not token.is_comment():
-                previous_meaningful_token = token
+                    self.bad_token = self.prev_token
+            elif (
+                token.string.strip()
+                and not token.is_comment()
+                and self.bad_token is None
+            ):
+                self.prev_token = token
 
             previous_token = token
             if token.is_not_in("()[]}{"):
@@ -156,7 +165,7 @@ class Statement:
         """Given a list of tokens, remove all space-like tokens and comments."""
         index = 0
         tokens = []
-        for tok in self.statement_tokens:
+        for tok in self.all_statement_tokens:
             if not tok.string.strip() or tok.is_comment():
                 continue
             tokens.append(tok)
