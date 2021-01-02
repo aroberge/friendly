@@ -126,11 +126,10 @@ class Statement:
             # The offset seems to be different depending on Python versions,
             # sometimes matching the beginning of a token, sometimes the end.
             # Furthermore, the end of a token (end_col) might be equal to
-            # the beginning of the next (start_col). So, we ensure to identify
-            # the bad token as the first meaningful token that might fit those criteria.
+            # the beginning of the next (start_col).
             if (
                 token.start_row == self.linenumber
-                and token.start_col >= offset
+                and token.start_col <= offset <= token.end_col
                 and self.bad_token is None
                 and token.string.strip()
             ):

@@ -92,44 +92,6 @@ def analyze_last_line(line, offset=None):
 
 
 @add_line_analyzer
-def detect_backquote(tokens, offset=None):
-    """Detecting if the error is due to using `x` which was allowed
-    in Python 2.
-    """
-    _ = current_lang.translate
-    cause = hint = None
-    bad_token, ignore = find_offending_token(tokens, offset)
-    if bad_token is None:
-        return cause, hint
-    # the token that gets flagged as problematic is the one after ""
-    if bad_token == "`":
-        hint = _("You should not use the backquote character.\n")
-        cause = _(
-            "You are using the backquote character.\n"
-            "Either you meant to write a single quote, ', "
-            "or copied Python 2 code;\n"
-            "in this latter case, use the function `repr(x)`."
-        )
-    return cause, hint
-
-
-@add_line_analyzer
-def assign_to_a_keyword(tokens, **_kwargs):
-    """Checks to see if line is of the form 'keyword = ...'"""
-    _ = current_lang.translate
-    cause = hint = None
-    if len(tokens) < 2 or (not tokens[0].is_keyword()) or tokens[1] != "=":
-        return cause, hint
-
-    cause = _(
-        "You were trying to assign a value to the Python keyword `{keyword}`.\n"
-        "This is not allowed.\n"
-        "\n"
-    ).format(keyword=tokens[0])
-    return cause, hint
-
-
-@add_line_analyzer
 def confused_elif(tokens, **_kwargs):
     _ = current_lang.translate
     cause = hint = None

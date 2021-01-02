@@ -115,3 +115,35 @@ def debug_f_string(statement):
                 "This is not allowed.\n"
             )
     return cause, hint
+
+
+@add_statement_analyzer
+def detect_backquote(statement):
+    """Detecting if the error is due to using `x` which was allowed
+    in Python 2.
+    """
+    _ = current_lang.translate
+    cause = hint = None
+    if statement.bad_token == "`":
+        hint = _("You should not use the backquote character.\n")
+        cause = _(
+            "You are using the backquote character.\n"
+            "Either you meant to write a single quote, ', "
+            "or copied Python 2 code;\n"
+            "in this latter case, use the function `repr(x)`."
+        )
+    return cause, hint
+
+
+@add_statement_analyzer
+def assign_to_a_keyword(statement):
+    """Checks to see if line is of the form 'keyword = ...'"""
+    _ = current_lang.translate
+    cause = hint = None
+    if statement.bad_token == "=" and statement.prev_token.is_keyword():
+        cause = _(
+            "You were trying to assign a value to the Python keyword `{keyword}`.\n"
+            "This is not allowed.\n"
+            "\n"
+        ).format(keyword=statement.prev_token)
+    return cause, hint
