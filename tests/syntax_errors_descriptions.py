@@ -330,11 +330,11 @@ descriptions = {
         title: "Invalid character (bad quote)",
     },
     "raise_syntax_error76": {
-        cause: "`=` instead of an equality operator `==` with an `if` statement",
+        cause: "You used an assignment operator `=`",
         title: "Single = instead of double == with if",
     },
     "raise_syntax_error77": {
-        cause: "`=` instead of an equality operator `==` with an `elif` statement",
+        cause: "You used an assignment operator `=`",
         title: "Single = instead of double == with elif",
     },
     "raise_syntax_error78": {

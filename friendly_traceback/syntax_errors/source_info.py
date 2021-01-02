@@ -98,10 +98,6 @@ class Statement:
         - self.end_bracket: an unmatched closing bracket ')]}' signaling an error
         """
 
-        # The offset value given by Python for a SyntaxError is off by 1 compared
-        # with the column index given by the tokenize module.
-        offset = offset - 1  # shift for proper comparison
-
         previous_row = -1
         previous_token = None
         self.prev_token = None

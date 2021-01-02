@@ -5,6 +5,7 @@
 import sys
 
 from ..my_gettext import current_lang
+from .. import debug_helper
 
 STATEMENT_ANALYZERS = []
 
@@ -28,6 +29,10 @@ def add_statement_analyzer(func):
 def analyze_statement(statement):
     """Analyzes the statement as identified by Python as that
     on which the error occurred."""
+    if not statement.tokens:
+        debug_helper.log("Statement with no tokens")
+        debug_helper.log_error()
+        return None, None
 
     for analyzer in STATEMENT_ANALYZERS:
         cause, hint = analyzer(statement)
@@ -188,4 +193,90 @@ def import_from(statement):
         "    from {module} import {function}\n\n"
         "\n"
     ).format(module=module, function=function)
+    return cause, hint
+
+
+@add_statement_analyzer
+def keyword_as_attribute(statement):
+    """Will identify something like  obj.True ..."""
+    _ = current_lang.translate
+    cause = hint = None
+    if statement.prev_token != ".":
+        return cause, hint
+
+    word = statement.bad_token
+    if word.is_keyword():
+        cause = _(
+            "You cannot use the Python keyword `{word}` as an attribute.\n\n"
+        ).format(word=word)
+    elif word == "__debug__":
+        cause = _("You cannot use the constant `__debug__` as an attribute.\n\n")
+
+    if cause is not None:
+        hint = _("`{word}` cannot be used as an attribute.\n").format(word=word)
+
+    return cause, hint
+
+
+@add_statement_analyzer
+def misplaced_quote(statement):
+    """This looks for a misplaced quote, something like
+       info = 'don't ...
+
+    The clue we are looking for is a STRING token ('don')
+    followed by something else than a string.
+    """
+    _ = current_lang.translate
+    cause = hint = None
+
+    if not statement.prev_token.is_string():
+        return cause, hint
+
+    bad_token = statement.bad_token
+    if bad_token.is_identifier():
+        bad_string = statement.prev_token.string
+        for fn in [int, float, complex]:
+            try:
+                fn(bad_string)  # Definitely not a word!
+                return cause, hint
+            except Exception:
+                pass
+
+        hint = _("Perhaps you misplaced a quote.\n")
+        cause = _(
+            "There appears to be a Python identifier (variable name)\n"
+            "immediately following a string.\n"
+            "I suspect that you were trying to use a quote inside a string\n"
+            "that was enclosed in quotes of the same kind.\n"
+        )
+
+    return cause, hint
+
+
+@add_statement_analyzer
+def assign_instead_of_equal(statement):
+    """Checks to see if an assignment sign, '=', has been used instead of
+    an equal sign, '==', in an if or elif statement."""
+    _ = current_lang.translate
+    cause = hint = None
+
+    if not statement.bad_token == "=":
+        return cause, hint
+
+    if not statement.first_token.is_in(["if", "elif", "while"]):
+        return cause, hint
+
+    equal = _("Perhaps you needed `==` instead of `=`.\n")
+    equal_or_walrus = _("Perhaps you needed `==` or `:=` instead of `=`.\n")
+    if sys.version_info < (3, 8):
+        cause = _(
+            "You used an assignment operator `=` instead of an equality operator `==`.\n"
+        )
+        hint = equal
+    else:
+        cause = _(
+            "You used an assignment operator `=`; perhaps you meant to use \n"
+            "an equality operator, `==`, or the walrus operator `:=`.\n"
+        )
+        hint = equal_or_walrus
     return cause, hint
