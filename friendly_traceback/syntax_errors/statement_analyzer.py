@@ -82,11 +82,36 @@ def detect_walrus(statement):
     if (prev == ":" and bad == "=" and bad.immediately_after(prev)) or (
         bad == ":" and next_token == "=" and bad.immediately_before(next_token)
     ):
-        hint = _("Your Python version might be too old.\n")
+        hint = _("Your Python version does not support this f-string feature.\n")
         cause = _(
             "You appear to be using the operator `:=`, sometimes called\n"
             "the walrus operator. This operator requires the use of\n"
             "Python 3.8 or newer. You are using version {version}.\n"
         ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
 
+    return cause, hint
+
+
+@add_statement_analyzer
+def debug_f_string(statement):
+    """detect debug feature of f-string introduced in Python 3.8"""
+    _ = current_lang.translate
+    cause = hint = None
+    if sys.version_info >= (3, 8):
+        return cause, hint
+    if not (statement.filename == "<fstring>" or "f-string" in statement.message):
+        return cause, hint
+
+    if statement.bad_token == "=" and statement.prev_token.is_identifier():
+        if statement.next_token == ")":
+            hint = _("Your Python version does not support this f-string feature.\n")
+            cause = _(
+                "You are likely using a 'debug' syntax of f-strings introduced\n"
+                "in Python version 3.8. You are using version {version}.\n"
+            ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
+        else:
+            cause = _(
+                "You are likely trying to assign a value within an f-string.\n"
+                "This is not allowed.\n"
+            )
     return cause, hint

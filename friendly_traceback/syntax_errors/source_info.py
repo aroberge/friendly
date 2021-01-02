@@ -36,6 +36,7 @@ class Statement:
     def __init__(self, value, tb_data):
         self.linenumber = value.lineno
         self.message = value.msg
+        self.filename = value.filename
         self.bad_line = tb_data.bad_line  # previously obtained from the traceback
 
         self.all_statement_tokens = []  # include newlines, comments, etc.

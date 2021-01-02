@@ -13,7 +13,7 @@ from .. import debug_helper
 from .. import utils
 from ..my_gettext import current_lang
 
-
+# TODO  f-string: expecting '}'   for {a=2}
 MESSAGE_ANALYZERS = []
 
 # The following has been taken from https://unicode-table.com/en/sets/quotation-marks/
