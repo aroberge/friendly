@@ -34,9 +34,10 @@ class Statement:
     """
 
     def __init__(self, value, tb_data):
+        self.filename = value.filename
         self.linenumber = value.lineno
         self.message = value.msg
-        self.filename = value.filename
+        self.offset = value.offset
         self.bad_line = tb_data.bad_line  # previously obtained from the traceback
 
         self.fstring_error = self.filename == "<fstring>" or "f-string" in self.message
@@ -54,8 +55,8 @@ class Statement:
         self.single_line = True
 
         if self.linenumber is not None:
-            source_tokens = self.get_source_tokens(value)
-            self.obtain_statement(source_tokens, value.offset)
+            source_tokens = self.get_source_tokens()
+            self.obtain_statement(source_tokens)
             self.tokens = self.remove_meaningless_tokens()
         elif "too many statically nested blocks" not in self.message:
             debug_helper.log("linenumber is None in analyze_syntax._find_likely_cause")
@@ -86,15 +87,24 @@ class Statement:
         if self.last_token != self.bad_token:
             self.next_token = self.tokens[self.bad_token_index + 1]
 
-    def get_source_tokens(self, value):
+    def get_source_tokens(self):
         """Returns a list containing all the tokens from the source."""
-        source_lines = cache.get_source_lines(value.filename)
-        source = "".join(source_lines)
+        source = ""
+        if "f-string: invalid syntax" in self.message:
+            source = self.bad_line
+            try:
+                exec(self.bad_line)
+            except SyntaxError as e:
+                self.offset = e.offset
+                self.linenumber = 1
         if not source.strip():
-            source = self.bad_line or "\n"
+            source_lines = cache.get_source_lines(self.filename)
+            source = "".join(source_lines)
+            if not source.strip():
+                source = self.bad_line or "\n"
         return token_utils.tokenize(source)
 
-    def obtain_statement(self, source_tokens, offset):
+    def obtain_statement(self, source_tokens):
         """This method scans the source searching for the statement that
         caused the problem. Most often, it will be a single line of code.
         However, it might occasionally be a multiline statement that
@@ -138,7 +148,7 @@ class Statement:
             # the beginning of the next (start_col).
             if (
                 token.start_row == self.linenumber
-                and token.start_col <= offset <= token.end_col
+                and token.start_col <= self.offset <= token.end_col
                 and self.bad_token is None
                 and token.string.strip()
             ):

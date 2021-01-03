@@ -30,8 +30,7 @@ def analyze_statement(statement):
     """Analyzes the statement as identified by Python as that
     on which the error occurred."""
     if not statement.tokens:
-        debug_helper.log("Statement with no tokens")
-        debug_helper.log_error()
+        debug_helper.log("Statement with no tokens in statement_analyser.py")
         return None, None
 
     for analyzer in STATEMENT_ANALYZERS:
