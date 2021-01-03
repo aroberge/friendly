@@ -206,17 +206,17 @@ def get_nonlocal_objects(frame):
     such object found.
     """
     globals_ = frame.f_globals
-    nonlocals_ = []
+    non_locals = []
     while frame.f_back is not None:
         frame = frame.f_back
         # By creating a new list here, we prevent a failure when
         # running with pytest.
         for name in list(frame.f_locals):
-            if name in globals_ or name in nonlocals_:
+            if name in globals_ or name in non_locals:
                 continue
             obj = frame.f_locals[name]
-            nonlocals_.append((name, repr(obj), obj))
-    return nonlocals_
+            non_locals.append((name, repr(obj), obj))
+    return non_locals
 
 
 def get_object_from_name(name, frame):
@@ -247,16 +247,16 @@ def get_variables_in_frame_by_scope(frame, scope):
         return frame.f_globals
     elif scope == "nonlocal":
         globals_ = frame.f_globals
-        nonlocals_ = {}
+        non_locals = {}
         while frame.f_back is not None:
             frame = frame.f_back
             # By creating a new list here, we prevent a failure when
             # running with pytest.
             for key in list(frame.f_locals):
-                if key in globals_ or key in nonlocals_:
+                if key in globals_ or key in non_locals:
                     continue
-                nonlocals_[key] = frame.f_locals[key]
-        return nonlocals_
+                non_locals[key] = frame.f_locals[key]
+        return non_locals
     else:
         debug_helper.log("Internal error in get_variable_in_frame_by_scope()")
         debug_helper.log(f"unknown scope '{scope}'")

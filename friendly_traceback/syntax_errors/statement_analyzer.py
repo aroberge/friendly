@@ -348,3 +348,17 @@ def raise_single_exception(statement):
             "It looks like you are trying to raise an exception using Python 2 syntax.\n"
         )
     return cause, hint
+
+
+@add_statement_analyzer
+def invalid_double_star_operator(statement):
+    _ = current_lang.translate
+    cause = hint = None
+
+    if statement.bad_token == "**":
+        cause = _(
+            "The double star operator `**` is likely interpreted to mean that\n"
+            "dict unpacking is to be used which does not make sense here.\n"
+        )
+
+    return cause, hint
