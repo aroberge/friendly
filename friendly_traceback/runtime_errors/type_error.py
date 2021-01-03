@@ -7,9 +7,9 @@ providing a more detailed explanation.
 import re
 
 from ..my_gettext import current_lang
-from .. import utils
 from .. import info_variables
 from .. import debug_helper
+from .. import token_utils
 
 convert_type = info_variables.convert_type
 MESSAGES_PARSERS = []
@@ -29,8 +29,8 @@ def add_message_parser(func):
 def get_cause(value, frame, tb_data):
     try:
         return _get_cause(value, frame, tb_data)
-    except Exception:
-        debug_helper.log_error()
+    except Exception as e:
+        debug_helper.log_error(e)
         return None, None
 
 
@@ -276,9 +276,11 @@ def bad_operand_type_for_unary(message, frame, tb_data):
         # The user might have written something like "=+" instead of
         # "+="
         operator = match.group(1)
-        index = utils.find_substring_index(tb_data.original_bad_line, tb_data.bad_line)
+        index = token_utils.find_substring_index(
+            tb_data.original_bad_line, tb_data.bad_line
+        )
         if index > 0:
-            tokens = utils.get_significant_tokens(tb_data.original_bad_line)
+            tokens = token_utils.get_significant_tokens(tb_data.original_bad_line)
             if (
                 tokens[index - 1] == "="
                 and tokens[index - 1].end_col == tokens[index].start_col
@@ -347,7 +349,7 @@ def incorrect_nb_positional_arguments(message, frame, tb_data):
             if "." in fn_name:
                 missing_self = True
             else:
-                tokens = utils.get_significant_tokens(tb_data.bad_line)
+                tokens = token_utils.get_significant_tokens(tb_data.bad_line)
                 prev_token = tokens[0]
                 missing_self = False
                 for token in tokens:
@@ -492,7 +494,7 @@ def cannot_multiply_by_str(message, frame, tb_data):
         )
         names = find_possible_integers(str, frame, tb_data.bad_line)
         if names:
-            tokens = utils.get_significant_tokens(tb_data.bad_line)
+            tokens = token_utils.get_significant_tokens(tb_data.bad_line)
             int_vars = []
             for prev_token, token in zip(tokens, tokens[1:]):
                 if prev_token.is_in(["*", "*="]) and token.is_in(names):

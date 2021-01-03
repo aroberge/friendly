@@ -231,8 +231,7 @@ class _State:
             explanation = self.formatter(info, include=self.include)
         except Exception as e:
             debug_helper.log("Exception raised in exception_hook().")
-            debug_helper.log(str(e))
-            debug_helper.log_error()
+            debug_helper.log_error(e)
             return
 
         self.write_err(explanation)

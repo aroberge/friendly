@@ -23,7 +23,6 @@ chunks of code.
 from .syntax_utils import matching_brackets, name_bracket, no_unclosed_brackets
 
 from .. import debug_helper
-from .. import utils
 from ..my_gettext import current_lang
 
 from .. import token_utils
@@ -36,7 +35,7 @@ def scan_source(source_lines=None, linenumber=0, offset=0):
     if not source_lines:
         return
     source = "".join(source_lines)
-    source_tokens = utils.get_significant_tokens(source)
+    source_tokens = token_utils.get_significant_tokens(source)
     cause = look_for_mismatched_brackets(
         source_tokens=source_tokens,
         source_lines=source_lines,
@@ -61,7 +60,7 @@ def look_for_mismatched_brackets(
     _ = current_lang.translate
     if source_tokens is None:
         source = "".join(source_lines)
-        source_tokens = utils.get_significant_tokens(source)
+        source_tokens = token_utils.get_significant_tokens(source)
 
     brackets = []
     for token in source_tokens:
@@ -151,7 +150,7 @@ def look_for_missing_bracket(
     _ = current_lang.translate
     if source_tokens is None:
         source = "".join(source_lines)
-        source_tokens = utils.get_significant_tokens(source)
+        source_tokens = token_utils.get_significant_tokens(source)
     brackets = []
     will_be_previous = None
     previous_token = None

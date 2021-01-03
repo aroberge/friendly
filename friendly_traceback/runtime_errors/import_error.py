@@ -12,8 +12,8 @@ from .. import debug_helper
 def get_cause(value, frame, tb_data):
     try:
         return _get_cause(value, frame, tb_data)
-    except Exception:
-        debug_helper.log_error()
+    except Exception as e:
+        debug_helper.log_error(e)
         return None, None
 
 

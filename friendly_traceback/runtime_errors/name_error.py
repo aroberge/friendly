@@ -2,15 +2,15 @@ import re
 
 from ..my_gettext import current_lang
 from .. import info_variables
-from .. import utils
 from .. import debug_helper
+from .. import token_utils
 
 
 def get_cause(value, frame, tb_data):
     try:
         return _get_cause(value, frame, tb_data)
-    except Exception:
-        debug_helper.log_error()
+    except Exception as e:
+        debug_helper.log_error(e)
         return None, None
 
 
@@ -145,7 +145,7 @@ def missing_self(unknown_name, frame, tb_data, hint):
     _ = current_lang.translate
     message = ""
     try:
-        tokens = utils.get_significant_tokens(tb_data.bad_line)
+        tokens = token_utils.get_significant_tokens(tb_data.bad_line)
     except Exception:
         return message, hint
 

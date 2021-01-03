@@ -11,6 +11,7 @@ import sys
 from . import source_analyzer
 from .. import debug_helper
 from .. import utils
+from .. import token_utils
 from ..my_gettext import current_lang
 
 # TODO  f-string: expecting '}'   for {a=2}
@@ -100,7 +101,7 @@ def assign_to_keyword(message="", line="", **kwargs):
     if "Ellipsis" in message:
         word = "Ellipsis (...)"
     else:
-        tokens = utils.get_significant_tokens(line)
+        tokens = token_utils.get_significant_tokens(line)
         for token in tokens:
             if token.is_keyword() or token == "__debug__":
                 word = token.string
@@ -390,7 +391,7 @@ def delete_function_call(message="", line=None, **kwargs):
         message == "can't delete function call"  # Python 3.6, 3.7
         or message == "cannot delete function call"  # Python 3.8
     ):
-        tokens = utils.get_significant_tokens(line)
+        tokens = token_utils.get_significant_tokens(line)
         if (
             tokens[0] == "del"
             and tokens[1].is_name()

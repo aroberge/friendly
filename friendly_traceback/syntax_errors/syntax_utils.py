@@ -86,8 +86,7 @@ def modify_source(tokens, bad_token, string, add=False):
             return source
     except Exception as e:
         debug_helper.log("Problem in token_utils.modify_source().")
-        debug_helper.log(str(e))
-        debug_helper.log_error()
+        debug_helper.log_error(e)
         return ""
 
 
@@ -120,8 +119,7 @@ def check_statement(statement):
 
     except Exception as e:
         debug_helper.log("Problem in token_utils.check_statement().")
-        debug_helper.log(str(e))
-        debug_helper.log_error()
+        debug_helper.log_error(e)
         return False
 
 

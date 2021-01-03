@@ -19,9 +19,15 @@ def log(text):
         print(text)
 
 
-def log_error():
+def log_error(e=None):
     if DEBUG:
         from . import explain_traceback
+
+        if e is not None:
+            print(repr(e))
+        for mod in sys.modules:
+            if "pytest" in mod:
+                return
 
         explain_traceback()
         sys.exit()

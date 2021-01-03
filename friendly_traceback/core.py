@@ -41,7 +41,7 @@ from .syntax_errors import indentation_error
 from . import token_utils
 
 try:
-    import executing
+    import executing  # noqa
 except ImportError:
     pass  # ignore errors when processed by Sphinx
 
@@ -306,8 +306,7 @@ class FriendlyTraceback:
             self.tb_data = TracebackData(etype, value, tb)
         except Exception as e:
             debug_helper.log("Uncaught exception in TracebackData.")
-            debug_helper.log(str(e))
-            debug_helper.log_error()
+            debug_helper.log_error(e)
             print("Internal problem in Friendly-traceback.")
             print("Please report this issue.")
             raise SystemExit

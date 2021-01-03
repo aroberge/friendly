@@ -37,8 +37,8 @@ def set_cause_syntax(value, tb_data):
     cause = hint = None
     try:
         cause, hint = find_syntax_error_cause(value, tb_data)
-    except Exception:
-        debug_helper.log_error()
+    except Exception as e:
+        debug_helper.log_error(e)
         cause = _(
             "Exception raised by Friendly-traceback itself.\n"
             "Please report this example to\n"
@@ -134,8 +134,8 @@ def find_syntax_error_cause(value, tb_data):
             source_lines=source_lines, linenumber=linenumber, offset=offset
         )
         statement = token_utils.untokenize(tokens)  # noqa
-    except Exception:
-        debug_helper.log_error()
+    except Exception as e:
+        debug_helper.log_error(e)
 
     # If not cause has been identified, we look at a single line
     # where the error has been found by Python, and try to find the source

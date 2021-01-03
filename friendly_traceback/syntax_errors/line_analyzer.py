@@ -12,18 +12,6 @@ from ..my_gettext import current_lang
 from .. import token_utils
 
 
-def find_offending_token(tokens, offset):
-    """Based on the offset provided by Python in the traceback, we find
-    the token that was flagged as being in error.
-    """
-    # Note that the offset provided by Python starts at 1 instead of 0
-    offset -= 1  # shift for proper comparison
-    for index, tok in enumerate(tokens):
-        if tok.start_col == offset:
-            return tok, index
-    return None, None
-
-
 def is_potential_statement(tokens):
     """This helper function tests the list of tokens
        (usually corresponding to a single line of code)
@@ -70,7 +58,7 @@ def add_line_analyzer(func):
 def analyze_last_line(line, offset=None):
     """Analyzes the last line of code as identified by Python as that
     on which the error occurred."""
-    tokens = utils.get_significant_tokens(
+    tokens = token_utils.get_significant_tokens(
         line
     )  # tokens do not include spaces nor comments
 

@@ -10,6 +10,8 @@ import tokenize as py_tokenize
 
 from io import StringIO
 
+from . import debug_helper
+
 _token_format = "type={type}  string={string}  start={start}  end={end}  line={line}"
 
 
@@ -207,6 +209,30 @@ def tokenize(source):
     return tokens
 
 
+def get_significant_tokens(source):
+    """Gets a list of tokens from a source (str), ignoring comments
+    as well as any token whose string value is either null or
+    consists of spaces, newline or tab characters.
+    """
+    try:
+        tokens = tokenize(source)
+    except Exception as e:
+        debug_helper.log("Exception from token_utils.get_significant_tokens()")
+        debug_helper.log_error(e)
+        return []
+    return remove_meaningless_tokens(tokens)
+
+
+def remove_meaningless_tokens(tokens):
+    """Given a list of tokens, remove all space-like tokens and comments."""
+    new_tokens = []
+    for tok in tokens:
+        if not tok.string.strip() or tok.is_comment():
+            continue
+        new_tokens.append(tok)
+    return new_tokens
+
+
 def get_lines(source):
     """Transforms a source (string) into a list of Tokens, with each
     (inner) list containing all the tokens found on a given line of code.
@@ -245,6 +271,25 @@ def strip_comment(line):
     except py_tokenize.TokenError:
         pass
     return untokenize(tokens)
+
+
+# TODO: add unit test for this
+# TODO: see if we might not be able to replace it.
+def find_substring_index(main, substring):
+    """Somewhat similar to the find() method for strings,
+    this function determines if the tokens for substring appear
+    as a subsequence of the tokens for main. If so, the index
+    of the first token in returned, otherwise -1 is returned.
+    """
+    main_tokens = [tok.string for tok in get_significant_tokens(main)]
+    sub_tokens = [tok.string for tok in get_significant_tokens(substring)]
+    for index, token in enumerate(main_tokens):
+        if (
+            token == sub_tokens[0]
+            and main_tokens[index : index + len(sub_tokens)] == sub_tokens
+        ):
+            return index
+    return -1
 
 
 def dedent(tokens, nb):
