@@ -166,7 +166,7 @@ descriptions = {
         title: "Positional argument follows keyword argument",
     },
     "raise_syntax_error35": {
-        cause: "a string prefixed by the letter f,",
+        cause: "you have another string, which starts with either",
         title: "f-string: unterminated string",
     },
     "raise_syntax_error36": {

@@ -405,7 +405,7 @@ def duplicate_argument_in_function_definition(message="", **_kwargs):
 
 
 @add_python_message
-def eol_while_scanning_string_literal(message="", statement=None, **_kwargs):
+def eol_while_scanning_string_literal(message="", **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "EOL while scanning string literal" in message:
@@ -418,7 +418,7 @@ def eol_while_scanning_string_literal(message="", statement=None, **_kwargs):
 
 
 @add_python_message
-def expression_cannot_contain_assignment(message="", statement=None, **_kwargs):
+def expression_cannot_contain_assignment(message="", **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "expression cannot contain assignment, perhaps you meant" in message:
@@ -436,7 +436,7 @@ def expression_cannot_contain_assignment(message="", statement=None, **_kwargs):
 
 
 @add_python_message
-def generator_expression_must_be_parenthesized(message="", statement=None, **_kwargs):
+def generator_expression_must_be_parenthesized(message="", **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "Generator expression must be parenthesized" in message:
@@ -461,7 +461,7 @@ def keyword_argument_repeated(message="", statement=None, **_kwargs):
 
 
 @add_python_message
-def keyword_cannot_be_expression(message="", statement=None, **_kwargs):
+def keyword_cannot_be_expression(message="", **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "keyword can't be an expression" in message:
@@ -477,61 +477,42 @@ def keyword_cannot_be_expression(message="", statement=None, **_kwargs):
 
 
 @add_python_message
-def invalid_character_in_identifier(message="", statement=None, line="", **_kwargs):
+def invalid_character_in_identifier(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     copy_paste = _("Did you use copy-paste?\n")
     if "invalid character" in message:
-        if sys.version_info >= (3, 9):
-            if "'" in message:
-                parts = message.split("'")
-                bad_character = parts[1]
-                result = _(
-                    "Python indicates that you used the unicode character"
-                    " `{bad_character}`\n"
-                    "which is not allowed.\n"
-                ).format(bad_character=bad_character)
-                if bad_character in bad_quotation_marks:
-                    hint = _(
-                        "Did you mean to use a normal quote character, `'` or `\"`?\n"
-                    )
-                    cause = (
-                        copy_paste
-                        + result
-                        + _(
-                            "I suspect that you used a fancy unicode quotation mark\n"
-                            "instead of a normal single or double quote for a string."
-                            "\n"
-                        )
-                    )
-                else:
-                    cause = result
-                return cause, hint
-
-        for quote in bad_quotation_marks:
-            if quote in line:
-                hint = _("Did you mean to use a normal quote character, `'` or `\"`?\n")
-                cause = _(
-                    "Python indicates that you used some unicode characters not allowed\n"
-                    "as part of a variable name; this includes many emojis.\n"
-                    "However, I suspect that you used a fancy unicode quotation mark\n"
-                    "instead of a normal single or double quote for a string.\n"
-                    "This can happen if you copy-pasted code.\n"
+        bad_character = statement.bad_token
+        result = _(
+            "Python indicates that you used the unicode character"
+            " `{bad_character}`\n"
+            "which is not allowed.\n"
+        ).format(bad_character=bad_character)
+        if bad_character in bad_quotation_marks:
+            hint = _("Did you mean to use a normal quote character, `'` or `\"`?\n")
+            cause = (
+                copy_paste
+                + result
+                + _(
+                    "I suspect that you used a fancy unicode quotation mark\n"
+                    "instead of a normal single or double quote for a string."
                     "\n"
                 )
-                return cause, hint
-        cause = _(
-            "You likely used some unicode character that is not allowed\n"
-            "as part of a variable name in Python.\n"
-            "This includes many emojis.\n"
-            "\n"
-        )
+            )
+        else:
+            cause = result
+        return cause, hint
     return cause, hint
 
 
 @add_python_message
 def mismatched_parenthesis(
-    message="", source_lines=None, linenumber=None, offset=None, **_kwargs
+    message="",
+    statement=None,
+    source_lines=None,
+    linenumber=None,
+    offset=None,
+    **_kwargs,
 ):
     # Python 3.8; something like:
     # closing parenthesis ']' does not match opening parenthesis '(' on line
@@ -586,10 +567,10 @@ def unterminated_f_string(message="", statement=None, **_kwargs):
     if "f-string: unterminated string" in message:
         hint = _("Perhaps you forgot a closing quote.\n")
         cause = _(
-            "Inside an f-string, which is a string prefixed by the letter f, \n"
+            "Inside the f-string `{fstring}`, \n"
             "you have another string, which starts with either a\n"
             "single quote (') or double quote (\"), without a matching closing one.\n"
-        )
+        ).format(fstring=statement.bad_token)
     return cause, hint
 
 
