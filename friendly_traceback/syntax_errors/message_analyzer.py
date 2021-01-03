@@ -9,9 +9,7 @@ import re
 import sys
 
 from . import source_analyzer
-from .. import debug_helper
 from .. import utils
-from .. import token_utils
 from ..my_gettext import current_lang
 
 # TODO  f-string: expecting '}'   for {a=2}
@@ -75,7 +73,7 @@ def add_python_message(func):
 
 
 @add_python_message
-def assign_to_keyword(message="", line="", **_kwargs):
+def assign_to_keyword(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if not (
@@ -99,23 +97,8 @@ def assign_to_keyword(message="", line="", **_kwargs):
     ):
         return cause, hint
 
-    if "Ellipsis" in message:
-        word = "Ellipsis (...)"
-    else:
-        tokens = token_utils.get_significant_tokens(line)
-        for token in tokens:
-            if token.is_keyword() or token == "__debug__":
-                word = token.string
-                break
-        else:
-            debug_helper.log("Problem in analyze_syntax.assign_to_keyword")
-            for tok in tokens:
-                debug_helper.log(tok)
-            cause = "Friendly-traceback internal problem: please report this case"
-            return cause, hint
-
+    word = statement.bad_token
     hint = _("You cannot assign a value to `{keyword}`.").format(keyword=word)
-
     if word in ["None", "True", "False", "__debug__", "Ellipsis (...)"]:
         cause = _(
             "`{keyword}` is a constant in Python; you cannot assign it a value.\n" "\n"
@@ -147,7 +130,7 @@ def assign_to_conditional_expression(message="", **_kwargs):
 
 
 @add_python_message
-def assign_to_function_call(message="", line="", **_kwargs):
+def assign_to_function_call(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if (
@@ -156,11 +139,13 @@ def assign_to_function_call(message="", line="", **_kwargs):
     ):
         return cause, hint
 
-    if line.count("=") > 1:
+    fn_call = statement.bad_token.string + "(...)"
+    line = statement.bad_line
+
+    if line.count("=") != 1 or line.count("(") != line.count(")"):
         # we have something like  fn(a=1) = 2
-        # or fn(a) = 1 = 2, etc.  Since there could be too many
-        # combinations, we use some generic names
-        fn_call = _("my_function(...)")
+        # or fn(a) = 1 = 2, etc., and we cannot determine what is a function
+        # argument and what is the value assigned
         value = _("some value")
         cause = _(
             "You wrote an expression like\n\n"
@@ -199,17 +184,17 @@ def assign_to_generator_expression(message="", **_kwargs):
 
 
 @add_python_message
-def assign_to_f_expression(message="", **_kwargs):
+def assign_to_f_expression(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
 
     if message == "cannot assign to f-string expression":
         cause = _(
-            "You wrote an expression that has an f-string\n"
+            "You wrote an expression that has the f-string `{fstring}`\n"
             "on the left-hand side of the equal sign.\n"
             "An f-string should only appear on the right-hand "
-            "side of the equal sign.\n"
-        )
+            "side of an equal sign.\n"
+        ).format(fstring=statement.bad_token)
     return cause, hint
 
 
@@ -242,7 +227,7 @@ def what_kind_of_literal(literal):
 
 
 @add_python_message
-def assign_to_literal(message="", line="", **_kwargs):
+def assign_to_literal(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if (
@@ -251,6 +236,7 @@ def assign_to_literal(message="", line="", **_kwargs):
         or message == "cannot assign to set display"  # Python 3.8
         or message == "cannot assign to dict display"  # Python 3.8
     ):
+        line = statement.bad_line.rstrip()
         info = line.split("=")
         if len(info) == 2:
             literal = info[0].strip()
@@ -259,11 +245,11 @@ def assign_to_literal(message="", line="", **_kwargs):
                 literal.startswith("f'{") or literal.startswith('f"{')
             ):
                 cause = _(
-                    "You wrote an expression that has an f-string\n"
+                    "You wrote an expression that has the f-string `{fstring}`\n"
                     "on the left-hand side of the equal sign.\n"
                     "An f-string should only appear on the right-hand "
                     "side of the equal sign.\n"
-                )
+                ).format(fstring=statement.bad_token)
                 return cause, hint
         else:
             literal = None
@@ -310,9 +296,10 @@ def assign_to_literal(message="", line="", **_kwargs):
 
 
 @add_python_message
-def assign_to_operator(message="", line=None, **_kwargs):
+def assign_to_operator(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
+    line = statement.bad_line.rstrip()
     if (
         message == "can't assign to operator"  # Python 3.6, 3.7
         or message == "cannot assign to operator"  # Python 3.8
@@ -347,15 +334,14 @@ def could_be_identifier(line):
 
 
 @add_python_message
-def both_nonlocal_and_global(message="", **_kwargs):
+def both_nonlocal_and_global(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "is nonlocal and global" in message:
-        name = message.split("'")[1]
         cause = _(
             "You declared `{name}` as being both a global and nonlocal variable.\n"
             "A variable can be global, or nonlocal, but not both at the same time.\n"
-        ).format(name=name)
+        ).format(name=statement.next_token)
     return cause, hint
 
 
@@ -385,24 +371,15 @@ def continue_outside_loop(message="", **_kwargs):
 
 
 @add_python_message
-def delete_function_call(message="", line=None, **_kwargs):
+def delete_function_call(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if (
         message == "can't delete function call"  # Python 3.6, 3.7
         or message == "cannot delete function call"  # Python 3.8
     ):
-        tokens = token_utils.get_significant_tokens(line)
-        if (
-            tokens[0] == "del"
-            and tokens[1].is_name()
-            and tokens[2] == "("
-            and tokens[-1] == ")"
-        ):
-            correct = "del {name}".format(name=tokens[1])
-        else:
-            line = "del function()"
-            correct = "del function"
+        line = statement.bad_line.rstrip()
+        correct = "del {name}".format(name=statement.bad_token)
         cause = _(
             "You attempted to delete a function call\n\n"
             "    {line}\n"
@@ -428,7 +405,7 @@ def duplicate_argument_in_function_definition(message="", **_kwargs):
 
 
 @add_python_message
-def eol_while_scanning_string_literal(message="", **_kwargs):
+def eol_while_scanning_string_literal(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "EOL while scanning string literal" in message:
@@ -441,7 +418,7 @@ def eol_while_scanning_string_literal(message="", **_kwargs):
 
 
 @add_python_message
-def expression_cannot_contain_assignment(message="", **_kwargs):
+def expression_cannot_contain_assignment(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "expression cannot contain assignment, perhaps you meant" in message:
@@ -459,7 +436,7 @@ def expression_cannot_contain_assignment(message="", **_kwargs):
 
 
 @add_python_message
-def generator_expression_must_be_parenthesized(message="", **_kwargs):
+def generator_expression_must_be_parenthesized(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "Generator expression must be parenthesized" in message:
@@ -472,19 +449,19 @@ def generator_expression_must_be_parenthesized(message="", **_kwargs):
 
 
 @add_python_message
-def keyword_argument_repeated(message="", **_kwargs):
+def keyword_argument_repeated(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "keyword argument repeated" in message:
         cause = _(
-            "You have called a function repeating the same keyword argument.\n"
+            "You have called a function repeating the same keyword argument (`{arg}`).\n"
             "Each keyword argument should appear only once in a function call.\n"
-        )
+        ).format(arg=statement.bad_token)
     return cause, hint
 
 
 @add_python_message
-def keyword_cannot_be_expression(message="", **_kwargs):
+def keyword_cannot_be_expression(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "keyword can't be an expression" in message:
@@ -500,7 +477,7 @@ def keyword_cannot_be_expression(message="", **_kwargs):
 
 
 @add_python_message
-def invalid_character_in_identifier(message="", line="", **_kwargs):
+def invalid_character_in_identifier(message="", statement=None, line="", **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     copy_paste = _("Did you use copy-paste?\n")
@@ -603,7 +580,7 @@ def mismatched_parenthesis(
 
 
 @add_python_message
-def unterminated_f_string(message="", **_kwargs):
+def unterminated_f_string(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "f-string: unterminated string" in message:
@@ -617,7 +594,7 @@ def unterminated_f_string(message="", **_kwargs):
 
 
 @add_python_message
-def name_is_parameter_and_global(message="", line="", **_kwargs):
+def name_is_parameter_and_global(message="", statement=None, line="", **_kwargs):
     # something like: name 'x' is parameter and global
     _ = current_lang.translate
     cause = hint = None
@@ -639,7 +616,7 @@ def name_is_parameter_and_global(message="", line="", **_kwargs):
 
 
 @add_python_message
-def name_assigned_to_prior_global(message="", **_kwargs):
+def name_assigned_to_prior_global(message="", statement=None, **_kwargs):
     # something like: name 'p' is assigned to before global declaration
     _ = current_lang.translate
     cause = hint = None
@@ -653,7 +630,7 @@ def name_assigned_to_prior_global(message="", **_kwargs):
 
 
 @add_python_message
-def name_used_prior_global(message="", **_kwargs):
+def name_used_prior_global(message="", statement=None, **_kwargs):
     # something like: name 'p' is used prior to global declaration
     _ = current_lang.translate
     cause = hint = None
@@ -667,7 +644,7 @@ def name_used_prior_global(message="", **_kwargs):
 
 
 @add_python_message
-def name_assigned_to_prior_nonlocal(message="", **_kwargs):
+def name_assigned_to_prior_nonlocal(message="", statement=None, **_kwargs):
     # something like: name 'p' is assigned to before global declaration
     _ = current_lang.translate
     cause = hint = None
@@ -682,7 +659,7 @@ def name_assigned_to_prior_nonlocal(message="", **_kwargs):
 
 
 @add_python_message
-def name_is_parameter_and_nonlocal(message="", **_kwargs):
+def name_is_parameter_and_nonlocal(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "is parameter and nonlocal" in message:
@@ -696,7 +673,7 @@ def name_is_parameter_and_nonlocal(message="", **_kwargs):
 
 
 @add_python_message
-def name_used_prior_nonlocal(message="", **_kwargs):
+def name_used_prior_nonlocal(message="", statement=None, **_kwargs):
     # something like: name 'q' is used prior to nonlocal declaration
     _ = current_lang.translate
     cause = hint = None
@@ -711,7 +688,7 @@ def name_used_prior_nonlocal(message="", **_kwargs):
 
 
 @add_python_message
-def nonlocal_at_module_level(message="", **_kwargs):
+def nonlocal_at_module_level(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "nonlocal declaration not allowed at module level" in message:
@@ -724,7 +701,7 @@ def nonlocal_at_module_level(message="", **_kwargs):
 
 
 @add_python_message
-def no_binding_for_nonlocal(message="", **_kwargs):
+def no_binding_for_nonlocal(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "no binding for nonlocal" in message:
@@ -737,7 +714,7 @@ def no_binding_for_nonlocal(message="", **_kwargs):
 
 
 @add_python_message
-def unexpected_character_after_continuation(message="", **_kwargs):
+def unexpected_character_after_continuation(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "unexpected character after line continuation character" in message:
@@ -779,7 +756,7 @@ def unexpected_eof_while_parsing(
 
 
 @add_python_message
-def unmatched_parenthesis(message="", linenumber=None, **_kwargs):
+def unmatched_parenthesis(message="", statement=None, linenumber=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     # Python 3.8
@@ -798,7 +775,7 @@ def unmatched_parenthesis(message="", linenumber=None, **_kwargs):
 
 
 @add_python_message
-def position_argument_follows_keyword_arg(message="", **_kwargs):
+def position_argument_follows_keyword_arg(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "positional argument follows keyword argument" not in message:
@@ -817,7 +794,7 @@ def position_argument_follows_keyword_arg(message="", **_kwargs):
 
 
 @add_python_message
-def non_default_arg_follows_default_arg(message="", **_kwargs):
+def non_default_arg_follows_default_arg(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if "non-default argument follows default argument" not in message:
@@ -836,7 +813,7 @@ def non_default_arg_follows_default_arg(message="", **_kwargs):
 
 
 @add_python_message
-def python2_print(message="", **_kwargs):
+def python2_print(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if not message.startswith(
@@ -854,7 +831,7 @@ def python2_print(message="", **_kwargs):
 
 
 @add_python_message
-def cannot_use_starred_expression(message="", **_kwargs):
+def cannot_use_starred_expression(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if not message == "can't use starred expression here":
@@ -870,7 +847,7 @@ def cannot_use_starred_expression(message="", **_kwargs):
 
 
 @add_python_message
-def return_outside_function(message="", **_kwargs):
+def return_outside_function(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if not message == "'return' outside function":
@@ -882,7 +859,7 @@ def return_outside_function(message="", **_kwargs):
 
 
 @add_python_message
-def too_many_nested_blocks(message="", **_kwargs):
+def too_many_nested_blocks(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if not message == "too many statically nested blocks":
@@ -900,7 +877,7 @@ def too_many_nested_blocks(message="", **_kwargs):
 
 
 @add_python_message
-def named_arguments_must_follow_bare_star(message="", **_kwargs):
+def named_arguments_must_follow_bare_star(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if not message == "named arguments must follow bare *":
@@ -918,7 +895,7 @@ def named_arguments_must_follow_bare_star(message="", **_kwargs):
 
 
 @add_python_message
-def you_found_it(message="", **_kwargs):
+def you_found_it(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if not message == "You found it!":
@@ -933,7 +910,7 @@ def you_found_it(message="", **_kwargs):
 
 
 @add_python_message
-def from__future__not_defined(message="", **_kwargs):
+def from__future__not_defined(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     pattern = re.compile(r"future feature (.*) is not defined")
@@ -971,7 +948,7 @@ def from__future__not_defined(message="", **_kwargs):
 
 
 @add_python_message
-def from__future__at_begin(message="", **_kwargs):
+def from__future__at_begin(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if message != "from __future__ imports must occur at the beginning of the file":
@@ -987,7 +964,7 @@ def from__future__at_begin(message="", **_kwargs):
 
 
 @add_python_message
-def import_braces(message="", **_kwargs):
+def import_braces(message="", statement=None, **_kwargs):
     _ = current_lang.translate
     cause = hint = None
     if message != "not a chance":

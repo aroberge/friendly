@@ -314,7 +314,7 @@ descriptions = {
         title: "Dot followed by parenthesis",
     },
     "raise_syntax_error72": {
-        cause: "expression that has an f-string",
+        cause: "expression that has the f-string",
         title: "Cannot assign to f-string",
     },
     "raise_syntax_error73": {
