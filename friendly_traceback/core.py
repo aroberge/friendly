@@ -544,8 +544,20 @@ class FriendlyTraceback:
                 "can be analyzed.\n"
             ).format(filename=filepath)
             return
+        offset = value.offset
+        if "f-string: invalid syntax" in value.msg:  # special case for Python 3.9, 3.10
+            lines = cache.get_source_lines(filepath)
+            error_line = lines[value.lineno - 1]
+            # recorded error, something like '(problem_string)'
+            problem_string = self.tb_data.bad_line.strip()
+            if problem_string:  # should never be a problem, but just in case
+                problem_string = problem_string[1:-1]
+                location = error_line.find(problem_string)
+                if location != -1:
+                    offset = location
+
         partial_source, _ignore = cache.get_formatted_partial_source(
-            filepath, value.lineno, value.offset
+            filepath, value.lineno, offset
         )
         if "-->" in partial_source:
             self.info["parsing_error"] = _(
