@@ -9,6 +9,7 @@ import sys
 
 from . import utils
 from . import debug_helper
+from . import token_utils
 
 from .path_info import path_utils
 from .my_gettext import current_lang
@@ -174,7 +175,7 @@ def get_dotted_names(line):
     without this hack.
     """
     names = []
-    prev_token = utils.get_significant_tokens("3")[0]  # convenient guard
+    prev_token = token_utils.tokenize("")[0]  # convenient guard
     dot_found = False
     tokens = utils.get_significant_tokens(line)
     for tok in tokens:

@@ -72,10 +72,16 @@ class Statement:
             if self.bad_token is None:
                 self.bad_token = self.tokens[-1]
                 self.bad_token_index = self.nb_tokens - 1
-                if self.nb_tokens == 1:
-                    self.prev_token = token_utils.tokenize(" ")[0]  # fake
+                if self.bad_token_index == 0:
+                    self.prev_token = token_utils.tokenize("")[0]  # fake
                 else:
-                    self.prev_token = self.tokens[-2]
+                    self.prev_token = self.tokens[self.bad_token_index - 1]
+
+            if self.prev_token is None:
+                if self.bad_token_index == 0:
+                    self.prev_token = token_utils.tokenize("")[0]  # fake
+                else:
+                    self.prev_token = self.tokens[self.bad_token_index - 1]
 
         if self.last_token != self.bad_token:
             self.next_token = self.tokens[self.bad_token_index + 1]
@@ -117,12 +123,13 @@ class Statement:
                 previous_row = token.start_row
 
             # Did we collect all the tokens belonging to the statement?
-            if (
-                token.start_row > self.linenumber
-                and not self.begin_brackets
-                and not continuation_line
-            ):
-                break
+            if token.start_row > self.linenumber and not continuation_line:
+                if token.is_in(
+                    ["class", "def", "if", "elif", "try", "except", "with" "while"]
+                ):
+                    break
+                elif not self.begin_brackets:
+                    break
 
             self.all_statement_tokens.append(token)
             # The offset seems to be different depending on Python versions,
