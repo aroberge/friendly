@@ -14,12 +14,14 @@ import runpy
 import sys
 
 from importlib import import_module
+from pathlib import Path
 
 # Modules
 from . import console
 from . import debug_helper
 from . import formatters
 from . import theme
+from .my_gettext import current_lang
 
 # Objects from __init__.py
 from . import explain_traceback, exclude_file_from_traceback, install
@@ -146,6 +148,7 @@ def warn(text):
 
 
 def main():
+    _ = current_lang.translate
     args = parser.parse_args()
     if args.version:
         print(f"\nFriendly-traceback version {__version__}")
@@ -192,6 +195,14 @@ def main():
 
     console_defaults = {}
     if args.source is not None:
+        filename = Path(args.source)
+        if not filename.exists():
+            print(
+                "\n",
+                _("The file {filename} does not exist.").format(filename=args.source),
+            )
+            return
+
         exclude_file_from_traceback(runpy.__file__)
         if sys.flags.interactive:
             try:
