@@ -204,16 +204,15 @@ def main():
             return
 
         exclude_file_from_traceback(runpy.__file__)
+        sys.argv = [args.source, *args.args]
+        try:
+            module_dict = runpy.run_path(args.source, run_name="__main__")
+            console_defaults.update(module_dict)
+        except Exception:
+            explain_traceback()
         if sys.flags.interactive:
-            try:
-                module_dict = runpy.run_path(args.source, run_name="__main__")
-                console_defaults.update(module_dict)
-            except Exception:
-                explain_traceback()
             console.start_console(local_vars=console_defaults, use_rich=use_rich)
-        else:
-            sys.argv = [args.source, *args.args]
-            runpy.run_path(args.source, run_name="__main__")
+
     else:
         console.start_console(local_vars=console_defaults, use_rich=use_rich)
 
