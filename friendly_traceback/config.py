@@ -220,6 +220,7 @@ class _State:
         elif etype.__name__ == "KeyboardInterrupt":
             raise KeyboardInterrupt(str(value))
 
+        saved_current_redirect = None
         if redirect is not None:
             saved_current_redirect = self.write_err
             self.set_redirect(redirect=redirect)
@@ -240,7 +241,7 @@ class _State:
         if not explanation.endswith("\n"):
             self.write_err("\n")
 
-        if redirect is not None:
+        if saved_current_redirect is not None:
             self.set_redirect(redirect=saved_current_redirect)
 
 

@@ -16,8 +16,8 @@ from .my_gettext import current_lang
 
 # third-party
 try:
-    from asttokens import ASTTokens
-    from pure_eval import Evaluator, group_expressions
+    from asttokens import ASTTokens  # noqa
+    from pure_eval import Evaluator, group_expressions  # noqa
 except ImportError:
     pass  # ignore errors when processed by Sphinx
 
@@ -129,7 +129,7 @@ def get_all_objects(line, frame):
                 objects["name, obj"].append((name, obj))
 
         Evaluator.literal_expressions_grouped = literal_expressions_grouped
-        for nodes, obj in Evaluator({}).literal_expressions_grouped(atok.tree):
+        for nodes, obj in Evaluator({}).literal_expressions_grouped(atok.tree):  # noqa
             name = atok.get_text(nodes[0])
             objects["literals"].append((name, obj))
             objects["name, obj"].append((name, obj))
@@ -188,6 +188,8 @@ def get_dotted_names(line):
                 names.append(previous_name + "." + tok.string)
                 dot_found = False
                 continue
+            else:
+                names.append(tok.string)
             names.append(tok.string)
         prev_token = tok
         dot_found = False

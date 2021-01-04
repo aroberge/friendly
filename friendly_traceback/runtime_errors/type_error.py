@@ -108,17 +108,23 @@ def _convert_str_to_number(obj_type1, obj_type2, operator, frame, tb_data):
     types_str = ["int", "float", "complex"]
     types_fn = [int, float, complex]
 
+    found = False
     all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
     for name, obj in all_objects:
         if isinstance(obj, str):
             for number_type, fn in zip(types_str, types_fn):
                 try:
                     fn(obj)
-                    break
                 except Exception:
-                    pass
+                    continue
+                found = True
+                break
             else:
                 return cause, hint
+            if found:
+                break
+    else:
+        return cause, hint
 
     hint = _(
         "Did you forget to convert the string `{name}` into {number_type}?\n"
@@ -132,7 +138,7 @@ def _convert_str_to_number(obj_type1, obj_type2, operator, frame, tb_data):
 @add_message_parser
 def parse_unsupported_operand_type(message, frame, tb_data):
     _ = current_lang.translate
-    more_cause = cause = hint = None
+    more_cause = possible_hint = cause = hint = None
     # example: unsupported operand type(s) for +: 'int' and 'str'
     pattern = re.compile(
         r"unsupported operand type\(s\) for (.+): [\'\"](\w+)[\'\"] and [\'\"](\w+)[\'\"]"
@@ -334,6 +340,7 @@ def exception_derived_from_BaseException(message, *args):
 def incorrect_nb_positional_arguments(message, frame, tb_data):
     _ = current_lang.translate
     cause = hint = None
+    missing_self = False
     # example: my_function() takes 0 positional arguments but x was/were given
     pattern = re.compile(r"(.*) takes (\d+) positional argument[s]* but (\d+) ")
     match = re.search(pattern, message)

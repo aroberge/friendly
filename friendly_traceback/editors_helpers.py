@@ -84,7 +84,7 @@ def check_syntax(
             session.set_include(include)
         session.explain_traceback()
         _reset(saved_except_hook, saved_lang, saved_include)
-        return False
+        return ""
 
     _reset(saved_except_hook, saved_lang, saved_include)
     return code

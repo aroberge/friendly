@@ -9,7 +9,7 @@ def get_similar_words(word_with_typo, words):
     """Returns a list of similar words.
 
     The parameters we chose are based on experimenting with
-    different values of the cutoff paramater for the difflib function
+    different values of the cutoff parameter for the difflib function
     get_close_matches.
 
     Suppose we have the following words:

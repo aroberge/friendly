@@ -4,13 +4,13 @@ All Rich-related imports and redefinitions are done here.
 
 """
 try:
-    from rich import pretty
-    from rich.console import Console
-    from rich.markdown import Markdown, Heading, CodeBlock
+    from rich import pretty  # noqa
+    from rich.console import Console  # noqa
+    from rich.markdown import Markdown, Heading, CodeBlock  # noqa
     from rich.panel import Panel  # noqa
-    from rich.syntax import Syntax
-    from rich.text import Text
-    from rich.theme import Theme
+    from rich.syntax import Syntax  # noqa
+    from rich.text import Text  # noqa
+    from rich.theme import Theme  # noqa
     from . import brunante
 
 except ImportError:
@@ -20,7 +20,7 @@ except ImportError:
 
 
 def init_console(style="dark"):
-    def _patch_heading(self, console, options):
+    def _patch_heading(self, console, options):  # noqa
         """By default, all headings are centered by Rich; I prefer to have
         them left-justified, except for <h3>
         """
@@ -33,7 +33,7 @@ def init_console(style="dark"):
 
     Heading.__rich_console__ = _patch_heading
 
-    def _patch_code_block(self, console, options):
+    def _patch_code_block(self, console, options):  # noqa
         code = str(self.text).rstrip()
         if self.lexer_name == "default":
             self.lexer_name = "python"

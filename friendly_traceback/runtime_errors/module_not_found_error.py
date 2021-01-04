@@ -112,6 +112,7 @@ def is_not_a_package(dotted_path, name):
                 ).format(name=name, attr=attr, rest=rest)
                 break
         else:
+            attr = similar[0]
             hint = _("Did you mean `from {name} import {attr}`?\n").format(
                 name=name, attr=attr
             )

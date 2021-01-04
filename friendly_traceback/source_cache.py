@@ -116,8 +116,12 @@ def highlight_source(linenumber, index, lines, offset=None, text_range=None):
     nb_digits = len(str(linenumber + index))
     no_mark = "       {:%d}: " % nb_digits
     with_mark = "    -->{:%d}: " % nb_digits
+
+    offset_mark = None
     if offset is not None:
         offset_mark = " " * (8 + nb_digits + offset) + "^"
+
+    text_range_mark = None
     if text_range is not None:
         begin, end = text_range
         text_range_mark = " " * (8 + nb_digits + begin + 1) + "^" * (end - begin)
@@ -128,9 +132,9 @@ def highlight_source(linenumber, index, lines, offset=None, text_range=None):
             num = with_mark.format(i)
             problem_line = line
             new_lines.append(num + line.rstrip())
-            if offset is not None:
+            if offset_mark is not None:
                 new_lines.append(offset_mark)
-            elif text_range is not None:
+            elif text_range_mark is not None:
                 new_lines.append(text_range_mark)
             marked = True
         elif marked:

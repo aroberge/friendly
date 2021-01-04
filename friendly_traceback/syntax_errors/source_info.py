@@ -7,6 +7,10 @@ from .syntax_utils import matching_brackets
 from .. import debug_helper
 from .. import token_utils
 
+# TODO: Add function/method to determine what range of tokens to print
+# This is to avoid splitting a triple quoted string and have the
+# highlighting being all wrong.
+
 
 class Statement:
     """Instances of this class contain all relevant information required

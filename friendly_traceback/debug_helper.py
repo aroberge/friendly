@@ -12,6 +12,7 @@ printed only when debugging mode is activated.
 import sys
 
 DEBUG = r"users\andre\github\friendly-traceback" in __file__.lower()
+EXIT = False
 
 
 def log(text):
@@ -20,6 +21,7 @@ def log(text):
 
 
 def log_error(e=None):
+    global EXIT
     if DEBUG:
         from . import explain_traceback
 
@@ -28,6 +30,8 @@ def log_error(e=None):
         for mod in sys.modules:
             if "pytest" in mod:
                 return
-
-        explain_traceback()
+        if not EXIT:
+            EXIT = True
+            explain_traceback()
+        log("Fatal error - aborting")
         sys.exit()

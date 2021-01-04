@@ -169,9 +169,11 @@ def find_circular_import(name, tb_data):
             else:
                 module = match_import.group(1)
                 if "," in module:  # multiple modules imported on same line
-                    modules = module.split(",").replace("(", "").strip()
+                    modules = module.split(",")
                     for mod in modules:
-                        modules_imported.append((current_file, mod))
+                        modules_imported.append(
+                            (current_file, mod.replace("(", "").strip())
+                        )
                 else:
                     modules_imported.append((current_file, module))
             current_file = ""

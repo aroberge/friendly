@@ -50,10 +50,10 @@ from .theme import pygments_available
 ipython_available = False
 if pygments_available:
     try:
-        from pygments import highlight
-        from pygments.lexers import PythonLexer, PythonTracebackLexer
-        from pygments.formatters import HtmlFormatter
-        from IPython.display import display, HTML
+        from pygments import highlight  # noqa
+        from pygments.lexers import PythonLexer, PythonTracebackLexer  # noqa
+        from pygments.formatters import HtmlFormatter  # noqa
+        from IPython.display import display, HTML  # noqa
 
         INSERTED_CSS = False
         ipython_available = True
