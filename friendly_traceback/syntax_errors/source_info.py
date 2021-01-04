@@ -7,10 +7,6 @@ from .syntax_utils import matching_brackets
 from .. import debug_helper
 from .. import token_utils
 
-# TODO: Add function/method to determine what range of tokens to print
-# This is to avoid splitting a triple quoted string and have the
-# highlighting being all wrong.
-
 
 class Statement:
     """Instances of this class contain all relevant information required
@@ -37,12 +33,12 @@ class Statement:
     on that statement, etc.) which are needed for some functions.
     """
 
-    def __init__(self, value, tb_data):
+    def __init__(self, value, bad_line):
         self.filename = value.filename
         self.linenumber = value.lineno
         self.message = value.msg
         self.offset = value.offset
-        self.bad_line = tb_data.bad_line  # previously obtained from the traceback
+        self.bad_line = bad_line  # previously obtained from the traceback
 
         self.fstring_error = self.filename == "<fstring>" or "f-string" in self.message
 

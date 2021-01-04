@@ -20,7 +20,6 @@ from friendly_traceback.my_gettext import current_lang
 from friendly_traceback.source_cache import cache
 from . import source_analyzer
 from . import line_analyzer
-from . import source_info
 from . import statement_analyzer
 from . import message_analyzer
 from .. import debug_helper
@@ -34,7 +33,7 @@ def set_cause_syntax(value, tb_data):
     specific to a given exception.
     """
     _ = current_lang.translate
-    cause = hint = None
+    hint = None
     try:
         cause, hint = find_syntax_error_cause(value, tb_data)
     except Exception as e:
@@ -59,7 +58,7 @@ def find_syntax_error_cause(value, tb_data):
     message = value.msg
     source_lines = cache.get_source_lines(filepath)
 
-    statement = source_info.Statement(value, tb_data)
+    statement = tb_data.statement
     if "invalid syntax" in message:
         cause, hint = statement_analyzer.analyze_statement(statement)
         if cause is not None:

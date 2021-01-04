@@ -220,9 +220,6 @@ def tokenize(source):
             debug_helper.log(repr(e))
             return tokens
     except (py_tokenize.TokenError, Exception):
-        # debug_helper.log("Exception from token_utils.tokenize()")
-        # debug_helper.log(repr(e))
-        # debug_helper.log(e.args[1])
         return tokens
 
     if source.endswith((" ", "\t")):
