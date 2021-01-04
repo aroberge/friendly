@@ -39,6 +39,7 @@ class Statement:
         self.message = value.msg
         self.offset = value.offset
         self.bad_line = bad_line  # previously obtained from the traceback
+        self.statement = bad_line  # temporary assignment
 
         self.fstring_error = self.filename == "<fstring>" or "f-string" in self.message
 
@@ -58,6 +59,7 @@ class Statement:
             source_tokens = self.get_source_tokens()
             self.obtain_statement(source_tokens)
             self.tokens = self.remove_meaningless_tokens()
+            self.statement = token_utils.untokenize(self.statement_tokens)
         elif "too many statically nested blocks" not in self.message:
             debug_helper.log("linenumber is None in analyze_syntax._find_likely_cause")
 
