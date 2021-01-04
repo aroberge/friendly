@@ -232,6 +232,10 @@ class _State:
             explanation = self.formatter(info, include=self.include)
         except Exception as e:
             debug_helper.log("Exception raised in exception_hook().")
+            try:
+                debug_helper.log(self.friendly_traceback.tb_data.filename)
+            except Exception:
+                pass
             debug_helper.log_error(e)
             return
 

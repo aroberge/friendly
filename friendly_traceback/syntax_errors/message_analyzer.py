@@ -587,7 +587,7 @@ def name_is_parameter_and_global(message="", statement=None, line="", **_kwargs)
             newline = f"global {name}"
         cause = _(
             "You are including the statement\n\n"
-            "    `{newline}`\n\n"
+            "    {newline}\n\n"
             "indicating that `{name}` is a variable defined outside a function.\n"
             "You are also using the same `{name}` as an argument for that\n"
             "function, thus indicating that it should be variable known only\n"

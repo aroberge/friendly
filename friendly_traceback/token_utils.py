@@ -132,10 +132,12 @@ class Token:
 
     def is_in(self, iterable):
         """Returns True if the string attribute is found as an item of iterable."""
-        return self.string in iterable
+        return self.string.strip() and self.string in iterable
 
     def is_not_in(self, iterable):
         """Returns True if the string attribute is found as an item of iterable."""
+        if self.string.strip():
+            return False
         return self.string not in iterable
 
     def immediately_before(self, other):
@@ -200,7 +202,27 @@ def tokenize(source):
         for tok in py_tokenize.generate_tokens(StringIO(source).readline):
             token = Token(tok)
             tokens.append(token)
+    except IndentationError as e:
+        try:
+            _, linenumber, col, line = e.args[1]
+            type_ = py_tokenize.NAME  # Not really relevant what we set here
+            # except that ERRORTOKEN would cause problems later on.
+            start = (linenumber, col)
+            end = (linenumber, len(line))
+            string = line[col:].strip()
+            token = Token((type_, string, start, end, line))
+            tokens.append(token)
+            return tokens
+        except Exception as e:
+            debug_helper.log(
+                "after IndentationError, error from token_utils.tokenize()"
+            )
+            debug_helper.log(repr(e))
+            return tokens
     except (py_tokenize.TokenError, Exception):
+        # debug_helper.log("Exception from token_utils.tokenize()")
+        # debug_helper.log(repr(e))
+        # debug_helper.log(e.args[1])
         return tokens
 
     if source.endswith((" ", "\t")):

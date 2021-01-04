@@ -38,6 +38,7 @@ from .runtime_errors import name_error
 from .source_cache import cache, highlight_source
 from .syntax_errors import analyze_syntax
 from .syntax_errors import indentation_error
+from .syntax_errors import source_info
 from . import token_utils
 
 try:
@@ -543,21 +544,27 @@ class FriendlyTraceback:
                 "can be analyzed.\n"
             ).format(filename=filepath)
             return
-        offset = value.offset
-        if "f-string: invalid syntax" in value.msg:  # special case for Python 3.9, 3.10
-            lines = cache.get_source_lines(filepath)
-            error_line = lines[value.lineno - 1]
-            # recorded error, something like '(problem_string)'
-            problem_string = self.tb_data.bad_line.strip()
-            if problem_string:  # should never be a problem, but just in case
-                problem_string = problem_string[1:-1]
-                location = error_line.find(problem_string)
-                if location != -1:
-                    offset = location
+        # offset = value.offset
 
-        partial_source, _ignore = cache.get_formatted_partial_source(
-            filepath, value.lineno, offset
-        )
+        # TODO: this is a duplicate
+        statement = source_info.Statement(value, self.tb_data)
+        statement.format_statement()
+        partial_source = statement.formatted_partial_source
+
+        # if "f-string: invalid syntax" in value.msg:  # special case for Python 3.9, 3.10
+        #     lines = cache.get_source_lines(filepath)
+        #     error_line = lines[value.lineno - 1]
+        #     # recorded error, something like '(problem_string)'
+        #     problem_string = self.tb_data.bad_line.strip()
+        #     if problem_string:  # should never be a problem, but just in case
+        #         problem_string = problem_string[1:-1]
+        #         location = error_line.find(problem_string)
+        #         if location != -1:
+        #             offset = location
+        #
+        # partial_source, _ignore = cache.get_formatted_partial_source(
+        #     filepath, value.lineno, offset
+        # )
         if "-->" in partial_source:
             self.info["parsing_error"] = _(
                 "Python could not understand the code in the file\n"
