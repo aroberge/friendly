@@ -353,6 +353,8 @@ class FriendlyTraceback:
 
         the latter being the "hint" appended to the friendly traceback.
         """
+        if self.tb_data.filename in ["<unknown>", "<string>"]:
+            return
         if issubclass(self.tb_data.exception_type, SyntaxError):
             self.set_cause_syntax()
         else:
@@ -488,12 +490,22 @@ class FriendlyTraceback:
             filename, linenumber, lines, index, self.tb_data.node_range
         )
         filename = path_utils.shorten_path(filename)
+
+        unavailable = filename in ["<unknown>", "<string>"]
+        if unavailable:
+            self.info["exception_raised_source"] = _(
+                "{filename} is not a regular Python file whose contents can be analyzed.\n"
+            ).format(filename=filename)
+
         if session.use_rich:
             filename = f"`'{filename}'`"
-
         self.info["exception_raised_header"] = _(
             "Exception raised on line {linenumber} of file {filename}.\n"
         ).format(linenumber=linenumber, filename=filename)
+
+        if unavailable:
+            return
+
         self.info["exception_raised_source"] = source_info["source"]
 
         if self.tb_data.node_text:
