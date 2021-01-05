@@ -129,13 +129,12 @@ class Statement:
         related values.
         """
         self.nb_tokens = len(self.tokens)
-        self.is_complete = not (self.begin_brackets or self.end_bracket)
         if self.nb_tokens >= 1:
             self.first_token = self.tokens[0]
             self.last_token = self.tokens[-1]
+            is_complete = not (self.begin_brackets or self.end_bracket)
             self.single_line = (
-                self.first_token.start_row == self.last_token.end_row
-                and self.is_complete
+                self.first_token.start_row == self.last_token.end_row and is_complete
             )
             if self.bad_token is None:
                 self.bad_token = self.tokens[-1]
