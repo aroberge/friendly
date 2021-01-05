@@ -50,7 +50,6 @@ def find_syntax_error_cause(value, tb_data):
     """Attempts to find the cause of a SyntaxError"""
     # value = tb_data.value
     _ = current_lang.translate
-    cause = hint = None
 
     filepath = value.filename
     linenumber = value.lineno

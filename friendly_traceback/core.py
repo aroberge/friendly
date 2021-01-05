@@ -32,7 +32,6 @@ from . import debug_helper
 
 from .my_gettext import current_lang
 
-# TODO: see if EXCLUDED_FILE_PATH can be removed
 from .path_info import is_excluded_file, EXCLUDED_FILE_PATH, path_utils
 from .runtime_errors import name_error
 from .source_cache import cache, highlight_source

@@ -27,9 +27,6 @@ def log_error(e=None):
 
         if e is not None:
             print(repr(e))
-        for mod in sys.modules:
-            if "pytest" in mod:
-                return
         if not EXIT:
             EXIT = True
             explain_traceback()
