@@ -4,6 +4,7 @@
 """
 import sys
 
+from . import fixers
 from ..my_gettext import current_lang
 from .. import debug_helper
 
@@ -101,9 +102,7 @@ def debug_fstring(statement):
     """detect debug feature of f-string introduced in Python 3.8"""
     _ = current_lang.translate
     cause = hint = None
-    if sys.version_info >= (3, 8):
-        return cause, hint
-    if not statement.fstring_error:
+    if sys.version_info >= (3, 8) or not statement.fstring_error:
         return cause, hint
 
     if statement.bad_token == "=" and statement.prev_token.is_identifier():
@@ -265,7 +264,15 @@ def assign_instead_of_equal(statement):
     if not statement.first_token.is_in(["if", "elif", "while"]):
         return cause, hint
 
-    # TODO: see if we can replace = by == and get valid syntax.
+    new_statement = fixers.modify_source(statement.tokens, statement.bad_token, "==")
+    if not fixers.check_statement(new_statement):
+        # TODO: find a way to confirm that new error is later.
+        debug_helper.log("Fix did not work in assign_instead_of_equal")
+        additional_cause = _(
+            "However, there might be some other errors in this statement.\n"
+        )
+    else:
+        additional_cause = ""
 
     equal = _("Perhaps you needed `==` instead of `=`.\n")
     equal_or_walrus = _("Perhaps you needed `==` or `:=` instead of `=`.\n")
@@ -280,7 +287,8 @@ def assign_instead_of_equal(statement):
             "an equality operator, `==`, or the walrus operator `:=`.\n"
         )
         hint = equal_or_walrus
-    return cause, hint
+
+    return cause + additional_cause, hint
 
 
 @add_statement_analyzer
@@ -291,8 +299,6 @@ def print_as_statement(statement):
     if statement.prev_token != "print":
         return cause, hint
 
-    # TODO: add hint
-    # TODO: check to see if perhaps [] were used instead of ()
     if statement.bad_token != "(":
         cause = _(
             "In older version of Python, `print` was a keyword.\n"
@@ -305,7 +311,6 @@ def print_as_statement(statement):
 def calling_pip(statement):
     _ = current_lang.translate
     cause = hint = None
-    # TODO: check if we cover other cases of using Python from an interpreter.
     if not statement.first_token.is_in(["pip", "python"]):
         return cause, hint
 
@@ -331,7 +336,12 @@ def dot_followed_by_bracket(statement):
         cause = _("You cannot have a dot `.` followed by `{bracket}`.\n").format(
             bracket=statement.bad_token
         )
-    # TODO: see if replacing the dot by a comma would fix the problem.
+
+    new_statement = fixers.modify_source(statement.tokens, statement.prev_token, ",")
+    if fixers.check_statement(new_statement):
+        cause += _("Perhaps you need to replace the dot by a comma.\n")
+        return cause, hint
+
     return cause, hint
 
 
@@ -361,3 +371,74 @@ def invalid_double_star_operator(statement):
         )
 
     return cause, hint
+
+
+@add_statement_analyzer
+def missing_colon(statement):
+    """look for missing colon at the end of statement"""
+    _ = current_lang.translate
+    cause = hint = None
+
+    if statement.last_token == ":" or statement.bad_token != statement.last_token:
+        return cause, hint
+
+    name = statement.first_token
+    if name.is_not_in(
+        [
+            "class",
+            "def",
+            "if",
+            "elif",
+            "else",
+            "for",
+            "while",
+            "try",
+            "except",
+            "finally",
+            "with",
+        ]
+    ):
+        return cause, hint
+
+    new_statement = fixers.modify_source(
+        statement.tokens, statement.bad_token, ":", add=True
+    )
+    if not fixers.check_statement(new_statement):
+        return cause, hint
+
+    name = statement.first_token
+
+    forgot_a_colon = _("Did you forget a colon `:`?\n")
+
+    if name.is_in(["for", "while"]):
+        cause = _(
+            "You wrote a `{for_while}` loop but\n"
+            "forgot to add a colon `:` at the end\n"
+            "\n"
+        ).format(for_while=name)
+        hint = forgot_a_colon
+    elif name.is_in(["def", "elif", "else", "except", "finally", "if", "try", "with"]):
+        cause = _(
+            "You wrote a statement beginning with\n"
+            "`{name}` but forgot to add a colon `:` at the end\n"
+            "\n"
+        ).format(name=name)
+        hint = forgot_a_colon
+
+    return cause, hint
+
+
+# # --------- Keep this last
+# @add_statement_analyzer
+# def general_fstring_problem(statement=None):
+#     # General f-string problems are outside of our main priorities.
+#     _ = current_lang.translate
+#     cause = hint = None
+#     if not statement.fstring_error:
+#         return cause, hint
+#
+#     cause = _(
+#         "The content of your f-string is invalid. Please consult the documentation:\n"
+#         "https://docs.python.org/3/reference/lexical_analysis.html#f-strings\n"
+#     )
+#     return cause, hint

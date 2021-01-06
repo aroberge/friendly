@@ -12,7 +12,6 @@ from . import source_analyzer
 from .. import utils
 from ..my_gettext import current_lang
 
-# TODO  f-string: expecting '}'   for {a=2}
 MESSAGE_ANALYZERS = []
 
 # The following has been taken from https://unicode-table.com/en/sets/quotation-marks/
@@ -954,3 +953,19 @@ def import_braces(message="", **_kwargs):
         "their indentation level, and not by using some curly braces, like `{...}`.\n"
     )
     return cause, hint
+
+
+# # --------- Keep this last
+# @add_python_message
+# def general_fstring_problem(message="", statement=None, **_kwargs):
+#     # General f-string problems are outside of our main priorities.
+#     _ = current_lang.translate
+#     cause = hint = None
+#     if not statement.fstring_error:
+#         return cause, hint
+#
+#     cause = _(
+#         "The content of your f-string is invalid. Please consult the documentation:\n"
+#         "https://docs.python.org/3/reference/lexical_analysis.html#f-strings\n"
+#     )
+#     return cause, hint

@@ -40,6 +40,10 @@ class Token:
         self.end = self.end_row, self.end_col = token[3]
         self.line = token[4]
 
+    def copy(self):
+        """Makes a copy of a given token"""
+        return Token((self.type, self.string, self.start, self.end, self.line))
+
     def __eq__(self, other):
         """Compares a Token with another object; returns true if
         self.string == other.string or if self.string == other.
@@ -130,17 +134,17 @@ class Token:
         """Returns True if the token is a string"""
         return self.type == py_tokenize.STRING
 
-    def is_in(self, iterable):
+    def is_in(self, iterable):  # TODO: add unit tests
         """Returns True if the string attribute is found as an item of iterable."""
         return self.string.strip() and self.string in iterable
 
-    def is_not_in(self, iterable):
+    def is_not_in(self, iterable):  # TODO: add unit tests
         """Returns True if the string attribute is found as an item of iterable."""
-        if self.string.strip():
-            return False
+        if not self.string:
+            return True
         return self.string not in iterable
 
-    def immediately_before(self, other):
+    def immediately_before(self, other):  # TODO: add unit tests
         """Return True if the current token is immediately before other,
         without any intervening space in between the two tokens.
         """
@@ -148,7 +152,7 @@ class Token:
             return False
         return self.end_row == other.start_row and self.end_col == other.start_col
 
-    def immediately_after(self, other):
+    def immediately_after(self, other):  # TODO: add unit tests
         """Return True if the current token is immediately after other,
         without any intervening space in between the two tokens.
         """
@@ -338,9 +342,6 @@ def indent(tokens, nb, tab=False):
 def untokenize(tokens):
     """Return source code based on tokens.
 
-    Adapted from https://github.com/myint/untokenize,
-    Copyright (C) 2013-2018 Steven Myint, MIT License (same as this project).
-
     This is similar to Python's own tokenize.untokenize(), except that it
     preserves spacing between tokens, by using the line
     information recorded by Python's tokenize.generate_tokens.
@@ -357,6 +358,8 @@ def untokenize(tokens):
     strings; however, it will only insert them *as is* without taking them
     into account when it comes with figuring out spacing between tokens.
     """
+    # Adapted from https://github.com/myint/untokenize,
+    # Copyright (C) 2013-2018 Steven Myint, MIT License (same as this project).
     words = []
     previous_line = ""
     last_row = 0

@@ -301,48 +301,6 @@ def missing_comma_or_operator(tokens, offset=None):
 
 
 @add_line_analyzer
-def missing_colon(tokens, **_kwargs):
-    """look for missing colon at the end of statement"""
-    _ = current_lang.translate
-    cause = hint = None
-
-    if tokens[-1] == ":":
-        return cause, hint
-
-    if not is_potential_statement(tokens):
-        return cause, hint
-
-    name = tokens[0]
-
-    forgot_a_colon = _("Perhaps you forgot a colon `:`.\n")
-
-    if name == "class":
-        name = _("a class")
-        cause = _(
-            "You wanted to define `{class_}`\n"
-            "but forgot to add a colon `:` at the end\n"
-            "\n"
-        ).format(class_=name)
-        hint = forgot_a_colon
-    elif name.is_in(["for", "while"]):
-        cause = _(
-            "You wrote a `{for_while}` loop but\n"
-            "forgot to add a colon `:` at the end\n"
-            "\n"
-        ).format(for_while=name)
-        hint = forgot_a_colon
-    elif name.is_in(["def", "elif", "else", "except", "finally", "if", "try"]):
-        cause = _(
-            "You wrote a statement beginning with\n"
-            "`{name}` but forgot to add a colon `:` at the end\n"
-            "\n"
-        ).format(name=name)
-        hint = forgot_a_colon
-
-    return cause, hint
-
-
-@add_line_analyzer
 def malformed_def(tokens, **_kwargs):
     """Looks for problems with defining a function, assuming that
     the information passed looks like a complete statement"""

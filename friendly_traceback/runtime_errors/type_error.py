@@ -684,9 +684,10 @@ def unhashable_type(message, *args):
         return cause, hint
 
     cause = _(
-        "Unhashable objects are objects that do not change value\n"
-        "once they are created. Only unhashable objects can be used\n"
+        "Only hashable objects can be used\n"
         "as elements of `set` or keys of `dict`.\n"
+        "Hashable objects are objects that do not change value\n"
+        "once they have been created."
     )
 
     original = match.group(1)
