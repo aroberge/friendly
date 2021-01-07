@@ -12,10 +12,10 @@ from .. import token_utils
 # a "bad token" identified by Python as the cause of the error and often
 # look at its two neighbours. If the bad token is the first one in a statement
 # it does not have a token preceding it; if it is the last one, it does not
-# have a token following it. By assigning a fake token value to these
+# have a token following it. By assigning a meaningless token value to these
 # neighbours, the code for the analysis can be greatly simplified as we do
 # not have to verify the existence of these neighbours.
-FAKE_TOKEN = token_utils.tokenize("")[0]
+MEANINGLESS_TOKEN = token_utils.tokenize(" ")[0]
 
 
 class Statement:
@@ -78,7 +78,6 @@ class Statement:
 
         self.first_token = None
         self.last_token = None
-        self.single_line = True
 
         # When using the friendly console (repl), SyntaxError might prevent
         # closing all brackets to complete a statement. Knowing this can be
@@ -105,7 +104,10 @@ class Statement:
         elif "too many statically nested blocks" not in self.message:
             debug_helper.log("linenumber is None in source_info.Statement")
 
-        self.assign_individual_token_values()
+        if self.tokens:
+            self.assign_individual_token_values()
+        elif "too many statically nested blocks" not in self.message:
+            debug_helper.log("No meaningful tokens in source_info.Statement")
 
     def get_source_tokens(self):
         """Returns a list containing all the tokens from the source."""
@@ -132,28 +134,25 @@ class Statement:
         if self.nb_tokens >= 1:
             self.first_token = self.tokens[0]
             self.last_token = self.tokens[-1]
-            is_complete = not (self.begin_brackets or self.end_bracket)
-            self.single_line = (
-                self.first_token.start_row == self.last_token.end_row and is_complete
-            )
+
             if self.bad_token is None:
-                self.bad_token = self.tokens[-1]
+                self.bad_token = self.last_token
                 self.bad_token_index = self.nb_tokens - 1
                 if self.bad_token_index == 0:
-                    self.prev_token = FAKE_TOKEN
+                    self.prev_token = MEANINGLESS_TOKEN
                 else:
                     self.prev_token = self.tokens[self.bad_token_index - 1]
 
             if self.prev_token is None:
                 if self.bad_token_index == 0:
-                    self.prev_token = FAKE_TOKEN
+                    self.prev_token = MEANINGLESS_TOKEN
                 else:
                     self.prev_token = self.tokens[self.bad_token_index - 1]
 
         if self.last_token != self.bad_token:
             self.next_token = self.tokens[self.bad_token_index + 1]
         else:
-            self.next_token = FAKE_TOKEN
+            self.next_token = MEANINGLESS_TOKEN
 
     def format_statement(self):
         """Format the statement identified as causing the problem and possibly

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-01-06 10:50-0400\n"
-"PO-Revision-Date: 2021-01-06 10:51-0400\n"
+"POT-Creation-Date: 2021-01-07 07:42-0400\n"
+"PO-Revision-Date: 2021-01-07 07:42-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1019,9 +1019,9 @@ msgstr ""
 "{first} et {second}.\n"
 
 #: runtime_errors\type_error.py:207 runtime_errors\type_error.py:642
-#: runtime_errors\type_error.py:737 syntax_errors\line_analyzer.py:219
-#: syntax_errors\line_analyzer.py:253 syntax_errors\line_analyzer.py:261
-#: syntax_errors\line_analyzer.py:298
+#: runtime_errors\type_error.py:737 syntax_errors\line_analyzer.py:169
+#: syntax_errors\line_analyzer.py:203 syntax_errors\line_analyzer.py:211
+#: syntax_errors\line_analyzer.py:248
 msgid "Did you mean `{line}`?\n"
 msgstr "Vouliez-vous dire `{line}` ?\n"
 
@@ -1544,35 +1544,11 @@ msgstr ""
 "est moins indentée que la ligne précédente\n"
 "et n’est pas alignée verticalement avec un autre bloc de code.\n"
 
-#: syntax_errors\line_analyzer.py:93
-msgid "Valid names cannot begin with a number.\n"
-msgstr "Les noms valides ne peuvent pas commencer par un chiffre.\n"
-
-#: syntax_errors\line_analyzer.py:95
-msgid "[Note: `{first}` is a complex number.]\n"
-msgstr "[N.B.: `{first}` est un nombre complexe.]\n"
-
-#: syntax_errors\line_analyzer.py:99 syntax_errors\line_analyzer.py:198
+#: syntax_errors\line_analyzer.py:148 syntax_errors\statement_analyzer.py:451
 msgid "Did you mean `{number}j`?\n"
 msgstr "Vouliez-vous dire `{number}j` ?\n"
 
-#: syntax_errors\line_analyzer.py:100
-msgid ""
-"Perhaps you thought that `i` could be used to represent\n"
-"the square root of -1. In Python, `j` (or `1j`) is used for this\n"
-"and perhaps you meant to write `{number}j`.\n"
-msgstr ""
-"Peut-être pensiez-vous que `i` pouvait être utilisé pour représenter\n"
-"la racine carrée de -1. Dans Python, `j` (ou `1j`) est utilisé pour ceci\n"
-"et peut-être que vous vouliez écrire `{number}j`.\n"
-
-#: syntax_errors\line_analyzer.py:118
-msgid "Perhaps you forgot a multiplication operator, `{first} * {second}`.\n"
-msgstr ""
-"Peut-être avez-vous oublié un opérateur de multiplication, `{first} * "
-"{second}`.\n"
-
-#: syntax_errors\line_analyzer.py:211
+#: syntax_errors\line_analyzer.py:161
 msgid ""
 "Python indicates that the error is caused by `{second}` written immediately "
 "after `{first}`.\n"
@@ -1580,7 +1556,7 @@ msgstr ""
 "Python indique que l’erreur est causée par `{second}` écrit tout juste après "
 "`{first}`.\n"
 
-#: syntax_errors\line_analyzer.py:220
+#: syntax_errors\line_analyzer.py:170
 msgid ""
 "Perhaps you meant to write `{operator}` between\n"
 "`{first}` and `{second}`:\n"
@@ -1594,11 +1570,11 @@ msgstr ""
 "    {line}\n"
 "ce qui ne causerait pas de `SyntaxError`.\n"
 
-#: syntax_errors\line_analyzer.py:230
+#: syntax_errors\line_analyzer.py:180
 msgid "Did you forget something between `{first}` and `{second}`?\n"
 msgstr "Avez-vous oublié quelque chose entre `{first}` et `{second}` ?\n"
 
-#: syntax_errors\line_analyzer.py:234
+#: syntax_errors\line_analyzer.py:184
 msgid ""
 "Perhaps you meant to insert an operator like `{operators}`\n"
 "between `{first}` and `{second}`.\n"
@@ -1610,11 +1586,11 @@ msgstr ""
 "Les lignes de code suivantes ne causeraient pas des `SyntaxError :\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:246
+#: syntax_errors\line_analyzer.py:196
 msgid "Note: these are just some of the possible choices.\n"
 msgstr "N.B. : ce ne sont là que quelques-uns des choix possibles.\n"
 
-#: syntax_errors\line_analyzer.py:255
+#: syntax_errors\line_analyzer.py:205
 msgid ""
 "Perhaps you meant to write `{keyword}` and made a typo.\n"
 "The correct line would then be `{line}`\n"
@@ -1623,7 +1599,7 @@ msgstr ""
 "faute.\n"
 "Si c'est le cas, la ligne correcte aurait été au lieu de `{line}`.\n"
 
-#: syntax_errors\line_analyzer.py:263
+#: syntax_errors\line_analyzer.py:213
 msgid ""
 "Perhaps you wrote another word instead of a Python keyword.\n"
 "If that is the case, perhaps you meant to write one of\n"
@@ -1635,13 +1611,13 @@ msgstr ""
 "de lignes de code qui ne soulèveraient pas un `SyntaxError` :\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:272
+#: syntax_errors\line_analyzer.py:222
 msgid ""
 "Perhaps you forgot to write something between `{first}` and `{second}`\n"
 msgstr ""
 "Avez-vous oublié d'écrire quelque chose entre `{first}` et `{second}` ?\n"
 
-#: syntax_errors\line_analyzer.py:286
+#: syntax_errors\line_analyzer.py:236
 msgid ""
 "Or perhaps you forgot that you cannot have spaces\n"
 "in variable names.\n"
@@ -1649,15 +1625,15 @@ msgstr ""
 "Ou peut-être avez-vous oublié que vous ne pouvez pas\n"
 "avoir d'espaces dans des noms variables.\n"
 
-#: syntax_errors\line_analyzer.py:316
+#: syntax_errors\line_analyzer.py:266
 msgid "Perhaps you forgot parentheses.\n"
 msgstr "Vous avez peut-être oublié d'écrire des parenthèses.\n"
 
-#: syntax_errors\line_analyzer.py:325
+#: syntax_errors\line_analyzer.py:275
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
 
-#: syntax_errors\line_analyzer.py:326
+#: syntax_errors\line_analyzer.py:276
 msgid ""
 "You tried to define {class_or_function} and did not use the correct syntax.\n"
 "The correct syntax is:\n"
@@ -1671,14 +1647,14 @@ msgstr ""
 "    def nom ( arguments_optionnels ):\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:337
+#: syntax_errors\line_analyzer.py:287
 msgid "You tried to use the Python keyword `{kwd}` as a function name.\n"
 msgstr ""
 "Vous avez tenté d'utiliser le mot clé Python `{kwd}` comme nom de fonction.\n"
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: syntax_errors\line_analyzer.py:385
+#: syntax_errors\line_analyzer.py:335
 msgid ""
 "I am guessing that you tried to use the Python keyword\n"
 "`{kwd}` as an argument in the definition of a function.\n"
@@ -2584,22 +2560,22 @@ msgstr ""
 msgid "However, there might be some other errors in this statement.\n"
 msgstr "Toutefois, il pourrait y avoir d’autres erreurs dans cet énoncé.\n"
 
-#: syntax_errors\statement_analyzer.py:275
+#: syntax_errors\statement_analyzer.py:277
 msgid "Perhaps you needed `==` instead of `=`.\n"
 msgstr "Peut-être que vous aviez besoin de `==` au lieu de `=`.\n"
 
-#: syntax_errors\statement_analyzer.py:276
+#: syntax_errors\statement_analyzer.py:278
 msgid "Perhaps you needed `==` or `:=` instead of `=`.\n"
 msgstr "Peut-être que vous aviez besoin de `==` ou `:=` au lieu de `=`.\n"
 
-#: syntax_errors\statement_analyzer.py:278
+#: syntax_errors\statement_analyzer.py:280
 msgid ""
 "You used an assignment operator `=` instead of an equality operator `==`.\n"
 msgstr ""
 "Vous avez utilisé un opérateur d’affectation `=` au lieu d’un opérateur "
 "d'égalité `==` \n"
 
-#: syntax_errors\statement_analyzer.py:283
+#: syntax_errors\statement_analyzer.py:285
 msgid ""
 "You used an assignment operator `=`; perhaps you meant to use \n"
 "an equality operator, `==`, or the walrus operator `:=`.\n"
@@ -2608,7 +2584,7 @@ msgstr ""
 "utiliser \n"
 "un opérateur d'égalité, `==`, ou l'opérateur `:=`.\n"
 
-#: syntax_errors\statement_analyzer.py:301
+#: syntax_errors\statement_analyzer.py:303
 msgid ""
 "In older version of Python, `print` was a keyword.\n"
 "Now, `print` is a function; you need to use parentheses to call it.\n"
@@ -2617,7 +2593,7 @@ msgstr ""
 "Maintenant, `print` est une fonction; vous devez utiliser des parenthèses "
 "pour l'invoquer.\n"
 
-#: syntax_errors\statement_analyzer.py:315
+#: syntax_errors\statement_analyzer.py:317
 msgid ""
 "It looks as if you are attempting to use pip to install a module.\n"
 "`pip` is a command that needs to run in a terminal,\n"
@@ -2627,15 +2603,15 @@ msgstr ""
 "`pip` est une commande qui doit être invoquée dans un terminal,\n"
 "pas dans un interprète Python.\n"
 
-#: syntax_errors\statement_analyzer.py:323
+#: syntax_errors\statement_analyzer.py:325
 msgid "Pip cannot be used in a Python interpreter.\n"
 msgstr "Pip ne peut pas être utilisé dans un interprète Python.\n"
 
-#: syntax_errors\statement_analyzer.py:334
+#: syntax_errors\statement_analyzer.py:336
 msgid "You cannot have a dot `.` followed by `{bracket}`.\n"
 msgstr "Vous ne pouvez pas avoir un point `.` suivi de `{bracket}`.\n"
 
-#: syntax_errors\statement_analyzer.py:340
+#: syntax_errors\statement_analyzer.py:342
 msgid "Perhaps you need to replace the dot by a comma.\n"
 msgstr "Peut-être que vous devez remplacer le point par une virgule.\n"
 
@@ -2678,6 +2654,34 @@ msgstr ""
 "Vous avez écrit un énoncé débutant avec\n"
 "`{name}` mais vous avez oublié d’ajouter deux points `:` à la fin.\n"
 "\n"
+
+#: syntax_errors\statement_analyzer.py:445
+msgid "Valid names cannot begin with a number.\n"
+msgstr "Les noms valides ne peuvent pas commencer par un chiffre.\n"
+
+#: syntax_errors\statement_analyzer.py:452
+msgid ""
+"Perhaps you thought that `i` could be used to represent\n"
+"the square root of `-1`. In Python, the symbol used for this is `j`\n"
+"and the complex part is written as `some_number` immediately\n"
+"followed by `j`, with no spaces in between.\n"
+"Perhaps you meant to write `{number}j`.\n"
+msgstr ""
+"Peut-être pensiez-vous que `i` pouvait être utilisé pour représenter\n"
+"la racine carrée de `-1`. Dans Python, le symbole utilisé pour ceci est `j`\n"
+"et la partie imaginaire d'un nombre complexe a la forme `nombre`\n"
+"suivie immédiatement par `j` sans aucun espace entre les deux.\n"
+"Peut-être que vous vouliez écrire `{number}j`.\n"
+
+#: syntax_errors\statement_analyzer.py:462
+msgid "[Note: `{first}` is a complex number.]\n"
+msgstr "[N.B.: `{first}` est un nombre complexe.]\n"
+
+#: syntax_errors\statement_analyzer.py:468
+msgid "Perhaps you forgot a multiplication operator, `{first} * {second}`.\n"
+msgstr ""
+"Peut-être avez-vous oublié un opérateur de multiplication, `{first} * "
+"{second}`.\n"
 
 #: syntax_errors\syntax_utils.py:37
 msgid "parenthesis `(`"

@@ -264,7 +264,7 @@ def assign_instead_of_equal(statement):
     if not statement.first_token.is_in(["if", "elif", "while"]):
         return cause, hint
 
-    new_statement = fixers.modify_source(statement.tokens, statement.bad_token, "==")
+    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "==")
     if not fixers.check_statement(new_statement):
         # TODO: find a way to confirm that new error is later.
         debug_helper.log("Fix did not work in assign_instead_of_equal")
@@ -337,7 +337,7 @@ def dot_followed_by_bracket(statement):
             bracket=statement.bad_token
         )
 
-    new_statement = fixers.modify_source(statement.tokens, statement.prev_token, ",")
+    new_statement = fixers.replace_token(statement.tokens, statement.prev_token, ",")
     if fixers.check_statement(new_statement):
         cause += _("Perhaps you need to replace the dot by a comma.\n")
         return cause, hint
@@ -400,8 +400,8 @@ def missing_colon(statement):
     ):
         return cause, hint
 
-    new_statement = fixers.modify_source(
-        statement.tokens, statement.bad_token, ":", add=True
+    new_statement = fixers.modify_token(
+        statement.tokens, statement.bad_token, append=":"
     )
     if not fixers.check_statement(new_statement):
         return cause, hint
@@ -425,6 +425,53 @@ def missing_colon(statement):
         ).format(name=name)
         hint = forgot_a_colon
 
+    return cause, hint
+
+
+@add_statement_analyzer
+def invalid_name(statement):
+    """Identifies invalid identifiers when a name begins with a number"""
+    _ = current_lang.translate
+    cause = hint = None
+
+    # TODO: handle octal and hexadecimal before here.
+
+    first = statement.prev_token
+    second = statement.bad_token
+
+    if not (first.is_number() and second.is_name() and first.end == second.start):
+        return cause, hint
+
+    cause = _("Valid names cannot begin with a number.\n")
+    if first == statement.first_token:  # statement begins with this invalid identifier
+        hint = cause
+        return cause, hint
+
+    if second == "i" and not first.is_complex():
+        hint = _("Did you mean `{number}j`?\n").format(number=first)
+        cause += _(
+            "Perhaps you thought that `i` could be used to represent\n"
+            "the square root of `-1`. In Python, the symbol used for this is `j`\n"
+            "and the complex part is written as `some_number` immediately\n"
+            "followed by `j`, with no spaces in between.\n"
+            "Perhaps you meant to write `{number}j`.\n"
+        ).format(number=first)
+        return cause, hint
+
+    if first.is_complex():
+        note = _("[Note: `{first}` is a complex number.]\n").format(first=first)
+        second.string = first.string[-1] + second.string
+        first.string = first.string[:-1]
+    else:
+        note = ""
+
+    hint = _(
+        "Perhaps you forgot a multiplication operator, `{first} * {second}`.\n"
+    ).format(first=first, second=second)
+    cause = cause + hint
+
+    if note is not None:
+        cause += "\n" + note
     return cause, hint
 
 

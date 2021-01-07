@@ -4,12 +4,47 @@ from .. import debug_helper
 from .. import token_utils
 
 
-def modify_source(tokens, bad_token, string, add=False):
+def replace_token(tokens, original_token, new_token_string):
     """Replaces a single token string to produce a new source.
     More specifically, given::
 
         tokens: a list of tokens
-        bad_token: single token to be replaced
+        original_token: single token to be replaced
+        replace: new string to replace original_token.string
+
+    It creates a new list of tokens with the replacement having been done,
+    untokenize it to produce a modified source which is stripped of
+    leading and ending spaces so that it could be inserted in a
+    code sample at the beginning of a line with no indentation.
+    """
+    return _modify_source(tokens, original_token, replace=new_token_string)
+
+
+def modify_token(tokens, original_token, prepend="", append=""):
+    """Replaces a single token string to produce a new source.
+    More specifically, given::
+
+        tokens: a list of tokens
+        original_token: single token to be replaced
+        append: string to append to original_token.string
+        prepend: string to prepend to original_token.string
+
+    It creates a new list of tokens with the replacement having been done,
+    untokenize it to produce a modified source which is stripped of
+    leading and ending spaces so that it could be inserted in a
+    code sample at the beginning of a line with no indentation.
+    """
+    return _modify_source(
+        tokens, original_token, original_token.string, prepend=prepend, append=append
+    )
+
+
+def _modify_source(tokens, original_token, replace="", append="", prepend=""):
+    """Replaces a single token string to produce a new source.
+    More specifically, given::
+
+        tokens: a list of tokens
+        original_token: single token to be replaced
         string: new string to use
         add: if True, the new string is added to the existing one
 
@@ -19,7 +54,7 @@ def modify_source(tokens, bad_token, string, add=False):
     code sample at the beginning of a line with no indentation.
     """
     if not tokens:
-        debug_helper.log("Problem in fixers.modify_source().")
+        debug_helper.log("Problem in fixers._modify_source().")
         debug_helper.log("Empty token list was received")
         debug_helper.log_error()
         return ""
@@ -27,12 +62,9 @@ def modify_source(tokens, bad_token, string, add=False):
     try:
         new_tokens = []
         for tok in tokens:
-            if tok is bad_token:
-                new_token = bad_token.copy()
-                if add:
-                    new_token.string += string
-                else:
-                    new_token.string = string
+            if tok is original_token:
+                new_token = original_token.copy()
+                new_token.string = prepend + replace + append
                 new_tokens.append(new_token)
             else:
                 new_tokens.append(tok)
@@ -40,7 +72,7 @@ def modify_source(tokens, bad_token, string, add=False):
         source = token_utils.untokenize(new_tokens)
         return source.strip()
     except Exception as e:
-        debug_helper.log("Problem in fixers.modify_source().")
+        debug_helper.log("Problem in fixers._modify_source().")
         debug_helper.log_error(e)
         return ""
 
@@ -54,6 +86,8 @@ def check_statement(statement):
 
     Returns True if no SyntaxError is raised, False otherwise.
     """
+    if not statement:  # If an empty string has been the result of modifying the code.
+        return False
     try:
         if statement.endswith(":"):
             statement += " pass"

@@ -78,56 +78,6 @@ def analyze_last_line(line, offset=None):
 # ==================
 
 
-@add_line_analyzer
-def invalid_name(tokens, **_kwargs):
-    """Identifies invalid identifiers when a name begins with a number"""
-    _ = current_lang.translate
-    cause = hint = None
-
-    if len(tokens) < 2:
-        return cause, hint
-
-    note = None
-    for first, second in zip(tokens, tokens[1:]):
-        if first.is_number() and second.is_identifier() and first.end == second.start:
-            cause = _("Valid names cannot begin with a number.\n")
-            if first.is_complex():
-                note = _("[Note: `{first}` is a complex number.]\n").format(first=first)
-                second.string = first.string[-1] + second.string
-                first.string = first.string[:-1]
-            if second == "i" and first != tokens[0]:
-                hint = _("Did you mean `{number}j`?\n").format(number=first)
-                cause += _(
-                    "Perhaps you thought that `i` could be used to represent\n"
-                    "the square root of -1. In Python, `j` (or `1j`) is used for this\n"
-                    "and perhaps you meant to write `{number}j`.\n"
-                ).format(number=first)
-                return cause, hint
-            break
-
-    # Try to distinguish between  "2x = ... and y = ... 2x ..."
-    if cause:
-        tokens.append(";")
-        for first, second, third in zip(tokens, tokens[1:], tokens[2:]):
-            if (
-                first.is_number()
-                and second.is_identifier()
-                and first.end == second.start
-            ):
-                if third != "=":
-                    hint = _(
-                        "Perhaps you forgot a multiplication operator,"
-                        " `{first} * {second}`.\n"
-                    ).format(first=first, second=second)
-                    cause = cause + hint
-                else:
-                    hint = cause
-                break
-    if note is not None:
-        cause += "\n" + note
-    return cause, hint
-
-
 def _add_operator(tokens, first):
     first_string = first.string
     results = []
