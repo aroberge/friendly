@@ -562,7 +562,7 @@ def malformed_def_missing_parens(statement):
     if fixers.check_statement(new_statement):
         hint = _("Did you forget parentheses?\n")
         cause = _(
-            "Perhaps you need to forgot to include parentheses.\n"
+            "Perhaps you forgot to include parentheses.\n"
             "You might have meant to write `{line}`\n"
         ).format(line=new_statement)
         return cause, hint

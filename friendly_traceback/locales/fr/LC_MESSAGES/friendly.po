@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-01-08 07:54-0400\n"
-"PO-Revision-Date: 2021-01-08 08:05-0400\n"
+"POT-Creation-Date: 2021-01-08 15:16-0400\n"
+"PO-Revision-Date: 2021-01-08 15:17-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1621,10 +1621,6 @@ msgstr ""
 "Ou peut-être avez-vous oublié que vous ne pouvez pas\n"
 "avoir d'espaces dans des noms variables.\n"
 
-#: syntax_errors\line_analyzer.py:255
-msgid "Perhaps you forgot parentheses.\n"
-msgstr "Vous avez peut-être oublié d'écrire des parenthèses.\n"
-
 #: syntax_errors\line_analyzer.py:264
 msgid "a function or method"
 msgstr "une fonction ou une méthode"
@@ -2428,7 +2424,7 @@ msgstr ""
 "L’invite Python, `>>>`, ne doit pas être incluse dans votre code.\n"
 
 #: syntax_errors\statement_analyzer.py:90
-#: syntax_errors\statement_analyzer.py:511
+#: syntax_errors\statement_analyzer.py:509
 msgid "Your Python version does not support this f-string feature.\n"
 msgstr ""
 "Votre version Python ne prend pas en charge cette fonctionnalité des f-"
@@ -2683,15 +2679,15 @@ msgstr ""
 "(le chiffre zéro suivi de la lettre `o`)\n"
 "suivi des caractères utilisés pour représenter la valeur de cet entier.\n"
 
-#: syntax_errors\statement_analyzer.py:468
+#: syntax_errors\statement_analyzer.py:466
 msgid "Valid names cannot begin with a number.\n"
 msgstr "Les noms valides ne peuvent pas commencer par un chiffre.\n"
 
-#: syntax_errors\statement_analyzer.py:474
+#: syntax_errors\statement_analyzer.py:472
 msgid "Did you mean `{number}j`?\n"
 msgstr "Vouliez-vous dire `{number}j` ?\n"
 
-#: syntax_errors\statement_analyzer.py:475
+#: syntax_errors\statement_analyzer.py:473
 msgid ""
 "Perhaps you thought that `i` could be used to represent\n"
 "the square root of `-1`. In Python, the symbol used for this is `j`\n"
@@ -2705,17 +2701,17 @@ msgstr ""
 "suivie immédiatement par `j` sans aucun espace entre les deux.\n"
 "Peut-être que vous vouliez écrire `{number}j`.\n"
 
-#: syntax_errors\statement_analyzer.py:485
+#: syntax_errors\statement_analyzer.py:483
 msgid "[Note: `{first}` is a complex number.]\n"
 msgstr "[N.B.: `{first}` est un nombre complexe.]\n"
 
-#: syntax_errors\statement_analyzer.py:491
+#: syntax_errors\statement_analyzer.py:489
 msgid "Perhaps you forgot a multiplication operator, `{first} * {second}`.\n"
 msgstr ""
 "Peut-être avez-vous oublié un opérateur de multiplication, `{first} * "
 "{second}`.\n"
 
-#: syntax_errors\statement_analyzer.py:512
+#: syntax_errors\statement_analyzer.py:510
 msgid ""
 "You are likely using a 'debug' syntax of f-strings introduced\n"
 "in Python version 3.8. You are using version {version}.\n"
@@ -2723,7 +2719,7 @@ msgstr ""
 "Vous utilisez probablement une syntaxe de f-strings introduite\n"
 "dans la version 3.8 de Python. Vous utilisez la version {version}.\n"
 
-#: syntax_errors\statement_analyzer.py:517
+#: syntax_errors\statement_analyzer.py:515
 msgid ""
 "You are likely trying to assign a value within an f-string.\n"
 "This is not allowed.\n"
@@ -2733,7 +2729,7 @@ msgstr ""
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: syntax_errors\statement_analyzer.py:532
+#: syntax_errors\statement_analyzer.py:530
 msgid ""
 "The content of your f-string is invalid. Please consult the documentation:\n"
 "https://docs.python.org/3/reference/lexical_analysis.html#f-strings\n"
@@ -2741,6 +2737,18 @@ msgstr ""
 "Le contenu de votre chaîne est invalide. Veuillez consulter la "
 "documentation :\n"
 "https://docs.python.org/fr/3/reference/lexical_analysis.html#f-strings\n"
+
+#: syntax_errors\statement_analyzer.py:563
+msgid "Did you forget parentheses?\n"
+msgstr "Avez-vous oublié d’ajouter des parenthèses ?\n"
+
+#: syntax_errors\statement_analyzer.py:564
+msgid ""
+"Perhaps you forgot to include parentheses.\n"
+"You might have meant to write `{line}`\n"
+msgstr ""
+"Vous avez peut-être oublié d’inclure des parenthèses.\n"
+"Vous avez peut-être voulu écrire `{line}`\n"
 
 #: syntax_errors\syntax_utils.py:37
 msgid "parenthesis `(`"

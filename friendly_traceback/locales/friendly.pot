@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-01-08 07:54-0400\n"
+"POT-Creation-Date: 2021-01-08 15:16-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1252,11 +1252,6 @@ msgid ""
 "in variable names.\n"
 msgstr ""
 
-#: syntax_errors\line_analyzer.py:255
-msgid ""
-"Perhaps you forgot parentheses.\n"
-msgstr ""
-
 #: syntax_errors\line_analyzer.py:264
 msgid "a function or method"
 msgstr ""
@@ -1816,7 +1811,7 @@ msgid ""
 msgstr ""
 
 #: syntax_errors\statement_analyzer.py:90
-#: syntax_errors\statement_analyzer.py:511
+#: syntax_errors\statement_analyzer.py:509
 msgid ""
 "Your Python version does not support this f-string feature.\n"
 msgstr ""
@@ -2015,17 +2010,17 @@ msgid ""
 "followed by the characters used to represent the value of that integer.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:468
+#: syntax_errors\statement_analyzer.py:466
 msgid ""
 "Valid names cannot begin with a number.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:474
+#: syntax_errors\statement_analyzer.py:472
 msgid ""
 "Did you mean `{number}j`?\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:475
+#: syntax_errors\statement_analyzer.py:473
 msgid ""
 "Perhaps you thought that `i` could be used to represent\n"
 "the square root of `-1`. In Python, the symbol used for this is `j`\n"
@@ -2034,32 +2029,43 @@ msgid ""
 "Perhaps you meant to write `{number}j`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:485
+#: syntax_errors\statement_analyzer.py:483
 msgid ""
 "[Note: `{first}` is a complex number.]\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:491
+#: syntax_errors\statement_analyzer.py:489
 msgid ""
 "Perhaps you forgot a multiplication operator, `{first} * {second}`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:512
+#: syntax_errors\statement_analyzer.py:510
 msgid ""
 "You are likely using a 'debug' syntax of f-strings introduced\n"
 "in Python version 3.8. You are using version {version}.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:517
+#: syntax_errors\statement_analyzer.py:515
 msgid ""
 "You are likely trying to assign a value within an f-string.\n"
 "This is not allowed.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:532
+#: syntax_errors\statement_analyzer.py:530
 msgid ""
 "The content of your f-string is invalid. Please consult the documentation:\n"
 "https://docs.python.org/3/reference/lexical_analysis.html#f-strings\n"
+msgstr ""
+
+#: syntax_errors\statement_analyzer.py:563
+msgid ""
+"Did you forget parentheses?\n"
+msgstr ""
+
+#: syntax_errors\statement_analyzer.py:564
+msgid ""
+"Perhaps you forgot to include parentheses.\n"
+"You might have meant to write `{line}`\n"
 msgstr ""
 
 #: syntax_errors\syntax_utils.py:37
