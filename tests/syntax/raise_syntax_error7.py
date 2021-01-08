@@ -1,4 +1,4 @@
 """Should raise SyntaxError"""
 
-def name  :
+def name:
     pass

@@ -457,8 +457,6 @@ def invalid_name(statement):
     _ = current_lang.translate
     cause = hint = None
 
-    # TODO: handle octal and hexadecimal before here.
-
     first = statement.prev_token
     second = statement.bad_token
 
@@ -533,4 +531,40 @@ def general_fstring_problem(statement=None):
         "The content of your f-string is invalid. Please consult the documentation:\n"
         "https://docs.python.org/3/reference/lexical_analysis.html#f-strings\n"
     )
+    return cause, hint
+
+
+@add_statement_analyzer
+def malformed_def_missing_parens(statement):
+    # Something like
+    # def test: ...
+    _ = current_lang.translate
+    cause = hint = None
+
+    if statement.first_token != "def":
+        return cause, hint
+
+    # TODO: remove requirement of only three tokens to be able to handle
+    # something like
+    # def test: something_valid  # all on one line
+    #
+
+    if (
+        statement.nb_tokens != 3
+        and statement.last_token != ":"
+        and statement.bad_token != statement.last_token
+    ):
+        return cause, hint
+
+    new_statement = fixers.modify_token(
+        statement.tokens, statement.bad_token, prepend="()"
+    )
+    if fixers.check_statement(new_statement):
+        hint = _("Did you forget parentheses?\n")
+        cause = _(
+            "Perhaps you need to forgot to include parentheses.\n"
+            "You might have meant to write `{line}`\n"
+        ).format(line=new_statement)
+        return cause, hint
+
     return cause, hint

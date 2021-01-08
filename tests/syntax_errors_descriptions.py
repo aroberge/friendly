@@ -51,15 +51,15 @@ descriptions = {
     },
     "raise_syntax_error6": {
         cause: "tried to define a function or method",
-        title: "Malformed def statment - 1",
+        title: "Malformed def statement - 1",
     },
     "raise_syntax_error7": {
-        cause: "tried to define a function or method",
-        title: "Malformed def statment - 2",
+        cause: "Did you forget parentheses?",
+        title: "Malformed def statement - missing parentheses",
     },
     "raise_syntax_error8": {
         cause: "tried to define a function or method",
-        title: "Malformed def statment - 3",
+        title: "Malformed def statement - 3",
     },
     "raise_syntax_error9": {
         cause: "is or includes an actual object of type `int`",

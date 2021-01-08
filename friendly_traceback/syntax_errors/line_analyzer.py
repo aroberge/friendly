@@ -251,8 +251,8 @@ def malformed_def(tokens, **_kwargs):
     if not is_potential_statement(tokens):
         return cause, hint
 
-    if len(tokens) >= 3 and tokens[1].is_identifier() and tokens[2] == ":":
-        hint = _("Perhaps you forgot parentheses.\n")
+    # if len(tokens) >= 3 and tokens[1].is_identifier() and tokens[2] == ":":
+    #     hint = _("Perhaps you forgot parentheses.\n")
     # need at least five tokens: def name ( ) :
     if (
         len(tokens) < 5
