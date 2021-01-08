@@ -131,6 +131,10 @@ def missing_comma_or_operator(tokens, offset=None):
     """Check to see if a comma or other operator
     is possibly missing between identifiers, or numbers, or both.
     """
+
+    # TODO: add case where a space is between two parts of an integer
+    # which could be replaced by _ or simply remove the space.
+
     _ = current_lang.translate
     cause = hint = None
 
@@ -138,21 +142,6 @@ def missing_comma_or_operator(tokens, offset=None):
         return cause, hint
 
     for first, second in zip(tokens, tokens[1:]):
-        if (
-            first.is_number()
-            and not first.is_complex()  # should not be needed as the preceding
-            # function should have caught this.
-            and second == "i"
-            and first.end == second.start
-        ):
-            hint = _("Did you mean `{number}j`?\n").format(number=first)
-            cause = (
-                "Perhaps you thought that `i` could be used to represent\n"
-                "the square root of -1.\n"
-                "In Python, `j` immediately following a number is used for this.\n"
-                "Perhaps you meant to write `{number}j`.\n"
-            ).format(number=first)
-            return cause, hint
         if (
             (first.is_number() or first.is_identifier() or first.is_string())
             and (second.is_number() or second.is_identifier() or second.is_string())

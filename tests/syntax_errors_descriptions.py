@@ -342,8 +342,8 @@ descriptions = {
         title: "Single = instead of double == with while",
     },
     "raise_syntax_error79": {
-        cause: "(x + y)",
-        title: "Forgot an operator in an f-string",
+        cause: "Did you made a mistake in writing an hexadecimal integer",
+        title: "Invalid hexadecimal number",
     },
     "raise_syntax_error80": {
         cause: "Valid names cannot begin with a number",
@@ -395,7 +395,7 @@ descriptions = {
     },
     "raise_syntax_error92": {
         cause: "print_function",
-        title: "Unkown feature in __future__",
+        title: "Unknown feature in __future__",
     },
     "raise_syntax_error93": {
         cause: "from __future__ import braces",
@@ -404,6 +404,10 @@ descriptions = {
     "raise_syntax_error94": {
         cause: "It must appear at the beginning of the file.",
         title: "__future__ at beginning",
+    },
+    "raise_syntax_error95": {
+        cause: "Did you made a mistake in writing an octal integer",
+        title: "Invalid octal number",
     },
 }
 

@@ -1,3 +1,3 @@
 """Should raise SyntaxError: invalid syntax"""
 
-f"{x y}"
+a = 0x123g4

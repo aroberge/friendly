@@ -9,6 +9,7 @@ import re
 import sys
 
 from . import source_analyzer
+from . import statement_analyzer
 from .. import utils
 from ..my_gettext import current_lang
 
@@ -952,6 +953,16 @@ def import_braces(message="", **_kwargs):
         "Unlike other programming languages, Python's code block are defined by\n"
         "their indentation level, and not by using some curly braces, like `{...}`.\n"
     )
+    return cause, hint
+
+
+@add_python_message
+def invalid_octal(message="", statement=None, **_kwargs):
+    # Before Python 3.8, we'd only get "invalid syntax"
+    cause = hint = None
+    if "in octal literal" in message:
+        return statement_analyzer.invalid_octal(statement)
+
     return cause, hint
 
 

@@ -16,8 +16,8 @@ def add_statement_analyzer(func):
     of all functions that analyze a single statement."""
     STATEMENT_ANALYZERS.append(func)
 
-    def wrapper(tokens, offset=None):
-        return func(tokens, offset=offset)
+    def wrapper(statement):
+        return func(statement)
 
     return wrapper
 
@@ -94,29 +94,6 @@ def detect_walrus(statement):
             "Python 3.8 or newer. You are using version {version}.\n"
         ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
 
-    return cause, hint
-
-
-@add_statement_analyzer
-def debug_fstring(statement):
-    """detect debug feature of f-string introduced in Python 3.8"""
-    _ = current_lang.translate
-    cause = hint = None
-    if sys.version_info >= (3, 8) or not statement.fstring_error:
-        return cause, hint
-
-    if statement.bad_token == "=" and statement.prev_token.is_identifier():
-        if statement.next_token == ")":
-            hint = _("Your Python version does not support this f-string feature.\n")
-            cause = _(
-                "You are likely using a 'debug' syntax of f-strings introduced\n"
-                "in Python version 3.8. You are using version {version}.\n"
-            ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
-        else:
-            cause = _(
-                "You are likely trying to assign a value within an f-string.\n"
-                "This is not allowed.\n"
-            )
     return cause, hint
 
 
@@ -429,6 +406,52 @@ def missing_colon(statement):
 
 
 @add_statement_analyzer
+def invalid_hexadecimal(statement):
+    """Identifies problem caused by invalid character in an hexadecimal number."""
+    _ = current_lang.translate
+    cause = hint = None
+
+    prev = statement.prev_token
+    wrong = statement.bad_token
+    if not (prev.immediately_before(wrong) and prev.string.lower().startswith("0x")):
+        return cause, hint
+
+    hint = _("Did you made a mistake in writing an hexadecimal integer?\n")
+    cause = _(
+        "It looks like you used an invalid character (`{character}`) in an hexadecimal number.\n\n"
+        "Hexadecimal numbers are base 16 integers that use the symbols `0` to `9`\n"
+        "to represent values 0 to 9, and the letters `a` to `f` (or `A` to `F`)\n"
+        "to represent values 10 to 15.\n"
+        "In Python, hexadecimal numbers start with either `0x` or `0X`,\n"
+        "followed by the characters used to represent the value of that integer.\n"
+    ).format(character=wrong.string[0])
+    return cause, hint
+
+
+@add_statement_analyzer
+def invalid_octal(statement):
+    """Identifies problem caused by invalid character in an octal number."""
+    _ = current_lang.translate
+    cause = hint = None
+
+    prev = statement.prev_token
+    wrong = statement.bad_token
+    if not (prev.immediately_before(wrong) and prev.string.lower().startswith("0o")):
+        return cause, hint
+
+    hint = _("Did you made a mistake in writing an octal integer?\n")
+    cause = _(
+        "It looks like you used an invalid character (`{character}`) in an octal number.\n\n"
+        "Octal numbers are base 8 integers that only use the symbols `0` to `7`\n"
+        "to represent values.\n"
+        "In Python, hexadecimal numbers start with either `0o` or `0O`,\n"
+        "(the digit zero followed by the letter `o`)\n"
+        "followed by the characters used to represent the value of that integer.\n"
+    ).format(character=wrong.string[0])
+    return cause, hint
+
+
+@add_statement_analyzer
 def invalid_name(statement):
     """Identifies invalid identifiers when a name begins with a number"""
     _ = current_lang.translate
@@ -475,17 +498,39 @@ def invalid_name(statement):
     return cause, hint
 
 
-# # --------- Keep this last
-# @add_statement_analyzer
-# def general_fstring_problem(statement=None):
-#     # General f-string problems are outside of our main priorities.
-#     _ = current_lang.translate
-#     cause = hint = None
-#     if not statement.fstring_error:
-#         return cause, hint
-#
-#     cause = _(
-#         "The content of your f-string is invalid. Please consult the documentation:\n"
-#         "https://docs.python.org/3/reference/lexical_analysis.html#f-strings\n"
-#     )
-#     return cause, hint
+@add_statement_analyzer
+def debug_fstring(statement):
+    """Detect debug feature of f-string introduced in Python 3.8"""
+    _ = current_lang.translate
+    cause = hint = None
+    if sys.version_info >= (3, 8) or not statement.fstring_error:
+        return cause, hint
+
+    if statement.bad_token == "=" and statement.prev_token.is_identifier():
+        if statement.next_token == ")":
+            hint = _("Your Python version does not support this f-string feature.\n")
+            cause = _(
+                "You are likely using a 'debug' syntax of f-strings introduced\n"
+                "in Python version 3.8. You are using version {version}.\n"
+            ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
+        else:
+            cause = _(
+                "You are likely trying to assign a value within an f-string.\n"
+                "This is not allowed.\n"
+            )
+    return cause, hint
+
+
+@add_statement_analyzer
+def general_fstring_problem(statement=None):
+    # General f-string problems are outside of our main priorities.
+    _ = current_lang.translate
+    cause = hint = None
+    if not statement.fstring_error:
+        return cause, hint
+
+    cause = _(
+        "The content of your f-string is invalid. Please consult the documentation:\n"
+        "https://docs.python.org/3/reference/lexical_analysis.html#f-strings\n"
+    )
+    return cause, hint
