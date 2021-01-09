@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-01-08 15:16-0400\n"
+"POT-Creation-Date: 2021-01-09 08:27-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2066,6 +2066,23 @@ msgstr ""
 msgid ""
 "Perhaps you forgot to include parentheses.\n"
 "You might have meant to write `{line}`\n"
+msgstr ""
+
+#: syntax_errors\statement_analyzer.py:575
+msgid ""
+"The correct syntax is:\n"
+"\n"
+"    def name ( ... ):"
+msgstr ""
+
+#: syntax_errors\statement_analyzer.py:595
+msgid ""
+"You tried to define a function and did not use the correct syntax.\n"
+msgstr ""
+
+#: syntax_errors\statement_analyzer.py:597
+msgid ""
+"You tried to define a function or method and did not use the correct syntax.\n"
 msgstr ""
 
 #: syntax_errors\syntax_utils.py:37

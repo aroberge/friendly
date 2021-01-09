@@ -50,7 +50,7 @@ descriptions = {
         title: "Write elif, not elseif",
     },
     "raise_syntax_error6": {
-        cause: "tried to define a function or method",
+        cause: "tried to define a function",
         title: "Malformed def statement - 1",
     },
     "raise_syntax_error7": {

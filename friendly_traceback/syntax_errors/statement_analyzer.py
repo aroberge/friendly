@@ -568,3 +568,39 @@ def malformed_def_missing_parens(statement):
         return cause, hint
 
     return cause, hint
+
+
+def def_correct_syntax():
+    _ = current_lang.translate
+    # fmt: off
+    return _(
+        "The correct syntax is:\n\n"
+        "    def name ( ... ):"
+    ) + "\n"
+    # fmt: on
+
+
+@add_statement_analyzer
+def malformed_def_begin_code_block(statement):
+    # Thinking of def simply beginning a code block; something like
+    # def : ...
+    _ = current_lang.translate
+    cause = hint = None
+
+    if statement.first_token != "def" or statement.bad_token != ":":
+        return cause, hint
+
+    if not statement.prev_token == statement.first_token:
+        return cause, hint
+
+    if statement.first_token.start_col == 0:
+        cause = _(
+            "You tried to define a function and did not use the correct syntax.\n"
+        )
+    else:
+        cause = _(
+            "You tried to define a function or method and did not use the correct syntax.\n"
+        )
+    cause += def_correct_syntax()
+
+    return cause, hint
