@@ -661,6 +661,32 @@ def malformed_def_missing_parens(statement):
     return cause, hint
 
 
+@add_statement_analyzer
+def keyword_as_function_name(statement):
+    # Something like
+    # def pass() ...
+    _ = current_lang.translate
+    cause = hint = None
+
+    if (
+        statement.first_token != "def"
+        or not statement.bad_token.is_keyword()
+        or not (statement.prev_token == statement.first_token)
+    ):
+        return cause, hint
+
+    hint = _("You cannot use a Python keyword as a function name.\n")
+    cause = _(
+        "You tried to use the Python keyword `{kwd}` as a function name.\n"
+    ).format(kwd=statement.bad_token)
+
+    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "name")
+    if not fixers.check_statement(new_statement):
+        cause += "\n" + _("There are more syntax errors later in your code.\n")
+
+    return cause, hint
+
+
 def def_correct_syntax():
     _ = current_lang.translate
     # fmt: off
