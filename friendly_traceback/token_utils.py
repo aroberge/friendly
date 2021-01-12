@@ -7,6 +7,7 @@ source code.
 import ast
 import keyword
 import tokenize as py_tokenize
+import sys
 
 from io import StringIO
 
@@ -161,6 +162,64 @@ class Token:
         return other.immediately_before(self)
 
 
+def is_assignment(op):
+    """Returns True if op (string or Token) is an assigment or augmented assignment."""
+    ops = [
+        "=",
+        "+=",
+        "-=",
+        "*=",
+        "@=",
+        "/=",
+        "//=",
+        "%=",
+        "**=",
+        ">>=",
+        "<<=",
+        "&=",
+        "^=",
+        "|=",
+    ]
+    if sys.version_info >= (3, 8):
+        ops.append(":=")
+    return op in ops or (hasattr(op, "string") and op.string in ops)
+
+
+def is_bitwise(op):
+    """Returns True if op (string or Token) is a bitwise operator."""
+    ops = ["^", "&", "|", "<<", ">>", "~"]
+    return op in ops or (hasattr(op, "string") and op.string in ops)
+
+
+def is_comparison(op):
+    """Returns True if op (string or Token) is a comparison operator."""
+    ops = ["<", ">", "<=", ">=", "==", "!="]
+    return op in ops or (hasattr(op, "string") and op.string in ops)
+
+
+def is_math_op(op):
+    """Returns True if op (string or Token) is an operator that can be used
+    as a binary operator in a mathematical operation.
+    """
+    ops = ["+", "-", "*", "**", "@", "/", "//", "%"]
+    return op in ops or (hasattr(op, "string") and op.string in ops)
+
+
+def is_operator(op):
+    """Returns True if op (string or token) is or could be part of one
+    of the following: assigment operator, mathematical operator,
+    bitwise operator, comparison operator."""
+    part_ops = ["!", ":"]
+    return (
+        is_assignment(op)
+        or is_bitwise(op)
+        or is_comparison(op)
+        or is_math_op(op)
+        or op in part_ops
+        or (hasattr(op, "string") and op.string in part_ops)
+    )
+
+
 def find_token_by_position(tokens, row, column):
     """Given a list of tokens, a specific row (linenumber) and column,
     a two-tuple is returned that includes the token
@@ -297,7 +356,6 @@ def strip_comment(line):
 
 
 # TODO: add unit test for this
-# TODO: see if we might not be able to replace it.
 def find_substring_index(main, substring):
     """Somewhat similar to the find() method for strings,
     this function determines if the tokens for substring appear

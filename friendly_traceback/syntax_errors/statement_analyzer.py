@@ -7,6 +7,7 @@ import sys
 from . import fixers
 from ..my_gettext import current_lang
 from .. import debug_helper
+from .. import token_utils
 
 STATEMENT_ANALYZERS = []
 
@@ -229,9 +230,90 @@ def misplaced_quote(statement):
 
 
 @add_statement_analyzer
+def space_between_operators(statement):
+    """Detect if some space has been inserted between two operators"""
+    _ = current_lang.translate
+    cause = hint = None
+
+    is_op = token_utils.is_operator
+
+    if not is_op(statement.bad_token):
+        return cause, hint
+
+    prev = statement.prev_token
+    bad = statement.bad_token
+    next_ = statement.next_token
+
+    possible_hint = _("Did you leave some spaces between operators?\n")
+    possible_cause = _(
+        "It looks like you wrote two operators, `{first}` and `{second}`,\n"
+        "separated by spaces instead of writing them as a single operator:\n"
+        "`{correct}`"
+    )
+
+    # TODO: check that this fixes the problem
+    if is_op(prev) and is_op(prev.string + bad.string):
+        hint = possible_hint
+        cause = possible_cause.format(
+            first=prev.string, second=bad.string, correct=prev.string + bad.string
+        )
+    elif is_op(next_) and is_op(bad.string + next_.string):
+        hint = possible_hint
+        cause = possible_cause.format(
+            first=bad.string, second=next_.string, correct=bad.string + next_.string
+        )
+
+    return cause, hint
+
+
+@add_statement_analyzer
+def inverted_comparison_operators(statement):
+    """Detect if comparison operators might have been inverted"""
+    _ = current_lang.translate
+    cause = hint = None
+
+    is_op = token_utils.is_operator
+
+    if not is_op(statement.bad_token):
+        return cause, hint
+
+    prev = statement.prev_token
+    bad = statement.bad_token
+    next_ = statement.next_token
+
+    possible_hint = _("Did you write operators in an incorrect order?\n")
+    possible_cause = _(
+        "It looks like you wrote two operators (`{first}` and `{second}`)\n"
+        "in the wrong order: `{wrong}` instead of `{correct}`.\n"
+    )
+
+    # TODO: check that this fixes the problem
+    if is_op(prev) and token_utils.is_comparison(bad.string + prev.string):
+        hint = possible_hint
+        cause = possible_cause.format(
+            first=prev.string,
+            second=bad.string,
+            correct=bad.string + prev.string,
+            wrong=prev.string + bad.string,
+        )
+    elif is_op(next_) and token_utils.is_comparison(next_.string + bad.string):
+        hint = possible_hint
+        cause = possible_cause.format(
+            first=bad.string,
+            second=next_.string,
+            correct=next_.string + bad.string,
+            wrong=bad.string + next_.string,
+        )
+
+    return cause, hint
+
+
+@add_statement_analyzer
 def assign_instead_of_equal(statement):
     """Checks to see if an assignment sign, '=', has been used instead of
-    an equal sign, '==', in an if or elif statement."""
+    an equal sign, '==', in an if, elif or while statement."""
+    # TODO: generalize this for other situations by checking that the proposed
+    # fix would work.
     _ = current_lang.translate
     cause = hint = None
 
@@ -253,17 +335,26 @@ def assign_instead_of_equal(statement):
 
     equal = _("Perhaps you needed `==` instead of `=`.\n")
     equal_or_walrus = _("Perhaps you needed `==` or `:=` instead of `=`.\n")
+    walrus = _("Perhaps you needed `:=` instead of `=:`.\n")
+
     if sys.version_info < (3, 8):
         cause = _(
             "You used an assignment operator `=` instead of an equality operator `==`.\n"
         )
         hint = equal
     else:
-        cause = _(
-            "You used an assignment operator `=`; perhaps you meant to use \n"
-            "an equality operator, `==`, or the walrus operator `:=`.\n"
-        )
-        hint = equal_or_walrus
+        if statement.next_token == ":":
+            hint = walrus
+            cause = _(
+                "You used an assignment operator `=` followed by `:`; perhaps you meant to use \n"
+                "the walrus operator `:=`.\n"
+            )
+        else:
+            cause = _(
+                "You used an assignment operator `=`; perhaps you meant to use \n"
+                "an equality operator, `==`, or the walrus operator `:=`.\n"
+            )
+            hint = equal_or_walrus
 
     return cause + additional_cause, hint
 

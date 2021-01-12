@@ -132,9 +132,6 @@ def missing_comma_or_operator(tokens, offset=None):
     is possibly missing between identifiers, or numbers, or both.
     """
 
-    # TODO: add case where a space is between two parts of an integer
-    # which could be replaced by _ or simply remove the space.
-
     _ = current_lang.translate
     cause = hint = None
 

@@ -25,8 +25,6 @@ from . import message_analyzer
 from .. import debug_helper
 from .. import token_utils
 
-# TODO invalid digit '8' in octal literal
-
 
 def set_cause_syntax(value, tb_data):
     """Gets the likely cause of a given exception based on some information
@@ -162,7 +160,8 @@ def find_syntax_error_cause(value, tb_data):
         "immediately above to see if you can identify some misspelled\n"
         "word, or missing symbols, like (, ), [, ], :, etc.\n"
         "\n"
-        "You might want to report this case to\n"
+        "Unless your code uses type annotations, which are beyond our scope,\n"
+        "you might want to report this case to\n"
         "https://github.com/aroberge/friendly-traceback/issues\n"
         "\n"
     )

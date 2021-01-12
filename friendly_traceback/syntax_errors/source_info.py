@@ -234,6 +234,7 @@ class Statement:
 
         for token in source_tokens:
             # Did we collect all the tokens belonging to the bad statement?
+
             if token.start_row > self.linenumber and not continuation_line:
                 if not self.statement_brackets:
                     break
@@ -252,6 +253,7 @@ class Statement:
                         "with",
                         "while",
                         "yield",
+                        ";",
                     ]
                 ):
                     break
@@ -266,7 +268,7 @@ class Statement:
             # Valid statements will have matching brackets (), {}, [].
             # A new statement will typically start on a new line and will be
             # preceded by valid statements.
-            if token.start_row > previous_row:
+            if token.start_row > previous_row or token == ";":
                 if previous_token is not None:
                     continuation_line = previous_token.line.endswith("\\\n")
                 if token.start_row <= self.linenumber and not self.statement_brackets:
@@ -276,7 +278,8 @@ class Statement:
                     self.begin_brackets = []
                 previous_row = token.start_row
 
-            self.statement_tokens.append(token)
+            if token != ";":
+                self.statement_tokens.append(token)
             # The offset seems to be different depending on Python versions,
             # sometimes matching the beginning of a token, sometimes the end.
             # Furthermore, the end of a token (end_col) might be equal to

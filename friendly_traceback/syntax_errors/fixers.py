@@ -127,3 +127,52 @@ try:
     pass
 %s
 """
+
+
+def calculate_token_shift(old_statement, new_statement):
+    """Given two statements that contain a SyntaxError, the position
+    of the token causing the error is calculated in both cases; by position,
+    we mean the index of the token when a statement is converted into
+    a list of meaningful token.
+
+    The difference in position (new - old) is returned.
+    """
+    old_tokens = token_utils.get_significant_tokens(old_statement)
+    try:
+        compile(old_statement, "fake-file", "exec")
+        debug_helper.log("Problem in calculate_token_shift()")
+        debug_helper.log("No error found in old_statement")
+        return -1
+    except SyntaxError as e:
+        row = e.lineno
+        offset = e.offset
+        old_index = find_token_by_index(old_tokens, row, offset)
+
+    new_tokens = token_utils.get_significant_tokens(new_statement)
+    try:
+        compile(new_statement, "fake-file", "exec")
+        debug_helper.log("Problem in calculate_token_shift()")
+        debug_helper.log("No error found in new_statement")
+        return -1
+    except SyntaxError as e:
+        row = e.lineno
+        offset = e.offset
+        new_index = find_token_by_index(new_tokens, row, offset)
+
+    return new_index - old_index
+
+
+def find_token_by_index(tokens, row, column):
+    """Given a list of tokens, a specific row (linenumber) and column (offset),
+    the list index of the token found at that position is returned.
+
+    If no such token is found, -1 is returned
+    """
+    for index, tok in enumerate(tokens):
+        if (
+            tok.start_row <= row <= tok.end_row
+            and tok.start_col <= column < tok.end_col
+        ):
+            return index
+    debug_helper.log("problem in find_token_by_index: token not found")
+    return -1
