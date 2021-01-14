@@ -625,6 +625,16 @@ def general_fstring_problem(statement=None):
     return cause, hint
 
 
+def def_correct_syntax():
+    _ = current_lang.translate
+    # fmt: off
+    return _(
+        "The correct syntax is:\n\n"
+        "    def name ( ... ):"
+    ) + "\n"
+    # fmt: on
+
+
 @add_statement_analyzer
 def malformed_def_missing_parens(statement):
     # Something like
@@ -635,15 +645,10 @@ def malformed_def_missing_parens(statement):
     if statement.first_token != "def":
         return cause, hint
 
-    # TODO: remove requirement of only three tokens to be able to handle
-    # something like
-    # def test: something_valid  # all on one line
-    #
-
     if (
-        statement.nb_tokens != 3
-        and statement.last_token != ":"
-        and statement.bad_token != statement.last_token
+        statement.bad_token != ":"
+        and statement.nb_tokens >= 3
+        and statement.bad_token != statement.tokens[2]
     ):
         return cause, hint
 
@@ -687,14 +692,43 @@ def keyword_as_function_name(statement):
     return cause, hint
 
 
-def def_correct_syntax():
+@add_statement_analyzer
+def function_definition_missing_name(statement):
     _ = current_lang.translate
-    # fmt: off
-    return _(
-        "The correct syntax is:\n\n"
-        "    def name ( ... ):"
-    ) + "\n"
-    # fmt: on
+    cause = hint = None
+
+    if not (
+        statement.first_token == "def"
+        and statement.bad_token == "("
+        and statement.bad_token == statement.tokens[1]
+    ):
+        return cause, hint
+
+    cause = _("You forgot to name your function.\n") + def_correct_syntax()
+    return cause, hint
+
+
+@add_statement_analyzer
+def keyword_not_allowed_as_function_argument(statement):
+    _ = current_lang.translate
+    cause = hint = None
+
+    if not (
+        statement.first_token == "def"
+        and statement.bad_token.is_keyword()
+        and statement.begin_brackets
+    ):
+        return cause, hint
+
+    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "name")
+    if fixers.check_statement(new_statement):
+        cause = _(
+            "I am guessing that you tried to use the Python keyword\n"
+            "`{kwd}` as an argument in the definition of a function\n"
+            "where an identifier (variable name) was expected.\n"
+        ).format(kwd=statement.bad_token)
+
+    return cause, hint
 
 
 @add_statement_analyzer

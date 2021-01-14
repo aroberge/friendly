@@ -58,7 +58,7 @@ descriptions = {
         title: "Malformed def statement - missing parentheses",
     },
     "raise_syntax_error8": {
-        cause: "tried to define a function or method",
+        cause: "forgot to name your function",
         title: "Malformed def statement - 3",
     },
     "raise_syntax_error9": {

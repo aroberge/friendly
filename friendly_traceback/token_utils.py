@@ -100,7 +100,7 @@ class Token:
         return keyword.iskeyword(self.string)
 
     def is_number(self):
-        """Returns True if the token represents a number"""
+        """Returns True if the token represents a number of any type"""
         return self.type == py_tokenize.NUMBER
 
     def is_float(self):

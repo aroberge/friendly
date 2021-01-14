@@ -135,7 +135,8 @@ def calculate_token_shift(old_statement, new_statement):
     we mean the index of the token when a statement is converted into
     a list of meaningful token.
 
-    The difference in position (new - old) is returned.
+    The original bad token is returned as well as the
+    difference in position (new - old).
     """
     old_tokens = token_utils.get_significant_tokens(old_statement)
     try:
@@ -146,7 +147,7 @@ def calculate_token_shift(old_statement, new_statement):
     except SyntaxError as e:
         row = e.lineno
         offset = e.offset
-        old_index = find_token_by_index(old_tokens, row, offset)
+        bad_token, old_index = find_token_by_index(old_tokens, row, offset)
 
     new_tokens = token_utils.get_significant_tokens(new_statement)
     try:
@@ -157,22 +158,23 @@ def calculate_token_shift(old_statement, new_statement):
     except SyntaxError as e:
         row = e.lineno
         offset = e.offset
-        new_index = find_token_by_index(new_tokens, row, offset)
+        _ignore, new_index = find_token_by_index(new_tokens, row, offset)
 
-    return new_index - old_index
+    return bad_token, new_index - old_index
 
 
 def find_token_by_index(tokens, row, column):
     """Given a list of tokens, a specific row (linenumber) and column (offset),
-    the list index of the token found at that position is returned.
+    the token itself, as well as the list index of the token found
+    at that position is returned.
 
-    If no such token is found, -1 is returned
+    If no such token is found, None, -1 is returned
     """
     for index, tok in enumerate(tokens):
         if (
             tok.start_row <= row <= tok.end_row
             and tok.start_col <= column < tok.end_col
         ):
-            return index
+            return tok, index
     debug_helper.log("problem in find_token_by_index: token not found")
-    return -1
+    return None, -1
