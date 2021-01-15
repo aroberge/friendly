@@ -43,18 +43,9 @@ bad_quotation_marks = [
 ]
 
 
-def analyze_message(
-    message="", statement=None, line="", linenumber=0, source_lines=None, offset=0
-):
+def analyze_message(message="", statement=None):
     for case in MESSAGE_ANALYZERS:
-        cause, hint = case(
-            message=message,
-            statement=statement,
-            line=line,
-            linenumber=linenumber,
-            source_lines=source_lines,
-            offset=offset,
-        )
+        cause, hint = case(message=message, statement=statement)
         if cause:
             return cause, hint
     return None, None
@@ -73,7 +64,7 @@ def add_python_message(func):
 
 
 @add_python_message
-def assign_to_keyword(message="", statement=None, **_kwargs):
+def assign_to_keyword(message="", statement=None):
     _ = current_lang.translate
     cause = hint = None
     if not (
@@ -130,7 +121,7 @@ def assign_to_conditional_expression(message="", **_kwargs):
 
 
 @add_python_message
-def assign_to_function_call(message="", statement=None, **_kwargs):
+def assign_to_function_call(message="", statement=None):
     _ = current_lang.translate
     cause = hint = None
     if (
@@ -184,7 +175,7 @@ def assign_to_generator_expression(message="", **_kwargs):
 
 
 @add_python_message
-def assign_to_f_expression(message="", statement=None, **_kwargs):
+def assign_to_f_expression(message="", statement=None):
     _ = current_lang.translate
     cause = hint = None
 
@@ -227,7 +218,7 @@ def what_kind_of_literal(literal):
 
 
 @add_python_message
-def assign_to_literal(message="", statement=None, **_kwargs):
+def assign_to_literal(message="", statement=None):
     _ = current_lang.translate
     cause = hint = None
     if (
@@ -296,7 +287,7 @@ def assign_to_literal(message="", statement=None, **_kwargs):
 
 
 @add_python_message
-def assign_to_operator(message="", statement=None, **_kwargs):
+def assign_to_operator(message="", statement=None):
     _ = current_lang.translate
     cause = hint = None
     line = statement.bad_line.rstrip()
@@ -334,7 +325,7 @@ def could_be_identifier(line):
 
 
 @add_python_message
-def both_nonlocal_and_global(message="", statement=None, **_kwargs):
+def both_nonlocal_and_global(message="", statement=None):
     _ = current_lang.translate
     cause = hint = None
     if "is nonlocal and global" in message:
@@ -371,7 +362,7 @@ def continue_outside_loop(message="", **_kwargs):
 
 
 @add_python_message
-def delete_function_call(message="", statement=None, **_kwargs):
+def delete_function_call(message="", statement=None):
     _ = current_lang.translate
     cause = hint = None
     if (
@@ -449,7 +440,7 @@ def generator_expression_must_be_parenthesized(message="", **_kwargs):
 
 
 @add_python_message
-def keyword_argument_repeated(message="", statement=None, **_kwargs):
+def keyword_argument_repeated(message="", statement=None):
     _ = current_lang.translate
     cause = hint = None
     if "keyword argument repeated" in message:
@@ -477,7 +468,7 @@ def keyword_cannot_be_expression(message="", **_kwargs):
 
 
 @add_python_message
-def invalid_character_in_identifier(message="", statement=None, **_kwargs):
+def invalid_character_in_identifier(message="", statement=None):
     _ = current_lang.translate
     cause = hint = None
     copy_paste = _("Did you use copy-paste?\n")
@@ -506,7 +497,7 @@ def invalid_character_in_identifier(message="", statement=None, **_kwargs):
 
 
 @add_python_message
-def mismatched_parenthesis(message="", statement=None, **_kwargs):
+def mismatched_parenthesis(message="", statement=None):
     # Python 3.8; something like:
     # closing parenthesis ']' does not match opening parenthesis '(' on line
     _ = current_lang.translate
@@ -552,7 +543,7 @@ def mismatched_parenthesis(message="", statement=None, **_kwargs):
 
 
 @add_python_message
-def unterminated_f_string(message="", statement=None, **_kwargs):
+def unterminated_f_string(message="", statement=None):
     _ = current_lang.translate
     cause = hint = None
     if "f-string: unterminated string" in message:
@@ -566,7 +557,7 @@ def unterminated_f_string(message="", statement=None, **_kwargs):
 
 
 @add_python_message
-def name_is_parameter_and_global(message="", statement=None, **_kwargs):
+def name_is_parameter_and_global(message="", statement=None):
     # something like: name 'x' is parameter and global
     _ = current_lang.translate
     cause = hint = None
@@ -701,7 +692,7 @@ def unexpected_character_after_continuation(message="", **_kwargs):
 
 
 @add_python_message
-def unexpected_eof_while_parsing(message="", statement=None, **_kwargs):
+def unexpected_eof_while_parsing(message="", statement=None):
     # unexpected EOF while parsing
     _ = current_lang.translate
     cause = hint = None
@@ -725,7 +716,7 @@ def unexpected_eof_while_parsing(message="", statement=None, **_kwargs):
 
 
 @add_python_message
-def unmatched_parenthesis(message="", statement=None, **_kwargs):
+def unmatched_parenthesis(message="", statement=None):
     _ = current_lang.translate
     cause = hint = None
     # Python 3.8
@@ -949,7 +940,7 @@ def import_braces(message="", **_kwargs):
 
 
 @add_python_message
-def invalid_octal(message="", statement=None, **_kwargs):
+def invalid_octal(message="", statement=None):
     # Before Python 3.8, we'd only get "invalid syntax"
     cause = hint = None
     if "in octal literal" in message:
@@ -960,7 +951,7 @@ def invalid_octal(message="", statement=None, **_kwargs):
 
 # # --------- Keep this last
 # @add_python_message
-# def general_fstring_problem(message="", statement=None, **_kwargs):
+# def general_fstring_problem(message="", statement=None):
 #     # General f-string problems are outside of our main priorities.
 #     _ = current_lang.translate
 #     cause = hint = None

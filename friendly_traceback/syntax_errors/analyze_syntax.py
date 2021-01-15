@@ -17,7 +17,6 @@ incorrect information.
 """
 
 from friendly_traceback.my_gettext import current_lang
-from friendly_traceback.source_cache import cache
 from . import statement_analyzer
 from . import message_analyzer
 from .. import debug_helper
@@ -46,69 +45,20 @@ def find_syntax_error_cause(value, tb_data):
     # value = tb_data.value
     _ = current_lang.translate
     hint = None
-
-    filepath = value.filename
-    linenumber = value.lineno
-    offset = value.offset
     message = value.msg
-    source_lines = cache.get_source_lines(filepath)
-
     statement = tb_data.statement
-    if "invalid syntax" in message:
-        cause, hint = statement_analyzer.analyze_statement(statement)
-        if cause is not None:
-            return cause, hint
-
-    # SyntaxError in f-strings are handled differently by Python
-    # than other types of errors. They are effectively handled internally
-    # as special files.  Before Python 3.9, Python will tell us
-    # that we have a
-    #   SyntaxError: invalid syntax
-    # that the error occurred in file <fstring>  (which is not a real file).
-    #
-    # Starting with Python 3.9, Python will indicates:
-    #     SyntaxError: f-string: invalid syntax
-    # but will give us the real name of the file.
-    #
-    # So, given this line with a SyntaxError:
-    #   f"{x y}"
-    # the traceback will indicate that the error is on line
-    #   (x y)
-    # which does not correspond to an actual line in the source file
-    # that we can retrieve when using Python 3.9.
-
-    if source_lines and "f-string: invalid syntax" not in message:
-        if linenumber is None:  # can happen in some rare cases where Python
-            # apparently gives up processing a file
-            if "too many statically nested blocks" not in message:
-                debug_helper.log(
-                    "linenumber is None in analyze_syntax._find_likely_cause"
-                )
-            offending_line = "\n"
-            source_lines = ["\n"]
-        else:
-            offending_line = source_lines[linenumber - 1]
-    else:
-        offending_line = tb_data.bad_line
-        source_lines = [offending_line]  # create a fake file for analysis
-    line = offending_line.rstrip()
 
     # If Python includes a descriptive enough message, we rely
     # on the information that it provides. We know that sometimes
-    # this will yield to the wrong diagnostic but one of our objectives
+    # this might give the wrong diagnostic but one of our objectives
     # is to explain in simpler language what Python means when it
     # raises a particular exception.
 
     if "invalid syntax" not in message:
         cause, hint = message_analyzer.analyze_message(
-            message=message,
-            statement=statement,
-            line=line,
-            linenumber=linenumber,
-            source_lines=source_lines,
-            offset=offset,
+            message=message, statement=statement
         )
-        if cause:
+        if cause is not None:
             return cause, hint
         else:
             notice = _(
@@ -118,16 +68,13 @@ def find_syntax_error_cause(value, tb_data):
                 "However, I do not recognize this information and I have\n"
                 "to guess what caused the problem, but I might be wrong.\n\n"
             ).format(message=message)
+            cause, hint = statement_analyzer.analyze_statement(statement)
+            if cause is not None:
+                return notice + cause, hint
     else:
-        notice = _(
-            "I make an effort below to guess what caused the problem\n"
-            "but I might guess incorrectly.\n\n"
-        )
-
-    if "invalid syntax" not in message:
         cause, hint = statement_analyzer.analyze_statement(statement)
         if cause is not None:
-            return notice + cause, hint
+            return cause, hint
 
     cause = _(
         "Currently, I cannot guess the likely cause of this error.\n"
