@@ -873,11 +873,17 @@ def missing_comma_before_string_in_dict(statement):
 
 
 def _perhaps_misspelled_keyword(tokens, wrong):
-    # 'not' can be used in many places, most of which would likely not make sense
-    # as suggestions
-    kwlist = [word for word in keyword.kwlist if word != "not"]
+    kwlist = list(keyword.kwlist)
     # Make sure we try possible typos first
     similar = utils.get_similar_words(wrong.string, kwlist)
+
+    # The 'except' and 'with' keywords can apparently appear in similar situations
+    # as 'for', 'if', etc., without raising any SyntaxErrors.
+    excluded = [word for word in ["except", "with"] if word not in similar]
+
+    # 'not' can be used in many places, most of which would likely not make sense
+    # as additional suggestions
+    kwlist.remove("not")
     words = [word for word in kwlist if word not in similar]
     similar.extend(words)
     results = []
@@ -885,11 +891,9 @@ def _perhaps_misspelled_keyword(tokens, wrong):
         new_statement = fixers.replace_token(tokens, wrong, word)
         if syntax_utils.check_statement(new_statement):
             results.append((word, new_statement))
-    # The with and except keywords can appear in similar situations as for/in and others.
+
     if len(results) > 1:
-        results = [
-            (word, line) for word, line in results if word not in ["with", "except"]
-        ]
+        results = [(word, line) for word, line in results if word not in excluded]
     return results
 
 
