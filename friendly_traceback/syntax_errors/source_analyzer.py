@@ -36,14 +36,7 @@ def scan_source(source_lines=None, linenumber=0, offset=0):
         return
     source = "".join(source_lines)
     source_tokens = token_utils.get_significant_tokens(source)
-    cause = look_for_mismatched_brackets(
-        source_tokens=source_tokens,
-        source_lines=source_lines,
-        max_linenumber=linenumber,
-        offset=offset,
-    )
-    if cause:
-        return cause
+
     cause = look_for_missing_bracket(
         source_tokens=source_tokens,
         source_lines=source_lines,
@@ -52,75 +45,6 @@ def scan_source(source_lines=None, linenumber=0, offset=0):
     )
     if cause:
         return cause
-
-
-def look_for_mismatched_brackets(
-    *, source_tokens=None, source_lines=None, max_linenumber=None, offset=None
-):
-    _ = current_lang.translate
-    if source_tokens is None:
-        source = "".join(source_lines)
-        source_tokens = token_utils.get_significant_tokens(source)
-
-    brackets = []
-    for token in source_tokens:
-        if (
-            token.start_row == max_linenumber
-            and token.start_col > offset
-            or token.start_row > max_linenumber
-        ):
-            return
-
-        if token.is_not_in("()[]}{"):
-            continue
-        if token.is_in("([{"):
-            brackets.append((token.string, token.start_row, token.start_col))
-        elif token.is_in(")]}"):
-            # In some of the cases below, we include the offending lines at the
-            # bottom of the error message as they might not be shown in the
-            # partial source included in the traceback.
-            if not brackets:
-                bracket = name_bracket(token)
-                _lineno = token.start_row
-                _source = f"\n    {_lineno}: {source_lines[_lineno - 1]}"
-                shift = len(str(_lineno)) + token.start_col + 6
-                _source += " " * shift + "^\n"
-                return (
-                    _(
-                        "The closing {bracket} on line {linenumber}"
-                        " does not match anything.\n"
-                    ).format(bracket=bracket, linenumber=token.start_row)
-                    + _source
-                )
-            else:
-                open_bracket, open_lineno, open_col = brackets.pop()
-                if not matching_brackets(open_bracket, token):
-                    bracket = name_bracket(token)
-                    open_bracket = name_bracket(open_bracket)
-                    _source = f"\n    {open_lineno}: {source_lines[open_lineno - 1]}"
-                    shift = len(str(open_lineno)) + open_col + 6
-                    if open_lineno == token.start_row:
-                        _source += " " * shift + "^"
-                        shift = token.start_col - open_col - 1
-                        _source += " " * shift + "^\n"
-                    else:
-                        _source += " " * shift + "^\n"
-                        _lineno = token.start_row
-                        _source += f"    {_lineno}: {source_lines[_lineno - 1]}"
-                        shift = len(str(_lineno)) + token.start_col + 6
-                        _source += " " * shift + "^\n"
-                    return (
-                        _(
-                            "The closing {bracket} on line {close_lineno} does not match "
-                            "the opening {open_bracket} on line {open_lineno}.\n"
-                        ).format(
-                            bracket=bracket,
-                            close_lineno=token.start_row,
-                            open_bracket=open_bracket,
-                            open_lineno=open_lineno,
-                        )
-                        + _source
-                    )
 
 
 # TODO: refactor this

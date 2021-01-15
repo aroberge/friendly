@@ -506,9 +506,7 @@ def invalid_character_in_identifier(message="", statement=None, **_kwargs):
 
 
 @add_python_message
-def mismatched_parenthesis(
-    message="", source_lines=None, linenumber=None, offset=None, **_kwargs
-):
+def mismatched_parenthesis(message="", statement=None, **_kwargs):
     # Python 3.8; something like:
     # closing parenthesis ']' does not match opening parenthesis '(' on line
     _ = current_lang.translate
@@ -542,9 +540,7 @@ def mismatched_parenthesis(
             "does not match the opening `{opening}`.\n\n"
         ).format(closing=closing, opening=opening)
 
-    additional_cause = source_analyzer.look_for_mismatched_brackets(
-        source_lines=source_lines, max_linenumber=linenumber, offset=offset
-    )
+    additional_cause, _ignore = statement_analyzer.mismatched_brackets(statement)
 
     if additional_cause:
         cause += (

@@ -5,6 +5,7 @@
 import sys
 
 from . import fixers
+from . import syntax_utils
 from ..my_gettext import current_lang
 from .. import debug_helper
 from .. import token_utils
@@ -46,6 +47,65 @@ def analyze_statement(statement):
 # IMPORTANT: causes are looked at in the same order as they appear below.
 # Changing the order could possibly yield incorrect results
 # ==================
+
+
+@add_statement_analyzer
+def mismatched_brackets(statement):
+    """Detecting code that starts with a Python prompt"""
+    _ = current_lang.translate
+    cause = hint = None
+    if not (statement.end_bracket and statement.bad_token == statement.last_token):
+        return cause, hint
+
+    if not statement.begin_brackets:
+        lineno = statement.end_bracket.start_row
+        source = f"\n    {lineno}: {statement.source_lines[lineno - 1]}"
+        shift = len(str(lineno)) + statement.end_bracket.start_col + 6
+        source += " " * shift + "^\n"
+
+        cause = (
+            _(
+                "The closing {bracket} on line {linenumber}"
+                " does not match anything.\n"
+            ).format(
+                bracket=syntax_utils.name_bracket(statement.end_bracket.string),
+                linenumber=statement.end_bracket.start_row,
+            )
+            + source
+        )
+
+        return cause, hint
+
+    open_bracket = statement.begin_brackets.pop()
+    open_lineno = open_bracket.start_row
+    end_bracket = statement.end_bracket
+    end_lineno = end_bracket.start_row
+
+    source = f"\n    {open_lineno}: {statement.source_lines[open_lineno - 1]}"
+    shift = len(str(open_lineno)) + open_bracket.start_col + 6
+    if open_lineno == end_lineno:
+        source += " " * shift + "^"
+        shift = end_bracket.start_col - open_bracket.start_col - 1
+        source += " " * shift + "^\n"
+    else:
+        source += " " * shift + "^\n"
+        source += f"    {end_lineno}: {statement.source_lines[end_lineno - 1]}"
+        shift = len(str(end_lineno)) + end_bracket.start_col + 6
+        source += " " * shift + "^\n"
+
+    cause = (
+        _(
+            "The closing {bracket} on line {close_lineno} does not match "
+            "the opening {open_bracket} on line {open_lineno}.\n"
+        ).format(
+            bracket=syntax_utils.name_bracket(statement.end_bracket.string),
+            close_lineno=statement.end_bracket.start_row,
+            open_bracket=syntax_utils.name_bracket(open_bracket.string),
+            open_lineno=open_bracket.start_row,
+        )
+        + source
+    )
+    return cause, hint
 
 
 @add_statement_analyzer

@@ -71,6 +71,7 @@ class Statement:
         self.tokens = []  # meaningful tokens, used for error analysis; see docstring
         self.nb_tokens = 0  # number of meaningful tokens
         self.formatted_partial_source = ""
+        self.source_lines = []  # lines of code for the source
 
         self.statement_brackets = []  # keep track of ([{ anywhere in a statement
         self.begin_brackets = []  # unclosed ([{  before bad token
@@ -120,8 +121,8 @@ class Statement:
                 self.offset = e.offset
                 self.linenumber = 1
         if not source.strip():
-            source_lines = cache.get_source_lines(self.filename)
-            source = "".join(source_lines)
+            self.source_lines = cache.get_source_lines(self.filename)
+            source = "".join(self.source_lines)
             if not source.strip():
                 source = self.bad_line or "\n"
         return token_utils.tokenize(source)
