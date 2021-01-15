@@ -51,7 +51,7 @@ def analyze_statement(statement):
 
 @add_statement_analyzer
 def mismatched_brackets(statement):
-    """Detecting code that starts with a Python prompt"""
+    """Detecting code that ends with an unmatched closing bracket"""
     _ = current_lang.translate
     cause = hint = None
     if not (statement.end_bracket and statement.bad_token == statement.last_token):
@@ -68,7 +68,7 @@ def mismatched_brackets(statement):
                 "The closing {bracket} on line {linenumber}"
                 " does not match anything.\n"
             ).format(
-                bracket=syntax_utils.name_bracket(statement.end_bracket.string),
+                bracket=syntax_utils.name_bracket(statement.end_bracket),
                 linenumber=statement.end_bracket.start_row,
             )
             + source
@@ -98,9 +98,9 @@ def mismatched_brackets(statement):
             "The closing {bracket} on line {close_lineno} does not match "
             "the opening {open_bracket} on line {open_lineno}.\n"
         ).format(
-            bracket=syntax_utils.name_bracket(statement.end_bracket.string),
+            bracket=syntax_utils.name_bracket(statement.end_bracket),
             close_lineno=statement.end_bracket.start_row,
-            open_bracket=syntax_utils.name_bracket(open_bracket.string),
+            open_bracket=syntax_utils.name_bracket(open_bracket),
             open_lineno=open_bracket.start_row,
         )
         + source
@@ -813,5 +813,58 @@ def malformed_def_begin_code_block(statement):
             "You tried to define a function or method and did not use the correct syntax.\n"
         )
     cause += def_correct_syntax()
+
+    return cause, hint
+
+
+@add_statement_analyzer
+def malformed_class_begin_code_block(statement):
+    # Thinking of class simply beginning a code block; something like
+    # class : ...
+    _ = current_lang.translate
+    cause = hint = None
+
+    if statement.first_token != "class" or statement.bad_token != ":":
+        return cause, hint
+
+    if not statement.prev_token == statement.first_token:
+        return cause, hint
+
+    cause = _("You tried to define a class and did not use the correct syntax.\n")
+
+    return cause, hint
+
+
+@add_statement_analyzer
+def missing_comma_before_string_in_dict(statement):
+    """Special case where keys and values in a dict are strings which are
+    not separated by commas."""
+    _ = current_lang.translate
+    cause = hint = None
+
+    # This is a bit of an usual case as the error occurred due to a forgotten comma
+    # two tokens before the token flagged by Python.
+    if (
+        not statement.begin_brackets
+        and statement.begin_brackets[-1] == "{"
+        and statement.bad_token == ":"
+        and statement.prev_token.is_string()
+        and statement.tokens[statement.bad_token_index - 1].is_string()
+    ):
+        return cause, hint
+
+    new_statement = fixers.modify_token(
+        statement.tokens, statement.prev_token, prepend=","
+    )
+    if fixers.check_statement(new_statement):
+        cause = _(
+            "I am guessing that you forgot a comma between two strings\n"
+            "when defining a dict.\n\n"
+        ).format(kwd=statement.bad_token)
+        new_statement = fixers.modify_token(
+            statement.tokens, statement.prev_token, prepend=" «,» "
+        )
+        cause += "```\n" + new_statement + "\n```"
+        hint = _("Did you forget a comma?\n")
 
     return cause, hint
