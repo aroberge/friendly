@@ -8,7 +8,7 @@ import ast
 import re
 import sys
 
-from . import source_analyzer
+from . import syntax_utils
 from . import statement_analyzer
 from .. import utils
 from ..my_gettext import current_lang
@@ -701,9 +701,7 @@ def unexpected_character_after_continuation(message="", **_kwargs):
 
 
 @add_python_message
-def unexpected_eof_while_parsing(
-    message="", source_lines=None, linenumber=None, offset=None, **_kwargs
-):
+def unexpected_eof_while_parsing(message="", statement=None, **_kwargs):
     # unexpected EOF while parsing
     _ = current_lang.translate
     cause = hint = None
@@ -715,9 +713,7 @@ def unexpected_eof_while_parsing(
         "and expected more content.\n\n"
     )
 
-    additional_cause = source_analyzer.look_for_missing_bracket(
-        source_lines=source_lines, max_linenumber=linenumber, offset=offset
-    )
+    additional_cause, _ignore = statement_analyzer.unclosed_bracket(statement)
 
     if additional_cause:
         cause += (
@@ -734,11 +730,11 @@ def unmatched_parenthesis(message="", statement=None, **_kwargs):
     cause = hint = None
     # Python 3.8
     if message == "unmatched ')'":
-        bracket = source_analyzer.name_bracket(")")
+        bracket = syntax_utils.name_bracket(")")
     elif message == "unmatched ']'":
-        bracket = source_analyzer.name_bracket("]")
+        bracket = syntax_utils.name_bracket("]")
     elif message == "unmatched '}'":
-        bracket = source_analyzer.name_bracket("}")
+        bracket = syntax_utils.name_bracket("}")
     else:
         return cause, hint
     cause = _(

@@ -996,7 +996,11 @@ def missing_comma_or_operator(statement):
 
             # The list of operators might include a comma; it is better to separate
             # items by semi-colons
-            operators = utils.list_to_string(operators, sep="; ")
+            if comma_first:
+                operators = operators[1:]
+                operators = utils.list_to_string(operators)
+            else:
+                operators = utils.list_to_string(operators, sep="; ")
 
             cause = (
                 possible_cause
@@ -1116,7 +1120,7 @@ def unclosed_bracket(statement):
     if not statement.begin_brackets:
         return cause, hint
 
-    bracket = statement.begin_brackets[-1]
+    bracket = statement.begin_brackets[0]
     linenumber = bracket.start_row
     start_col = bracket.start_col
 
