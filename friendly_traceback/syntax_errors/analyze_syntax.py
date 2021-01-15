@@ -19,7 +19,6 @@ incorrect information.
 from friendly_traceback.my_gettext import current_lang
 from friendly_traceback.source_cache import cache
 from . import source_analyzer
-from . import line_analyzer
 from . import statement_analyzer
 from . import message_analyzer
 from .. import debug_helper
@@ -48,6 +47,7 @@ def find_syntax_error_cause(value, tb_data):
     """Attempts to find the cause of a SyntaxError"""
     # value = tb_data.value
     _ = current_lang.translate
+    hint = None
 
     filepath = value.filename
     linenumber = value.lineno
@@ -133,18 +133,6 @@ def find_syntax_error_cause(value, tb_data):
         statement = token_utils.untokenize(tokens)  # noqa
     except Exception as e:
         debug_helper.log_error(e)
-
-    # If not cause has been identified, we look at a single line
-    # where the error has been found by Python, and try to find the source
-    # of the error
-
-    cause, hint = line_analyzer.analyze_last_line(line, offset=offset)
-    if cause:
-        return notice + cause, hint
-
-    # TODO: check to see if the offset corresponds to the first token
-    # of a line; if so, the error might be found by looking at the
-    # previous line.
 
     # Failing that, we look for another type of common mistake. Note that
     # while we look for missing or mismatched brackets, such as (],

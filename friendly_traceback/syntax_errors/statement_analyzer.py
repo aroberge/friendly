@@ -918,7 +918,7 @@ def misspelled_python_keyword(tokens, bad_token):
             cause = _(
                 "Perhaps you wrote another word instead of a Python keyword.\n"
                 "If that is the case, perhaps you meant to write one of\n"
-                "the following lines of code which would not raise a `SyntaxError`:\n\n"
+                "the following lines of code which might not raise a `SyntaxError`:\n\n"
             )
             for line in lines:
                 cause += f"    {line}\n"
@@ -944,3 +944,155 @@ def previous_is_misspelled_python_keyword(statement):
     if not statement.prev_token.is_identifier():
         return cause, hint
     return misspelled_python_keyword(statement.tokens, statement.prev_token)
+
+
+def _add_comma_or_operator(tokens, tok, comma_first=True):
+    if comma_first:
+        operators = ",", " +", " -", " *", " in"
+    else:
+        operators = " +", " -", " *", ",", " in"
+    results = []
+    for operator in operators:
+        if operator == " in" and results:
+            break
+        new_statement = fixers.modify_token(tokens, tok, append=operator)
+        if syntax_utils.check_statement(new_statement):
+            if operator == "," and results:  # So that it prints correctly
+                operator = '","'
+            results.append((operator.strip(), new_statement))
+    return results
+
+
+def _comma_first_cause(bracket):
+    _ = current_lang.translate
+    if bracket == "(":
+        return _(
+            "It is possible that you "
+            "forgot a comma between items in a tuple, \n"
+            "or between function arguments, \n"
+            "before the position indicated by --> and ^.\n"
+        )
+    elif bracket == "[":
+        return _(
+            "It is possible that you "
+            "forgot a comma between items in a list\n"
+            "before the position indicated by --> and ^.\n"
+        )
+    else:
+        return _(
+            "It is possible that you "
+            "forgot a comma between items in a set or dict\n"
+            "before the position indicated by --> and ^.\n"
+        )
+
+
+@add_statement_analyzer
+def missing_comma_or_operator(statement):
+    """Check to see if a comma or other operator
+    is possibly missing between identifiers, or numbers, or both.
+    """
+    _ = current_lang.translate
+    cause = hint = None
+
+    bad_token = statement.bad_token
+    if not (
+        bad_token.is_identifier() or bad_token.is_number() or bad_token.is_string()
+    ):
+        return cause, hint
+
+    prev_token = statement.prev_token
+    if not (
+        prev_token.is_identifier() or prev_token.is_number() or prev_token.is_string()
+    ):
+        return cause, hint
+
+    possible_cause = _(
+        "Python indicates that the error is caused by "
+        "`{second}` written immediately after `{first}`.\n"
+    ).format(first=bad_token, second=prev_token)
+
+    if statement.begin_brackets:
+        # likely inside a list, tuple, function def, dict, ...
+        # in which case the most likely cause is a missing comma
+        comma_first = True
+        bracket = statement.begin_brackets.pop()
+        comma_first_cause = _comma_first_cause(bracket)
+    else:
+        comma_first = False
+        bracket = None
+        comma_first_cause = ""
+
+    results = _add_comma_or_operator(
+        statement.tokens, prev_token, comma_first=comma_first
+    )
+
+    if results:
+        if len(results) == 1:
+            operator, line = results[0]
+            if "," in operator:
+                hint = _("Did you forget a comma?\n")
+                cause = possible_cause + comma_first_cause
+                cause += _("Perhaps you meant\n\n    {line}\n").format(line=line)
+            else:
+                hint = _("Did you mean `{line}`?\n").format(line=line)
+                cause = possible_cause
+
+        else:
+            operators = [operator for operator, line in results]
+            lines = [line for operator, line in results]
+            hint = _(
+                "Did you forget something between `{first}` and `{second}`?\n"
+            ).format(first=prev_token, second=bad_token)
+
+            # The list of operators might include a comma; it is better to separate
+            # items by semi-colons
+            operators = utils.list_to_string(operators, sep="; ")
+
+            cause = (
+                possible_cause
+                + comma_first_cause
+                + _(
+                    "Perhaps you meant to insert an operator like `{operators}`\n"
+                    "between `{first}` and `{second}`.\n"
+                    "The following lines of code would not cause any `SyntaxError`:\n\n"
+                ).format(first=prev_token, second=bad_token, operators=operators)
+            )
+            for line in lines:
+                cause += f"    {line}\n"
+
+            cause += _("Note: these are just some of the possible choices.\n")
+
+    if cause and prev_token is statement.first_token:
+        first_tokens = []
+        line = None
+        for tok in statement.tokens:
+            if tok == "=":
+                line = token_utils.untokenize(statement.tokens)
+                begin, end = line.split("=", 1)
+                line = "_".join(first_tokens) + " =" + end
+                cause += (
+                    "\n"
+                    + _(
+                        "Or perhaps you forgot that you cannot have spaces\n"
+                        "in variable names.\n"
+                    )
+                    + f"\n\n    {line}\n"
+                )
+                break
+            elif not tok.is_identifier():
+                break
+            else:
+                first_tokens.append(tok.string)
+        if line:
+            hint = _("Did you mean `{line}`?\n").format(line=line)
+
+    return cause, hint
+
+
+# else:
+# cause = possible_cause + _(
+#     "Perhaps you meant to write `{operator}` between\n"
+#     "`{first}` and `{second}`:\n\n"
+#     "    {line}\n"
+#     "which would not cause a `SyntaxError`.\n"
+# ).format(first=prev_token, second=bad_token, line=line, operator=operator)

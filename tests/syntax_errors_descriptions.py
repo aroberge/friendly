@@ -142,7 +142,7 @@ descriptions = {
         title: "Missing comma in a tuple",
     },
     "raise_syntax_error29": {
-        cause: "Did you mean `def a(b, c, d):`",
+        cause: "Did you forget a comma",
         title: "Missing comma between function args",
     },
     "raise_syntax_error30": {

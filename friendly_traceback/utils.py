@@ -51,8 +51,8 @@ def get_similar_words(word_with_typo, words):
     return result
 
 
-def list_to_string(list_):
+def list_to_string(list_, sep=", "):
     """Transforms a list of names, like ['a', 'b', 'c'], into a single
     string of names, like "a, b, c"."""
     result = ["{c}".format(c=c.replace("'", "")) for c in list_]
-    return ", ".join(result)
+    return sep.join(result)
