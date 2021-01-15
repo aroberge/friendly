@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-01-15 13:53-0400\n"
+"POT-Creation-Date: 2021-01-15 18:17-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -291,7 +291,7 @@ msgid ""
 "    `result = my_variable % 0`\n"
 msgstr ""
 
-#: info_specific.py:26 syntax_errors\analyze_syntax.py:39
+#: info_specific.py:26 syntax_errors\analyze_syntax.py:36
 msgid ""
 "Exception raised by Friendly-traceback itself.\n"
 "Please report this example to\n"
@@ -798,10 +798,10 @@ msgid ""
 msgstr ""
 
 #: runtime_errors\type_error.py:207 runtime_errors\type_error.py:642
-#: runtime_errors\type_error.py:737 syntax_errors\statement_analyzer.py:908
-#: syntax_errors\statement_analyzer.py:916
-#: syntax_errors\statement_analyzer.py:1030
-#: syntax_errors\statement_analyzer.py:1080
+#: runtime_errors\type_error.py:737 syntax_errors\statement_analyzer.py:987
+#: syntax_errors\statement_analyzer.py:1037
+#: syntax_errors\statement_analyzer.py:1050
+#: syntax_errors\statement_analyzer.py:1058
 msgid ""
 "Did you mean `{line}`?\n"
 msgstr ""
@@ -1145,7 +1145,7 @@ msgid ""
 "than the length of the iterable, {iter_type} of length {length}.\n"
 msgstr ""
 
-#: syntax_errors\analyze_syntax.py:117
+#: syntax_errors\analyze_syntax.py:114
 msgid ""
 "Python gave us the following informative message\n"
 "about the possible cause of the error:\n"
@@ -1157,14 +1157,14 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\analyze_syntax.py:125
+#: syntax_errors\analyze_syntax.py:122
 msgid ""
 "I make an effort below to guess what caused the problem\n"
 "but I might guess incorrectly.\n"
 "\n"
 msgstr ""
 
-#: syntax_errors\analyze_syntax.py:158
+#: syntax_errors\analyze_syntax.py:132
 msgid ""
 "Currently, I cannot guess the likely cause of this error.\n"
 "Try to examine closely the line indicated as well as the line\n"
@@ -1691,35 +1691,10 @@ msgid ""
 "their indentation level, and not by using some curly braces, like `{...}`.\n"
 msgstr ""
 
-#: syntax_errors\source_analyzer.py:99
-msgid ""
-"It is possible that you used an equal sign `=` instead of a colon `:`\n"
-"to assign values to keys in a dict\n"
-"before or at the position indicated by --> and ^.\n"
-msgstr ""
-
-#: syntax_errors\source_analyzer.py:138
+#: syntax_errors\source_analyzer.py:126
+#: syntax_errors\statement_analyzer.py:1129
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
-msgstr ""
-
-#: syntax_errors\source_analyzer.py:150
-msgid ""
-"It is also possible that you forgot a comma between items in a tuple, \n"
-"or between function arguments, \n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-
-#: syntax_errors\source_analyzer.py:157
-msgid ""
-"It is also possible that you forgot a comma between items in a list\n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-
-#: syntax_errors\source_analyzer.py:163
-msgid ""
-"It is also possible that you forgot a comma between items in a set or dict\n"
-"before the position indicated by --> and ^.\n"
 msgstr ""
 
 #: syntax_errors\statement_analyzer.py:99
@@ -2082,62 +2057,48 @@ msgid ""
 msgstr ""
 
 #: syntax_errors\statement_analyzer.py:870
-#: syntax_errors\statement_analyzer.py:1026
+#: syntax_errors\statement_analyzer.py:983
 msgid ""
 "Did you forget a comma?\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:910
-msgid ""
-"Perhaps you meant to write `{keyword}` and made a typo.\n"
-"The correct line would then be `{line}`\n"
-msgstr ""
-
-#: syntax_errors\statement_analyzer.py:918
-msgid ""
-"Perhaps you wrote another word instead of a Python keyword.\n"
-"If that is the case, perhaps you meant to write one of\n"
-"the following lines of code which might not raise a `SyntaxError`:\n"
-"\n"
-msgstr ""
-
-#: syntax_errors\statement_analyzer.py:969
+#: syntax_errors\statement_analyzer.py:920
 msgid ""
 "It is possible that you forgot a comma between items in a tuple, \n"
 "or between function arguments, \n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:976
+#: syntax_errors\statement_analyzer.py:927
 msgid ""
 "It is possible that you forgot a comma between items in a list\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:982
+#: syntax_errors\statement_analyzer.py:933
 msgid ""
 "It is possible that you forgot a comma between items in a set or dict\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1004
+#: syntax_errors\statement_analyzer.py:960
 msgid ""
 "Python indicates that the error is caused by `{second}` written immediately after `{first}`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1028
+#: syntax_errors\statement_analyzer.py:985
 msgid ""
 "Perhaps you meant\n"
 "\n"
 "    {line}\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1036
+#: syntax_errors\statement_analyzer.py:993
 msgid ""
 "Did you forget something between `{first}` and `{second}`?\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1044
+#: syntax_errors\statement_analyzer.py:1004
 msgid ""
 "Perhaps you meant to insert an operator like `{operators}`\n"
 "between `{first}` and `{second}`.\n"
@@ -2145,15 +2106,36 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1056
+#: syntax_errors\statement_analyzer.py:1013
 msgid ""
 "Note: these are just some of the possible choices.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1068
+#: syntax_errors\statement_analyzer.py:1025
 msgid ""
 "Or perhaps you forgot that you cannot have spaces\n"
 "in variable names.\n"
+msgstr ""
+
+#: syntax_errors\statement_analyzer.py:1052
+msgid ""
+"Perhaps you meant to write `{keyword}` and made a typo.\n"
+"The correct line would then be `{line}`\n"
+msgstr ""
+
+#: syntax_errors\statement_analyzer.py:1060
+msgid ""
+"Perhaps you wrote another word instead of a Python keyword.\n"
+"If that is the case, perhaps you meant to write one of\n"
+"the following lines of code which might not raise a `SyntaxError`:\n"
+"\n"
+msgstr ""
+
+#: syntax_errors\statement_analyzer.py:1100
+msgid ""
+"It is possible that you used an equal sign `=` instead of a colon `:`\n"
+"to assign values to keys in a dict\n"
+"before or at the position indicated by --> and ^.\n"
 msgstr ""
 
 #: syntax_errors\syntax_utils.py:37

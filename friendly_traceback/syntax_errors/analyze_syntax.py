@@ -18,11 +18,9 @@ incorrect information.
 
 from friendly_traceback.my_gettext import current_lang
 from friendly_traceback.source_cache import cache
-from . import source_analyzer
 from . import statement_analyzer
 from . import message_analyzer
 from .. import debug_helper
-from .. import token_utils
 
 
 def set_cause_syntax(value, tb_data):
@@ -126,21 +124,10 @@ def find_syntax_error_cause(value, tb_data):
             "but I might guess incorrectly.\n\n"
         )
 
-    try:
-        tokens, brackets, end_bracket, bad_token = source_analyzer.isolate_bad_statement(
-            source_lines=source_lines, linenumber=linenumber, offset=offset
-        )
-        statement = token_utils.untokenize(tokens)  # noqa
-    except Exception as e:
-        debug_helper.log_error(e)
-
-    # Failing that, we look for another type of common mistake. Note that
-    # while we look for missing or mismatched brackets, such as (],
-    # we also can sometimes identify other problems during this step.
-
-    cause = source_analyzer.scan_source(source_lines, linenumber, offset)
-    if cause:
-        return notice + cause, hint
+    if "invalid syntax" not in message:
+        cause, hint = statement_analyzer.analyze_statement(statement)
+        if cause is not None:
+            return notice + cause, hint
 
     cause = _(
         "Currently, I cannot guess the likely cause of this error.\n"

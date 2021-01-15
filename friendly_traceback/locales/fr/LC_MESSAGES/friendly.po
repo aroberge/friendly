@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-01-15 13:53-0400\n"
-"PO-Revision-Date: 2021-01-15 13:55-0400\n"
+"POT-Creation-Date: 2021-01-15 18:17-0400\n"
+"PO-Revision-Date: 2021-01-15 18:18-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -411,7 +411,7 @@ msgstr ""
 "à l’aide de l’opérateur modulo '%'\n"
 "    `résultat = ma_variable % 0`\n"
 
-#: info_specific.py:26 syntax_errors\analyze_syntax.py:39
+#: info_specific.py:26 syntax_errors\analyze_syntax.py:36
 msgid ""
 "Exception raised by Friendly-traceback itself.\n"
 "Please report this example to\n"
@@ -1019,10 +1019,10 @@ msgstr ""
 "{first} et {second}.\n"
 
 #: runtime_errors\type_error.py:207 runtime_errors\type_error.py:642
-#: runtime_errors\type_error.py:737 syntax_errors\statement_analyzer.py:908
-#: syntax_errors\statement_analyzer.py:916
-#: syntax_errors\statement_analyzer.py:1030
-#: syntax_errors\statement_analyzer.py:1080
+#: runtime_errors\type_error.py:737 syntax_errors\statement_analyzer.py:987
+#: syntax_errors\statement_analyzer.py:1037
+#: syntax_errors\statement_analyzer.py:1050
+#: syntax_errors\statement_analyzer.py:1058
 msgid "Did you mean `{line}`?\n"
 msgstr "Vouliez-vous dire `{line}` ?\n"
 
@@ -1466,7 +1466,7 @@ msgstr ""
 "Dans ce cas-ci, il y a moins de noms ({nb_names})\n"
 "que la longueur de l’itérable, {iter_type} de longueur {length}.\n"
 
-#: syntax_errors\analyze_syntax.py:117
+#: syntax_errors\analyze_syntax.py:114
 msgid ""
 "Python gave us the following informative message\n"
 "about the possible cause of the error:\n"
@@ -1487,7 +1487,7 @@ msgstr ""
 "mais il est possible que me trompe.\n"
 "\n"
 
-#: syntax_errors\analyze_syntax.py:125
+#: syntax_errors\analyze_syntax.py:122
 msgid ""
 "I make an effort below to guess what caused the problem\n"
 "but I might guess incorrectly.\n"
@@ -1497,7 +1497,7 @@ msgstr ""
 "tromper.\n"
 "\n"
 
-#: syntax_errors\analyze_syntax.py:158
+#: syntax_errors\analyze_syntax.py:132
 msgid ""
 "Currently, I cannot guess the likely cause of this error.\n"
 "Try to examine closely the line indicated as well as the line\n"
@@ -2253,51 +2253,12 @@ msgstr ""
 "leur niveau d’indentation, et non pas en utilisant des accolades, comme "
 "`{...}`.\n"
 
-#: syntax_errors\source_analyzer.py:99
-msgid ""
-"It is possible that you used an equal sign `=` instead of a colon `:`\n"
-"to assign values to keys in a dict\n"
-"before or at the position indicated by --> and ^.\n"
-msgstr ""
-"Il est possible que vous ayez utilisé un signe d'égalité `=` au lieu de deux "
-"points `:`\n"
-"pour attribuer des valeurs à une clé d'un dictionnaire\n"
-"avant ou exactement à la position indiquée par --> et ^.\n"
-
-#: syntax_errors\source_analyzer.py:138
+#: syntax_errors\source_analyzer.py:126
+#: syntax_errors\statement_analyzer.py:1129
 msgid "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'est pas fermé par le symbole "
 "correspondant.\n"
-
-#: syntax_errors\source_analyzer.py:150
-msgid ""
-"It is also possible that you forgot a comma between items in a tuple, \n"
-"or between function arguments, \n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-"Il est également possible que vous ayez oublié une virgule entre les "
-"éléments d'un tuple,\n"
-"ou entre les arguments d'une fonction, avant la position indiquée par --> et "
-"^.\n"
-
-#: syntax_errors\source_analyzer.py:157
-msgid ""
-"It is also possible that you forgot a comma between items in a list\n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-"Il est également possible que vous ayez oublié une virgule entre les "
-"éléments d'une liste\n"
-"avant la position indiquée par --> et ^.\n"
-
-#: syntax_errors\source_analyzer.py:163
-msgid ""
-"It is also possible that you forgot a comma between items in a set or dict\n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-"Il est également possible que vous ayez oublié une virgule entre les "
-"éléments d'un ensemble (set)\n"
-"ou un dict avant la position indiquée par --> et ^.\n"
 
 #: syntax_errors\statement_analyzer.py:99
 msgid ""
@@ -2754,11 +2715,86 @@ msgstr ""
 "\n"
 
 #: syntax_errors\statement_analyzer.py:870
-#: syntax_errors\statement_analyzer.py:1026
+#: syntax_errors\statement_analyzer.py:983
 msgid "Did you forget a comma?\n"
 msgstr "Avez-vous oublié une virgule ?\n"
 
-#: syntax_errors\statement_analyzer.py:910
+#: syntax_errors\statement_analyzer.py:920
+msgid ""
+"It is possible that you forgot a comma between items in a tuple, \n"
+"or between function arguments, \n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+"Il est également possible que vous ayez oublié une virgule entre les "
+"éléments d'un tuple,\n"
+"ou entre les arguments d'une fonction, avant la position indiquée par --> et "
+"^.\n"
+
+#: syntax_errors\statement_analyzer.py:927
+msgid ""
+"It is possible that you forgot a comma between items in a list\n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+"Il est également possible que vous ayez oublié une virgule entre les "
+"éléments d'une liste\n"
+"avant la position indiquée par --> et ^.\n"
+
+#: syntax_errors\statement_analyzer.py:933
+msgid ""
+"It is possible that you forgot a comma between items in a set or dict\n"
+"before the position indicated by --> and ^.\n"
+msgstr ""
+"Il est également possible que vous ayez oublié une virgule entre les "
+"éléments d'un ensemble (set)\n"
+"ou un dict avant la position indiquée par --> et ^.\n"
+
+#: syntax_errors\statement_analyzer.py:960
+msgid ""
+"Python indicates that the error is caused by `{second}` written immediately "
+"after `{first}`.\n"
+msgstr ""
+"Python indique que l’erreur est causée par `{second}` écrit tout juste après "
+"`{first}`.\n"
+
+#: syntax_errors\statement_analyzer.py:985
+msgid ""
+"Perhaps you meant\n"
+"\n"
+"    {line}\n"
+msgstr ""
+"Peut-être que vous vouliez plutôt\n"
+"\n"
+"    {line}\n"
+
+#: syntax_errors\statement_analyzer.py:993
+msgid "Did you forget something between `{first}` and `{second}`?\n"
+msgstr "Avez-vous oublié quelque chose entre `{first}` et `{second}` ?\n"
+
+#: syntax_errors\statement_analyzer.py:1004
+msgid ""
+"Perhaps you meant to insert an operator like `{operators}`\n"
+"between `{first}` and `{second}`.\n"
+"The following lines of code would not cause any `SyntaxError`:\n"
+"\n"
+msgstr ""
+"Peut-être que vous vouliez insérer un opérateur comme `{operators}`\n"
+"entre `{first}` et `{second}`.\n"
+"Les lignes de code suivantes ne causeraient pas des `SyntaxError :\n"
+"\n"
+
+#: syntax_errors\statement_analyzer.py:1013
+msgid "Note: these are just some of the possible choices.\n"
+msgstr "N.B. : ce ne sont là que quelques-uns des choix possibles.\n"
+
+#: syntax_errors\statement_analyzer.py:1025
+msgid ""
+"Or perhaps you forgot that you cannot have spaces\n"
+"in variable names.\n"
+msgstr ""
+"Ou peut-être avez-vous oublié que vous ne pouvez pas\n"
+"avoir d'espaces dans des noms variables.\n"
+
+#: syntax_errors\statement_analyzer.py:1052
 msgid ""
 "Perhaps you meant to write `{keyword}` and made a typo.\n"
 "The correct line would then be `{line}`\n"
@@ -2767,7 +2803,7 @@ msgstr ""
 "faute.\n"
 "Si c'est le cas, la ligne correcte aurait été au lieu de `{line}`.\n"
 
-#: syntax_errors\statement_analyzer.py:918
+#: syntax_errors\statement_analyzer.py:1060
 msgid ""
 "Perhaps you wrote another word instead of a Python keyword.\n"
 "If that is the case, perhaps you meant to write one of\n"
@@ -2780,80 +2816,16 @@ msgstr ""
 "`SyntaxError` :\n"
 "\n"
 
-#: syntax_errors\statement_analyzer.py:969
+#: syntax_errors\statement_analyzer.py:1100
 msgid ""
-"It is possible that you forgot a comma between items in a tuple, \n"
-"or between function arguments, \n"
-"before the position indicated by --> and ^.\n"
+"It is possible that you used an equal sign `=` instead of a colon `:`\n"
+"to assign values to keys in a dict\n"
+"before or at the position indicated by --> and ^.\n"
 msgstr ""
-"Il est également possible que vous ayez oublié une virgule entre les "
-"éléments d'un tuple,\n"
-"ou entre les arguments d'une fonction, avant la position indiquée par --> et "
-"^.\n"
-
-#: syntax_errors\statement_analyzer.py:976
-msgid ""
-"It is possible that you forgot a comma between items in a list\n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-"Il est également possible que vous ayez oublié une virgule entre les "
-"éléments d'une liste\n"
-"avant la position indiquée par --> et ^.\n"
-
-#: syntax_errors\statement_analyzer.py:982
-msgid ""
-"It is possible that you forgot a comma between items in a set or dict\n"
-"before the position indicated by --> and ^.\n"
-msgstr ""
-"Il est également possible que vous ayez oublié une virgule entre les "
-"éléments d'un ensemble (set)\n"
-"ou un dict avant la position indiquée par --> et ^.\n"
-
-#: syntax_errors\statement_analyzer.py:1004
-msgid ""
-"Python indicates that the error is caused by `{second}` written immediately "
-"after `{first}`.\n"
-msgstr ""
-"Python indique que l’erreur est causée par `{second}` écrit tout juste après "
-"`{first}`.\n"
-
-#: syntax_errors\statement_analyzer.py:1028
-msgid ""
-"Perhaps you meant\n"
-"\n"
-"    {line}\n"
-msgstr ""
-"Peut-être que vous vouliez plutôt\n"
-"\n"
-"    {line}\n"
-
-#: syntax_errors\statement_analyzer.py:1036
-msgid "Did you forget something between `{first}` and `{second}`?\n"
-msgstr "Avez-vous oublié quelque chose entre `{first}` et `{second}` ?\n"
-
-#: syntax_errors\statement_analyzer.py:1044
-msgid ""
-"Perhaps you meant to insert an operator like `{operators}`\n"
-"between `{first}` and `{second}`.\n"
-"The following lines of code would not cause any `SyntaxError`:\n"
-"\n"
-msgstr ""
-"Peut-être que vous vouliez insérer un opérateur comme `{operators}`\n"
-"entre `{first}` et `{second}`.\n"
-"Les lignes de code suivantes ne causeraient pas des `SyntaxError :\n"
-"\n"
-
-#: syntax_errors\statement_analyzer.py:1056
-msgid "Note: these are just some of the possible choices.\n"
-msgstr "N.B. : ce ne sont là que quelques-uns des choix possibles.\n"
-
-#: syntax_errors\statement_analyzer.py:1068
-msgid ""
-"Or perhaps you forgot that you cannot have spaces\n"
-"in variable names.\n"
-msgstr ""
-"Ou peut-être avez-vous oublié que vous ne pouvez pas\n"
-"avoir d'espaces dans des noms variables.\n"
+"Il est possible que vous ayez utilisé un signe d'égalité `=` au lieu de deux "
+"points `:`\n"
+"pour attribuer des valeurs à une clé d'un dictionnaire\n"
+"avant ou exactement à la position indiquée par --> et ^.\n"
 
 #: syntax_errors\syntax_utils.py:37
 msgid "parenthesis `(`"
@@ -2878,6 +2850,33 @@ msgstr "accolade `{`"
 #: syntax_errors\syntax_utils.py:47
 msgid "curly bracket `}`"
 msgstr "accolade `}`"
+
+#~ msgid ""
+#~ "It is also possible that you forgot a comma between items in a tuple, \n"
+#~ "or between function arguments, \n"
+#~ "before the position indicated by --> and ^.\n"
+#~ msgstr ""
+#~ "Il est également possible que vous ayez oublié une virgule entre les "
+#~ "éléments d'un tuple,\n"
+#~ "ou entre les arguments d'une fonction, avant la position indiquée par --> "
+#~ "et ^.\n"
+
+#~ msgid ""
+#~ "It is also possible that you forgot a comma between items in a list\n"
+#~ "before the position indicated by --> and ^.\n"
+#~ msgstr ""
+#~ "Il est également possible que vous ayez oublié une virgule entre les "
+#~ "éléments d'une liste\n"
+#~ "avant la position indiquée par --> et ^.\n"
+
+#~ msgid ""
+#~ "It is also possible that you forgot a comma between items in a set or "
+#~ "dict\n"
+#~ "before the position indicated by --> and ^.\n"
+#~ msgstr ""
+#~ "Il est également possible que vous ayez oublié une virgule entre les "
+#~ "éléments d'un ensemble (set)\n"
+#~ "ou un dict avant la position indiquée par --> et ^.\n"
 
 #~ msgid ""
 #~ "Perhaps you meant to write `{operator}` between\n"

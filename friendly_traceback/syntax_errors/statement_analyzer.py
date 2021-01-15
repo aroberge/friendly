@@ -78,7 +78,7 @@ def mismatched_brackets(statement):
 
         return cause, hint
 
-    open_bracket = statement.begin_brackets.pop()
+    open_bracket = statement.begin_brackets[-1]
     open_lineno = open_bracket.start_row
     end_bracket = statement.end_bracket
     end_lineno = end_bracket.start_row
@@ -897,55 +897,6 @@ def _perhaps_misspelled_keyword(tokens, wrong):
     return results
 
 
-def misspelled_python_keyword(tokens, bad_token):
-    _ = current_lang.translate
-    cause = hint = None
-
-    results = _perhaps_misspelled_keyword(tokens, bad_token)
-    if results:
-        if len(results) == 1:
-            word, line = results[0]
-            hint = _("Did you mean `{line}`?\n").format(line=line)
-
-            cause = _(
-                "Perhaps you meant to write `{keyword}` and made a typo.\n"
-                "The correct line would then be `{line}`\n"
-            ).format(keyword=word, line=line)
-        else:
-            lines = [line for _word, line in results]
-            hint = _("Did you mean `{line}`?\n").format(line=lines[0])
-
-            cause = _(
-                "Perhaps you wrote another word instead of a Python keyword.\n"
-                "If that is the case, perhaps you meant to write one of\n"
-                "the following lines of code which might not raise a `SyntaxError`:\n\n"
-            )
-            for line in lines:
-                cause += f"    {line}\n"
-
-    return cause, hint
-
-
-@add_statement_analyzer
-def current_is_misspelled_python_keyword(statement):
-    _ = current_lang.translate
-    cause = hint = None
-
-    if not statement.bad_token.is_identifier():
-        return cause, hint
-    return misspelled_python_keyword(statement.tokens, statement.bad_token)
-
-
-@add_statement_analyzer
-def previous_is_misspelled_python_keyword(statement):
-    _ = current_lang.translate
-    cause = hint = None
-
-    if not statement.prev_token.is_identifier():
-        return cause, hint
-    return misspelled_python_keyword(statement.tokens, statement.prev_token)
-
-
 def _add_comma_or_operator(tokens, tok, comma_first=True):
     if comma_first:
         operators = ",", " +", " -", " *", " in"
@@ -1015,11 +966,10 @@ def missing_comma_or_operator(statement):
         # likely inside a list, tuple, function def, dict, ...
         # in which case the most likely cause is a missing comma
         comma_first = True
-        bracket = statement.begin_brackets.pop()
+        bracket = statement.begin_brackets[-1]
         comma_first_cause = _comma_first_cause(bracket)
     else:
         comma_first = False
-        bracket = None
         comma_first_cause = ""
 
     results = _add_comma_or_operator(
@@ -1089,10 +1039,96 @@ def missing_comma_or_operator(statement):
     return cause, hint
 
 
-# else:
-# cause = possible_cause + _(
-#     "Perhaps you meant to write `{operator}` between\n"
-#     "`{first}` and `{second}`:\n\n"
-#     "    {line}\n"
-#     "which would not cause a `SyntaxError`.\n"
-# ).format(first=prev_token, second=bad_token, line=line, operator=operator)
+def misspelled_python_keyword(tokens, bad_token):
+    _ = current_lang.translate
+    cause = hint = None
+
+    results = _perhaps_misspelled_keyword(tokens, bad_token)
+    if results:
+        if len(results) == 1:
+            word, line = results[0]
+            hint = _("Did you mean `{line}`?\n").format(line=line)
+
+            cause = _(
+                "Perhaps you meant to write `{keyword}` and made a typo.\n"
+                "The correct line would then be `{line}`\n"
+            ).format(keyword=word, line=line)
+        else:
+            lines = [line for _word, line in results]
+            hint = _("Did you mean `{line}`?\n").format(line=lines[0])
+
+            cause = _(
+                "Perhaps you wrote another word instead of a Python keyword.\n"
+                "If that is the case, perhaps you meant to write one of\n"
+                "the following lines of code which might not raise a `SyntaxError`:\n\n"
+            )
+            for line in lines:
+                cause += f"    {line}\n"
+
+    return cause, hint
+
+
+@add_statement_analyzer
+def current_is_misspelled_python_keyword(statement):
+    _ = current_lang.translate
+    cause = hint = None
+
+    if not statement.bad_token.is_identifier():
+        return cause, hint
+    return misspelled_python_keyword(statement.tokens, statement.bad_token)
+
+
+@add_statement_analyzer
+def previous_is_misspelled_python_keyword(statement):
+    _ = current_lang.translate
+    cause = hint = None
+
+    if not statement.prev_token.is_identifier():
+        return cause, hint
+    return misspelled_python_keyword(statement.tokens, statement.prev_token)
+
+
+@add_statement_analyzer
+def equal_instead_of_colon_in_dict(statement):
+    _ = current_lang.translate
+    cause = hint = None
+
+    if not (statement.begin_brackets and statement.bad_token == "="):
+        return cause, hint
+
+    if statement.begin_brackets[-1] == "{":
+        cause = _(
+            "It is possible that "
+            "you used an equal sign `=` instead of a colon `:`\n"
+            "to assign values to keys in a dict\n"
+            "before or at the position indicated by --> and ^.\n"
+        )
+
+    return cause, hint
+
+
+# Keep last
+@add_statement_analyzer
+def unclosed_bracket(statement):
+    _ = current_lang.translate
+    cause = hint = None
+
+    if not statement.begin_brackets:
+        return cause, hint
+
+    bracket = statement.begin_brackets[-1]
+    linenumber = bracket.start_row
+    start_col = bracket.start_col
+
+    bracket_name = syntax_utils.name_bracket(bracket)
+    source = f"\n    {linenumber}: {statement.source_lines[linenumber - 1]}"
+    shift = len(str(linenumber)) + start_col + 6
+    source += " " * shift + "|\n"
+
+    cause = (
+        _("The opening {bracket} on line {linenumber} is not closed.\n").format(
+            bracket=bracket_name, linenumber=linenumber
+        )
+        + source
+    )
+    return cause, hint

@@ -102,6 +102,41 @@ class Statement:
             self.obtain_statement(source_tokens)
             self.tokens = self.remove_meaningless_tokens()
             self.statement = token_utils.untokenize(self.statement_tokens)
+            if self.filename.startswith("<friendly-console"):
+                if self.statement_brackets and not self.end_bracket:
+                    # We got an error flagged before we had the chance to close
+                    # brackets. Unclosed brackets are never a problem on their
+                    # own in a console session - so, we make sure to close
+                    # the brackets in order to be able to find the true cause
+                    # of the error
+                    add_token = ""
+                    while self.statement_brackets:
+                        bracket = self.statement_brackets.pop()
+                        if bracket == "(":
+                            add_token += ")"
+                        elif bracket == "[":
+                            add_token += "]"
+                        else:
+                            add_token += "}"
+
+                    if self.tokens[0].string in [
+                        "class",
+                        "def",
+                        "if",
+                        "elif",
+                        "while",
+                        "for",
+                        "except",
+                        "with",
+                    ]:
+                        add_token += ":"
+
+                    last_token = self.tokens[-1]
+                    last_token = last_token.copy()
+                    last_token.start_row += 1
+                    last_token.string = last_token.line = add_token
+                    self.tokens.append(last_token)
+
         elif "too many statically nested blocks" not in self.message:
             debug_helper.log("linenumber is None in source_info.Statement")
 
@@ -307,12 +342,7 @@ class Statement:
 
             if token.is_in("([{"):
                 self.statement_brackets.append(token.string)
-                if token.start_row < self.linenumber:
-                    self.begin_brackets.append(token)
-                elif (
-                    token.start_row == self.linenumber
-                    and token.start_col <= self.offset
-                ):
+                if self.bad_token is None or self.bad_token is token:
                     self.begin_brackets.append(token)
             elif token.is_in(")]}"):
                 self.end_bracket = token
