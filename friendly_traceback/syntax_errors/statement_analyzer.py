@@ -2,6 +2,7 @@
    analyze a single statement which has been identified
    as containing a syntax error with the message "invalid syntax".
 """
+import keyword
 import sys
 
 from . import fixers
@@ -9,6 +10,7 @@ from . import syntax_utils
 from ..my_gettext import current_lang
 from .. import debug_helper
 from .. import token_utils
+from .. import utils
 
 STATEMENT_ANALYZERS = []
 
@@ -844,8 +846,8 @@ def missing_comma_before_string_in_dict(statement):
 
     # This is a bit of an usual case as the error occurred due to a forgotten comma
     # two tokens before the token flagged by Python.
-    if (
-        not statement.begin_brackets
+    if not (
+        statement.begin_brackets
         and statement.begin_brackets[-1] == "{"
         and statement.bad_token == ":"
         and statement.prev_token.is_string()
@@ -868,3 +870,73 @@ def missing_comma_before_string_in_dict(statement):
         hint = _("Did you forget a comma?\n")
 
     return cause, hint
+
+
+def _perhaps_misspelled_keyword(tokens, wrong):
+    # 'not' can be used in many places, most of which would likely not make sense
+    # as suggestions
+    kwlist = [word for word in keyword.kwlist if word != "not"]
+    # Make sure we try possible typos first
+    similar = utils.get_similar_words(wrong.string, kwlist)
+    words = [word for word in kwlist if word not in similar]
+    similar.extend(words)
+    results = []
+    for word in similar:
+        new_statement = fixers.replace_token(tokens, wrong, word)
+        if syntax_utils.check_statement(new_statement):
+            results.append((word, new_statement))
+    # The with and except keywords can appear in similar situations as for/in and others.
+    if len(results) > 1:
+        results = [
+            (word, line) for word, line in results if word not in ["with", "except"]
+        ]
+    return results
+
+
+def misspelled_python_keyword(tokens, bad_token):
+    _ = current_lang.translate
+    cause = hint = None
+
+    results = _perhaps_misspelled_keyword(tokens, bad_token)
+    if results:
+        if len(results) == 1:
+            word, line = results[0]
+            hint = _("Did you mean `{line}`?\n").format(line=line)
+
+            cause = _(
+                "Perhaps you meant to write `{keyword}` and made a typo.\n"
+                "The correct line would then be `{line}`\n"
+            ).format(keyword=word, line=line)
+        else:
+            lines = [line for _word, line in results]
+            hint = _("Did you mean `{line}`?\n").format(line=lines[0])
+
+            cause = _(
+                "Perhaps you wrote another word instead of a Python keyword.\n"
+                "If that is the case, perhaps you meant to write one of\n"
+                "the following lines of code which would not raise a `SyntaxError`:\n\n"
+            )
+            for line in lines:
+                cause += f"    {line}\n"
+
+    return cause, hint
+
+
+@add_statement_analyzer
+def current_is_misspelled_python_keyword(statement):
+    _ = current_lang.translate
+    cause = hint = None
+
+    if not statement.bad_token.is_identifier():
+        return cause, hint
+    return misspelled_python_keyword(statement.tokens, statement.bad_token)
+
+
+@add_statement_analyzer
+def previous_is_misspelled_python_keyword(statement):
+    _ = current_lang.translate
+    cause = hint = None
+
+    if not statement.prev_token.is_identifier():
+        return cause, hint
+    return misspelled_python_keyword(statement.tokens, statement.prev_token)

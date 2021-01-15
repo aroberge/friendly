@@ -2,8 +2,6 @@
    analyze a single line of code which has been identified
    as containing a syntax error with the message "invalid syntax".
 """
-import keyword
-
 from . import syntax_utils
 from .. import debug_helper
 from .. import utils
@@ -14,13 +12,13 @@ from .. import token_utils
 
 def is_potential_statement(tokens):
     """This helper function tests the list of tokens
-       (usually corresponding to a single line of code)
-       and returns True if the corresponding line of code could possibly be a
-       complete Python statement as described below.
+    (usually corresponding to a single line of code)
+    and returns True if the corresponding line of code could possibly be a
+    complete Python statement as described below.
 
-       A complete Python statement would have brackets,
-       including (), [], and {}, matched in pairs,
-       and would not end with the continuation character.
+    A complete Python statement would have brackets,
+    including (), [], and {}, matched in pairs,
+    and would not end with the continuation character.
     """
     line = tokens[0].line
 
@@ -99,33 +97,6 @@ def _add_operator(tokens, first):
     return results
 
 
-def perhaps_misspelled_keyword(tokens, first, second):
-    kwlist = keyword.kwlist
-    similar = utils.get_similar_words(first.string, kwlist)
-    similar += utils.get_similar_words(second.string, kwlist)
-    words = [word for word in kwlist if word not in similar]
-    similar.extend(words)
-    results = []
-    for wrong in (first, second):
-        original_string = wrong.string
-        for word in similar:
-            if results:
-                continue
-            new_tokens = []
-            for tok in tokens:
-                if tok == wrong:
-                    tok.string = word
-                new_tokens.append(tok)
-            line = token_utils.untokenize(new_tokens).strip()
-            if syntax_utils.check_statement(line):
-                results.append((word, line))
-            wrong.string = original_string
-    # The with keyword can appear in similar situations as for/in and others.
-    if len(results) > 1:
-        results = [(word, line) for word, line in results if word != "with"]
-    return results
-
-
 @add_line_analyzer
 def missing_comma_or_operator(tokens, offset=None):
     """Check to see if a comma or other operator
@@ -180,34 +151,6 @@ def missing_comma_or_operator(tokens, offset=None):
                         cause += f"    {line}\n"
 
                     cause += _("Note: these are just some of the possible choices.\n")
-            else:
-                # Add case here where we replace either first or second by a Python keyword
-                results = perhaps_misspelled_keyword(tokens, first, second)
-                if results:
-                    if len(results) == 1:
-                        word, line = results[0]
-                        hint = _("Did you mean `{line}`?\n").format(line=line)
-
-                        cause += _(
-                            "Perhaps you meant to write `{keyword}` and made a typo.\n"
-                            "The correct line would then be `{line}`\n"
-                        ).format(keyword=word, line=line)
-                    else:
-                        lines = [line for _word, line in results]
-                        hint = _("Did you mean `{line}`?\n").format(line=lines[0])
-
-                        cause += _(
-                            "Perhaps you wrote another word instead of a Python keyword.\n"
-                            "If that is the case, perhaps you meant to write one of\n"
-                            "the following lines of code which would not raise a `SyntaxError`:\n\n"
-                        )
-                        for line in lines:
-                            cause += f"    {line}\n"
-
-                else:
-                    cause = _(
-                        "Perhaps you forgot to write something between `{first}` and `{second}`\n"
-                    ).format(first=first, second=second)
 
             if first == tokens[0]:
                 first_tokens = []
