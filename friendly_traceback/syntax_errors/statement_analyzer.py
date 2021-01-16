@@ -1019,7 +1019,10 @@ def missing_comma_or_operator(statement):
             for line in lines:
                 cause += f"    {line}\n"
 
-            cause += _("Note: these are just some of the possible choices.\n")
+            cause += _(
+                "Note: these are just some of the possible choices and that\n"
+                "some of them might raise other types of exceptions.\n"
+            )
 
     if cause and prev_token is statement.first_token:
         first_tokens = []
