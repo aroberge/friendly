@@ -977,7 +977,11 @@ def missing_comma_or_operator(statement):
     )
 
     if results:
-        if len(results) == 1:
+        if (
+            len(results) == 1
+            or statement.first_token == "def"
+            or statement.first_token == "class"
+        ):
             operator, line = results[0]
             if "," in operator:
                 hint = _("Did you forget a comma?\n")
@@ -986,7 +990,6 @@ def missing_comma_or_operator(statement):
             else:
                 hint = _("Did you mean `{line}`?\n").format(line=line)
                 cause = possible_cause
-
         else:
             operators = [operator for operator, line in results]
             lines = [line for operator, line in results]
