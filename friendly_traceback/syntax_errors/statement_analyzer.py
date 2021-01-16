@@ -466,6 +466,8 @@ def dot_followed_by_bracket(statement):
         cause = _("You cannot have a dot `.` followed by `{bracket}`.\n").format(
             bracket=statement.bad_token
         )
+    else:
+        return cause, hint
 
     new_statement = fixers.replace_token(statement.tokens, statement.prev_token, ",")
     if fixers.check_statement(new_statement):
@@ -1111,6 +1113,91 @@ def equal_instead_of_colon_in_dict(statement):
             "before or at the position indicated by --> and ^.\n"
         )
 
+    return cause, hint
+
+
+@add_statement_analyzer
+def consecutive_operators(statement):
+    _ = current_lang.translate
+    cause = hint = None
+    is_op = token_utils.is_operator
+
+    if not (is_op(statement.bad_token) and is_op(statement.prev_token)):
+        return cause, hint
+
+    if statement.bad_token == statement.prev_token:
+        cause = _(
+            "You cannot have write the same operator, `{op}`, twice in a row.\n"
+            "Perhaps you wrote one of them by mistake\n"
+            "or forgot to write something between them.\n"
+        ).format(op=statement.prev_token)
+    else:
+        cause = _(
+            "You cannot have these two operators, `{first}` and `{second}`,\n"
+            "following each other. Perhaps you wrote one of them by mistake\n"
+            "or forgot to write something between them.\n"
+        ).format(first=statement.prev_token, second=statement.bad_token)
+
+    return cause, hint
+
+
+@add_statement_analyzer
+def dotted_name_in_def(statement):
+    _ = current_lang.translate
+    cause = hint = None
+
+    if not (statement.bad_token == "." and statement.first_token == "def"):
+        return cause, hint
+
+    cause = _("You cannot use dotted names as function arguments.\n")
+
+    return cause, hint
+
+
+@add_statement_analyzer
+def positional_arguments_in_def(statement):
+    _ = current_lang.translate
+    cause = hint = None
+
+    if not (statement.bad_token == "/" and statement.first_token == "def"):
+        return cause, hint
+
+    prev_tok = ""
+    for tok in statement.tokens:
+        if tok == "*":
+            cause = _(
+                "`/` indicates that the previous arguments in a function definition\n"
+                "are positional arguments. However, `*` indicates that the arguments\n"
+                "that follow must be keyword arguments.\n"
+                "When they are used together, `/` must appear before `*`.\n"
+            )
+            hint = _("`*` must appear after `/` in a function definition.\n")
+            return cause, hint
+        elif tok is statement.bad_token:
+            break
+        elif tok == "/" and prev_tok == ",":
+            cause = _("You can only use `/` once in a function definition.\n")
+            return cause, hint
+        prev_tok = tok
+    return cause, hint
+
+
+@add_statement_analyzer
+def keyword_arguments_in_def(statement):
+    _ = current_lang.translate
+    cause = hint = None
+
+    if not (statement.bad_token == "*" and statement.first_token == "def"):
+        return cause, hint
+
+    prev_tok = ""
+    for tok in statement.tokens:
+        if tok is statement.bad_token:
+            break
+        elif tok == "*" and prev_tok == ",":
+            cause = _("You can only use `*` once in a function definition.\n")
+            return cause, hint
+        prev_tok = tok
     return cause, hint
 
 
