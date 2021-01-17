@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-01-16 15:18-0400\n"
+"POT-Creation-Date: 2021-01-17 07:50-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -375,7 +375,7 @@ msgid ""
 msgstr ""
 
 #: runtime_errors\attribute_error.py:77 runtime_errors\attribute_error.py:118
-#: runtime_errors\attribute_error.py:219 runtime_errors\import_error.py:114
+#: runtime_errors\attribute_error.py:224 runtime_errors\import_error.py:114
 #: runtime_errors\module_not_found_error.py:55 runtime_errors\name_error.py:82
 #: runtime_errors\unbound_local_error.py:44
 #: syntax_errors\message_analyzer.py:305 syntax_errors\message_analyzer.py:897
@@ -388,7 +388,7 @@ msgid ""
 "Perhaps you meant to write `{module}.{correct}` instead of `{module}.{typo}`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:85 runtime_errors\attribute_error.py:226
+#: runtime_errors\attribute_error.py:85 runtime_errors\attribute_error.py:231
 #: runtime_errors\import_error.py:121
 msgid ""
 "Did you mean one of the following: `{names}`?\n"
@@ -447,74 +447,80 @@ msgid ""
 "The object `{obj}` has no attribute named `{attr}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:206
+#: runtime_errors\attribute_error.py:203
+msgid ""
+"Note that object `{obj}` uses `__slots__` which prevents\n"
+"the creation of new attributes.\n"
+msgstr ""
+
+#: runtime_errors\attribute_error.py:211
 msgid ""
 "The following are some of its known attributes:\n"
 "`{names}`."
 msgstr ""
 
-#: runtime_errors\attribute_error.py:220
+#: runtime_errors\attribute_error.py:225
 msgid ""
 "Perhaps you meant to write `{obj}.{correct}` instead of `{obj}.{typo}`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:227
+#: runtime_errors\attribute_error.py:232
 msgid ""
 "Instead of writing `{obj}.{typo}`, perhaps you meant to write one of \n"
 "the following names which are attributes of object `{obj}`:\n"
 "`{names}`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:244
+#: runtime_errors\attribute_error.py:249
 msgid ""
 "Did you mean `'...'.join({obj_name})`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:245
+#: runtime_errors\attribute_error.py:250
 msgid ""
 "The object `{obj_name}` has no attribute named `join`.\n"
 "Perhaps you wanted something like `'...'.join({obj_name})`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:254
+#: runtime_errors\attribute_error.py:259
 msgid ""
 "Did you mean `{known_builtin}({obj_name})`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:257
+#: runtime_errors\attribute_error.py:262
 msgid ""
 "The object `{obj_name}` has no attribute named `{attribute}`.\n"
 "Perhaps you can use the Python builtin function `{known_builtin}` instead:\n"
 "`{known_builtin}({obj_name})`."
 msgstr ""
 
-#: runtime_errors\attribute_error.py:290
+#: runtime_errors\attribute_error.py:295
 msgid ""
 "Did you mean `{attr}`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:292
+#: runtime_errors\attribute_error.py:297
 msgid ""
 "The object `{name}` has no attribute named `{attribute}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:297
+#: runtime_errors\attribute_error.py:302
 msgid ""
 "However, `{attr}` is an attribute of `{name}` with a similar meaning.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:301
+#: runtime_errors\attribute_error.py:306
 msgid ""
 "However, `{name}` has the following attributes with similar meanings:\n"
 "`{attributes}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:312
+#: runtime_errors\attribute_error.py:317
 msgid ""
 "Did you mean to separate object names by a comma?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:314
+#: runtime_errors\attribute_error.py:319
 msgid ""
 "`{second}` is not an attribute of `{first}`.\n"
 "However, both `{first}` and `{second}` are known objects.\n"
@@ -799,9 +805,9 @@ msgstr ""
 
 #: runtime_errors\type_error.py:207 runtime_errors\type_error.py:642
 #: runtime_errors\type_error.py:737 syntax_errors\statement_analyzer.py:993
-#: syntax_errors\statement_analyzer.py:1047
-#: syntax_errors\statement_analyzer.py:1060
-#: syntax_errors\statement_analyzer.py:1068
+#: syntax_errors\statement_analyzer.py:1049
+#: syntax_errors\statement_analyzer.py:1062
+#: syntax_errors\statement_analyzer.py:1070
 msgid ""
 "Did you mean `{line}`?\n"
 msgstr ""
@@ -2099,19 +2105,19 @@ msgid ""
 "some of them might raise other types of exceptions.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1035
+#: syntax_errors\statement_analyzer.py:1037
 msgid ""
 "Or perhaps you forgot that you cannot have spaces\n"
 "in variable names.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1062
+#: syntax_errors\statement_analyzer.py:1064
 msgid ""
 "Perhaps you meant to write `{keyword}` and made a typo.\n"
 "The correct line would then be `{line}`\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1070
+#: syntax_errors\statement_analyzer.py:1072
 msgid ""
 "Perhaps you wrote another word instead of a Python keyword.\n"
 "If that is the case, perhaps you meant to write one of\n"
@@ -2119,33 +2125,33 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1110
+#: syntax_errors\statement_analyzer.py:1112
 msgid ""
 "It is possible that you used an equal sign `=` instead of a colon `:`\n"
 "to assign values to keys in a dict\n"
 "before or at the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1130
+#: syntax_errors\statement_analyzer.py:1132
 msgid ""
 "You cannot have write the same operator, `{op}`, twice in a row.\n"
 "Perhaps you wrote one of them by mistake\n"
 "or forgot to write something between them.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1136
+#: syntax_errors\statement_analyzer.py:1138
 msgid ""
 "You cannot have these two operators, `{first}` and `{second}`,\n"
 "following each other. Perhaps you wrote one of them by mistake\n"
 "or forgot to write something between them.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1153
+#: syntax_errors\statement_analyzer.py:1155
 msgid ""
 "You cannot use dotted names as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1169
+#: syntax_errors\statement_analyzer.py:1171
 msgid ""
 "`/` indicates that the previous arguments in a function definition\n"
 "are positional arguments. However, `*` indicates that the arguments\n"
@@ -2153,22 +2159,22 @@ msgid ""
 "When they are used together, `/` must appear before `*`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1175
+#: syntax_errors\statement_analyzer.py:1177
 msgid ""
 "`*` must appear after `/` in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1180
+#: syntax_errors\statement_analyzer.py:1182
 msgid ""
 "You can only use `/` once in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1199
+#: syntax_errors\statement_analyzer.py:1201
 msgid ""
 "You can only use `*` once in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1224
+#: syntax_errors\statement_analyzer.py:1226
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""

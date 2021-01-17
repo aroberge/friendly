@@ -199,6 +199,11 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
     cause = _("The object `{obj}` has no attribute named `{attr}`.\n").format(
         obj=obj_name, attr=attribute
     )
+    if hasattr(obj, "__slots__"):
+        cause += _(
+            "Note that object `{obj}` uses `__slots__` which prevents\n"
+            "the creation of new attributes.\n"
+        ).format(obj=obj_name)
     known_attributes = [a for a in known_attributes if "__" not in a]
     if len(known_attributes) > 10:
         known_attributes = known_attributes[:9] + ["..."]
