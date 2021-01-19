@@ -67,7 +67,7 @@ def literal_expressions_grouped(self, root):
     """
     # Except for the inner function is_literal
     # this is modeled after interesting_expressions_grouped
-    def is_literal(node, value):
+    def is_literal(node, _ignore):
         try:
             return ast.literal_eval(node)
         except ValueError:
@@ -98,12 +98,13 @@ def get_all_objects(line, frame):
     ('name', obj). It is only occasionally used in helping to make
     suggestions regarding the cause of some exception.
     """
-    objects = {}
-    objects["locals"] = []
-    objects["globals"] = []
-    objects["literals"] = []
-    objects["builtins"] = []
-    objects["name, obj"] = []
+    objects = {
+        "locals": [],
+        "globals": [],
+        "literals": [],
+        "builtins": [],
+        "name, obj": [],
+    }
 
     scopes = (
         ("locals", frame.f_locals),  # always have locals before globals
@@ -158,11 +159,13 @@ def get_all_objects(line, frame):
         for scope, scope_dict in scopes:
             try:  # TODO: see if pure_eval could not be used instead of eval
                 obj = eval(name, scope_dict)
-                objects[scope].append((name, repr(obj), obj))
-                objects["name, obj"].append((name, obj))
+                if (name, obj) not in objects["name, obj"]:
+                    objects[scope].append((name, repr(obj), obj))
+                    objects["name, obj"].append((name, obj))
             except Exception:
                 pass
 
+    # TODO: check to see if this is still needed
     objects["nonlocals"] = get_nonlocal_objects(frame)
     return objects
 
