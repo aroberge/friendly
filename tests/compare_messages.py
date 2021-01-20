@@ -1,4 +1,4 @@
-'''Compare messages for exceptions other than SyntaxError'''
+"""Compare messages for exceptions other than SyntaxError"""
 import messages_3_6
 import messages_3_7
 import messages_3_8
@@ -68,7 +68,6 @@ def print_different(fn_name, in_36, in_37, in_38, in_39, in_310):
         output.write("</pre>\n")
 
 
-
 for fn_name in info_36:
     try:
         messages_36 = info_36[fn_name].replace("<", "&lt;").replace(">", "&gt;")
@@ -83,12 +82,7 @@ for fn_name in info_36:
         continue
 
     print_different(
-        fn_name,
-        messages_36,
-        messages_37,
-        messages_38,
-        messages_39,
-        messages_310
+        fn_name, messages_36, messages_37, messages_38, messages_39, messages_310
     )
 
 output.write("</div>\n")
