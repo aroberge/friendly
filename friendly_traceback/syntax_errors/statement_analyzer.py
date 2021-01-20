@@ -962,7 +962,7 @@ def missing_comma_or_operator(statement):
     possible_cause = _(
         "Python indicates that the error is caused by "
         "`{second}` written immediately after `{first}`.\n"
-    ).format(first=bad_token, second=prev_token)
+    ).format(first=prev_token, second=bad_token)
 
     if statement.begin_brackets:
         # likely inside a list, tuple, function def, dict, ...
