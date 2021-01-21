@@ -47,6 +47,7 @@ def name_bracket(bracket):
         return _("curly bracket `}`")
 
 
+# TODO: remove this and use fixers' version instead
 def modify_source(tokens, bad_token, string, add=False):
     """Replaces a single token string to produce a new source.
     More specifically, given::
@@ -88,6 +89,9 @@ def modify_source(tokens, bad_token, string, add=False):
         debug_helper.log("Problem in token_utils.modify_source().")
         debug_helper.log_error(e)
         return ""
+
+
+# TODO: remove this and use fixers' version instead
 
 
 def check_statement(statement):

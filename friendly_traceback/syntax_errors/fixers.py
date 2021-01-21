@@ -74,7 +74,38 @@ def _modify_source(tokens, original_token, replace="", append="", prepend=""):
     except Exception as e:
         debug_helper.log("Problem in fixers._modify_source().")
         debug_helper.log_error(e)
-        return ""
+        return token_utils.untokenize(tokens)
+
+
+def replace_two_tokens(
+    tokens, first_token, first_string="", second_token=None, second_string=""
+):
+    """Replace two tokens at once by their new string value"""
+    if second_token is None:
+        debug_helper.log("Problem in fixers.replace_two_tokens()")
+        debug_helper.log("second_token should not be None")
+        return token_utils.untokenize(tokens)
+
+    try:
+        new_tokens = []
+        for tok in tokens:
+            if tok is first_token:
+                new_token = first_token.copy()
+                new_token.string = first_string
+                new_tokens.append(new_token)
+            elif tok is second_token:
+                new_token = second_token.copy()
+                new_token.string = second_string
+                new_tokens.append(new_token)
+            else:
+                new_tokens.append(tok)
+
+        source = token_utils.untokenize(new_tokens)
+        return source.strip()
+    except Exception as e:
+        debug_helper.log("Problem in fixers.replace_two_tokens().")
+        debug_helper.log_error(e)
+        return token_utils.untokenize(tokens)
 
 
 def check_statement(statement):

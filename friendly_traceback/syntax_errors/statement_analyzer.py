@@ -1024,6 +1024,10 @@ def missing_comma_or_operator(statement):
                 "some of them might raise other types of exceptions.\n"
             )
 
+    # special case; something like
+    # my name = "André"
+    # instead of  my_name = ...
+    # See more general handling in space_in_identifiers() below
     if cause and prev_token is statement.first_token:
         first_tokens = []
         line = None
@@ -1048,6 +1052,43 @@ def missing_comma_or_operator(statement):
         if line:
             hint = _("Did you mean `{line}`?\n").format(line=line)
 
+    return cause, hint
+
+
+@add_statement_analyzer
+def space_in_identifiers(statement):
+    # More general handling of space between identifiers; something like
+    # "my name" instead of "my_name".
+    # We limit this to cases where both parts are valid identifiers.
+    _ = current_lang.translate
+    cause = hint = None
+
+    bad_token = statement.bad_token
+    prev_token = statement.prev_token
+    if not (bad_token.is_identifier() and prev_token.is_identifier()):
+        return cause, hint
+
+    possible_cause = _(
+        "Python indicates that the error is caused by "
+        "`{second}` written immediately after `{first}`.\n"
+    ).format(first=prev_token, second=bad_token)
+
+    new_statement = fixers.replace_two_tokens(
+        statement.tokens,
+        prev_token,
+        prev_token.string + "_" + bad_token.string,
+        bad_token,
+        "",
+    )
+    if fixers.check_statement(new_statement):
+        cause = possible_cause + _(
+            "Perhaps you forgot that you cannot have spaces\n"
+            "in variable names and wrote `'{first} {second}'`\n"
+            "instead of `'{first}_{second}'`.\n"
+        ).format(first=prev_token, second=bad_token)
+        hint = _("Did you mean `'{first}_{second}'`?\n").format(
+            first=prev_token, second=bad_token
+        )
     return cause, hint
 
 

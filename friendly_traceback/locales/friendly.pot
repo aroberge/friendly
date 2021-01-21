@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-01-17 07:50-0400\n"
+"POT-Creation-Date: 2021-01-21 08:32-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -349,7 +349,7 @@ msgstr ""
 msgid "a `frozenset`"
 msgstr ""
 
-#: info_variables.py:452
+#: info_variables.py:455
 msgid ""
 "A type hint found for `{name}` in the {scope} scope.\n"
 "Perhaps you had used a colon instead of an equal sign and wrote\n"
@@ -805,9 +805,9 @@ msgstr ""
 
 #: runtime_errors\type_error.py:207 runtime_errors\type_error.py:642
 #: runtime_errors\type_error.py:737 syntax_errors\statement_analyzer.py:993
-#: syntax_errors\statement_analyzer.py:1049
-#: syntax_errors\statement_analyzer.py:1062
-#: syntax_errors\statement_analyzer.py:1070
+#: syntax_errors\statement_analyzer.py:1053
+#: syntax_errors\statement_analyzer.py:1103
+#: syntax_errors\statement_analyzer.py:1111
 msgid ""
 "Did you mean `{line}`?\n"
 msgstr ""
@@ -2075,6 +2075,7 @@ msgid ""
 msgstr ""
 
 #: syntax_errors\statement_analyzer.py:962
+#: syntax_errors\statement_analyzer.py:1071
 msgid ""
 "Python indicates that the error is caused by `{second}` written immediately after `{first}`.\n"
 msgstr ""
@@ -2105,19 +2106,31 @@ msgid ""
 "some of them might raise other types of exceptions.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1037
+#: syntax_errors\statement_analyzer.py:1041
 msgid ""
 "Or perhaps you forgot that you cannot have spaces\n"
 "in variable names.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1064
+#: syntax_errors\statement_analyzer.py:1084
+msgid ""
+"Perhaps you forgot that you cannot have spaces\n"
+"in variable names and wrote `'{first} {second}'`\n"
+"instead of `'{first}_{second}'`.\n"
+msgstr ""
+
+#: syntax_errors\statement_analyzer.py:1089
+msgid ""
+"Did you mean `'{first}_{second}'`?\n"
+msgstr ""
+
+#: syntax_errors\statement_analyzer.py:1105
 msgid ""
 "Perhaps you meant to write `{keyword}` and made a typo.\n"
 "The correct line would then be `{line}`\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1072
+#: syntax_errors\statement_analyzer.py:1113
 msgid ""
 "Perhaps you wrote another word instead of a Python keyword.\n"
 "If that is the case, perhaps you meant to write one of\n"
@@ -2125,33 +2138,33 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1112
+#: syntax_errors\statement_analyzer.py:1153
 msgid ""
 "It is possible that you used an equal sign `=` instead of a colon `:`\n"
 "to assign values to keys in a dict\n"
 "before or at the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1132
+#: syntax_errors\statement_analyzer.py:1173
 msgid ""
 "You cannot have write the same operator, `{op}`, twice in a row.\n"
 "Perhaps you wrote one of them by mistake\n"
 "or forgot to write something between them.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1138
+#: syntax_errors\statement_analyzer.py:1179
 msgid ""
 "You cannot have these two operators, `{first}` and `{second}`,\n"
 "following each other. Perhaps you wrote one of them by mistake\n"
 "or forgot to write something between them.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1155
+#: syntax_errors\statement_analyzer.py:1196
 msgid ""
 "You cannot use dotted names as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1171
+#: syntax_errors\statement_analyzer.py:1212
 msgid ""
 "`/` indicates that the previous arguments in a function definition\n"
 "are positional arguments. However, `*` indicates that the arguments\n"
@@ -2159,22 +2172,22 @@ msgid ""
 "When they are used together, `/` must appear before `*`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1177
+#: syntax_errors\statement_analyzer.py:1218
 msgid ""
 "`*` must appear after `/` in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1182
+#: syntax_errors\statement_analyzer.py:1223
 msgid ""
 "You can only use `/` once in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1201
+#: syntax_errors\statement_analyzer.py:1242
 msgid ""
 "You can only use `*` once in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1226
+#: syntax_errors\statement_analyzer.py:1267
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
