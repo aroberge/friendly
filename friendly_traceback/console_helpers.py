@@ -119,6 +119,15 @@ def debug():
     explain("debug_tb")
 
 
+def _get_statement():
+    """This returns a 'Statement' instance obtained for SyntaxErrors and
+    subclasses.
+
+    This is not intended for end-users but is useful in development.
+    """
+    return session.friendly_traceback.tb_data.statement
+
+
 get_lang = friendly_traceback.get_lang
 set_lang = friendly_traceback.set_lang
 get_include = friendly_traceback.get_include
@@ -143,6 +152,7 @@ helpers = {
     "debug": debug,
     "show_paths": show_paths,
     "show_info": show_info,
+    "_get_statement": _get_statement,
 }
 
 

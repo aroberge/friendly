@@ -73,6 +73,8 @@ class TracebackData:
         self.get_source_info(etype, value)  # sets the proper value for bad_line
         if issubclass(etype, SyntaxError):
             self.statement = source_info.Statement(self.value, self.bad_line)
+        else:
+            self.statement = None
         self.node = None
         self.node_text = ""
         self.node_range = None
@@ -411,7 +413,9 @@ class FriendlyTraceback:
             self.info["cause"] = cannot_analyze_stdin()
             return
         if etype.__name__ == "IndentationError":
-            self.info["cause"] = indentation_error.set_cause_indentation_error(value)
+            self.info["cause"] = indentation_error.set_cause_indentation_error(
+                value, self.tb_data.statement
+            )
             return
         elif etype.__name__ == "TabError":
             return
