@@ -271,7 +271,16 @@ class Statement:
 
         for token in source_tokens:
             # Did we collect all the tokens belonging to the bad statement?
-
+            if (  # is the bad token identified as the very first token of a new line
+                token.string.strip()
+                and token.start_row == self.linenumber
+                and token.start_col <= self.offset <= token.end_col
+                and previous_token is not None
+                and previous_token.string.strip()
+                and previous_token.start_row < token.start_row
+                and token.is_not_in(")]}")
+            ):
+                break
             if (
                 token.start_row > self.linenumber
                 and (last_closing is None or token.start_row > last_closing.start_row)
@@ -298,10 +307,14 @@ class Statement:
                     ]
                 ):
                     break
+                elif self.bad_token == ":":
+                    break
                 elif token.is_in(["if", "else", "for"]):
                     if token.start_row > previous_row_non_space:
                         # the keyword above likely starts a new statement
                         break
+                elif token.start_col <= self.statement_tokens[0].start_col:
+                    break
             if token.string.strip():
                 previous_row_non_space = token.end_row
 

@@ -1251,7 +1251,7 @@ def unclosed_bracket(statement):
     _ = current_lang.translate
     cause = hint = None
 
-    if not statement.begin_brackets:
+    if not statement.statement_brackets:
         return cause, hint
 
     bracket = statement.begin_brackets[0]
