@@ -33,3 +33,10 @@ We support the
 Contributors to this project, including those filing or commenting on an issue,
 are expected to do the same.
 
+
+## JetBrains support
+
+We graciously acknowledge the support of [JetBrains](
+https://www.jetbrains.com/?from=friendly_traceback)
+which enables us to use the professional version
+of PyCharm for developing Friendly-traceback.
