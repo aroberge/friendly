@@ -757,6 +757,30 @@ def keyword_as_function_name(statement):
 
 
 @add_statement_analyzer
+def other_invalid_function_names(statement):
+    _ = current_lang.translate
+    cause = hint = None
+
+    if (
+        statement.first_token != "def"
+        or statement.bad_token.is_identifier()
+        or not (statement.prev_token == statement.first_token)
+    ):
+        return cause, hint
+
+    possible_hint = _("You wrote an invalid function name.\n")
+    possible_cause = _("The name of a function must be a Python identifier.\n")
+    if statement.bad_token.is_string():
+        possible_cause += _("You attempted to use a string as a function name\n")
+
+    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "name")
+    if not fixers.check_statement(new_statement):
+        return cause, hint
+
+    return possible_cause, possible_hint
+
+
+@add_statement_analyzer
 def function_definition_missing_name(statement):
     _ = current_lang.translate
     cause = hint = None
