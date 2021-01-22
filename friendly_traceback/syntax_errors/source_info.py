@@ -267,11 +267,16 @@ class Statement:
         previous_row_non_space = -1
         previous_token = None
         continuation_line = False
+        last_closing = None
 
         for token in source_tokens:
             # Did we collect all the tokens belonging to the bad statement?
 
-            if token.start_row > self.linenumber and not continuation_line:
+            if (
+                token.start_row > self.linenumber
+                and (last_closing is None or token.start_row > last_closing.start_row)
+                and not continuation_line
+            ):
                 if not self.statement_brackets:
                     break
                 # perhaps we have some unclosed bracket causing the error
@@ -312,6 +317,7 @@ class Statement:
                         self.all_statements.append(self.statement_tokens[:])
                     self.statement_tokens = []
                     self.begin_brackets = []
+                    last_closing = None
                 previous_row = token.start_row
 
             if token != ";":
@@ -346,6 +352,7 @@ class Statement:
                     self.begin_brackets.append(token)
             elif token.is_in(")]}"):
                 self.end_bracket = token
+                last_closing = token
                 if not self.statement_brackets:
                     break
                 else:
