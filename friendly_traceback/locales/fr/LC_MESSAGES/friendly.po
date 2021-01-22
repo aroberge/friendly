@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-01-21 08:32-0400\n"
-"PO-Revision-Date: 2021-01-21 08:32-0400\n"
+"POT-Creation-Date: 2021-01-22 15:40-0400\n"
+"PO-Revision-Date: 2021-01-22 15:41-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -67,15 +67,15 @@ msgstr ""
 msgid "Warning: you have redefined the python builtin {name}."
 msgstr "Attention : vous avez redéfini l'identifiant Python (builtin) {name}."
 
-#: core.py:316 core.py:337
+#: core.py:318 core.py:339
 msgid "Python exception:"
 msgstr "Exception Python:"
 
-#: core.py:386 core.py:430
+#: core.py:388 core.py:434
 msgid "Likely cause based on the information given by Python:"
 msgstr "Cause probable basée sur les informations données par Python :"
 
-#: core.py:425
+#: core.py:429
 msgid ""
 "Python's error message (invalid syntax) cannot be used to identify the "
 "problem:"
@@ -83,23 +83,23 @@ msgstr ""
 "Le message d’erreur de Python (invalid syntax) ne peut pas être utilisé pour "
 "identifier le problème :"
 
-#: core.py:496
+#: core.py:500
 msgid ""
 "{filename} is not a regular Python file whose contents can be analyzed.\n"
 msgstr ""
 "{filename} n’est pas un fichier Python dont le contenu\n"
 "peut être analysé.\n"
 
-#: core.py:502
+#: core.py:506
 msgid "Exception raised on line {linenumber} of file {filename}.\n"
 msgstr "Exception levée à la ligne {linenumber} du fichier {filename}.\n"
 
-#: core.py:537
+#: core.py:541
 msgid "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
 "L'exécution s'est arrêtée à la ligne {linenumber} du fichier {filename}\n"
 
-#: core.py:556
+#: core.py:560
 msgid ""
 "`{filename}` is not a regular Python file whose contents\n"
 "can be analyzed.\n"
@@ -107,7 +107,7 @@ msgstr ""
 "`{filename}` n’est pas un fichier Python dont le contenu\n"
 "peut être analysé.\n"
 
-#: core.py:567
+#: core.py:571
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -117,7 +117,7 @@ msgstr ""
 "'{filename}'\n"
 "jusqu'à l'endroit indiqué par --> et ^.\n"
 
-#: core.py:573
+#: core.py:577
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
@@ -128,7 +128,7 @@ msgstr ""
 "La fin du fichier a été atteinte et Python s'attendait à voir plus de code.\n"
 "\n"
 
-#: core.py:579
+#: core.py:583
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -138,15 +138,15 @@ msgstr ""
 "'{filename}'\n"
 "pour une raison non spécifiée.\n"
 
-#: core.py:625
+#: core.py:629
 msgid "More lines not shown."
 msgstr "Plus de lignes non affichées."
 
-#: core.py:726
+#: core.py:730
 msgid "Problem: source of `{filename}` is not available\n"
 msgstr "Problème : la source de `{filename}` n'est pas disponible.\n"
 
-#: core.py:740
+#: core.py:744
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
@@ -156,7 +156,7 @@ msgstr ""
 "        vous devez utiliser la console 'Friendly' et non pas une \n"
 "        console Python régulière.\n"
 
-#: core.py:773
+#: core.py:777
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -1517,17 +1517,11 @@ msgstr ""
 "https://github.com/aroberge/friendly-traceback/issues\n"
 "\n"
 
-#: syntax_errors\indentation_error.py:9
-msgid ""
-"The line identified above\n"
-"is more indented than expected and \n"
-"does not match the indentation of the previous line.\n"
-msgstr ""
-"La ligne indiquée ci-dessus par -->\n"
-"est plus indentée que ce qui était attendu et ne\n"
-"correspond pas à l'indentation de la ligne précédente.\n"
+#: syntax_errors\indentation_error.py:10
+msgid "The line identified above is more indented than expected.\n"
+msgstr "La ligne indiquée ci-dessus par --> est plus indentée que prévu.\n"
 
-#: syntax_errors\indentation_error.py:15
+#: syntax_errors\indentation_error.py:12
 msgid ""
 "The line identified above\n"
 "was expected to begin a new indented block.\n"
@@ -1535,15 +1529,23 @@ msgstr ""
 "La ligne indiquée ci-dessus par --> devrait\n"
 "normalement commencer un nouveau bloc de code indenté.\n"
 
-#: syntax_errors\indentation_error.py:20
+#: syntax_errors\indentation_error.py:17
+msgid "The line identified above is less indented than expected.\n"
+msgstr "La ligne indiquée ci-dessus par --> est moins indentée que prévu.\n"
+
+#: syntax_errors\indentation_error.py:27
 msgid ""
-"The line identified above is\n"
-"less indented than the preceding one,\n"
-"and is not aligned vertically with another block of code.\n"
+"However, line {number}, which is identified as having a problem,\n"
+"consists of a single string which is also the case\n"
+"for the preceding line.\n"
+"Perhaps you meant to include a continuation character, `\\`,\n"
+"at the end of line {preceding}.\n"
 msgstr ""
-"La ligne indiquée ci-dessus par -->\n"
-"est moins indentée que la ligne précédente\n"
-"et n’est pas alignée verticalement avec un autre bloc de code.\n"
+"Toutefois, la ligne {number}, qui est identifiée comme ayant un problème,\n"
+"se compose d’une seule chaîne, ce qui est également le cas\n"
+"pour la ligne précédente.\n"
+"Peut-être que vous vouliez inclure un caractère de continuation, '\\',\n"
+"à la fin de la ligne {preceding}.\n"
 
 #: syntax_errors\message_analyzer.py:92
 msgid "You cannot assign a value to `{keyword}`."
@@ -2919,6 +2921,24 @@ msgstr "accolade `{`"
 #: syntax_errors\syntax_utils.py:47
 msgid "curly bracket `}`"
 msgstr "accolade `}`"
+
+#~ msgid ""
+#~ "The line identified above\n"
+#~ "is more indented than expected and \n"
+#~ "does not match the indentation of the previous line.\n"
+#~ msgstr ""
+#~ "La ligne indiquée ci-dessus par -->\n"
+#~ "est plus indentée que ce qui était attendu et ne\n"
+#~ "correspond pas à l'indentation de la ligne précédente.\n"
+
+#~ msgid ""
+#~ "The line identified above is\n"
+#~ "less indented than the preceding one,\n"
+#~ "and is not aligned vertically with another block of code.\n"
+#~ msgstr ""
+#~ "La ligne indiquée ci-dessus par -->\n"
+#~ "est moins indentée que la ligne précédente\n"
+#~ "et n’est pas alignée verticalement avec un autre bloc de code.\n"
 
 #~ msgid ""
 #~ "I make an effort below to guess what caused the problem\n"

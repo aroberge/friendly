@@ -18,11 +18,11 @@ descriptions = {
         title: "IndentationError: expected an indented block",
     },
     "raise_indentation_error2": {
-        cause: "does not match the indentation of the previous line",
+        cause: "is more indented than expected",
         title: "IndentationError: unexpected indent",
     },
     "raise_indentation_error3": {
-        cause: "not aligned vertically with another block of code",
+        cause: "is less indented than expected",
         title: "IndentationError: unindent does not match ...",
     },
     "raise_tab_error": {

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-01-21 08:32-0400\n"
+"POT-Creation-Date: 2021-01-22 15:40-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,77 +54,77 @@ msgstr ""
 msgid "Warning: you have redefined the python builtin {name}."
 msgstr ""
 
-#: core.py:316 core.py:337
+#: core.py:318 core.py:339
 msgid "Python exception:"
 msgstr ""
 
-#: core.py:386 core.py:430
+#: core.py:388 core.py:434
 msgid "Likely cause based on the information given by Python:"
 msgstr ""
 
-#: core.py:425
+#: core.py:429
 msgid "Python's error message (invalid syntax) cannot be used to identify the problem:"
 msgstr ""
 
-#: core.py:496
+#: core.py:500
 msgid ""
 "{filename} is not a regular Python file whose contents can be analyzed.\n"
 msgstr ""
 
-#: core.py:502
+#: core.py:506
 msgid ""
 "Exception raised on line {linenumber} of file {filename}.\n"
 msgstr ""
 
-#: core.py:537
+#: core.py:541
 msgid ""
 "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
 
-#: core.py:556
+#: core.py:560
 msgid ""
 "`{filename}` is not a regular Python file whose contents\n"
 "can be analyzed.\n"
 msgstr ""
 
-#: core.py:567
+#: core.py:571
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "beyond the location indicated by --> and ^.\n"
 msgstr ""
 
-#: core.py:573
+#: core.py:577
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
 "It reached the end of the file and expected more content.\n"
 msgstr ""
 
-#: core.py:579
+#: core.py:583
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "for an unspecified reason.\n"
 msgstr ""
 
-#: core.py:625
+#: core.py:629
 msgid "More lines not shown."
 msgstr ""
 
-#: core.py:726
+#: core.py:730
 msgid ""
 "Problem: source of `{filename}` is not available\n"
 msgstr ""
 
-#: core.py:740
+#: core.py:744
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
 "        regular Python console.\n"
 msgstr ""
 
-#: core.py:773
+#: core.py:777
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -1176,24 +1176,29 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\indentation_error.py:9
+#: syntax_errors\indentation_error.py:10
 msgid ""
-"The line identified above\n"
-"is more indented than expected and \n"
-"does not match the indentation of the previous line.\n"
+"The line identified above is more indented than expected.\n"
 msgstr ""
 
-#: syntax_errors\indentation_error.py:15
+#: syntax_errors\indentation_error.py:12
 msgid ""
 "The line identified above\n"
 "was expected to begin a new indented block.\n"
 msgstr ""
 
-#: syntax_errors\indentation_error.py:20
+#: syntax_errors\indentation_error.py:17
 msgid ""
-"The line identified above is\n"
-"less indented than the preceding one,\n"
-"and is not aligned vertically with another block of code.\n"
+"The line identified above is less indented than expected.\n"
+msgstr ""
+
+#: syntax_errors\indentation_error.py:27
+msgid ""
+"However, line {number}, which is identified as having a problem,\n"
+"consists of a single string which is also the case\n"
+"for the preceding line.\n"
+"Perhaps you meant to include a continuation character, `\\`,\n"
+"at the end of line {preceding}.\n"
 msgstr ""
 
 #: syntax_errors\message_analyzer.py:92
