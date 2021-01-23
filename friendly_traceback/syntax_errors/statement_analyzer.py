@@ -927,7 +927,7 @@ def _perhaps_misspelled_keyword(tokens, wrong):
     results = []
     for word in similar:
         new_statement = fixers.replace_token(tokens, wrong, word)
-        if syntax_utils.check_statement(new_statement):
+        if fixers.check_statement(new_statement):
             results.append((word, new_statement))
 
     if len(results) > 1:
@@ -945,7 +945,7 @@ def _add_comma_or_operator(tokens, tok, comma_first=True):
         if operator == " in" and results:
             break
         new_statement = fixers.modify_token(tokens, tok, append=operator)
-        if syntax_utils.check_statement(new_statement):
+        if fixers.check_statement(new_statement):
             if operator == "," and results:  # So that it prints correctly
                 operator = '","'
             results.append((operator.strip(), new_statement))
