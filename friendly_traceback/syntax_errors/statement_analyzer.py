@@ -769,7 +769,11 @@ def other_invalid_function_names(statement):
         return cause, hint
 
     possible_hint = _("You wrote an invalid function name.\n")
-    possible_cause = _("The name of a function must be a Python identifier.\n")
+    possible_cause = _(
+        "The name of a function must be a valid Python identifier,\n"
+        "that is a name that begins with a letter or an underscore character, `_`,\n"
+        "and which contains only letters, digits or the underscore character.\n"
+    )
     if statement.bad_token.is_string():
         possible_cause += _("You attempted to use a string as a function name\n")
 

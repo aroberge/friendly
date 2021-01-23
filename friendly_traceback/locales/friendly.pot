@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-01-22 17:25-0400\n"
+"POT-Creation-Date: 2021-01-23 07:42-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -804,10 +804,10 @@ msgid ""
 msgstr ""
 
 #: runtime_errors\type_error.py:207 runtime_errors\type_error.py:642
-#: runtime_errors\type_error.py:737 syntax_errors\statement_analyzer.py:1017
-#: syntax_errors\statement_analyzer.py:1077
-#: syntax_errors\statement_analyzer.py:1127
-#: syntax_errors\statement_analyzer.py:1135
+#: runtime_errors\type_error.py:737 syntax_errors\statement_analyzer.py:1020
+#: syntax_errors\statement_analyzer.py:1080
+#: syntax_errors\statement_analyzer.py:1130
+#: syntax_errors\statement_analyzer.py:1138
 msgid ""
 "Did you mean `{line}`?\n"
 msgstr ""
@@ -2027,92 +2027,94 @@ msgstr ""
 
 #: syntax_errors\statement_analyzer.py:772
 msgid ""
-"The name of a function must be a Python identifier.\n"
+"The name of a function must be a valid Python identifier,\n"
+"that is a name that begins with a letter or an underscore character, `_`,\n"
+"and which contains only letters, digits or the underscore character.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:774
+#: syntax_errors\statement_analyzer.py:777
 msgid ""
 "You attempted to use a string as a function name\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:795
+#: syntax_errors\statement_analyzer.py:798
 msgid ""
 "You forgot to name your function.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:813
+#: syntax_errors\statement_analyzer.py:816
 msgid ""
 "I am guessing that you tried to use the Python keyword\n"
 "`{kwd}` as an argument in the definition of a function\n"
 "where an identifier (variable name) was expected.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:836
+#: syntax_errors\statement_analyzer.py:839
 msgid ""
 "You tried to define a function and did not use the correct syntax.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:840
+#: syntax_errors\statement_analyzer.py:843
 msgid ""
 "You tried to define a function or method and did not use the correct syntax.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:861
+#: syntax_errors\statement_analyzer.py:864
 msgid ""
 "You tried to define a class and did not use the correct syntax.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:888
+#: syntax_errors\statement_analyzer.py:891
 msgid ""
 "I am guessing that you forgot a comma between two strings\n"
 "when defining a dict.\n"
 "\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:896
-#: syntax_errors\statement_analyzer.py:1013
+#: syntax_errors\statement_analyzer.py:899
+#: syntax_errors\statement_analyzer.py:1016
 msgid ""
 "Did you forget a comma?\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:946
+#: syntax_errors\statement_analyzer.py:949
 msgid ""
 "It is possible that you forgot a comma between items in a tuple, \n"
 "or between function arguments, \n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:953
+#: syntax_errors\statement_analyzer.py:956
 msgid ""
 "It is possible that you forgot a comma between items in a list\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:959
+#: syntax_errors\statement_analyzer.py:962
 msgid ""
 "It is possible that you forgot a comma between items in a set or dict\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:986
-#: syntax_errors\statement_analyzer.py:1095
+#: syntax_errors\statement_analyzer.py:989
+#: syntax_errors\statement_analyzer.py:1098
 msgid ""
 "Python indicates that the error is caused by `{second}` written immediately after `{first}`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1015
+#: syntax_errors\statement_analyzer.py:1018
 msgid ""
 "Perhaps you meant\n"
 "\n"
 "    {line}\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1022
+#: syntax_errors\statement_analyzer.py:1025
 msgid ""
 "Did you forget something between `{first}` and `{second}`?\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1037
+#: syntax_errors\statement_analyzer.py:1040
 msgid ""
 "Perhaps you meant to insert an operator like `{operators}`\n"
 "between `{first}` and `{second}`.\n"
@@ -2120,37 +2122,37 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1046
+#: syntax_errors\statement_analyzer.py:1049
 msgid ""
 "Note: these are just some of the possible choices and that\n"
 "some of them might raise other types of exceptions.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1065
+#: syntax_errors\statement_analyzer.py:1068
 msgid ""
 "Or perhaps you forgot that you cannot have spaces\n"
 "in variable names.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1108
+#: syntax_errors\statement_analyzer.py:1111
 msgid ""
 "Perhaps you forgot that you cannot have spaces\n"
 "in variable names and wrote `'{first} {second}'`\n"
 "instead of `'{first}_{second}'`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1113
+#: syntax_errors\statement_analyzer.py:1116
 msgid ""
 "Did you mean `'{first}_{second}'`?\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1129
+#: syntax_errors\statement_analyzer.py:1132
 msgid ""
 "Perhaps you meant to write `{keyword}` and made a typo.\n"
 "The correct line would then be `{line}`\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1137
+#: syntax_errors\statement_analyzer.py:1140
 msgid ""
 "Perhaps you wrote another word instead of a Python keyword.\n"
 "If that is the case, perhaps you meant to write one of\n"
@@ -2158,33 +2160,33 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1177
+#: syntax_errors\statement_analyzer.py:1180
 msgid ""
 "It is possible that you used an equal sign `=` instead of a colon `:`\n"
 "to assign values to keys in a dict\n"
 "before or at the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1197
+#: syntax_errors\statement_analyzer.py:1200
 msgid ""
 "You cannot have write the same operator, `{op}`, twice in a row.\n"
 "Perhaps you wrote one of them by mistake\n"
 "or forgot to write something between them.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1203
+#: syntax_errors\statement_analyzer.py:1206
 msgid ""
 "You cannot have these two operators, `{first}` and `{second}`,\n"
 "following each other. Perhaps you wrote one of them by mistake\n"
 "or forgot to write something between them.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1220
+#: syntax_errors\statement_analyzer.py:1223
 msgid ""
 "You cannot use dotted names as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1236
+#: syntax_errors\statement_analyzer.py:1239
 msgid ""
 "`/` indicates that the previous arguments in a function definition\n"
 "are positional arguments. However, `*` indicates that the arguments\n"
@@ -2192,22 +2194,22 @@ msgid ""
 "When they are used together, `/` must appear before `*`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1242
+#: syntax_errors\statement_analyzer.py:1245
 msgid ""
 "`*` must appear after `/` in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1247
+#: syntax_errors\statement_analyzer.py:1250
 msgid ""
 "You can only use `/` once in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1266
+#: syntax_errors\statement_analyzer.py:1269
 msgid ""
 "You can only use `*` once in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1291
+#: syntax_errors\statement_analyzer.py:1294
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
