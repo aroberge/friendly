@@ -909,7 +909,15 @@ def _perhaps_misspelled_keyword(tokens, wrong):
 
     # The 'except' and 'with' keywords can apparently appear in similar situations
     # as 'for', 'if', etc., without raising any SyntaxErrors.
-    excluded = [word for word in ["except", "with"] if word not in similar]
+    # Furthermore, while it might be syntactically correct to have something like
+    # else: statement_on_one_Line
+    # it should be avoided as it could lead to incorrect suggestions.
+    # Also, since 'if' can be used wherever 'elif' is acceptable, we exclude elif
+    excluded = [
+        word
+        for word in ["except", "with", "else", "finally", "try", "elif"]
+        if word not in similar
+    ]
 
     # 'not' can be used in many places, most of which would likely not make sense
     # as additional suggestions

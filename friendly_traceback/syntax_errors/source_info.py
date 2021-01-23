@@ -179,11 +179,10 @@ class Statement:
                 else:
                     self.prev_token = self.tokens[self.bad_token_index - 1]
 
-            if self.prev_token is None:
-                if self.bad_token_index == 0:
-                    self.prev_token = MEANINGLESS_TOKEN
-                else:
-                    self.prev_token = self.tokens[self.bad_token_index - 1]
+            if self.bad_token_index == 0:
+                self.prev_token = MEANINGLESS_TOKEN
+            elif self.prev_token is None:
+                self.prev_token = self.tokens[self.bad_token_index - 1]
 
         if self.last_token != self.bad_token:
             self.next_token = self.tokens[self.bad_token_index + 1]

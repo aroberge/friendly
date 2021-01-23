@@ -57,7 +57,13 @@ def _modify_source(tokens, original_token, replace="", append="", prepend=""):
         debug_helper.log("Problem in fixers._modify_source().")
         debug_helper.log("Empty token list was received")
         debug_helper.log_error()
-        return ""
+        return "?"
+
+    # In some instances, the token immediately before or immediately after the
+    # bad token will be set as a meaningless space token. It would not make sense
+    # to modify this token, and we thus return an invalid statement.
+    if not original_token.string.strip():  # When prev or next token is
+        return "?"
 
     try:
         new_tokens = []
@@ -68,7 +74,6 @@ def _modify_source(tokens, original_token, replace="", append="", prepend=""):
                 new_tokens.append(new_token)
             else:
                 new_tokens.append(tok)
-
         source = token_utils.untokenize(new_tokens)
         return source.strip()
     except Exception as e:
