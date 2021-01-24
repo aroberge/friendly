@@ -183,12 +183,15 @@ def assign_to_a_keyword(statement):
     """Checks to see if line is of the form 'keyword = ...'"""
     _ = current_lang.translate
     cause = hint = None
+    possible_cause = _(
+        "You were trying to assign a value to the Python keyword `{keyword}`.\n"
+        "This is not allowed.\n"
+        "\n"
+    )
     if statement.bad_token == "=" and statement.prev_token.is_keyword():
-        cause = _(
-            "You were trying to assign a value to the Python keyword `{keyword}`.\n"
-            "This is not allowed.\n"
-            "\n"
-        ).format(keyword=statement.prev_token)
+        cause = possible_cause.format(keyword=statement.prev_token)
+    elif statement.bad_token.is_keyword() and statement.next_token == "=":
+        cause = possible_cause.format(keyword=statement.bad_token)
     return cause, hint
 
 
