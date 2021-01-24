@@ -179,19 +179,24 @@ def detect_backquote(statement):
 
 
 @add_statement_analyzer
-def assign_to_a_keyword(statement):
-    """Checks to see if line is of the form 'keyword = ...'"""
+def keyword_as_attribute(statement):
+    """Will identify something like  obj.True ..."""
     _ = current_lang.translate
     cause = hint = None
-    possible_cause = _(
-        "You were trying to assign a value to the Python keyword `{keyword}`.\n"
-        "This is not allowed.\n"
-        "\n"
-    )
-    if statement.bad_token == "=" and statement.prev_token.is_keyword():
-        cause = possible_cause.format(keyword=statement.prev_token)
-    elif statement.bad_token.is_keyword() and statement.next_token == "=":
-        cause = possible_cause.format(keyword=statement.bad_token)
+    if statement.prev_token != ".":
+        return cause, hint
+
+    word = statement.bad_token
+    if word.is_keyword():
+        cause = _(
+            "You cannot use the Python keyword `{word}` as an attribute.\n\n"
+        ).format(word=word)
+    elif word == "__debug__":
+        cause = _("You cannot use the constant `__debug__` as an attribute.\n\n")
+
+    if cause is not None:
+        hint = _("`{word}` cannot be used as an attribute.\n").format(word=word)
+
     return cause, hint
 
 
@@ -234,28 +239,6 @@ def import_from(statement):
         "    from {module} import {function}\n\n"
         "\n"
     ).format(module=module, function=function)
-    return cause, hint
-
-
-@add_statement_analyzer
-def keyword_as_attribute(statement):
-    """Will identify something like  obj.True ..."""
-    _ = current_lang.translate
-    cause = hint = None
-    if statement.prev_token != ".":
-        return cause, hint
-
-    word = statement.bad_token
-    if word.is_keyword():
-        cause = _(
-            "You cannot use the Python keyword `{word}` as an attribute.\n\n"
-        ).format(word=word)
-    elif word == "__debug__":
-        cause = _("You cannot use the constant `__debug__` as an attribute.\n\n")
-
-    if cause is not None:
-        hint = _("`{word}` cannot be used as an attribute.\n").format(word=word)
-
     return cause, hint
 
 
@@ -867,6 +850,23 @@ def malformed_class_begin_code_block(statement):
 
     cause = _("You tried to define a class and did not use the correct syntax.\n")
 
+    return cause, hint
+
+
+@add_statement_analyzer
+def assign_to_a_keyword(statement):
+    """Checks to see if line is of the form 'keyword = ...'"""
+    _ = current_lang.translate
+    cause = hint = None
+    possible_cause = _(
+        "You were trying to assign a value to the Python keyword `{keyword}`.\n"
+        "This is not allowed.\n"
+        "\n"
+    )
+    if statement.bad_token == "=" and statement.prev_token.is_keyword():
+        cause = possible_cause.format(keyword=statement.prev_token)
+    elif statement.bad_token.is_keyword() and statement.next_token == "=":
+        cause = possible_cause.format(keyword=statement.bad_token)
     return cause, hint
 
 
