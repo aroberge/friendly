@@ -231,4 +231,5 @@ def zero_division_error():
         "It can also happen if you calculate the remainder of a division\n"
         "using the modulo operator `%`:\n"
         "    `result = my_variable % 0`\n"
+        "or if you try to raise 0 to a negative power.\n"
     )
