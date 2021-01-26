@@ -429,6 +429,10 @@ descriptions = {
         cause: "the exact same object, use the operator `is`",
         title: "Triple-equal sign",
     },
+    "raise_syntax_error99": {
+        cause: "you forgot that you cannot have spaces",
+        title: "Two consecutive names",
+    },
 }
 
 if sys.version_info < (3, 8):
@@ -437,5 +441,10 @@ if sys.version_info < (3, 8):
         cause: "walrus operator",
         title: "Walrus operator does not exist - yet",
     }
+
+# TODO: fix this eventually so that the test is included
+if sys.version_info < (3, 8):
+    del descriptions["raise_syntax_error99"]
+
 if sys.version_info >= (3, 9):
     descriptions["raise_syntax_error66"]["cause"] = "expected an indented block"
