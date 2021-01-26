@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-01-26 08:36-0400\n"
+"POT-Creation-Date: 2021-01-26 15:35-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2170,24 +2170,37 @@ msgstr ""
 
 #: syntax_errors\statement_analyzer.py:1212
 msgid ""
+"You wrote three equal signs in a row which is allowed in some\n"
+"programming languages, but not in Python. To check if two objects\n"
+"are equal, use two equal signs, `==`; to see if two names represent\n"
+"the exact same object, use the operator `is`.\n"
+msgstr ""
+
+#: syntax_errors\statement_analyzer.py:1218
+msgid ""
+"Did you mean to use `is` instead of `===`?\n"
+msgstr ""
+
+#: syntax_errors\statement_analyzer.py:1220
+msgid ""
 "You cannot have write the same operator, `{op}`, twice in a row.\n"
 "Perhaps you wrote one of them by mistake\n"
 "or forgot to write something between them.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1218
+#: syntax_errors\statement_analyzer.py:1226
 msgid ""
 "You cannot have these two operators, `{first}` and `{second}`,\n"
 "following each other. Perhaps you wrote one of them by mistake\n"
 "or forgot to write something between them.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1235
+#: syntax_errors\statement_analyzer.py:1243
 msgid ""
 "You cannot use dotted names as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1251
+#: syntax_errors\statement_analyzer.py:1259
 msgid ""
 "`/` indicates that the previous arguments in a function definition\n"
 "are positional arguments. However, `*` indicates that the arguments\n"
@@ -2195,22 +2208,22 @@ msgid ""
 "When they are used together, `/` must appear before `*`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1257
+#: syntax_errors\statement_analyzer.py:1265
 msgid ""
 "`*` must appear after `/` in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1262
+#: syntax_errors\statement_analyzer.py:1270
 msgid ""
 "You can only use `/` once in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1281
+#: syntax_errors\statement_analyzer.py:1289
 msgid ""
 "You can only use `*` once in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1306
+#: syntax_errors\statement_analyzer.py:1314
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""

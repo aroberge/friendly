@@ -425,6 +425,10 @@ descriptions = {
         cause: "The name of a function must be a valid Python identifier",
         title: "Non-identifier as a function name",
     },
+    "raise_syntax_error98": {
+        cause: "the exact same object, use the operator `is`",
+        title: "Triple-equal sign",
+    },
 }
 
 if sys.version_info < (3, 8):

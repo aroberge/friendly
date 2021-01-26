@@ -1208,7 +1208,15 @@ def consecutive_operators(statement):
     if not (is_op(statement.bad_token) and is_op(statement.prev_token)):
         return cause, hint
 
-    if statement.bad_token == statement.prev_token:
+    if statement.bad_token == "=" and statement.prev_token == "==":
+        cause = _(
+            "You wrote three equal signs in a row which is allowed in some\n"
+            "programming languages, but not in Python. To check if two objects\n"
+            "are equal, use two equal signs, `==`; to see if two names represent\n"
+            "the exact same object, use the operator `is`.\n"
+        )
+        hint = _("Did you mean to use `is` instead of `===`?\n")
+    elif statement.bad_token == statement.prev_token:
         cause = _(
             "You cannot have write the same operator, `{op}`, twice in a row.\n"
             "Perhaps you wrote one of them by mistake\n"
