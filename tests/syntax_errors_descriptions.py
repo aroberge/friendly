@@ -25,6 +25,10 @@ descriptions = {
         cause: "is less indented than expected",
         title: "IndentationError: unindent does not match ...",
     },
+    "raise_indentation_error4": {
+        cause: "meant to include a continuation character",
+        title: "IndentationError: missing continuation line",
+    },
     "raise_tab_error": {
         cause: "A `TabError` indicates that you have used",
         title: "TabError",
