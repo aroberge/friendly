@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-01-26 08:01-0400\n"
-"PO-Revision-Date: 2021-01-26 08:02-0400\n"
+"POT-Creation-Date: 2021-01-26 08:36-0400\n"
+"PO-Revision-Date: 2021-01-26 08:37-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -2682,9 +2682,9 @@ msgstr ""
 "soulignement.\n"
 
 #: syntax_errors\statement_analyzer.py:764
-msgid "You attempted to use a string as a function name\n"
+msgid "You attempted to use a string as a function name.\n"
 msgstr ""
-"Vous avez essayé d’utiliser une chaîne de caractères comme nom de fonction\n"
+"Vous avez essayé d’utiliser une chaîne de caractères comme nom de fonction.\n"
 
 #: syntax_errors\statement_analyzer.py:785
 msgid "You forgot to name your function.\n"

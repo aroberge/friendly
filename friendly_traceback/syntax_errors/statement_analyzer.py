@@ -761,7 +761,7 @@ def other_invalid_function_names(statement):
         "and which contains only letters, digits or the underscore character.\n"
     )
     if statement.bad_token.is_string():
-        possible_cause += _("You attempted to use a string as a function name\n")
+        possible_cause += _("You attempted to use a string as a function name.\n")
 
     new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "name")
     if not fixers.check_statement(new_statement):

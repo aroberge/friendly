@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-01-26 08:01-0400\n"
+"POT-Creation-Date: 2021-01-26 08:36-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2035,7 +2035,7 @@ msgstr ""
 
 #: syntax_errors\statement_analyzer.py:764
 msgid ""
-"You attempted to use a string as a function name\n"
+"You attempted to use a string as a function name.\n"
 msgstr ""
 
 #: syntax_errors\statement_analyzer.py:785

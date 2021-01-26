@@ -417,6 +417,14 @@ descriptions = {
         cause: "Did you made a mistake in writing an octal integer",
         title: "Invalid octal number",
     },
+    "raise_syntax_error96": {
+        cause: "use a string as a function name",
+        title: "Using a string as a function name",
+    },
+    "raise_syntax_error97": {
+        cause: "The name of a function must be a valid Python identifier",
+        title: "Non-identifier as a function name",
+    },
 }
 
 if sys.version_info < (3, 8):
