@@ -29,7 +29,11 @@ descriptions = {
         cause: "A `TabError` indicates that you have used",
         title: "TabError",
     },
-    "raise_syntax_error1": {
+    "raise_syntax_error0": {  # else is flagged
+        cause: "assign a value to the Python keyword `else`",
+        title: "Assign to keyword",
+    },
+    "raise_syntax_error1": {  # = sign is flagged
         cause: "assign a value to the Python keyword `def`",
         title: "Assign to keyword",
     },
