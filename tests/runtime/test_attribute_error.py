@@ -214,5 +214,25 @@ def test_Builtin_module_with_no_file():
     return result, message
 
 
+def test_Using_slots():
+    """Issue 141"""
+
+    class F:
+        __slots__ = ["a"]
+
+    f = F()
+    try:
+        f.b = 1
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+
+    assert "'F' object has no attribute 'b'" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "object `f` uses `__slots__`" in result
+    return result, message
+
+
 if __name__ == "__main__":
     print(test_Generic()[0])
