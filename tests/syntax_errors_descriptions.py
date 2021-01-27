@@ -433,7 +433,12 @@ descriptions = {
         cause: "you forgot that you cannot have spaces",
         title: "Two consecutive names",
     },
+    "raise_syntax_error100": {
+        cause: "only be used for boolean expressions",
+        title: "Using 'and' in import statement",
+    },
 }
+
 
 if sys.version_info < (3, 8):
     descriptions["raise_syntax_error55"]["cause"] = "walrus operator"

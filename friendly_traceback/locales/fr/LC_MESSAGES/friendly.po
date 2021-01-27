@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-01-26 15:35-0400\n"
-"PO-Revision-Date: 2021-01-26 15:36-0400\n"
+"POT-Creation-Date: 2021-01-27 11:06-0400\n"
+"PO-Revision-Date: 2021-01-27 11:08-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -2934,7 +2934,20 @@ msgstr ""
 "Vous ne pouvez utiliser `*` qu’une seule fois dans une définition de "
 "fonction.\n"
 
-#: syntax_errors\statement_analyzer.py:1314
+#: syntax_errors\statement_analyzer.py:1304
+msgid ""
+"The Python keyword `and` can only be used for boolean expressions.\n"
+"Perhaps you meant to write\n"
+"\n"
+"`{new_statement}`\n"
+msgstr ""
+"Le mot clé Python `and` ne peut être utilisé que pour les expressions "
+"booléennes.\n"
+"Peut-être que vous vouliez écrire\n"
+"\n"
+"`{new_statement}`\n"
+
+#: syntax_errors\statement_analyzer.py:1338
 msgid "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'est pas fermé par le symbole "

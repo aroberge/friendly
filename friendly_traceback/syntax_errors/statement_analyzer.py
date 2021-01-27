@@ -1292,6 +1292,32 @@ def keyword_arguments_in_def(statement):
     return cause, hint
 
 
+@add_statement_analyzer
+def and_instead_of_comma(statement):
+    # Example: from math import sin and cos
+    _ = current_lang.translate
+    cause = hint = None
+
+    if not statement.bad_token == "and":
+        return cause, hint
+
+    possible_cause = _(
+        "The Python keyword `and` can only be used for boolean expressions.\n"
+        "Perhaps you meant to write\n\n"
+        "`{new_statement}`\n"
+    )
+
+    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, ",")
+    if fixers.check_statement(new_statement):
+        cause = possible_cause.format(new_statement=new_statement)
+    else:  # 'and' following a comma
+        new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "")
+        if fixers.check_statement(new_statement):
+            cause = possible_cause.format(new_statement=new_statement)
+
+    return cause, hint
+
+
 # Keep last
 @add_statement_analyzer
 def unclosed_bracket(statement):
