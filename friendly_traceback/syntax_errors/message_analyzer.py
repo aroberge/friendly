@@ -218,6 +218,23 @@ def what_kind_of_literal(literal):
 
 
 @add_python_message
+def annotated_name_cannot_be_global(message="", **_kwargs):
+    # annotated name 'x' can't be global
+    _ = current_lang.translate
+    cause = hint = None
+    pattern1 = re.compile(r"annotated name '(.)' can't be global")
+    match = re.search(pattern1, message)
+    if not match:
+        return cause, hint
+    cause = _(
+        "The object named `{name}` is defined with type annotation\n"
+        "as a local variable. It cannot be declared to be a global variable.\n"
+    ).format(name=match.group(1))
+
+    return cause, hint
+
+
+@add_python_message
 def assign_to_literal(message="", statement=None):
     _ = current_lang.translate
     cause = hint = None

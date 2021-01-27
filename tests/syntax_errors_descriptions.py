@@ -437,6 +437,10 @@ descriptions = {
         cause: "only be used for boolean expressions",
         title: "Using 'and' in import statement",
     },
+    "raise_syntax_error101": {
+        cause: "It cannot be declared to be a global variable.",
+        title: "Annotated name cannot be global",
+    },
 }
 
 
