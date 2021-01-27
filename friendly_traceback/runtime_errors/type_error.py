@@ -416,10 +416,13 @@ def x_is_not_callable(message, frame, tb_data):
     obj = info_variables.get_object_from_name(obj_type, frame)
     all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
     for obj_name, instance in all_objects:
-        if isinstance(instance, obj) or instance == obj:
-            fn_call = tb_data.bad_line.replace(obj_name, "", 1).strip()
-            if fn_call.startswith("(") and fn_call.endswith(")"):
-                break
+        try:
+            if isinstance(instance, obj) or instance == obj:
+                fn_call = tb_data.bad_line.replace(obj_name, "", 1).strip()
+                if fn_call.startswith("(") and fn_call.endswith(")"):
+                    break
+        except Exception:
+            continue
     else:
         return cause, hint
 
