@@ -441,6 +441,10 @@ descriptions = {
         cause: "It cannot be declared to be a global variable.",
         title: "Annotated name cannot be global",
     },
+    "raise_syntax_error102": {
+        cause: "you forgot that you cannot have spaces",
+        title: "Two consecutive names",
+    },
 }
 
 
@@ -450,10 +454,8 @@ if sys.version_info < (3, 8):
         cause: "walrus operator",
         title: "Walrus operator does not exist - yet",
     }
-
-# TODO: fix this eventually so that the test is included
-if sys.version_info < (3, 8):
     del descriptions["raise_syntax_error99"]
+    del descriptions["raise_syntax_error102"]
 
 if sys.version_info >= (3, 9):
     descriptions["raise_syntax_error66"]["cause"] = "expected an indented block"

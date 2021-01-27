@@ -983,6 +983,7 @@ def missing_comma_or_operator(statement):
     """Check to see if a comma or other operator
     is possibly missing between identifiers, or numbers, or both.
     """
+    # TODO: refactor this
     _ = current_lang.translate
     cause = hint = None
 
@@ -1090,44 +1091,31 @@ def missing_comma_or_operator(statement):
                 first_tokens.append(tok.string)
         if line:
             hint = _("Did you mean `{line}`?\n").format(line=line)
-
-    return cause, hint
-
-
-@add_statement_analyzer
-def space_in_identifiers(statement):
-    # More general handling of space between identifiers; something like
-    # "my name" instead of "my_name".
-    # We limit this to cases where both parts are valid identifiers.
-    _ = current_lang.translate
-    cause = hint = None
-
-    bad_token = statement.bad_token
-    prev_token = statement.prev_token
-    if not (bad_token.is_identifier() and prev_token.is_identifier()):
-        return cause, hint
-
-    possible_cause = _(
-        "Python indicates that the error is caused by "
-        "`{second}` written immediately after `{first}`.\n"
-    ).format(first=prev_token, second=bad_token)
-
-    new_statement = fixers.replace_two_tokens(
-        statement.tokens,
-        prev_token,
-        prev_token.string + "_" + bad_token.string,
-        bad_token,
-        "",
-    )
-    if fixers.check_statement(new_statement):
-        cause = possible_cause + _(
-            "Perhaps you forgot that you cannot have spaces\n"
-            "in variable names and wrote `'{first} {second}'`\n"
-            "instead of `'{first}_{second}'`.\n"
-        ).format(first=prev_token, second=bad_token)
-        hint = _("Did you mean `'{first}_{second}'`?\n").format(
-            first=prev_token, second=bad_token
+    else:
+        new_statement = fixers.replace_two_tokens(
+            statement.tokens,
+            prev_token,
+            prev_token.string + "_" + bad_token.string,
+            bad_token,
+            "",
         )
+        if fixers.check_statement(new_statement):
+            if cause is None:
+                cause = ""
+            cause += _(
+                "Perhaps you forgot that you cannot have spaces\n"
+                "in variable names and wrote `'{first} {second}'`\n"
+                "instead of `'{first}_{second}'`.\n"
+            ).format(first=prev_token, second=bad_token)
+        if hint is None:
+            hint = _("Did you mean `'{first}_{second}'`?\n").format(
+                first=prev_token, second=bad_token
+            )
+        elif statement.first_token != "def" and statement.first_token != "class":
+            hint = _("Did you mean `'{first}_{second}'`?\n").format(
+                first=prev_token, second=bad_token
+            )
+
     return cause, hint
 
 

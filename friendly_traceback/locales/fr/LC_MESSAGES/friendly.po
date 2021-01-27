@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-01-27 16:56-0400\n"
-"PO-Revision-Date: 2021-01-27 16:58-0400\n"
+"POT-Creation-Date: 2021-01-27 18:10-0400\n"
+"PO-Revision-Date: 2021-01-27 18:11-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1030,10 +1030,10 @@ msgstr ""
 "{first} et {second}.\n"
 
 #: runtime_errors\type_error.py:207 runtime_errors\type_error.py:642
-#: runtime_errors\type_error.py:737 syntax_errors\statement_analyzer.py:1032
-#: syntax_errors\statement_analyzer.py:1092
-#: syntax_errors\statement_analyzer.py:1142
-#: syntax_errors\statement_analyzer.py:1150
+#: runtime_errors\type_error.py:737 syntax_errors\statement_analyzer.py:1033
+#: syntax_errors\statement_analyzer.py:1093
+#: syntax_errors\statement_analyzer.py:1130
+#: syntax_errors\statement_analyzer.py:1138
 msgid "Did you mean `{line}`?\n"
 msgstr "Vouliez-vous dire `{line}` ?\n"
 
@@ -2739,7 +2739,7 @@ msgstr ""
 "\n"
 
 #: syntax_errors\statement_analyzer.py:903
-#: syntax_errors\statement_analyzer.py:1028
+#: syntax_errors\statement_analyzer.py:1029
 msgid "Did you forget a comma?\n"
 msgstr "Avez-vous oublié une virgule ?\n"
 
@@ -2772,8 +2772,7 @@ msgstr ""
 "éléments d'un ensemble (set)\n"
 "ou un dict avant la position indiquée par --> et ^.\n"
 
-#: syntax_errors\statement_analyzer.py:1001
-#: syntax_errors\statement_analyzer.py:1110
+#: syntax_errors\statement_analyzer.py:1002
 msgid ""
 "Python indicates that the error is caused by `{second}` written immediately "
 "after `{first}`.\n"
@@ -2781,7 +2780,7 @@ msgstr ""
 "Python indique que l’erreur est causée par `{second}` écrit tout juste après "
 "`{first}`.\n"
 
-#: syntax_errors\statement_analyzer.py:1030
+#: syntax_errors\statement_analyzer.py:1031
 msgid ""
 "Perhaps you meant\n"
 "\n"
@@ -2791,11 +2790,11 @@ msgstr ""
 "\n"
 "    {line}\n"
 
-#: syntax_errors\statement_analyzer.py:1037
+#: syntax_errors\statement_analyzer.py:1038
 msgid "Did you forget something between `{first}` and `{second}`?\n"
 msgstr "Avez-vous oublié quelque chose entre `{first}` et `{second}` ?\n"
 
-#: syntax_errors\statement_analyzer.py:1052
+#: syntax_errors\statement_analyzer.py:1053
 msgid ""
 "Perhaps you meant to insert an operator like `{operators}`\n"
 "between `{first}` and `{second}`.\n"
@@ -2807,7 +2806,7 @@ msgstr ""
 "Les lignes de code suivantes ne causeraient pas des `SyntaxError :\n"
 "\n"
 
-#: syntax_errors\statement_analyzer.py:1061
+#: syntax_errors\statement_analyzer.py:1062
 msgid ""
 "Note: these are just some of the possible choices and that\n"
 "some of them might raise other types of exceptions.\n"
@@ -2815,7 +2814,7 @@ msgstr ""
 "Remarque : ce ne sont là que quelques-uns des choix possibles et\n"
 "certains d’entre eux pourraient soulever d’autres types d’exceptions.\n"
 
-#: syntax_errors\statement_analyzer.py:1080
+#: syntax_errors\statement_analyzer.py:1081
 msgid ""
 "Or perhaps you forgot that you cannot have spaces\n"
 "in variable names.\n"
@@ -2823,7 +2822,7 @@ msgstr ""
 "Ou peut-être avez-vous oublié que vous ne pouvez pas\n"
 "avoir d'espaces dans des noms variables.\n"
 
-#: syntax_errors\statement_analyzer.py:1123
+#: syntax_errors\statement_analyzer.py:1105
 msgid ""
 "Perhaps you forgot that you cannot have spaces\n"
 "in variable names and wrote `'{first} {second}'`\n"
@@ -2833,11 +2832,12 @@ msgstr ""
 "avoir d'espaces dans des noms variables et avez écrit `'{first} {second}'`\n"
 "au lieu de `'{first}_{second}'`.\n"
 
-#: syntax_errors\statement_analyzer.py:1128
+#: syntax_errors\statement_analyzer.py:1111
+#: syntax_errors\statement_analyzer.py:1115
 msgid "Did you mean `'{first}_{second}'`?\n"
 msgstr "Vouliez-vous dire `'{first}_{second}'` ?\n"
 
-#: syntax_errors\statement_analyzer.py:1144
+#: syntax_errors\statement_analyzer.py:1132
 msgid ""
 "Perhaps you meant to write `{keyword}` and made a typo.\n"
 "The correct line would then be `{line}`\n"
@@ -2846,7 +2846,7 @@ msgstr ""
 "faute.\n"
 "Si c'est le cas, la ligne correcte aurait été au lieu de `{line}`.\n"
 
-#: syntax_errors\statement_analyzer.py:1152
+#: syntax_errors\statement_analyzer.py:1140
 msgid ""
 "Perhaps you wrote another word instead of a Python keyword.\n"
 "If that is the case, perhaps you meant to write one of\n"
@@ -2859,7 +2859,7 @@ msgstr ""
 "`SyntaxError` :\n"
 "\n"
 
-#: syntax_errors\statement_analyzer.py:1192
+#: syntax_errors\statement_analyzer.py:1180
 msgid ""
 "It is possible that you used an equal sign `=` instead of a colon `:`\n"
 "to assign values to keys in a dict\n"
@@ -2870,7 +2870,7 @@ msgstr ""
 "pour attribuer des valeurs à une clé d'un dictionnaire\n"
 "avant ou exactement à la position indiquée par --> et ^.\n"
 
-#: syntax_errors\statement_analyzer.py:1212
+#: syntax_errors\statement_analyzer.py:1200
 msgid ""
 "You wrote three equal signs in a row which is allowed in some\n"
 "programming languages, but not in Python. To check if two objects\n"
@@ -2884,11 +2884,11 @@ msgstr ""
 "représentent\n"
 "exactement le même objet, utilisez l’opérateur `is`.\n"
 
-#: syntax_errors\statement_analyzer.py:1218
+#: syntax_errors\statement_analyzer.py:1206
 msgid "Did you mean to use `is` instead of `===`?\n"
 msgstr "Voulez-vous utiliser `is` au lieu de `===`?\n"
 
-#: syntax_errors\statement_analyzer.py:1220
+#: syntax_errors\statement_analyzer.py:1208
 msgid ""
 "You cannot have write the same operator, `{op}`, twice in a row.\n"
 "Perhaps you wrote one of them by mistake\n"
@@ -2898,7 +2898,7 @@ msgstr ""
 "Peut-être avez-vous écrit l’un d’eux par erreur\n"
 "ou vous avez oublié d’écrire quelque chose entre les deux.\n"
 
-#: syntax_errors\statement_analyzer.py:1226
+#: syntax_errors\statement_analyzer.py:1214
 msgid ""
 "You cannot have these two operators, `{first}` and `{second}`,\n"
 "following each other. Perhaps you wrote one of them by mistake\n"
@@ -2908,13 +2908,13 @@ msgstr ""
 "qui se suivent. Peut-être avez-vous écrit l’un d’eux par erreur\n"
 "ou vous avez oublié d’écrire quelque chose entre les deux.\n"
 
-#: syntax_errors\statement_analyzer.py:1243
+#: syntax_errors\statement_analyzer.py:1231
 msgid "You cannot use dotted names as function arguments.\n"
 msgstr ""
 "Vous avez tenté d'utiliser un objet avec un attribut comme argument de "
 "fonction.\n"
 
-#: syntax_errors\statement_analyzer.py:1259
+#: syntax_errors\statement_analyzer.py:1247
 msgid ""
 "`/` indicates that the previous arguments in a function definition\n"
 "are positional arguments. However, `*` indicates that the arguments\n"
@@ -2926,23 +2926,23 @@ msgstr ""
 "qui suivent doivent être des arguments nommés.\n"
 "Lorsqu’ils sont utilisés ensemble, `/` doit apparaître avant `*`.\n"
 
-#: syntax_errors\statement_analyzer.py:1265
+#: syntax_errors\statement_analyzer.py:1253
 msgid "`*` must appear after `/` in a function definition.\n"
 msgstr "`*` doit apparaître après `/` dans une définition de fonction.\n"
 
-#: syntax_errors\statement_analyzer.py:1270
+#: syntax_errors\statement_analyzer.py:1258
 msgid "You can only use `/` once in a function definition.\n"
 msgstr ""
 "Vous ne pouvez utiliser `/` qu’une seule fois dans une définition de "
 "fonction.\n"
 
-#: syntax_errors\statement_analyzer.py:1289
+#: syntax_errors\statement_analyzer.py:1277
 msgid "You can only use `*` once in a function definition.\n"
 msgstr ""
 "Vous ne pouvez utiliser `*` qu’une seule fois dans une définition de "
 "fonction.\n"
 
-#: syntax_errors\statement_analyzer.py:1304
+#: syntax_errors\statement_analyzer.py:1292
 msgid ""
 "The Python keyword `and` can only be used for boolean expressions.\n"
 "Perhaps you meant to write\n"
@@ -2955,7 +2955,7 @@ msgstr ""
 "\n"
 "`{new_statement}`\n"
 
-#: syntax_errors\statement_analyzer.py:1340
+#: syntax_errors\statement_analyzer.py:1328
 msgid "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'est pas fermé par le symbole "
