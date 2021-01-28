@@ -398,6 +398,33 @@ def delete_function_call(message="", statement=None):
 
 
 @add_python_message
+def delete_X(message="", statement=None):
+    _ = current_lang.translate
+    cause = hint = None
+    if not (
+        message == "can't delete keyword"  # Python 3.6, 3.7
+        or message == "can't delete literal"
+        or message == "cannot delete literal"  # Python 3.8
+        or message == "cannot delete None"
+        or message == "cannot delete True"
+        or message == "cannot delete False"
+    ):
+        return cause, hint
+
+    if statement.bad_token.is_in(["None", "True", "False"]):
+        cause = _("You cannot delete the constant `{constant}`.\n").format(
+            constant=statement.bad_token
+        )
+    else:
+        cause = _(
+            "You cannot delete the literal `{literal}`.\n"
+            "You can only delete the names of objects, or\n"
+            "individual items in a container.\n"
+        ).format(literal=statement.bad_token)
+    return cause, hint
+
+
+@add_python_message
 def duplicate_argument_in_function_definition(message="", **_kwargs):
     _ = current_lang.translate
     cause = hint = None

@@ -445,6 +445,14 @@ descriptions = {
         cause: "you forgot that you cannot have spaces",
         title: "Two consecutive names",
     },
+    "raise_syntax_error103": {
+        cause: "You cannot delete the constant",
+        title: "Deleting constant/keyword",
+    },
+    "raise_syntax_error104": {
+        cause: "You cannot delete the literal",
+        title: "Deleting literal",
+    },
 }
 
 
