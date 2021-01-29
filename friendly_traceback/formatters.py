@@ -354,7 +354,7 @@ def _no_result(info, include):
     """
     _ = current_lang.translate
     if include == "why":
-        return _("I do not know.")
+        return _("I have no suggestion to offer.")
     elif include == "hint":
         if info["cause"]:
             return _("I have no suggestion to offer; try `why()`.")
