@@ -68,21 +68,21 @@ def print_different(fn_name, in_36, in_37, in_38, in_39, in_310):
         output.write("</pre>\n")
 
 
-for fn_name in info_36:
+for f_name in info_36:
     try:
-        messages_36 = info_36[fn_name].replace("<", "&lt;").replace(">", "&gt;")
-        messages_37 = info_37[fn_name].replace("<", "&lt;").replace(">", "&gt;")
-        messages_38 = info_38[fn_name].replace("<", "&lt;").replace(">", "&gt;")
-        messages_39 = info_39[fn_name].replace("<", "&lt;").replace(">", "&gt;")
-        messages_310 = info_310[fn_name].replace("<", "&lt;").replace(">", "&gt;")
+        messages_36 = info_36[f_name].replace("<", "&lt;").replace(">", "&gt;")
+        messages_37 = info_37[f_name].replace("<", "&lt;").replace(">", "&gt;")
+        messages_38 = info_38[f_name].replace("<", "&lt;").replace(">", "&gt;")
+        messages_39 = info_39[f_name].replace("<", "&lt;").replace(">", "&gt;")
+        messages_310 = info_310[f_name].replace("<", "&lt;").replace(">", "&gt;")
     except KeyError:
         output.write("<div class='filename-header'>")
-        output.write("entry does not exist in one data file for " + fn_name)
+        output.write("entry does not exist in one data file for " + f_name)
         output.write("</div>\n")
         continue
 
     print_different(
-        fn_name, messages_36, messages_37, messages_38, messages_39, messages_310
+        f_name, messages_36, messages_37, messages_38, messages_39, messages_310
     )
 
 output.write("</div>\n")

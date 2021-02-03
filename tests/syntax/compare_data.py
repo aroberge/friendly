@@ -26,6 +26,7 @@ def print_different(filename, in_36, in_37, in_38, in_39, in_310, topic):
     header_added = False
     printed_37 = False
     printed_38 = False
+    printed_39 = False
     if in_36 != in_37:
         if filename not in files:
             output.write("<div class='filename-header'>\n")
@@ -77,7 +78,7 @@ def print_different(filename, in_36, in_37, in_38, in_39, in_310, topic):
         if not header_added:
             output.write(header)
         output.write("<pre class='highlight friendly-small-pre'>")
-        if not printed_38:
+        if not printed_39:
             output.write("<b>3.9: </b>" + in_39 + "\n")
         output.write("<b>3.10: </b>" + in_310 + "\n")
         output.write("</pre>\n")
