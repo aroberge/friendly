@@ -398,7 +398,7 @@ def delete_function_call(message="", statement=None):
 
 
 @add_python_message
-def delete_X(message="", statement=None):
+def delete_x(message="", statement=None):
     _ = current_lang.translate
     cause = hint = None
     if not (
@@ -443,7 +443,10 @@ def duplicate_argument_in_function_definition(message="", **_kwargs):
 def eol_while_scanning_string_literal(message="", **_kwargs):
     _ = current_lang.translate
     cause = hint = None
-    if "EOL while scanning string literal" in message:
+    if (
+        "EOL while scanning string literal" in message
+        or "unterminated string literal" in message  # Python 3.10
+    ):
         hint = _("Did you forget a closing quote?\n")
         cause = _(
             "You starting writing a string with a single or double quote\n"

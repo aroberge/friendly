@@ -82,7 +82,7 @@ descriptions = {
         title: "Inversion: import X from Y",
     },
     "raise_syntax_error12": {
-        cause: "EOL while scanning string literal",
+        cause: "ended the string with another quote",
         title: "EOL while scanning string literal",
     },
     "raise_syntax_error13": {
@@ -467,3 +467,8 @@ if sys.version_info < (3, 8):
 
 if sys.version_info >= (3, 9):
     descriptions["raise_syntax_error66"]["cause"] = "expected an indented block"
+
+if sys.version_info >= (3, 10):
+    descriptions["raise_syntax_error24"]["cause"] = "ended the string with another quote"
+    del descriptions["raise_syntax_error26"]  # Temporary due to a bug in CPython
+    del descriptions["raise_syntax_error27"]  # Temporary due to a bug in CPython
