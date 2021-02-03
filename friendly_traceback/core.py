@@ -46,6 +46,22 @@ except ImportError:
     pass  # ignore errors when processed by Sphinx
 
 
+STR_FAILED = "<exception str() failed>"  # Same as Python
+
+
+def convert_value_to_message(value):
+    """This converts the 'value' of an exception into a string, while
+    being safe to use for custom exceptions which have been incorrectly
+    defined. See Issue 181.
+    """
+    _ = current_lang.translate
+    try:
+        message = str(value)
+    except Exception:
+        message = STR_FAILED
+    return message
+
+
 class TracebackData:
     """Raw traceback info obtained from Python.
 
@@ -65,7 +81,7 @@ class TracebackData:
         self.exception_type = etype
         self.exception_name = etype.__name__
         self.value = value
-        self.message = str(value)
+        self.message = convert_value_to_message(value)
         self.tb = tb
         self.bad_line = "\n"
         self.formatted_tb = traceback.format_exception(etype, value, tb)
@@ -319,6 +335,22 @@ class FriendlyTraceback:
         self.assign_message()  # language independent
         self.assign_tracebacks()
 
+    def assign_message(self):
+        """Assigns the error message, as the attribute ``message``
+        which is something like::
+
+            NameError: name 'a' is not defined
+        """
+        exc_name = self.tb_data.exception_name
+
+        value = self.tb_data.value
+        if hasattr(value, "msg"):
+            self.info["message"] = f"{exc_name}: {value.msg}\n"
+        else:
+            message = convert_value_to_message(value)
+            self.info["message"] = f"{exc_name}: {message}\n"
+        self.message = self.info["message"]
+
     def compile_info(self):
         """Compile all info that was not set in __init__."""
         self.assign_generic()
@@ -355,9 +387,18 @@ class FriendlyTraceback:
 
         the latter being the "hint" appended to the friendly traceback.
         """
+        _ = current_lang.translate
         if self.tb_data.filename in ["<unknown>", "<string>"]:
             return
-        if issubclass(self.tb_data.exception_type, SyntaxError):
+        elif STR_FAILED in self.message:
+            self.info["cause"] = _(
+                "Warning: improperly formed exception.\n"
+                "I suspect that a custom exception has been raised\n"
+                "with a non-string value used as a message.\n"
+                "This can occur if a `__repr__` or a `__str__` method\n"
+                "raises an exception or does not return a string.\n"
+            )
+        elif issubclass(self.tb_data.exception_type, SyntaxError):
             self.set_cause_syntax()
         else:
             self.set_cause_runtime()
@@ -374,7 +415,6 @@ class FriendlyTraceback:
         * suggest
         """
         _ = current_lang.translate
-
         etype = self.tb_data.exception_type
         value = self.tb_data.value
         if self.tb_data.filename == "<stdin>":
@@ -587,20 +627,6 @@ class FriendlyTraceback:
             ).format(filename=path_utils.shorten_path(filepath))
 
         self.info["parsing_error_source"] = f"{partial_source}\n"
-
-    def assign_message(self):
-        """Assigns the error message, as the attribute ``message``
-        which is something like::
-
-            NameError: name 'a' is not defined
-        """
-        exc_name = self.tb_data.exception_name
-        value = self.tb_data.value
-        if hasattr(value, "msg"):
-            self.info["message"] = f"{exc_name}: {value.msg}\n"
-        else:
-            self.info["message"] = f"{exc_name}: {value}\n"
-        self.message = self.info["message"]
 
     def assign_tracebacks(self):
         """When required, a standard Python traceback might be required to be

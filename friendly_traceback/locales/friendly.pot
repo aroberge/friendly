@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-01-28 17:16-0400\n"
+"POT-Creation-Date: 2021-02-03 12:47-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,84 +54,93 @@ msgstr ""
 msgid "Warning: you have redefined the python builtin {name}."
 msgstr ""
 
-#: core.py:318 core.py:339
+#: core.py:334 core.py:371
 msgid "Python exception:"
 msgstr ""
 
-#: core.py:388 core.py:434
+#: core.py:394
+msgid ""
+"Warning: improperly formed exception.\n"
+"I suspect that a custom exception has been raised\n"
+"with a non-string value used as a message.\n"
+"This can occur if a `__repr__` or a `__str__` method\n"
+"raises an exception or does not return a string.\n"
+msgstr ""
+
+#: core.py:428 core.py:474
 msgid "Likely cause based on the information given by Python:"
 msgstr ""
 
-#: core.py:429
+#: core.py:469
 msgid "Python's error message (invalid syntax) cannot be used to identify the problem:"
 msgstr ""
 
-#: core.py:500
+#: core.py:540
 msgid ""
 "{filename} is not a regular Python file whose contents can be analyzed.\n"
 msgstr ""
 
-#: core.py:506
+#: core.py:546
 msgid ""
 "Exception raised on line {linenumber} of file {filename}.\n"
 msgstr ""
 
-#: core.py:541
+#: core.py:581
 msgid ""
 "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
 
-#: core.py:560
+#: core.py:600
 msgid ""
 "`{filename}` is not a regular Python file whose contents\n"
 "can be analyzed.\n"
 msgstr ""
 
-#: core.py:571
+#: core.py:611
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "beyond the location indicated by --> and ^.\n"
 msgstr ""
 
-#: core.py:577
+#: core.py:617
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
 "It reached the end of the file and expected more content.\n"
 msgstr ""
 
-#: core.py:583
+#: core.py:623
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "for an unspecified reason.\n"
 msgstr ""
 
-#: core.py:629
+#: core.py:655
 msgid "More lines not shown."
 msgstr ""
 
-#: core.py:730
+#: core.py:756
 msgid ""
 "Problem: source of `{filename}` is not available\n"
 msgstr ""
 
-#: core.py:744
+#: core.py:770
 msgid ""
 "        To see the lines of code that cause the problem, \n"
 "        you must use the Friendly Console and not a \n"
 "        regular Python console.\n"
 msgstr ""
 
-#: core.py:777
+#: core.py:803
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
 "Are you using a regular Python console instead of a Friendly-console?\n"
 msgstr ""
 
-#: formatters.py:204 formatters.py:357
+#: formatters.py:204
 msgid "I do not know."
 msgstr ""
 
@@ -139,7 +148,7 @@ msgstr ""
 msgid "I have no suggestion to offer; try `why()`."
 msgstr ""
 
-#: formatters.py:209 formatters.py:362
+#: formatters.py:209 formatters.py:357 formatters.py:362
 msgid "I have no suggestion to offer."
 msgstr ""
 
@@ -376,7 +385,7 @@ msgid ""
 msgstr ""
 
 #: runtime_errors\attribute_error.py:77 runtime_errors\attribute_error.py:118
-#: runtime_errors\attribute_error.py:224 runtime_errors\import_error.py:114
+#: runtime_errors\attribute_error.py:224 runtime_errors\import_error.py:108
 #: runtime_errors\module_not_found_error.py:55 runtime_errors\name_error.py:82
 #: runtime_errors\unbound_local_error.py:44
 #: syntax_errors\message_analyzer.py:322 syntax_errors\message_analyzer.py:941
@@ -390,7 +399,7 @@ msgid ""
 msgstr ""
 
 #: runtime_errors\attribute_error.py:85 runtime_errors\attribute_error.py:231
-#: runtime_errors\import_error.py:121
+#: runtime_errors\import_error.py:115
 msgid ""
 "Did you mean one of the following: `{names}`?\n"
 msgstr ""
@@ -543,7 +552,7 @@ msgid ""
 "You have a circular import.\n"
 msgstr ""
 
-#: runtime_errors\import_error.py:75 runtime_errors\import_error.py:107
+#: runtime_errors\import_error.py:75
 msgid ""
 "The object that could not be imported is `{name}`.\n"
 "The module or package where it was \n"
@@ -559,12 +568,12 @@ msgid ""
 "before the execution of the code in module 'A' had been completed.\n"
 msgstr ""
 
-#: runtime_errors\import_error.py:115
+#: runtime_errors\import_error.py:109
 msgid ""
 "Perhaps you meant to import `{correct}` (from `{module}`) instead of `{typo}`\n"
 msgstr ""
 
-#: runtime_errors\import_error.py:124
+#: runtime_errors\import_error.py:118
 msgid ""
 "Instead of trying to import `{typo}` from `{module}`, \n"
 "perhaps you meant to import one of \n"
@@ -572,12 +581,12 @@ msgid ""
 "`{candidates}`\n"
 msgstr ""
 
-#: runtime_errors\import_error.py:143
+#: runtime_errors\import_error.py:137
 msgid ""
 "The object that could not be imported is `{name}`.\n"
 msgstr ""
 
-#: runtime_errors\import_error.py:185
+#: runtime_errors\import_error.py:179
 msgid ""
 "The problem was likely caused by what is known as a 'circular import'.\n"
 "First, Python imported and started executing the code in file\n"

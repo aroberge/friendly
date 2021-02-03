@@ -104,12 +104,6 @@ def cannot_import_name_from(name, module, frame, tb_data, add_circular_hint=True
     if not similar:
         return cause, hint
 
-    cause = _(
-        "The object that could not be imported is `{name}`.\n"
-        "The module or package where it was \n"
-        "expected to be found is `{module}`.\n"
-    ).format(name=name, module=module)
-
     if len(similar) == 1:
         hint = _("Did you mean `{name}`?\n").format(name=similar[0])
         cause = _(
