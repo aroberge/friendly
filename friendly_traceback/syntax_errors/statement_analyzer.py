@@ -1091,7 +1091,7 @@ def missing_comma_or_operator(statement):
                 first_tokens.append(tok.string)
         if line:
             hint = _("Did you mean `{line}`?\n").format(line=line)
-    else:
+    elif prev_token.is_identifier():
         new_statement = fixers.replace_two_tokens(
             statement.tokens,
             prev_token,
