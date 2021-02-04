@@ -4,19 +4,8 @@ The exception hook at the heart of Friendly-traceback.
 
 You should not need to use any of the functions defined here;
 they are considered to be internal functions, subject to change at any
-time. If functions defined in __init__.py do not meet your needs,
+time. If functions defined in friendly_traceback.__init__.py do not meet your needs,
 please file an issue.
-
-IMPORTANT: All the traceback information is collected in a dict called 'info'
-which is passed around as an argument to many functions where its content
-can be changed. Admittedly, this is going against the "best practices"
-from modern functional programming where only immutable objects are
-passed to functions which do not produce side effects.
-
-I have found that passing this 'info' object around was an easier way
-to figure out when a change is made as one can simply do a string search
-and locate a particular message, instead of attempting to follow
-function call after function call.
 """
 import inspect
 import os
@@ -52,7 +41,7 @@ STR_FAILED = "<exception str() failed>"  # Same as Python
 def convert_value_to_message(value):
     """This converts the 'value' of an exception into a string, while
     being safe to use for custom exceptions which have been incorrectly
-    defined. See Issue 181.
+    defined. See issue #181 for an example.
     """
     _ = current_lang.translate
     try:
@@ -67,8 +56,7 @@ class TracebackData:
 
     Instances of this class are intended to include all the relevant
     information about an exception so that a FriendlyTraceback object
-    can be created in any language.
-
+    can be created.
     """
 
     def __init__(self, etype, value, tb):
@@ -82,21 +70,26 @@ class TracebackData:
         self.exception_name = etype.__name__
         self.value = value
         self.message = convert_value_to_message(value)
-        self.tb = tb
-        self.bad_line = "\n"
         self.formatted_tb = traceback.format_exception(etype, value, tb)
         self.records = self.get_records(tb)
-        self.get_source_info(etype, value)  # sets the proper value for bad_line
-        if issubclass(etype, SyntaxError):
-            self.statement = source_info.Statement(self.value, self.bad_line)
-        else:
-            self.statement = None
+
+        # The following three attributes get their correct values in get_source_info()
+        self.bad_line = "\n"
+        self.filename = ""
+        self.exception_frame = None
+        self.get_source_info(etype, value)
+
+        # The following four attributes get their correct values in locate_error()
         self.node = None
         self.node_text = ""
         self.node_range = None
         self.original_bad_line = ""
-        if not issubclass(etype, SyntaxError):
-            self.locate_error()
+
+        if issubclass(etype, SyntaxError):
+            self.statement = source_info.Statement(self.value, self.bad_line)
+        else:
+            self.statement = None
+            self.locate_error(tb)
 
     def get_records(self, tb):
         """Get the traceback frame history, excluding those originating
@@ -138,9 +131,10 @@ class TracebackData:
                     self.bad_line = "\n"
                 return
         elif self.records:
-            self.exception_frame, filename, linenumber, _, _, _ = self.records[-1]
-            _, line = cache.get_formatted_partial_source(filename, linenumber, None)
-            self.filename = filename
+            self.exception_frame, self.filename, linenumber, _, _, _ = self.records[-1]
+            _, line = cache.get_formatted_partial_source(
+                self.filename, linenumber, None
+            )
             self.bad_line = line.rstrip()
             return
 
@@ -150,22 +144,9 @@ class TracebackData:
         debug_helper.log("etype:" + str(etype))
         debug_helper.log("value:" + str(value))
         debug_helper.log_error()
-        self.filename = ""
-        self.bad_line = "\n"
-        return
 
-    def copy_simulated(self, tb):
-        """Gets a copy of the simulated traceback as it is used in at least
-        one case to determine the cause.
-
-        Such a case is when we have a circular import.
-        """
-        self.simulated_python_traceback = tb
-
-    def locate_error(self):
+    def locate_error(self, tb):
         """Attempts to narrow down the location of the error."""
-        self.node_text = ""
-        self.node_range = None
         if not self.records:
             return
 
@@ -194,10 +175,9 @@ class TracebackData:
         # the line that caused the exception by that of the node itself,
         # to be used later for processing.
         if self.exception_name == "NameError":
-            # `executing` cannot give us location in this case
+            # `executing` cannot give us the node location in this case
             return self.locate_name_error()
 
-        tb = self.tb
         while True:
             if tb.tb_frame == self.exception_frame:
                 break
@@ -206,7 +186,7 @@ class TracebackData:
                 return
 
         try:
-            self.executing = ex = executing.Source.executing(tb)
+            ex = executing.Source.executing(tb)
             self.node = ex.node
             self.node_text = ex.text()
             # We want to transform logical line (or parts thereof) into
@@ -332,7 +312,7 @@ class FriendlyTraceback:
             print("Please report this issue.")
             raise SystemExit
         self.info = {"header": _("Python exception:")}
-        self.assign_message()  # language independent
+        self.message = self.assign_message()  # language independent
         self.assign_tracebacks()
 
     def assign_message(self):
@@ -349,7 +329,7 @@ class FriendlyTraceback:
         else:
             message = convert_value_to_message(value)
             self.info["message"] = f"{exc_name}: {message}\n"
-        self.message = self.info["message"]
+        return self.info["message"]
 
     def compile_info(self):
         """Compile all info that was not set in __init__."""
@@ -375,17 +355,6 @@ class FriendlyTraceback:
     def assign_cause(self):
         """Determine the cause of an exception, which is what is returned
         by ``why()``.
-
-        Sets the value of the following attributes:
-
-        * cause_header
-        * cause
-
-        and possibly:
-
-        * suggest
-
-        the latter being the "hint" appended to the friendly traceback.
         """
         _ = current_lang.translate
         if self.tb_data.filename in ["<unknown>", "<string>"]:
@@ -413,6 +382,8 @@ class FriendlyTraceback:
         and possibly:
 
         * suggest
+
+        the latter being the "hint" appended to the friendly traceback.
         """
         _ = current_lang.translate
         etype = self.tb_data.exception_type
@@ -422,7 +393,7 @@ class FriendlyTraceback:
             return
 
         cause, hint = info_specific.get_likely_cause(
-            etype, value, self.exception_frame, self.tb_data
+            etype, value, self.tb_data.exception_frame, self.tb_data
         )  # [3]
         if cause is not None:
             self.info["cause_header"] = _(
@@ -442,6 +413,8 @@ class FriendlyTraceback:
         and possibly:
 
         * suggest
+
+        the latter being the "hint" appended to the friendly traceback.
         """
         _ = current_lang.translate
         etype = self.tb_data.exception_type
@@ -527,10 +500,8 @@ class FriendlyTraceback:
         _ = current_lang.translate
 
         frame, filename, linenumber, _func, lines, index = record
-        # The following is needed when determining the cause
-        self.exception_frame = frame
 
-        source_info = get_partial_source(
+        partial_source = get_partial_source(
             filename, linenumber, lines, index, self.tb_data.node_range
         )
         filename = path_utils.shorten_path(filename)
@@ -550,12 +521,12 @@ class FriendlyTraceback:
         if unavailable:
             return
 
-        self.info["exception_raised_source"] = source_info["source"]
+        self.info["exception_raised_source"] = partial_source["source"]
 
         if self.tb_data.node_text:
             line = self.tb_data.node_text
         else:
-            line = source_info["line"]
+            line = partial_source["line"]
 
         var_info = info_variables.get_var_info(line, frame)
         if var_info:
@@ -573,7 +544,7 @@ class FriendlyTraceback:
         _ = current_lang.translate
 
         frame, filename, linenumber, _func, lines, index = record
-        source_info = get_partial_source(filename, linenumber, lines, index)
+        partial_source = get_partial_source(filename, linenumber, lines, index)
         filename = path_utils.shorten_path(filename)
         if session.use_rich:
             filename = f"`'{filename}'`"
@@ -581,9 +552,9 @@ class FriendlyTraceback:
         self.info["last_call_header"] = _(
             "Execution stopped on line {linenumber} of file {filename}.\n"
         ).format(linenumber=linenumber, filename=filename)
-        self.info["last_call_source"] = source_info["source"]
+        self.info["last_call_source"] = partial_source["source"]
 
-        var_info = info_variables.get_var_info(source_info["line"], frame)
+        var_info = info_variables.get_var_info(partial_source["line"], frame)
         if var_info:
             self.info["last_call_variables"] = var_info
 
@@ -700,7 +671,9 @@ class FriendlyTraceback:
         self.info["original_python_traceback"] = "\n".join(python_tb) + "\n"
         # The following is needed for some determining the cause in at
         # least one case.
-        self.tb_data.copy_simulated("\n".join(tb) + "\n")
+        self.tb_data.simulated_python_traceback = self.info[
+            "simulated_python_traceback"
+        ]
 
     def create_traceback(self):
         """Using records that exclude code from certain files,
@@ -710,11 +683,11 @@ class FriendlyTraceback:
         result = []
         for record in self.tb_data.records:
             frame, filename, linenumber, _func, lines, index = record
-            source_info = get_partial_source(filename, linenumber, lines, index)
+            partial_source = get_partial_source(filename, linenumber, lines, index)
             result.append(
                 '  File "{}", line {}, in {}'.format(filename, linenumber, _func)
             )
-            bad_line = source_info["line"]
+            bad_line = partial_source["line"]
             if bad_line is not None:
                 result.append("    {}".format(bad_line.strip()))
 
@@ -767,14 +740,11 @@ def get_partial_source(filename, linenumber, lines, index, text_range=None):
         if not source:
             line = ""
             if filename == "<stdin>":
-                source = _(
-                    "        To see the lines of code that cause the problem, \n"
-                    "        you must use the Friendly Console and not a \n"
-                    "        regular Python console.\n"
-                )
+                source = "\n"  # Using a normal Python REPL - source unavailable.
+                # An appropriate error message will have been given via
+                # cannot_analyze_stdin
             else:
                 source = file_not_found
-                line = ""
                 debug_helper.log("Problem in get_partial_source().")
                 debug_helper.log(file_not_found)
     elif not filename:
