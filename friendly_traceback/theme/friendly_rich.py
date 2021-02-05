@@ -38,9 +38,9 @@ def init_console(style="dark"):
         if self.lexer_name == "default":
             self.lexer_name = "python"
         if style == "light" or style == "tango":
-            syntax = Syntax(code, self.lexer_name, theme="tango")
+            syntax = Syntax(code, self.lexer_name, theme="tango", word_wrap=True)
         else:
-            syntax = Syntax(code, self.lexer_name, theme=style)
+            syntax = Syntax(code, self.lexer_name, theme=style, word_wrap=True)
         yield syntax
 
     CodeBlock.__rich_console__ = _patch_code_block
