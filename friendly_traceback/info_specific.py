@@ -143,6 +143,7 @@ def _unbound_local_error(value, frame, tb_data):
 
 
 @register("ZeroDivisionError")
-def zero_division_error(*_args):
-    # TODO: add explanation for three different cases.
-    return None, None  # No additional information can be provided
+def zero_division_error(value, frame, tb_data):
+    from .runtime_errors import zero_division_error
+
+    return zero_division_error.get_cause(value, frame, tb_data)

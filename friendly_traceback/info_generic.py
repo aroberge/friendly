@@ -225,11 +225,6 @@ def unknown_warning():
 def zero_division_error():
     _ = current_lang.translate
     return _(
-        "A `ZeroDivisionError` occurs when you are attempting to divide\n"
-        "a value by zero:\n"
-        "    `result = my_variable / 0.`\n"
-        "It can also happen if you calculate the remainder of a division\n"
-        "using the modulo operator `%`:\n"
-        "    `result = my_variable % 0`\n"
-        "or if you try to raise 0 to a negative power.\n"
+        "A `ZeroDivisionError` occurs when you are attempting to divide a value\n"
+        "by zero either directly or by using some other mathematical operation.\n"
     )
