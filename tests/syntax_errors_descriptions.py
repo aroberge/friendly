@@ -457,6 +457,10 @@ descriptions = {
         cause: "Did you forget to escape a backslash character",
         title: "EOL unescaped backslash",
     },
+    "raise_syntax_error106": {
+        cause: "you can replace the part that contains a backslash",
+        title: "f-string with backslash",
+    },
 }
 
 

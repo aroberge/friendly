@@ -189,6 +189,26 @@ def assign_to_f_expression(message="", statement=None):
     return cause, hint
 
 
+@add_python_message
+def f_string_backslash(message="", **_kwargs):
+    _ = current_lang.translate
+    cause = hint = None
+    if message != "f-string expression part cannot include a backslash":
+        return cause, hint
+
+    cause = _(
+        "You have written an f-string whose content `{...}`\n"
+        "includes a backslash; this is not allowed.\n"
+        "Perhaps you can replace the part that contains a backslash by\n"
+        "some variable. For example, suppose that you have an f-string like:\n\n"
+        "    f\"{... 'hello\\n' ...}\"\n\n"
+        "you could write this as\n\n"
+        "    hello = 'hello\\n'\n"
+        '    f"{... hello ...}"\n'
+    )
+    return cause, hint
+
+
 def what_kind_of_literal(literal):
     _ = current_lang.translate
 
