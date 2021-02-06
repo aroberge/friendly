@@ -1,6 +1,8 @@
 from .. import debug_helper
 from ..my_gettext import current_lang
 
+
+_ = current_lang.translate
 MESSAGES_PARSERS = []
 
 
@@ -25,7 +27,6 @@ def get_cause(value, frame, tb_data):
 
 
 def _get_cause(message, frame, tb_data):
-    _ = current_lang.translate
     unknown = _(
         "I do not recognize this case. Please report it to\n"
         "https://github.com/aroberge/friendly-traceback/issues\n"
@@ -38,9 +39,21 @@ def _get_cause(message, frame, tb_data):
     return unknown, None
 
 
+def expression_is_zero(expression, modulo=False):
+    """Simpler message when the denominator is a literal 0."""
+    try:
+        if int(expression) == 0:
+            if modulo:
+                return _("Using the modulo operator, you are dividing by zero.\n")
+            return _("You are dividing by zero.\n")
+        else:
+            return ""
+    except Exception:
+        return ""
+
+
 @add_message_parser
 def division_by_zero(message, _frame, tb_data):
-    _ = current_lang.translate
     cause = hint = None
     if (
         message != "division by zero"
@@ -52,11 +65,13 @@ def division_by_zero(message, _frame, tb_data):
     expression = tb_data.bad_line
     if expression.count("/") == 1:
         expression = expression.split("/")[1]
-        cause = _(
-            "You are dividing by the following term\n\n"
-            "    {expression}\n\n"
-            "which is equal to zero.\n"
-        ).format(expression=expression)
+        cause = expression_is_zero(expression)
+        if not cause:
+            cause = _(
+                "You are dividing by the following term\n\n"
+                "    {expression}\n\n"
+                "which is equal to zero.\n"
+            ).format(expression=expression)
     else:
         cause = _(
             "The following mathematical expression includes a division by zero:\n\n"
@@ -67,7 +82,6 @@ def division_by_zero(message, _frame, tb_data):
 
 @add_message_parser
 def integer_or_modulo(message, _frame, tb_data):
-    _ = current_lang.translate
     cause = hint = None
     if message != "integer division or modulo by zero":
         return cause, hint
@@ -78,11 +92,13 @@ def integer_or_modulo(message, _frame, tb_data):
     if nb_div and not (nb_mod or nb_divmod):
         if nb_div == 1:
             expression = expression.split("//")[1]
-            cause = _(
-                "You are dividing by the following term\n\n"
-                "    {expression}\n\n"
-                "which is equal to zero.\n"
-            ).format(expression=expression)
+            cause = expression_is_zero(expression)
+            if not cause:
+                cause = _(
+                    "You are dividing by the following term\n\n"
+                    "    {expression}\n\n"
+                    "which is equal to zero.\n"
+                ).format(expression=expression)
         else:
             cause = _(
                 "The following mathematical expression includes a division by zero:\n\n"
@@ -91,11 +107,13 @@ def integer_or_modulo(message, _frame, tb_data):
     elif nb_mod and not (nb_div or nb_divmod):
         if nb_mod == 1:
             expression = expression.split("%")[1]
-            cause = _(
-                "Using the modulo operator, you are dividing by the following term\n\n"
-                "    {expression}\n\n"
-                "which is equal to zero.\n"
-            ).format(expression=expression)
+            cause = expression_is_zero(expression, modulo=True)
+            if not cause:
+                cause = _(
+                    "Using the modulo operator, you are dividing by the following term\n\n"
+                    "    {expression}\n\n"
+                    "which is equal to zero.\n"
+                ).format(expression=expression)
         else:
             cause = _(
                 "The following mathematical expression includes a division by zero:\n\n"
@@ -114,7 +132,6 @@ def integer_or_modulo(message, _frame, tb_data):
 
 @add_message_parser
 def zero_negative_power(message, *_ignore):
-    _ = current_lang.translate
     if message != "0.0 cannot be raised to a negative power":
         return None, None
     cause = _(
@@ -126,17 +143,18 @@ def zero_negative_power(message, *_ignore):
 
 @add_message_parser
 def float_modulo(message, _frame, tb_data):
-    _ = current_lang.translate
     if message != "float modulo":
         return None, None
     expression = tb_data.bad_line
     if expression.count("%") == 1:
         expression = expression.split("%")[1]
-        cause = _(
-            "Using the modulo operator, you are dividing by the following term\n\n"
-            "    {expression}\n\n"
-            "which is equal to zero.\n"
-        ).format(expression=expression)
+        cause = expression_is_zero(expression, modulo=True)
+        if not cause:
+            cause = _(
+                "Using the modulo operator, you are dividing by the following term\n\n"
+                "    {expression}\n\n"
+                "which is equal to zero.\n"
+            ).format(expression=expression)
     else:
         cause = _(
             "The following mathematical expression includes a division by zero\n"
@@ -149,7 +167,6 @@ def float_modulo(message, _frame, tb_data):
 
 @add_message_parser
 def float_divmod(message, *_ignore):
-    _ = current_lang.translate
     if message != "float divmod()":
         return None, None
 

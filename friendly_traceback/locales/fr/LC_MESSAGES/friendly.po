@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-02-06 11:03-0400\n"
-"PO-Revision-Date: 2021-02-06 11:04-0400\n"
+"POT-Creation-Date: 2021-02-06 13:38-0400\n"
+"PO-Revision-Date: 2021-02-06 13:39-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -957,7 +957,7 @@ msgstr ""
 "`{unknown_name}`.\n"
 
 #: runtime_errors\type_error.py:39 runtime_errors\value_error.py:38
-#: runtime_errors\zero_division_error.py:29
+#: runtime_errors\zero_division_error.py:30
 msgid ""
 "I do not recognize this case. Please report it to\n"
 "https://github.com/aroberge/friendly-traceback/issues\n"
@@ -1472,8 +1472,16 @@ msgstr ""
 "Dans ce cas-ci, il y a moins de noms ({nb_names})\n"
 "que la longueur de l’itérable, {iter_type} de longueur {length}.\n"
 
-#: runtime_errors\zero_division_error.py:55
-#: runtime_errors\zero_division_error.py:81
+#: runtime_errors\zero_division_error.py:47
+msgid "Using the modulo operator, you are dividing by zero.\n"
+msgstr "En utilisant l’opérateur modulo, vous divisez par zéro.\n"
+
+#: runtime_errors\zero_division_error.py:48
+msgid "You are dividing by zero.\n"
+msgstr "Vous divisez par zéro.\n"
+
+#: runtime_errors\zero_division_error.py:70
+#: runtime_errors\zero_division_error.py:97
 msgid ""
 "You are dividing by the following term\n"
 "\n"
@@ -1487,10 +1495,10 @@ msgstr ""
 "\n"
 "qui est égal à zéro.\n"
 
-#: runtime_errors\zero_division_error.py:61
-#: runtime_errors\zero_division_error.py:87
-#: runtime_errors\zero_division_error.py:100
-#: runtime_errors\zero_division_error.py:107
+#: runtime_errors\zero_division_error.py:76
+#: runtime_errors\zero_division_error.py:103
+#: runtime_errors\zero_division_error.py:118
+#: runtime_errors\zero_division_error.py:125
 msgid ""
 "The following mathematical expression includes a division by zero:\n"
 "\n"
@@ -1500,8 +1508,8 @@ msgstr ""
 "\n"
 "    {expression}\n"
 
-#: runtime_errors\zero_division_error.py:94
-#: runtime_errors\zero_division_error.py:135
+#: runtime_errors\zero_division_error.py:112
+#: runtime_errors\zero_division_error.py:153
 msgid ""
 "Using the modulo operator, you are dividing by the following term\n"
 "\n"
@@ -1515,11 +1523,11 @@ msgstr ""
 "\n"
 "qui est égal à zéro.\n"
 
-#: runtime_errors\zero_division_error.py:105
+#: runtime_errors\zero_division_error.py:123
 msgid "The second argument of the `divmod()` function is zero.\n"
 msgstr "Le deuxième argument de la fonction `divmod()` est égal à zéro.\n"
 
-#: runtime_errors\zero_division_error.py:120
+#: runtime_errors\zero_division_error.py:137
 msgid ""
 "You are attempting to raise the number 0 to a negative power\n"
 "which is equivalent to dividing by zero.\n"
@@ -1527,7 +1535,7 @@ msgstr ""
 "Vous essayez d'élever le nombre 0 à une puissance négative\n"
 "ce qui équivaut à diviser par zéro.\n"
 
-#: runtime_errors\zero_division_error.py:141
+#: runtime_errors\zero_division_error.py:159
 msgid ""
 "The following mathematical expression includes a division by zero\n"
 "done using the modulo operator:\n"
@@ -1539,7 +1547,7 @@ msgstr ""
 "\n"
 "    {expression}\n"
 
-#: runtime_errors\zero_division_error.py:156
+#: runtime_errors\zero_division_error.py:173
 msgid "The second argument to the `divmod()` function is equal to zero.\n"
 msgstr "Le deuxième argument de la fonction `divmod()` est égal à zéro.\n"
 
