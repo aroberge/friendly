@@ -440,7 +440,7 @@ def duplicate_argument_in_function_definition(message="", **_kwargs):
 
 
 @add_python_message
-def eol_while_scanning_string_literal(message="", **_kwargs):
+def eol_while_scanning_string_literal(message="", statement=None):
     _ = current_lang.translate
     cause = hint = None
     if (
@@ -452,6 +452,15 @@ def eol_while_scanning_string_literal(message="", **_kwargs):
             "You starting writing a string with a single or double quote\n"
             "but never ended the string with another quote on that line.\n"
         )
+        # second if case for Python 3.10
+        if statement.prev_token == "\\" or statement.bad_line[-2] == "\\":
+            cause += _(
+                "Perhaps you meant to write the backslash character, `\\`\n"
+                "as the last character in the string and forgot that you\n"
+                "needed to escape it by writing two `\\` in a row.\n"
+            )
+            hint = _("Did you forget to escape a backslash character?\n")
+
     return cause, hint
 
 

@@ -453,6 +453,10 @@ descriptions = {
         cause: "You cannot delete the literal",
         title: "Deleting literal",
     },
+    "raise_syntax_error105": {
+        cause: "Did you forget to escape a backslash character",
+        title: "EOL unescaped backslash",
+    },
 }
 
 
