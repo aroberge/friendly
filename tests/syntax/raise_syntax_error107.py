@@ -1,0 +1,3 @@
+some_text = """In a land
+populated by weird animals,
+a ...

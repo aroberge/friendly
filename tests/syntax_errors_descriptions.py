@@ -461,6 +461,10 @@ descriptions = {
         cause: "you can replace the part that contains a backslash",
         title: "f-string with backslash",
     },
+    "raise_syntax_error107": {
+        cause: "You started writing a triple-quoted string",
+        title: "Unterminated triple quoted string",
+    },
 }
 
 

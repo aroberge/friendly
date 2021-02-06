@@ -1025,6 +1025,24 @@ def invalid_octal(message="", statement=None):
     return cause, hint
 
 
+@add_python_message
+def eof_unclosed_triple_quoted(message="", **_kwargs):
+    _ = current_lang.translate
+    cause = hint = None
+    if not (
+        message == "EOF while scanning triple-quoted string literal"
+        or "unterminated triple-quoted string literal" in message
+    ):
+        return cause, hint
+
+    cause = _(
+        "You started writing a triple-quoted string but never wrote\n"
+        "the triple quotes needed to end the string.\n"
+    )
+
+    return cause, hint
+
+
 # # --------- Keep this last
 # @add_python_message
 # def general_fstring_problem(message="", statement=None):
