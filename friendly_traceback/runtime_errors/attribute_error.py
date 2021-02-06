@@ -169,6 +169,10 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
         debug_helper.log("object is not on bad_line in attribute_error_in_object.")
         return cause, hint
 
+    possible_cause = tuple_by_accident(instance, obj_name, attribute)
+    if possible_cause:
+        return possible_cause
+
     known_attributes = dir(instance)
 
     # Example: this.len -> len(this)
@@ -190,7 +194,7 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
     if known_synonyms:
         return use_synonym(obj_name, attribute, known_synonyms)
 
-    # Example: list.apend -> list.append
+    # noqa Example: list.apend -> list.append
     similar = get_similar_words(attribute, known_attributes)
     if similar:
         return handle_attribute_typo(obj_name, attribute, similar)
@@ -240,8 +244,30 @@ def handle_attribute_typo(obj_name, attribute, similar):
 def perhaps_builtin(attribute, known_attributes):
     if attribute in ["min", "max", "sorted", "reversed", "sum"]:
         return attribute
-    if attribute in ["len", "length", "lenght"] and "__len__" in known_attributes:
+    if (
+        attribute in ["len", "length", "lenght"]  # noqa
+        and "__len__" in known_attributes
+    ):
         return "len"
+
+
+def tuple_by_accident(obj, obj_name, attribute):
+    _ = current_lang.translate
+    cause = hint = None
+    if not (isinstance(obj, tuple) and len(obj) == 1):
+        return cause
+
+    true_obj = obj[0]
+    if hasattr(true_obj, attribute):
+        hint = _("Did you write a comma by mistake?\n")
+        cause = _(
+            "`{obj_name}` is a tuple that contains a single item\n"
+            "which does have `'{attribute}'` as an attribute.\n"
+            "Perhaps you added a trailing comma by mistake at the end of the line\n"
+            "where you defined `{obj_name}`.\n"
+        ).format(obj_name=obj_name, attribute=attribute)
+
+    return cause, hint
 
 
 def use_str_join(obj_name):

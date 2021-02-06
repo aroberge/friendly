@@ -234,5 +234,21 @@ def test_Using_slots():
     return result, message
 
 
+def test_Tuple_by_accident():
+    something = "abc",  # note trailing comma
+    try:
+        something.upper()
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+
+    assert "'tuple' object has no attribute 'upper'" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "Did you write a comma" in result
+
+    return result, message
+
+
 if __name__ == "__main__":
     print(test_Generic()[0])
