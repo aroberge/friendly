@@ -687,8 +687,12 @@ class FriendlyTraceback:
         seen = set()
         lines = []
 
-        def add_line(line):
-            lines.append(line)
+        direct_cause = (
+            "The above exception was the direct cause of the following exception:"
+        )
+        another_exception = (
+            "During handling of the above exception, another exception occurred:"
+        )
 
         def chain_exc(typ, exc, tb):
             seen.add(id(exc))
@@ -696,29 +700,21 @@ class FriendlyTraceback:
             cause = exc.__cause__
             if cause is not None and id(cause) not in seen:
                 chain_exc(type(cause), cause, cause.__traceback__)
-                add_line(
-                    "\n    "
-                    + "The above exception was the direct cause of the following exception:"
-                    + "\n\n"
-                )
+                lines.append(f"\n    {direct_cause}\n\n")
             elif (
                 context is not None
                 and not exc.__suppress_context__
                 and id(context) not in seen
             ):
                 chain_exc(type(context), context, context.__traceback__)
-                add_line(
-                    "\n    "
-                    + "During handling of the above exception, another exception occurred:"
-                    + "\n\n"
-                )
+                lines.append(f"\n    {another_exception}\n\n")
             if tb:
                 tbe = traceback.extract_tb(tb)
-                add_line("Traceback (most recent call last):\n")
+                lines.append("Traceback (most recent call last):\n")
                 for line in traceback.format_list(tbe):
-                    add_line(line)
+                    lines.append(line)
                 for line in traceback.format_exception_only(typ, exc):
-                    add_line(line)
+                    lines.append(line)
 
         chain_exc(etype, value, None)
         return "".join(lines)
