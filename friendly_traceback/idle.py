@@ -30,9 +30,9 @@ def install_in_idle_shell():
         for line in lines:
             if not line.endswith("\n"):
                 line += "\n"
-            if filename.startswith("<pyshell#") and line.startswith("    "):
+            if filename.startswith("<pyshell#") and line.startswith("\t"):
                 # Remove extra indentation added in the shell
-                line = line[4:]
+                line = "    " + line[1:]
             new_lines.append(line)
         if linenumber is None:
             return new_lines
