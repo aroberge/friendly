@@ -18,6 +18,7 @@ from . import info_generic
 from . import info_specific
 from . import info_variables
 from . import debug_helper
+from . import source_cache
 
 from .my_gettext import current_lang
 
@@ -500,6 +501,8 @@ class FriendlyTraceback:
         _ = current_lang.translate
 
         frame, filename, linenumber, _func, lines, index = record
+        if lines == ["\n"] and source_cache.idle_get_lines is not None:
+            lines = source_cache.idle_get_lines(filename, linenumber - 1)
 
         partial_source = get_partial_source(
             filename, linenumber, lines, index, self.tb_data.node_range
@@ -544,6 +547,8 @@ class FriendlyTraceback:
         _ = current_lang.translate
 
         frame, filename, linenumber, _func, lines, index = record
+        if lines == ["\n"] and source_cache.idle_get_lines is not None:
+            lines = source_cache.idle_get_lines(filename, linenumber - 1)
         partial_source = get_partial_source(filename, linenumber, lines, index)
         filename = path_utils.shorten_path(filename)
         if session.use_rich:

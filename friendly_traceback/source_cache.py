@@ -12,6 +12,8 @@ import time
 
 old_getlines = linecache.getlines
 
+idle_get_lines = None
+
 
 class Cache:
     """Class used to store source of files and similar objects"""
@@ -58,9 +60,12 @@ class Cache:
         The contents is stored as a string and returned as a list of lines,
         each line ending with a newline character.
         """
-        lines = old_getlines(filename, module_globals=module_globals)
-        if not lines and filename in self.cache:
-            lines = self.cache[filename]
+        if idle_get_lines is not None:
+            lines = idle_get_lines(filename, None)
+        else:
+            lines = old_getlines(filename, module_globals=module_globals)
+            if not lines and filename in self.cache:
+                lines = self.cache[filename]
         lines.append("\n")  # required when dealing with EOF errors
         return lines
 
