@@ -666,14 +666,62 @@ class FriendlyTraceback:
             if len(tb) > 12:
                 tb = tb[0:4] + suppressed + tb[-5:]
 
-        self.info["simulated_python_traceback"] = "\n".join(tb) + "\n"
-        self.info["shortened_traceback"] = "\n".join(shortened_tb) + "\n"
-        self.info["original_python_traceback"] = "\n".join(python_tb) + "\n"
+        exc = self.tb_data.value
+        if exc.__cause__ or exc.__context__:
+            chain_info = self.process_exception_chain(self.tb_data.exception_type, exc)
+        else:
+            chain_info = ""
+
+        self.info["simulated_python_traceback"] = chain_info + "\n".join(tb) + "\n"
+        self.info["shortened_traceback"] = chain_info + "\n".join(shortened_tb) + "\n"
+        self.info["original_python_traceback"] = (
+            chain_info + "\n".join(python_tb) + "\n"
+        )
         # The following is needed for some determining the cause in at
         # least one case.
-        self.tb_data.simulated_python_traceback = self.info[
-            "simulated_python_traceback"
-        ]
+        self.tb_data.simulated_python_traceback = "\n".join(tb) + "\n"
+
+    @staticmethod
+    def process_exception_chain(etype, value):
+        """Adds info about exceptions raised while treating other exceptions."""
+        seen = set()
+        lines = []
+
+        def add_line(line):
+            lines.append(line)
+
+        def chain_exc(typ, exc, tb):
+            seen.add(id(exc))
+            context = exc.__context__
+            cause = exc.__cause__
+            if cause is not None and id(cause) not in seen:
+                chain_exc(type(cause), cause, cause.__traceback__)
+                add_line(
+                    "\n    "
+                    + "The above exception was the direct cause of the following exception:"
+                    + "\n\n"
+                )
+            elif (
+                context is not None
+                and not exc.__suppress_context__
+                and id(context) not in seen
+            ):
+                chain_exc(type(context), context, context.__traceback__)
+                add_line(
+                    "\n    "
+                    + "During handling of the above exception, another exception occurred:"
+                    + "\n\n"
+                )
+            if tb:
+                tbe = traceback.extract_tb(tb)
+                add_line("Traceback (most recent call last):\n")
+                for line in traceback.format_list(tbe):
+                    add_line(line)
+                for line in traceback.format_exception_only(typ, exc):
+                    add_line(line)
+
+        chain_exc(etype, value, None)
+        return "".join(lines)
 
     def create_traceback(self):
         """Using records that exclude code from certain files,
