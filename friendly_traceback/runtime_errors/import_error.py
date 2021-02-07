@@ -9,15 +9,15 @@ from ..path_info import path_utils
 from .. import debug_helper
 
 
-def get_cause(value, frame, tb_data):
+def get_cause(value, _frame, tb_data):
     try:
-        return _get_cause(value, frame, tb_data)
+        return _get_cause(value, tb_data)
     except Exception as e:
         debug_helper.log_error(e)
         return None, None
 
 
-def _get_cause(value, frame, tb_data):
+def _get_cause(value, tb_data):
     _ = current_lang.translate
 
     message = str(value)
@@ -43,27 +43,21 @@ def _get_cause(value, frame, tb_data):
     if match1:
         if "circular import" in message:
             cause, hint = cannot_import_name_from(
-                match1.group(1),
-                match1.group(2),
-                frame,
-                tb_data,
-                add_circular_hint=False,
+                match1.group(1), match1.group(2), tb_data, add_circular_hint=False
             )
         else:
             cause, hint = cannot_import_name_from(
-                match1.group(1), match1.group(2), frame, tb_data
+                match1.group(1), match1.group(2), tb_data
             )
     elif match2:
-        cause, hint = cannot_import_name_from(
-            match2.group(1), match2.group(2), frame, tb_data
-        )
+        cause, hint = cannot_import_name_from(match2.group(1), match2.group(2), tb_data)
     elif match3:
-        cause, hint = cannot_import_name(match3.group(1), frame, tb_data)
+        cause, hint = cannot_import_name(match3.group(1), tb_data)
 
     return cause, hint
 
 
-def cannot_import_name_from(name, module, frame, tb_data, add_circular_hint=True):
+def cannot_import_name_from(name, module, tb_data, add_circular_hint=True):
     _ = current_lang.translate
 
     hint = None
@@ -133,13 +127,13 @@ def cannot_import_name_from(name, module, frame, tb_data, add_circular_hint=True
     return cause, hint
 
 
-def cannot_import_name(name, frame, tb_data):
+def cannot_import_name(name, tb_data):
     # Python 3.6 does not give us the name of the module
     _ = current_lang.translate
     pattern = re.compile(r"from (.*) import")
     match = re.search(pattern, tb_data.bad_line)
     if match:
-        return cannot_import_name_from(name, match.group(1), frame, tb_data)
+        return cannot_import_name_from(name, match.group(1), tb_data)
 
     return (
         _("The object that could not be imported is `{name}`.\n").format(name=name),
