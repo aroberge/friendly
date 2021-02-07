@@ -67,10 +67,14 @@ def cannot_import_name_from(name, module, frame, tb_data, add_circular_hint=True
     _ = current_lang.translate
 
     hint = None
-    circular_info = find_circular_import(module, tb_data)
-    if circular_info and add_circular_hint:
-        hint = _("You have a circular import.\n")
-        # Python 3.8+ adds a similar hint on its own.
+    modules_imported = extract_import_data_from_traceback(tb_data)
+    if modules_imported:
+        circular_info = find_circular_import(modules_imported)
+        if circular_info and add_circular_hint:
+            hint = _("You have a circular import.\n")
+            # Python 3.8+ adds a similar hint on its own.
+    else:
+        circular_info = ""
 
     cause = _(
         "The object that could not be imported is `{name}`.\n"
@@ -99,6 +103,10 @@ def cannot_import_name_from(name, module, frame, tb_data, add_circular_hint=True
     try:
         mod = sys.modules[module]
     except Exception:
+        cause += "\n" + _(
+            "Inconsistent state: `'{module}'` was apparently not imported.\n"
+            "As a result, no further analysis can be done.\n"
+        ).format(module=module)
         return cause, hint
     similar = get_similar_words(name, dir(mod))
     if not similar:
@@ -139,10 +147,8 @@ def cannot_import_name(name, frame, tb_data):
     )
 
 
-def find_circular_import(name, tb_data):
-    """This attempts to find circular imports."""
-    _ = current_lang.translate
-
+def extract_import_data_from_traceback(tb_data):
+    """Attempts to extract the list of imported modules from the traceback information"""
     pattern_file = re.compile(r'^File "(.*)", line', re.M)
     pattern_from = re.compile(r"^from (.*) import", re.M)
     pattern_import = re.compile(r"^import (.*)", re.M)
@@ -171,6 +177,13 @@ def find_circular_import(name, tb_data):
                 else:
                     modules_imported.append((current_file, module))
             current_file = ""
+
+    return modules_imported
+
+
+def find_circular_import(modules_imported):
+    """This attempts to find circular imports."""
+    _ = current_lang.translate
 
     last_file, last_module = modules_imported[-1]
 

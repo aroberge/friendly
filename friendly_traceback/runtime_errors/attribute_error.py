@@ -50,6 +50,11 @@ def _get_cause(value, frame, tb_data):
             cause, hint = attribute_error_in_object(
                 match3.group(1), match3.group(2), tb_data, frame
             )
+    else:
+        cause = _(
+            "I do not recognize this case. Please report it to\n"
+            "https://github.com/aroberge/friendly-traceback/issues\n"
+        )
     return cause, hint
 
 
