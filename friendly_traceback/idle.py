@@ -32,6 +32,9 @@ def idle_writer(output, color=None):
 
 
 def format_traceback(text):
+    """We format tracebacks using the default stderr color (usually read)
+    except that lines with code are shown in the default color (usually black).
+    """
     lines = text.split("\n")
     new_lines = []
     for line in lines:
@@ -43,9 +46,45 @@ def format_traceback(text):
     return new_lines
 
 
-def idle_formatter(info, include="friendly_tb"):
-    """Formatter that takes care of color definitions.
+def format_source(text, keep_caret):
+    """Often, the location of an error is indicated by one or more ^ below
+    the line with the error. IDLE uses highlighting with red background the
+    normal single character location of an error.
+    This function replaces the ^ used to highlight an error by the same
+    highlighting scheme used by IDLE.
     """
+    lines = text.split("\n")
+    caret_set = {"^"}
+    error_line = -2
+    begin = end = 0
+    for index, line in enumerate(lines):
+        if set(line.strip()) == caret_set:
+            error_line = index
+            begin = line.find("^")
+            end = begin + len(line.strip())
+            break
+
+    new_lines = []
+    for index, line in enumerate(lines):
+        if index == error_line and not keep_caret:
+            continue
+        elif index == error_line - 1:
+            new_lines.append((line[0:begin], "default"))
+            new_lines.append((line[begin:end], "ERROR"))
+            new_lines.append((line[end:], "default"))
+        else:
+            new_lines.append((line, "default"))
+        new_lines.append(("\n", "default"))
+    return new_lines
+
+
+def idle_formatter(info, include="friendly_tb"):
+    """Formatter that takes care of color definitions."""
+    keep_caret = (
+        "SyntaxError" in info["shortened_traceback"]
+        or "IndentationError" in info["shortened_traceback"]
+        or "TabError" in info["shortened_traceback"]
+    )
     items_to_show = select_items(include)
     spacing = {"single": " " * 4, "double": " " * 8, "none": ""}
     result = ["\n"]
@@ -60,9 +99,16 @@ def idle_formatter(info, include="friendly_tb"):
         else:
             color = "stdout"
 
+        # TODO: scan code for lines that only contain "^". Find position, and
+        # use "ERROR" on previous line at same position instead.
+        # Create 'format_source' and 'format_explanation' instead of what
+        # we have below.
+
         if item in info:
             if "traceback" in item:
                 result.extend(format_traceback(info[item]))
+            elif "source" in item:
+                result.extend(format_source(info[item], keep_caret))
             else:
                 indentation = spacing[repl_indentation[item]]
                 for line in info[item].split("\n"):
