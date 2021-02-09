@@ -47,7 +47,9 @@ def format_traceback(text):
 
 
 def format_source(text, keep_caret):
-    """Often, the location of an error is indicated by one or more ^ below
+    """Formats the source code.
+
+    Often, the location of an error is indicated by one or more ^ below
     the line with the error. IDLE uses highlighting with red background the
     normal single character location of an error.
     This function replaces the ^ used to highlight an error by the same
@@ -78,8 +80,32 @@ def format_source(text, keep_caret):
     return new_lines
 
 
+def format_text(info, item, indentation):
+    """Format text with embedded code fragment surrounded by backquote characters."""
+    new_lines = []
+    for line in info[item].split("\n"):
+        if "`" in line and line.count("`") % 2 == 0:
+            fragments = line.split("`")
+            for index, fragment in enumerate(fragments):
+                if index == 0:
+                    new_lines.append((indentation + fragment, "stdout"))
+                elif index % 2:
+                    if "Error" in fragment:
+                        new_lines.append((fragment, "stderr"))
+                    else:
+                        new_lines.append((fragment, "default"))
+                else:
+                    new_lines.append((fragment, "stdout"))
+            new_lines.append(("\n", "stdout"))
+        else:
+            new_lines.append((indentation + line + "\n", "stdout"))
+    return new_lines
+
+
 def idle_formatter(info, include="friendly_tb"):
     """Formatter that takes care of color definitions."""
+    # The explanation for SyntaxError and subclasses states that the
+    # location of the error is indicated by --> and ^
     keep_caret = (
         "SyntaxError" in info["shortened_traceback"]
         or "IndentationError" in info["shortened_traceback"]
@@ -92,41 +118,17 @@ def idle_formatter(info, include="friendly_tb"):
         if item == "header":
             continue
 
-        if "header" in item:
-            color = "stderr"
-        elif "source" in item:
-            color = "default"
-        else:
-            color = "stdout"
-
-        # TODO: scan code for lines that only contain "^". Find position, and
-        # use "ERROR" on previous line at same position instead.
-        # Create 'format_source' and 'format_explanation' instead of what
-        # we have below.
-
         if item in info:
-            if "traceback" in item:
+            if "traceback" in item:  # no additional indentation
                 result.extend(format_traceback(info[item]))
-            elif "source" in item:
+            elif "source" in item:  # no additional indentation
                 result.extend(format_source(info[item], keep_caret))
+            elif "header" in item:
+                indentation = spacing[repl_indentation[item]]
+                result.append((indentation + info[item], "stderr"))
             else:
                 indentation = spacing[repl_indentation[item]]
-                for line in info[item].split("\n"):
-                    if "`" in line and line.count("`") % 2 == 0:
-                        fragments = line.split("`")
-                        for index, fragment in enumerate(fragments):
-                            if index == 0:
-                                result.append((indentation + fragment, color))
-                            elif index % 2:
-                                if "Error" in fragment:
-                                    result.append((fragment, "stderr"))
-                                else:
-                                    result.append((fragment, "default"))
-                            else:
-                                result.append((fragment, color))
-                        result.append(("\n", color))
-                    else:
-                        result.append((indentation + line + "\n", color))
+                result.extend(format_text(info, item, indentation))
 
     if result == ["\n"]:
         return no_result(info, include)
