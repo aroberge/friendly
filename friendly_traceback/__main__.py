@@ -178,7 +178,7 @@ def main():
 
     use_rich = False
     if args.format:
-        format = args.format
+        format = args.format  # noqa
         if format in ["repl", "pre", "markdown"]:
             set_formatter(format)
         elif format == "rich":

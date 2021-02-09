@@ -166,8 +166,8 @@ class Friendly:
     pass
 
 
-for item in helpers:
-    setattr(Friendly, item, helpers[item])
+for helper in helpers:
+    setattr(Friendly, helper, helpers[helper])
 
 helpers["Friendly"] = Friendly
 

@@ -38,7 +38,6 @@ from pathlib import Path
 from . import editors_helpers
 from . import formatters
 from . import path_info
-from . import token_utils  # noqa
 from .config import session
 from .my_gettext import current_lang
 from .theme import rich_available
@@ -92,7 +91,7 @@ def get_output(flush=True):
     written anywhere desired.
 
     By default, flushes all the captured content.
-    However, this can be overriden if desired.
+    However, this can be overridden if desired.
     """
     return session.get_captured(flush=flush)
 
@@ -111,7 +110,7 @@ def install(lang=None, redirect=None, include="explain"):
         redirect: stream to be used to send the output.
                   The default is sys.stderr
 
-        include: controls the amout of information displayed.
+        include: controls the amount of information displayed.
         See set_include() for details.
     """
     session.install(lang=lang, redirect=redirect, include=include)
@@ -151,7 +150,7 @@ def run(
 
     Other arguments include:
 
-    ``lang``: language used; currenly only ``en`` (default) and ``fr``
+    ``lang``: language used; currently only ``en`` (default) and ``fr``
     are available.
 
     ``include``: specifies what information is to be included if an
@@ -203,7 +202,7 @@ def run(
         return module_globals
 
 
-def set_formatter(formatter=None, **kwds):
+def set_formatter(formatter=None, **kwargs):
     """Sets the default formatter. If no argument is given, the default
     formatter is used.
 
@@ -211,7 +210,7 @@ def set_formatter(formatter=None, **kwds):
     as well an additional argument whose value is subject to change.
     See formatters.py for details.
     """
-    session.set_formatter(formatter=formatter, **kwds)
+    session.set_formatter(formatter=formatter, **kwargs)
 
 
 def show_again():
@@ -314,14 +313,3 @@ def set_stream(redirect=None):
 def get_stream():
     """Returns the value of the current stream used for output."""
     return session.write_err
-
-
-# -----------------------------------------
-#   Deprecated functions
-# -----------------------------------------
-
-
-def set_level(verbosity_level):
-    """Deprecated. Details about new API to be provided later."""
-    print("friendly-traceback set_level is deprecated; defaults will be used.")
-    set_include("explain")
