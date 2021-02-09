@@ -305,6 +305,9 @@ def start_console(
 
     if not friendly_traceback.is_installed():
         friendly_traceback.install(include=include, lang=lang)
+
+    source_cache.idle_get_lines = None
+
     if local_vars is not None:
         # Make sure we don't overwrite with our own functions
         helpers.update(local_vars)
