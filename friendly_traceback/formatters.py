@@ -105,6 +105,7 @@ default_indentation = {  # used with repl and pre formatters.
     "exception_raised_variables": "double",
 }
 
+
 # ===============================
 #
 #  Next, we have the five formatters.
@@ -136,7 +137,7 @@ def repl(info, include="friendly_tb"):
                 result.append(indentation + line)
 
     if result == [""]:
-        return _no_result(info, include)
+        return no_result(info, include)
 
     return "\n".join(result)
 
@@ -154,6 +155,7 @@ def html_escape(text):
     return text
 
 
+# TODO: move to ipython.py
 def jupyter(info, include="friendly_tb"):
     """Jupyter formatter using pygments and html format."""
     _ = current_lang.translate
@@ -244,7 +246,7 @@ def pre(info, include="friendly_tb"):
                 result.append(indentation + line)
 
     if result == [""]:
-        return _no_result(info, include)
+        return no_result(info, include)
 
     return "\n".join(result)
 
@@ -344,11 +346,11 @@ def _markdown(info, include, rich=False, docs=False):
             result.append(prefix + content + suffix)
 
     if result == [""]:
-        return _no_result(info, include)
+        return no_result(info, include)
     return "\n\n".join(result)
 
 
-def _no_result(info, include):
+def no_result(info, include):
     """Should normally only be called if no result is available
     from either hint() or why().
     """
@@ -361,7 +363,7 @@ def _no_result(info, include):
         else:
             return _("I have no suggestion to offer.")
     else:
-        return f"Internal error: include = {include} in formatters._no_result()"
+        return f"Internal error: include = {include} in formatters.no_result()"
 
 
 items_groups = {

@@ -15,9 +15,27 @@ from friendly_traceback import (
 from friendly_traceback.console_helpers import *  # noqa
 from friendly_traceback.console_helpers import helpers  # noqa
 from friendly_traceback import source_cache
+from friendly_traceback.formatters import repl
 
 __all__ = list(helpers.keys())
-__all__.append("set_formatter")
+__all__.append("set_include")
+
+
+def idle_writer(output, color=None):
+    if isinstance(output, str):
+        if color is None:
+            sys.stdout.shell.write(output, "stderr")  # noqa
+        else:
+            sys.stdout.shell.write(output, color)  # noqa
+        return
+    for fragment in output:
+        if isinstance(fragment, str):
+            if color is None:
+                sys.stdout.shell.write(fragment, "stderr")  # noqa
+            elif len(fragment) == 2:
+                sys.stdout.shell.write(fragment[0], fragment[1])  # noqa
+            else:
+                sys.stdout.shell.write(fragment[0], "stderr")  # noqa
 
 
 def install_in_idle_shell():
@@ -31,7 +49,7 @@ def install_in_idle_shell():
             if not line.endswith("\n"):
                 line += "\n"
             if filename.startswith("<pyshell#") and line.startswith("\t"):
-                # Remove extra indentation added in the shell
+                # Remove extra indentation added in the shell (\t == 8 spaces)
                 line = "    " + line[1:]
             new_lines.append(line)
         if linenumber is None:
@@ -40,14 +58,21 @@ def install_in_idle_shell():
 
     source_cache.idle_get_lines = get_lines
 
-    install(include="friendly_tb")
-    set_formatter("repl")
-    print("Friendly-traceback installed.")
+    set_formatter(repl)
+    install(include="friendly_tb", redirect=idle_writer)
+    idle_writer("Friendly-traceback installed.\n", "stdout")
+    # Current limitation
+    idle_writer("               WARNING\n", "ERROR")  # noqa
+    idle_writer(
+        "Friendly-traceback cannot handle SyntaxErrors for code entered in the shell.\n"
+    )
 
 
 if sys.version_info >= (3, 10):
     install_in_idle_shell()
 else:
-    print("Friendly-traceback cannot be installed in this version of IDLE.")
-    print("Using Friendly's own console instead")
+    sys.stderr.write(
+        "Friendly-traceback cannot be installed in this version of IDLE.\n"
+    )
+    sys.stderr.write("Using Friendly's own console instead.\n")
     start_console()

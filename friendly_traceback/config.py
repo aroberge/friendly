@@ -51,7 +51,6 @@ class _State:
         self.use_jupyter = False
         self.markdown = False
         self.set_defaults()
-        self.set_formatter()
 
     def set_defaults(self):
         """Sets some defaults for various values"""

@@ -61,7 +61,7 @@ class Cache:
         each line ending with a newline character.
         """
         if idle_get_lines is not None:
-            lines = idle_get_lines(filename, None)
+            lines = idle_get_lines(filename, None)  # noqa
         else:
             lines = old_getlines(filename, module_globals=module_globals)
             if not lines and filename in self.cache:
