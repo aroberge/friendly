@@ -88,9 +88,12 @@ items_in_order = [
 ]
 
 
-default_indentation = {  # used with repl and pre formatters.
+repl_indentation = {
     "header": "single",
     "message": "double",
+    "simulated_python_traceback": "none",
+    "original_python_traceback": "none",
+    "shortened_traceback": "none",
     "suggest": "double",
     "generic": "single",
     "parsing_error": "single",
@@ -119,20 +122,13 @@ def repl(info, include="friendly_tb"):
     The only change made to the content of "info" is
     some added indentation.
     """
-    # We first define the indentation to appear before each item
-    repl_items = {
-        "simulated_python_traceback": "none",
-        "original_python_traceback": "none",
-        "shortened_traceback": "none",
-    }
-    repl_items.update(**default_indentation)
 
     items_to_show = select_items(include)
     spacing = {"single": " " * 4, "double": " " * 8, "none": ""}
     result = [""]
     for item in items_to_show:
         if item in info:
-            indentation = spacing[repl_items[item]]
+            indentation = spacing[repl_indentation[item]]
             for line in info[item].split("\n"):
                 result.append(indentation + line)
 
@@ -229,12 +225,15 @@ def pre(info, include="friendly_tb"):
     some added indentation.
     """
     # We first define the indentation to appear before each item
-    pre_items = {
-        "simulated_python_traceback": "single",
-        "original_python_traceback": "single",
-        "shortened_traceback": "single",
-    }
-    pre_items.update(**default_indentation)
+    pre_items = dict(**repl_indentation)
+
+    pre_items.update(
+        **{
+            "simulated_python_traceback": "single",
+            "original_python_traceback": "single",
+            "shortened_traceback": "single",
+        }
+    )
 
     items_to_show = select_items(include)
     spacing = {"single": " " * 4, "double": " " * 8, "none": ""}
