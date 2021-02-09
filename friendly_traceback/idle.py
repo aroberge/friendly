@@ -15,13 +15,16 @@ from friendly_traceback import (
 from friendly_traceback.console_helpers import *  # noqa
 from friendly_traceback.console_helpers import helpers  # noqa
 from friendly_traceback import source_cache
-from friendly_traceback.formatters import repl
+from friendly_traceback.formatters import select_items, repl_indentation, no_result
 
 __all__ = list(helpers.keys())
 __all__.append("set_include")
 
 
 def idle_writer(output, color=None):
+    """Use this instead of standard sys.stderr to write traceback so that
+    they can be colorized.
+    """
     if isinstance(output, str):
         if color is None:
             sys.stdout.shell.write(output, "stderr")  # noqa
@@ -30,12 +33,54 @@ def idle_writer(output, color=None):
         return
     for fragment in output:
         if isinstance(fragment, str):
-            if color is None:
-                sys.stdout.shell.write(fragment, "stderr")  # noqa
-            elif len(fragment) == 2:
-                sys.stdout.shell.write(fragment[0], fragment[1])  # noqa
+            sys.stdout.shell.write(fragment, "stderr")  # noqa
+        elif len(fragment) == 2:
+            sys.stdout.shell.write(fragment[0], fragment[1])  # noqa
+        else:
+            sys.stdout.shell.write(fragment[0], "stderr")  # noqa
+
+
+def format_traceback(text):
+    lines = text.split("\n")
+    new_lines = []
+    for line in lines:
+        if line.startswith("    "):
+            new_lines.append((line, "default"))
+        elif line:
+            new_lines.append((line, "stderr"))
+        new_lines.append(("\n", "default"))
+    return new_lines
+
+
+def idle_formatter(info, include="friendly_tb"):
+    """Formatter that takes care of color definitions.
+    """
+    items_to_show = select_items(include)
+    spacing = {"single": " " * 4, "double": " " * 8, "none": ""}
+    result = ["\n"]
+    for item in items_to_show:
+        if item == "header":
+            continue
+
+        if "header" in item:
+            color = "stderr"
+        elif "source" in item:
+            color = "default"
+        else:
+            color = "stdout"
+
+        if item in info:
+            if "traceback" in item:
+                result.extend(format_traceback(info[item]))
             else:
-                sys.stdout.shell.write(fragment[0], "stderr")  # noqa
+                indentation = spacing[repl_indentation[item]]
+                for line in info[item].split("\n"):
+                    result.append((indentation + line + "\n", color))
+
+    if result == ["\n"]:
+        return no_result(info, include)
+
+    return result
 
 
 def install_in_idle_shell():
@@ -58,11 +103,11 @@ def install_in_idle_shell():
 
     source_cache.idle_get_lines = get_lines
 
-    set_formatter(repl)
+    set_formatter(idle_formatter)
     install(include="friendly_tb", redirect=idle_writer)
     idle_writer("Friendly-traceback installed.\n", "stdout")
     # Current limitation
-    idle_writer("               WARNING\n", "ERROR")  # noqa
+    idle_writer("               WARNING\n", "hit")  # noqa
     idle_writer(
         "Friendly-traceback cannot handle SyntaxErrors for code entered in the shell.\n"
     )
@@ -70,6 +115,7 @@ def install_in_idle_shell():
 
 if sys.version_info >= (3, 10):
     install_in_idle_shell()
+    sys.stderr = sys.stdout.shell  # noqa
 else:
     sys.stderr.write(
         "Friendly-traceback cannot be installed in this version of IDLE.\n"

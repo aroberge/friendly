@@ -90,7 +90,7 @@ def name_not_defined(unknown_name, frame, tb_data):
     except Exception as e:
         print("exception raised: ", e)
     if not additional:
-        additional = _("I have no additional information for you.")
+        additional = _("I have no additional information for you.\n")
     return cause + additional, hint
 
 

@@ -72,7 +72,9 @@ class _State:
             print(_("Nothing to show: no exception recorded."))
             return
         explanation = self.formatter(self.saved_info, include=self.include)
-        self.write_err(explanation + "\n")
+        self.write_err(explanation)
+        # Do not combine with above as 'explanation' could be a list for IDLE
+        self.write_err("\n")
 
     def capture(self, txt):
         """Captures the output instead of writing to stderr."""
@@ -241,7 +243,7 @@ class _State:
         self.write_err(explanation)
 
         # Ensures that we start on a new line; essential for the console
-        if not explanation.endswith("\n"):
+        if hasattr(explanation, "endswith") and not explanation.endswith("\n"):
             self.write_err("\n")
 
         if saved_current_redirect is not None:
