@@ -66,7 +66,21 @@ def idle_formatter(info, include="friendly_tb"):
             else:
                 indentation = spacing[repl_indentation[item]]
                 for line in info[item].split("\n"):
-                    result.append((indentation + line + "\n", color))
+                    if "`" in line and line.count("`") % 2 == 0:
+                        fragments = line.split("`")
+                        for index, fragment in enumerate(fragments):
+                            if index == 0:
+                                result.append((indentation + fragment, color))
+                            elif index % 2:
+                                if "Error" in fragment:
+                                    result.append((fragment, "stderr"))
+                                else:
+                                    result.append((fragment, "default"))
+                            else:
+                                result.append((fragment, color))
+                        result.append(("\n", color))
+                    else:
+                        result.append((indentation + line + "\n", color))
 
     if result == ["\n"]:
         return no_result(info, include)
@@ -134,7 +148,7 @@ def install():
 
 def start_console():
     """Starts a Friendly console with a custom formatter for IDLE"""
-    import friendly_traceback
+    import friendly_traceback  # noqa
 
     sys.stderr = sys.stdout.shell  # noqa
     friendly_traceback.set_formatter(idle_formatter)
