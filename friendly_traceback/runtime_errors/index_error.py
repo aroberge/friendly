@@ -65,20 +65,35 @@ def index_out_of_range(obj_type, frame, tb_data):
     evaluator = pure_eval.Evaluator.from_frame(frame)
     try:
         index = evaluator[node.slice.value]
-    except TypeError:  # Python 3.10.0a3
-        index = evaluator[node.slice]
+    except Exception:
+        try:
+            index = node.slice.value
+        except Exception:
+            index = "unknown"
 
-    cause = _(
-        "You have tried to get the item with index `{index}` of `{name}`,\n"
-        "{obj_type} of length `{length}`.\n"
-    ).format(
-        index=index,
-        name=name,
-        length=length,
-        obj_type=info_variables.convert_type(obj_type),
-    )
+    if index != "unknown":
+        cause = _(
+            "You have tried to get the item with index `{index}` of `{name}`,\n"
+            "{obj_type} of length `{length}`.\n"
+        ).format(
+            index=index,
+            name=name,
+            length=length,
+            obj_type=info_variables.convert_type(obj_type),
+        )
+    else:
+        cause = _(
+            "You have tried to get an item from `{name}`,\n"
+            "{obj_type} of length `{length}`, by using a value for the index\n"
+            "that I cannot determine but which is not allowed.\n"
+        ).format(
+            index=index,
+            name=name,
+            length=length,
+            obj_type=info_variables.convert_type(obj_type),
+        )
 
-    if index == length:
+    if index == length or index == "unknown":
         cause += _("The largest valid index of `{name}` is `{index}`.\n").format(
             name=name, index=length - 1
         )
