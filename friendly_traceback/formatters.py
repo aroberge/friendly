@@ -90,7 +90,7 @@ items_in_order = [
 
 repl_indentation = {
     "header": "single",
-    "message": "double",
+    "message": "single",
     "simulated_python_traceback": "none",
     "original_python_traceback": "none",
     "shortened_traceback": "none",
@@ -99,7 +99,7 @@ repl_indentation = {
     "parsing_error": "single",
     "parsing_error_source": "none",
     "cause_header": "single",
-    "cause": "double",
+    "cause": "single",
     "last_call_header": "single",
     "last_call_source": "none",
     "last_call_variables": "double",

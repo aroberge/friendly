@@ -129,6 +129,12 @@ def idle_formatter(info, include="friendly_tb"):
             elif "header" in item:
                 indentation = spacing[repl_indentation[item]]
                 result.append((indentation + info[item], "stderr"))
+            elif item == "message":  # Highlight error name
+                parts = info[item].split(":")
+                parts[0] = "`" + parts[0] + "`"
+                _info = {item: ":".join(parts)}
+                indentation = spacing[repl_indentation[item]]
+                result.extend(format_text(_info, item, indentation))
             else:
                 indentation = spacing[repl_indentation[item]]
                 result.extend(format_text(info, item, indentation))
