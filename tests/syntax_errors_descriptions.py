@@ -465,6 +465,10 @@ descriptions = {
         cause: "You started writing a triple-quoted string",
         title: "Unterminated triple quoted string",
     },
+    "raise_syntax_error108": {
+        cause: "and rename it using the Python keyword `as`",
+        title: "Incorrect use of 'from module import ... as ...",
+    },
 }
 
 

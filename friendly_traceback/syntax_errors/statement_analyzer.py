@@ -1306,6 +1306,31 @@ def and_instead_of_comma(statement):
     return cause, hint
 
 
+@add_statement_analyzer
+def from_import_as(statement):
+    """from module import ... as ..., with 'as' flagged as the bad token"""
+    _ = current_lang.translate
+    cause = hint = None
+    if not (
+        statement.bad_token == "as"
+        and statement.first_token == "from"
+        and statement.tokens[2] == "import"
+    ):
+        return cause, hint
+
+    cause = _(
+        "I am guessing that you are trying to import at least one object\n"
+        "from module `{module}` and rename it using the Python keyword `as`;\n"
+        "this keyword can only be used to rename one object at a time\n"
+        "using a well defined syntax.\n"
+        "I suggest that you split up any such import statement with each object\n"
+        "renamed on a separate line as follows:\n\n"
+        "    from {module} import object_1 as name_1\n"
+        "    from {module} import object_2 as name_2  # if needed\n"
+    ).format(module=statement.tokens[1])
+    return cause, hint
+
+
 # Keep last
 @add_statement_analyzer
 def unclosed_bracket(statement):
