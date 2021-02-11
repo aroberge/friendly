@@ -16,6 +16,7 @@ from .config import session
 from .formatters import items_in_order
 from .info_generic import get_generic_explanation
 from .path_info import show_paths
+from .my_gettext import current_lang
 
 
 def explain(include="explain"):
@@ -128,6 +129,27 @@ def _get_statement():
     return session.friendly_traceback.tb_data.statement
 
 
+def www():
+    """Using the ``webbrowser`` module, searches the web for the error message.
+
+    If no error message exists, it searches for Friendly-traceback!
+    """
+    import urllib
+    import webbrowser
+
+    _ = current_lang.translate
+
+    try:
+        message = session.saved_info["message"]
+    except Exception:
+        message = "Friendly-traceback"
+    message = urllib.parse.quote(message)  # noqa
+    try:
+        webbrowser.open_new_tab("https://duckduckgo.com?q=" + message)
+    except Exception:
+        print(_("The default web browser cannot be used for searching."))
+
+
 get_lang = friendly_traceback.get_lang
 set_lang = friendly_traceback.set_lang
 get_include = friendly_traceback.get_include
@@ -153,6 +175,7 @@ helpers = {
     "show_paths": show_paths,
     "show_info": show_info,
     "_get_statement": _get_statement,
+    "www": www,
 }
 
 
