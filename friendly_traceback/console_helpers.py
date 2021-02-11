@@ -129,6 +129,33 @@ def _get_statement():
     return session.friendly_traceback.tb_data.statement
 
 
+def py_doc():
+    """Using the ``webbrowser`` module, searches the python documentation
+    for some relevant information. In most cases, this will simply be a
+    search for the exception name. However, in a few cases, some specific
+    part of the documentation will be explicitly linked.
+
+    If no exception has yet been raised, the python documentation is open.
+    """
+    import webbrowser
+
+    _ = current_lang.translate
+    info = session.saved_info
+    if info is None:
+        url = _("https://docs.python.org/3/")
+    elif "python_link" in info:
+        url = _(info["python_link"])
+    else:
+        url = (
+            _("https://docs.python.org/3/search.html?q=")
+            + session.friendly_traceback.tb_data.exception_name
+        )
+    try:
+        webbrowser.open_new_tab(url)
+    except Exception:
+        print(_("The default web browser cannot be used for searching."))
+
+
 def www():
     """Using the ``webbrowser`` module, searches the web for the error message.
 
@@ -175,6 +202,7 @@ helpers = {
     "show_paths": show_paths,
     "show_info": show_info,
     "_get_statement": _get_statement,
+    "py_doc": py_doc,
     "www": www,
 }
 
