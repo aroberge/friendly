@@ -195,11 +195,9 @@ def install():
     if sys.version_info >= (3, 10):
         install_in_idle_shell()
     else:
-        sys.stderr.write(
-            "Friendly-traceback cannot be installed in this version of IDLE.\n"
-        )
-        sys.stderr.write("Using Friendly's own console instead.\n")
-        friendly_traceback.start_console()
+        idle_writer("Friendly-traceback cannot be installed in this version of IDLE.\n")
+        idle_writer("Using Friendly's own console instead.\n")
+        start_console()
 
 
 def start_console():
