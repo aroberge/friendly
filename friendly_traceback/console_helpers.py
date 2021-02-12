@@ -9,6 +9,7 @@ We suggest to use ``dir()`` to see all possible choices as some might
 not be listed here.
 """
 
+import sys
 import friendly_traceback
 
 from . import debug_helper
@@ -129,52 +130,87 @@ def _get_statement():
     return session.friendly_traceback.tb_data.statement
 
 
-def py_doc():
-    """Using the ``webbrowser`` module, searches the python documentation
-    for some relevant information. In most cases, this will simply be a
-    search for the exception name. However, in a few cases, some specific
-    part of the documentation will be explicitly linked.
+def www(search=None, python=False):
+    """This uses the ``webbrowser`` module to open a tab (or window) in the
+    default browser, linking to a specific url.
 
-    If no exception has yet been raised, the python documentation is open.
-    """
-    import webbrowser
+    * If no arguments are provided, and no exception has been raised, this opens
+      Friendly-traceback documentation.
 
-    _ = current_lang.translate
-    info = session.saved_info
-    if info is None:
-        url = _("https://docs.python.org/3/")
-    elif "python_link" in info:
-        url = _(info["python_link"])
-    else:
-        url = (
-            _("https://docs.python.org/3/search.html?q=")
-            + session.friendly_traceback.tb_data.exception_name
-        )
-    try:
-        webbrowser.open_new_tab(url)
-    except Exception:
-        print(_("The default web browser cannot be used for searching."))
+    * If no arguments are provided, and an exception has been raised, in most
+      cases, an internet search will be done using the exception message as the
+      search string. In a few cases, Friendly-traceback will link to a
+      specific site based on its determination of the cause of the exception.
 
+    * If no search argument is provided, but ``python`` is specified to be ``True``,
+      we will have the following:
 
-def www():
-    """Using the ``webbrowser`` module, searches the web for the error message.
+        * If no exception has been raised, this opens the Python documentation
 
-    If no error message exists, it searches for Friendly-traceback!
+        * If an exception has been raised, in most cases a search of the Python
+          documentation will be done using the exception name as the search term.
+          In a few cases, Friendly-traceback will link to a
+          specific site based on its determination of the cause of the exception.
+
+    * If a search (string) argument is provided, we have three possibilities:
+
+      * If the ``python`` argument is ``True``, a search will be done in the
+        Python documentation site; otherwise
+      * if the search term contains the string "friendly" (independent of case),
+        Friendly-traceback documentation will open
+      * otherwise, an internet search will be done using the search string provided.
     """
     import urllib
     import webbrowser
 
     _ = current_lang.translate
 
+    if search is not None and not isinstance(search, str):
+        sys.stderr.write(
+            _("The first argument of `www()` must be either `None` or a string.\n")
+        )
+        if search is True and not python:
+            sys.stderr.write(
+                _(
+                    "If you wish to open Python's documentation, use\n"
+                    "`www(python=True)`.\n"
+                )
+            )
+        return
+
+    quote = urllib.parse.quote  # noqa
+
+    ddg_url = "https://duckduckgo.com?q="
+    friendly_url = "https://aroberge.github.io/friendly-traceback-docs/docs/html/"
+    python_docs_url = _("https://docs.python.org/3/")
+    python_search_url = _("https://docs.python.org/3/search.html?q=")
+    info = session.saved_info
+
+    if search is None and not python:  # default search
+        if info is None:
+            url = friendly_url
+        elif "python_link" in info:
+            url = info["python_link"]
+        else:
+            url = ddg_url + quote(info["message"])
+    elif search is None:
+        if info is not None and "python_link" in info:
+            url = info["python_link"]
+        elif info is not None:  # an exception has been raised
+            url = python_search_url + session.friendly_traceback.tb_data.exception_name
+        else:
+            url = python_docs_url
+    elif python:
+        url = python_search_url + quote(search)
+    elif "friendly" in search.lower():
+        url = friendly_url
+    else:
+        url = ddg_url + quote(search)
+
     try:
-        message = session.saved_info["message"]
+        webbrowser.open_new_tab(url)
     except Exception:
-        message = "Friendly-traceback"
-    message = urllib.parse.quote(message)  # noqa
-    try:
-        webbrowser.open_new_tab("https://duckduckgo.com?q=" + message)
-    except Exception:
-        print(_("The default web browser cannot be used for searching."))
+        sys.stderr.write(_("The default web browser cannot be used for searching."))
 
 
 get_lang = friendly_traceback.get_lang
@@ -202,7 +238,6 @@ helpers = {
     "show_paths": show_paths,
     "show_info": show_info,
     "_get_statement": _get_statement,
-    "py_doc": py_doc,
     "www": www,
 }
 
