@@ -13,7 +13,7 @@ from .my_gettext import current_lang
 
 def _write_err(text):
     """Default writer"""
-    if not text.strip() and session.use_jupyter:
+    if not text.strip():
         return
     if session.use_rich:
         session.console.print()
@@ -117,7 +117,6 @@ class _State:
         formatter is used.
         """
         self.use_rich = False
-        self.use_jupyter = False
         self.markdown = markdown
         if formatter is None or formatter == "repl":
             self.formatter = formatters.repl
@@ -125,7 +124,6 @@ class _State:
             self.formatter = formatters.pre
         elif formatter == "jupyter":
             self.formatter = formatters.jupyter
-            self.use_jupyter = True
         elif formatter == "rich":
             theme.set_theme(style)
             self.formatter = formatters.rich_markdown
