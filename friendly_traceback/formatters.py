@@ -55,7 +55,6 @@ if pygments_available:
         from pygments.formatters import HtmlFormatter  # noqa
         from IPython.display import display, HTML  # noqa
 
-        INSERTED_CSS = False
         ipython_available = True
     except ImportError:
         pass
@@ -151,7 +150,9 @@ def html_escape(text):
     return text
 
 
-# TODO: move to ipython.py
+# For some reason, moving this to friendly_traceback.ipython
+# and trying to import it from there uninstalls everything: it is as though
+# it starts a new iPython subprocess.
 def jupyter(info, include="friendly_tb"):
     """Jupyter formatter using pygments and html format."""
     _ = current_lang.translate

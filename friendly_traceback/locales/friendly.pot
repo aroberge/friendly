@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-02-11 18:26-0400\n"
+"POT-Creation-Date: 2021-02-13 08:58-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,15 +54,26 @@ msgstr ""
 msgid "Warning: you have redefined the python builtin {name}."
 msgstr ""
 
-#: console_helpers.py:145
+#: console_helpers.py:170
+msgid ""
+"The first argument of `www()` must be either `None` or a string.\n"
+msgstr ""
+
+#: console_helpers.py:174
+msgid ""
+"If you wish to open Python's documentation, use\n"
+"`www(python=True)`.\n"
+msgstr ""
+
+#: console_helpers.py:185
 msgid "https://docs.python.org/3/"
 msgstr ""
 
-#: console_helpers.py:150
+#: console_helpers.py:186
 msgid "https://docs.python.org/3/search.html?q="
 msgstr ""
 
-#: console_helpers.py:156 console_helpers.py:177
+#: console_helpers.py:213
 msgid "The default web browser cannot be used for searching."
 msgstr ""
 
@@ -145,15 +156,15 @@ msgid ""
 "Are you using a regular Python console instead of a Friendly-console?\n"
 msgstr ""
 
-#: formatters.py:202
+#: formatters.py:203
 msgid "I do not know."
 msgstr ""
 
-#: formatters.py:205 formatters.py:361
+#: formatters.py:206 formatters.py:362
 msgid "I have no suggestion to offer; try `why()`."
 msgstr ""
 
-#: formatters.py:207 formatters.py:358 formatters.py:363
+#: formatters.py:208 formatters.py:359 formatters.py:364
 msgid "I have no suggestion to offer."
 msgstr ""
 

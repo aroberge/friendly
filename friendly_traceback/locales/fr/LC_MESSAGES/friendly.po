@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-02-11 18:26-0400\n"
-"PO-Revision-Date: 2021-02-11 18:32-0400\n"
+"POT-Creation-Date: 2021-02-13 08:58-0400\n"
+"PO-Revision-Date: 2021-02-13 09:00-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -67,15 +67,29 @@ msgstr ""
 msgid "Warning: you have redefined the python builtin {name}."
 msgstr "Attention : vous avez redéfini l'identifiant Python (builtin) {name}."
 
-#: console_helpers.py:145
+#: console_helpers.py:170
+msgid "The first argument of `www()` must be either `None` or a string.\n"
+msgstr ""
+"Le premier argument de `www()` doit être soit `None` ou une chaîne de "
+"caractères.\n"
+
+#: console_helpers.py:174
+msgid ""
+"If you wish to open Python's documentation, use\n"
+"`www(python=True)`.\n"
+msgstr ""
+"Si vous désirez ouvrir la documentation Python, utilisez\n"
+"`www(python=True)`.\n"
+
+#: console_helpers.py:185
 msgid "https://docs.python.org/3/"
 msgstr "https://docs.python.org/fr/3/"
 
-#: console_helpers.py:150
+#: console_helpers.py:186
 msgid "https://docs.python.org/3/search.html?q="
 msgstr "https://docs.python.org/fr/3/search.html?q="
 
-#: console_helpers.py:156 console_helpers.py:177
+#: console_helpers.py:213
 msgid "The default web browser cannot be used for searching."
 msgstr ""
 "Le navigateur Web par défaut ne peut pas être utilisé pour la recherche."
@@ -184,15 +198,15 @@ msgstr ""
 "Est-ce que vous utilisez une console Python plutôt que la console \"Friendly"
 "\" ?\n"
 
-#: formatters.py:202
+#: formatters.py:203
 msgid "I do not know."
 msgstr "Je ne sais pas."
 
-#: formatters.py:205 formatters.py:361
+#: formatters.py:206 formatters.py:362
 msgid "I have no suggestion to offer; try `why()`."
 msgstr "Je n’ai aucune suggestion à offrir; essayez `why()`."
 
-#: formatters.py:207 formatters.py:358 formatters.py:363
+#: formatters.py:208 formatters.py:359 formatters.py:364
 msgid "I have no suggestion to offer."
 msgstr "Je n’ai aucune suggestion à offrir."
 
