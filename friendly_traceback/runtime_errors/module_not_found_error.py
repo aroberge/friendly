@@ -4,7 +4,7 @@ import re
 
 from . import stdlib_modules
 from .. import debug_helper
-from ..my_gettext import current_lang
+from ..my_gettext import current_lang, no_information, internal_error
 from ..utils import get_similar_words, list_to_string
 
 
@@ -13,32 +13,33 @@ def get_cause(value, frame, tb_data):
         return _get_cause(value, frame, tb_data)
     except Exception as e:
         debug_helper.log_error(e)
-        return None, None
+        return {"cause": internal_error(), "suggest": internal_error()}
 
 
-def _get_cause(value, frame, tb_data):
+def _get_cause(value, *_args):
     _ = current_lang.translate
 
     message = str(value)
-
-    cause = _(
-        "No information is known about this exception.\n"
-        "Please report this example to\n"
-        "https://github.com/aroberge/friendly-traceback/issues\n"
-    )
-    hint = None  # unused for now
-
-    pattern = re.compile(r"No module named '(.*)'")
-    match = re.search(pattern, message)
-    if match:
-        cause, hint = no_module_named(match.group(1))
 
     pattern = re.compile(r"No module named '(.*)'; '(.*)' is not a package")
     match = re.search(pattern, message)
     if match:
         cause, hint = is_not_a_package(match.group(1), match.group(2))
+        cause = {"cause": cause}
+        if hint:
+            cause["suggest"] = hint
+        return cause
 
-    return cause, hint
+    pattern = re.compile(r"No module named '(.*)'")
+    match = re.search(pattern, message)
+    if match:
+        cause, hint = no_module_named(match.group(1))
+        cause = {"cause": cause}
+        if hint:
+            cause["suggest"] = hint
+        return cause
+
+    return {"cause": no_information()}
 
 
 def no_module_named(name):
@@ -69,7 +70,7 @@ def no_module_named(name):
 
 def is_not_a_package(dotted_path, name):
     _ = current_lang.translate
-    cause = hint = None
+    hint = None
 
     rest = dotted_path.replace(name + ".", "")
 
