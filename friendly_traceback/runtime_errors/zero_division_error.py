@@ -1,5 +1,5 @@
 from .. import debug_helper
-from ..my_gettext import current_lang
+from ..my_gettext import current_lang, no_information
 
 
 _ = current_lang.translate
@@ -27,16 +27,12 @@ def get_cause(value, frame, tb_data):
 
 
 def _get_cause(message, frame, tb_data):
-    unknown = _(
-        "I do not recognize this case. Please report it to\n"
-        "https://github.com/aroberge/friendly-traceback/issues\n"
-    )
     for parser in MESSAGES_PARSERS:
         cause = parser(message, frame, tb_data)
         if cause:
             return cause
 
-    return {"cause": unknown}
+    return {"cause": no_information()}
 
 
 def expression_is_zero(expression, modulo=False):

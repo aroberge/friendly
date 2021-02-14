@@ -2,39 +2,33 @@
 
 import re
 
-from ..my_gettext import current_lang
+from ..my_gettext import current_lang, no_information
 from .. import info_variables
 from .. import debug_helper
 
 
-def get_cause(value, frame, tb_data):
+def get_cause(value, frame, _tb_data):
     try:
-        return _get_cause(value, frame, tb_data)
+        return _get_cause(value, frame)
     except Exception as e:
         debug_helper.log_error(e)
         return None, None
 
 
-def _get_cause(value, frame, tb_data):
+def _get_cause(value, frame):
     _ = current_lang.translate
-    hint = None
-    cause = _(
-        "No information is known about this exception.\n"
-        "Please report this example to\n"
-        "https://github.com/aroberge/friendly-traceback/issues\n"
-    )
+    cause = {"cause": no_information()}
 
     pattern = re.compile(r"local variable '(.*)' referenced before assignment")
     match = re.search(pattern, str(value))
     if match:
-        cause, hint = local_variable_referenced(match.group(1), frame)
+        cause = local_variable_referenced(match.group(1), frame)
 
-    return cause, hint
+    return cause
 
 
 def local_variable_referenced(unknown_name, frame):
     _ = current_lang.translate
-    cause = hint = None
     scopes = info_variables.get_definition_scope(unknown_name, frame)
     if not scopes:
         similar = info_variables.get_similar_names(unknown_name, frame)
@@ -43,13 +37,15 @@ def local_variable_referenced(unknown_name, frame):
             if best_guess in similar["locals"]:
                 hint = _("Did you mean `{name}`?\n").format(name=similar["best"])
                 cause = format_similar_names(unknown_name, similar)
-                return cause, hint
+                return {"cause": cause, "suggest": hint}
 
         else:
             cause = info_variables.name_has_type_hint(unknown_name, frame)
             if cause:
                 hint = _("Did you use a colon instead of an equal sign?\n")
-        return cause, hint
+                return {"cause": cause, "suggest": hint}
+            else:
+                return {}
 
     if "global" in scopes and "nonlocal" in scopes:
         cause = _(
@@ -65,14 +61,14 @@ def local_variable_referenced(unknown_name, frame):
             "Did you forget to add either `global {var_name}` or \n"
             "`nonlocal {var_name}`?\n"
         ).format(var_name=unknown_name)
-        return cause, hint
+        return {"cause": cause, "suggest": hint}
 
     if "global" in scopes:
         scope = "global"
     elif "nonlocal" in scopes:
         scope = "nonlocal"
     else:
-        return cause, hint
+        return {}
 
     cause = _(
         "The name `{var_name}` exists in the {scope} scope.\n"
@@ -85,7 +81,7 @@ def local_variable_referenced(unknown_name, frame):
         var_name=unknown_name, scope=scope
     )
 
-    return cause, hint
+    return {"cause": cause, "suggest": hint}
 
 
 def format_similar_names(unknown_name, similar):
