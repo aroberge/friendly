@@ -1,6 +1,6 @@
 import re
 
-from ..my_gettext import current_lang, no_information
+from ..my_gettext import current_lang, no_information, internal_error
 from .. import info_variables
 from .. import debug_helper
 from .. import token_utils
@@ -11,7 +11,7 @@ def get_cause(value, frame, tb_data):
         return _get_cause(value, frame, tb_data)
     except Exception as e:
         debug_helper.log_error(e)
-        return None, None
+        return {"cause": internal_error(), "suggest": internal_error()}
 
 
 def _get_cause(value, frame, tb_data):
@@ -44,7 +44,7 @@ def get_unknown_name(message):
     return None, None
 
 
-def free_variable_referenced(unknown_name, *args):
+def free_variable_referenced(unknown_name, *_args):
     _ = current_lang.translate
     cause = _(
         "In your program, `{var_name}` is an unknown name\n"

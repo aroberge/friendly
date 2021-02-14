@@ -1,5 +1,5 @@
 from .. import debug_helper
-from ..my_gettext import current_lang, no_information
+from ..my_gettext import current_lang, no_information, internal_error
 
 
 _ = current_lang.translate
@@ -23,7 +23,7 @@ def get_cause(value, frame, tb_data):
         return _get_cause(message, frame, tb_data)
     except Exception:
         debug_helper.log_error()
-        return None, None
+        return {"cause": internal_error(), "suggest": internal_error()}
 
 
 def _get_cause(message, frame, tb_data):

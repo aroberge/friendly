@@ -6,7 +6,7 @@ providing a more detailed explanation.
 
 import re
 
-from ..my_gettext import current_lang, no_information
+from ..my_gettext import current_lang, no_information, internal_error
 from .. import info_variables
 from .. import debug_helper
 
@@ -30,7 +30,7 @@ def get_cause(value, frame, tb_data):
         return _get_cause(value, frame, tb_data)
     except Exception as e:
         debug_helper.log_error(e)
-        return {}
+        return {"cause": internal_error(), "suggest": internal_error()}
 
 
 def _get_cause(value, frame, tb_data):

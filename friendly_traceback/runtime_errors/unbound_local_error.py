@@ -12,7 +12,7 @@ def get_cause(value, frame, _tb_data):
         return _get_cause(value, frame)
     except Exception as e:
         debug_helper.log_error(e)
-        return None, None
+        return {}
 
 
 def _get_cause(value, frame):
