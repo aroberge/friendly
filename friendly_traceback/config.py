@@ -50,12 +50,8 @@ class _State:
         self.use_rich = False
         self.use_jupyter = False
         self.markdown = False
-        self.set_defaults()
-
-    def set_defaults(self):
-        """Sets some defaults for various values"""
+        self.friendly_traceback = None
         self.include = "explain"
-        # self.level = self._default_level = 1
         self.lang = "en"
         self.install_gettext(self.lang)
 
@@ -141,15 +137,6 @@ class _State:
             self.formatter = formatters.repl
         else:
             self.formatter = formatter  # could be provided as a function
-
-    def quote(self, text):
-        """Surrounds text by single quote, or by backquote if formatter
-        is markdown type.
-        """
-        if self.markdown:
-            return f"`{text}`"
-        else:
-            return f"'{text}'"
 
     def install(self, lang=None, redirect=None, include="explain"):
         """Replaces sys.excepthook by friendly_traceback's own version."""

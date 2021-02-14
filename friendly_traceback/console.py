@@ -18,7 +18,6 @@ import friendly_traceback
 from . import source_cache
 from . import theme
 
-from .config import session
 from .console_helpers import helpers
 from .my_gettext import current_lang
 
@@ -33,15 +32,8 @@ please_comment = (
 )
 
 
-def _quote(text):
-    """Surrounds text by single quote, or by backquote if formatter
-    is markdown type.
-    """
-    return session.quote(text)
-
-
 class FriendlyConsole(InteractiveConsole):
-    def __init__(self, locals=None, use_rich=False):
+    def __init__(self, locals=None, use_rich=False):  # noqa
         """This class builds upon Python's code.InteractiveConsole
         so as to provide friendly tracebacks. It keeps track
         of code fragment executed by treating each of them as
@@ -187,9 +179,8 @@ class FriendlyConsole(InteractiveConsole):
         suggest_str = _("Instead of {hint}, perhaps you meant {assignment}.")
 
         for name in hints:
-            warning = ""
             if name in dir(builtins):
-                warning = warning_builtins.format(name=_quote(name))
+                warning = warning_builtins.format(name=name)
                 if self.rich_console:
                     warning = "#### " + warning
                     warning = theme.friendly_rich.Markdown(warning)
@@ -217,8 +208,8 @@ class FriendlyConsole(InteractiveConsole):
                         warning = "#### " + warning
                 if not str(f"{hints[name]}").startswith("<"):
                     suggest = suggest_str.format(
-                        hint=_quote(f"{name} : {hints[name]}"),
-                        assignment=_quote(f"{name} = {hints[name]}"),
+                        hint=f"{name} : {hints[name]}",
+                        assignment=f"{name} = {hints[name]}",
                     )
                 else:
                     suggest = ""
@@ -258,7 +249,7 @@ class FriendlyConsole(InteractiveConsole):
             if name in self.locals and self.saved_builtins[name] != self.locals[name]:
                 warning = _(
                     "Warning: you have redefined the python builtin {name}."
-                ).format(name=_quote(name))
+                ).format(name=name)
                 if self.rich_console:
                     warning = theme.friendly_rich.Markdown("#### " + warning)
                     self.rich_console.print(warning)
