@@ -4,7 +4,7 @@ import re
 import sys
 
 
-from ..my_gettext import current_lang
+from ..my_gettext import current_lang, no_information, internal_error
 from ..utils import get_similar_words, list_to_string
 from ..path_info import path_utils
 from .. import info_variables
@@ -23,7 +23,6 @@ def get_cause(value, frame, tb_data):
 def _get_cause(value, frame, tb_data):
     _ = current_lang.translate
     message = str(value)
-    cause = hint = None
 
     pattern1 = re.compile(r"module '(.*)' has no attribute '(.*)'")
     match1 = re.search(pattern1, message)
@@ -35,27 +34,25 @@ def _get_cause(value, frame, tb_data):
     match3 = re.search(pattern3, message)
 
     if match1:
-        cause, hint = attribute_error_in_module(match1.group(1), match1.group(2), frame)
+        return attribute_error_in_module(match1.group(1), match1.group(2), frame)
     elif match2:
-        cause, hint = attribute_error_in_object(
+        return attribute_error_in_object(
             match2.group(1), match2.group(2), tb_data, frame
         )
     elif match3:
         if match3.group(1) == "NoneType":
-            cause = _(
-                "You are attempting to access the attribute `{attr}`\n"
-                "for a variable whose value is `None`."
-            ).format(attr=match3.group(2))
+            return {
+                "cause": _(
+                    "You are attempting to access the attribute `{attr}`\n"
+                    "for a variable whose value is `None`."
+                ).format(attr=match3.group(2))
+            }
         else:
-            cause, hint = attribute_error_in_object(
+            return attribute_error_in_object(
                 match3.group(1), match3.group(2), tb_data, frame
             )
     else:
-        cause = _(
-            "I do not recognize this case. Please report it to\n"
-            "https://github.com/aroberge/friendly-traceback/issues\n"
-        )
-    return cause, hint
+        return {"cause": no_information()}
 
 
 # ======= Attribute error in module =========
@@ -64,7 +61,6 @@ def _get_cause(value, frame, tb_data):
 def attribute_error_in_module(module, attribute, frame):
     """Attempts to find if a module attribute or module name might have been misspelled"""
     _ = current_lang.translate
-    hint = None
     try:
         mod = sys.modules[module]
     except Exception:
@@ -74,7 +70,7 @@ def attribute_error_in_module(module, attribute, frame):
             "attribute named `{attribute}`.\n"
             "However, it does not appear that module `{module}` was imported.\n"
         ).format(module=module, attribute=attribute)
-        return cause, hint
+        return {"cause": cause}
 
     similar_attributes = get_similar_words(attribute, dir(mod))
     if similar_attributes:
@@ -84,7 +80,7 @@ def attribute_error_in_module(module, attribute, frame):
                 "Perhaps you meant to write `{module}.{correct}` "
                 "instead of `{module}.{typo}`\n"
             ).format(correct=similar_attributes[0], typo=attribute, module=module)
-            return cause, hint
+            return {"cause": cause, "suggest": hint}
         else:
             names = list_to_string(similar_attributes)
             hint = _("Did you mean one of the following: `{names}`?\n").format(
@@ -95,7 +91,7 @@ def attribute_error_in_module(module, attribute, frame):
                 "the following names which are attributes of module `{module}`:\n"
                 "`{names}`\n"
             ).format(names=names, typo=attribute, module=module)
-            return cause, hint
+            return {"cause": cause, "suggest": hint}
 
     if module in stdlib_modules.names and hasattr(mod, "__file__"):
         mod_path = path_utils.shorten_path(mod.__file__)
@@ -106,7 +102,7 @@ def attribute_error_in_module(module, attribute, frame):
                 "There is also a module named `{module}` in Python's standard library.\n"
                 "Perhaps you need to rename your module.\n"
             ).format(module=module, mod_path=mod_path)
-            return cause, hint
+            return {"cause": cause, "suggest": hint}
 
     # TODO: test this
     # the following is untested
@@ -125,13 +121,13 @@ def attribute_error_in_module(module, attribute, frame):
                 "Perhaps you meant to use the attribute `{attribute}` of \n"
                 "module `{mod_name}` instead of module `{module}`.\n"
             ).format(attribute=attribute, mod_name=mod_name, module=module)
-            return cause, hint
+            return {"cause": cause, "suggest": hint}
 
     cause = _(
         "Python tells us that no object with name `{attribute}` is\n"
         "found in module `{module}`.\n"
     ).format(attribute=attribute, module=module)
-    return cause, hint
+    return {"cause": cause}
 
 
 # ======= Handle attribute error in object =========
@@ -140,7 +136,6 @@ def attribute_error_in_module(module, attribute, frame):
 def attribute_error_in_object(obj_type, attribute, tb_data, frame):
     """Attempts to find if object attribute might have been misspelled"""
     _ = current_lang.translate
-    cause = hint = None
 
     if obj_type == "builtin_function_or_method":
         obj_name = tb_data.bad_line.replace("." + attribute, "")
@@ -153,18 +148,18 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
             hint = _("Did you mean `{obj_name}({attribute})`?\n").format(
                 obj_name=obj_name, attribute=attribute
             )
-            return cause, hint
+            return {"cause": cause, "suggest": hint}
         else:
             cause = _(
                 "`{obj_name}` is a Python built-in function or method\n"
                 "which does not have an attribute named `{attribute}.`\n"
             ).format(obj_name=obj_name, attribute=attribute)
-            return cause, hint
+            return {"cause": cause}
 
     obj = info_variables.get_object_from_name(obj_type, frame)
     if obj is None:
         debug_helper.log("obj is None in attribute_error_in_object.")
-        return cause, hint
+        return {"cause": internal_error()}
 
     all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
     for obj_name, instance in all_objects:
@@ -172,7 +167,7 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
             break
     else:
         debug_helper.log("object is not on bad_line in attribute_error_in_object.")
-        return cause, hint
+        return {"cause": internal_error()}
 
     possible_cause = tuple_by_accident(instance, obj_name, attribute)
     if possible_cause:
@@ -220,7 +215,7 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
         cause += _(
             "The following are some of its known attributes:\n" "`{names}`."
         ).format(names=", ".join(known_attributes))
-    return cause, hint
+    return {"cause": cause}
 
 
 def handle_attribute_typo(obj_name, attribute, similar):
@@ -243,7 +238,7 @@ def handle_attribute_typo(obj_name, attribute, similar):
             "the following names which are attributes of object `{obj}`:\n"
             "`{names}`\n"
         ).format(names=names, typo=attribute, obj=obj_name)
-    return cause, hint
+    return {"cause": cause, "suggest": hint}
 
 
 def perhaps_builtin(attribute, known_attributes):
@@ -258,9 +253,8 @@ def perhaps_builtin(attribute, known_attributes):
 
 def tuple_by_accident(obj, obj_name, attribute):
     _ = current_lang.translate
-    cause = hint = None
     if not (isinstance(obj, tuple) and len(obj) == 1):
-        return cause
+        return {}
 
     true_obj = obj[0]
     if hasattr(true_obj, attribute):
@@ -271,8 +265,9 @@ def tuple_by_accident(obj, obj_name, attribute):
             "Perhaps you added a trailing comma by mistake at the end of the line\n"
             "where you defined `{obj_name}`.\n"
         ).format(obj_name=obj_name, attribute=attribute)
+        return {"cause": cause, "suggest": hint}
 
-    return cause, hint
+    return {}
 
 
 def use_str_join(obj_name):
@@ -282,7 +277,7 @@ def use_str_join(obj_name):
         "The object `{obj_name}` has no attribute named `join`.\n"
         "Perhaps you wanted something like `'...'.join({obj_name})`.\n"
     ).format(obj_name=obj_name)
-    return cause, hint
+    return {"cause": cause, "suggest": hint}
 
 
 def use_builtin_function(obj_name, attribute, known_builtin):
@@ -295,7 +290,7 @@ def use_builtin_function(obj_name, attribute, known_builtin):
         "Perhaps you can use the Python builtin function `{known_builtin}` instead:\n"
         "`{known_builtin}({obj_name})`."
     ).format(known_builtin=known_builtin, obj_name=obj_name, attribute=attribute)
-    return cause, hint
+    return {"cause": cause, "suggest": hint}
 
 
 def perhaps_join(obj):
@@ -339,7 +334,7 @@ def use_synonym(obj_name, attribute, synonyms):
             "`{attributes}`.\n"
         ).format(name=obj_name, attributes=list_to_string(synonyms))
 
-    return cause, hint
+    return {"cause": cause, "suggest": hint}
 
 
 def missing_comma(first, second):
@@ -354,4 +349,4 @@ def missing_comma(first, second):
         "instead of using a comma.\n"
     ).format(first=first, second=second)
 
-    return cause, hint
+    return {"cause": cause, "suggest": hint}
