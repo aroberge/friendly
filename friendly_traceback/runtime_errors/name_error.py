@@ -1,6 +1,6 @@
 import re
 
-from ..my_gettext import current_lang
+from ..my_gettext import current_lang, no_information
 from .. import info_variables
 from .. import debug_helper
 from .. import token_utils
@@ -15,20 +15,12 @@ def get_cause(value, frame, tb_data):
 
 
 def _get_cause(value, frame, tb_data):
-    _ = current_lang.translate
-
-    cause = _(
-        "No information is known about this exception.\n"
-        "Please report this example to\n"
-        "https://github.com/aroberge/friendly-traceback/issues\n"
-    )
-    hint = None
 
     name, fn = get_unknown_name(str(value))
     if name is not None:
         return fn(name, frame, tb_data)
 
-    return cause, hint
+    return {"cause": no_information()}
 
 
 def get_unknown_name(message):
@@ -59,7 +51,7 @@ def free_variable_referenced(unknown_name, *args):
         "that had been declared as belonging in a nonlocal scope;\n"
         "however, no such name could not be found.\n"
     ).format(var_name=unknown_name)
-    return cause, None
+    return {"cause": cause}
 
 
 def name_not_defined(unknown_name, frame, tb_data):
@@ -91,7 +83,12 @@ def name_not_defined(unknown_name, frame, tb_data):
         print("exception raised: ", e)
     if not additional:
         additional = _("I have no additional information for you.\n")
-    return cause + additional, hint
+
+    cause = {"cause": cause + additional}
+    if hint is None:
+        return cause
+    cause["suggest"] = hint
+    return cause
 
 
 def format_similar_names(name, similar):
