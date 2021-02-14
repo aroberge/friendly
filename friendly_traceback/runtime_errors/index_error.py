@@ -7,7 +7,7 @@ import pure_eval
 
 from .. import debug_helper
 from .. import info_variables
-from ..my_gettext import current_lang
+from ..my_gettext import current_lang, no_information, internal_error
 
 
 def get_cause(value, frame, tb_data):
@@ -15,7 +15,7 @@ def get_cause(value, frame, tb_data):
         return _get_cause(value, frame, tb_data)
     except Exception as e:
         debug_helper.log_error(e)
-        return None, None
+        return {"cause": internal_error()}
 
 
 def _get_cause(value, frame, tb_data):
@@ -23,23 +23,16 @@ def _get_cause(value, frame, tb_data):
 
     message = str(value)
 
-    cause = _(
-        "No information is known about this exception.\n"
-        "Please report this example to\n"
-        "https://github.com/aroberge/friendly-traceback/issues\n"
-    )
-    hint = None  # unused for now
-
     pattern = re.compile(r"(.*) index out of range")
     match = re.search(pattern, message)
     if match:
-        cause, hint = index_out_of_range(match.group(1), frame, tb_data)
-    return cause, hint
+        return index_out_of_range(match.group(1), frame, tb_data)
+
+    return {"cause": no_information()}
 
 
 def index_out_of_range(obj_type, frame, tb_data):
     _ = current_lang.translate
-    cause = hint = None
 
     # first, try to identify object
     all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)
@@ -49,17 +42,17 @@ def index_out_of_range(obj_type, frame, tb_data):
             break
     else:
         debug_helper.log("Cannot identify object in index_out_of_range().")
-        return cause, hint
+        return {}
 
     try:
         node = tb_data.node
     except Exception:
         debug_helper.log("node does not exist in index_out_of_range()")
-        return cause, hint
+        return {}
 
     if not (node and isinstance(node, ast.Subscript)):
         debug_helper.log("node is not Subscript in index_out_of_range().")
-        return cause, hint
+        return {}
 
     length = len(sequence)
     evaluator = pure_eval.Evaluator.from_frame(frame)
@@ -100,5 +93,6 @@ def index_out_of_range(obj_type, frame, tb_data):
         hint = _("Remember: the first item of {obj_type} is at index 0.\n").format(
             obj_type=info_variables.convert_type(obj_type)
         )
+        return {"cause": cause, "suggest": hint}
 
-    return cause, hint
+    return {"cause": cause}
