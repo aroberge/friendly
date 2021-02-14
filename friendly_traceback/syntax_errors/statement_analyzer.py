@@ -140,9 +140,8 @@ def detect_walrus(statement):
     older version of Python.
     """
     _ = current_lang.translate
-    cause = hint = None
     if sys.version_info >= (3, 8):
-        return cause, hint
+        return {}
 
     # Normally, the token identified as the bad token should be
     # '='; however, in some test cases where a named assignment
@@ -162,8 +161,9 @@ def detect_walrus(statement):
             "the walrus operator. This operator requires the use of\n"
             "Python 3.8 or newer. You are using version {version}.\n"
         ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
+        return {"cause": cause, "suggest": hint}
 
-    return cause, hint
+    return {}
 
 
 @add_statement_analyzer
@@ -172,7 +172,6 @@ def detect_backquote(statement):
     in Python 2.
     """
     _ = current_lang.translate
-    cause = hint = None
     if statement.bad_token == "`":
         hint = _("You should not use the backquote character.\n")
         cause = _(
@@ -181,16 +180,16 @@ def detect_backquote(statement):
             "or copied Python 2 code;\n"
             "in this latter case, use the function `repr(x)`."
         )
-    return cause, hint
+        return {"cause": cause, "suggest": hint}
+    return {}
 
 
 @add_statement_analyzer
 def keyword_as_attribute(statement):
     """Will identify something like  obj.True ..."""
     _ = current_lang.translate
-    cause = hint = None
     if statement.prev_token != ".":
-        return cause, hint
+        return {}
 
     word = statement.bad_token
     if word.is_keyword():
@@ -199,17 +198,16 @@ def keyword_as_attribute(statement):
         ).format(word=word)
     elif word == "__debug__":
         cause = _("You cannot use the constant `__debug__` as an attribute.\n\n")
+    else:
+        return {}
 
-    if cause is not None:
-        hint = _("`{word}` cannot be used as an attribute.\n").format(word=word)
-
-    return cause, hint
+    hint = _("`{word}` cannot be used as an attribute.\n").format(word=word)
+    return {"cause": cause, "suggest": hint}
 
 
 @add_statement_analyzer
 def confused_elif(statement):
     _ = current_lang.translate
-    cause = hint = None
     name = None
     if statement.bad_token == "elseif" or statement.prev_token == "elseif":
         name = "elseif"
@@ -222,15 +220,15 @@ def confused_elif(statement):
             "but wrote `{name}` instead\n"
             "\n"
         ).format(name=name)
-    return cause, hint
+        return {"cause": cause, "suggest": hint}
+    return {}
 
 
 @add_statement_analyzer
 def import_from(statement):
     _ = current_lang.translate
-    cause = hint = None
     if statement.bad_token != "from" or statement.tokens[0] != "import":
-        return cause, hint
+        return {}
 
     function = statement.prev_token
     module = statement.next_token
@@ -245,7 +243,7 @@ def import_from(statement):
         "    from {module} import {function}\n\n"
         "\n"
     ).format(module=module, function=function)
-    return cause, hint
+    return {"cause": cause, "suggest": hint}
 
 
 @add_statement_analyzer
@@ -257,10 +255,8 @@ def misplaced_quote(statement):
     followed by something else than a string.
     """
     _ = current_lang.translate
-    cause = hint = None
-
     if not statement.prev_token.is_string():
-        return cause, hint
+        return {}
 
     bad_token = statement.bad_token
     if bad_token.is_identifier():
@@ -268,7 +264,7 @@ def misplaced_quote(statement):
         for fn in [int, float, complex]:
             try:
                 fn(bad_string)  # Definitely not a word!
-                return cause, hint
+                return {}
             except Exception:
                 pass
 
@@ -279,8 +275,9 @@ def misplaced_quote(statement):
             "I suspect that you were trying to use a quote inside a string\n"
             "that was enclosed in quotes of the same kind.\n"
         )
+        return {"cause": cause, "suggest": hint}
 
-    return cause, hint
+    return {}
 
 
 @add_statement_analyzer
