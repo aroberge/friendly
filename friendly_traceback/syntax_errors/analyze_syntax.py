@@ -16,7 +16,7 @@ as often as possible what went wrong while trying to avoid giving
 incorrect information.
 """
 
-from friendly_traceback.my_gettext import current_lang
+from friendly_traceback.my_gettext import current_lang, internal_error
 from . import statement_analyzer
 from . import message_analyzer
 from .. import debug_helper
@@ -27,24 +27,17 @@ def set_cause_syntax(value, tb_data):
     specific to a given exception.
     """
     _ = current_lang.translate
-    hint = None
     try:
-        cause, hint = find_syntax_error_cause(value, tb_data)
+        return find_syntax_error_cause(value, tb_data)
     except Exception as e:
         debug_helper.log_error(e)
-        cause = _(
-            "Exception raised by Friendly-traceback itself.\n"
-            "Please report this example to\n"
-            "https://github.com/aroberge/friendly-traceback/issues\n"
-        )
-    return cause, hint
+        return {"cause": internal_error()}
 
 
 def find_syntax_error_cause(value, tb_data):
     """Attempts to find the cause of a SyntaxError"""
     # value = tb_data.value
     _ = current_lang.translate
-    hint = None
     message = value.msg
     statement = tb_data.statement
 
@@ -55,11 +48,21 @@ def find_syntax_error_cause(value, tb_data):
     # raises a particular exception.
 
     if "invalid syntax" not in message:
-        cause, hint = message_analyzer.analyze_message(
-            message=message, statement=statement
-        )
-        if cause is not None:
-            return cause, hint
+        cause = message_analyzer.analyze_message(message=message, statement=statement)
+        if isinstance(cause, tuple):
+            cause, hint = cause
+        else:
+            cause = cause["cause"]
+            if "suggest" in cause:
+                hint = cause["suggest"]
+            else:
+                hint = None
+
+        if cause:
+            if hint:
+                return {"cause": cause, "suggest": hint}
+            else:
+                return {"cause": cause}
         else:
             notice = _(
                 "Python gave us the following informative message\n"
@@ -68,13 +71,30 @@ def find_syntax_error_cause(value, tb_data):
                 "However, I do not recognize this information and I have\n"
                 "to guess what caused the problem, but I might be wrong.\n\n"
             ).format(message=message)
-            cause, hint = statement_analyzer.analyze_statement(statement)
-            if cause is not None:
-                return notice + cause, hint
+            cause = statement_analyzer.analyze_statement(statement)
+
+            if isinstance(cause, tuple):
+                cause, hint = cause
+                if cause:
+                    if hint:
+                        return {"cause": cause + notice, "suggest": hint}
+                    else:
+                        return {"cause": cause + notice}
+            elif cause:
+                cause["cause"] += notice
+                return cause
+
     else:
-        cause, hint = statement_analyzer.analyze_statement(statement)
-        if cause is not None:
-            return cause, hint
+        cause = statement_analyzer.analyze_statement(statement)
+        if isinstance(cause, tuple):
+            cause, hint = cause
+            if cause:
+                if hint:
+                    return {"cause": cause, "suggest": hint}
+                else:
+                    return {"cause": cause}
+        elif cause:
+            return cause
 
     cause = _(
         "Currently, I cannot guess the likely cause of this error.\n"
@@ -87,4 +107,4 @@ def find_syntax_error_cause(value, tb_data):
         "https://github.com/aroberge/friendly-traceback/issues\n"
         "\n"
     )
-    return cause, hint
+    return {"cause": cause}

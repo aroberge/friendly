@@ -7,7 +7,7 @@ import sys
 
 from . import fixers
 from . import syntax_utils
-from ..my_gettext import current_lang
+from ..my_gettext import current_lang, internal_error
 from .. import debug_helper
 from .. import token_utils
 from .. import utils
@@ -36,13 +36,20 @@ def analyze_statement(statement):
     on which the error occurred."""
     if not statement.tokens:
         debug_helper.log("Statement with no tokens in statement_analyser.py")
-        return None, None
+        return {"cause": internal_error()}
 
     for analyzer in STATEMENT_ANALYZERS:
-        cause, hint = analyzer(statement)
-        if cause:
-            return cause, hint
-    return None, None
+        cause = analyzer(statement)
+        if isinstance(cause, tuple):
+            cause, hint = cause
+            if cause:
+                if hint:
+                    return {"cause": cause, "suggest": hint}
+                else:
+                    return {"cause": cause}
+        elif cause:
+            return cause
+    return {}
 
 
 # ==================
@@ -55,9 +62,8 @@ def analyze_statement(statement):
 def mismatched_brackets(statement):
     """Detecting code that ends with an unmatched closing bracket"""
     _ = current_lang.translate
-    cause = hint = None
     if not (statement.end_bracket and statement.bad_token == statement.last_token):
-        return cause, hint
+        return {}
 
     if not statement.begin_brackets:
         lineno = statement.end_bracket.start_row
@@ -76,7 +82,7 @@ def mismatched_brackets(statement):
             + source
         )
 
-        return cause, hint
+        return {"cause": cause}
 
     open_bracket = statement.begin_brackets[-1]
     open_lineno = open_bracket.start_row
@@ -107,16 +113,15 @@ def mismatched_brackets(statement):
         )
         + source
     )
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_statement_analyzer
 def copy_pasted_code(statement):
     """Detecting code that starts with a Python prompt"""
     _ = current_lang.translate
-    cause = hint = None
     if statement.nb_tokens < 2:
-        return cause, hint
+        return {}
 
     tokens = statement.tokens
     if tokens[0] == ">>" and tokens[1] == ">":
@@ -125,7 +130,8 @@ def copy_pasted_code(statement):
             "The Python prompt, `>>>`, should not be included in your code.\n"
         )
         hint = _("Did you use copy-paste?\n")
-    return cause, hint
+        return {"cause": cause, "suggest": hint}
+    return {}
 
 
 @add_statement_analyzer

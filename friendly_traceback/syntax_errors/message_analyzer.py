@@ -607,12 +607,12 @@ def mismatched_parenthesis(message="", statement=None):
             "does not match the opening `{opening}`.\n\n"
         ).format(closing=closing, opening=opening)
 
-    additional_cause, _ignore = statement_analyzer.mismatched_brackets(statement)
+    additional_cause = statement_analyzer.mismatched_brackets(statement)
 
     if additional_cause:
         cause += (
             _("I will attempt to be give a bit more information.\n\n")
-            + additional_cause
+            + additional_cause["cause"]
         )
 
     return cause, hint
