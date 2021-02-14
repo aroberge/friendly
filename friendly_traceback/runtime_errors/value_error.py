@@ -6,7 +6,7 @@ providing a more detailed explanation.
 
 import re
 
-from ..my_gettext import current_lang
+from ..my_gettext import current_lang, no_information
 from .. import info_variables
 from .. import debug_helper
 
@@ -35,16 +35,13 @@ def get_cause(value, frame, tb_data):
 
 def _get_cause(value, frame, tb_data):
     _ = current_lang.translate
-    unknown = _(
-        "I do not recognize this case. Please report it to\n"
-        "https://github.com/aroberge/friendly-traceback/issues\n"
-    )
+
     message = str(value)
     for parser in MESSAGES_PARSERS:
-        cause, hint = parser(message, frame, tb_data)
-        if cause is not None:
-            return cause, hint
-    return unknown, None
+        cause = parser(message, frame, tb_data)
+        if cause:
+            return cause
+    return {"cause": no_information()}
 
 
 def _unpacking():
@@ -80,7 +77,6 @@ def get_iterable(code, frame):
 @add_message_parser
 def not_enough_values_to_unpack(message, frame, tb_data):
     _ = current_lang.translate
-    cause = hint = None
     pattern1 = re.compile(r"not enough values to unpack \(expected (\d+), got (\d+)\)")
     match1 = re.search(pattern1, message)
     pattern2 = re.compile(
@@ -88,7 +84,7 @@ def not_enough_values_to_unpack(message, frame, tb_data):
     )
     match2 = re.search(pattern2, message)
     if match1 is None and match2 is None:
-        return cause, hint
+        return {}
 
     match = match1 if match2 is None else match2
 
@@ -100,7 +96,7 @@ def not_enough_values_to_unpack(message, frame, tb_data):
             "In this instance, there are more names ({nb_names})\n"
             "than {length}, the length of the iterable.\n"
         ).format(nb_names=nb_names, length=length)
-        return cause, hint
+        return {"cause": cause}
 
     _lhs, rhs = tb_data.bad_line.split("=")
     obj, iterable = get_iterable(rhs, frame)
@@ -109,23 +105,22 @@ def not_enough_values_to_unpack(message, frame, tb_data):
             "In this instance, there are more names ({nb_names})\n"
             "than {length}, the length of the iterable.\n"
         ).format(nb_names=nb_names, length=length)
-        return cause, hint
+        return {"cause": cause}
 
     cause = _unpacking() + _(
         "In this instance, there are more names ({nb_names})\n"
         "than the length of the iterable, {iter_type} of length {length}.\n"
     ).format(nb_names=nb_names, iter_type=convert_type(iterable), length=length)
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_message_parser
 def too_many_values_to_unpack(message, frame, tb_data):
     _ = current_lang.translate
-    cause = hint = None
     pattern = re.compile(r"too many values to unpack \(expected (\d+)\)")
     match = re.search(pattern, message)
     if match is None:
-        return cause, hint
+        return {}
 
     nb_names = match.group(1)
 
@@ -134,7 +129,7 @@ def too_many_values_to_unpack(message, frame, tb_data):
             "In this instance, there are fewer names ({nb_names})\n"
             "than the length of the iterable.\n"
         ).format(nb_names=nb_names)
-        return cause, hint
+        return {"cause": cause}
 
     _lhs, rhs = tb_data.bad_line.split("=")
 
@@ -144,10 +139,10 @@ def too_many_values_to_unpack(message, frame, tb_data):
             "In this instance, there are fewer names ({nb_names})\n"
             "than the length of the iterable.\n"
         ).format(nb_names=nb_names)
-        return cause, hint
+        return {"cause": cause}
 
     cause = _unpacking() + _(
         "In this instance, there are fewer names ({nb_names})\n"
         "than the length of the iterable, {iter_type} of length {length}.\n"
     ).format(nb_names=nb_names, iter_type=convert_type(iterable), length=len(obj))
-    return cause, hint
+    return {"cause": cause}
