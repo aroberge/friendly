@@ -3,7 +3,7 @@
 import re
 import sys
 
-from ..my_gettext import current_lang
+from ..my_gettext import current_lang, no_information, internal_error
 from ..utils import get_similar_words, list_to_string
 from ..path_info import path_utils
 from .. import debug_helper
@@ -14,20 +14,13 @@ def get_cause(value, _frame, tb_data):
         return _get_cause(value, tb_data)
     except Exception as e:
         debug_helper.log_error(e)
-        return None, None
+        return {"cause": internal_error()}
 
 
 def _get_cause(value, tb_data):
     _ = current_lang.translate
 
     message = str(value)
-    cause = _(
-        "No information is known about this exception.\n"
-        "Please report this example to\n"
-        "https://github.com/aroberge/friendly-traceback/issues\n"
-    )
-    hint = None
-
     # Python 3.8+
     pattern1 = re.compile(
         r"cannot import name '(.*)' from partially initialized module '(.*)'"
@@ -42,33 +35,31 @@ def _get_cause(value, tb_data):
 
     if match1:
         if "circular import" in message:
-            cause, hint = cannot_import_name_from(
+            return cannot_import_name_from(
                 match1.group(1), match1.group(2), tb_data, add_circular_hint=False
             )
         else:
-            cause, hint = cannot_import_name_from(
-                match1.group(1), match1.group(2), tb_data
-            )
+            return cannot_import_name_from(match1.group(1), match1.group(2), tb_data)
     elif match2:
-        cause, hint = cannot_import_name_from(match2.group(1), match2.group(2), tb_data)
+        return cannot_import_name_from(match2.group(1), match2.group(2), tb_data)
     elif match3:
-        cause, hint = cannot_import_name(match3.group(1), tb_data)
+        return cannot_import_name(match3.group(1), tb_data)
 
-    return cause, hint
+    return {"cause": no_information()}
 
 
 def cannot_import_name_from(name, module, tb_data, add_circular_hint=True):
     _ = current_lang.translate
 
     hint = None
+    circular_info = None
+
     modules_imported = extract_import_data_from_traceback(tb_data)
     if modules_imported:
         circular_info = find_circular_import(modules_imported)
         if circular_info and add_circular_hint:
             hint = _("You have a circular import.\n")
             # Python 3.8+ adds a similar hint on its own.
-    else:
-        circular_info = ""
 
     cause = _(
         "The object that could not be imported is `{name}`.\n"
@@ -77,22 +68,23 @@ def cannot_import_name_from(name, module, tb_data, add_circular_hint=True):
     ).format(name=name, module=module)
 
     if circular_info:
-        return cause + "\n" + circular_info, hint
+        if hint is None:
+            return {"cause": cause + "\n" + circular_info}
+        else:
+            return {"cause": cause + "\n" + circular_info, "suggest": hint}
+
     elif not add_circular_hint:
-        return (
-            (
-                cause
-                + "\n"
-                + _(
-                    "Python indicated that you have a circular import.\n"
-                    "This can occur if executing the code in module 'A'\n"
-                    "results in executing the code in module 'B' where\n"
-                    "an attempt to import a name from module 'A' is made\n"
-                    "before the execution of the code in module 'A' had been completed.\n"
-                )
-            ),
-            hint,
-        )
+        return {
+            "cause": cause
+            + "\n"
+            + _(
+                "Python indicated that you have a circular import.\n"
+                "This can occur if executing the code in module 'A'\n"
+                "results in executing the code in module 'B' where\n"
+                "an attempt to import a name from module 'A' is made\n"
+                "before the execution of the code in module 'A' had been completed.\n"
+            )
+        }
 
     try:
         mod = sys.modules[module]
@@ -101,10 +93,11 @@ def cannot_import_name_from(name, module, tb_data, add_circular_hint=True):
             "Inconsistent state: `'{module}'` was apparently not imported.\n"
             "As a result, no further analysis can be done.\n"
         ).format(module=module)
-        return cause, hint
+        return {"cause": cause}
+
     similar = get_similar_words(name, dir(mod))
     if not similar:
-        return cause, hint
+        return {"cause": cause}
 
     if len(similar) == 1:
         hint = _("Did you mean `{name}`?\n").format(name=similar[0])
@@ -124,7 +117,7 @@ def cannot_import_name_from(name, module, tb_data, add_circular_hint=True):
             "`{candidates}`\n"
         ).format(candidates=candidates, typo=name, module=module)
 
-    return cause, hint
+    return {"cause": cause, "suggest": hint}
 
 
 def cannot_import_name(name, tb_data):
@@ -135,10 +128,11 @@ def cannot_import_name(name, tb_data):
     if match:
         return cannot_import_name_from(name, match.group(1), tb_data)
 
-    return (
-        _("The object that could not be imported is `{name}`.\n").format(name=name),
-        None,
-    )
+    return {
+        "cause": _("The object that could not be imported is `{name}`.\n").format(
+            name=name
+        )
+    }
 
 
 def extract_import_data_from_traceback(tb_data):
