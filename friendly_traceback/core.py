@@ -393,16 +393,26 @@ class FriendlyTraceback:
             self.info["cause"] = cannot_analyze_stdin()
             return
 
-        cause, hint = info_specific.get_likely_cause(
+        cause = info_specific.get_likely_cause(
             etype, value, self.tb_data.exception_frame, self.tb_data
         )  # [3]
-        if cause is not None:
+        if isinstance(cause, tuple):  # old style to be replaced
+            cause, hint = cause
+            if cause is not None:
+                self.info["cause"] = cause
+                if hint:
+                    self.info["suggest"] = hint
+        elif isinstance(cause, dict):
+            self.info.update(**cause)
+        else:
+            debug_helper.log("Problem: invalid cause")
+            debug_helper.log(str(cause))
+            debug_helper.log(self.info["message"])
+
+        if "cause" in self.info:
             self.info["cause_header"] = _(
                 "Likely cause based on the information given by Python:"
             )
-            self.info["cause"] = cause
-            if hint:
-                self.info["suggest"] = hint
 
     def set_cause_syntax(self):
         """For SyntaxError and subclasses. Sets the value of the following

@@ -32,11 +32,11 @@ def _get_cause(message, frame, tb_data):
         "https://github.com/aroberge/friendly-traceback/issues\n"
     )
     for parser in MESSAGES_PARSERS:
-        cause, hint = parser(message, frame, tb_data)
-        if cause is not None:
-            return cause, hint
+        cause = parser(message, frame, tb_data)
+        if cause:
+            return cause
 
-    return unknown, None
+    return {"cause": unknown}
 
 
 def expression_is_zero(expression, modulo=False):
@@ -54,13 +54,12 @@ def expression_is_zero(expression, modulo=False):
 
 @add_message_parser
 def division_by_zero(message, _frame, tb_data):
-    cause = hint = None
     if (
         message != "division by zero"
         and message != "float division by zero"
         and message != "complex division by zero"
     ):
-        return cause, hint
+        return {}
 
     expression = tb_data.bad_line
     if expression.count("/") == 1:
@@ -77,14 +76,13 @@ def division_by_zero(message, _frame, tb_data):
             "The following mathematical expression includes a division by zero:\n\n"
             "    {expression}\n"
         ).format(expression=expression)
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_message_parser
 def integer_or_modulo(message, _frame, tb_data):
-    cause = hint = None
     if message != "integer division or modulo by zero":
-        return cause, hint
+        return {}
     expression = tb_data.bad_line
     nb_div = expression.count("//")
     nb_mod = expression.count("%")
@@ -127,24 +125,24 @@ def integer_or_modulo(message, _frame, tb_data):
             "    {expression}\n"
         ).format(expression=expression)
 
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_message_parser
 def zero_negative_power(message, *_ignore):
     if message != "0.0 cannot be raised to a negative power":
-        return None, None
+        return {}
     cause = _(
         "You are attempting to raise the number 0 to a negative power\n"
         "which is equivalent to dividing by zero.\n"
     )
-    return cause, None
+    return {"cause": cause}
 
 
 @add_message_parser
 def float_modulo(message, _frame, tb_data):
     if message != "float modulo":
-        return None, None
+        return {}
     expression = tb_data.bad_line
     if expression.count("%") == 1:
         expression = expression.split("%")[1]
@@ -162,13 +160,13 @@ def float_modulo(message, _frame, tb_data):
             "    {expression}\n"
         ).format(expression=expression)
 
-    return cause, None
+    return {"cause": cause}
 
 
 @add_message_parser
 def float_divmod(message, *_ignore):
     if message != "float divmod()":
-        return None, None
+        return {}
 
     cause = _("The second argument to the `divmod()` function is equal to zero.\n")
-    return cause, None
+    return {"cause": cause}

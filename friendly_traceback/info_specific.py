@@ -16,19 +16,20 @@ def get_likely_cause(etype, value, frame, tb_data):
     specific to a given exception.
     """
     _ = current_lang.translate
-    cause = hint = None
+    cause = {}
     try:
         if etype.__name__ in get_cause:
-            cause, hint = get_cause[etype.__name__](value, frame, tb_data)
+            cause = get_cause[etype.__name__](value, frame, tb_data)
     except Exception as e:
         debug_helper.log("Exception caught in get_likely_cause().")
         debug_helper.log_error(e)
-        cause = _(
+        _cause = _(
             "Exception raised by Friendly-traceback itself.\n"
             "Please report this example to\n"
             "https://github.com/aroberge/friendly-traceback/issues\n"
         )
-    return cause, hint
+        cause = {"cause": _cause}
+    return cause
 
 
 def register(error_name):

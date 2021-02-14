@@ -15,6 +15,8 @@ def _write_err(text):
     """Default writer"""
     if not text.strip():
         return
+    if not text.endswith("\n"):
+        text += "\n"
     if session.use_rich:
         session.console.print()
         md = theme.friendly_rich.Markdown(
