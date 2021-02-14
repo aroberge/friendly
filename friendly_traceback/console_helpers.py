@@ -111,13 +111,12 @@ def debug_tb():
     explain("debug_tb")
 
 
-def debug():
+def debug(flag=True):
     """This functions displays the true traceback recorded, that
     includes friendly-traceback's own code.
-    It also adds the suggestion/hint from friendly-traceback
-    and sets a debug flag for the current session.
+    It also sets a debug flag for the current session.
     """
-    debug_helper.DEBUG = True
+    debug_helper.DEBUG = flag
     explain("debug_tb")
 
 
