@@ -439,23 +439,27 @@ class FriendlyTraceback:
         elif etype.__name__ == "TabError":
             return
 
-        cause, hint = analyze_syntax.set_cause_syntax(value, self.tb_data)
-        if cause is not None:
+        cause = analyze_syntax.set_cause_syntax(value, self.tb_data)
+        if isinstance(cause, tuple):
+            self.info["cause"] = cause[0]
+            if cause[1]:
+                self.info["suggest"] = cause[1]
+        elif "cause" in cause:
+            self.info.update(**cause)
+
+        if "cause" in self.info:
             if "invalid syntax" in self.message:
                 if self.tb_data.filename == "<string>":
-                    header = ""
+                    return
                 else:
-                    header = _(
+                    self.info["cause_header"] = _(
                         "Python's error message (invalid syntax) "
                         "cannot be used to identify the problem:"
                     )
             else:
-                header = _("Likely cause based on the information given by Python:")
-            if header:
-                self.info["cause_header"] = header
-            self.info["cause"] = cause
-            if hint:
-                self.info["suggest"] = hint
+                self.info["cause_header"] = _(
+                    "Likely cause based on the information given by Python:"
+                )
 
     def assign_generic(self):
         """Assigns the generic information about a given error. This is
