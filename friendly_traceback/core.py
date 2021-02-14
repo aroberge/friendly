@@ -396,18 +396,13 @@ class FriendlyTraceback:
         cause = info_specific.get_likely_cause(
             etype, value, self.tb_data.exception_frame, self.tb_data
         )  # [3]
-        if isinstance(cause, tuple):  # old style to be replaced
-            cause, hint = cause
-            if cause is not None:
-                self.info["cause"] = cause
-                if hint:
-                    self.info["suggest"] = hint
-        elif isinstance(cause, dict):
+        try:
             self.info.update(**cause)
-        else:
+        except Exception as e:
             debug_helper.log("Problem: invalid cause")
             debug_helper.log(str(cause))
             debug_helper.log(self.info["message"])
+            debug_helper.log_error(e)
 
         if "cause" in self.info:
             self.info["cause_header"] = _(

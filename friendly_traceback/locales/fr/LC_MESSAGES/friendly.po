@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-02-14 08:54-0400\n"
-"PO-Revision-Date: 2021-02-14 08:55-0400\n"
+"POT-Creation-Date: 2021-02-14 14:54-0400\n"
+"PO-Revision-Date: 2021-02-14 14:55-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -112,11 +112,11 @@ msgstr ""
 "Cela peut se produire si une méthode `__repr__` ou `__str__`\n"
 "soulève une exception ou ne retourne pas une chaîne.\n"
 
-#: core.py:413 core.py:458
+#: core.py:408 core.py:453
 msgid "Likely cause based on the information given by Python:"
 msgstr "Cause probable basée sur les informations données par Python :"
 
-#: core.py:453
+#: core.py:448
 msgid ""
 "Python's error message (invalid syntax) cannot be used to identify the "
 "problem:"
@@ -124,23 +124,23 @@ msgstr ""
 "Le message d’erreur de Python (invalid syntax) ne peut pas être utilisé pour "
 "identifier le problème :"
 
-#: core.py:524
+#: core.py:519
 msgid ""
 "{filename} is not a regular Python file whose contents can be analyzed.\n"
 msgstr ""
 "{filename} n’est pas un fichier Python dont le contenu\n"
 "peut être analysé.\n"
 
-#: core.py:530
+#: core.py:525
 msgid "Exception raised on line {linenumber} of file {filename}.\n"
 msgstr "Exception levée à la ligne {linenumber} du fichier {filename}.\n"
 
-#: core.py:567
+#: core.py:562
 msgid "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
 "L'exécution s'est arrêtée à la ligne {linenumber} du fichier {filename}\n"
 
-#: core.py:586
+#: core.py:581
 msgid ""
 "`{filename}` is not a regular Python file whose contents\n"
 "can be analyzed.\n"
@@ -148,7 +148,7 @@ msgstr ""
 "`{filename}` n’est pas un fichier Python dont le contenu\n"
 "peut être analysé.\n"
 
-#: core.py:597
+#: core.py:592
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -158,7 +158,7 @@ msgstr ""
 "'{filename}'\n"
 "jusqu'à l'endroit indiqué par --> et ^.\n"
 
-#: core.py:603
+#: core.py:598
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
@@ -169,7 +169,7 @@ msgstr ""
 "La fin du fichier a été atteinte et Python s'attendait à voir plus de code.\n"
 "\n"
 
-#: core.py:609
+#: core.py:604
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -179,15 +179,15 @@ msgstr ""
 "'{filename}'\n"
 "pour une raison non spécifiée.\n"
 
-#: core.py:641
+#: core.py:636
 msgid "More lines not shown."
 msgstr "Plus de lignes non affichées."
 
-#: core.py:788
+#: core.py:783
 msgid "Problem: source of `{filename}` is not available\n"
 msgstr "Problème : la source de `{filename}` n'est pas disponible.\n"
 
-#: core.py:832
+#: core.py:827
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -431,23 +431,13 @@ msgstr ""
 "diviser une valeur\n"
 "par zéro soit directement ou en utilisant une autre opération mathématique.\n"
 
-#: info_specific.py:26 syntax_errors\analyze_syntax.py:35
-msgid ""
-"Exception raised by Friendly-traceback itself.\n"
-"Please report this example to\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
-msgstr ""
-"Exception soulevée par Friendly-traceback.\n"
-"Veuillez signaler cet exemple à\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
-
-#: info_specific.py:66
+#: info_specific.py:60
 msgid ""
 "In your program, the name of the\n"
 "file that cannot be found is `{filename}`.\n"
 msgstr "Dans votre programme, le nom du fichier inconnu est `{filename}`.\n"
 
-#: info_specific.py:96
+#: info_specific.py:89
 msgid "In your program, the key that cannot be found is `{key_name!r}`.\n"
 msgstr "Dans votre programme, la clé inconnue est `{key_name!r}`.\n"
 
@@ -519,14 +509,24 @@ msgid ""
 "https://github.com/aroberge/friendly-traceback/issues\n"
 "\n"
 "If you are using the Friendly console, use `www()` to\n"
-"do an Internet search for this particular case."
+"do an Internet search for this particular case.\n"
 msgstr ""
 "Aucune information n’est connue à propos de cette exception.\n"
 "Veuillez signaler cet exemple à\n"
 "https://github.com/aroberge/friendly-traceback/issues\n"
 "\n"
 "Si vous utilisez la console Friendly, utilisez `www()` pour\n"
-"faire une recherche sur Internet pour ce cas particulier."
+"faire une recherche sur Internet pour ce cas particulier.\n"
+
+#: my_gettext.py:88
+msgid ""
+"Internal error for Friendly-traceback.\n"
+"Please report this example to\n"
+"https://github.com/aroberge/friendly-traceback/issues\n"
+msgstr ""
+"Exception soulevée par Friendly-traceback.\n"
+"Veuillez signaler cet exemple à\n"
+"https://github.com/aroberge/friendly-traceback/issues\n"
 
 #: runtime_errors\attribute_error.py:45
 msgid ""
@@ -536,15 +536,7 @@ msgstr ""
 "Vous tentez d’accéder à l’attribut `{attr}`\n"
 "pour une variable dont la valeur est `None`."
 
-#: runtime_errors\attribute_error.py:54 runtime_errors\type_error.py:39
-msgid ""
-"I do not recognize this case. Please report it to\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
-msgstr ""
-"Je ne reconnais pas ce cas. Veuillez le signaler à\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
-
-#: runtime_errors\attribute_error.py:71
+#: runtime_errors\attribute_error.py:67
 msgid ""
 "This should not happen:\n"
 "Python tells us that module `{module}` does not have an attribute named "
@@ -556,15 +548,15 @@ msgstr ""
 "`{attribute}`.\n"
 "Toutefois, il ne semble pas que le module `{module}` ait été importé.\n"
 
-#: runtime_errors\attribute_error.py:82 runtime_errors\attribute_error.py:123
-#: runtime_errors\attribute_error.py:233 runtime_errors\import_error.py:110
-#: runtime_errors\module_not_found_error.py:55 runtime_errors\name_error.py:82
+#: runtime_errors\attribute_error.py:78 runtime_errors\attribute_error.py:119
+#: runtime_errors\attribute_error.py:228 runtime_errors\import_error.py:103
+#: runtime_errors\module_not_found_error.py:47 runtime_errors\name_error.py:73
 #: runtime_errors\unbound_local_error.py:38
 #: syntax_errors\message_analyzer.py:342 syntax_errors\message_analyzer.py:973
 msgid "Did you mean `{name}`?\n"
 msgstr "Vouliez-vous dire `{name}` ?\n"
 
-#: runtime_errors\attribute_error.py:83
+#: runtime_errors\attribute_error.py:79
 msgid ""
 "Perhaps you meant to write `{module}.{correct}` instead of `{module}.{typo}"
 "`\n"
@@ -572,12 +564,12 @@ msgstr ""
 "Peut-être que vous vouliez plutôt écrire : `{module}.{correct}` au lieu de "
 "`{module}.{typo}`.\n"
 
-#: runtime_errors\attribute_error.py:90 runtime_errors\attribute_error.py:240
-#: runtime_errors\import_error.py:117
+#: runtime_errors\attribute_error.py:86 runtime_errors\attribute_error.py:235
+#: runtime_errors\import_error.py:110
 msgid "Did you mean one of the following: `{names}`?\n"
 msgstr "Vouliez-vous dire l’un des éléments suivants: `{names}` ?\n"
 
-#: runtime_errors\attribute_error.py:93
+#: runtime_errors\attribute_error.py:89
 msgid ""
 "Instead of writing `{module}.{typo}`, perhaps you meant to write one of \n"
 "the following names which are attributes of module `{module}`:\n"
@@ -587,11 +579,11 @@ msgstr ""
 "l'un des attributs suivants du module `{module}` :\n"
 "{names}\n"
 
-#: runtime_errors\attribute_error.py:103
+#: runtime_errors\attribute_error.py:99
 msgid "Did you give your program the same name as a Python module?\n"
 msgstr "Avez-vous donné à votre programme le même nom qu’un module Python ?\n"
 
-#: runtime_errors\attribute_error.py:104
+#: runtime_errors\attribute_error.py:100
 msgid ""
 "You imported a module named `{module}` from `{mod_path}`.\n"
 "There is also a module named `{module}` in Python's standard library.\n"
@@ -602,7 +594,7 @@ msgstr ""
 "Python.\n"
 "Peut-être avez-vous besoin de renommer votre module.\n"
 
-#: runtime_errors\attribute_error.py:124
+#: runtime_errors\attribute_error.py:120
 msgid ""
 "Perhaps you meant to use the attribute `{attribute}` of \n"
 "module `{mod_name}` instead of module `{module}`.\n"
@@ -610,7 +602,7 @@ msgstr ""
 "Peut-être vouliez-vous utiliser l’attribut `{attribute}` du \n"
 "module `{mod_name}` au lieu du module `{module}`.\n"
 
-#: runtime_errors\attribute_error.py:130
+#: runtime_errors\attribute_error.py:126
 msgid ""
 "Python tells us that no object with name `{attribute}` is\n"
 "found in module `{module}`.\n"
@@ -618,7 +610,7 @@ msgstr ""
 "Python nous dit qu’aucun objet avec le nom `{attribute}` n’est\n"
 "dans le module `{module}`.\n"
 
-#: runtime_errors\attribute_error.py:149
+#: runtime_errors\attribute_error.py:144
 msgid ""
 "`{obj_name}` is a function. Perhaps you meant to write\n"
 "`{obj_name}({attribute})`\n"
@@ -626,11 +618,11 @@ msgstr ""
 "`{obj_name}` est une fonction. Peut-être que vous vouliez écrire\n"
 "`{obj_name}({attribute})`\n"
 
-#: runtime_errors\attribute_error.py:153
+#: runtime_errors\attribute_error.py:148
 msgid "Did you mean `{obj_name}({attribute})`?\n"
 msgstr "Vouliez-vous dire `{obj_name}({attribute})` ?\n"
 
-#: runtime_errors\attribute_error.py:158
+#: runtime_errors\attribute_error.py:153
 msgid ""
 "`{obj_name}` is a Python built-in function or method\n"
 "which does not have an attribute named `{attribute}.`\n"
@@ -638,11 +630,11 @@ msgstr ""
 "`{obj_name}` est une fonction ou une méthode Python de type 'builtin'\n"
 "qui n’a pas d’attribut nommé `{attribute}`.\n"
 
-#: runtime_errors\attribute_error.py:208
+#: runtime_errors\attribute_error.py:203
 msgid "The object `{obj}` has no attribute named `{attr}`.\n"
 msgstr "L’objet `{obj}` n’a pas d’attribut nommé `{attr}`.\n"
 
-#: runtime_errors\attribute_error.py:212
+#: runtime_errors\attribute_error.py:207
 msgid ""
 "Note that object `{obj}` uses `__slots__` which prevents\n"
 "the creation of new attributes.\n"
@@ -650,7 +642,7 @@ msgstr ""
 "Notez que l’objet `{obj}` utilise `__slots__` qui empêche\n"
 "la création de nouveaux attributs.\n"
 
-#: runtime_errors\attribute_error.py:220
+#: runtime_errors\attribute_error.py:215
 msgid ""
 "The following are some of its known attributes:\n"
 "`{names}`."
@@ -658,14 +650,14 @@ msgstr ""
 "Voici quelques-uns de ses attributs connus :\n"
 "`{names}`."
 
-#: runtime_errors\attribute_error.py:234
+#: runtime_errors\attribute_error.py:229
 msgid ""
 "Perhaps you meant to write `{obj}.{correct}` instead of `{obj}.{typo}`\n"
 msgstr ""
 "Peut-être que vous vouliez plutôt écrire : `{obj}.{correct}` au lieu de "
 "`{obj}.{typo}`.\n"
 
-#: runtime_errors\attribute_error.py:241
+#: runtime_errors\attribute_error.py:236
 msgid ""
 "Instead of writing `{obj}.{typo}`, perhaps you meant to write one of \n"
 "the following names which are attributes of object `{obj}`:\n"
@@ -675,11 +667,11 @@ msgstr ""
 "l'un des attributs suivants de l'objet `{obj}` :\n"
 "{names}\n"
 
-#: runtime_errors\attribute_error.py:267
+#: runtime_errors\attribute_error.py:261
 msgid "Did you write a comma by mistake?\n"
 msgstr "Avez-vous écrit une virgule par erreur ?\n"
 
-#: runtime_errors\attribute_error.py:268
+#: runtime_errors\attribute_error.py:262
 msgid ""
 "`{obj_name}` is a tuple that contains a single item\n"
 "which does have `'{attribute}'` as an attribute.\n"
@@ -691,11 +683,11 @@ msgstr ""
 "Peut-être avez-vous ajouté une virgule par erreur à la fin de la ligne\n"
 "lorsque vous avez défini `{obj_name}`.\n"
 
-#: runtime_errors\attribute_error.py:280
+#: runtime_errors\attribute_error.py:275
 msgid "Did you mean `'...'.join({obj_name})`?\n"
 msgstr "Vouliez-vous utiliser `'...'.join({obj_name})` ?\n"
 
-#: runtime_errors\attribute_error.py:281
+#: runtime_errors\attribute_error.py:276
 msgid ""
 "The object `{obj_name}` has no attribute named `join`.\n"
 "Perhaps you wanted something like `'...'.join({obj_name})`.\n"
@@ -704,11 +696,11 @@ msgstr ""
 "Vous vouliez peut-être plutôt écrire quelque chose comme `'...'."
 "join({obj_name})`.\n"
 
-#: runtime_errors\attribute_error.py:290
+#: runtime_errors\attribute_error.py:285
 msgid "Did you mean `{known_builtin}({obj_name})`?\n"
 msgstr "Vouliez-vous utiliser `{known_builtin}({obj_name})` ?\n"
 
-#: runtime_errors\attribute_error.py:293
+#: runtime_errors\attribute_error.py:288
 msgid ""
 "The object `{obj_name}` has no attribute named `{attribute}`.\n"
 "Perhaps you can use the Python builtin function `{known_builtin}` instead:\n"
@@ -719,20 +711,20 @@ msgstr ""
 "à la place:\n"
 "`{known_builtin}({obj_name})`."
 
-#: runtime_errors\attribute_error.py:326
+#: runtime_errors\attribute_error.py:321
 msgid "Did you mean `{attr}`?\n"
 msgstr "Vouliez-vous dire `{attr}` ?\n"
 
-#: runtime_errors\attribute_error.py:328
+#: runtime_errors\attribute_error.py:323
 msgid "The object `{name}` has no attribute named `{attribute}`.\n"
 msgstr "L’objet `{name}` n’a pas d’attribut nommé `{attribute}`.\n"
 
-#: runtime_errors\attribute_error.py:333
+#: runtime_errors\attribute_error.py:328
 msgid "However, `{attr}` is an attribute of `{name}` with a similar meaning.\n"
 msgstr ""
 "Cependant, `{attr}` est un attribut de `{name}` avec une sens similaire.\n"
 
-#: runtime_errors\attribute_error.py:337
+#: runtime_errors\attribute_error.py:332
 msgid ""
 "However, `{name}` has the following attributes with similar meanings:\n"
 "`{attributes}`.\n"
@@ -740,11 +732,11 @@ msgstr ""
 "Toutefois, `{name}` a les attributs suivants avec des sens similaires:\n"
 "'{attributes}'.\n"
 
-#: runtime_errors\attribute_error.py:348
+#: runtime_errors\attribute_error.py:343
 msgid "Did you mean to separate object names by a comma?\n"
 msgstr "Vouliez-vous séparer les noms d’objets par une virgule ?\n"
 
-#: runtime_errors\attribute_error.py:350
+#: runtime_errors\attribute_error.py:345
 msgid ""
 "`{second}` is not an attribute of `{first}`.\n"
 "However, both `{first}` and `{second}` are known objects.\n"
@@ -756,22 +748,11 @@ msgstr ""
 "Peut-être avez-vous écrit une période pour séparer ces deux objets, \n"
 "au lieu d’utiliser une virgule.\n"
 
-#: runtime_errors\import_error.py:24 runtime_errors\index_error.py:26
-#: runtime_errors\module_not_found_error.py:24 runtime_errors\name_error.py:20
-msgid ""
-"No information is known about this exception.\n"
-"Please report this example to\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
-msgstr ""
-"Aucune information n’est connue à propos de cette exception.\n"
-"Veuillez signaler cet exemple à\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
-
-#: runtime_errors\import_error.py:68
+#: runtime_errors\import_error.py:61
 msgid "You have a circular import.\n"
 msgstr "Vous avez une importation circulaire.\n"
 
-#: runtime_errors\import_error.py:73
+#: runtime_errors\import_error.py:64
 msgid ""
 "The object that could not be imported is `{name}`.\n"
 "The module or package where it was \n"
@@ -780,7 +761,7 @@ msgstr ""
 "L’objet qui n’a pas pu être importé est `{name}`.\n"
 "Le module ou le paquet d'où il devait être importé est `{module}`.\n"
 
-#: runtime_errors\import_error.py:86
+#: runtime_errors\import_error.py:80
 msgid ""
 "Python indicated that you have a circular import.\n"
 "This can occur if executing the code in module 'A'\n"
@@ -794,7 +775,7 @@ msgstr ""
 "une tentative d’importer un nom du module 'A' est faite\n"
 "avant que l’exécution du code dans le module ' A' ne soit terminée.\n"
 
-#: runtime_errors\import_error.py:100
+#: runtime_errors\import_error.py:92
 msgid ""
 "Inconsistent state: `'{module}'` was apparently not imported.\n"
 "As a result, no further analysis can be done.\n"
@@ -802,7 +783,7 @@ msgstr ""
 "État incohérent : `{module}` n’a apparemment pas été importé.\n"
 "Par conséquent, aucune autre analyse ne peut être effectuée.\n"
 
-#: runtime_errors\import_error.py:111
+#: runtime_errors\import_error.py:104
 msgid ""
 "Perhaps you meant to import `{correct}` (from `{module}`) instead of `{typo}"
 "`\n"
@@ -810,7 +791,7 @@ msgstr ""
 "Peut-être que vous vouliez importer `{correct}` (de `{module}`) au lieu de "
 "`{typo}`.\n"
 
-#: runtime_errors\import_error.py:120
+#: runtime_errors\import_error.py:113
 msgid ""
 "Instead of trying to import `{typo}` from `{module}`, \n"
 "perhaps you meant to import one of \n"
@@ -822,11 +803,11 @@ msgstr ""
 "les noms suivants qui se trouvent dans le module `{module}`:\n"
 "`{candidates}`\n"
 
-#: runtime_errors\import_error.py:139
+#: runtime_errors\import_error.py:132
 msgid "The object that could not be imported is `{name}`.\n"
 msgstr "L’objet qui n’a pas pu être importé est `{name} `.\n"
 
-#: runtime_errors\import_error.py:186
+#: runtime_errors\import_error.py:180
 msgid ""
 "The problem was likely caused by what is known as a 'circular import'.\n"
 "First, Python imported and started executing the code in file\n"
@@ -850,7 +831,7 @@ msgstr ""
 "pour importer le module d’origine `{last_module}`\n"
 "une deuxième fois, avant que Python n’ait terminé la première importation.\n"
 
-#: runtime_errors\index_error.py:75
+#: runtime_errors\index_error.py:68
 msgid ""
 "You have tried to get the item with index `{index}` of `{name}`,\n"
 "{obj_type} of length `{length}`.\n"
@@ -858,7 +839,7 @@ msgstr ""
 "Vous avez essayé d’obtenir l’élément avec l’index `{index}` de `{name}`,\n"
 "{obj_type} de longueur `{length}`.\n"
 
-#: runtime_errors\index_error.py:85
+#: runtime_errors\index_error.py:78
 msgid ""
 "You have tried to get an item from `{name}`,\n"
 "{obj_type} of length `{length}`, by using a value for the index\n"
@@ -868,21 +849,21 @@ msgstr ""
 "{obj_type} de longueur `{length}`, en utilisant une valeur pour l’indice\n"
 "que je ne peux pas déterminer, mais qui n’est pas valide.\n"
 
-#: runtime_errors\index_error.py:97
+#: runtime_errors\index_error.py:90
 msgid "The largest valid index of `{name}` is `{index}`.\n"
 msgstr "Le plus grand indice valide de `{name}` est `{index}`.\n"
 
-#: runtime_errors\index_error.py:100
+#: runtime_errors\index_error.py:93
 msgid "Remember: the first item of {obj_type} is at index 0.\n"
 msgstr ""
 "N’oubliez pas : le premier élément d'un objet de type `{obj_type}` est à "
 "l’indice 0.\n"
 
-#: runtime_errors\module_not_found_error.py:49
+#: runtime_errors\module_not_found_error.py:41
 msgid "The name of the module that could not be imported is `{name}`.\n"
 msgstr "Le nom du module qui n’a pas pu être importé est `{name}`.\n"
 
-#: runtime_errors\module_not_found_error.py:58
+#: runtime_errors\module_not_found_error.py:50
 msgid ""
 "The following existing modules have names that are similar \n"
 "to the module you tried to import: `{names}`\n"
@@ -890,33 +871,33 @@ msgstr ""
 "Les modules existants suivants ont des noms similaires \n"
 "au module que vous avez essayé d’importer : `{names}`\n"
 
-#: runtime_errors\module_not_found_error.py:63
+#: runtime_errors\module_not_found_error.py:55
 msgid "`{name}` is an existing module that has a similar name.\n"
 msgstr "`{name}` est un module existant qui a un nom similaire.\n"
 
-#: runtime_errors\module_not_found_error.py:81
+#: runtime_errors\module_not_found_error.py:72
 msgid ""
 "No additional information available since `{name}` cannot be imported.\n"
 msgstr ""
 "Aucune information supplémentaire n’est disponible puisque `{name}` ne peut "
 "pas être importé.\n"
 
-#: runtime_errors\module_not_found_error.py:92
+#: runtime_errors\module_not_found_error.py:83
 msgid "Did you mean `from {name} import {rest}`?\n"
 msgstr "Vouliez-vous dire `from {name} import {rest}` ?\n"
 
-#: runtime_errors\module_not_found_error.py:95
+#: runtime_errors\module_not_found_error.py:86
 msgid ""
 "`{rest}` is not a separate module but an object that is part of `{name}`.\n"
 msgstr ""
 "`{rest}` n’est pas un module distinct, mais un objet qui fait partie de "
 "`{name}`.\n"
 
-#: runtime_errors\module_not_found_error.py:105
+#: runtime_errors\module_not_found_error.py:96
 msgid "Did you mean `import {name}.{attr}`?\n"
 msgstr "Vouliez-vous dire `import {name}.{attr}` ?\n"
 
-#: runtime_errors\module_not_found_error.py:108
+#: runtime_errors\module_not_found_error.py:99
 msgid ""
 "Perhaps you meant `import {name}.{attr}`.\n"
 "`{attr}` is a name similar to `{rest}` and is a module that\n"
@@ -926,11 +907,11 @@ msgstr ""
 "`{attr}` est un nom semblable à `{rest}` et est un module qui\n"
 "peut être importé de `{name}`.\n"
 
-#: runtime_errors\module_not_found_error.py:116
+#: runtime_errors\module_not_found_error.py:107
 msgid "Did you mean `from {name} import {attr}`?\n"
 msgstr "Vouliez-vous dire `from {name} import {attr}` ?\n"
 
-#: runtime_errors\module_not_found_error.py:119
+#: runtime_errors\module_not_found_error.py:110
 msgid ""
 "Perhaps you meant `from {name} import {attr}`.\n"
 "`{attr}` is a name similar to `{rest}` and is an object that\n"
@@ -940,7 +921,7 @@ msgstr ""
 "`{attr}` est un nom similaire à `{rest}` et est un objet qui\n"
 "peut être importé de `{name}`.\n"
 
-#: runtime_errors\module_not_found_error.py:126
+#: runtime_errors\module_not_found_error.py:117
 msgid ""
 "Other objects with similar names that are part of\n"
 " `{name}` include `{others}`.\n"
@@ -948,13 +929,13 @@ msgstr ""
 "D’autres objets avec des noms similaires qui font partie de\n"
 "`{name}` comprennent `{others}`.\n"
 
-#: runtime_errors\module_not_found_error.py:131
+#: runtime_errors\module_not_found_error.py:123
 msgid "`{rest}` cannot be imported from `{name}`.\n"
 msgstr ""
 "`{rest}` ne peut pas être importé de `{name}`.\n"
 "\n"
 
-#: runtime_errors\name_error.py:57
+#: runtime_errors\name_error.py:49
 msgid ""
 "In your program, `{var_name}` is an unknown name\n"
 "that had been declared as belonging in a nonlocal scope;\n"
@@ -964,15 +945,15 @@ msgstr ""
 "qui avaient été déclaré comme appartenant à une portée non locale;\n"
 "cependant, aucun objet avec ce nom n’a pu être trouvé.\n"
 
-#: runtime_errors\name_error.py:68
+#: runtime_errors\name_error.py:59
 msgid "In your program, `{var_name}` is an unknown name.\n"
 msgstr "Dans votre programme, `{var_name}` est un nom inconnu.\n"
 
-#: runtime_errors\name_error.py:72
+#: runtime_errors\name_error.py:63
 msgid "Did you mean `1j`?\n"
 msgstr "Vouliez-vous dire `1j` ?\n"
 
-#: runtime_errors\name_error.py:73
+#: runtime_errors\name_error.py:64
 msgid ""
 "However, sometimes `{name}` is intended to represent\n"
 "the square root of `-1` which is written as `1j` in Python.\n"
@@ -980,53 +961,53 @@ msgstr ""
 "Toutefois, parfois, `{name}` est utilisé pour représenter\n"
 "la racine carrée de `-1` qui est écrit `1j` en Python.\n"
 
-#: runtime_errors\name_error.py:84 runtime_errors\unbound_local_error.py:45
+#: runtime_errors\name_error.py:75 runtime_errors\unbound_local_error.py:45
 msgid "Did you use a colon instead of an equal sign?\n"
 msgstr "Avez-vous utilisé deux points au lieu d’un signe égal ?\n"
 
-#: runtime_errors\name_error.py:93
+#: runtime_errors\name_error.py:86
 msgid "I have no additional information for you.\n"
 msgstr "Je n’ai pas d’informations supplémentaires pour vous.\n"
 
-#: runtime_errors\name_error.py:107
+#: runtime_errors\name_error.py:105
 msgid "The similar name `{name}` was found in the local scope.\n"
 msgstr "Le nom semblable `{name}` a été trouvé dans la portée locale.\n"
 
-#: runtime_errors\name_error.py:108
+#: runtime_errors\name_error.py:106
 msgid "The similar name `{name}` was found in the global scope.\n"
 msgstr "Le nom semblable `{name}` a été trouvé dans la portée globale.\n"
 
-#: runtime_errors\name_error.py:109
+#: runtime_errors\name_error.py:107
 msgid "The name `{name}` was found in the global scope.\n"
 msgstr "Le nom `{name}` a été trouvé dans la portée globale.\n"
 
-#: runtime_errors\name_error.py:110
+#: runtime_errors\name_error.py:108
 msgid "The Python builtin `{name}` has a similar name.\n"
 msgstr "L'identifiant Python (builtin) `{name}` a un nom semblable.\n"
 
-#: runtime_errors\name_error.py:126 runtime_errors\unbound_local_error.py:100
+#: runtime_errors\name_error.py:124 runtime_errors\unbound_local_error.py:100
 msgid "Instead of writing `{name}`, perhaps you meant one of the following:\n"
 msgstr ""
 "Au lieu d’écrire `{name}`, peut-être que vous vouliez écrire l'un des noms "
 "suivants :\n"
 
-#: runtime_errors\name_error.py:131 runtime_errors\unbound_local_error.py:104
+#: runtime_errors\name_error.py:129 runtime_errors\unbound_local_error.py:104
 msgid "*   Local scope: "
 msgstr "*    Portée locale : "
 
-#: runtime_errors\name_error.py:132
+#: runtime_errors\name_error.py:130
 msgid "*   Global scope: "
 msgstr "*    Portée globale : "
 
-#: runtime_errors\name_error.py:133
+#: runtime_errors\name_error.py:131
 msgid "*   Python builtins: "
 msgstr "*    Identifiant Python (builtins) : "
 
-#: runtime_errors\name_error.py:173
+#: runtime_errors\name_error.py:171
 msgid "Did you forget to add `self`?"
 msgstr "Avez-vous oublié d’ajouter `self` ?"
 
-#: runtime_errors\name_error.py:178
+#: runtime_errors\name_error.py:176
 msgid ""
 "The {scope} object `{obj}` has an attribute named `{unknown_name}`.\n"
 "Perhaps you should have written `self.{unknown_name}` instead of "
@@ -1036,7 +1017,7 @@ msgstr ""
 "Peut-être que vous auriez dû écrire `moi-même.{unknown_name}` au lieu de "
 "`{unknown_name}`.\n"
 
-#: runtime_errors\type_error.py:62 runtime_errors\type_error.py:84
+#: runtime_errors\type_error.py:61 runtime_errors\type_error.py:81
 msgid ""
 "You tried to concatenate (add) two different types of objects:\n"
 "{first} and {second}.\n"
@@ -1045,15 +1026,15 @@ msgstr ""
 "différents:\n"
 "{first} et {second}.\n"
 
-#: runtime_errors\type_error.py:129
+#: runtime_errors\type_error.py:124
 msgid "Did you forget to convert the string `{name}` into {number_type}?\n"
 msgstr "Avez-vous oublié de convertir `{name}` en {number_type} ?\n"
 
-#: runtime_errors\type_error.py:132
+#: runtime_errors\type_error.py:129
 msgid "Perhaps you forgot to convert the string `{name}` into {number_type}.\n"
 msgstr "Peut-être avez-vous oublié de convertir `{name}` en {number_type}.\n"
 
-#: runtime_errors\type_error.py:158
+#: runtime_errors\type_error.py:155
 msgid ""
 "You tried to add two incompatible types of objects:\n"
 "{first} and {second}.\n"
@@ -1061,7 +1042,7 @@ msgstr ""
 "Vous avez essayé d’additionner deux types d’objets incompatibles:\n"
 "{first} et {second}.\n"
 
-#: runtime_errors\type_error.py:166
+#: runtime_errors\type_error.py:163
 msgid ""
 "You tried to subtract two incompatible types of objects:\n"
 "{first} and {second}.\n"
@@ -1069,7 +1050,7 @@ msgstr ""
 "Vous avez tenté de soustraire deux types d’objets incompatibles:\n"
 "{first} et {second}.\n"
 
-#: runtime_errors\type_error.py:174
+#: runtime_errors\type_error.py:171
 msgid ""
 "You tried to multiply two incompatible types of objects:\n"
 "{first} and {second}.\n"
@@ -1077,7 +1058,7 @@ msgstr ""
 "Vous avez essayé de multiplier deux types d’objets différents:\n"
 "{first} et {second}.\n"
 
-#: runtime_errors\type_error.py:182
+#: runtime_errors\type_error.py:179
 msgid ""
 "You tried to divide two incompatible types of objects:\n"
 "{first} and {second}.\n"
@@ -1085,7 +1066,7 @@ msgstr ""
 "Vous avez essayé de diviser deux types d’objets différents:\n"
 "{first} et {second}.\n"
 
-#: runtime_errors\type_error.py:190
+#: runtime_errors\type_error.py:187
 msgid ""
 "You tried to perform the bitwise operation {operator}\n"
 "on two incompatible types of objects:\n"
@@ -1095,25 +1076,25 @@ msgstr ""
 "sur deux types d’objets incompatibles:\n"
 "{first} et {second}.\n"
 
-#: runtime_errors\type_error.py:207 runtime_errors\type_error.py:645
-#: runtime_errors\type_error.py:740 syntax_errors\statement_analyzer.py:1033
+#: runtime_errors\type_error.py:204 runtime_errors\type_error.py:672
+#: runtime_errors\type_error.py:767 syntax_errors\statement_analyzer.py:1033
 #: syntax_errors\statement_analyzer.py:1093
 #: syntax_errors\statement_analyzer.py:1130
 #: syntax_errors\statement_analyzer.py:1138
 msgid "Did you mean `{line}`?\n"
 msgstr "Vouliez-vous dire `{line}` ?\n"
 
-#: runtime_errors\type_error.py:208
+#: runtime_errors\type_error.py:205
 msgid "Outside of Python, `^` is often used to indicate exponentiation.\n"
 msgstr ""
 "Ailleurs que dans Python, `^` est souvent utilisé pour indiquer "
 "l’exponentiation.\n"
 
-#: runtime_errors\type_error.py:211 runtime_errors\type_error.py:648
+#: runtime_errors\type_error.py:208 runtime_errors\type_error.py:675
 msgid "Perhaps you meant `{line}`.\n"
 msgstr "Peut-être que vous vouliez plutôt `{line}`.\n"
 
-#: runtime_errors\type_error.py:214
+#: runtime_errors\type_error.py:211
 msgid ""
 "You tried to perform the bit shifting operation {operator}\n"
 "on two incompatible types of objects:\n"
@@ -1123,7 +1104,7 @@ msgstr ""
 "sur deux types d’objets incompatibles:\n"
 "{first} et {second}.\n"
 
-#: runtime_errors\type_error.py:224
+#: runtime_errors\type_error.py:221
 msgid ""
 "You tried to exponentiate (raise to a power)\n"
 "using two incompatible types of objects:\n"
@@ -1133,7 +1114,7 @@ msgstr ""
 "en utilisant deux types d’objets incompatibles:\n"
 "{first} et {second}.\n"
 
-#: runtime_errors\type_error.py:233
+#: runtime_errors\type_error.py:230
 msgid ""
 "You tried to use the operator {operator}\n"
 "using two incompatible types of objects:\n"
@@ -1147,7 +1128,7 @@ msgstr ""
 "Cet opérateur est normalement utilisé uniquement\n"
 "pour la multiplication des matrices.\n"
 
-#: runtime_errors\type_error.py:262
+#: runtime_errors\type_error.py:265
 msgid ""
 "You tried to do an order comparison ({operator})\n"
 "between two incompatible types of objects:\n"
@@ -1157,13 +1138,13 @@ msgstr ""
 "deux types d’objets incompatibles:\n"
 "{first} et {second}.\n"
 
-#: runtime_errors\type_error.py:294
+#: runtime_errors\type_error.py:299
 msgid "Perhaps you meant to write `{operator}=` instead of `={operator}`"
 msgstr ""
 "Peut-être que vous vouliez plutôt écrire `{operator}=` au lieu de "
 "`={operator}`"
 
-#: runtime_errors\type_error.py:298
+#: runtime_errors\type_error.py:303
 msgid ""
 "You tried to use the unary operator '{operator}'\n"
 "with the following type of object: {obj}.\n"
@@ -1173,7 +1154,7 @@ msgstr ""
 "avec le type d’objet suivant: {obj}.\n"
 "Cette opération n’est pas définie pour ce type d’objet.\n"
 
-#: runtime_errors\type_error.py:317
+#: runtime_errors\type_error.py:328
 msgid ""
 "In Python, some objects are known as immutable:\n"
 "once defined, their value cannot be changed.\n"
@@ -1185,20 +1166,20 @@ msgstr ""
 "Vous avez essayé de modifier une partie d’un tel objet immuable: {obj},\n"
 "probablement en utilisant une opération d’indexation.\n"
 
-#: runtime_errors\type_error.py:324
+#: runtime_errors\type_error.py:335
 msgid "Did you mean to use a list?\n"
 msgstr "Voulez-vous utiliser une liste?\n"
 
-#: runtime_errors\type_error.py:325
+#: runtime_errors\type_error.py:336
 msgid "Perhaps you meant to use a list instead.\n"
 msgstr "Peut-être que vous vouliez plutôt utiliser une liste.\n"
 
-#: runtime_errors\type_error.py:335
+#: runtime_errors\type_error.py:349
 msgid "In Python 3, exceptions must be derived from BaseException.\n"
 msgstr ""
 "Dans Python 3, les exceptions doivent être dérivées de BaseException.\n"
 
-#: runtime_errors\type_error.py:367
+#: runtime_errors\type_error.py:384
 msgid ""
 "You apparently have called the function `{fn_name}` with\n"
 "{nb_given} positional argument(s) while it requires {nb_required}\n"
@@ -1207,12 +1188,12 @@ msgstr ""
 "Vous avez apparemment invoqué la fonction `{fn_name}` avec\n"
 "{nb_given} arguments positionnels alors qu'elle en requiert {nb_required}.\n"
 
-#: runtime_errors\type_error.py:373
+#: runtime_errors\type_error.py:390
 msgid "Perhaps you forgot `self` when defining `{fn_name}`.\n"
 msgstr ""
 "Peut-être avez-vous oublié `self` lors de la définition de `{fn_name}`.\n"
 
-#: runtime_errors\type_error.py:389
+#: runtime_errors\type_error.py:411
 msgid ""
 "You apparently have called the function '{fn_name}' with\n"
 "fewer positional arguments than it requires ({nb_required} missing).\n"
@@ -1220,7 +1201,7 @@ msgstr ""
 "Vous avez apparemment invoqué la fonction '{fn_name}' avec\n"
 "moins d'arguments positionnels qu'il n'en faut ({nb_required} manquent).\n"
 
-#: runtime_errors\type_error.py:408
+#: runtime_errors\type_error.py:429
 msgid ""
 "Python indicates that you have an object of type `{obj_type}`,\n"
 "followed by something surrounded by parentheses, `(...)`,\n"
@@ -1234,7 +1215,7 @@ msgstr ""
 "Soit que l’objet du type `{obj_type}` était censé être une fonction,\n"
 "ou soit que vous avez oublié une virgule avant `(...)`.\n"
 
-#: runtime_errors\type_error.py:429
+#: runtime_errors\type_error.py:450
 msgid ""
 "Because of the surrounding parenthesis, `{fn_call}` \n"
 "is interpreted by Python as indicating a function call for \n"
@@ -1248,7 +1229,7 @@ msgstr ""
 "ne pouvant pas être invoqué.\n"
 "\n"
 
-#: runtime_errors\type_error.py:442
+#: runtime_errors\type_error.py:463
 msgid ""
 "However, `{fn_call}` is a `tuple`.\n"
 "Either the object `{obj_name}` was meant to be a function\n"
@@ -1262,11 +1243,11 @@ msgstr ""
 "et le tuple `{fn_call}` et auriez dû écrire\n"
 "`{obj_name}, {fn_call}`.\n"
 
-#: runtime_errors\type_error.py:449
+#: runtime_errors\type_error.py:470
 msgid "Did you forget a comma between `{obj_name}` and `{fn_call}`?\n"
 msgstr "Avez-vous oublié une virgule entre `{obj_name}` et `{fn_call}` ?\n"
 
-#: runtime_errors\type_error.py:455
+#: runtime_errors\type_error.py:476
 msgid ""
 "However, `{obj_name}` is a sequence.\n"
 "Perhaps you meant to use `[]` instead of `()` and write\n"
@@ -1276,11 +1257,11 @@ msgstr ""
 "Peut-être que vous vouliez utiliser `[]` au lieu de `()` et écrire\n"
 "`{obj_name}[{slice}]`\n"
 
-#: runtime_errors\type_error.py:460
+#: runtime_errors\type_error.py:481
 msgid "Did you mean `{obj_name}[{slice}]`?\n"
 msgstr "Vouliez-vous dire `{obj_name}[{slice}]` ?\n"
 
-#: runtime_errors\type_error.py:471
+#: runtime_errors\type_error.py:492
 msgid ""
 "However, both `{obj_name}` and `{fn_call}` are numbers.\n"
 "Perhaps you forgot a multiplication operator, `*`,\n"
@@ -1292,19 +1273,19 @@ msgstr ""
 "et auriez dû écrire `{obj_name} * {fn_call}`\n"
 "."
 
-#: runtime_errors\type_error.py:476
+#: runtime_errors\type_error.py:497
 msgid "Did you mean `{obj_name} * {fn_call}`?\n"
 msgstr "Vouliez-vous dire `{obj_name} * {fn_call}` ?\n"
 
-#: runtime_errors\type_error.py:489
+#: runtime_errors\type_error.py:510
 msgid "Did you forget to convert `{name}` into an integer?\n"
 msgstr "Avez-vous oublié de convertir `{name}` en un entier ?\n"
 
-#: runtime_errors\type_error.py:490
+#: runtime_errors\type_error.py:511
 msgid "Perhaps you forgot to convert `{name}` into an integer.\n"
 msgstr "Peut-être avez-vous oublié de convertir `{name}` en un entier.\n"
 
-#: runtime_errors\type_error.py:501
+#: runtime_errors\type_error.py:524
 msgid ""
 "You can only multiply sequences, such as list, tuples,\n"
 " strings, etc., by integers.\n"
@@ -1312,29 +1293,29 @@ msgstr ""
 "Vous ne pouvez multiplier les séquences, telles que\n"
 "les listes, les tuples, les chaînes, etc., que par des entiers.\n"
 
-#: runtime_errors\type_error.py:522
+#: runtime_errors\type_error.py:545
 msgid "Did you forget to convert `{name1}` and `{name2}` into integers?\n"
 msgstr "Avez-vous oublié de convertir `{name1}` et `{name2}` en entiers ?\n"
 
-#: runtime_errors\type_error.py:525
+#: runtime_errors\type_error.py:548
 msgid "Perhaps you forgot to convert `{name1}` and `{name2}` into integers.\n"
 msgstr ""
 "Peut-être avez-vous oublié de convertir `{name1}` et `{name2}` en entiers.\n"
 
-#: runtime_errors\type_error.py:561
+#: runtime_errors\type_error.py:585
 msgid "You wrote an object of type `{obj}` where an integer was expected.\n"
 msgstr ""
 "Vous avez écrit un objet de type `{obj}` là où un entier était attendu.\n"
 
-#: runtime_errors\type_error.py:572
+#: runtime_errors\type_error.py:596
 msgid "Did you forget to convert `{names}` into integers?\n"
 msgstr "Avez-vous oublié de convertir `{names}` en entiers ?\n"
 
-#: runtime_errors\type_error.py:575
+#: runtime_errors\type_error.py:599
 msgid "Perhaps you forgot to convert `{names}` into integers."
 msgstr "Peut-être avez-vous oublié de convertir `{names}` en entiers."
 
-#: runtime_errors\type_error.py:593
+#: runtime_errors\type_error.py:620
 msgid ""
 "In the expression `{line}`\n"
 "what is included between the square brackets, `[...]`,\n"
@@ -1348,7 +1329,7 @@ msgstr ""
 "(`start:stop` ou `start:stop:step`) \n"
 "et vous l’avez utilisé {obj_type} la place.\n"
 
-#: runtime_errors\type_error.py:670
+#: runtime_errors\type_error.py:699
 msgid ""
 "When using a slice to extract a range of elements\n"
 "from a sequence, that is something like\n"
@@ -1363,7 +1344,7 @@ msgstr ""
 "soit `None`,\n"
 "ou possiblement un autre objet ayant une méthode `__index__`.\n"
 
-#: runtime_errors\type_error.py:689
+#: runtime_errors\type_error.py:717
 msgid ""
 "Only hashable objects can be used\n"
 "as elements of `set` or keys of `dict`.\n"
@@ -1375,11 +1356,11 @@ msgstr ""
 "Les objets hachables sont des objets qui ne changent pas de valeur\n"
 "une fois qu’ils ont été créés."
 
-#: runtime_errors\type_error.py:699
+#: runtime_errors\type_error.py:727
 msgid "Instead of using {original}, consider using {replacement}.\n"
 msgstr "Au lieu d’utiliser {original}, envisagez d’utiliser {replacement}.\n"
 
-#: runtime_errors\type_error.py:720
+#: runtime_errors\type_error.py:747
 msgid ""
 "Subscriptable objects are typically containers from which\n"
 "you can retrieve item using the notation `[...]`.\n"
@@ -1387,7 +1368,7 @@ msgstr ""
 "Les objets subscriptibles sont généralement des conteneurs à partir\n"
 "desquels on peut tirer des éléments en utilisant la notation '[...] `.\n"
 
-#: runtime_errors\type_error.py:732
+#: runtime_errors\type_error.py:759
 msgid ""
 "Using this notation, you attempted to retrieve an item\n"
 "from an object of type `{obj_type}` which is not allowed.\n"
@@ -1395,11 +1376,11 @@ msgstr ""
 "À l’aide de cette notation, vous avez tenté de tirer un élément\n"
 "d’un objet de type `{obj_type}`, ce qui n’est pas permis.\n"
 
-#: runtime_errors\type_error.py:741
+#: runtime_errors\type_error.py:768
 msgid "Perhaps you meant to write `{line}`.\n"
 msgstr "Peut-être que vous vouliez plutôt écrire `{line}`.\n"
 
-#: runtime_errors\type_error.py:744
+#: runtime_errors\type_error.py:771
 msgid ""
 "Using this notation, you attempted to retrieve an item\n"
 "from `{name}`, an object of type `{obj_type}`. This is not allowed.\n"
@@ -1407,7 +1388,7 @@ msgstr ""
 "À l’aide de cette notation, vous avez tenté de tirer un élément\n"
 "de `{name}`, un objet de type `{obj_type}`. Ceci n’est pas permis.\n"
 
-#: runtime_errors\type_error.py:761
+#: runtime_errors\type_error.py:787
 msgid ""
 "An iterable is an object capable of returning its members one at a time.\n"
 "Python containers (`list, tuple, dict`, etc.) are iterables.\n"
@@ -1417,7 +1398,7 @@ msgstr ""
 "Les contenants python (`list, tuple, dict`, etc.) sont itérables.\n"
 "Une itérable est requis ici.\n"
 
-#: runtime_errors\type_error.py:778 runtime_errors\value_error.py:49
+#: runtime_errors\type_error.py:803 runtime_errors\value_error.py:49
 msgid ""
 "Unpacking is a convenient way to assign a name,\n"
 "to each item of an iterable.\n"
@@ -1425,7 +1406,7 @@ msgstr ""
 "Le dépaquetage ('unpack') est un moyen pratique d’attribuer un nom\n"
 "à chaque élément d’un itérable.\n"
 
-#: runtime_errors\type_error.py:782
+#: runtime_errors\type_error.py:807
 msgid ""
 "An iterable is an object capable of returning its members one at a time.\n"
 "Python containers (`list, tuple, dict`, etc.) are iterables,\n"
@@ -1435,7 +1416,7 @@ msgstr ""
 "Les contenants python (`list, tuple, dict`, etc.) sont itérables,\n"
 "mais pas les objets de type `{obj_type}`.\n"
 
-#: runtime_errors\type_error.py:797
+#: runtime_errors\type_error.py:821
 msgid ""
 "{function} does not accept a sequence as an argument.\n"
 "Instead of writing `{line}`\n"
@@ -1446,7 +1427,7 @@ msgstr ""
 "peut-être devriez-vous utiliser la méthode `dict.fromkeys()` : `{new_line}"
 "`.\n"
 
-#: runtime_errors\type_error.py:802
+#: runtime_errors\type_error.py:826
 msgid "Perhaps you need to use the `dict.fromkeys()` method.\n"
 msgstr ""
 "Peut-être que vous vouliez plutôt utiliser la méthode `dict.fromkeys()`.\n"
@@ -1621,6 +1602,16 @@ msgstr ""
 #: runtime_errors\zero_division_error.py:167
 msgid "The second argument to the `divmod()` function is equal to zero.\n"
 msgstr "Le deuxième argument de la fonction `divmod()` est égal à zéro.\n"
+
+#: syntax_errors\analyze_syntax.py:35
+msgid ""
+"Exception raised by Friendly-traceback itself.\n"
+"Please report this example to\n"
+"https://github.com/aroberge/friendly-traceback/issues\n"
+msgstr ""
+"Exception soulevée par Friendly-traceback.\n"
+"Veuillez signaler cet exemple à\n"
+"https://github.com/aroberge/friendly-traceback/issues\n"
 
 #: syntax_errors\analyze_syntax.py:64
 msgid ""
@@ -3218,6 +3209,22 @@ msgstr "accolade `{`"
 #: syntax_errors\syntax_utils.py:47
 msgid "curly bracket `}`"
 msgstr "accolade `}`"
+
+#~ msgid ""
+#~ "I do not recognize this case. Please report it to\n"
+#~ "https://github.com/aroberge/friendly-traceback/issues\n"
+#~ msgstr ""
+#~ "Je ne reconnais pas ce cas. Veuillez le signaler à\n"
+#~ "https://github.com/aroberge/friendly-traceback/issues\n"
+
+#~ msgid ""
+#~ "No information is known about this exception.\n"
+#~ "Please report this example to\n"
+#~ "https://github.com/aroberge/friendly-traceback/issues\n"
+#~ msgstr ""
+#~ "Aucune information n’est connue à propos de cette exception.\n"
+#~ "Veuillez signaler cet exemple à\n"
+#~ "https://github.com/aroberge/friendly-traceback/issues\n"
 
 #~ msgid "No information is available about this exception.\n"
 #~ msgstr "Aucune information n’est disponible sur cette exception.\n"

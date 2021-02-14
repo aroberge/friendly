@@ -5,7 +5,7 @@ of a given exception.
 """
 
 from . import debug_helper
-from .my_gettext import current_lang
+from .my_gettext import current_lang, internal_error
 
 
 get_cause = {}
@@ -16,20 +16,14 @@ def get_likely_cause(etype, value, frame, tb_data):
     specific to a given exception.
     """
     _ = current_lang.translate
-    cause = {}
     try:
         if etype.__name__ in get_cause:
-            cause = get_cause[etype.__name__](value, frame, tb_data)
+            return get_cause[etype.__name__](value, frame, tb_data)
     except Exception as e:
         debug_helper.log("Exception caught in get_likely_cause().")
         debug_helper.log_error(e)
-        _cause = _(
-            "Exception raised by Friendly-traceback itself.\n"
-            "Please report this example to\n"
-            "https://github.com/aroberge/friendly-traceback/issues\n"
-        )
-        cause = {"cause": _cause}
-    return cause
+        return {"cause": internal_error()}
+    return {}
 
 
 def register(error_name):
@@ -62,13 +56,12 @@ def file_not_found_error(value, *_args):
     #
     # By splitting value using ', we can extract the module name.
     # TODO: use re instead for added robustness
-    return (
-        _(
+    return {
+        "cause": _(
             "In your program, the name of the\n"
             "file that cannot be found is `{filename}`.\n"
-        ).format(filename=str(value).split("'")[1]),
-        None,
-    )
+        ).format(filename=str(value).split("'")[1])
+    }
 
 
 @register("ImportError")
@@ -92,12 +85,11 @@ def key_error(value, *_args):
     #
     # KeyError: 'c'
     # TODO: extract to separate file and see if similar keys can be found.
-    return (
-        _("In your program, the key that cannot be found is `{key_name!r}`.\n").format(
-            key_name=value.args[0]
-        ),
-        None,
-    )
+    return {
+        "cause": _(
+            "In your program, the key that cannot be found is `{key_name!r}`.\n"
+        ).format(key_name=value.args[0])
+    }
 
 
 @register("ModuleNotFoundError")

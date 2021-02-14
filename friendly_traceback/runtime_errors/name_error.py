@@ -56,7 +56,6 @@ def free_variable_referenced(unknown_name, *_args):
 
 def name_not_defined(unknown_name, frame, tb_data):
     _ = current_lang.translate
-    hint = None
     cause = _("In your program, `{var_name}` is an unknown name.\n").format(
         var_name=unknown_name
     )
@@ -66,7 +65,7 @@ def name_not_defined(unknown_name, frame, tb_data):
             "However, sometimes `{name}` is intended to represent\n"
             "the square root of `-1` which is written as `1j` in Python.\n"
         ).format(name=unknown_name)
-        return cause, hint
+        return {"cause": cause, "suggest": hint}
 
     type_hint = info_variables.name_has_type_hint(unknown_name, frame)
     similar = info_variables.get_similar_names(unknown_name, frame)
@@ -74,6 +73,8 @@ def name_not_defined(unknown_name, frame, tb_data):
         hint = _("Did you mean `{name}`?\n").format(name=similar["best"])
     elif type_hint:
         hint = _("Did you use a colon instead of an equal sign?\n")
+    else:
+        hint = None
 
     additional = type_hint + format_similar_names(unknown_name, similar)
     try:
