@@ -94,19 +94,19 @@ def _convert_str_to_number(obj_type1, obj_type2, operator, frame, tb_data):
     'string + number', 'number += string', but not 'string += number'
     """
     _ = current_lang.translate
-    cause = hint = None
     types = obj_type1, obj_type2
     if "str" not in types or obj_type1 == "str" and "=" in operator:
-        return cause, hint
+        return None, None
 
     if not ("int" in types or "float" in types or "complex" in types):
-        return cause, hint
+        return None, None
 
     types_str = ["int", "float", "complex"]
     types_fn = [int, float, complex]
 
     found = False
     all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
+    # TODO: review this logic
     for name, obj in all_objects:
         if isinstance(obj, str):
             for number_type, fn in zip(types_str, types_fn):
@@ -116,16 +116,16 @@ def _convert_str_to_number(obj_type1, obj_type2, operator, frame, tb_data):
                     continue
                 found = True
                 break
-            else:
-                return cause, hint
-            if found:
-                break
+        if found:
+            break
     else:
-        return cause, hint
+        return None, None
 
     hint = _(
         "Did you forget to convert the string `{name}` into {number_type}?\n"
-    ).format(name=name, number_type=convert_type(number_type))
+    ).format(
+        name=name, number_type=convert_type(number_type)  # noqa
+    )
     cause = _(
         "Perhaps you forgot to convert the string `{name}` into {number_type}.\n"
     ).format(name=name, number_type=convert_type(number_type))
@@ -251,7 +251,7 @@ def parse_unsupported_operand_type(message, frame, tb_data):
 
 
 @add_message_parser
-def parse_order_comparison(message, *args):
+def parse_order_comparison(message, *_args):
     _ = current_lang.translate
     # example: '<' not supported between instances of 'int' and 'str'
     pattern = re.compile(
@@ -275,7 +275,7 @@ def parse_order_comparison(message, *args):
 
 
 @add_message_parser
-def bad_operand_type_for_unary(message, frame, tb_data):
+def bad_operand_type_for_unary(message, _frame, tb_data):
     _ = current_lang.translate
     # example: bad operand type for unary +: 'str'
     pattern = re.compile(r"bad operand type for unary (.+): [\'\"](\w+)[\'\"]")
@@ -315,7 +315,7 @@ def bad_operand_type_for_unary(message, frame, tb_data):
 
 
 @add_message_parser
-def does_not_support_item_assignment(message, *args):
+def does_not_support_item_assignment(message, *_args):
     _ = current_lang.translate
     # example: 'tuple' object does not support item assignment
     pattern = re.compile(r"[\'\"](\w+)[\'\"] object does not support item assignment")
@@ -341,7 +341,7 @@ def does_not_support_item_assignment(message, *args):
 
 
 @add_message_parser
-def exception_derived_from_BaseException(message, *args):
+def exception_derived_from_base_exception(message, *_args):
     _ = current_lang.translate
 
     if "exceptions must derive from BaseException" in message:
@@ -352,7 +352,7 @@ def exception_derived_from_BaseException(message, *args):
 
 
 @add_message_parser
-def incorrect_nb_positional_arguments(message, frame, tb_data):
+def incorrect_nb_positional_arguments(message, _frame, tb_data):
     _ = current_lang.translate
     missing_self = False
     # example: my_function() takes 0 positional arguments but x was/were given
@@ -398,7 +398,7 @@ def incorrect_nb_positional_arguments(message, frame, tb_data):
 
 
 @add_message_parser
-def missing_positional_arguments(message, *args):
+def missing_positional_arguments(message, *_args):
     _ = current_lang.translate
     # example: my_function() missing 1 required positional argument
     pattern = re.compile(r"(.*) missing (\d+) required positional argument")
@@ -483,7 +483,7 @@ def x_is_not_callable(message, frame, tb_data):
         )
         return {"cause": cause, "suggest": hint}
 
-    elif (  # Many objects can be multipled, but only numbers should have __abs__
+    elif (  # Many objects can be multiplied, but only numbers should have __abs__
         hasattr(obj, "__abs__")  # Should identify numbers: int, float, ...
         and hasattr(can_eval, "__abs__")  # complex, Fractions, Decimals, ...
         and hasattr(obj, "__mul__")  # Confirming that they can be multiplied
@@ -689,7 +689,7 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
 
 
 @add_message_parser
-def slice_indices_must_be_integers_or_None(message, *args):
+def slice_indices_must_be_integers_or_none(message, *_args):
     _ = current_lang.translate
     if message != (
         "slice indices must be integers or None or have an __index__ method"
@@ -707,7 +707,7 @@ def slice_indices_must_be_integers_or_None(message, *args):
 
 
 @add_message_parser
-def unhashable_type(message, *args):
+def unhashable_type(message, *_args):
     _ = current_lang.translate
     pattern = re.compile(r"unhashable type: '(.*)'")
     match = re.search(pattern, message)
@@ -777,7 +777,7 @@ def object_is_not_subscriptable(message, frame, tb_data):
 
 
 @add_message_parser
-def object_is_not_iterable(message, frame, tb_data):
+def object_is_not_iterable(message, *_args):
     _ = current_lang.translate
     pattern = re.compile(r"'(.*)' object is not iterable")
     match = re.search(pattern, message)
@@ -793,7 +793,7 @@ def object_is_not_iterable(message, frame, tb_data):
 
 
 @add_message_parser
-def cannot_unpack_non_iterable(message, *args):
+def cannot_unpack_non_iterable(message, *_args):
     _ = current_lang.translate
     pattern = re.compile(r"cannot unpack non-iterable (.*) object")
     match = re.search(pattern, message)
@@ -813,7 +813,7 @@ def cannot_unpack_non_iterable(message, *args):
 
 
 @add_message_parser
-def cannot_convert_dictionary_update_sequence(message, frame, tb_data):
+def cannot_convert_dictionary_update_sequence(message, _frame, tb_data):
     _ = current_lang.translate
     if "cannot convert dictionary update sequence element" not in message:
         return {}
