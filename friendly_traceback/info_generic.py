@@ -2,7 +2,7 @@
 
 Generic information about Python exceptions.
 """
-from .my_gettext import current_lang
+from .my_gettext import current_lang, no_information
 
 GENERIC = {}
 
@@ -14,7 +14,7 @@ def get_generic_explanation(exception_name):
     elif exception_name.endswith("Warning"):
         explanation = GENERIC["UnknownWarning"]()
     else:
-        explanation = GENERIC["Unknown"]()
+        explanation = no_information()
     return explanation
 
 
@@ -207,12 +207,6 @@ def unbound_local_error():
         "Python that this is a global variable, otherwise you will see\n"
         "an `UnboundLocalError`.\n"
     )
-
-
-@register("Unknown")
-def unknown():
-    _ = current_lang.translate
-    return _("No information is available about this exception.\n")
 
 
 @register("UnknownWarning")

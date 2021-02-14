@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-02-13 08:58-0400\n"
+"POT-Creation-Date: 2021-02-14 08:54-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,61 +19,61 @@ msgstr ""
 msgid "The file {filename} does not exist."
 msgstr ""
 
-#: config.py:72 config.py:199
+#: config.py:70 config.py:186
 msgid "Nothing to show: no exception recorded."
 msgstr ""
 
-#: console.py:63
+#: console.py:55
 msgid ""
 "\n"
 "    Installed version of Rich is too old.\n"
 "\n"
 msgstr ""
 
-#: console.py:65
+#: console.py:57
 msgid ""
 "\n"
 "    Rich is not installed.\n"
 "\n"
 msgstr ""
 
-#: console.py:181
+#: console.py:173
 msgid "Warning: you added a type hint to the python builtin {name}."
 msgstr ""
 
-#: console.py:184
+#: console.py:176
 msgid ""
 "Warning: you used a type hint for a variable without assigning it a value.\n"
 msgstr ""
 
-#: console.py:187
+#: console.py:179
 msgid "Instead of {hint}, perhaps you meant {assignment}."
 msgstr ""
 
-#: console.py:259
+#: console.py:250
 msgid "Warning: you have redefined the python builtin {name}."
 msgstr ""
 
-#: console_helpers.py:170
+#: console_helpers.py:169
 msgid ""
 "The first argument of `www()` must be either `None` or a string.\n"
 msgstr ""
 
-#: console_helpers.py:174
+#: console_helpers.py:173
 msgid ""
 "If you wish to open Python's documentation, use\n"
 "`www(python=True)`.\n"
 msgstr ""
 
-#: console_helpers.py:185
+#: console_helpers.py:184
 msgid "https://docs.python.org/3/"
 msgstr ""
 
-#: console_helpers.py:186
+#: console_helpers.py:185
 msgid "https://docs.python.org/3/search.html?q="
 msgstr ""
 
-#: console_helpers.py:213
+#: console_helpers.py:212
 msgid "The default web browser cannot be used for searching."
 msgstr ""
 
@@ -90,66 +90,66 @@ msgid ""
 "raises an exception or does not return a string.\n"
 msgstr ""
 
-#: core.py:400 core.py:448
+#: core.py:413 core.py:458
 msgid "Likely cause based on the information given by Python:"
 msgstr ""
 
-#: core.py:443
+#: core.py:453
 msgid "Python's error message (invalid syntax) cannot be used to identify the problem:"
 msgstr ""
 
-#: core.py:514
+#: core.py:524
 msgid ""
 "{filename} is not a regular Python file whose contents can be analyzed.\n"
 msgstr ""
 
-#: core.py:520
+#: core.py:530
 msgid ""
 "Exception raised on line {linenumber} of file {filename}.\n"
 msgstr ""
 
-#: core.py:557
+#: core.py:567
 msgid ""
 "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
 
-#: core.py:576
+#: core.py:586
 msgid ""
 "`{filename}` is not a regular Python file whose contents\n"
 "can be analyzed.\n"
 msgstr ""
 
-#: core.py:587
+#: core.py:597
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "beyond the location indicated by --> and ^.\n"
 msgstr ""
 
-#: core.py:593
+#: core.py:603
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
 "It reached the end of the file and expected more content.\n"
 msgstr ""
 
-#: core.py:599
+#: core.py:609
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "for an unspecified reason.\n"
 msgstr ""
 
-#: core.py:631
+#: core.py:641
 msgid "More lines not shown."
 msgstr ""
 
-#: core.py:778
+#: core.py:788
 msgid ""
 "Problem: source of `{filename}` is not available\n"
 msgstr ""
 
-#: core.py:822
+#: core.py:832
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -298,15 +298,10 @@ msgstr ""
 
 #: info_generic.py:215
 msgid ""
-"No information is available about this exception.\n"
-msgstr ""
-
-#: info_generic.py:221
-msgid ""
 "No information is available about this warning.\n"
 msgstr ""
 
-#: info_generic.py:227
+#: info_generic.py:221
 msgid ""
 "A `ZeroDivisionError` occurs when you are attempting to divide a value\n"
 "by zero either directly or by using some other mathematical operation.\n"
@@ -319,13 +314,13 @@ msgid ""
 "https://github.com/aroberge/friendly-traceback/issues\n"
 msgstr ""
 
-#: info_specific.py:65
+#: info_specific.py:66
 msgid ""
 "In your program, the name of the\n"
 "file that cannot be found is `{filename}`.\n"
 msgstr ""
 
-#: info_specific.py:95
+#: info_specific.py:96
 msgid ""
 "In your program, the key that cannot be found is `{key_name!r}`.\n"
 msgstr ""
@@ -382,6 +377,16 @@ msgid ""
 "    {name} = {hint}\n"
 msgstr ""
 
+#: my_gettext.py:77
+msgid ""
+"No information is known about this exception.\n"
+"Please report this example to\n"
+"https://github.com/aroberge/friendly-traceback/issues\n"
+"\n"
+"If you are using the Friendly console, use `www()` to\n"
+"do an Internet search for this particular case."
+msgstr ""
+
 #: runtime_errors\attribute_error.py:45
 msgid ""
 "You are attempting to access the attribute `{attr}`\n"
@@ -389,7 +394,6 @@ msgid ""
 msgstr ""
 
 #: runtime_errors\attribute_error.py:54 runtime_errors\type_error.py:39
-#: runtime_errors\value_error.py:38 runtime_errors\zero_division_error.py:30
 msgid ""
 "I do not recognize this case. Please report it to\n"
 "https://github.com/aroberge/friendly-traceback/issues\n"
@@ -405,7 +409,7 @@ msgstr ""
 #: runtime_errors\attribute_error.py:82 runtime_errors\attribute_error.py:123
 #: runtime_errors\attribute_error.py:233 runtime_errors\import_error.py:110
 #: runtime_errors\module_not_found_error.py:55 runtime_errors\name_error.py:82
-#: runtime_errors\unbound_local_error.py:44
+#: runtime_errors\unbound_local_error.py:38
 #: syntax_errors\message_analyzer.py:342 syntax_errors\message_analyzer.py:973
 msgid ""
 "Did you mean `{name}`?\n"
@@ -571,7 +575,6 @@ msgstr ""
 
 #: runtime_errors\import_error.py:24 runtime_errors\index_error.py:26
 #: runtime_errors\module_not_found_error.py:24 runtime_errors\name_error.py:20
-#: runtime_errors\unbound_local_error.py:21
 msgid ""
 "No information is known about this exception.\n"
 "Please report this example to\n"
@@ -748,7 +751,7 @@ msgid ""
 "the square root of `-1` which is written as `1j` in Python.\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:84 runtime_errors\unbound_local_error.py:51
+#: runtime_errors\name_error.py:84 runtime_errors\unbound_local_error.py:45
 msgid ""
 "Did you use a colon instead of an equal sign?\n"
 msgstr ""
@@ -778,12 +781,12 @@ msgid ""
 "The Python builtin `{name}` has a similar name.\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:126 runtime_errors\unbound_local_error.py:104
+#: runtime_errors\name_error.py:126 runtime_errors\unbound_local_error.py:100
 msgid ""
 "Instead of writing `{name}`, perhaps you meant one of the following:\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:131 runtime_errors\unbound_local_error.py:108
+#: runtime_errors\name_error.py:131 runtime_errors\unbound_local_error.py:104
 msgid "*   Local scope: "
 msgstr ""
 
@@ -1111,7 +1114,7 @@ msgid ""
 "An iterable is required here.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:778 runtime_errors\value_error.py:52
+#: runtime_errors\type_error.py:778 runtime_errors\value_error.py:49
 msgid ""
 "Unpacking is a convenient way to assign a name,\n"
 "to each item of an iterable.\n"
@@ -1136,7 +1139,7 @@ msgid ""
 "Perhaps you need to use the `dict.fromkeys()` method.\n"
 msgstr ""
 
-#: runtime_errors\unbound_local_error.py:55
+#: runtime_errors\unbound_local_error.py:51
 msgid ""
 "The name `{var_name}` exists in both the global and nonlocal scope.\n"
 "This can be rather confusing and is not recommended.\n"
@@ -1151,13 +1154,13 @@ msgid ""
 "as the first line inside your function.\n"
 msgstr ""
 
-#: runtime_errors\unbound_local_error.py:64
+#: runtime_errors\unbound_local_error.py:60
 msgid ""
 "Did you forget to add either `global {var_name}` or \n"
 "`nonlocal {var_name}`?\n"
 msgstr ""
 
-#: runtime_errors\unbound_local_error.py:77
+#: runtime_errors\unbound_local_error.py:73
 msgid ""
 "The name `{var_name}` exists in the {scope} scope.\n"
 "Perhaps the statement\n"
@@ -1167,51 +1170,51 @@ msgid ""
 "should have been included as the first line inside your function.\n"
 msgstr ""
 
-#: runtime_errors\unbound_local_error.py:84
+#: runtime_errors\unbound_local_error.py:80
 msgid ""
 "Did you forget to add `{scope} {var_name}`?\n"
 msgstr ""
 
-#: runtime_errors\unbound_local_error.py:98
+#: runtime_errors\unbound_local_error.py:94
 msgid "The similar name `{name}` was found in the local scope. "
 msgstr ""
 
-#: runtime_errors\value_error.py:99 runtime_errors\value_error.py:108
+#: runtime_errors\value_error.py:95 runtime_errors\value_error.py:104
 msgid ""
 "In this instance, there are more names ({nb_names})\n"
 "than {length}, the length of the iterable.\n"
 msgstr ""
 
-#: runtime_errors\value_error.py:114
+#: runtime_errors\value_error.py:110
 msgid ""
 "In this instance, there are more names ({nb_names})\n"
 "than the length of the iterable, {iter_type} of length {length}.\n"
 msgstr ""
 
-#: runtime_errors\value_error.py:133 runtime_errors\value_error.py:143
+#: runtime_errors\value_error.py:128 runtime_errors\value_error.py:138
 msgid ""
 "In this instance, there are fewer names ({nb_names})\n"
 "than the length of the iterable.\n"
 msgstr ""
 
-#: runtime_errors\value_error.py:149
+#: runtime_errors\value_error.py:144
 msgid ""
 "In this instance, there are fewer names ({nb_names})\n"
 "than the length of the iterable, {iter_type} of length {length}.\n"
 msgstr ""
 
-#: runtime_errors\zero_division_error.py:47
+#: runtime_errors\zero_division_error.py:43
 msgid ""
 "Using the modulo operator, you are dividing by zero.\n"
 msgstr ""
 
-#: runtime_errors\zero_division_error.py:48
+#: runtime_errors\zero_division_error.py:44
 msgid ""
 "You are dividing by zero.\n"
 msgstr ""
 
-#: runtime_errors\zero_division_error.py:70
-#: runtime_errors\zero_division_error.py:97
+#: runtime_errors\zero_division_error.py:65
+#: runtime_errors\zero_division_error.py:91
 msgid ""
 "You are dividing by the following term\n"
 "\n"
@@ -1220,18 +1223,18 @@ msgid ""
 "which is equal to zero.\n"
 msgstr ""
 
-#: runtime_errors\zero_division_error.py:76
-#: runtime_errors\zero_division_error.py:103
-#: runtime_errors\zero_division_error.py:118
-#: runtime_errors\zero_division_error.py:125
+#: runtime_errors\zero_division_error.py:71
+#: runtime_errors\zero_division_error.py:97
+#: runtime_errors\zero_division_error.py:112
+#: runtime_errors\zero_division_error.py:119
 msgid ""
 "The following mathematical expression includes a division by zero:\n"
 "\n"
 "    {expression}\n"
 msgstr ""
 
-#: runtime_errors\zero_division_error.py:112
-#: runtime_errors\zero_division_error.py:153
+#: runtime_errors\zero_division_error.py:106
+#: runtime_errors\zero_division_error.py:147
 msgid ""
 "Using the modulo operator, you are dividing by the following term\n"
 "\n"
@@ -1240,18 +1243,18 @@ msgid ""
 "which is equal to zero.\n"
 msgstr ""
 
-#: runtime_errors\zero_division_error.py:123
+#: runtime_errors\zero_division_error.py:117
 msgid ""
 "The second argument of the `divmod()` function is zero.\n"
 msgstr ""
 
-#: runtime_errors\zero_division_error.py:137
+#: runtime_errors\zero_division_error.py:131
 msgid ""
 "You are attempting to raise the number 0 to a negative power\n"
 "which is equivalent to dividing by zero.\n"
 msgstr ""
 
-#: runtime_errors\zero_division_error.py:159
+#: runtime_errors\zero_division_error.py:153
 msgid ""
 "The following mathematical expression includes a division by zero\n"
 "done using the modulo operator:\n"
@@ -1259,7 +1262,7 @@ msgid ""
 "    {expression}\n"
 msgstr ""
 
-#: runtime_errors\zero_division_error.py:173
+#: runtime_errors\zero_division_error.py:167
 msgid ""
 "The second argument to the `divmod()` function is equal to zero.\n"
 msgstr ""

@@ -77,5 +77,7 @@ def no_information():
     return _(
         "No information is known about this exception.\n"
         "Please report this example to\n"
-        "https://github.com/aroberge/friendly-traceback/issues\n"
+        "https://github.com/aroberge/friendly-traceback/issues\n\n"
+        "If you are using the Friendly console, use `www()` to\n"
+        "do an Internet search for this particular case."
     )
