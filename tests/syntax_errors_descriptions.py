@@ -508,3 +508,4 @@ if sys.version_info >= (3, 10):
     descriptions["raise_syntax_error24"]["cause"] = "ended the string with another quote"
     del descriptions["raise_syntax_error26"]  # Temporary due to a bug in CPython
     del descriptions["raise_syntax_error27"]  # Temporary due to a bug in CPython
+    del descriptions["raise_syntax_error36"]  # Temporary due to a bug in CPython

@@ -1083,6 +1083,27 @@ def leading_zeros_in_decimal_integers(message="", statement=None):
     return proper_decimal_or_octal_number(prev_str, bad_str)
 
 
+@add_python_message
+def forgot_paren_around_comprehension(message="", **_kwargs):
+    # Python 3.10+
+    _ = current_lang.translate
+    if not message == "did you forget parentheses around the comprehension target?":
+        return {}
+
+    # message same as from statement_analyzer.comprehension_condition_or_tuple
+
+    cause_tuple = _(
+        "I am guessing that you were writing a comprehension or a generator expression\n"
+        "and forgot to include parentheses around tuples.\n"
+        "As an example, instead of writing\n\n"
+        "    [i, i**2 for i in range(10)]\n\n"
+        "you would need to write\n\n"
+        "    [(i, i**2) for i in range(10)]\n\n"
+    )
+    hint = _("Did you forget parentheses?\n")
+    return {"cause": cause_tuple, "suggest": hint}
+
+
 # # --------- Keep this last
 # @add_python_message
 # def general_fstring_problem(message="", statement=None):
