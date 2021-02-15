@@ -619,18 +619,13 @@ def invalid_name(statement):
 
     return {"cause": cause + hint + "\n" + note, "suggest": hint}
 
-    # if note is not None:
-    #     cause += "\n" + note
-    # return cause, hint
-
 
 @add_statement_analyzer
 def debug_fstring(statement):
     """Detect debug feature of f-string introduced in Python 3.8"""
     _ = current_lang.translate
-    cause = hint = None
     if sys.version_info >= (3, 8) or not statement.fstring_error:
-        return cause, hint
+        return {}
 
     if statement.bad_token == "=" and statement.prev_token.is_identifier():
         if statement.next_token == ")":
@@ -639,27 +634,28 @@ def debug_fstring(statement):
                 "You are likely using a 'debug' syntax of f-strings introduced\n"
                 "in Python version 3.8. You are using version {version}.\n"
             ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
+            return {"cause": cause, "suggest": hint}
         else:
             cause = _(
                 "You are likely trying to assign a value within an f-string.\n"
                 "This is not allowed.\n"
             )
-    return cause, hint
+            return {"cause": cause}
+    return {}
 
 
 @add_statement_analyzer
 def general_fstring_problem(statement=None):
     # General f-string problems are outside of our main priorities.
     _ = current_lang.translate
-    cause = hint = None
     if not statement.fstring_error:
-        return cause, hint
+        return {}
 
     cause = _(
         "The content of your f-string is invalid. Please consult the documentation:\n"
         "https://docs.python.org/3/reference/lexical_analysis.html#f-strings\n"
     )
-    return cause, hint
+    return {"cause": cause}
 
 
 def def_correct_syntax():
@@ -677,17 +673,16 @@ def malformed_def_missing_parens(statement):
     # Something like
     # def test: ...
     _ = current_lang.translate
-    cause = hint = None
 
     if statement.first_token != "def":
-        return cause, hint
+        return {}
 
     if (
         statement.bad_token != ":"
         and statement.nb_tokens >= 3
         and statement.bad_token != statement.tokens[2]
     ):
-        return cause, hint
+        return {}
 
     new_statement = fixers.modify_token(
         statement.tokens, statement.bad_token, prepend="()"
@@ -698,9 +693,9 @@ def malformed_def_missing_parens(statement):
             "Perhaps you forgot to include parentheses.\n"
             "You might have meant to write `{line}`\n"
         ).format(line=new_statement)
-        return cause, hint
+        return {"cause": cause, "suggest": hint}
 
-    return cause, hint
+    return {}
 
 
 @add_statement_analyzer
@@ -708,14 +703,12 @@ def keyword_as_function_name(statement):
     # Something like
     # def pass() ...
     _ = current_lang.translate
-    cause = hint = None
-
     if (
         statement.first_token != "def"
         or not statement.bad_token.is_keyword()
         or not (statement.prev_token == statement.first_token)
     ):
-        return cause, hint
+        return {}
 
     hint = _("You cannot use a Python keyword as a function name.\n")
     cause = _(
@@ -726,74 +719,70 @@ def keyword_as_function_name(statement):
     if not fixers.check_statement(new_statement):
         cause += "\n" + _("There are more syntax errors later in your code.\n")
 
-    return cause, hint
+    return {"cause": cause, "suggest": hint}
 
 
 @add_statement_analyzer
 def other_invalid_function_names(statement):
     _ = current_lang.translate
-    cause = hint = None
 
     if (
         statement.first_token != "def"
         or statement.bad_token.is_identifier()
         or not (statement.prev_token == statement.first_token)
     ):
-        return cause, hint
+        return {}
 
-    possible_hint = _("You wrote an invalid function name.\n")
-    possible_cause = _(
+    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "name")
+    if not fixers.check_statement(new_statement):
+        return {}
+
+    hint = _("You wrote an invalid function name.\n")
+    cause = _(
         "The name of a function must be a valid Python identifier,\n"
         "that is a name that begins with a letter or an underscore character, `_`,\n"
         "and which contains only letters, digits or the underscore character.\n"
     )
     if statement.bad_token.is_string():
-        possible_cause += _("You attempted to use a string as a function name.\n")
-
-    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "name")
-    if not fixers.check_statement(new_statement):
-        return cause, hint
-
-    return possible_cause, possible_hint
+        cause += _("You attempted to use a string as a function name.\n")
+    return {"cause": cause, "suggest": hint}
 
 
 @add_statement_analyzer
 def function_definition_missing_name(statement):
     _ = current_lang.translate
-    cause = hint = None
-
     if not (
         statement.first_token == "def"
         and statement.bad_token == "("
         and statement.bad_token == statement.tokens[1]
     ):
-        return cause, hint
+        return {}
 
     cause = _("You forgot to name your function.\n") + def_correct_syntax()
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_statement_analyzer
 def keyword_not_allowed_as_function_argument(statement):
     _ = current_lang.translate
-    cause = hint = None
-
     if not (
         statement.first_token == "def"
         and statement.bad_token.is_keyword()
         and statement.begin_brackets
     ):
-        return cause, hint
+        return {}
 
     new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "name")
-    if fixers.check_statement(new_statement):
-        cause = _(
-            "I am guessing that you tried to use the Python keyword\n"
-            "`{kwd}` as an argument in the definition of a function\n"
-            "where an identifier (variable name) was expected.\n"
-        ).format(kwd=statement.bad_token)
+    if not fixers.check_statement(new_statement):
+        return {}
 
-    return cause, hint
+    cause = _(
+        "I am guessing that you tried to use the Python keyword\n"
+        "`{kwd}` as an argument in the definition of a function\n"
+        "where an identifier (variable name) was expected.\n"
+    ).format(kwd=statement.bad_token)
+
+    return {"cause": cause}
 
 
 @add_statement_analyzer
@@ -801,13 +790,11 @@ def malformed_def_begin_code_block(statement):
     # Thinking of def simply beginning a code block; something like
     # def : ...
     _ = current_lang.translate
-    cause = hint = None
-
     if statement.first_token != "def" or statement.bad_token != ":":
-        return cause, hint
+        return {}
 
     if not statement.prev_token == statement.first_token:
-        return cause, hint
+        return {}
 
     if statement.first_token.start_col == 0:
         cause = _(
@@ -819,7 +806,7 @@ def malformed_def_begin_code_block(statement):
         )
     cause += def_correct_syntax()
 
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_statement_analyzer
@@ -827,24 +814,21 @@ def malformed_class_begin_code_block(statement):
     # Thinking of class simply beginning a code block; something like
     # class : ...
     _ = current_lang.translate
-    cause = hint = None
 
     if statement.first_token != "class" or statement.bad_token != ":":
-        return cause, hint
+        return {}
 
     if not statement.prev_token == statement.first_token:
-        return cause, hint
+        return {}
 
     cause = _("You tried to define a class and did not use the correct syntax.\n")
-
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_statement_analyzer
 def assign_to_a_keyword(statement):
     """Checks to see if line is of the form 'keyword = ...'"""
     _ = current_lang.translate
-    cause = hint = None
     possible_cause = _(
         "You were trying to assign a value to the Python keyword `{keyword}`.\n"
         "This is not allowed.\n"
@@ -854,7 +838,9 @@ def assign_to_a_keyword(statement):
         cause = possible_cause.format(keyword=statement.prev_token)
     elif statement.bad_token.is_keyword() and statement.next_token == "=":
         cause = possible_cause.format(keyword=statement.bad_token)
-    return cause, hint
+    else:
+        return {}
+    return {"cause": cause}
 
 
 @add_statement_analyzer
