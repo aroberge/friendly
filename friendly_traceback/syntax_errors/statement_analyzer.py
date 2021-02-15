@@ -1298,6 +1298,41 @@ def from_import_as(statement):
     return {"cause": cause}
 
 
+@add_statement_analyzer
+def comprehension_condition(statement):
+    _ = current_lang.translate
+    if not statement.begin_brackets:
+        return {}
+
+    if statement.bad_token == "else":
+        for tok in statement.tokens[0 : statement.bad_token_index]:
+            if tok == "for":
+                break
+        else:
+            return {}
+    elif statement.bad_token == "for":
+        for tok in statement.tokens[0 : statement.bad_token_index]:
+            if tok == "if":
+                break
+        else:
+            return {}
+    else:
+        return {}
+
+    cause = _(
+        "I am guessing that you were writing a comprehension or a generator expression\n"
+        "and use the wrong order for a condition.\n"
+        "The correct order depends if there is an `else` clause or not.\n"
+        "For example, the correct order for a list comprehensions with\n"
+        "condition can be either\n\n"
+        "    [f(x) if condition else other for x in sequence]  # 'if' before 'for'\n\n"
+        "or, if there is no `else`\n\n"
+        "    [f(x) for x in sequence if condition]  # 'if' after 'for'\n\n"
+    )
+
+    return {"cause": cause}
+
+
 # Keep last
 @add_statement_analyzer
 def unclosed_bracket(statement):

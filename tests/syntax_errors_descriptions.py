@@ -469,6 +469,14 @@ descriptions = {
         cause: "and rename it using the Python keyword `as`",
         title: "Incorrect use of 'from module import ... as ...",
     },
+    "raise_syntax_error109": {
+        cause: "The correct order depends if there is an `else` clause or not",
+        title: "Comprehension with condition (no else)",
+    },
+    "raise_syntax_error110": {
+        cause: "The correct order depends if there is an `else` clause or not",
+        title: "Comprehension with condition (with else)",
+    },
 }
 
 

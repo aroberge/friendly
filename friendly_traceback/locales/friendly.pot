@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-02-15 13:48-0400\n"
+"POT-Creation-Date: 2021-02-15 15:07-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -397,7 +397,7 @@ msgstr ""
 
 #: runtime_errors\attribute_error.py:78 runtime_errors\attribute_error.py:119
 #: runtime_errors\attribute_error.py:228 runtime_errors\import_error.py:103
-#: runtime_errors\key_error.py:44 runtime_errors\key_error.py:50
+#: runtime_errors\key_error.py:46 runtime_errors\key_error.py:52
 #: runtime_errors\module_not_found_error.py:47 runtime_errors\name_error.py:73
 #: runtime_errors\unbound_local_error.py:38
 #: syntax_errors\message_analyzer.py:340 syntax_errors\message_analyzer.py:963
@@ -661,24 +661,24 @@ msgid ""
 "Did you convert '{key}' into a string by mistake?\n"
 msgstr ""
 
-#: runtime_errors\key_error.py:45
+#: runtime_errors\key_error.py:47
 msgid ""
 "`{name}` is a key of `{dict_}` which is similar to `{key}`.\n"
 msgstr ""
 
-#: runtime_errors\key_error.py:51
+#: runtime_errors\key_error.py:53
 msgid ""
 "`{dict_}` has some keys similar to `{key}` including:\n"
 "`{names}`\n"
 msgstr ""
 
-#: runtime_errors\key_error.py:58
+#: runtime_errors\key_error.py:59
 msgid ""
 "`{name}` contains a string key which is identical to `str({key})`.\n"
 "Perhaps you forgot to convert the key into a string.\n"
 msgstr ""
 
-#: runtime_errors\key_error.py:62
+#: runtime_errors\key_error.py:63
 msgid ""
 "Did you forget to convert '{key}' into a string?\n"
 msgstr ""
@@ -2431,7 +2431,23 @@ msgid ""
 "    from {module} import object_2 as name_2  # if needed\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1318
+#: syntax_errors\statement_analyzer.py:1322
+msgid ""
+"I am guessing that you were writing a comprehension or a generator expression\n"
+"and use the wrong order for a condition.\n"
+"The correct order depends if there is an `else` clause or not.\n"
+"For example, the correct order for a list comprehensions with\n"
+"condition can be either\n"
+"\n"
+"    [f(x) if condition else other for x in sequence]  # 'if' before 'for'\n"
+"\n"
+"or, if there is no `else`\n"
+"\n"
+"    [f(x) for x in sequence if condition]  # 'if' after 'for'\n"
+"\n"
+msgstr ""
+
+#: syntax_errors\statement_analyzer.py:1353
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
