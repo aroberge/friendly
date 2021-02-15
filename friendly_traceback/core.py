@@ -440,12 +440,7 @@ class FriendlyTraceback:
             return
 
         cause = analyze_syntax.set_cause_syntax(value, self.tb_data)
-        if isinstance(cause, tuple):
-            self.info["cause"] = cause[0]
-            if cause[1]:
-                self.info["suggest"] = cause[1]
-        elif "cause" in cause:
-            self.info.update(**cause)
+        self.info.update(**cause)
 
         if "cause" in self.info:
             if "invalid syntax" in self.message:

@@ -22,6 +22,21 @@ from . import message_analyzer
 from .. import debug_helper
 
 
+def unknown_cause():
+    _ = current_lang.translate
+    return _(
+        "Currently, I cannot guess the likely cause of this error.\n"
+        "Try to examine closely the line indicated as well as the line\n"
+        "immediately above to see if you can identify some misspelled\n"
+        "word, or missing symbols, like (, ), [, ], :, etc.\n"
+        "\n"
+        "Unless your code uses type annotations, which are beyond our scope,\n"
+        "you might want to report this case to\n"
+        "https://github.com/aroberge/friendly-traceback/issues\n"
+        "\n"
+    )
+
+
 def set_cause_syntax(value, tb_data):
     """Gets the likely cause of a given exception based on some information
     specific to a given exception.
@@ -49,23 +64,12 @@ def find_syntax_error_cause(value, tb_data):
 
     if "invalid syntax" not in message:
         cause = message_analyzer.analyze_message(message=message, statement=statement)
-        if isinstance(cause, tuple):
-            cause, hint = cause
-        elif not cause:
-            cause = hint = None
-        else:
-            cause = cause["cause"]
-            if "suggest" in cause:
-                hint = cause["suggest"]
-            else:
-                hint = None
-
         if cause:
-            if hint:
-                return {"cause": cause, "suggest": hint}
-            else:
-                return {"cause": cause}
+            return cause
         else:
+            cause = statement_analyzer.analyze_statement(statement)
+            if not cause:
+                return {"cause": unknown_cause()}
             notice = _(
                 "Python gave us the following informative message\n"
                 "about the possible cause of the error:\n\n"
@@ -73,40 +77,11 @@ def find_syntax_error_cause(value, tb_data):
                 "However, I do not recognize this information and I have\n"
                 "to guess what caused the problem, but I might be wrong.\n\n"
             ).format(message=message)
-            cause = statement_analyzer.analyze_statement(statement)
-
-            if isinstance(cause, tuple):
-                cause, hint = cause
-                if cause:
-                    if hint:
-                        return {"cause": cause + notice, "suggest": hint}
-                    else:
-                        return {"cause": cause + notice}
-            elif cause:
-                cause["cause"] += notice
-                return cause
-
+            cause["cause"] = notice + cause["cause"]
+            return cause
     else:
         cause = statement_analyzer.analyze_statement(statement)
-        if isinstance(cause, tuple):
-            cause, hint = cause
-            if cause:
-                if hint:
-                    return {"cause": cause, "suggest": hint}
-                else:
-                    return {"cause": cause}
-        elif cause:
+        if cause:
             return cause
 
-    cause = _(
-        "Currently, I cannot guess the likely cause of this error.\n"
-        "Try to examine closely the line indicated as well as the line\n"
-        "immediately above to see if you can identify some misspelled\n"
-        "word, or missing symbols, like (, ), [, ], :, etc.\n"
-        "\n"
-        "Unless your code uses type annotations, which are beyond our scope,\n"
-        "you might want to report this case to\n"
-        "https://github.com/aroberge/friendly-traceback/issues\n"
-        "\n"
-    )
-    return {"cause": cause}
+    return {"cause": unknown_cause()}
