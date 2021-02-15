@@ -79,17 +79,11 @@ def _index_error(value, frame, tb_data):
 
 
 @register("KeyError")
-def key_error(value, *_args):
+def key_error(value, frame, tb_data):
     _ = current_lang.translate
-    # str(value) is expected to be something like
-    #
-    # KeyError: 'c'
-    # TODO: extract to separate file and see if similar keys can be found.
-    return {
-        "cause": _(
-            "In your program, the key that cannot be found is `{key_name!r}`.\n"
-        ).format(key_name=value.args[0])
-    }
+    from .runtime_errors import key_error
+
+    return key_error.get_cause(value, frame, tb_data)
 
 
 @register("ModuleNotFoundError")
