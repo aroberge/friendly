@@ -780,24 +780,23 @@ def unexpected_character_after_continuation(message="", **_kwargs):
 def unexpected_eof_while_parsing(message="", statement=None):
     # unexpected EOF while parsing
     _ = current_lang.translate
-    cause = hint = None
     if "unexpected EOF while parsing" not in message:
-        return cause, hint
+        return {}
 
     cause = _(
         "Python tells us that it reached the end of the file\n"
         "and expected more content.\n\n"
     )
 
-    additional_cause, _ignore = statement_analyzer.unclosed_bracket(statement)
+    additional_cause = statement_analyzer.unclosed_bracket(statement)
 
     if additional_cause:
         cause += (
             _("I will attempt to be give a bit more information.\n\n")
-            + additional_cause
+            + additional_cause["cause"]
         )
 
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_python_message

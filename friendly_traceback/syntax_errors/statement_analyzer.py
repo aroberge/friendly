@@ -848,7 +848,6 @@ def missing_comma_before_string_in_dict(statement):
     """Special case where keys and values in a dict are strings which are
     not separated by commas."""
     _ = current_lang.translate
-    cause = hint = None
 
     # This is a bit of an usual case as the error occurred due to a forgotten comma
     # two tokens before the token flagged by Python.
@@ -859,23 +858,25 @@ def missing_comma_before_string_in_dict(statement):
         and statement.prev_token.is_string()
         and statement.tokens[statement.bad_token_index - 1].is_string()
     ):
-        return cause, hint
+        return {}
 
     new_statement = fixers.modify_token(
         statement.tokens, statement.prev_token, prepend=","
     )
-    if fixers.check_statement(new_statement):
-        cause = _(
-            "I am guessing that you forgot a comma between two strings\n"
-            "when defining a dict.\n\n"
-        ).format(kwd=statement.bad_token)
-        new_statement = fixers.modify_token(
-            statement.tokens, statement.prev_token, prepend=" «,» "
-        )
-        cause += "```\n" + new_statement + "\n```"
-        hint = _("Did you forget a comma?\n")
+    if not fixers.check_statement(new_statement):
+        return {}
 
-    return cause, hint
+    cause = _(
+        "I am guessing that you forgot a comma between two strings\n"
+        "when defining a dict.\n\n"
+    ).format(kwd=statement.bad_token)
+    new_statement = fixers.modify_token(
+        statement.tokens, statement.prev_token, prepend=" «,» "
+    )
+    cause += "```\n" + new_statement + "\n```"
+    hint = _("Did you forget a comma?\n")
+
+    return {"cause": cause, "suggest": hint}
 
 
 def _perhaps_misspelled_keyword(tokens, wrong):
@@ -958,19 +959,18 @@ def missing_comma_or_operator(statement):
     """
     # TODO: refactor this
     _ = current_lang.translate
-    cause = hint = None
 
     bad_token = statement.bad_token
     if not (
         bad_token.is_identifier() or bad_token.is_number() or bad_token.is_string()
     ):
-        return cause, hint
+        return {}
 
     prev_token = statement.prev_token
     if not (
         prev_token.is_identifier() or prev_token.is_number() or prev_token.is_string()
     ):
-        return cause, hint
+        return {}
 
     possible_cause = _(
         "Python indicates that the error is caused by "
@@ -990,6 +990,8 @@ def missing_comma_or_operator(statement):
     results = _add_comma_or_operator(
         statement.tokens, prev_token, comma_first=comma_first
     )
+
+    cause = hint = None
 
     if results:
         if (
@@ -1088,86 +1090,89 @@ def missing_comma_or_operator(statement):
             hint = _("Did you mean `'{first}_{second}'`?\n").format(
                 first=prev_token, second=bad_token
             )
-
-    return cause, hint
+    if cause is None:
+        return {}
+    elif hint is None:
+        return {"cause": cause}
+    else:
+        return {"cause": cause, "suggest": hint}
 
 
 def misspelled_python_keyword(tokens, bad_token):
     _ = current_lang.translate
-    cause = hint = None
 
     results = _perhaps_misspelled_keyword(tokens, bad_token)
-    if results:
-        if len(results) == 1:
-            word, line = results[0]
-            hint = _("Did you mean `{line}`?\n").format(line=line)
+    if not results:
+        return {}
 
-            cause = _(
-                "Perhaps you meant to write `{keyword}` and made a typo.\n"
-                "The correct line would then be `{line}`\n"
-            ).format(keyword=word, line=line)
-        else:
-            lines = [line for _word, line in results]
-            hint = _("Did you mean `{line}`?\n").format(line=lines[0])
+    if len(results) == 1:
+        word, line = results[0]
+        hint = _("Did you mean `{line}`?\n").format(line=line)
 
-            cause = _(
-                "Perhaps you wrote another word instead of a Python keyword.\n"
-                "If that is the case, perhaps you meant to write one of\n"
-                "the following lines of code which might not raise a `SyntaxError`:\n\n"
-            )
-            for line in lines:
-                cause += f"    {line}\n"
+        cause = _(
+            "Perhaps you meant to write `{keyword}` and made a typo.\n"
+            "The correct line would then be `{line}`\n"
+        ).format(keyword=word, line=line)
+    else:
+        lines = [line for _word, line in results]
+        hint = _("Did you mean `{line}`?\n").format(line=lines[0])
 
-    return cause, hint
+        cause = _(
+            "Perhaps you wrote another word instead of a Python keyword.\n"
+            "If that is the case, perhaps you meant to write one of\n"
+            "the following lines of code which might not raise a `SyntaxError`:\n\n"
+        )
+        for line in lines:
+            cause += f"    {line}\n"
+
+    return {"cause": cause, "suggest": hint}
 
 
 @add_statement_analyzer
 def current_is_misspelled_python_keyword(statement):
     _ = current_lang.translate
-    cause = hint = None
 
     if not statement.bad_token.is_identifier():
-        return cause, hint
+        return {}
     return misspelled_python_keyword(statement.tokens, statement.bad_token)
 
 
 @add_statement_analyzer
 def previous_is_misspelled_python_keyword(statement):
     _ = current_lang.translate
-    cause = hint = None
 
     if not statement.prev_token.is_identifier():
-        return cause, hint
+        return {}
     return misspelled_python_keyword(statement.tokens, statement.prev_token)
 
 
 @add_statement_analyzer
 def equal_instead_of_colon_in_dict(statement):
     _ = current_lang.translate
-    cause = hint = None
 
-    if not (statement.begin_brackets and statement.bad_token == "="):
-        return cause, hint
+    if not (
+        statement.begin_brackets
+        and statement.bad_token == "="
+        and statement.begin_brackets[-1] == "{"
+    ):
+        return {}
 
-    if statement.begin_brackets[-1] == "{":
-        cause = _(
-            "It is possible that "
-            "you used an equal sign `=` instead of a colon `:`\n"
-            "to assign values to keys in a dict\n"
-            "before or at the position indicated by --> and ^.\n"
-        )
-
-    return cause, hint
+    cause = _(
+        "It is possible that "
+        "you used an equal sign `=` instead of a colon `:`\n"
+        "to assign values to keys in a dict\n"
+        "before or at the position indicated by --> and ^.\n"
+    )
+    return {"cause": cause}
 
 
 @add_statement_analyzer
 def consecutive_operators(statement):
     _ = current_lang.translate
-    cause = hint = None
     is_op = token_utils.is_operator
 
     if not (is_op(statement.bad_token) and is_op(statement.prev_token)):
-        return cause, hint
+        return {}
 
     if statement.bad_token == "=" and statement.prev_token == "==":
         cause = _(
@@ -1177,6 +1182,8 @@ def consecutive_operators(statement):
             "the exact same object, use the operator `is`.\n"
         )
         hint = _("Did you mean to use `is` instead of `===`?\n")
+        return {"cause": cause, "suggest": hint}
+
     elif statement.bad_token == statement.prev_token:
         cause = _(
             "You cannot have write the same operator, `{op}`, twice in a row.\n"
@@ -1190,29 +1197,25 @@ def consecutive_operators(statement):
             "or forgot to write something between them.\n"
         ).format(first=statement.prev_token, second=statement.bad_token)
 
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_statement_analyzer
 def dotted_name_in_def(statement):
     _ = current_lang.translate
-    cause = hint = None
-
     if not (statement.bad_token == "." and statement.first_token == "def"):
-        return cause, hint
+        return {}
 
     cause = _("You cannot use dotted names as function arguments.\n")
-
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_statement_analyzer
 def positional_arguments_in_def(statement):
     _ = current_lang.translate
-    cause = hint = None
 
     if not (statement.bad_token == "/" and statement.first_token == "def"):
-        return cause, hint
+        return {}
 
     prev_tok = ""
     for tok in statement.tokens:
@@ -1224,23 +1227,22 @@ def positional_arguments_in_def(statement):
                 "When they are used together, `/` must appear before `*`.\n"
             )
             hint = _("`*` must appear after `/` in a function definition.\n")
-            return cause, hint
+            return {"cause": cause, "suggest": hint}
         elif tok is statement.bad_token:
             break
         elif tok == "/" and prev_tok == ",":
             cause = _("You can only use `/` once in a function definition.\n")
-            return cause, hint
+            return {"cause": cause}
         prev_tok = tok
-    return cause, hint
+    return {}
 
 
 @add_statement_analyzer
 def keyword_arguments_in_def(statement):
     _ = current_lang.translate
-    cause = hint = None
 
     if not (statement.bad_token == "*" and statement.first_token == "def"):
-        return cause, hint
+        return {}
 
     prev_tok = ""
     for tok in statement.tokens:
@@ -1248,19 +1250,18 @@ def keyword_arguments_in_def(statement):
             break
         elif tok == "*" and prev_tok == ",":
             cause = _("You can only use `*` once in a function definition.\n")
-            return cause, hint
+            return {"cause": cause}
         prev_tok = tok
-    return cause, hint
+    return {}
 
 
 @add_statement_analyzer
 def and_instead_of_comma(statement):
     # Example: from math import sin and cos
     _ = current_lang.translate
-    cause = hint = None
 
     if not statement.bad_token == "and":
-        return cause, hint
+        return {}
 
     possible_cause = _(
         "The Python keyword `and` can only be used for boolean expressions.\n"
@@ -1268,6 +1269,7 @@ def and_instead_of_comma(statement):
         "`{new_statement}`\n"
     )
 
+    cause = None
     new_statement = fixers.replace_token(statement.tokens, statement.bad_token, ",")
     if fixers.check_statement(new_statement):
         cause = possible_cause.format(new_statement=new_statement)
@@ -1276,20 +1278,21 @@ def and_instead_of_comma(statement):
         if fixers.check_statement(new_statement):
             cause = possible_cause.format(new_statement=new_statement)
 
-    return cause, hint
+    if cause:
+        return {"cause": cause}
+    return {}
 
 
 @add_statement_analyzer
 def from_import_as(statement):
     """from module import ... as ..., with 'as' flagged as the bad token"""
     _ = current_lang.translate
-    cause = hint = None
     if not (
         statement.bad_token == "as"
         and statement.first_token == "from"
         and statement.tokens[2] == "import"
     ):
-        return cause, hint
+        return {}
 
     cause = _(
         "I am guessing that you are trying to import at least one object\n"
@@ -1301,17 +1304,15 @@ def from_import_as(statement):
         "    from {module} import object_1 as name_1\n"
         "    from {module} import object_2 as name_2  # if needed\n"
     ).format(module=statement.tokens[1])
-    return cause, hint
+    return {"cause": cause}
 
 
 # Keep last
 @add_statement_analyzer
 def unclosed_bracket(statement):
     _ = current_lang.translate
-    cause = hint = None
-
     if not statement.statement_brackets:
-        return cause, hint
+        return {}
 
     bracket = statement.begin_brackets[0]
     linenumber = bracket.start_row
@@ -1328,4 +1329,4 @@ def unclosed_bracket(statement):
         )
         + source
     )
-    return cause, hint
+    return {"cause": cause}
