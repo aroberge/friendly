@@ -485,6 +485,10 @@ descriptions = {
         cause: "Did you mean `123_456`",
         title: "Integer with leading zeros",
     },
+    "raise_syntax_error113": {
+        cause: "and forgot to include parentheses around tuples",
+        title: "Missing () for tuples in comprehension",
+    },
 }
 
 

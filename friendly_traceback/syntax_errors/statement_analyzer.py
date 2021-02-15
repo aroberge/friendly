@@ -1299,27 +1299,12 @@ def from_import_as(statement):
 
 
 @add_statement_analyzer
-def comprehension_condition(statement):
+def comprehension_condition_or_tuple(statement):
     _ = current_lang.translate
     if not statement.begin_brackets:
         return {}
 
-    if statement.bad_token == "else":
-        for tok in statement.tokens[0 : statement.bad_token_index]:
-            if tok == "for":
-                break
-        else:
-            return {}
-    elif statement.bad_token == "for":
-        for tok in statement.tokens[0 : statement.bad_token_index]:
-            if tok == "if":
-                break
-        else:
-            return {}
-    else:
-        return {}
-
-    cause = _(
+    cause_condition = _(
         "I am guessing that you were writing a comprehension or a generator expression\n"
         "and use the wrong order for a condition.\n"
         "The correct order depends if there is an `else` clause or not.\n"
@@ -1329,6 +1314,41 @@ def comprehension_condition(statement):
         "or, if there is no `else`\n\n"
         "    [f(x) for x in sequence if condition]  # 'if' after 'for'\n\n"
     )
+
+    cause_tuple = _(
+        "I am guessing that you were writing a comprehension or a generator expression\n"
+        "and forgot to include parentheses around tuples.\n"
+        "As an example, instead of writing\n\n"
+        "    [i, i**2 for i in range(10)]\n\n"
+        "you would need to write\n\n"
+        "    [(i, i**2) for i in range(10)]\n\n"
+    )
+
+    if statement.bad_token == "else":
+        for tok in statement.tokens[0 : statement.bad_token_index]:
+            if tok == "for":
+                cause = cause_condition
+                break
+        else:
+            return {}
+    elif statement.bad_token == "for":
+        for tok in statement.tokens[0 : statement.bad_token_index]:
+            if tok == "if":
+                cause = cause_condition
+                break
+        else:
+            found_bracket = False
+            for tok in statement.tokens[0 : statement.bad_token_index]:
+                if tok.string in "([{":
+                    found_bracket = True
+                if tok == "," and found_bracket:
+                    cause = cause_tuple
+                    hint = _("Did you forget parentheses?\n")
+                    return {"cause": cause, "suggest": hint}
+            else:
+                return {}
+    else:
+        return {}
 
     return {"cause": cause}
 

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-02-15 17:30-0400\n"
-"PO-Revision-Date: 2021-02-15 17:30-0400\n"
+"POT-Creation-Date: 2021-02-15 18:15-0400\n"
+"PO-Revision-Date: 2021-02-15 18:17-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -2899,6 +2899,7 @@ msgstr ""
 "    def nom ( ... ):"
 
 #: syntax_errors\statement_analyzer.py:682
+#: syntax_errors\statement_analyzer.py:1346
 msgid "Did you forget parentheses?\n"
 msgstr "Avez-vous oublié d’ajouter des parenthèses ?\n"
 
@@ -3233,7 +3234,7 @@ msgstr ""
 "    from {module} import objet_1 as nom_1\n"
 "    from {module} import objet_2 as nom_2 # si nécessaire\n"
 
-#: syntax_errors\statement_analyzer.py:1322
+#: syntax_errors\statement_analyzer.py:1307
 msgid ""
 "I am guessing that you were writing a comprehension or a generator "
 "expression\n"
@@ -3263,7 +3264,33 @@ msgstr ""
 "    [f(x) pour x in séquence si condition]  # 'if' après 'for'\n"
 "\n"
 
-#: syntax_errors\statement_analyzer.py:1353
+#: syntax_errors\statement_analyzer.py:1318
+msgid ""
+"I am guessing that you were writing a comprehension or a generator "
+"expression\n"
+"and forgot to include parentheses around tuples.\n"
+"As an example, instead of writing\n"
+"\n"
+"    [i, i**2 for i in range(10)]\n"
+"\n"
+"you would need to write\n"
+"\n"
+"    [(i, i**2) for i in range(10)]\n"
+"\n"
+msgstr ""
+"Je suppose que vous écriviez une compréhension ou une expression "
+"génératrice\n"
+"et vous avez oublié d’inclure des parenthèses autour des tuples.\n"
+"Voici un exemple: au lieu d’écrire\n"
+"\n"
+"    [i, i**2 for i in range(10)]\n"
+"\n"
+"vous auriez besoin d’écrire\n"
+"\n"
+"    [(i, i**2) for i in range(10)]\n"
+"\n"
+
+#: syntax_errors\statement_analyzer.py:1373
 msgid "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""
 "Le symbole {bracket} à la ligne {linenumber} n'est pas fermé par le symbole "
