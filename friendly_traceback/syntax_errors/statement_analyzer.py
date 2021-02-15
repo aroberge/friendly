@@ -40,14 +40,7 @@ def analyze_statement(statement):
 
     for analyzer in STATEMENT_ANALYZERS:
         cause = analyzer(statement)
-        if isinstance(cause, tuple):
-            cause, hint = cause
-            if cause:
-                if hint:
-                    return {"cause": cause, "suggest": hint}
-                else:
-                    return {"cause": cause}
-        elif cause:
+        if cause:
             return cause
     return {}
 
@@ -581,18 +574,16 @@ def invalid_octal(statement):
 def invalid_name(statement):
     """Identifies invalid identifiers when a name begins with a number"""
     _ = current_lang.translate
-    cause = hint = None
 
     first = statement.prev_token
     second = statement.bad_token
 
     if not (first.is_number() and second.is_name() and first.end == second.start):
-        return cause, hint
+        return {}
 
     cause = _("Valid names cannot begin with a number.\n")
     if first == statement.first_token:  # statement begins with this invalid identifier
-        hint = cause
-        return cause, hint
+        return {"cause": cause, "suggest": cause}
 
     if second == "i" and not first.is_complex():
         hint = _("Did you mean `{number}j`?\n").format(number=first)

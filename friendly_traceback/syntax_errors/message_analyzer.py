@@ -46,16 +46,8 @@ bad_quotation_marks = [
 def analyze_message(message="", statement=None):
     for case in MESSAGE_ANALYZERS:
         cause = case(message=message, statement=statement)
-        if isinstance(cause, tuple):
-            cause, hint = cause
-            if cause:
-                if hint:
-                    return {"cause": cause, "suggest": hint}
-                else:
-                    return {"cause": cause}
-        elif cause:
+        if cause:
             return cause
-
     return {}
 
 
@@ -669,112 +661,118 @@ def name_is_parameter_and_global(message="", statement=None):
 def name_assigned_to_prior_global(message="", **_kwargs):
     # something like: name 'p' is assigned to before global declaration
     _ = current_lang.translate
-    cause = hint = None
-    if "is assigned to before global declaration" in message:
-        name = message.split("'")[1]
-        cause = _(
-            "You assigned a value to the variable `{name}`\n"
-            "before declaring it as a global variable.\n"
-        ).format(name=name)
-    return cause, hint
+    if "is assigned to before global declaration" not in message:
+        return {}
+
+    name = message.split("'")[1]
+    cause = _(
+        "You assigned a value to the variable `{name}`\n"
+        "before declaring it as a global variable.\n"
+    ).format(name=name)
+    return {"cause": cause}
 
 
 @add_python_message
 def name_used_prior_global(message="", **_kwargs):
     # something like: name 'p' is used prior to global declaration
     _ = current_lang.translate
-    cause = hint = None
-    if "is used prior to global declaration" in message:
-        name = message.split("'")[1]
-        cause = _(
-            "You used the variable `{name}`\n"
-            "before declaring it as a global variable.\n"
-        ).format(name=name)
-    return cause, hint
+    if "is used prior to global declaration" not in message:
+        return {}
+
+    name = message.split("'")[1]
+    cause = _(
+        "You used the variable `{name}`\n" "before declaring it as a global variable.\n"
+    ).format(name=name)
+    return {"cause": cause}
 
 
 @add_python_message
 def name_assigned_to_prior_nonlocal(message="", **_kwargs):
     # something like: name 'p' is assigned to before global declaration
     _ = current_lang.translate
-    cause = hint = None
-    if "is assigned to before nonlocal declaration" in message:
-        name = message.split("'")[1]
-        hint = _("Did you forget to add `nonlocal`?\n")
-        cause = _(
-            "You assigned a value to the variable `{name}`\n"
-            "before declaring it as a nonlocal variable.\n"
-        ).format(name=name)
-    return cause, hint
+    if "is assigned to before nonlocal declaration" not in message:
+        return {}
+
+    name = message.split("'")[1]
+    hint = _("Did you forget to add `nonlocal`?\n")
+    cause = _(
+        "You assigned a value to the variable `{name}`\n"
+        "before declaring it as a nonlocal variable.\n"
+    ).format(name=name)
+    return {"cause": cause, "suggest": hint}
 
 
 @add_python_message
 def name_is_parameter_and_nonlocal(message="", **_kwargs):
     _ = current_lang.translate
-    cause = hint = None
-    if "is parameter and nonlocal" in message:
-        name = message.split("'")[1]
-        cause = _(
-            "You used `{name}` as a parameter for a function\n"
-            "before declaring it also as a nonlocal variable:\n"
-            "`{name}` cannot be both at the same time.\n"
-        ).format(name=name)
-    return cause, hint
+    if "is parameter and nonlocal" not in message:
+        return {}
+
+    name = message.split("'")[1]
+    cause = _(
+        "You used `{name}` as a parameter for a function\n"
+        "before declaring it also as a nonlocal variable:\n"
+        "`{name}` cannot be both at the same time.\n"
+    ).format(name=name)
+    return {"cause": cause}
 
 
 @add_python_message
 def name_used_prior_nonlocal(message="", **_kwargs):
     # something like: name 'q' is used prior to nonlocal declaration
     _ = current_lang.translate
-    cause = hint = None
-    if "is used prior to nonlocal declaration" in message:
-        hint = _("Did you forget to write `nonlocal` first?\n")
-        name = message.split("'")[1]
-        cause = _(
-            "You used the variable `{name}`\n"
-            "before declaring it as a nonlocal variable.\n"
-        ).format(name=name)
-    return cause, hint
+    if "is used prior to nonlocal declaration" not in message:
+        return {}
+
+    hint = _("Did you forget to write `nonlocal` first?\n")
+    name = message.split("'")[1]
+    cause = _(
+        "You used the variable `{name}`\n"
+        "before declaring it as a nonlocal variable.\n"
+    ).format(name=name)
+    return {"cause": cause, "suggest": hint}
 
 
 @add_python_message
 def nonlocal_at_module_level(message="", **_kwargs):
     _ = current_lang.translate
-    cause = hint = None
-    if "nonlocal declaration not allowed at module level" in message:
-        cause = _(
-            "You used the nonlocal keyword at a module level.\n"
-            "The nonlocal keyword refers to a variable inside a function\n"
-            "given a value outside that function."
-        )
-    return cause, hint
+    if "nonlocal declaration not allowed at module level" not in message:
+        return {}
+    cause = _(
+        "You used the nonlocal keyword at a module level.\n"
+        "The nonlocal keyword refers to a variable inside a function\n"
+        "given a value outside that function."
+    )
+    return {"cause": cause}
 
 
 @add_python_message
 def no_binding_for_nonlocal(message="", **_kwargs):
     _ = current_lang.translate
-    cause = hint = None
-    if "no binding for nonlocal" in message:
-        name = message.split("'")[1]
-        cause = _(
-            "You declared the variable `{name}` as being a\n"
-            "nonlocal variable but it cannot be found.\n"
-        ).format(name=name)
-    return cause, hint
+    if "no binding for nonlocal" not in message:
+        return {}
+
+    name = message.split("'")[1]
+    cause = _(
+        "You declared the variable `{name}` as being a\n"
+        "nonlocal variable but it cannot be found.\n"
+    ).format(name=name)
+    return {"cause": cause}
 
 
 @add_python_message
 def unexpected_character_after_continuation(message="", **_kwargs):
     _ = current_lang.translate
-    cause = hint = None
-    if "unexpected character after line continuation character" in message:
-        cause = _(
-            "You are using the continuation character `\\` outside of a string,\n"
-            "and it is followed by some other character(s).\n"
-            "I am guessing that you forgot to enclose some content in a string.\n"
-            "\n"
-        )
-    return cause, hint
+    if "unexpected character after line continuation character" not in message:
+        return {}
+
+    cause = _(
+        "You are using the continuation character `\\` outside of a string,\n"
+        "and it is followed by some other character(s).\n"
+        "I am guessing that you forgot to enclose some content in a string.\n"
+        "\n"
+    )
+    return {"cause": cause}
 
 
 @add_python_message
@@ -788,22 +786,18 @@ def unexpected_eof_while_parsing(message="", statement=None):
         "Python tells us that it reached the end of the file\n"
         "and expected more content.\n\n"
     )
-
     additional_cause = statement_analyzer.unclosed_bracket(statement)
-
     if additional_cause:
         cause += (
             _("I will attempt to be give a bit more information.\n\n")
             + additional_cause["cause"]
         )
-
     return {"cause": cause}
 
 
 @add_python_message
 def unmatched_parenthesis(message="", statement=None):
     _ = current_lang.translate
-    cause = hint = None
     # Python 3.8
     if message == "unmatched ')'":
         bracket = syntax_utils.name_bracket(")")
@@ -812,19 +806,18 @@ def unmatched_parenthesis(message="", statement=None):
     elif message == "unmatched '}'":
         bracket = syntax_utils.name_bracket("}")
     else:
-        return cause, hint
+        return {}
     cause = _(
         "The closing {bracket} on line {linenumber} does not match anything.\n"
     ).format(bracket=bracket, linenumber=statement.linenumber)
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_python_message
 def position_argument_follows_keyword_arg(message="", **_kwargs):
     _ = current_lang.translate
-    cause = hint = None
     if "positional argument follows keyword argument" not in message:
-        return cause, hint
+        return {}
     cause = _(
         "In Python, you can call functions with only positional arguments\n\n"
         "    test(1, 2, 3)\n\n"
@@ -835,15 +828,14 @@ def position_argument_follows_keyword_arg(message="", **_kwargs):
         "but with the keyword arguments appearing after all the positional ones.\n"
         "According to Python, you used positional arguments after keyword ones.\n"
     )
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_python_message
 def non_default_arg_follows_default_arg(message="", **_kwargs):
     _ = current_lang.translate
-    cause = hint = None
     if "non-default argument follows default argument" not in message:
-        return cause, hint
+        return {}
     cause = _(
         "In Python, you can define functions with only positional arguments\n\n"
         "    def test(a, b, c): ...\n\n"
@@ -854,17 +846,16 @@ def non_default_arg_follows_default_arg(message="", **_kwargs):
         "but with the keyword arguments appearing after all the positional ones.\n"
         "According to Python, you used positional arguments after keyword ones.\n"
     )
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_python_message
 def python2_print(message="", **_kwargs):
     _ = current_lang.translate
-    cause = hint = None
     if not message.startswith(
         "Missing parentheses in call to 'print'. Did you mean print("
     ):
-        return cause, hint
+        return {}
     message = message[59:-2]
     cause = _(
         "Perhaps you need to type\n\n"
@@ -872,15 +863,14 @@ def python2_print(message="", **_kwargs):
         "In older version of Python, `print` was a keyword.\n"
         "Now, `print` is a function; you need to use parentheses to call it.\n"
     ).format(message=message)
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_python_message
 def cannot_use_starred_expression(message="", **_kwargs):
     _ = current_lang.translate
-    cause = hint = None
     if not message == "can't use starred expression here":
-        return cause, hint
+        return {}
 
     cause = _(
         "The star operator `*` is interpreted to mean that\n"
@@ -888,80 +878,70 @@ def cannot_use_starred_expression(message="", **_kwargs):
         "to each item of an iterable, which does not make sense here.\n"
     )
 
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_python_message
 def return_outside_function(message="", **_kwargs):
     _ = current_lang.translate
-    cause = hint = None
     if not message == "'return' outside function":
-        return cause, hint
+        return {}
 
     cause = _("You can only use a `return` statement inside a function or method.\n")
-
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_python_message
 def too_many_nested_blocks(message="", **_kwargs):
     _ = current_lang.translate
-    cause = hint = None
     if not message == "too many statically nested blocks":
-        return cause, hint
+        return {}
 
     hint = _("Seriously?\n")
-
     cause = _(
         "You cannot be serious!\n\n"
         "In case this is a mistake in a real program, please\n"
         "consider reducing the number of nested code blocks.\n"
     )
-
-    return cause, hint
+    return {"cause": cause, "suggest": hint}
 
 
 @add_python_message
 def named_arguments_must_follow_bare_star(message="", **_kwargs):
     _ = current_lang.translate
-    cause = hint = None
     if not message == "named arguments must follow bare *":
-        return cause, hint
+        return {}
 
     hint = _("Did you forget something after `*`?\n")
-
     cause = _(
         "Assuming you were defining a function, you need\n"
         "to replace `*` by either `*arguments` or\n"
         "by `*, named_argument=value`.\n"
     )
-
-    return cause, hint
+    return {"cause": cause, "suggest": hint}
 
 
 @add_python_message
 def you_found_it(message="", **_kwargs):
     _ = current_lang.translate
-    cause = hint = None
     if not message == "You found it!":
-        return cause, hint
+        return {}
 
     cause = _(
         "This is a message that was added in Python 3.9\n"
         "to prevent redefining `__peg_parser__`.\n"
         "It should not be present in other versions.\n"
     )
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_python_message
 def from__future__not_defined(message="", **_kwargs):
     _ = current_lang.translate
-    cause = hint = None
     pattern = re.compile(r"future feature (.*) is not defined")
     match = re.search(pattern, message)
     if match is None:
-        return cause, hint
+        return {}
 
     names = __future__.all_feature_names
     available = _("The available features are `{names}`.\n").format(
@@ -974,6 +954,7 @@ def from__future__not_defined(message="", **_kwargs):
             "you must import specific named features.\n"
         )
         cause += "\n" + available
+        return {"cause": cause}
 
     else:
         names = __future__.all_feature_names
@@ -983,37 +964,34 @@ def from__future__not_defined(message="", **_kwargs):
             cause = _(
                 "Instead of `{feature}`, perhaps you meant to import `{name}`.\n"
             ).format(feature=feature, name=similar[0])
+            return {"cause": cause, "suggest": hint}
         else:
             cause = _(
                 "`{feature}` is not a valid feature of module `__future__`.\n"
             ).format(feature=feature)
             cause += "\n" + available
-
-    return cause, hint
+            return {"cause": cause}
 
 
 @add_python_message
 def from__future__at_begin(message="", **_kwargs):
     _ = current_lang.translate
-    cause = hint = None
     if message != "from __future__ imports must occur at the beginning of the file":
-        return cause, hint
+        return {}
 
     cause = _(
         "A `from __future__ import` statement changes the way Python\n"
         "interprets the code in a file.\n"
         "It must appear at the beginning of the file."
     )
-
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_python_message
 def import_braces(message="", **_kwargs):
     _ = current_lang.translate
-    cause = hint = None
     if message != "not a chance":
-        return cause, hint
+        return {}
 
     cause = _(
         "I suspect you wrote `from __future__ import braces` following\n"
@@ -1021,35 +999,33 @@ def import_braces(message="", **_kwargs):
         "Unlike other programming languages, Python's code block are defined by\n"
         "their indentation level, and not by using some curly braces, like `{...}`.\n"
     )
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_python_message
 def invalid_octal(message="", statement=None):
     # Before Python 3.8, we'd only get "invalid syntax"
-    cause = hint = None
-    if "in octal literal" in message:
-        return statement_analyzer.invalid_octal(statement)
+    if "in octal literal" not in message:
+        return {}
 
-    return cause, hint
+    return statement_analyzer.invalid_octal(statement)
 
 
 @add_python_message
 def eof_unclosed_triple_quoted(message="", **_kwargs):
     _ = current_lang.translate
-    cause = hint = None
     if not (
         message == "EOF while scanning triple-quoted string literal"
         or "unterminated triple-quoted string literal" in message
     ):
-        return cause, hint
+        return {}
 
     cause = _(
         "You started writing a triple-quoted string but never wrote\n"
         "the triple quotes needed to end the string.\n"
     )
 
-    return cause, hint
+    return {"cause": cause}
 
 
 # # --------- Keep this last
