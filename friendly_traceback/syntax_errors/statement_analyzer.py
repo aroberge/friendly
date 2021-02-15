@@ -284,18 +284,16 @@ def misplaced_quote(statement):
 def space_between_operators(statement):
     """Detect if some space has been inserted between two operators"""
     _ = current_lang.translate
-    cause = hint = None
 
     is_op = token_utils.is_operator
-
     if not is_op(statement.bad_token):
-        return cause, hint
+        return {}
 
     prev = statement.prev_token
     bad = statement.bad_token
     next_ = statement.next_token
 
-    possible_hint = _("Did you leave some spaces between operators?\n")
+    hint = _("Did you leave some spaces between operators?\n")
     possible_cause = _(
         "It looks like you wrote two operators, `{first}` and `{second}`,\n"
         "separated by spaces instead of writing them as a single operator:\n"
@@ -304,35 +302,33 @@ def space_between_operators(statement):
 
     # TODO: check that this fixes the problem
     if is_op(prev) and is_op(prev.string + bad.string):
-        hint = possible_hint
         cause = possible_cause.format(
             first=prev.string, second=bad.string, correct=prev.string + bad.string
         )
+        return {"cause": cause, "suggest": hint}
     elif is_op(next_) and is_op(bad.string + next_.string):
-        hint = possible_hint
         cause = possible_cause.format(
             first=bad.string, second=next_.string, correct=bad.string + next_.string
         )
+        return {"cause": cause, "suggest": hint}
 
-    return cause, hint
+    return {}
 
 
 @add_statement_analyzer
 def inverted_comparison_operators(statement):
     """Detect if comparison operators might have been inverted"""
     _ = current_lang.translate
-    cause = hint = None
 
     is_op = token_utils.is_operator
-
     if not is_op(statement.bad_token):
-        return cause, hint
+        return {}
 
     prev = statement.prev_token
     bad = statement.bad_token
     next_ = statement.next_token
 
-    possible_hint = _("Did you write operators in an incorrect order?\n")
+    hint = _("Did you write operators in an incorrect order?\n")
     possible_cause = _(
         "It looks like you wrote two operators (`{first}` and `{second}`)\n"
         "in the wrong order: `{wrong}` instead of `{correct}`.\n"
@@ -340,23 +336,23 @@ def inverted_comparison_operators(statement):
 
     # TODO: check that this fixes the problem
     if is_op(prev) and token_utils.is_comparison(bad.string + prev.string):
-        hint = possible_hint
         cause = possible_cause.format(
             first=prev.string,
             second=bad.string,
             correct=bad.string + prev.string,
             wrong=prev.string + bad.string,
         )
+        return {"cause": cause, "suggest": hint}
     elif is_op(next_) and token_utils.is_comparison(next_.string + bad.string):
-        hint = possible_hint
         cause = possible_cause.format(
             first=bad.string,
             second=next_.string,
             correct=next_.string + bad.string,
             wrong=bad.string + next_.string,
         )
+        return {"cause": cause, "suggest": hint}
 
-    return cause, hint
+    return {}
 
 
 @add_statement_analyzer
@@ -366,13 +362,12 @@ def assign_instead_of_equal(statement):
     # TODO: generalize this for other situations by checking that the proposed
     # fix would work.
     _ = current_lang.translate
-    cause = hint = None
 
     if not statement.bad_token == "=":
-        return cause, hint
+        return {}
 
     if not statement.first_token.is_in(["if", "elif", "while"]):
-        return cause, hint
+        return {}
 
     new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "==")
     if not fixers.check_statement(new_statement):
@@ -384,56 +379,48 @@ def assign_instead_of_equal(statement):
     else:
         additional_cause = ""
 
-    equal = _("Perhaps you needed `==` instead of `=`.\n")
-    equal_or_walrus = _("Perhaps you needed `==` or `:=` instead of `=`.\n")
-    walrus = _("Perhaps you needed `:=` instead of `=:`.\n")
-
     if sys.version_info < (3, 8):
+        hint = _("Perhaps you needed `==` instead of `=`.\n")
         cause = _(
             "You used an assignment operator `=` instead of an equality operator `==`.\n"
         )
-        hint = equal
+        return {"cause": cause + additional_cause, "suggest": hint}
     else:
         if statement.next_token == ":":
-            hint = walrus
+            hint = _("Perhaps you needed `:=` instead of `=:`.\n")
             cause = _(
                 "You used an assignment operator `=` followed by `:`; perhaps you meant to use \n"
                 "the walrus operator `:=`.\n"
             )
         else:
+            hint = _("Perhaps you needed `==` or `:=` instead of `=`.\n")
             cause = _(
                 "You used an assignment operator `=`; perhaps you meant to use \n"
                 "an equality operator, `==`, or the walrus operator `:=`.\n"
             )
-            hint = equal_or_walrus
-
-    return cause + additional_cause, hint
+        return {"cause": cause + additional_cause, "suggest": hint}
 
 
 @add_statement_analyzer
 def print_as_statement(statement):
     _ = current_lang.translate
-    cause = hint = None
 
-    if statement.prev_token != "print":
-        return cause, hint
-
-    if statement.bad_token != "(":
+    if statement.prev_token == "print" and statement.bad_token != "(":
         cause = _(
             "In older version of Python, `print` was a keyword.\n"
             "Now, `print` is a function; you need to use parentheses to call it.\n"
         )
-    return cause, hint
+        return {"cause": cause}
+    return {}
 
 
 @add_statement_analyzer
 def calling_pip(statement):
     _ = current_lang.translate
-    cause = hint = None
     if not statement.first_token.is_in(["pip", "python"]):
-        return cause, hint
+        return {}
 
-    use_pip = _(
+    cause = _(
         "It looks as if you are attempting to use pip to install a module.\n"
         "`pip` is a command that needs to run in a terminal,\n"
         "not from a Python interpreter.\n"
@@ -442,66 +429,63 @@ def calling_pip(statement):
     for tok in statement.tokens:
         if tok == "pip":
             hint = _("Pip cannot be used in a Python interpreter.\n")
-            return use_pip, hint
-    return cause, hint
+            return {"cause": cause, "suggest": hint}
+    return {}
 
 
 @add_statement_analyzer
 def dot_followed_by_bracket(statement):
     _ = current_lang.translate
-    cause = hint = None
 
     if statement.bad_token.is_in("()[]{}") and statement.prev_token == ".":
         cause = _("You cannot have a dot `.` followed by `{bracket}`.\n").format(
             bracket=statement.bad_token
         )
     else:
-        return cause, hint
+        return {}
 
     new_statement = fixers.replace_token(statement.tokens, statement.prev_token, ",")
     if fixers.check_statement(new_statement):
         cause += _("Perhaps you need to replace the dot by a comma.\n")
-        return cause, hint
 
-    return cause, hint
+    return {"cause": cause}
 
 
 @add_statement_analyzer
 def raise_single_exception(statement):
     _ = current_lang.translate
-    cause = hint = None
     if statement.first_token != "raise":
-        return cause, hint
+        return {}
 
     if statement.bad_token == "," and statement.prev_token.is_identifier():
         cause = _(
             "It looks like you are trying to raise an exception using Python 2 syntax.\n"
         )
-    return cause, hint
+        return {"cause": cause}
+    return {}
 
 
 @add_statement_analyzer
 def invalid_double_star_operator(statement):
     _ = current_lang.translate
-    cause = hint = None
 
     if statement.bad_token == "**":
         cause = _(
             "The double star operator `**` is likely interpreted to mean that\n"
             "dict unpacking is to be used which does not make sense here.\n"
         )
+        return {"cause": cause}
 
-    return cause, hint
+    return {}
 
 
 @add_statement_analyzer
 def missing_colon(statement):
     """look for missing colon at the end of statement"""
     _ = current_lang.translate
-    cause = hint = None
 
     if statement.last_token == ":" or statement.bad_token != statement.last_token:
-        return cause, hint
+        return {}
 
     name = statement.first_token
     if name.is_not_in(
@@ -519,17 +503,17 @@ def missing_colon(statement):
             "with",
         ]
     ):
-        return cause, hint
+        return {}
 
     new_statement = fixers.modify_token(
         statement.tokens, statement.bad_token, append=":"
     )
     if not fixers.check_statement(new_statement):
-        return cause, hint
+        return {}
 
     name = statement.first_token
 
-    forgot_a_colon = _("Did you forget a colon `:`?\n")
+    hint = _("Did you forget a colon `:`?\n")
 
     if name.is_in(["for", "while"]):
         cause = _(
@@ -537,16 +521,16 @@ def missing_colon(statement):
             "forgot to add a colon `:` at the end\n"
             "\n"
         ).format(for_while=name)
-        hint = forgot_a_colon
+        return {"cause": cause, "suggest": hint}
     elif name.is_in(["def", "elif", "else", "except", "finally", "if", "try", "with"]):
         cause = _(
             "You wrote a statement beginning with\n"
             "`{name}` but forgot to add a colon `:` at the end\n"
             "\n"
         ).format(name=name)
-        hint = forgot_a_colon
+        return {"cause": cause, "suggest": hint}
 
-    return cause, hint
+    return {}
 
 
 @add_statement_analyzer
