@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-02-15 15:07-0400\n"
+"POT-Creation-Date: 2021-02-15 17:30-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1881,6 +1881,25 @@ msgstr ""
 msgid ""
 "You started writing a triple-quoted string but never wrote\n"
 "the triple quotes needed to end the string.\n"
+msgstr ""
+
+#: syntax_errors\message_analyzer.py:1039
+#: syntax_errors\message_analyzer.py:1048
+msgid ""
+"Did you mean `{num}`?\n"
+msgstr ""
+
+#: syntax_errors\message_analyzer.py:1040
+msgid ""
+"Perhaps you meant to write the octal number `{num}`\n"
+"and forgot the letter 'o', or perhaps you meant to write\n"
+"a decimal integer and did not know that it could not start with zeros.\n"
+msgstr ""
+
+#: syntax_errors\message_analyzer.py:1049
+msgid ""
+"Perhaps you meant to write the integer `{num}`\n"
+"and did not know that it could not start with zeros.\n"
 msgstr ""
 
 #: syntax_errors\statement_analyzer.py:98

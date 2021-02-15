@@ -477,6 +477,14 @@ descriptions = {
         cause: "The correct order depends if there is an `else` clause or not",
         title: "Comprehension with condition (with else)",
     },
+    "raise_syntax_error111": {
+        cause: "Did you mean `0o1`",
+        title: "Forgot 'o' for octal",
+    },
+    "raise_syntax_error112": {
+        cause: "Did you mean `123_456`",
+        title: "Integer with leading zeros",
+    },
 }
 
 

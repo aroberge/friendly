@@ -1028,6 +1028,61 @@ def eof_unclosed_triple_quoted(message="", **_kwargs):
     return {"cause": cause}
 
 
+def proper_decimal_or_octal_number(prev_str, bad_str):
+    # see next two cases
+    _ = current_lang.translate
+    if not (set(prev_str).issubset("_0") and prev_str.startswith("0")):
+        return {}
+
+    if prev_str == "0" and set(bad_str).issubset("01234567_"):
+        correct = "0o" + bad_str
+        hint = _("Did you mean `{num}`?\n").format(num=correct)
+        cause = _(
+            "Perhaps you meant to write the octal number `{num}`\n"
+            "and forgot the letter 'o', or perhaps you meant to write\n"
+            "a decimal integer and did not know that it could not start with zeros.\n"
+        ).format(num=correct)
+        return {"cause": cause, "suggest": hint}
+    elif set(bad_str).issubset("0123456789_"):
+        correct = bad_str.lstrip("_")
+        hint = _("Did you mean `{num}`?\n").format(num=correct)
+        cause = _(
+            "Perhaps you meant to write the integer `{num}`\n"
+            "and did not know that it could not start with zeros.\n"
+        ).format(num=correct)
+        return {"cause": cause, "suggest": hint}
+
+    return {}
+
+
+@add_python_message
+def invalid_token(message="", statement=None):
+    # Seen this for Python 3.6, 3.7 for would-be decimal number starting with zero.
+    _ = current_lang.translate
+    if not (message == "invalid token"):
+        return {}
+
+    prev_str = statement.prev_token.string
+    bad_str = statement.bad_token.string
+    return proper_decimal_or_octal_number(prev_str, bad_str)
+
+
+@add_python_message
+def leading_zeros_in_decimal_integers(message="", statement=None):
+    # Same as previous case but for Python 3.8+
+    _ = current_lang.translate
+    if not (
+        message.startswith(
+            "leading zeros in decimal integer literals are not permitted"
+        )
+    ):
+        return {}
+
+    prev_str = statement.prev_token.string
+    bad_str = statement.bad_token.string
+    return proper_decimal_or_octal_number(prev_str, bad_str)
+
+
 # # --------- Keep this last
 # @add_python_message
 # def general_fstring_problem(message="", statement=None):
