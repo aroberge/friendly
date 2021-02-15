@@ -45,9 +45,18 @@ bad_quotation_marks = [
 
 def analyze_message(message="", statement=None):
     for case in MESSAGE_ANALYZERS:
-        cause, hint = case(message=message, statement=statement)
-        if cause:
-            return cause, hint
+        cause = case(message=message, statement=statement)
+        if isinstance(cause, tuple):
+            cause, hint = cause
+            if cause:
+                return cause, hint
+        elif cause:
+            if "suggest" in cause:
+                hint = cause["suggest"]
+            else:
+                hint = None
+            return cause["cause"], hint
+
     return None, None
 
 

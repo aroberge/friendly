@@ -51,6 +51,8 @@ def find_syntax_error_cause(value, tb_data):
         cause = message_analyzer.analyze_message(message=message, statement=statement)
         if isinstance(cause, tuple):
             cause, hint = cause
+        elif not cause:
+            cause = hint = None
         else:
             cause = cause["cause"]
             if "suggest" in cause:

@@ -537,12 +537,11 @@ def missing_colon(statement):
 def invalid_hexadecimal(statement):
     """Identifies problem caused by invalid character in an hexadecimal number."""
     _ = current_lang.translate
-    cause = hint = None
 
     prev = statement.prev_token
     wrong = statement.bad_token
     if not (prev.immediately_before(wrong) and prev.string.lower().startswith("0x")):
-        return cause, hint
+        return {}
 
     hint = _("Did you made a mistake in writing an hexadecimal integer?\n")
     cause = _(
@@ -553,19 +552,18 @@ def invalid_hexadecimal(statement):
         "In Python, hexadecimal numbers start with either `0x` or `0X`,\n"
         "followed by the characters used to represent the value of that integer.\n"
     ).format(character=wrong.string[0])
-    return cause, hint
+    return {"cause": cause, "suggest": hint}
 
 
 @add_statement_analyzer
 def invalid_octal(statement):
     """Identifies problem caused by invalid character in an octal number."""
     _ = current_lang.translate
-    cause = hint = None
 
     prev = statement.prev_token
     wrong = statement.bad_token
     if not (prev.immediately_before(wrong) and prev.string.lower().startswith("0o")):
-        return cause, hint
+        return {}
 
     hint = _("Did you made a mistake in writing an octal integer?\n")
     cause = _(
@@ -576,7 +574,7 @@ def invalid_octal(statement):
         "(the digit zero followed by the letter `o`)\n"
         "followed by the characters used to represent the value of that integer.\n"
     ).format(character=wrong.string[0])
-    return cause, hint
+    return {"cause": cause, "suggest": hint}
 
 
 @add_statement_analyzer
@@ -605,7 +603,7 @@ def invalid_name(statement):
             "followed by `j`, with no spaces in between.\n"
             "Perhaps you meant to write `{number}j`.\n"
         ).format(number=first)
-        return cause, hint
+        return {"cause": cause, "suggest": hint}
 
     if first.is_complex():
         note = _("[Note: `{first}` is a complex number.]\n").format(first=first)
@@ -617,11 +615,13 @@ def invalid_name(statement):
     hint = _(
         "Perhaps you forgot a multiplication operator, `{first} * {second}`.\n"
     ).format(first=first, second=second)
-    cause = cause + hint
+    cause = cause
 
-    if note is not None:
-        cause += "\n" + note
-    return cause, hint
+    return {"cause": cause + hint + "\n" + note, "suggest": hint}
+
+    # if note is not None:
+    #     cause += "\n" + note
+    # return cause, hint
 
 
 @add_statement_analyzer
