@@ -489,6 +489,10 @@ descriptions = {
         cause: "and forgot to include parentheses around tuples",
         title: "Missing () for tuples in comprehension",
     },
+    "raise_syntax_error114": {
+        cause: "`bf` is an illegal string prefix.",
+        title: "Binary f-string not allowed",
+    },
 }
 
 

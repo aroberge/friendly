@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-02-15 18:15-0400\n"
+"POT-Creation-Date: 2021-02-15 21:36-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -877,10 +877,10 @@ msgid ""
 msgstr ""
 
 #: runtime_errors\type_error.py:204 runtime_errors\type_error.py:672
-#: runtime_errors\type_error.py:767 syntax_errors\statement_analyzer.py:999
-#: syntax_errors\statement_analyzer.py:1059
-#: syntax_errors\statement_analyzer.py:1101
-#: syntax_errors\statement_analyzer.py:1109
+#: runtime_errors\type_error.py:767 syntax_errors\statement_analyzer.py:1009
+#: syntax_errors\statement_analyzer.py:1069
+#: syntax_errors\statement_analyzer.py:1111
+#: syntax_errors\statement_analyzer.py:1119
 msgid ""
 "Did you mean `{line}`?\n"
 msgstr ""
@@ -1902,6 +1902,28 @@ msgid ""
 "and did not know that it could not start with zeros.\n"
 msgstr ""
 
+#: syntax_errors\message_analyzer.py:1095
+#: syntax_errors\statement_analyzer.py:1328
+msgid ""
+"I am guessing that you were writing a comprehension or a generator expression\n"
+"and forgot to include parentheses around tuples.\n"
+"As an example, instead of writing\n"
+"\n"
+"    [i, i**2 for i in range(10)]\n"
+"\n"
+"you would need to write\n"
+"\n"
+"    [(i, i**2) for i in range(10)]\n"
+"\n"
+msgstr ""
+
+#: syntax_errors\message_analyzer.py:1103
+#: syntax_errors\statement_analyzer.py:682
+#: syntax_errors\statement_analyzer.py:1356
+msgid ""
+"Did you forget parentheses?\n"
+msgstr ""
+
 #: syntax_errors\statement_analyzer.py:98
 msgid ""
 "The closing {bracket} on line {close_lineno} does not match the opening {open_bracket} on line {open_lineno}.\n"
@@ -2201,12 +2223,6 @@ msgid ""
 "    def name ( ... ):"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:682
-#: syntax_errors\statement_analyzer.py:1346
-msgid ""
-"Did you forget parentheses?\n"
-msgstr ""
-
 #: syntax_errors\statement_analyzer.py:683
 msgid ""
 "Perhaps you forgot to include parentheses.\n"
@@ -2280,7 +2296,7 @@ msgid ""
 msgstr ""
 
 #: syntax_errors\statement_analyzer.py:868
-#: syntax_errors\statement_analyzer.py:995
+#: syntax_errors\statement_analyzer.py:1005
 msgid ""
 "Did you forget a comma?\n"
 msgstr ""
@@ -2304,24 +2320,35 @@ msgid ""
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:966
+#: syntax_errors\statement_analyzer.py:971
+msgid ""
+"`bf` is an illegal string prefix.\n"
+msgstr ""
+
+#: syntax_errors\statement_analyzer.py:972
+msgid ""
+"I am guessing that you wanted a binary f-string;\n"
+"this is not allowed.\n"
+msgstr ""
+
+#: syntax_errors\statement_analyzer.py:976
 msgid ""
 "Python indicates that the error is caused by `{second}` written immediately after `{first}`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:997
+#: syntax_errors\statement_analyzer.py:1007
 msgid ""
 "Perhaps you meant\n"
 "\n"
 "    {line}\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1004
+#: syntax_errors\statement_analyzer.py:1014
 msgid ""
 "Did you forget something between `{first}` and `{second}`?\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1019
+#: syntax_errors\statement_analyzer.py:1029
 msgid ""
 "Perhaps you meant to insert an operator like `{operators}`\n"
 "between `{first}` and `{second}`.\n"
@@ -2329,38 +2356,38 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1028
+#: syntax_errors\statement_analyzer.py:1038
 msgid ""
 "Note: these are just some of the possible choices and that\n"
 "some of them might raise other types of exceptions.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1047
+#: syntax_errors\statement_analyzer.py:1057
 msgid ""
 "Or perhaps you forgot that you cannot have spaces\n"
 "in variable names.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1071
+#: syntax_errors\statement_analyzer.py:1081
 msgid ""
 "Perhaps you forgot that you cannot have spaces\n"
 "in variable names and wrote `'{first} {second}'`\n"
 "instead of `'{first}_{second}'`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1077
-#: syntax_errors\statement_analyzer.py:1081
+#: syntax_errors\statement_analyzer.py:1087
+#: syntax_errors\statement_analyzer.py:1091
 msgid ""
 "Did you mean `'{first}_{second}'`?\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1103
+#: syntax_errors\statement_analyzer.py:1113
 msgid ""
 "Perhaps you meant to write `{keyword}` and made a typo.\n"
 "The correct line would then be `{line}`\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1111
+#: syntax_errors\statement_analyzer.py:1121
 msgid ""
 "Perhaps you wrote another word instead of a Python keyword.\n"
 "If that is the case, perhaps you meant to write one of\n"
@@ -2368,14 +2395,14 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1151
+#: syntax_errors\statement_analyzer.py:1161
 msgid ""
 "It is possible that you used an equal sign `=` instead of a colon `:`\n"
 "to assign values to keys in a dict\n"
 "before or at the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1169
+#: syntax_errors\statement_analyzer.py:1179
 msgid ""
 "You wrote three equal signs in a row which is allowed in some\n"
 "programming languages, but not in Python. To check if two objects\n"
@@ -2383,31 +2410,31 @@ msgid ""
 "the exact same object, use the operator `is`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1175
+#: syntax_errors\statement_analyzer.py:1185
 msgid ""
 "Did you mean to use `is` instead of `===`?\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1179
+#: syntax_errors\statement_analyzer.py:1189
 msgid ""
 "You cannot have write the same operator, `{op}`, twice in a row.\n"
 "Perhaps you wrote one of them by mistake\n"
 "or forgot to write something between them.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1185
+#: syntax_errors\statement_analyzer.py:1195
 msgid ""
 "You cannot have these two operators, `{first}` and `{second}`,\n"
 "following each other. Perhaps you wrote one of them by mistake\n"
 "or forgot to write something between them.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1200
+#: syntax_errors\statement_analyzer.py:1210
 msgid ""
 "You cannot use dotted names as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1214
+#: syntax_errors\statement_analyzer.py:1224
 msgid ""
 "`/` indicates that the previous arguments in a function definition\n"
 "are positional arguments. However, `*` indicates that the arguments\n"
@@ -2415,22 +2442,22 @@ msgid ""
 "When they are used together, `/` must appear before `*`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1220
+#: syntax_errors\statement_analyzer.py:1230
 msgid ""
 "`*` must appear after `/` in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1225
+#: syntax_errors\statement_analyzer.py:1235
 msgid ""
 "You can only use `/` once in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1243
+#: syntax_errors\statement_analyzer.py:1253
 msgid ""
 "You can only use `*` once in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1257
+#: syntax_errors\statement_analyzer.py:1267
 msgid ""
 "The Python keyword `and` can only be used for boolean expressions.\n"
 "Perhaps you meant to write\n"
@@ -2438,7 +2465,7 @@ msgid ""
 "`{new_statement}`\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1288
+#: syntax_errors\statement_analyzer.py:1298
 msgid ""
 "I am guessing that you are trying to import at least one object\n"
 "from module `{module}` and rename it using the Python keyword `as`;\n"
@@ -2451,7 +2478,7 @@ msgid ""
 "    from {module} import object_2 as name_2  # if needed\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1307
+#: syntax_errors\statement_analyzer.py:1317
 msgid ""
 "I am guessing that you were writing a comprehension or a generator expression\n"
 "and use the wrong order for a condition.\n"
@@ -2467,21 +2494,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1318
-msgid ""
-"I am guessing that you were writing a comprehension or a generator expression\n"
-"and forgot to include parentheses around tuples.\n"
-"As an example, instead of writing\n"
-"\n"
-"    [i, i**2 for i in range(10)]\n"
-"\n"
-"you would need to write\n"
-"\n"
-"    [(i, i**2) for i in range(10)]\n"
-"\n"
-msgstr ""
-
-#: syntax_errors\statement_analyzer.py:1373
+#: syntax_errors\statement_analyzer.py:1383
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""

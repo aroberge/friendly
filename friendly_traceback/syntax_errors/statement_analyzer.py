@@ -963,6 +963,18 @@ def missing_comma_or_operator(statement):
     ):
         return {}
 
+    if (
+        bad_token.is_string()
+        and (prev_token == "bf" or prev_token == "fb")
+        and prev_token.immediately_before(bad_token)
+    ):
+        hint = _("`bf` is an illegal string prefix.\n")
+        cause = _(
+            "I am guessing that you wanted a binary f-string;\n"
+            "this is not allowed.\n"
+        )
+        return {"cause": cause, "suggest": hint}
+
     possible_cause = _(
         "Python indicates that the error is caused by "
         "`{second}` written immediately after `{first}`.\n"
