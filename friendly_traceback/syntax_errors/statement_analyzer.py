@@ -7,7 +7,7 @@ import sys
 
 from . import fixers
 from . import syntax_utils
-from ..my_gettext import current_lang, internal_error
+from ..my_gettext import current_lang, internal_error, use_www
 from .. import debug_helper
 from .. import token_utils
 from .. import utils
@@ -1363,6 +1363,33 @@ def comprehension_condition_or_tuple(statement):
         return {}
 
     return {"cause": cause}
+
+
+@add_statement_analyzer
+def parens_around_exceptions(statement):
+    _ = current_lang.translate
+
+    if not (statement.bad_token == "," and statement.first_token == "except"):
+        return {}
+
+    for tok in statement.tokens[1 : statement.bad_token_index]:
+        if not (tok.is_identifier() or tok == ","):
+            return {}
+
+    hint = _("Did you forget parentheses?\n")
+    cause = _(
+        "I am guessing that you wanted to use an `except` statement\n"
+        "with multiple exception types. If that is the case, you must\n"
+        "surround them with parentheses.\n"
+    )
+    python_link = _(
+        "https://docs.python.org/3/tutorial/errors.html#handling-exceptions"
+    )
+    return {
+        "cause": cause + "\n" + use_www(),
+        "suggest": hint,
+        "python_link": python_link,
+    }
 
 
 # Keep last

@@ -90,3 +90,12 @@ def internal_error():
         "Please report this example to\n"
         "https://github.com/aroberge/friendly-traceback/issues\n"
     )
+
+
+def use_www():
+    _ = current_lang.translate
+    return _(
+        "If you are using a Friendly console, you might want to\n"
+        "use the function `www()` which will open a browser at\n"
+        "a relevant place in the Python documentation.\n"
+    )

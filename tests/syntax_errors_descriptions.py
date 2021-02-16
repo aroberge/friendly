@@ -493,6 +493,10 @@ descriptions = {
         cause: "`bf` is an illegal string prefix.",
         title: "Binary f-string not allowed",
     },
+    "raise_syntax_error115": {
+        cause: "with multiple exception types.",
+        title: "Parens around multiple exceptions",
+    },
 }
 
 
