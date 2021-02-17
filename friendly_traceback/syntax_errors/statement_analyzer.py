@@ -328,7 +328,11 @@ def inverted_comparison_operators(statement):
     )
 
     # TODO: check that this fixes the problem
-    if is_op(prev) and token_utils.is_comparison(bad.string + prev.string):
+    if (
+        is_op(prev)
+        and token_utils.is_comparison(bad.string + prev.string)
+        and prev.immediately_before(bad)
+    ):
         cause = possible_cause.format(
             first=prev.string,
             second=bad.string,
@@ -336,7 +340,11 @@ def inverted_comparison_operators(statement):
             wrong=prev.string + bad.string,
         )
         return {"cause": cause, "suggest": hint}
-    elif is_op(next_) and token_utils.is_comparison(next_.string + bad.string):
+    elif (
+        is_op(next_)
+        and token_utils.is_comparison(next_.string + bad.string)
+        and bad.immediately_before(next_)
+    ):
         cause = possible_cause.format(
             first=bad.string,
             second=next_.string,

@@ -666,9 +666,6 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
             return {"cause": cause + additional_cause, "suggest": hint}
         return {"cause": cause}
 
-    if not index_type == "tuple":
-        return {"cause": cause}
-
     if container == index:
         additional_cause = "\n" + _(
             "Perhaps you have forgotten a comma between two identical lists\n"
@@ -684,6 +681,7 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
         hint = _("Did you forget a comma before `{index}`?\n").format(index=index)
 
     index = index[1:-1]
+
     try:
         index = eval(index, frame.f_globals, frame.f_locals)
         index_type = eval(index_type)
@@ -721,7 +719,7 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
             line=container + newline.replace("[]", "", 1)
         )
         return {"cause": cause + "\n" + additional_cause, "suggest": hint}
-    elif isinstance(index, index_type):
+    else:
         names = find_possible_integers(index_type, frame, tb_data.bad_line)
         if len(names) == 1:  # This should usually be the case
             more_cause, hint = forgot_to_convert_name_to_int(names[0])
