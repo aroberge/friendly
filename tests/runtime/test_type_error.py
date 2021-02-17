@@ -486,7 +486,7 @@ def test_Not_callable():
 
 def test_Derive_from_BaseException():
     try:
-        raise "exception"
+        raise "exception"  # noqa
     except Exception as e:
         message = str(e)
         friendly_traceback.explain_traceback(redirect="capture")
@@ -611,7 +611,7 @@ def test_Indices_must_be_integers_or_slices():
 
     assert "TypeError: list indices must be integers or slices" in result
     if friendly_traceback.get_lang() == "en":
-        assert "Did you mean `a[1: 2]`" in result
+        assert "Did you mean `a[1:2]`" in result
 
     a = (1, 2, 3)
     try:
@@ -678,16 +678,6 @@ def test_Object_is_not_subscriptable():
     assert "TypeError: 'int' object is not subscriptable" in result
     if friendly_traceback.get_lang() == "en":
         assert "from `2`, an object of type `int`" in result
-
-    try:
-        a = i
-    except Exception:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
-
-    assert "NameError: name 'i' is not defined" in result
-    if friendly_traceback.get_lang() == "en":
-        assert "Did you mean `1j`" in result
 
     def f():
         pass

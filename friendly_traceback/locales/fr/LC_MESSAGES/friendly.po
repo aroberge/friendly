@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-02-15 21:52-0400\n"
-"PO-Revision-Date: 2021-02-15 21:55-0400\n"
+"POT-Creation-Date: 2021-02-17 08:34-0400\n"
+"PO-Revision-Date: 2021-02-17 08:37-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1125,8 +1125,8 @@ msgstr ""
 "sur deux types d’objets incompatibles:\n"
 "{first} et {second}.\n"
 
-#: runtime_errors\type_error.py:204 runtime_errors\type_error.py:672
-#: runtime_errors\type_error.py:767 syntax_errors\statement_analyzer.py:1011
+#: runtime_errors\type_error.py:204 runtime_errors\type_error.py:717
+#: runtime_errors\type_error.py:814 syntax_errors\statement_analyzer.py:1011
 #: syntax_errors\statement_analyzer.py:1071
 #: syntax_errors\statement_analyzer.py:1113
 #: syntax_errors\statement_analyzer.py:1121
@@ -1139,7 +1139,7 @@ msgstr ""
 "Ailleurs que dans Python, `^` est souvent utilisé pour indiquer "
 "l’exponentiation.\n"
 
-#: runtime_errors\type_error.py:208 runtime_errors\type_error.py:675
+#: runtime_errors\type_error.py:208 runtime_errors\type_error.py:720
 msgid "Perhaps you meant `{line}`.\n"
 msgstr "Peut-être que vous vouliez plutôt `{line}`.\n"
 
@@ -1378,7 +1378,47 @@ msgstr ""
 "(`start:stop` ou `start:stop:step`) \n"
 "et vous l’avez utilisé {obj_type} la place.\n"
 
-#: runtime_errors\type_error.py:699
+#: runtime_errors\type_error.py:631
+msgid ""
+"Note: sometimes this exception is raised because what Python\n"
+"interprets as indices was meant to be a separate list, and a comma\n"
+"should have been written before the opening `[` of that list.\n"
+msgstr ""
+"Remarque : parfois, cette exception est soulevée parce que ce que Python\n"
+"interprète comme des indices était censé être une liste distincte, et une "
+"virgule\n"
+"aurait dû être écrit avant le crochet `[` débutant cette liste.\n"
+
+#: runtime_errors\type_error.py:636 syntax_errors\statement_analyzer.py:868
+#: syntax_errors\statement_analyzer.py:1007
+msgid "Did you forget a comma?\n"
+msgstr "Avez-vous oublié une virgule ?\n"
+
+#: runtime_errors\type_error.py:673
+msgid ""
+"Perhaps you have forgotten a comma between two identical lists\n"
+"`{container}`.  The second list had been interpreted as\n"
+"the indexation the first one by the index `{new_index}`\n"
+msgstr ""
+"Peut-être avez-vous oublié une virgule entre deux listes identiques\n"
+"`{container}`. La deuxième liste avait été interprétée comme\n"
+"l’indexation la première par l’indice `{new_index}`\n"
+
+#: runtime_errors\type_error.py:679
+msgid ""
+"Perhaps you have forgotten a comma between the object `{container}`\n"
+"and the list `{index}`.  The list `{index}` had been interpreted as\n"
+"the indexation of object `{container}` by the index `{new_index}`\n"
+msgstr ""
+"Peut-être avez-vous oublié une virgule entre l’objet `{container}`\n"
+"et la liste `{index}`. La liste `{index}` avait été interprétée comme\n"
+"l’indexation de l’objet `{container}` par l’indice `{new_index}`\n"
+
+#: runtime_errors\type_error.py:684
+msgid "Did you forget a comma before `{index}`?\n"
+msgstr "Avez-vous oublié une virgule avant `{index}` ?\n"
+
+#: runtime_errors\type_error.py:746
 msgid ""
 "When using a slice to extract a range of elements\n"
 "from a sequence, that is something like\n"
@@ -1393,7 +1433,7 @@ msgstr ""
 "soit `None`,\n"
 "ou possiblement un autre objet ayant une méthode `__index__`.\n"
 
-#: runtime_errors\type_error.py:717
+#: runtime_errors\type_error.py:764
 msgid ""
 "Only hashable objects can be used\n"
 "as elements of `set` or keys of `dict`.\n"
@@ -1405,11 +1445,11 @@ msgstr ""
 "Les objets hachables sont des objets qui ne changent pas de valeur\n"
 "une fois qu’ils ont été créés."
 
-#: runtime_errors\type_error.py:727
+#: runtime_errors\type_error.py:774
 msgid "Instead of using {original}, consider using {replacement}.\n"
 msgstr "Au lieu d’utiliser {original}, envisagez d’utiliser {replacement}.\n"
 
-#: runtime_errors\type_error.py:747
+#: runtime_errors\type_error.py:794
 msgid ""
 "Subscriptable objects are typically containers from which\n"
 "you can retrieve item using the notation `[...]`.\n"
@@ -1417,7 +1457,7 @@ msgstr ""
 "Les objets subscriptibles sont généralement des conteneurs à partir\n"
 "desquels on peut tirer des éléments en utilisant la notation '[...] `.\n"
 
-#: runtime_errors\type_error.py:759
+#: runtime_errors\type_error.py:806
 msgid ""
 "Using this notation, you attempted to retrieve an item\n"
 "from an object of type `{obj_type}` which is not allowed.\n"
@@ -1425,11 +1465,11 @@ msgstr ""
 "À l’aide de cette notation, vous avez tenté de tirer un élément\n"
 "d’un objet de type `{obj_type}`, ce qui n’est pas permis.\n"
 
-#: runtime_errors\type_error.py:768
+#: runtime_errors\type_error.py:815
 msgid "Perhaps you meant to write `{line}`.\n"
 msgstr "Peut-être que vous vouliez plutôt écrire `{line}`.\n"
 
-#: runtime_errors\type_error.py:771
+#: runtime_errors\type_error.py:818
 msgid ""
 "Using this notation, you attempted to retrieve an item\n"
 "from `{name}`, an object of type `{obj_type}`. This is not allowed.\n"
@@ -1437,7 +1477,7 @@ msgstr ""
 "À l’aide de cette notation, vous avez tenté de tirer un élément\n"
 "de `{name}`, un objet de type `{obj_type}`. Ceci n’est pas permis.\n"
 
-#: runtime_errors\type_error.py:787
+#: runtime_errors\type_error.py:834
 msgid ""
 "An iterable is an object capable of returning its members one at a time.\n"
 "Python containers (`list, tuple, dict`, etc.) are iterables.\n"
@@ -1447,7 +1487,7 @@ msgstr ""
 "Les contenants python (`list, tuple, dict`, etc.) sont itérables.\n"
 "Une itérable est requis ici.\n"
 
-#: runtime_errors\type_error.py:803 runtime_errors\value_error.py:49
+#: runtime_errors\type_error.py:850 runtime_errors\value_error.py:49
 msgid ""
 "Unpacking is a convenient way to assign a name,\n"
 "to each item of an iterable.\n"
@@ -1455,7 +1495,7 @@ msgstr ""
 "Le dépaquetage ('unpack') est un moyen pratique d’attribuer un nom\n"
 "à chaque élément d’un itérable.\n"
 
-#: runtime_errors\type_error.py:807
+#: runtime_errors\type_error.py:854
 msgid ""
 "An iterable is an object capable of returning its members one at a time.\n"
 "Python containers (`list, tuple, dict`, etc.) are iterables,\n"
@@ -1465,7 +1505,7 @@ msgstr ""
 "Les contenants python (`list, tuple, dict`, etc.) sont itérables,\n"
 "mais pas les objets de type `{obj_type}`.\n"
 
-#: runtime_errors\type_error.py:821
+#: runtime_errors\type_error.py:868
 msgid ""
 "{function} does not accept a sequence as an argument.\n"
 "Instead of writing `{line}`\n"
@@ -1476,7 +1516,7 @@ msgstr ""
 "peut-être devriez-vous utiliser la méthode `dict.fromkeys()` : `{new_line}"
 "`.\n"
 
-#: runtime_errors\type_error.py:826
+#: runtime_errors\type_error.py:873
 msgid "Perhaps you need to use the `dict.fromkeys()` method.\n"
 msgstr ""
 "Peut-être que vous vouliez plutôt utiliser la méthode `dict.fromkeys()`.\n"
@@ -3031,11 +3071,6 @@ msgstr ""
 "Je crois que vous avez oublié une virgule entre deux chaînes de caractères\n"
 "lors de la définition d’un dictionnaire.\n"
 "\n"
-
-#: syntax_errors\statement_analyzer.py:868
-#: syntax_errors\statement_analyzer.py:1007
-msgid "Did you forget a comma?\n"
-msgstr "Avez-vous oublié une virgule ?\n"
 
 #: syntax_errors\statement_analyzer.py:926
 msgid ""

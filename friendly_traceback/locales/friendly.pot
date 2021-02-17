@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-02-15 21:52-0400\n"
+"POT-Creation-Date: 2021-02-17 08:34-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -883,8 +883,8 @@ msgid ""
 "{first} and {second}.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:204 runtime_errors\type_error.py:672
-#: runtime_errors\type_error.py:767 syntax_errors\statement_analyzer.py:1011
+#: runtime_errors\type_error.py:204 runtime_errors\type_error.py:717
+#: runtime_errors\type_error.py:814 syntax_errors\statement_analyzer.py:1011
 #: syntax_errors\statement_analyzer.py:1071
 #: syntax_errors\statement_analyzer.py:1113
 #: syntax_errors\statement_analyzer.py:1121
@@ -897,7 +897,7 @@ msgid ""
 "Outside of Python, `^` is often used to indicate exponentiation.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:208 runtime_errors\type_error.py:675
+#: runtime_errors\type_error.py:208 runtime_errors\type_error.py:720
 msgid ""
 "Perhaps you meant `{line}`.\n"
 msgstr ""
@@ -1090,7 +1090,39 @@ msgid ""
 "and you have used {obj_type} instead.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:699
+#: runtime_errors\type_error.py:631
+msgid ""
+"Note: sometimes this exception is raised because what Python\n"
+"interprets as indices was meant to be a separate list, and a comma\n"
+"should have been written before the opening `[` of that list.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:636 syntax_errors\statement_analyzer.py:868
+#: syntax_errors\statement_analyzer.py:1007
+msgid ""
+"Did you forget a comma?\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:673
+msgid ""
+"Perhaps you have forgotten a comma between two identical lists\n"
+"`{container}`.  The second list had been interpreted as\n"
+"the indexation the first one by the index `{new_index}`\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:679
+msgid ""
+"Perhaps you have forgotten a comma between the object `{container}`\n"
+"and the list `{index}`.  The list `{index}` had been interpreted as\n"
+"the indexation of object `{container}` by the index `{new_index}`\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:684
+msgid ""
+"Did you forget a comma before `{index}`?\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:746
 msgid ""
 "When using a slice to extract a range of elements\n"
 "from a sequence, that is something like\n"
@@ -1099,7 +1131,7 @@ msgid ""
 "or possibly some other object having an `__index__` method.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:717
+#: runtime_errors\type_error.py:764
 msgid ""
 "Only hashable objects can be used\n"
 "as elements of `set` or keys of `dict`.\n"
@@ -1107,62 +1139,62 @@ msgid ""
 "once they have been created."
 msgstr ""
 
-#: runtime_errors\type_error.py:727
+#: runtime_errors\type_error.py:774
 msgid ""
 "Instead of using {original}, consider using {replacement}.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:747
+#: runtime_errors\type_error.py:794
 msgid ""
 "Subscriptable objects are typically containers from which\n"
 "you can retrieve item using the notation `[...]`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:759
+#: runtime_errors\type_error.py:806
 msgid ""
 "Using this notation, you attempted to retrieve an item\n"
 "from an object of type `{obj_type}` which is not allowed.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:768
+#: runtime_errors\type_error.py:815
 msgid ""
 "Perhaps you meant to write `{line}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:771
+#: runtime_errors\type_error.py:818
 msgid ""
 "Using this notation, you attempted to retrieve an item\n"
 "from `{name}`, an object of type `{obj_type}`. This is not allowed.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:787
+#: runtime_errors\type_error.py:834
 msgid ""
 "An iterable is an object capable of returning its members one at a time.\n"
 "Python containers (`list, tuple, dict`, etc.) are iterables.\n"
 "An iterable is required here.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:803 runtime_errors\value_error.py:49
+#: runtime_errors\type_error.py:850 runtime_errors\value_error.py:49
 msgid ""
 "Unpacking is a convenient way to assign a name,\n"
 "to each item of an iterable.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:807
+#: runtime_errors\type_error.py:854
 msgid ""
 "An iterable is an object capable of returning its members one at a time.\n"
 "Python containers (`list, tuple, dict`, etc.) are iterables,\n"
 "but not objects of type `{obj_type}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:821
+#: runtime_errors\type_error.py:868
 msgid ""
 "{function} does not accept a sequence as an argument.\n"
 "Instead of writing `{line}`\n"
 "perhaps you should use the `dict.fromkeys()` method: `{new_line}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:826
+#: runtime_errors\type_error.py:873
 msgid ""
 "Perhaps you need to use the `dict.fromkeys()` method.\n"
 msgstr ""
@@ -2301,12 +2333,6 @@ msgid ""
 "I am guessing that you forgot a comma between two strings\n"
 "when defining a dict.\n"
 "\n"
-msgstr ""
-
-#: syntax_errors\statement_analyzer.py:868
-#: syntax_errors\statement_analyzer.py:1007
-msgid ""
-"Did you forget a comma?\n"
 msgstr ""
 
 #: syntax_errors\statement_analyzer.py:926

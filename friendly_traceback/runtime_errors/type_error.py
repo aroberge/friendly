@@ -625,6 +625,18 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
         "and you have used {obj_type} instead.\n"
     ).format(line=tb_data.bad_line, obj_type=convert_type(index_type))
 
+    if index_type == "tuple":  # Example: [1, 2] [2,3] --> tuple == 2,3
+        # Default message in case we do not manage to separate out what is
+        # the first object and the list.
+        additional_cause = "\n" + _(
+            "Note: sometimes this exception is raised because what Python\n"
+            "interprets as indices was meant to be a separate list, and a comma\n"
+            "should have been written before the opening `[` of that list.\n"
+        )
+        hint = _("Did you forget a comma?\n")
+    else:
+        additional_cause = hint = None
+
     # To see if we can get more specific info,
     # we assume we have container[...]
     # and we look for two cases:
@@ -634,6 +646,8 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
     try:
         container_type = eval(container_type, frame.f_globals, frame.f_locals)
     except Exception:
+        if additional_cause:
+            return {"cause": cause + additional_cause, "suggest": hint}
         return {"cause": cause}
 
     all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)
@@ -642,32 +656,63 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
             container = name
             break
     else:
+        if additional_cause:
+            return {"cause": cause + additional_cause, "suggest": hint}
         return {"cause": cause}
 
-    index = tb_data.bad_line.replace(container, "", 1)
+    index = tb_data.bad_line.replace(container, "", 1).strip()
     if not (index.startswith("[") and index.endswith("]")):
+        if additional_cause:
+            return {"cause": cause + additional_cause, "suggest": hint}
         return {"cause": cause}
+
+    if not index_type == "tuple":
+        return {"cause": cause}
+
+    if container == index:
+        additional_cause = "\n" + _(
+            "Perhaps you have forgotten a comma between two identical lists\n"
+            "`{container}`.  The second list had been interpreted as\n"
+            "the indexation the first one by the index `{new_index}`\n"
+        ).format(container=container, new_index=f"({index[1:-1]})")
+    else:
+        additional_cause = "\n" + _(
+            "Perhaps you have forgotten a comma between the object `{container}`\n"
+            "and the list `{index}`.  The list `{index}` had been interpreted as\n"
+            "the indexation of object `{container}` by the index `{new_index}`\n"
+        ).format(container=container, index=index, new_index=f"({index[1:-1]})")
+        hint = _("Did you forget a comma before `{index}`?\n").format(index=index)
 
     index = index[1:-1]
     try:
         index = eval(index, frame.f_globals, frame.f_locals)
         index_type = eval(index_type)
     except Exception:
+        if additional_cause:
+            return {"cause": cause + additional_cause, "suggest": hint}
         return {"cause": cause}
 
     if not isinstance(index, index_type):
+        if additional_cause:
+            return {"cause": cause + additional_cause, "suggest": hint}
         return {"cause": cause}
 
     if isinstance(index, tuple):
         # container[a, b] --> [][a: b]
-        newline = tb_data.bad_line.replace(container, "[]", 1).replace(",", ":")
+        newline = (
+            tb_data.bad_line.replace(container, "[]", 1)
+            .replace(",", ":")
+            .replace(" ", "")
+        )
         try:
             result = [] == eval(newline, frame.f_globals, frame.f_locals)
         except Exception:
             result = False
 
         if not result:
-            return {"cause": cause}
+            if additional_cause:
+                return {"cause": cause + additional_cause, "suggest": hint}
+            return {"cause": cause + "\n" + additional_cause, "suggest": hint}
 
         hint = _("Did you mean `{line}`?\n").format(
             line=container + newline.replace("[]", "", 1)
@@ -675,7 +720,7 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
         cause += "\n" + _("Perhaps you meant `{line}`.\n").format(
             line=container + newline.replace("[]", "", 1)
         )
-        return {"cause": cause, "suggest": hint}
+        return {"cause": cause + "\n" + additional_cause, "suggest": hint}
     elif isinstance(index, index_type):
         names = find_possible_integers(index_type, frame, tb_data.bad_line)
         if len(names) == 1:  # This should usually be the case
@@ -685,6 +730,8 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
                 return {"cause": cause, "suggest": hint}
             return {"cause": cause}
 
+    if additional_cause:
+        return {"cause": cause + additional_cause, "suggest": hint}
     return {"cause": cause}
 
 
