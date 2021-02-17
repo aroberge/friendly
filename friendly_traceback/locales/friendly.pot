@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-02-17 08:34-0400\n"
+"POT-Creation-Date: 2021-02-17 10:03-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -407,7 +407,7 @@ msgstr ""
 #: runtime_errors\key_error.py:46 runtime_errors\key_error.py:52
 #: runtime_errors\module_not_found_error.py:47 runtime_errors\name_error.py:73
 #: runtime_errors\unbound_local_error.py:38
-#: syntax_errors\message_analyzer.py:340 syntax_errors\message_analyzer.py:963
+#: syntax_errors\message_analyzer.py:340 syntax_errors\message_analyzer.py:964
 msgid ""
 "Did you mean `{name}`?\n"
 msgstr ""
@@ -884,10 +884,10 @@ msgid ""
 msgstr ""
 
 #: runtime_errors\type_error.py:204 runtime_errors\type_error.py:717
-#: runtime_errors\type_error.py:814 syntax_errors\statement_analyzer.py:1011
-#: syntax_errors\statement_analyzer.py:1071
-#: syntax_errors\statement_analyzer.py:1113
-#: syntax_errors\statement_analyzer.py:1121
+#: runtime_errors\type_error.py:814 syntax_errors\statement_analyzer.py:1018
+#: syntax_errors\statement_analyzer.py:1078
+#: syntax_errors\statement_analyzer.py:1120
+#: syntax_errors\statement_analyzer.py:1128
 msgid ""
 "Did you mean `{line}`?\n"
 msgstr ""
@@ -1097,8 +1097,8 @@ msgid ""
 "should have been written before the opening `[` of that list.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:636 syntax_errors\statement_analyzer.py:868
-#: syntax_errors\statement_analyzer.py:1007
+#: runtime_errors\type_error.py:636 syntax_errors\statement_analyzer.py:875
+#: syntax_errors\statement_analyzer.py:1014
 msgid ""
 "Did you forget a comma?\n"
 msgstr ""
@@ -1388,7 +1388,7 @@ msgid ""
 msgstr ""
 
 #: syntax_errors\message_analyzer.py:97
-#: syntax_errors\statement_analyzer.py:823
+#: syntax_errors\statement_analyzer.py:830
 msgid ""
 "You were trying to assign a value to the Python keyword `{keyword}`.\n"
 "This is not allowed.\n"
@@ -1835,24 +1835,29 @@ msgid ""
 "Now, `print` is a function; you need to use parentheses to call it.\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:875
+#: syntax_errors\message_analyzer.py:866
+msgid ""
+"Did you mean `print({message})`?\n"
+msgstr ""
+
+#: syntax_errors\message_analyzer.py:876
 msgid ""
 "The star operator `*` is interpreted to mean that\n"
 "iterable unpacking is to be used to assign a name\n"
 "to each item of an iterable, which does not make sense here.\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:890
+#: syntax_errors\message_analyzer.py:891
 msgid ""
 "You can only use a `return` statement inside a function or method.\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:900
+#: syntax_errors\message_analyzer.py:901
 msgid ""
 "Seriously?\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:901
+#: syntax_errors\message_analyzer.py:902
 msgid ""
 "You cannot be serious!\n"
 "\n"
@@ -1860,54 +1865,54 @@ msgid ""
 "consider reducing the number of nested code blocks.\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:915
+#: syntax_errors\message_analyzer.py:916
 msgid ""
 "Did you forget something after `*`?\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:916
+#: syntax_errors\message_analyzer.py:917
 msgid ""
 "Assuming you were defining a function, you need\n"
 "to replace `*` by either `*arguments` or\n"
 "by `*, named_argument=value`.\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:930
+#: syntax_errors\message_analyzer.py:931
 msgid ""
 "This is a message that was added in Python 3.9\n"
 "to prevent redefining `__peg_parser__`.\n"
 "It should not be present in other versions.\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:947
+#: syntax_errors\message_analyzer.py:948
 msgid ""
 "The available features are `{names}`.\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:952
+#: syntax_errors\message_analyzer.py:953
 msgid ""
 "When using a `from __future__ import` statement,\n"
 "you must import specific named features.\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:964
+#: syntax_errors\message_analyzer.py:965
 msgid ""
 "Instead of `{feature}`, perhaps you meant to import `{name}`.\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:969
+#: syntax_errors\message_analyzer.py:970
 msgid ""
 "`{feature}` is not a valid feature of module `__future__`.\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:982
+#: syntax_errors\message_analyzer.py:983
 msgid ""
 "A `from __future__ import` statement changes the way Python\n"
 "interprets the code in a file.\n"
 "It must appear at the beginning of the file."
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:996
+#: syntax_errors\message_analyzer.py:997
 msgid ""
 "I suspect you wrote `from __future__ import braces` following\n"
 "someone else's suggestion. This will never work.\n"
@@ -1916,33 +1921,33 @@ msgid ""
 "their indentation level, and not by using some curly braces, like `{...}`.\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:1023
+#: syntax_errors\message_analyzer.py:1024
 msgid ""
 "You started writing a triple-quoted string but never wrote\n"
 "the triple quotes needed to end the string.\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:1039
-#: syntax_errors\message_analyzer.py:1048
+#: syntax_errors\message_analyzer.py:1040
+#: syntax_errors\message_analyzer.py:1049
 msgid ""
 "Did you mean `{num}`?\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:1040
+#: syntax_errors\message_analyzer.py:1041
 msgid ""
 "Perhaps you meant to write the octal number `{num}`\n"
 "and forgot the letter 'o', or perhaps you meant to write\n"
 "a decimal integer and did not know that it could not start with zeros.\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:1049
+#: syntax_errors\message_analyzer.py:1050
 msgid ""
 "Perhaps you meant to write the integer `{num}`\n"
 "and did not know that it could not start with zeros.\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:1095
-#: syntax_errors\statement_analyzer.py:1330
+#: syntax_errors\message_analyzer.py:1096
+#: syntax_errors\statement_analyzer.py:1337
 msgid ""
 "I am guessing that you were writing a comprehension or a generator expression\n"
 "and forgot to include parentheses around tuples.\n"
@@ -1956,10 +1961,10 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:1103
-#: syntax_errors\statement_analyzer.py:682
-#: syntax_errors\statement_analyzer.py:1358
-#: syntax_errors\statement_analyzer.py:1379
+#: syntax_errors\message_analyzer.py:1104
+#: syntax_errors\statement_analyzer.py:689
+#: syntax_errors\statement_analyzer.py:1365
+#: syntax_errors\statement_analyzer.py:1386
 msgid ""
 "Did you forget parentheses?\n"
 msgstr ""
@@ -1976,7 +1981,7 @@ msgid ""
 msgstr ""
 
 #: syntax_errors\statement_analyzer.py:151
-#: syntax_errors\statement_analyzer.py:623
+#: syntax_errors\statement_analyzer.py:630
 msgid ""
 "Your Python version does not support this f-string feature.\n"
 msgstr ""
@@ -2125,64 +2130,64 @@ msgid ""
 "Now, `print` is a function; you need to use parentheses to call it.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:416
+#: syntax_errors\statement_analyzer.py:423
 msgid ""
 "It looks as if you are attempting to use pip to install a module.\n"
 "`pip` is a command that needs to run in a terminal,\n"
 "not from a Python interpreter.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:424
+#: syntax_errors\statement_analyzer.py:431
 msgid ""
 "Pip cannot be used in a Python interpreter.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:434
+#: syntax_errors\statement_analyzer.py:441
 msgid ""
 "You cannot have a dot `.` followed by `{bracket}`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:442
+#: syntax_errors\statement_analyzer.py:449
 msgid ""
 "Perhaps you need to replace the dot by a comma.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:454
+#: syntax_errors\statement_analyzer.py:461
 msgid ""
 "It looks like you are trying to raise an exception using Python 2 syntax.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:466
+#: syntax_errors\statement_analyzer.py:473
 msgid ""
 "The double star operator `**` is likely interpreted to mean that\n"
 "dict unpacking is to be used which does not make sense here.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:509
+#: syntax_errors\statement_analyzer.py:516
 msgid ""
 "Did you forget a colon `:`?\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:512
+#: syntax_errors\statement_analyzer.py:519
 msgid ""
 "You wrote a `{for_while}` loop but\n"
 "forgot to add a colon `:` at the end\n"
 "\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:519
+#: syntax_errors\statement_analyzer.py:526
 msgid ""
 "You wrote a statement beginning with\n"
 "`{name}` but forgot to add a colon `:` at the end\n"
 "\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:539
+#: syntax_errors\statement_analyzer.py:546
 msgid ""
 "Did you made a mistake in writing an hexadecimal integer?\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:540
+#: syntax_errors\statement_analyzer.py:547
 msgid ""
 "It looks like you used an invalid character (`{character}`) in an hexadecimal number.\n"
 "\n"
@@ -2193,12 +2198,12 @@ msgid ""
 "followed by the characters used to represent the value of that integer.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:561
+#: syntax_errors\statement_analyzer.py:568
 msgid ""
 "Did you made a mistake in writing an octal integer?\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:562
+#: syntax_errors\statement_analyzer.py:569
 msgid ""
 "It looks like you used an invalid character (`{character}`) in an octal number.\n"
 "\n"
@@ -2209,17 +2214,17 @@ msgid ""
 "followed by the characters used to represent the value of that integer.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:584
+#: syntax_errors\statement_analyzer.py:591
 msgid ""
 "Valid names cannot begin with a number.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:589
+#: syntax_errors\statement_analyzer.py:596
 msgid ""
 "Did you mean `{number}j`?\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:590
+#: syntax_errors\statement_analyzer.py:597
 msgid ""
 "Perhaps you thought that `i` could be used to represent\n"
 "the square root of `-1`. In Python, the symbol used for this is `j`\n"
@@ -2228,161 +2233,161 @@ msgid ""
 "Perhaps you meant to write `{number}j`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:600
+#: syntax_errors\statement_analyzer.py:607
 msgid ""
 "[Note: `{first}` is a complex number.]\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:606
+#: syntax_errors\statement_analyzer.py:613
 msgid ""
 "Perhaps you forgot a multiplication operator, `{first} * {second}`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:624
+#: syntax_errors\statement_analyzer.py:631
 msgid ""
 "You are likely using a 'debug' syntax of f-strings introduced\n"
 "in Python version 3.8. You are using version {version}.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:630
+#: syntax_errors\statement_analyzer.py:637
 msgid ""
 "You are likely trying to assign a value within an f-string.\n"
 "This is not allowed.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:645
+#: syntax_errors\statement_analyzer.py:652
 msgid ""
 "The content of your f-string is invalid. Please consult the documentation:\n"
 "https://docs.python.org/3/reference/lexical_analysis.html#f-strings\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:655
+#: syntax_errors\statement_analyzer.py:662
 msgid ""
 "The correct syntax is:\n"
 "\n"
 "    def name ( ... ):"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:683
+#: syntax_errors\statement_analyzer.py:690
 msgid ""
 "Perhaps you forgot to include parentheses.\n"
 "You might have meant to write `{line}`\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:704
+#: syntax_errors\statement_analyzer.py:711
 msgid ""
 "You cannot use a Python keyword as a function name.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:705
+#: syntax_errors\statement_analyzer.py:712
 msgid ""
 "You tried to use the Python keyword `{kwd}` as a function name.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:711
+#: syntax_errors\statement_analyzer.py:718
 msgid ""
 "There are more syntax errors later in your code.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:731
+#: syntax_errors\statement_analyzer.py:738
 msgid ""
 "You wrote an invalid function name.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:732
+#: syntax_errors\statement_analyzer.py:739
 msgid ""
 "The name of a function must be a valid Python identifier,\n"
 "that is a name that begins with a letter or an underscore character, `_`,\n"
 "and which contains only letters, digits or the underscore character.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:738
+#: syntax_errors\statement_analyzer.py:745
 msgid ""
 "You attempted to use a string as a function name.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:752
+#: syntax_errors\statement_analyzer.py:759
 msgid ""
 "You forgot to name your function.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:770
+#: syntax_errors\statement_analyzer.py:777
 msgid ""
 "I am guessing that you tried to use the Python keyword\n"
 "`{kwd}` as an argument in the definition of a function\n"
 "where an identifier (variable name) was expected.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:791
+#: syntax_errors\statement_analyzer.py:798
 msgid ""
 "You tried to define a function and did not use the correct syntax.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:795
+#: syntax_errors\statement_analyzer.py:802
 msgid ""
 "You tried to define a function or method and did not use the correct syntax.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:815
+#: syntax_errors\statement_analyzer.py:822
 msgid ""
 "You tried to define a class and did not use the correct syntax.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:860
+#: syntax_errors\statement_analyzer.py:867
 msgid ""
 "I am guessing that you forgot a comma between two strings\n"
 "when defining a dict.\n"
 "\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:926
+#: syntax_errors\statement_analyzer.py:933
 msgid ""
 "It is possible that you forgot a comma between items in a tuple, \n"
 "or between function arguments, \n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:933
+#: syntax_errors\statement_analyzer.py:940
 msgid ""
 "It is possible that you forgot a comma between items in a list\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:939
+#: syntax_errors\statement_analyzer.py:946
 msgid ""
 "It is possible that you forgot a comma between items in a set or dict\n"
 "before the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:971
+#: syntax_errors\statement_analyzer.py:978
 msgid ""
 "`bf` is an illegal string prefix.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:972
+#: syntax_errors\statement_analyzer.py:979
 msgid ""
 "I am guessing that you wanted a binary f-string;\n"
 "this is not allowed.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:978
+#: syntax_errors\statement_analyzer.py:985
 msgid ""
 "Python indicates that the error is caused by `{second}` written immediately after `{first}`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1009
+#: syntax_errors\statement_analyzer.py:1016
 msgid ""
 "Perhaps you meant\n"
 "\n"
 "    {line}\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1016
+#: syntax_errors\statement_analyzer.py:1023
 msgid ""
 "Did you forget something between `{first}` and `{second}`?\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1031
+#: syntax_errors\statement_analyzer.py:1038
 msgid ""
 "Perhaps you meant to insert an operator like `{operators}`\n"
 "between `{first}` and `{second}`.\n"
@@ -2390,38 +2395,38 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1040
+#: syntax_errors\statement_analyzer.py:1047
 msgid ""
 "Note: these are just some of the possible choices and that\n"
 "some of them might raise other types of exceptions.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1059
+#: syntax_errors\statement_analyzer.py:1066
 msgid ""
 "Or perhaps you forgot that you cannot have spaces\n"
 "in variable names.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1083
+#: syntax_errors\statement_analyzer.py:1090
 msgid ""
 "Perhaps you forgot that you cannot have spaces\n"
 "in variable names and wrote `'{first} {second}'`\n"
 "instead of `'{first}_{second}'`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1089
-#: syntax_errors\statement_analyzer.py:1093
+#: syntax_errors\statement_analyzer.py:1096
+#: syntax_errors\statement_analyzer.py:1100
 msgid ""
 "Did you mean `'{first}_{second}'`?\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1115
+#: syntax_errors\statement_analyzer.py:1122
 msgid ""
 "Perhaps you meant to write `{keyword}` and made a typo.\n"
 "The correct line would then be `{line}`\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1123
+#: syntax_errors\statement_analyzer.py:1130
 msgid ""
 "Perhaps you wrote another word instead of a Python keyword.\n"
 "If that is the case, perhaps you meant to write one of\n"
@@ -2429,14 +2434,14 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1163
+#: syntax_errors\statement_analyzer.py:1170
 msgid ""
 "It is possible that you used an equal sign `=` instead of a colon `:`\n"
 "to assign values to keys in a dict\n"
 "before or at the position indicated by --> and ^.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1181
+#: syntax_errors\statement_analyzer.py:1188
 msgid ""
 "You wrote three equal signs in a row which is allowed in some\n"
 "programming languages, but not in Python. To check if two objects\n"
@@ -2444,31 +2449,31 @@ msgid ""
 "the exact same object, use the operator `is`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1187
+#: syntax_errors\statement_analyzer.py:1194
 msgid ""
 "Did you mean to use `is` instead of `===`?\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1191
+#: syntax_errors\statement_analyzer.py:1198
 msgid ""
 "You cannot have write the same operator, `{op}`, twice in a row.\n"
 "Perhaps you wrote one of them by mistake\n"
 "or forgot to write something between them.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1197
+#: syntax_errors\statement_analyzer.py:1204
 msgid ""
 "You cannot have these two operators, `{first}` and `{second}`,\n"
 "following each other. Perhaps you wrote one of them by mistake\n"
 "or forgot to write something between them.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1212
+#: syntax_errors\statement_analyzer.py:1219
 msgid ""
 "You cannot use dotted names as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1226
+#: syntax_errors\statement_analyzer.py:1233
 msgid ""
 "`/` indicates that the previous arguments in a function definition\n"
 "are positional arguments. However, `*` indicates that the arguments\n"
@@ -2476,22 +2481,22 @@ msgid ""
 "When they are used together, `/` must appear before `*`.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1232
+#: syntax_errors\statement_analyzer.py:1239
 msgid ""
 "`*` must appear after `/` in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1237
+#: syntax_errors\statement_analyzer.py:1244
 msgid ""
 "You can only use `/` once in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1255
+#: syntax_errors\statement_analyzer.py:1262
 msgid ""
 "You can only use `*` once in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1269
+#: syntax_errors\statement_analyzer.py:1276
 msgid ""
 "The Python keyword `and` can only be used for boolean expressions.\n"
 "Perhaps you meant to write\n"
@@ -2499,7 +2504,7 @@ msgid ""
 "`{new_statement}`\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1300
+#: syntax_errors\statement_analyzer.py:1307
 msgid ""
 "I am guessing that you are trying to import at least one object\n"
 "from module `{module}` and rename it using the Python keyword `as`;\n"
@@ -2512,7 +2517,7 @@ msgid ""
 "    from {module} import object_2 as name_2  # if needed\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1319
+#: syntax_errors\statement_analyzer.py:1326
 msgid ""
 "I am guessing that you were writing a comprehension or a generator expression\n"
 "and use the wrong order for a condition.\n"
@@ -2528,18 +2533,18 @@ msgid ""
 "\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1380
+#: syntax_errors\statement_analyzer.py:1387
 msgid ""
 "I am guessing that you wanted to use an `except` statement\n"
 "with multiple exception types. If that is the case, you must\n"
 "surround them with parentheses.\n"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1385
+#: syntax_errors\statement_analyzer.py:1392
 msgid "https://docs.python.org/3/tutorial/errors.html#handling-exceptions"
 msgstr ""
 
-#: syntax_errors\statement_analyzer.py:1412
+#: syntax_errors\statement_analyzer.py:1419
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
 msgstr ""

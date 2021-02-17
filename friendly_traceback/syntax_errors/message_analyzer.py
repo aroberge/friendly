@@ -863,7 +863,8 @@ def python2_print(message="", **_kwargs):
         "In older version of Python, `print` was a keyword.\n"
         "Now, `print` is a function; you need to use parentheses to call it.\n"
     ).format(message=message)
-    return {"cause": cause}
+    hint = _("Did you mean `print({message})`?\n").format(message=message)
+    return {"cause": cause, "suggest": hint}
 
 
 @add_python_message

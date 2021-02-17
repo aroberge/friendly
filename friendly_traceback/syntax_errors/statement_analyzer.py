@@ -403,7 +403,14 @@ def print_as_statement(statement):
             "In older version of Python, `print` was a keyword.\n"
             "Now, `print` is a function; you need to use parentheses to call it.\n"
         )
-        return {"cause": cause}
+        bad_line = statement.bad_line
+        if bad_line.count("(") == bad_line.count(")"):
+            new_line = bad_line.replace("print", "", 1).strip()
+            new_line = "print(" + new_line + ")"
+        else:
+            new_line = "print(...)"
+        hint = _(f"Did you mean `{new_line}`?\n").format(new_line=new_line)
+        return {"cause": cause, "suggest": hint}
     return {}
 
 
