@@ -101,6 +101,16 @@ class Statement:
             # self.all_statements and self.statement_tokens are set in the following
             self.obtain_statement(source_tokens)
             self.tokens = self.remove_meaningless_tokens()
+            if (
+                len(self.tokens) == 1
+                and self.tokens[0] == ";"
+                and len(self.all_statements) > 1
+            ):
+                statement_tokens = self.all_statements[-2]
+                statement_tokens.append(self.tokens[0])
+                self.statement_tokens = statement_tokens
+                self.tokens = self.remove_meaningless_tokens()
+
             self.statement = token_utils.untokenize(self.statement_tokens)
             if self.filename.startswith("<friendly-console"):
                 if self.statement_brackets and not self.end_bracket:
@@ -291,6 +301,8 @@ class Statement:
                 # and we meant to start a new statement
                 elif token.is_in(
                     [
+                        "async",
+                        "await",
                         "class",
                         "def",
                         "return",
@@ -332,8 +344,7 @@ class Statement:
                     last_closing = None
                 previous_row = token.start_row
 
-            if token != ";":
-                self.statement_tokens.append(token)
+            self.statement_tokens.append(token)
             # The offset seems to be different depending on Python versions,
             # sometimes matching the beginning of a token, sometimes the end.
             # Furthermore, the end of a token (end_col) might be equal to

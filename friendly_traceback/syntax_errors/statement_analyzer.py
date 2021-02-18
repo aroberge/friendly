@@ -38,6 +38,16 @@ def analyze_statement(statement):
         debug_helper.log("Statement with no tokens in statement_analyser.py")
         return {"cause": internal_error()}
 
+    # Remove async if present, to simplify the analysis
+    if (
+        statement.tokens[0] == "async"
+        and statement.tokens[1] == "def"
+        and statement.bad_token_index not in (0, 1)
+    ):
+        statement.tokens.pop(1)
+        statement.tokens[0].string = "def"
+        statement.bad_token_index -= 1
+
     for analyzer in STATEMENT_ANALYZERS:
         cause = analyzer(statement)
         if cause:
