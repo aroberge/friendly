@@ -101,16 +101,6 @@ class Statement:
             # self.all_statements and self.statement_tokens are set in the following
             self.obtain_statement(source_tokens)
             self.tokens = self.remove_meaningless_tokens()
-            if (
-                len(self.tokens) == 1
-                and self.tokens[0] == ";"
-                and len(self.all_statements) > 1
-            ):
-                statement_tokens = self.all_statements[-2]
-                statement_tokens.append(self.tokens[0])
-                self.statement_tokens = statement_tokens
-                self.tokens = self.remove_meaningless_tokens()
-
             self.statement = token_utils.untokenize(self.statement_tokens)
             if self.filename.startswith("<friendly-console"):
                 if self.statement_brackets and not self.end_bracket:
@@ -314,7 +304,7 @@ class Statement:
                         "with",
                         "while",
                         "yield",
-                        ";",
+                        # ";",
                     ]
                 ):
                     break
@@ -333,7 +323,13 @@ class Statement:
             # Valid statements will have matching brackets (), {}, [].
             # A new statement will typically start on a new line and will be
             # preceded by valid statements.
-            if token.start_row > previous_row or token == ";":
+
+            # An initial version was based on the assumption that any semi-colon
+            # would be used correctly and would indicate the end of a statement;
+            # however, I am guessing that it more likely indicates
+            # a typo, and that the user wanted to write a comma or a colon, so I
+            # do not treat them in any special way.
+            if token.start_row > previous_row:
                 if previous_token is not None:
                     continuation_line = previous_token.line.endswith("\\\n")
                 if token.start_row <= self.linenumber and not self.statement_brackets:

@@ -552,6 +552,29 @@ def missing_colon(statement):
 
 
 @add_statement_analyzer
+def semi_colon_instead_of_other(statement):
+    """look for missing colon at the end of statement"""
+    _ = current_lang.translate
+
+    if statement.bad_token != ";":
+        return {}
+
+    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, ":")
+    if fixers.check_statement(new_statement):
+        cause = _("You wrote a semi-colon, `;`, where a colon, `:`, was expected.\n")
+        hint = _("Did you mean to write a colon `:`?\n")
+        return {"cause": cause, "suggest": hint}
+
+    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, ",")
+    if fixers.check_statement(new_statement):
+        cause = _("You wrote a semi-colon, `;`, where a comma was expected.\n")
+        hint = _("Did you mean to write a comma?\n")
+        return {"cause": cause, "suggest": hint}
+
+    return {}
+
+
+@add_statement_analyzer
 def invalid_hexadecimal(statement):
     """Identifies problem caused by invalid character in an hexadecimal number."""
     _ = current_lang.translate
