@@ -424,6 +424,8 @@ def print_as_statement(statement):
         bad_line = statement.bad_line
         if bad_line.count("(") == bad_line.count(")"):
             new_line = bad_line.replace("print", "", 1).strip()
+            if len(new_line) > 30:
+                new_line = new_line[0:10] + " ... " + new_line[-10:]
             new_line = "print(" + new_line + ")"
         else:
             new_line = "print(...)"

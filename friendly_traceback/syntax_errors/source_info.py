@@ -6,6 +6,7 @@ from ..source_cache import cache
 from .syntax_utils import matching_brackets
 from .. import debug_helper
 from .. import token_utils
+from ..my_gettext import internal_error
 
 
 # During the analysis for finding the cause of the error, we typically examine
@@ -101,6 +102,14 @@ class Statement:
             # self.all_statements and self.statement_tokens are set in the following
             self.obtain_statement(source_tokens)
             self.tokens = self.remove_meaningless_tokens()
+            if not self.tokens:
+                if len(self.all_statements) > 1:
+                    self.statement_tokens = self.all_statements[-2]
+                    self.tokens = self.remove_meaningless_tokens()
+                else:
+                    print(internal_error())
+                    self.tokens = [token_utils.tokenize("Internal_error")[0]]
+
             self.statement = token_utils.untokenize(self.statement_tokens)
             if self.filename.startswith("<friendly-console"):
                 if self.statement_brackets and not self.end_bracket:

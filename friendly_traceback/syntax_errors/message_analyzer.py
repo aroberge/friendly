@@ -857,6 +857,8 @@ def python2_print(message="", **_kwargs):
     ):
         return {}
     message = message[59:-2]
+    if len(message) > 40:
+        message = message[0:15] + " ... "
     cause = _(
         "Perhaps you need to type\n\n"
         "     print({message})\n\n"
