@@ -31,7 +31,8 @@ def unknown_cause():
         "word, or missing symbols, like (, ), [, ], :, etc.\n"
         "\n"
         "Unless your code uses type annotations, which are beyond our scope,\n"
-        "you might want to report this case to\n"
+        "if you think that this is something which should be handled\n"
+        "by Friendly-traceback, please report this case to\n"
         "https://github.com/aroberge/friendly-traceback/issues\n"
         "\n"
     )
