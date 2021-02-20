@@ -5,6 +5,7 @@
 import keyword
 import sys
 
+from . import error_in_def
 from . import fixers
 from . import syntax_utils
 from ..my_gettext import current_lang, internal_error, use_www
@@ -38,15 +39,12 @@ def analyze_statement(statement):
         debug_helper.log("Statement with no tokens in statement_analyser.py")
         return {"cause": internal_error()}
 
-    # Remove async if present, to simplify the analysis
-    if (
-        statement.tokens[0] == "async"
-        and statement.tokens[1] == "def"
-        and statement.bad_token_index not in (0, 1)
+    if statement.first_token == "def" or (
+        statement.first_token == "async" and statement.tokens[1] == "def"
     ):
-        statement.tokens.pop(1)
-        statement.tokens[0].string = "def"
-        statement.bad_token_index -= 1
+        cause = error_in_def.analyze_def_statement(statement)
+        if cause:
+            return cause
 
     for analyzer in STATEMENT_ANALYZERS:
         cause = analyzer(statement)
@@ -555,7 +553,7 @@ def missing_colon(statement):
 
 @add_statement_analyzer
 def semi_colon_instead_of_other(statement):
-    """look for missing colon at the end of statement"""
+    """Writing a semi colon as a typo"""
     _ = current_lang.translate
 
     if statement.bad_token != ";":
@@ -696,157 +694,6 @@ def general_fstring_problem(statement=None):
         "The content of your f-string is invalid. Please consult the documentation:\n"
         "https://docs.python.org/3/reference/lexical_analysis.html#f-strings\n"
     )
-    return {"cause": cause}
-
-
-def def_correct_syntax():
-    _ = current_lang.translate
-    # fmt: off
-    return _(
-        "The correct syntax is:\n\n"
-        "    def name ( ... ):"
-    ) + "\n"
-    # fmt: on
-
-
-@add_statement_analyzer
-def malformed_def_missing_parens(statement):
-    # Something like
-    # def test: ...
-    _ = current_lang.translate
-
-    if statement.first_token != "def":
-        return {}
-
-    if (
-        statement.bad_token != ":"
-        and statement.nb_tokens >= 3
-        and statement.bad_token != statement.tokens[2]
-    ):
-        return {}
-
-    new_statement = fixers.modify_token(
-        statement.tokens, statement.bad_token, prepend="()"
-    )
-    if fixers.check_statement(new_statement):
-        hint = _("Did you forget parentheses?\n")
-        cause = _(
-            "Perhaps you forgot to include parentheses.\n"
-            "You might have meant to write `{line}`\n"
-        ).format(line=new_statement)
-        return {"cause": cause, "suggest": hint}
-
-    return {}
-
-
-@add_statement_analyzer
-def keyword_as_function_name(statement):
-    # Something like
-    # def pass() ...
-    _ = current_lang.translate
-    if (
-        statement.first_token != "def"
-        or not statement.bad_token.is_keyword()
-        or not (statement.prev_token == statement.first_token)
-    ):
-        return {}
-
-    hint = _("You cannot use a Python keyword as a function name.\n")
-    cause = _(
-        "You tried to use the Python keyword `{kwd}` as a function name.\n"
-    ).format(kwd=statement.bad_token)
-
-    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "name")
-    if not fixers.check_statement(new_statement):
-        cause += "\n" + _("There are more syntax errors later in your code.\n")
-
-    return {"cause": cause, "suggest": hint}
-
-
-@add_statement_analyzer
-def other_invalid_function_names(statement):
-    _ = current_lang.translate
-
-    if (
-        statement.first_token != "def"
-        or statement.bad_token.is_identifier()
-        or not (statement.prev_token == statement.first_token)
-    ):
-        return {}
-
-    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "name")
-    if not fixers.check_statement(new_statement):
-        return {}
-
-    hint = _("You wrote an invalid function name.\n")
-    cause = _(
-        "The name of a function must be a valid Python identifier,\n"
-        "that is a name that begins with a letter or an underscore character, `_`,\n"
-        "and which contains only letters, digits or the underscore character.\n"
-    )
-    if statement.bad_token.is_string():
-        cause += _("You attempted to use a string as a function name.\n")
-    return {"cause": cause, "suggest": hint}
-
-
-@add_statement_analyzer
-def function_definition_missing_name(statement):
-    _ = current_lang.translate
-    if not (
-        statement.first_token == "def"
-        and statement.bad_token == "("
-        and statement.bad_token == statement.tokens[1]
-    ):
-        return {}
-
-    cause = _("You forgot to name your function.\n") + def_correct_syntax()
-    return {"cause": cause}
-
-
-@add_statement_analyzer
-def keyword_not_allowed_as_function_argument(statement):
-    _ = current_lang.translate
-    if not (
-        statement.first_token == "def"
-        and statement.bad_token.is_keyword()
-        and statement.begin_brackets
-    ):
-        return {}
-
-    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "name")
-    if not fixers.check_statement(new_statement):
-        return {}
-
-    cause = _(
-        "I am guessing that you tried to use the Python keyword\n"
-        "`{kwd}` as an argument in the definition of a function\n"
-        "where an identifier (variable name) was expected.\n"
-    ).format(kwd=statement.bad_token)
-
-    return {"cause": cause}
-
-
-@add_statement_analyzer
-def malformed_def_begin_code_block(statement):
-    # Thinking of def simply beginning a code block; something like
-    # def : ...
-    _ = current_lang.translate
-    if statement.first_token != "def" or statement.bad_token != ":":
-        return {}
-
-    if not statement.prev_token == statement.first_token:
-        return {}
-
-    if statement.first_token.start_col == 0:
-        cause = _(
-            "You tried to define a function and did not use the correct syntax.\n"
-        )
-    else:
-        cause = _(
-            "You tried to define a function or method and did not use the correct syntax.\n"
-        )
-    cause += def_correct_syntax()
-
     return {"cause": cause}
 
 
@@ -1251,61 +1098,6 @@ def consecutive_operators(statement):
         ).format(first=statement.prev_token, second=statement.bad_token)
 
     return {"cause": cause}
-
-
-@add_statement_analyzer
-def dotted_name_in_def(statement):
-    _ = current_lang.translate
-    if not (statement.bad_token == "." and statement.first_token == "def"):
-        return {}
-
-    cause = _("You cannot use dotted names as function arguments.\n")
-    return {"cause": cause}
-
-
-@add_statement_analyzer
-def positional_arguments_in_def(statement):
-    _ = current_lang.translate
-
-    if not (statement.bad_token == "/" and statement.first_token == "def"):
-        return {}
-
-    prev_tok = ""
-    for tok in statement.tokens:
-        if tok == "*":
-            cause = _(
-                "`/` indicates that the previous arguments in a function definition\n"
-                "are positional arguments. However, `*` indicates that the arguments\n"
-                "that follow must be keyword arguments.\n"
-                "When they are used together, `/` must appear before `*`.\n"
-            )
-            hint = _("`*` must appear after `/` in a function definition.\n")
-            return {"cause": cause, "suggest": hint}
-        elif tok is statement.bad_token:
-            break
-        elif tok == "/" and prev_tok == ",":
-            cause = _("You can only use `/` once in a function definition.\n")
-            return {"cause": cause}
-        prev_tok = tok
-    return {}
-
-
-@add_statement_analyzer
-def keyword_arguments_in_def(statement):
-    _ = current_lang.translate
-
-    if not (statement.bad_token == "*" and statement.first_token == "def"):
-        return {}
-
-    prev_tok = ""
-    for tok in statement.tokens:
-        if tok is statement.bad_token:
-            break
-        elif tok == "*" and prev_tok == ",":
-            cause = _("You can only use `*` once in a function definition.\n")
-            return {"cause": cause}
-        prev_tok = tok
-    return {}
 
 
 @add_statement_analyzer

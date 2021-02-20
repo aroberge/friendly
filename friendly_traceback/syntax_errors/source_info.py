@@ -88,6 +88,7 @@ class Statement:
         if self.filename is not None:
             self.using_friendly_console = self.filename.startswith("<friendly")
         elif "too many statically nested blocks" not in self.message:
+            # We know of only one case where filename should be None.
             debug_helper.log("filename is None in source_info.Statement")
 
         self.get_token_info()

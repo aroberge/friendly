@@ -29,17 +29,17 @@ def make_title(text, format="pre"):
 cur_dir = os.getcwd()
 sys.path.append(os.path.join(cur_dir, "syntax"))
 
+
 def create_tracebacks(target, intro_text, format="pre"):
     with open(target, "w", encoding="utf8") as out:
         with redirect_stderr(out):
             write(intro_text)
 
             for name in descriptions:
-                function = None
                 title = descriptions[name]["title"]
                 make_title(title, format=format)
                 try:
-                    mod = __import__(name)
+                    __import__(name)
                 except Exception:
                     friendly_traceback.explain_traceback()
 

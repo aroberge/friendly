@@ -90,7 +90,6 @@ def replace_two_tokens(
         debug_helper.log("Problem in fixers.replace_two_tokens()")
         debug_helper.log("second_token should not be None")
         return token_utils.untokenize(tokens)
-
     try:
         new_tokens = []
         for tok in tokens:
