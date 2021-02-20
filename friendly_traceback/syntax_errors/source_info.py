@@ -324,8 +324,6 @@ class Statement:
                     if token.start_row > previous_row_non_space:
                         # the keyword above likely starts a new statement
                         break
-                elif token.start_col <= self.statement_tokens[0].start_col:
-                    break
             if token.string.strip():
                 previous_row_non_space = token.end_row
 

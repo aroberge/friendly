@@ -2,7 +2,6 @@ from .. import debug_helper
 from ..my_gettext import current_lang, no_information, internal_error
 
 
-_ = current_lang.translate
 MESSAGES_PARSERS = []
 
 
@@ -37,6 +36,7 @@ def _get_cause(message, frame, tb_data):
 
 def expression_is_zero(expression, modulo=False):
     """Simpler message when the denominator is a literal 0."""
+    _ = current_lang.translate
     try:
         if int(expression) == 0:
             if modulo:
@@ -50,6 +50,7 @@ def expression_is_zero(expression, modulo=False):
 
 @add_message_parser
 def division_by_zero(message, _frame, tb_data):
+    _ = current_lang.translate
     if (
         message != "division by zero"
         and message != "float division by zero"
@@ -77,6 +78,7 @@ def division_by_zero(message, _frame, tb_data):
 
 @add_message_parser
 def integer_or_modulo(message, _frame, tb_data):
+    _ = current_lang.translate
     if message != "integer division or modulo by zero":
         return {}
     expression = tb_data.bad_line
@@ -126,6 +128,7 @@ def integer_or_modulo(message, _frame, tb_data):
 
 @add_message_parser
 def zero_negative_power(message, *_ignore):
+    _ = current_lang.translate
     if message != "0.0 cannot be raised to a negative power":
         return {}
     cause = _(
@@ -137,6 +140,7 @@ def zero_negative_power(message, *_ignore):
 
 @add_message_parser
 def float_modulo(message, _frame, tb_data):
+    _ = current_lang.translate
     if message != "float modulo":
         return {}
     expression = tb_data.bad_line
@@ -161,6 +165,7 @@ def float_modulo(message, _frame, tb_data):
 
 @add_message_parser
 def float_divmod(message, *_ignore):
+    _ = current_lang.translate
     if message != "float divmod()":
         return {}
 

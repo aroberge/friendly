@@ -546,7 +546,7 @@ def missing_colon(statement):
     elif name.is_in(["def", "elif", "else", "except", "finally", "if", "try", "with"]):
         cause = _(
             "You wrote a statement beginning with\n"
-            "`{name}` but forgot to add a colon `:` at the end\n"
+            "`{name}` but forgot to add a colon `:` at the end.\n"
             "\n"
         ).format(name=name)
         return {"cause": cause, "suggest": hint}
