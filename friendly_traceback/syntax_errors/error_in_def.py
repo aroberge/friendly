@@ -5,7 +5,7 @@ associated with a 'def' statement.
 from . import fixers
 from ..my_gettext import current_lang, internal_error
 from .. import debug_helper
-
+from .. import token_utils
 
 STATEMENT_ANALYZERS = []
 
@@ -310,3 +310,79 @@ def keyword_arguments_in_def(statement):
             return {"cause": cause}
         prev_tok = tok
     return {}
+
+
+@add_statement_analyzer
+def number_as_argument(statement):
+    _ = current_lang.translate
+
+    if not statement.bad_token.is_number():
+        return {}
+
+    # TODO: add tests
+    hint = _("You cannot use a number here.\n")
+    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "name")
+    if fixers.check_statement(new_statement):
+        cause = _(
+            "You used a number as an argument when defining a function.\n"
+            "You can only use identifiers (variable names) as function arguments.\n"
+        )
+        return {"cause": cause, "suggest": hint}
+    new_tokens = []
+    for index, tok in enumerate(statement.statement_tokens):
+        if tok.is_number():
+            tok.string = "__name" + str(index)  # could be made more robust
+        new_tokens.append(tok)
+
+    new_statement = token_utils.untokenize(new_tokens).strip()
+    if fixers.check_statement(new_statement):
+        cause = _(
+            "You used numbers as arguments when defining a function.\n"
+            "You can only use identifiers (variable names) as function arguments.\n"
+        )
+        return {"cause": cause, "suggest": hint}
+
+    cause = _(
+        "I suspect that you used a number as an argument when defining a function.\n"
+        "You can only use identifiers (variable names) as function arguments.\n"
+        "However, there might be other syntax errors in your function definition.\n"
+    )
+    return {"cause": cause, "suggest": hint}
+
+
+@add_statement_analyzer
+def string_as_argument(statement):
+    _ = current_lang.translate
+
+    if not statement.bad_token.is_string():
+        return {}
+
+    # TODO: add tests
+    hint = _("You cannot use a string here.\n")
+    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "name")
+    if fixers.check_statement(new_statement):
+        cause = _(
+            "You used a string as an argument when defining a function.\n"
+            "You can only use identifiers (variable names) as function arguments.\n"
+        )
+        return {"cause": cause, "suggest": hint}
+    new_tokens = []
+    for index, tok in enumerate(statement.tokens):
+        if tok.is_string():
+            tok.string = "__name" + str(index)  # could be made more robust
+        new_tokens.append(tok)
+
+    new_statement = token_utils.untokenize(new_tokens).strip()
+    if fixers.check_statement(new_statement):
+        cause = _(
+            "You used strings as arguments when defining a function.\n"
+            "You can only use identifiers (variable names) as function arguments.\n"
+        )
+        return {"cause": cause, "suggest": hint}
+
+    cause = _(
+        "I suspect that you used a string as an argument when defining a function.\n"
+        "You can only use identifiers (variable names) as function arguments.\n"
+        "However, there might be other syntax errors in your function definition.\n"
+    )
+    return {"cause": cause, "suggest": hint}

@@ -43,6 +43,7 @@ def analyze_statement(statement):
         statement.first_token == "async" and statement.tokens[1] == "def"
     ):
         cause = error_in_def.analyze_def_statement(statement)
+        # The above call will have removed any "async" tokens for further analysis.
         if cause:
             return cause
 
@@ -427,7 +428,7 @@ def print_as_statement(statement):
             new_line = "print(" + new_line + ")"
         else:
             new_line = "print(...)"
-        hint = _(f"Did you mean `{new_line}`?\n").format(new_line=new_line)
+        hint = _("Did you mean `{new_line}`?\n").format(new_line=new_line)
         return {"cause": cause, "suggest": hint}
     return {}
 
@@ -506,6 +507,8 @@ def missing_colon(statement):
         return {}
 
     name = statement.first_token
+    # Note: "async def" statements are transformed into "def" statements
+    # prior to reaching this stage.
     if name.is_not_in(
         [
             "class",
@@ -896,6 +899,8 @@ def missing_comma_or_operator(statement):
     if results:
         if (
             len(results) == 1
+            # Note: "async def" statements are transformed into "def" statements
+            # prior to reaching this stage.
             or statement.first_token == "def"
             or statement.first_token == "class"
         ):

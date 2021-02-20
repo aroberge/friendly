@@ -497,6 +497,32 @@ descriptions = {
         cause: "with multiple exception types.",
         title: "Parens around multiple exceptions",
     },
+    "raise_syntax_error116": {
+        cause: "You used a number as an argument",
+        title: "Single number used as arg in function def",
+    },
+    "raise_syntax_error117": {
+        cause: "You used numbers as arguments",
+        title: "Numbers used as arg in function def",
+    },
+    "raise_syntax_error118": {
+        cause: "I suspect that you used a number as an argument",
+        title: "Number and string used as arg in function def",
+        "other causes": ["there might be other syntax errors"],
+    },
+    "raise_syntax_error119": {
+        cause: "You used a string as an argument",
+        title: "Single string used as arg in function def",
+    },
+    "raise_syntax_error120": {
+        cause: "You used strings as arguments",
+        title: "Strings used as arg in function def",
+    },
+    "raise_syntax_error121": {
+        cause: "I suspect that you used a string as an argument",
+        title: "String and number used as arg in function def",
+        "other causes": ["there might be other syntax errors"],
+    },
 }
 
 

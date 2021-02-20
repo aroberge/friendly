@@ -38,3 +38,10 @@ def test_syntax_errors(filename):
 
     unwrapped_result = " ".join(result.split())
     assert cause in unwrapped_result, "\nExpected to see: %s\nIn: %s" % (cause, result)
+    if "other causes" in descriptions[filename]:
+        other_causes = descriptions[filename]["other causes"]
+        for cause in other_causes:
+            assert cause in unwrapped_result, "\nExpected to see: %s\nIn: %s" % (
+                cause,
+                result,
+            )
