@@ -16,6 +16,14 @@ from .. import utils
 STATEMENT_ANALYZERS = []
 
 
+def more_errors():
+    _ = current_lang.translate
+    return "\n" + _(
+        "However, making such a change would still not correct\n"
+        "all the syntax problems in the code you wrote.\n"
+    )
+
+
 def add_statement_analyzer(func):
     """A simple decorator that adds a function to the list
     of all functions that analyze a single statement."""
@@ -67,7 +75,7 @@ def mismatched_brackets(statement):
     if not (statement.end_bracket and statement.bad_token == statement.last_token):
         return {}
 
-    if not statement.begin_brackets:
+    if not statement.statement_brackets:
         lineno = statement.end_bracket.start_row
         source = f"\n    {lineno}: {statement.source_lines[lineno - 1]}"
         shift = len(str(lineno)) + statement.end_bracket.start_col + 6
@@ -133,38 +141,6 @@ def copy_pasted_code(statement):
         )
         hint = _("Did you use copy-paste?\n")
         return {"cause": cause, "suggest": hint}
-    return {}
-
-
-@add_statement_analyzer
-def detect_walrus(statement):
-    """Detecting if code uses named assignment operator := with an
-    older version of Python.
-    """
-    _ = current_lang.translate
-    if sys.version_info >= (3, 8):
-        return {}
-
-    # Normally, the token identified as the bad token should be
-    # '='; however, in some test cases where a named assignment
-    # is not allowed, it is ':' that is identified as the
-    # bad token.
-
-    bad = statement.bad_token
-    prev = statement.prev_token
-    next_token = statement.next_token
-
-    if (prev == ":" and bad == "=" and bad.immediately_after(prev)) or (
-        bad == ":" and next_token == "=" and bad.immediately_before(next_token)
-    ):
-        hint = _("Your Python version does not support this f-string feature.\n")
-        cause = _(
-            "You appear to be using the operator `:=`, sometimes called\n"
-            "the walrus operator. This operator requires the use of\n"
-            "Python 3.8 or newer. You are using version {version}.\n"
-        ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
-        return {"cause": cause, "suggest": hint}
-
     return {}
 
 
@@ -295,26 +271,36 @@ def space_between_operators(statement):
     bad = statement.bad_token
     next_ = statement.next_token
 
+    if is_op(prev) and is_op(prev.string + bad.string):
+        first_token = prev
+        second_token = bad
+    elif is_op(next_) and is_op(bad.string + next_.string):
+        first_token = bad
+        second_token = next_
+    else:
+        return {}
+
     hint = _("Did you leave some spaces between operators?\n")
     possible_cause = _(
         "It looks like you wrote two operators, `{first}` and `{second}`,\n"
         "separated by spaces instead of writing them as a single operator:\n"
         "`{correct}`"
     )
-
-    # TODO: check that this fixes the problem
-    if is_op(prev) and is_op(prev.string + bad.string):
-        cause = possible_cause.format(
-            first=prev.string, second=bad.string, correct=prev.string + bad.string
-        )
+    correct = first_token.string + second_token.string
+    cause = possible_cause.format(
+        first=bad.string, second=next_.string, correct=correct
+    )
+    new_statement = fixers.replace_two_tokens(
+        statement.tokens,
+        first_token,
+        first_string=correct,
+        second_token=second_token,
+        second_string="",
+    )
+    if fixers.check_statement(new_statement):
         return {"cause": cause, "suggest": hint}
-    elif is_op(next_) and is_op(bad.string + next_.string):
-        cause = possible_cause.format(
-            first=bad.string, second=next_.string, correct=bad.string + next_.string
-        )
-        return {"cause": cause, "suggest": hint}
-
-    return {}
+    else:
+        return {"cause": cause + more_errors(), "suggest": hint}
 
 
 @add_statement_analyzer
@@ -330,36 +316,75 @@ def inverted_comparison_operators(statement):
     bad = statement.bad_token
     next_ = statement.next_token
 
-    hint = _("Did you write operators in an incorrect order?\n")
-    possible_cause = _(
-        "It looks like you wrote two operators (`{first}` and `{second}`)\n"
-        "in the wrong order: `{wrong}` instead of `{correct}`.\n"
-    )
-
-    # TODO: check that this fixes the problem
     if (
         is_op(prev)
         and token_utils.is_comparison(bad.string + prev.string)
         and prev.immediately_before(bad)
     ):
-        cause = possible_cause.format(
-            first=prev.string,
-            second=bad.string,
-            correct=bad.string + prev.string,
-            wrong=prev.string + bad.string,
-        )
-        return {"cause": cause, "suggest": hint}
+        first = prev
+        second = bad
     elif (
         is_op(next_)
         and token_utils.is_comparison(next_.string + bad.string)
         and bad.immediately_before(next_)
     ):
-        cause = possible_cause.format(
-            first=bad.string,
-            second=next_.string,
-            correct=next_.string + bad.string,
-            wrong=bad.string + next_.string,
-        )
+        first = bad
+        second = next_
+    else:
+        return {}
+
+    correct = second.string + first.string
+    hint = _("Did you write operators in an incorrect order?\n")
+    cause = _(
+        "It looks like you wrote two operators (`{first}` and `{second}`)\n"
+        "in the wrong order: `{wrong}` instead of `{correct}`.\n"
+    ).format(
+        first=first.string,
+        second=second.string,
+        correct=correct,
+        wrong=first.string + second.string,
+    )
+
+    new_statement = fixers.replace_two_tokens(
+        statement.tokens,
+        first,
+        first_string=correct,
+        second_token=second,
+        second_string="",
+    )
+    if fixers.check_statement(new_statement):
+        return {"cause": cause, "suggest": hint}
+    else:
+        return {"cause": cause + more_errors(), "suggest": hint}
+
+
+@add_statement_analyzer
+def detect_walrus(statement):
+    """Detecting if code uses named assignment operator := with an
+    older version of Python.
+    """
+    _ = current_lang.translate
+    if sys.version_info >= (3, 8):
+        return {}
+
+    # Normally, the token identified as the bad token should be
+    # '='; however, in some test cases where a named assignment
+    # is not allowed, it is ':' that is identified as the
+    # bad token.
+
+    bad = statement.bad_token
+    prev = statement.prev_token
+    next_token = statement.next_token
+
+    if (prev == ":" and bad == "=" and bad.immediately_after(prev)) or (
+        bad == ":" and next_token == "=" and bad.immediately_before(next_token)
+    ):
+        hint = _("Your Python version does not support this f-string feature.\n")
+        cause = _(
+            "You appear to be using the operator `:=`, sometimes called\n"
+            "the walrus operator. This operator requires the use of\n"
+            "Python 3.8 or newer. You are using version {version}.\n"
+        ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
         return {"cause": cause, "suggest": hint}
 
     return {}
@@ -383,9 +408,7 @@ def assign_instead_of_equal(statement):
     if not fixers.check_statement(new_statement):
         # TODO: find a way to confirm that new error is later.
         debug_helper.log("Fix did not work in assign_instead_of_equal")
-        additional_cause = _(
-            "However, there might be some other errors in this statement.\n"
-        )
+        additional_cause = more_errors()
     else:
         additional_cause = ""
 
@@ -409,6 +432,9 @@ def assign_instead_of_equal(statement):
                 "an equality operator, `==`, or the walrus operator `:=`.\n"
             )
         return {"cause": cause + additional_cause, "suggest": hint}
+
+
+# TODO: add triple equal.
 
 
 @add_statement_analyzer
@@ -1253,7 +1279,7 @@ def unclosed_bracket(statement):
     bracket_name = syntax_utils.name_bracket(bracket)
     source = f"\n    {linenumber}: {statement.source_lines[linenumber - 1]}"
     shift = len(str(linenumber)) + start_col + 6
-    source += " " * shift + "|\n"
+    source += " " * shift + "^\n"
 
     cause = (
         _("The opening {bracket} on line {linenumber} is not closed.\n").format(

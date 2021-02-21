@@ -381,7 +381,7 @@ def break_outside_loop(message="", **_kwargs):
     if "'break' outside loop" in message:
         cause = _(
             "The Python keyword `break` can only be used "
-            "inside a for loop or inside a while loop.\n"
+            "inside a `for` loop or inside a `while` loop.\n"
         )
         return {"cause": cause}
     return {}
@@ -393,7 +393,7 @@ def continue_outside_loop(message="", **_kwargs):
     if "'continue' not properly in loop" in message:
         cause = _(
             "The Python keyword `continue` can only be used "
-            "inside a for loop or inside a while loop.\n"
+            "inside a `for` loop or inside a `while` loop.\n"
         )
         return {"cause": cause}
     return {}
