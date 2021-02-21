@@ -259,28 +259,69 @@ def misplaced_quote(statement):
 
 
 @add_statement_analyzer
-def triple_equal(statement):
+def detect_walrus(statement):
+    """Detecting if code uses named assignment operator := with an
+    older version of Python.
+    """
     _ = current_lang.translate
-    # TODO: add test for this
-    if not (
-        statement.bad_token == "="
-        and statement.prev_token == "=="
-        and statement.prev_token.immediately_before(statement.bad_token)
-    ):
+    if sys.version_info >= (3, 8):
         return {}
 
-    hint = _("Did you mean to use `==` or `is`?\n")
+    # Normally, the token identified as the bad token should be
+    # '='; however, in some test cases where a named assignment
+    # is not allowed, it is ':' that is identified as the
+    # bad token.
 
-    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "")
-    cause = _(
-        "`===` is not an operator in Python.\n"
-        "Python uses `==` to compare if two objects are equal and\n"
-        "the `is` keyword to see if two names represent the exact same object.\n"
-    )
-    if fixers.check_statement(new_statement):
+    bad = statement.bad_token
+    prev = statement.prev_token
+    next_token = statement.next_token
+
+    if (prev == ":" and bad == "=" and bad.immediately_after(prev)) or (
+        bad == ":" and next_token == "=" and bad.immediately_before(next_token)
+    ):
+        hint = _("Your Python version does not support this f-string feature.\n")
+        cause = _(
+            "You appear to be using the operator `:=`, sometimes called\n"
+            "the walrus operator. This operator requires the use of\n"
+            "Python 3.8 or newer. You are using version {version}.\n"
+        ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
         return {"cause": cause, "suggest": hint}
+
+    return {}
+
+
+@add_statement_analyzer
+def consecutive_operators(statement):
+    _ = current_lang.translate
+    is_op = token_utils.is_operator
+
+    if not (is_op(statement.bad_token) and is_op(statement.prev_token)):
+        return {}
+
+    if statement.bad_token == "=" and statement.prev_token == "==":
+        cause = _(
+            "You wrote three equal signs in a row which is allowed in some\n"
+            "programming languages, but not in Python. To check if two objects\n"
+            "are equal, use two equal signs, `==`; to see if two names represent\n"
+            "the exact same object, use the operator `is`.\n"
+        )
+        hint = _("Did you mean to use `is` instead of `===`?\n")
+        return {"cause": cause, "suggest": hint}
+
+    elif statement.bad_token == statement.prev_token:
+        cause = _(
+            "You cannot have write the same operator, `{op}`, twice in a row.\n"
+            "Perhaps you wrote one of them by mistake\n"
+            "or forgot to write something between them.\n"
+        ).format(op=statement.prev_token)
     else:
-        return {"cause": cause + more_errors(), "suggest": hint}
+        cause = _(
+            "You cannot have these two operators, `{first}` and `{second}`,\n"
+            "following each other. Perhaps you wrote one of them by mistake\n"
+            "or forgot to write something between them.\n"
+        ).format(first=statement.prev_token, second=statement.bad_token)
+
+    return {"cause": cause}
 
 
 @add_statement_analyzer
@@ -381,38 +422,6 @@ def inverted_comparison_operators(statement):
         return {"cause": cause, "suggest": hint}
     else:
         return {"cause": cause + more_errors(), "suggest": hint}
-
-
-@add_statement_analyzer
-def detect_walrus(statement):
-    """Detecting if code uses named assignment operator := with an
-    older version of Python.
-    """
-    _ = current_lang.translate
-    if sys.version_info >= (3, 8):
-        return {}
-
-    # Normally, the token identified as the bad token should be
-    # '='; however, in some test cases where a named assignment
-    # is not allowed, it is ':' that is identified as the
-    # bad token.
-
-    bad = statement.bad_token
-    prev = statement.prev_token
-    next_token = statement.next_token
-
-    if (prev == ":" and bad == "=" and bad.immediately_after(prev)) or (
-        bad == ":" and next_token == "=" and bad.immediately_before(next_token)
-    ):
-        hint = _("Your Python version does not support this f-string feature.\n")
-        cause = _(
-            "You appear to be using the operator `:=`, sometimes called\n"
-            "the walrus operator. This operator requires the use of\n"
-            "Python 3.8 or newer. You are using version {version}.\n"
-        ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
-        return {"cause": cause, "suggest": hint}
-
-    return {}
 
 
 @add_statement_analyzer
@@ -1121,40 +1130,6 @@ def equal_instead_of_colon_in_dict(statement):
         "to assign values to keys in a dict\n"
         "before or at the position indicated by --> and ^.\n"
     )
-    return {"cause": cause}
-
-
-@add_statement_analyzer
-def consecutive_operators(statement):
-    _ = current_lang.translate
-    is_op = token_utils.is_operator
-
-    if not (is_op(statement.bad_token) and is_op(statement.prev_token)):
-        return {}
-
-    if statement.bad_token == "=" and statement.prev_token == "==":
-        cause = _(
-            "You wrote three equal signs in a row which is allowed in some\n"
-            "programming languages, but not in Python. To check if two objects\n"
-            "are equal, use two equal signs, `==`; to see if two names represent\n"
-            "the exact same object, use the operator `is`.\n"
-        )
-        hint = _("Did you mean to use `is` instead of `===`?\n")
-        return {"cause": cause, "suggest": hint}
-
-    elif statement.bad_token == statement.prev_token:
-        cause = _(
-            "You cannot have write the same operator, `{op}`, twice in a row.\n"
-            "Perhaps you wrote one of them by mistake\n"
-            "or forgot to write something between them.\n"
-        ).format(op=statement.prev_token)
-    else:
-        cause = _(
-            "You cannot have these two operators, `{first}` and `{second}`,\n"
-            "following each other. Perhaps you wrote one of them by mistake\n"
-            "or forgot to write something between them.\n"
-        ).format(first=statement.prev_token, second=statement.bad_token)
-
     return {"cause": cause}
 
 

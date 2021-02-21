@@ -13,6 +13,51 @@ cause = "cause"
 title = "title"
 
 descriptions = {
+    "assign_to_keyword_else": {  # else is flagged
+        cause: "assign a value to the Python keyword `else`",
+        title: "Assign to keyword else",
+    },
+    "assign_to_keyword_def": {  # = sign is flagged
+        cause: "assign a value to the Python keyword `def`",
+        title: "Assign to keyword def",
+    },
+    "cannot_assign_to_literal_int": {
+        cause: "is or includes an actual object of type `int`",
+        title: "Cannot assign to literal int",
+        "other causes": ["Perhaps you meant to write"],
+    },
+    "cannot_assign_to_literal_int2": {
+        cause: "is or includes an actual object of type `int`",
+        title: "Cannot assign to literal int - 2",
+    },
+    "def_code_block": {
+        cause: "tried to define a function",
+        title: "def: misused as code block",
+    },
+    "def_missing_parens": {
+        cause: "Did you forget parentheses?",
+        title: "def: missing parentheses",
+    },
+    "def_missing_name": {
+        cause: "forgot to name your function",
+        title: "def: missing function name",
+    },
+    "else_if_instead_of_elif": {
+        cause: "wrote `else if` instead",
+        title: "Write elif, not else if",
+    },
+    "elseif_instead_of_elif": {
+        cause: "wrote `elseif` instead",
+        title: "Write elif, not elseif",
+    },
+    "missing_colon_if": {
+        cause: "`if` but forgot to add a colon `:`",
+        title: "Missing colon - if",
+    },
+    "missing_colon_while": {
+        cause: "wrote a `while` loop but",
+        title: "Missing colon - while",
+    },
     "raise_indentation_error1": {
         cause: "expected to begin a new indented block",
         title: "IndentationError: expected an indented block",
@@ -32,50 +77,6 @@ descriptions = {
     "raise_tab_error": {
         cause: "A `TabError` indicates that you have used",
         title: "TabError",
-    },
-    "raise_syntax_error0": {  # else is flagged
-        cause: "assign a value to the Python keyword `else`",
-        title: "Assign to keyword",
-    },
-    "raise_syntax_error1": {  # = sign is flagged
-        cause: "assign a value to the Python keyword `def`",
-        title: "Assign to keyword",
-    },
-    "raise_syntax_error2": {
-        cause: "`if` but forgot to add a colon `:`",
-        title: "Missing colon - if",
-    },
-    "raise_syntax_error3": {
-        cause: "wrote a `while` loop but",
-        title: "Missing colon - while",
-    },
-    "raise_syntax_error4": {
-        cause: "wrote `else if` instead",
-        title: "Write elif, not else if",
-    },
-    "raise_syntax_error5": {
-        cause: "wrote `elseif` instead",
-        title: "Write elif, not elseif",
-    },
-    "raise_syntax_error6": {
-        cause: "tried to define a function",
-        title: "Malformed def statement - 1",
-    },
-    "raise_syntax_error7": {
-        cause: "Did you forget parentheses?",
-        title: "Malformed def statement - missing parentheses",
-    },
-    "raise_syntax_error8": {
-        cause: "forgot to name your function",
-        title: "Malformed def statement - 3",
-    },
-    "raise_syntax_error9": {
-        cause: "is or includes an actual object of type `int`",
-        title: "Cannot assign to literal - 1",
-    },
-    "raise_syntax_error10": {
-        cause: "is or includes an actual object of type `int`",
-        title: "Cannot assign to literal - 2",
     },
     "raise_syntax_error11": {
         cause: "from turtle import pen",

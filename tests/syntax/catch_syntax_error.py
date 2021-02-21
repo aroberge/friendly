@@ -25,16 +25,16 @@ def test_syntax_errors(filename):
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
 
-    if "syntax" in filename and not "indented" in cause:
-        assert "SyntaxError" in result, (
-            "SyntaxError identified incorrectly; %s" % filename
-        )
+    if "tab_error" in filename:
+        assert "TabError" in result, "TabError identified incorrectly; %s" % filename
     elif "indentation" in filename or "indented" in cause:
         assert "IndentationError" in result, (
             "IndentationError identified incorrectly; %s" % filename
         )
     else:
-        assert "TabError" in result, "TabError identified incorrectly; %s" % filename
+        assert "SyntaxError" in result, (
+            "SyntaxError identified incorrectly; %s" % filename
+        )
 
     unwrapped_result = " ".join(result.split())
     assert cause in unwrapped_result, "\nExpected to see: %s\nIn: %s" % (cause, result)
