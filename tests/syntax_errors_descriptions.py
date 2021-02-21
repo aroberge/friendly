@@ -33,6 +33,16 @@ descriptions = {
         cause: "The Python keyword `break` can only be used",
         title: "break outside loop",
     },
+    "cannot_assign_to_function_call_1": {
+        cause: "function call and is not simply the name of a variable",
+        title: "Cannot assign to function call: single = sign",
+        "other causes": ["len('a')"],
+    },
+    "cannot_assign_to_function_call_2": {
+        cause: "function call and not the name of a variable",
+        title: "Cannot assign to function call: two = signs",
+        "other causes": ["func(...)"],
+    },
     "cannot_assign_to_literal_int": {
         cause: "is or includes an actual object of type `int`",
         title: "Cannot assign to literal int",
@@ -66,6 +76,18 @@ descriptions = {
         cause: "forgot to name your function",
         title: "def: missing function name",
     },
+    "def_name_is_parameter_and_global": {
+        cause: "is a variable defined outside a function.",
+        title: "def: name is parameter and global",
+    },
+    "def_non_default_after_default": {
+        cause: "define functions with only positional arguments",
+        title: "def: non-default argument follows default argument",
+    },
+    "def_positional_after_keyword_arg": {
+        cause: "call functions with only positional arguments",
+        title: "Positional argument follows keyword argument",
+    },
     "else_if_instead_of_elif": {
         cause: "wrote `else if` instead",
         title: "Write elif, not else if",
@@ -78,9 +100,21 @@ descriptions = {
         cause: "ended the string with another quote",
         title: "EOL while scanning string literal",
     },
+    "equal_sign_instead_of_colon": {
+        cause: "used an equal sign `=` instead of a colon `:`",
+        title: "Used equal sign instead of colon",
+    },
+    "f_string_unterminated": {
+        cause: "you have another string, which starts with either",
+        title: "f-string: unterminated string",
+    },
     "import_from": {
         cause: "from turtle import pen",
         title: "Import inversion: import X from Y",
+    },
+    "keyword_as_attribute": {
+        cause: "keyword `pass` as an attribute",
+        title: "Keyword as attribute",
     },
     "missing_colon_if": {
         cause: "`if` but forgot to add a colon `:`",
@@ -114,6 +148,10 @@ descriptions = {
         cause: "quote inside a string",
         title: "Quote inside a string",
     },
+    "unclosed_bracket": {
+        cause: "The opening square bracket `[`",
+        title: "Unclosed bracket",
+    },
     "unclosed_paren_1": {
         cause: "The opening parenthesis `(` on line",
         title: "Unclosed parenthesis - 1",
@@ -121,6 +159,10 @@ descriptions = {
     "unclosed_paren_2": {
         cause: "The opening parenthesis `(` on line",
         title: "Unclosed parenthesis - 2",
+    },
+    "unexpected_eof": {
+        cause: "The opening square bracket `[`",
+        title: "Unexpected EOF while parsing",
     },
     "unmatched_closing_paren": {
         cause: "The closing parenthesis `)` on",
@@ -137,47 +179,6 @@ descriptions = {
 
 
 
-
-    "raise_syntax_error30": {
-        cause: "function call and is not simply the name of a variable",
-        title: "Cannot assign to function call - 1",
-    },
-    "raise_syntax_error31": {
-        cause: "function call and not the name of a variable",
-        title: "Cannot assign to function call - 2",
-    },
-    "raise_syntax_error32": {
-        cause: "used an equal sign `=` instead of a colon `:`",
-        title: "Used equal sign instead of colon",
-    },
-    "raise_syntax_error33": {
-        cause: "define functions with only positional arguments",
-        title: "Non-default argument follows default argument",
-    },
-    "raise_syntax_error34": {
-        cause: "call functions with only positional arguments",
-        title: "Positional argument follows keyword argument",
-    },
-    "raise_syntax_error35": {
-        cause: "you have another string, which starts with either",
-        title: "f-string: unterminated string",
-    },
-    "raise_syntax_error36": {
-        cause: "The opening square bracket `[`",
-        title: "Unclosed bracket",
-    },
-    "raise_syntax_error37": {
-        cause: "The opening square bracket `[`",
-        title: "Unexpected EOF while parsing",
-    },
-    "raise_syntax_error38": {
-        cause: "is a variable defined outside a function.",
-        title: "Name is parameter and global",
-    },
-    "raise_syntax_error39": {
-        cause: "keyword `pass` as an attribute",
-        title: "Keyword as attribute",
-    },
     "raise_syntax_error40": {
         cause: "using the continuation character",
         title: "Content passed continuation line character",
@@ -547,4 +548,4 @@ if sys.version_info >= (3, 10):
     descriptions["quote_inside_string"]["cause"] = "ended the string with another quote"
     del descriptions["missing_comma_in_set"]  # Temporary due to a bug in CPython
     del descriptions["missing_comma_in_list"]  # Temporary due to a bug in CPython
-    del descriptions["raise_syntax_error36"]  # Temporary due to a bug in CPython
+    del descriptions["unclosed_bracket"]  # Temporary due to a bug in CPython
