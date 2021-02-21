@@ -13,6 +13,22 @@ cause = "cause"
 title = "title"
 
 descriptions = {
+    "assign_name_before_global_1": {
+        cause: "before declaring it as a global variable.",
+        title: "Name assigned prior to global declaration",
+    },
+    "assign_name_before_global_2": {
+        cause: "You used the variable `r`",
+        title: "Name used prior to global declaration",
+    },
+    "assign_name_before_nonlocal_1": {
+        cause: "before declaring it as a nonlocal variable.",
+        title: "Name used prior to nonlocal declaration",
+    },
+    "assign_name_before_nonlocal_2": {
+        cause: "You assigned a value to the variable `s`",
+        title: "Name assigned prior to nonlocal declaration",
+    },
     "assign_to_debug": {
         cause: "`__debug__` is a constant in Python",
         title: "Assignment to keyword (__debug__)",
@@ -108,7 +124,7 @@ descriptions = {
         cause: "call functions with only positional arguments",
         title: "def: positional argument follows keyword argument",
     },
-    "def_tuple_as_arg_1":{
+    "def_tuple_as_arg_1": {
         cause: "You cannot have explicit tuples as arguments.",
         title: "def: tuple as function argument"
     },
@@ -225,23 +241,6 @@ descriptions = {
         title: "Mismatched brackets - 2",
     },
 
-
-    "raise_syntax_error48": {
-        cause: "before declaring it as a global variable.",
-        title: "Name assigned prior to global declaration",
-    },
-    "raise_syntax_error49": {
-        cause: "You used the variable `r`",
-        title: "Name used prior to global declaration",
-    },
-    "raise_syntax_error50": {
-        cause: "before declaring it as a nonlocal variable.",
-        title: "Name used prior to nonlocal declaration",
-    },
-    "raise_syntax_error51": {
-        cause: "You assigned a value to the variable `s`",
-        title: "Name assigned prior to nonlocal declaration",
-    },
     "raise_syntax_error52": {
         cause: "is or includes an actual object of type `set`",
         title: "Cannot assign to literal - 3",

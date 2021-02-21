@@ -192,7 +192,7 @@ def www(search=None, python=False):
             url = info["python_link"]
         else:
             message = info["message"]
-            if "ImportError" in message and "(" in message:
+            if " (" in message:
                 message = message.split("(")[0]
             url = ddg_url + quote(message)
     elif search is None:
