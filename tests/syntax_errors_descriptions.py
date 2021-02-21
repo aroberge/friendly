@@ -59,14 +59,26 @@ descriptions = {
         title: "Cannot assign to function call: two = signs",
         "other causes": ["func(...)"],
     },
+    "cannot_assign_to_literal_dict": {
+        cause: "is or includes an actual object of type `dict`",
+        title: "Cannot assign to literal - 4",
+    },
     "cannot_assign_to_literal_int": {
         cause: "is or includes an actual object of type `int`",
         title: "Cannot assign to literal int",
         "other causes": ["Perhaps you meant to write"],
     },
-    "cannot_assign_to_literal_int2": {
+    "cannot_assign_to_literal_int_2": {
         cause: "is or includes an actual object of type `int`",
         title: "Cannot assign to literal int - 2",
+    },
+    "cannot_assign_to_literal_int_3": {
+        cause: "is or includes an actual object",
+        title: "Cannot assign to literal - 5",
+    },
+    "cannot_assign_to_literal_set": {
+        cause: "is or includes an actual object of type `set`",
+        title: "Cannot assign to literal - 3",
     },
     "cannot_delete_function_call": {
         cause: "instead of deleting the function's name",
@@ -241,18 +253,6 @@ descriptions = {
         title: "Mismatched brackets - 2",
     },
 
-    "raise_syntax_error52": {
-        cause: "is or includes an actual object of type `set`",
-        title: "Cannot assign to literal - 3",
-    },
-    "raise_syntax_error53": {
-        cause: "is or includes an actual object of type `dict`",
-        title: "Cannot assign to literal - 4",
-    },
-    "raise_syntax_error54": {
-        cause: "is or includes an actual object",
-        title: "Cannot assign to literal - 5",
-    },
     "raise_syntax_error55": {  # May differ depending on Python version
         cause: "`True` is a constant in Python",
         title: "Walrus/Named assignment depending on Python version",
