@@ -797,6 +797,37 @@ def assign_to_a_keyword(statement):
 
 
 @add_statement_analyzer
+def lambda_with_paren(statement):
+    _ = current_lang.translate
+
+    if not statement.bad_token == "(":
+        return {}
+
+    if statement.prev_token == "lambda":
+        cause = _(
+            "`lambda` does not allow parentheses around its arguments.\n"
+            "This was allowed in Python 2 but it not allowed in Python 3.\n"
+        )
+        return {"cause": cause}
+
+    lambda_present = False
+    for tok in statement.tokens[: statement.bad_token_index]:
+        if tok == ":":
+            return {}
+        elif tok == "lambda":
+            lambda_present = True
+
+    if lambda_present:
+        cause = _(
+            "You cannot have explicit tuples as arguments.\n"
+            "Assign any tuple to a parameter and unpack it\n"
+            "within the body of the function.\n"
+        )
+        return {"cause": cause}
+    return {}
+
+
+@add_statement_analyzer
 def missing_comma_before_string_in_dict(statement):
     """Special case where keys and values in a dict are strings which are
     not separated by commas."""
@@ -863,6 +894,81 @@ def _perhaps_misspelled_keyword(tokens, wrong):
     if len(results) > 1:
         results = [(word, line) for word, line in results if word not in excluded]
     return results
+
+
+@add_statement_analyzer
+def missing_in_with_for(statement):
+    """Whenever we have a 'for' keyword, there should be a corresponding
+    'in' keyword. Cases where 'in' have been misspelled are taken care below.
+    """
+    _ = current_lang.translate
+
+    for tok in statement.tokens[: statement.bad_token_index]:
+        if tok == "for":
+            break
+    else:
+        return {}
+
+    new_statement = fixers.replace_token(
+        statement.tokens, statement.bad_token, "in " + statement.bad_token.string
+    )
+    if fixers.check_statement(new_statement):
+        hint = _("Did you forget to write `in`?\n")
+        cause = _(
+            "It looks as though you forgot to use the keyword `in`\n"
+            "as part of a `for` statement. Perhaps you meant:\n\n"
+            "    {new_statement}\n\n"
+        ).format(new_statement=new_statement)
+        return {"cause": cause, "suggest": hint}
+    return {}
+
+
+def misspelled_python_keyword(tokens, bad_token):
+    _ = current_lang.translate
+
+    results = _perhaps_misspelled_keyword(tokens, bad_token)
+    if not results:
+        return {}
+
+    if len(results) == 1:
+        word, line = results[0]
+        hint = _("Did you mean `{line}`?\n").format(line=line)
+
+        cause = _(
+            "Perhaps you meant to write `{keyword}` and made a typo.\n"
+            "The correct line would then be `{line}`\n"
+        ).format(keyword=word, line=line)
+    else:
+        lines = [line for _word, line in results]
+        hint = _("Did you mean `{line}`?\n").format(line=lines[0])
+
+        cause = _(
+            "Perhaps you wrote another word instead of a Python keyword.\n"
+            "If that is the case, perhaps you meant to write one of\n"
+            "the following lines of code which might not raise a `SyntaxError`:\n\n"
+        )
+        for line in lines:
+            cause += f"    {line}\n"
+
+    return {"cause": cause, "suggest": hint}
+
+
+@add_statement_analyzer
+def current_is_misspelled_python_keyword(statement):
+    _ = current_lang.translate
+
+    if not statement.bad_token.is_identifier():
+        return {}
+    return misspelled_python_keyword(statement.tokens, statement.bad_token)
+
+
+@add_statement_analyzer
+def previous_is_misspelled_python_keyword(statement):
+    _ = current_lang.translate
+
+    if not statement.prev_token.is_identifier():
+        return {}
+    return misspelled_python_keyword(statement.tokens, statement.prev_token)
 
 
 def _add_comma_or_operator(tokens, tok, comma_first=True):
@@ -1063,54 +1169,6 @@ def missing_comma_or_operator(statement):
         return {"cause": cause}
     else:
         return {"cause": cause, "suggest": hint}
-
-
-def misspelled_python_keyword(tokens, bad_token):
-    _ = current_lang.translate
-
-    results = _perhaps_misspelled_keyword(tokens, bad_token)
-    if not results:
-        return {}
-
-    if len(results) == 1:
-        word, line = results[0]
-        hint = _("Did you mean `{line}`?\n").format(line=line)
-
-        cause = _(
-            "Perhaps you meant to write `{keyword}` and made a typo.\n"
-            "The correct line would then be `{line}`\n"
-        ).format(keyword=word, line=line)
-    else:
-        lines = [line for _word, line in results]
-        hint = _("Did you mean `{line}`?\n").format(line=lines[0])
-
-        cause = _(
-            "Perhaps you wrote another word instead of a Python keyword.\n"
-            "If that is the case, perhaps you meant to write one of\n"
-            "the following lines of code which might not raise a `SyntaxError`:\n\n"
-        )
-        for line in lines:
-            cause += f"    {line}\n"
-
-    return {"cause": cause, "suggest": hint}
-
-
-@add_statement_analyzer
-def current_is_misspelled_python_keyword(statement):
-    _ = current_lang.translate
-
-    if not statement.bad_token.is_identifier():
-        return {}
-    return misspelled_python_keyword(statement.tokens, statement.bad_token)
-
-
-@add_statement_analyzer
-def previous_is_misspelled_python_keyword(statement):
-    _ = current_lang.translate
-
-    if not statement.prev_token.is_identifier():
-        return {}
-    return misspelled_python_keyword(statement.tokens, statement.prev_token)
 
 
 @add_statement_analyzer

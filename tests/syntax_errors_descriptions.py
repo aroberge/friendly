@@ -52,6 +52,10 @@ descriptions = {
         cause: "is or includes an actual object of type `int`",
         title: "Cannot assign to literal int - 2",
     },
+    "cannot_delete_function_call": {
+        cause: "instead of deleting the function's name",
+        title: "Cannot delete function call",
+    },
     "continue_outside_loop": {
         cause: "The Python keyword `continue` can only be used",
         title: "continue outside loop",
@@ -59,6 +63,22 @@ descriptions = {
     "def_code_block": {
         cause: "tried to define a function",
         title: "def: misused as code block",
+    },
+    "def_keyword_as_arg_1": {
+        cause: "as an argument in the definition of a function",
+        title: "def: keyword cannot be argument in def - 1",
+    },
+    "def_keyword_as_arg_2": {
+        cause: "as an argument in the definition of a function",
+        title: "def: keyword cannot be argument in def - 2",
+    },
+    "def_keyword_as_arg_3": {
+        cause: "as an argument in the definition of a function",
+        title: "def: keyword cannot be argument in def - 3",
+    },
+    "def_keyword_as_arg_4": {
+        cause: "as an argument in the definition of a function",
+        title: "def: keyword cannot be argument in def - 4",
     },
     "def_keyword_as_name": {
         cause: "You tried to use the Python keyword",
@@ -112,9 +132,25 @@ descriptions = {
         cause: "from turtle import pen",
         title: "Import inversion: import X from Y",
     },
+    "invalid_character_in_identifier": {
+        cause: "unicode character",
+        title: "Invalid character in identifier",
+    },
+    "invalid_keyword_argument": {
+        cause: "where `invalid` is not a valid ",
+        title: "Keyword can't be an expression",
+    },
     "keyword_as_attribute": {
         cause: "keyword `pass` as an attribute",
         title: "Keyword as attribute",
+    },
+    "lambda_with_parens": {
+        cause: "`lambda` does not allow parentheses ",
+        title: "lambda with parentheses around arguments"
+    },
+    "lambda_with_tuple_argument": {
+        cause: "You cannot have explicit tuples as arguments.",
+        title: "lambda with tuple as argument"
     },
     "missing_colon_if": {
         cause: "`if` but forgot to add a colon `:`",
@@ -182,35 +218,6 @@ descriptions = {
     },
 
 
-
-    "raise_syntax_error41": {
-        cause: "where `invalid` is not a valid variable name in Python",
-        title: "Keyword can't be an expression",
-    },
-    "raise_syntax_error42": {
-        cause: "unicode character",
-        title: "Invalid character in identifier",
-    },
-    "raise_syntax_error43": {
-        cause: "as an argument in the definition of a function",
-        title: "Keyword cannot be argument in def - 1",
-    },
-    "raise_syntax_error44": {
-        cause: "as an argument in the definition of a function",
-        title: "Keyword cannot be argument in def - 2",
-    },
-    "raise_syntax_error45": {
-        cause: "as an argument in the definition of a function",
-        title: "Keyword cannot be argument in def - 3",
-    },
-    "raise_syntax_error46": {
-        cause: "as an argument in the definition of a function",
-        title: "Keyword cannot be argument in def - 4",
-    },
-    "raise_syntax_error47": {
-        cause: "instead of deleting the function's name",
-        title: "Delete function call",
-    },
     "raise_syntax_error48": {
         cause: "before declaring it as a global variable.",
         title: "Name assigned prior to global declaration",
