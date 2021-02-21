@@ -1073,6 +1073,10 @@ def missing_comma_or_operator(statement):
             or statement.first_token == "class"
         ):
             operator, line = results[0]
+            # reducing multiple spaces to single space
+            temp = line.split(" ")
+            temp = [x for x in temp if x]
+            line = " ".join(temp)
             if "," in operator:
                 hint = _("Did you forget a comma?\n")
                 cause = possible_cause + comma_first_cause

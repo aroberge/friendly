@@ -109,13 +109,14 @@ def assign_to_conditional_expression(message="", **_kwargs):
         message == "can't assign to conditional expression"  # Python 3.6, 3.7
         or message == "cannot assign to conditional expression"  # Python 3.8
     ):
+        hint = _("You can only assign objects to identifiers (variable names).\n")
         cause = _(
             "On the left-hand side of an equal sign, you have a\n"
             "conditional expression instead of the name of a variable.\n"
             "A conditional expression has the following form:\n\n"
             "    variable = object if condition else other_object"
         )
-        return {"cause": cause}
+        return {"cause": cause, "suggest": hint}
     return {}
 
 
@@ -127,6 +128,8 @@ def assign_to_function_call(message="", statement=None):
         and message != "cannot assign to function call"  # Python 3.8
     ):
         return {}
+
+    hint = _("You can only assign objects to identifiers (variable names).\n")
 
     fn_call = statement.bad_token.string + "(...)"
     line = statement.bad_line
@@ -143,7 +146,7 @@ def assign_to_function_call(message="", statement=None):
             "a function call and not the name of a variable.\n"
         ).format(fn_call=fn_call, value=value)
 
-        return {"cause": cause}
+        return {"cause": cause, "suggest": hint}
 
     info = line.split("=")
     fn_call = info[0].strip()
@@ -154,7 +157,7 @@ def assign_to_function_call(message="", statement=None):
         "where `{fn_call}`, on the left-hand side of the equal sign, either is\n"
         "or includes a function call and is not simply the name of a variable.\n"
     ).format(fn_call=fn_call, value=value)
-    return {"cause": cause}
+    return {"cause": cause, "suggest": hint}
 
 
 @add_python_message
@@ -164,11 +167,12 @@ def assign_to_generator_expression(message="", **_kwargs):
         message == "can't assign to generator expression"  # Python 3.6, 3.7
         or message == "cannot assign to generator expression"  # Python 3.8
     ):
+        hint = _("You can only assign objects to identifiers (variable names).\n")
         cause = _(
             "On the left-hand side of an equal sign, you have a\n"
             "generator expression instead of the name of a variable.\n"
         )
-        return {"cause": cause}
+        return {"cause": cause, "suggest": hint}
     return {}
 
 
@@ -177,13 +181,14 @@ def assign_to_f_expression(message="", statement=None):
     _ = current_lang.translate
 
     if message == "cannot assign to f-string expression":
+        hint = _("You can only assign objects to identifiers (variable names).\n")
         cause = _(
             "You wrote an expression that has the f-string `{fstring}`\n"
             "on the left-hand side of the equal sign.\n"
             "An f-string should only appear on the right-hand "
             "side of an equal sign.\n"
         ).format(fstring=statement.bad_token)
-        return {"cause": cause}
+        return {"cause": cause, "suggest": hint}
     return {}
 
 
@@ -291,7 +296,7 @@ def assign_to_literal(message="", statement=None):
             # fmt: on
         else:
             suggest = "\n"
-            hint = None
+            hint = _("You can only assign objects to identifiers (variable names).\n")
 
         # Impose the right type when we know it.
         if message == "cannot assign to set display":
@@ -316,9 +321,7 @@ def assign_to_literal(message="", statement=None):
             ).format(literal=literal, name=name, of_type=of_type)
             + suggest
         )
-        if hint:
-            return {"cause": cause, "suggest": hint}
-        return {"cause": cause}
+        return {"cause": cause, "suggest": hint}
     return {}
 
 
@@ -343,7 +346,8 @@ def assign_to_operator(message="", statement=None):
             ).format(name=name, original=name.replace("_", "-"))
             return {"cause": cause, "suggest": hint}
         else:
-            return {"cause": cause}
+            hint = _("You can only assign objects to identifiers (variable names).\n")
+            return {"cause": cause, "suggest": hint}
 
     return {}
 
