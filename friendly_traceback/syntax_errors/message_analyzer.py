@@ -490,11 +490,11 @@ def expression_cannot_contain_assignment(message="", **_kwargs):
     if "expression cannot contain assignment, perhaps you meant" not in message:
         return {}
     cause = _(
-        "One of the following two possibilities could be the cause:\n"
-        "1. You meant to do a comparison with == and wrote = instead.\n"
-        "2. You called a function with a named argument:\n\n"
-        "       a_function(invalid=something)\n\n"
-        "where `invalid` is not a valid variable name in Python\n"
+        "One of the following two possibilities could be the cause:\n\n"
+        "(1) You meant to do a comparison with == and wrote = instead.\n\n"
+        "(2) You called a function with a named argument:\n\n"
+        "    a_function(invalid=...)\n\n"
+        "where `invalid` is not a valid identifier (variable name) in Python\n"
         "either because it starts with a number, or is a string,\n"
         "or contains a period, etc.\n"
         "\n"
@@ -1034,7 +1034,7 @@ def eof_unclosed_triple_quoted(message="", **_kwargs):
 def proper_decimal_or_octal_number(prev_str, bad_str):
     # see next two cases
     _ = current_lang.translate
-    if not (set(prev_str).issubset("_0") and prev_str.startswith("0")):
+    if not (set(prev_str).issubset("_0") and prev_str.startswith("0")):  # noqa
         return {}
 
     if prev_str == "0" and set(bad_str).issubset("01234567_"):

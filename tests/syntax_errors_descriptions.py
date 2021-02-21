@@ -160,6 +160,10 @@ descriptions = {
         cause: "The opening parenthesis `(` on line",
         title: "Unclosed parenthesis - 2",
     },
+    "unexpected_after_continuation_character": {
+        cause: "using the continuation character",
+        title: "Content passed continuation line character",
+    },
     "unexpected_eof": {
         cause: "The opening square bracket `[`",
         title: "Unexpected EOF while parsing",
@@ -179,10 +183,6 @@ descriptions = {
 
 
 
-    "raise_syntax_error40": {
-        cause: "using the continuation character",
-        title: "Content passed continuation line character",
-    },
     "raise_syntax_error41": {
         cause: "where `invalid` is not a valid variable name in Python",
         title: "Keyword can't be an expression",
