@@ -386,3 +386,18 @@ def string_as_argument(statement):
         "However, there might be other syntax errors in your function definition.\n"
     )
     return {"cause": cause, "suggest": hint}
+
+
+@add_statement_analyzer
+def tuple_as_argument(statement):
+    _ = current_lang.translate
+
+    if not (statement.bad_token == "(" and statement.prev_token.is_in("(,")):
+        return {}
+
+    cause = _(
+        "You cannot have explicit tuples as arguments.\n"
+        "Assign any tuple to a parameter and unpack it\n"
+        "within the body of the function.\n"
+    )
+    return {"cause": cause}

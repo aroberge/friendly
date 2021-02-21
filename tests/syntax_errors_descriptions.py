@@ -106,7 +106,15 @@ descriptions = {
     },
     "def_positional_after_keyword_arg": {
         cause: "call functions with only positional arguments",
-        title: "Positional argument follows keyword argument",
+        title: "def: positional argument follows keyword argument",
+    },
+    "def_tuple_as_arg_1":{
+        cause: "You cannot have explicit tuples as arguments.",
+        title: "def: tuple as function argument"
+    },
+    "def_tuple_as_arg_2": {
+        cause: "You cannot have explicit tuples as arguments.",
+        title: "def: tuple as function argument - 2"
     },
     "else_if_instead_of_elif": {
         cause: "wrote `else if` instead",
