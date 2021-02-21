@@ -259,6 +259,31 @@ def misplaced_quote(statement):
 
 
 @add_statement_analyzer
+def triple_equal(statement):
+    _ = current_lang.translate
+    # TODO: add test for this
+    if not (
+        statement.bad_token == "="
+        and statement.prev_token == "=="
+        and statement.prev_token.immediately_before(statement.bad_token)
+    ):
+        return {}
+
+    hint = _("Did you mean to use `==` or `is`?\n")
+
+    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "")
+    cause = _(
+        "`===` is not an operator in Python.\n"
+        "Python uses `==` to compare if two objects are equal and\n"
+        "the `is` keyword to see if two names represent the exact same object.\n"
+    )
+    if fixers.check_statement(new_statement):
+        return {"cause": cause, "suggest": hint}
+    else:
+        return {"cause": cause + more_errors(), "suggest": hint}
+
+
+@add_statement_analyzer
 def space_between_operators(statement):
     """Detect if some space has been inserted between two operators"""
     _ = current_lang.translate
@@ -434,9 +459,6 @@ def assign_instead_of_equal(statement):
         return {"cause": cause + additional_cause, "suggest": hint}
 
 
-# TODO: add triple equal.
-
-
 @add_statement_analyzer
 def print_as_statement(statement):
     _ = current_lang.translate
@@ -475,7 +497,12 @@ def calling_pip(statement):
         if tok == "pip":
             hint = _("Pip cannot be used in a Python interpreter.\n")
             return {"cause": cause, "suggest": hint}
-    return {}
+
+    cause = _(
+        "I am guessing that you are attempting to use Python to run a program.\n"
+        "You must do so from a terminal and not from a Python interpreter.\n"
+    )
+    return {"cause": cause}
 
 
 @add_statement_analyzer
