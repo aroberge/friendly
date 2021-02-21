@@ -29,6 +29,10 @@ descriptions = {
         cause: "`None` is a constant in Python",
         title: "Assignment to keyword (None)",
     },
+    "break_outside_loop": {
+        cause: "The Python keyword `break` can only be used",
+        title: "break outside loop",
+    },
     "cannot_assign_to_literal_int": {
         cause: "is or includes an actual object of type `int`",
         title: "Cannot assign to literal int",
@@ -38,9 +42,21 @@ descriptions = {
         cause: "is or includes an actual object of type `int`",
         title: "Cannot assign to literal int - 2",
     },
+    "continue_outside_loop": {
+        cause: "The Python keyword `continue` can only be used",
+        title: "continue outside loop",
+    },
     "def_code_block": {
         cause: "tried to define a function",
         title: "def: misused as code block",
+    },
+    "def_keyword_as_name": {
+        cause: "You tried to use the Python keyword",
+        title: "def: Python keyword as function name",
+    },
+    "def_missing_comma": {
+        cause: "Did you forget a comma",
+        title: "def: missing comma between function args",
     },
     "def_missing_parens": {
         cause: "Did you forget parentheses?",
@@ -74,6 +90,30 @@ descriptions = {
         cause: "wrote a `while` loop but",
         title: "Missing colon - while",
     },
+    "missing_comma_in_dict": {
+        cause: "forgot a comma",
+        title: "Missing comma in a dict",
+    },
+    "missing_comma_in_list": {
+        cause: "The following lines of code",
+        title: "Missing comma in a list",
+    },
+    "missing_comma_in_set": {
+        cause: "The following lines of code",
+        title: "Missing comma in a set",
+    },
+    "missing_comma_in_tuple": {
+        cause: "The following lines of code",
+        title: "Missing comma in a tuple",
+    },
+    "print_is_a_function": {
+        cause: "In older version of Python, `print` was a keyword",
+        title: "print is a function",
+    },
+    "quote_inside_string": {
+        cause: "quote inside a string",
+        title: "Quote inside a string",
+    },
     "unclosed_paren_1": {
         cause: "The opening parenthesis `(` on line",
         title: "Unclosed parenthesis - 1",
@@ -95,46 +135,9 @@ descriptions = {
         title: "Mismatched brackets - 2",
     },
 
-    "raise_syntax_error20": {
-        cause: "In older version of Python, `print` was a keyword",
-        title: "print is a function",
-    },
-    "raise_syntax_error21": {
-        cause: "You tried to use the Python keyword",
-        title: "Python keyword as function name",
-    },
-    "raise_syntax_error22": {
-        cause: "The Python keyword `break` can only be used",
-        title: "break outside loop",
-    },
-    "raise_syntax_error23": {
-        cause: "The Python keyword `continue` can only be used",
-        title: "continue outside loop",
-    },
-    "raise_syntax_error24": {
-        cause: "quote inside a string",
-        title: "Quote inside a string",
-    },
-    "raise_syntax_error25": {
-        cause: "forgot a comma",
-        title: "Missing comma in a dict",
-    },
-    "raise_syntax_error26": {
-        cause: "The following lines of code",
-        title: "Missing comma in a set",
-    },
-    "raise_syntax_error27": {
-        cause: "The following lines of code",
-        title: "Missing comma in a list",
-    },
-    "raise_syntax_error28": {
-        cause: "The following lines of code",
-        title: "Missing comma in a tuple",
-    },
-    "raise_syntax_error29": {
-        cause: "Did you forget a comma",
-        title: "Missing comma between function args",
-    },
+
+
+
     "raise_syntax_error30": {
         cause: "function call and is not simply the name of a variable",
         title: "Cannot assign to function call - 1",
@@ -541,7 +544,7 @@ if sys.version_info >= (3, 9):
     descriptions["raise_syntax_error66"]["cause"] = "expected an indented block"
 
 if sys.version_info >= (3, 10):
-    descriptions["raise_syntax_error24"]["cause"] = "ended the string with another quote"
-    del descriptions["raise_syntax_error26"]  # Temporary due to a bug in CPython
-    del descriptions["raise_syntax_error27"]  # Temporary due to a bug in CPython
+    descriptions["quote_inside_string"]["cause"] = "ended the string with another quote"
+    del descriptions["missing_comma_in_set"]  # Temporary due to a bug in CPython
+    del descriptions["missing_comma_in_list"]  # Temporary due to a bug in CPython
     del descriptions["raise_syntax_error36"]  # Temporary due to a bug in CPython
