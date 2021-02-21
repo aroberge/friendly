@@ -13,13 +13,21 @@ cause = "cause"
 title = "title"
 
 descriptions = {
-    "assign_to_keyword_else": {  # else is flagged
-        cause: "assign a value to the Python keyword `else`",
-        title: "Assign to keyword else",
+    "assign_to_debug": {
+        cause: "`__debug__` is a constant in Python",
+        title: "Assignment to keyword (__debug__)",
     },
     "assign_to_keyword_def": {  # = sign is flagged
         cause: "assign a value to the Python keyword `def`",
         title: "Assign to keyword def",
+    },
+    "assign_to_keyword_else": {  # else is flagged
+        cause: "assign a value to the Python keyword `else`",
+        title: "Assign to keyword else",
+    },
+    "assign_to_keyword_none": {
+        cause: "`None` is a constant in Python",
+        title: "Assignment to keyword (None)",
     },
     "cannot_assign_to_literal_int": {
         cause: "is or includes an actual object of type `int`",
@@ -50,6 +58,14 @@ descriptions = {
         cause: "wrote `elseif` instead",
         title: "Write elif, not elseif",
     },
+    "eol_string_literal": {
+        cause: "ended the string with another quote",
+        title: "EOL while scanning string literal",
+    },
+    "import_from": {
+        cause: "from turtle import pen",
+        title: "Import inversion: import X from Y",
+    },
     "missing_colon_if": {
         cause: "`if` but forgot to add a colon `:`",
         title: "Missing colon - if",
@@ -58,62 +74,27 @@ descriptions = {
         cause: "wrote a `while` loop but",
         title: "Missing colon - while",
     },
-    "raise_indentation_error1": {
-        cause: "expected to begin a new indented block",
-        title: "IndentationError: expected an indented block",
-    },
-    "raise_indentation_error2": {
-        cause: "is more indented than expected",
-        title: "IndentationError: unexpected indent",
-    },
-    "raise_indentation_error3": {
-        cause: "is less indented than expected",
-        title: "IndentationError: unindent does not match ...",
-    },
-    "raise_indentation_error4": {
-        cause: "meant to include a continuation character",
-        title: "IndentationError: missing continuation line",
-    },
-    "raise_tab_error": {
-        cause: "A `TabError` indicates that you have used",
-        title: "TabError",
-    },
-    "raise_syntax_error11": {
-        cause: "from turtle import pen",
-        title: "Inversion: import X from Y",
-    },
-    "raise_syntax_error12": {
-        cause: "ended the string with another quote",
-        title: "EOL while scanning string literal",
-    },
-    "raise_syntax_error13": {
-        cause: "`None` is a constant in Python",
-        title: "Assignment to keyword (None)",
-    },
-    "raise_syntax_error14": {
-        cause: "`__debug__` is a constant in Python",
-        title: "Assignment to keyword (__debug__)",
-    },
-    "raise_syntax_error15": {
-        cause: "The closing parenthesis `)` on",
-        title: "Unmatched closing parenthesis",
-    },
-    "raise_syntax_error16": {
+    "unclosed_paren_1": {
         cause: "The opening parenthesis `(` on line",
         title: "Unclosed parenthesis - 1",
     },
-    "raise_syntax_error17": {
+    "unclosed_paren_2": {
         cause: "The opening parenthesis `(` on line",
         title: "Unclosed parenthesis - 2",
     },
-    "raise_syntax_error18": {
+    "unmatched_closing_paren": {
+        cause: "The closing parenthesis `)` on",
+        title: "Unmatched closing parenthesis",
+    },
+    "unmatched_closing_bracket_1": {
         cause: "The closing square bracket `]` on line",
         title: "Mismatched brackets - 1",
     },
-    "raise_syntax_error19": {
+    "unmatched_closing_bracket_2": {
         cause: "The closing square bracket `]` on line",
         title: "Mismatched brackets - 2",
     },
+
     "raise_syntax_error20": {
         cause: "In older version of Python, `print` was a keyword",
         title: "print is a function",
@@ -523,6 +504,26 @@ descriptions = {
         cause: "I suspect that you used a string as an argument",
         title: "String and number used as arg in function def",
         "other causes": ["there might be other syntax errors"],
+    },
+    "raise_indentation_error1": {
+        cause: "expected to begin a new indented block",
+        title: "IndentationError: expected an indented block",
+    },
+    "raise_indentation_error2": {
+        cause: "is more indented than expected",
+        title: "IndentationError: unexpected indent",
+    },
+    "raise_indentation_error3": {
+        cause: "is less indented than expected",
+        title: "IndentationError: unindent does not match ...",
+    },
+    "raise_indentation_error4": {
+        cause: "meant to include a continuation character",
+        title: "IndentationError: missing continuation line",
+    },
+    "raise_tab_error": {
+        cause: "A `TabError` indicates that you have used",
+        title: "TabError",
     },
 }
 
