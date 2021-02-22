@@ -491,7 +491,7 @@ def print_as_statement(statement):
 
 
 @add_statement_analyzer
-def calling_pip(statement):
+def calling_python_or_pip(statement):
     _ = current_lang.translate
     if not statement.first_token.is_in(["pip", "python"]):
         return {}
@@ -811,21 +811,58 @@ def lambda_with_paren(statement):
         )
         return {"cause": cause}
 
-    lambda_present = False
-    for tok in statement.tokens[: statement.bad_token_index]:
-        if tok == ":":
+    tokens = list(statement.tokens[0 : statement.bad_token_index])
+    tokens.reverse()
+    for tok in tokens:
+        if tok == "lambda":
+            break
+        elif tok.is_identifier() or tok == ",":
+            continue
+        else:
             return {}
-        elif tok == "lambda":
-            lambda_present = True
+    else:
+        return {}
 
-    if lambda_present:
-        cause = _(
-            "You cannot have explicit tuples as arguments.\n"
-            "Assign any tuple to a parameter and unpack it\n"
-            "within the body of the function.\n"
+    cause = _(
+        "You cannot have explicit tuples as arguments.\n"
+        "Assign any tuple to a parameter and unpack it\n"
+        "within the body of the function.\n"
+    )
+    return {"cause": cause}
+
+
+@add_statement_analyzer
+def wrong_type_declaration(statement):
+    _ = current_lang.translate
+
+    if not statement.bad_token.is_identifier():
+        return {}
+    if not statement.prev_token.is_in(
+        ["int", "float", "double", "var", "let", "str", "string", "complex"]
+    ):
+        return {}
+
+    new_statement = fixers.replace_token(statement.tokens, statement.prev_token, "")
+    if fixers.check_statement(new_statement):
+        additional = _(
+            "If you remove `{type_decl}`, you will have a valid Python statement.\n"
         )
-        return {"cause": cause}
-    return {}
+    else:
+        additional = _(
+            "However, even if you remove `{type_decl}`, there would still be some\n"
+            "some syntax errors.\n"
+        )
+
+    hint = _("You do not need to declare variables in Python.\n")
+    cause = _(
+        "It looks like you were trying to declare that `{var}` was\n"
+        "a variable using the word `{type_decl}`.\n"
+    ).format(
+        var=statement.bad_token, type_decl=statement.prev_token
+    ) + additional.format(
+        type_decl=statement.prev_token
+    )
+    return {"cause": cause, "suggest": hint}
 
 
 @add_statement_analyzer
@@ -972,6 +1009,48 @@ def previous_is_misspelled_python_keyword(statement):
     return misspelled_python_keyword(statement.tokens, statement.prev_token)
 
 
+@add_statement_analyzer
+def space_in_variable_name(statement):
+    # Looking for spaces in variable name assignments, like
+    # my name = André
+    _ = current_lang.translate
+
+    if not (
+        statement.bad_token.is_identifier()
+        and statement.prev_token.is_identifier
+        and statement.prev_token is statement.first_token
+    ):
+        return {}
+
+    first_tokens = []
+    for tok in statement.tokens:
+        if tok == "=" or tok == ":=":
+            cause = _("You cannot have spaces in identifiers (variable names).\n")
+            hint = _("Did you mean `{name}`?\n").format(name="_".join(first_tokens))
+            return {"cause": cause, "suggest": hint}
+        elif not tok.is_identifier():
+            return {}
+        else:
+            first_tokens.append(tok.string)
+    return {}
+
+
+@add_statement_analyzer
+def impossible_binary_fstring(statement):
+    _ = current_lang.translate
+    if (
+        statement.bad_token.is_string()
+        and statement.prev_token.is_in(["bf", "fb"])
+        and statement.prev_token.immediately_before(statement.bad_token)
+    ):
+        hint = _("`bf` is an illegal string prefix.\n")
+        cause = _(
+            "I am guessing that you wanted a binary f-string;\n"
+            "this is not allowed.\n"
+        )
+        return {"cause": cause, "suggest": hint}
+
+
 def _add_comma_or_operator(tokens, tok, comma_first=True):
     if comma_first:
         operators = ",", " +", " -", " *", " in"
@@ -1017,32 +1096,16 @@ def missing_comma_or_operator(statement):
     """Check to see if a comma or other operator
     is possibly missing between identifiers, or numbers, or both.
     """
-    # TODO: refactor this
     _ = current_lang.translate
 
     bad_token = statement.bad_token
-    if not (
-        bad_token.is_identifier() or bad_token.is_number() or bad_token.is_string()
-    ):
-        return {}
-
     prev_token = statement.prev_token
     if not (
+        bad_token.is_identifier() or bad_token.is_number() or bad_token.is_string()
+    ) and not (
         prev_token.is_identifier() or prev_token.is_number() or prev_token.is_string()
     ):
         return {}
-
-    if (
-        bad_token.is_string()
-        and (prev_token == "bf" or prev_token == "fb")
-        and prev_token.immediately_before(bad_token)
-    ):
-        hint = _("`bf` is an illegal string prefix.\n")
-        cause = _(
-            "I am guessing that you wanted a binary f-string;\n"
-            "this is not allowed.\n"
-        )
-        return {"cause": cause, "suggest": hint}
 
     possible_cause = _(
         "Python indicates that the error is caused by "
@@ -1062,118 +1125,61 @@ def missing_comma_or_operator(statement):
     results = _add_comma_or_operator(
         statement.tokens, prev_token, comma_first=comma_first
     )
-
-    cause = hint = None
-
-    if results:
-        if (
-            len(results) == 1
-            # Note: "async def" statements are transformed into "def" statements
-            # prior to reaching this stage.
-            or statement.first_token == "def"
-            or statement.first_token == "class"
-        ):
-            operator, line = results[0]
-            # reducing multiple spaces to single space
-            temp = line.split(" ")
-            temp = [x for x in temp if x]
-            line = " ".join(temp)
-            if "," in operator:
-                hint = _("Did you forget a comma?\n")
-                cause = possible_cause + comma_first_cause
-                cause += _("Perhaps you meant\n\n    {line}\n").format(line=line)
-            else:
-                hint = _("Did you mean `{line}`?\n").format(line=line)
-                cause = possible_cause
-        else:
-            operators = [operator for operator, line in results]
-            lines = [line for operator, line in results]
-            hint = _(
-                "Did you forget something between `{first}` and `{second}`?\n"
-            ).format(first=prev_token, second=bad_token)
-
-            # The list of operators might include a comma; it is better to separate
-            # items by semi-colons
-            if comma_first:
-                operators = operators[1:]
-                operators = utils.list_to_string(operators)
-            else:
-                operators = utils.list_to_string(operators, sep="; ")
-
-            cause = (
-                possible_cause
-                + comma_first_cause
-                + _(
-                    "Perhaps you meant to insert an operator like `{operators}`\n"
-                    "between `{first}` and `{second}`.\n"
-                    "The following lines of code would not cause any `SyntaxError`:\n\n"
-                ).format(first=prev_token, second=bad_token, operators=operators)
-            )
-            for line in lines:
-                cause += f"    {line}\n"
-
-            cause += _(
-                "Note: these are just some of the possible choices and that\n"
-                "some of them might raise other types of exceptions.\n"
-            )
-
-    # special case; something like
-    # my name = "André"
-    # instead of  my_name = ...
-    # See more general handling in space_in_identifiers() below
-    if cause and prev_token is statement.first_token:
-        first_tokens = []
-        line = None
-        for tok in statement.tokens:
-            if tok == "=":
-                line = token_utils.untokenize(statement.tokens)
-                begin, end = line.split("=", 1)
-                line = "_".join(first_tokens) + " =" + end
-                cause += (
-                    "\n"
-                    + _(
-                        "Or perhaps you forgot that you cannot have spaces\n"
-                        "in variable names.\n"
-                    )
-                    + f"\n\n    {line}\n"
-                )
-                break
-            elif not tok.is_identifier():
-                break
-            else:
-                first_tokens.append(tok.string)
-        if line:
-            hint = _("Did you mean `{line}`?\n").format(line=line)
-    elif prev_token.is_identifier():
-        new_statement = fixers.replace_two_tokens(
-            statement.tokens,
-            prev_token,
-            prev_token.string + "_" + bad_token.string,
-            bad_token,
-            "",
-        )
-        if fixers.check_statement(new_statement):
-            if cause is None:
-                cause = ""
-            cause += _(
-                "Perhaps you forgot that you cannot have spaces\n"
-                "in variable names and wrote `'{first} {second}'`\n"
-                "instead of `'{first}_{second}'`.\n"
-            ).format(first=prev_token, second=bad_token)
-        if hint is None:
-            hint = _("Did you mean `'{first}_{second}'`?\n").format(
-                first=prev_token, second=bad_token
-            )
-        elif statement.first_token != "def" and statement.first_token != "class":
-            hint = _("Did you mean `'{first}_{second}'`?\n").format(
-                first=prev_token, second=bad_token
-            )
-    if cause is None:
+    if not results:
         return {}
-    elif hint is None:
-        return {"cause": cause}
+
+    if (
+        len(results) == 1
+        # Note: "async def" statements should have been transformed
+        # into "def" statements prior to reaching this stage.
+        or statement.first_token == "def"
+        or statement.first_token == "class"
+    ):
+        operator, line = results[0]
+        # reducing multiple spaces to single space for nicer display
+        temp = line.split(" ")
+        temp = [x for x in temp if x]
+        line = " ".join(temp)
+        if "," in operator:
+            hint = _("Did you forget a comma?\n")
+            cause = possible_cause + comma_first_cause
+            cause += _("Perhaps you meant\n\n    {line}\n").format(line=line)
+        else:
+            hint = _("Did you mean `{line}`?\n").format(line=line)
+            cause = possible_cause
     else:
-        return {"cause": cause, "suggest": hint}
+        operators = [operator for operator, line in results]
+        lines = [line for operator, line in results]
+        hint = _("Did you forget something between `{first}` and `{second}`?\n").format(
+            first=prev_token, second=bad_token
+        )
+
+        # The list of operators might include a comma; it is better to separate
+        # items by semi-colons
+        if comma_first:
+            operators = operators[1:]
+            operators = utils.list_to_string(operators)
+        else:
+            operators = utils.list_to_string(operators, sep="; ")
+
+        cause = (
+            possible_cause
+            + comma_first_cause
+            + _(
+                "Perhaps you meant to insert an operator like `{operators}`\n"
+                "between `{first}` and `{second}`.\n"
+                "The following lines of code would not cause any `SyntaxError`:\n\n"
+            ).format(first=prev_token, second=bad_token, operators=operators)
+        )
+        for line in lines:
+            cause += f"    {line}\n"
+
+        cause += _(
+            "Note: these are just some of the possible choices and that\n"
+            "some of them might raise other types of exceptions.\n"
+        )
+
+    return {"cause": cause, "suggest": hint}
 
 
 @add_statement_analyzer

@@ -430,8 +430,8 @@ descriptions = {
         title: "Triple-equal sign",
     },
     "raise_syntax_error99": {
-        cause: "you forgot that you cannot have spaces",
-        title: "Two consecutive names",
+        cause: "You do not need to declare variables in Python.",
+        title: "Would-be variable declaration",
     },
     "raise_syntax_error100": {
         cause: "only be used for boolean expressions",
@@ -442,8 +442,8 @@ descriptions = {
         title: "Annotated name cannot be global",
     },
     "raise_syntax_error102": {
-        cause: "you forgot that you cannot have spaces",
-        title: "Two consecutive names",
+        cause: "You do not need to declare variables in Python.",
+        title: "Would-be variable declaration - 2",
     },
     "raise_syntax_error103": {
         cause: "You cannot delete the constant",

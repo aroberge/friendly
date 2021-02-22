@@ -430,6 +430,15 @@ def operator_as_argument(statement):
     if statement.prev_token.is_in("(,"):
         hint = _("You cannot have operators as function arguments.\n")
     else:
+        new_statement = fixers.replace_token(statement.tokens, statement.bad_token, ",")
+        if fixers.check_statement(new_statement):
+            hint = _("Did you mean to write a comma?\n")
+            cause = _(
+                "I suspect you made a typo and wrote `{op}` instead of a comma.\n"
+                "The following statement contains no syntax error:\n\n"
+                "    {new_statement}"
+            ).format(op=statement.bad_token, new_statement=new_statement)
+            return {"cause": cause, "suggest": hint}
         hint = _("You cannot use operators with function arguments.\n")
     cause = hint + _(
         "You can only use identifiers (variable names) as function arguments.\n"
