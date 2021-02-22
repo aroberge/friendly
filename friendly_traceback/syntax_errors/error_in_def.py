@@ -12,6 +12,10 @@ STATEMENT_ANALYZERS = []
 
 
 def def_correct_syntax():
+    # Note that a valid function definition must have at least 5 tokens.
+    # We make use of this in our analysis below, to ensure that we are
+    # making the proper identification of a mistake, as we go through the
+    # various possible cases.
     _ = current_lang.translate
     # fmt: off
     return _(
@@ -48,6 +52,10 @@ def analyze_def_statement(statement):
         statement = remove_async(statement)
         if statement is None:
             return {}
+
+    if statement.tokens[1] == "=" or statement.tokens[1] == ":=":
+        # Let the generic method handle the wrong assignment case
+        return {}
 
     for analyzer in STATEMENT_ANALYZERS:
         cause = analyzer(statement)
@@ -90,6 +98,33 @@ def remove_async(statement):
             token.line = token.line.replace(" def", "", 1)
             token.line = token.line.replace("async", "def      ", 1)
     return statement
+
+
+# TODO: rewrite this so that we first look at a series of fixers
+# like adding a colon at the end, replacing the last token by a colon,
+# adding parens, replacing the function name, etc. As soon as we find
+# a good fix, we can stop.  Otherwise, we continue the analysis as we currently
+# have.
+
+
+@add_statement_analyzer
+def def_begin_code_block(statement):  #
+    # Thinking of trying to use def to begin a code block, i.e.
+    # def : ...
+    _ = current_lang.translate
+    if statement.nb_tokens > 2 or statement.bad_token != ":":
+        return {}
+
+    if statement.first_token.start_col == 0:
+        cause = _(
+            "You tried to define a function and did not use the correct syntax.\n"
+        )
+    else:
+        cause = _(
+            "You tried to define a function or method and did not use the correct syntax.\n"
+        )
+
+    return {"cause": cause + def_correct_syntax()}
 
 
 @add_statement_analyzer
@@ -149,6 +184,27 @@ def missing_parens_2(statement):
 
 
 @add_statement_analyzer
+def not_enough_tokens(statement):
+    _ = current_lang.translate
+
+    if statement.nb_tokens >= 5:
+        return {}
+
+    cause = _("You did not write a valid function definition.\n")
+    if statement.bad_token == "(" and statement.bad_token_index == 1:
+        new_statement = fixers.replace_token(
+            statement.tokens, statement.bad_token, "name"
+        )
+        if not fixers.check_statement(new_statement):
+            return {"cause": cause + def_correct_syntax()}
+        else:
+            cause = hint = _("You forgot to name your function.\n")
+            return {"cause": cause + def_correct_syntax(), "suggest": hint}
+
+    return {"cause": cause + def_correct_syntax()}
+
+
+@add_statement_analyzer
 def keyword_as_function_name(statement):
     # Something like
     # def pass() ...
@@ -192,6 +248,7 @@ def other_invalid_function_names(statement):
     )
     if statement.bad_token.is_string():
         cause += _("You attempted to use a string as a function name.\n")
+        hint = cause
     return {"cause": cause, "suggest": hint}
 
 
@@ -205,8 +262,16 @@ def function_definition_missing_name(statement):
     ):
         return {}
 
-    cause = _("You forgot to name your function.\n") + def_correct_syntax()
-    return {"cause": cause}
+    cause = _("You forgot to name your function.\n")
+
+    new_statement = fixers.replace_token(
+        statement.tokens, statement.bad_token, "name ("
+    )
+    if fixers.check_statement(new_statement):
+        return {"cause": cause + def_correct_syntax()}
+    else:
+        cause += _("However, there are some other syntax errors in your code.\n")
+        return {"cause": cause + def_correct_syntax()}
 
 
 @add_statement_analyzer
@@ -224,30 +289,6 @@ def keyword_not_allowed_as_function_argument(statement):
         "`{kwd}` as an argument in the definition of a function\n"
         "where an identifier (variable name) was expected.\n"
     ).format(kwd=statement.bad_token)
-
-    return {"cause": cause}
-
-
-@add_statement_analyzer
-def def_begin_code_block(statement):
-    # Thinking of trying to use def to begin a code block, i.e.
-    # def : ...
-    _ = current_lang.translate
-    if statement.first_token != "def" or statement.bad_token != ":":
-        return {}
-
-    if not statement.prev_token == statement.first_token:
-        return {}
-
-    if statement.first_token.start_col == 0:
-        cause = _(
-            "You tried to define a function and did not use the correct syntax.\n"
-        )
-    else:
-        cause = _(
-            "You tried to define a function or method and did not use the correct syntax.\n"
-        )
-    cause += def_correct_syntax()
 
     return {"cause": cause}
 

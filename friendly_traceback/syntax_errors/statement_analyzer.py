@@ -425,6 +425,23 @@ def inverted_comparison_operators(statement):
 
 
 @add_statement_analyzer
+def walrus_instead_of_equal(statement):
+    _ = current_lang.translate
+    if not statement.bad_token == ":=":
+        return {}
+
+    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "=")
+    if fixers.check_statement(new_statement):
+        hint = _("Did you mean to use `=`?\n")
+        cause = _(
+            "You use the augmented assignment operator `:=` where\n"
+            "the normal assignment operator `=` was required.\n"
+        )
+        return {"cause": cause, "suggest": hint}
+    return {}
+
+
+@add_statement_analyzer
 def assign_instead_of_equal(statement):
     """Checks to see if an assignment sign, '=', has been used instead of
     an equal sign, '==', in an if, elif or while statement."""
