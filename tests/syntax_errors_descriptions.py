@@ -13,6 +13,14 @@ cause = "cause"
 title = "title"
 
 descriptions = {
+    "and_in_import_statement": {
+        cause: "only be used for boolean expressions",
+        title: "Using 'and' in import statement",
+    },
+    "annotated_name_global": {
+        cause: "It cannot be declared to be a global variable.",
+        title: "Annotated name cannot be global",
+    },
     "assign_name_before_global_1": {
         cause: "before declaring it as a global variable.",
         title: "Name assigned prior to global declaration",
@@ -33,6 +41,37 @@ descriptions = {
         cause: "`__debug__` is a constant in Python",
         title: "Assignment to keyword (__debug__)",
     },
+    "assign_to_function_call_1": {
+        cause: "function call and is not simply the name of a variable",
+        title: "Cannot assign to function call: single = sign",
+        "other causes": ["len('a')"],
+    },
+    "assign_to_function_call_2": {
+        cause: "function call and not the name of a variable",
+        title: "Cannot assign to function call: two = signs",
+        "other causes": ["func(...)"],
+    },
+    "assign_to_literal_dict": {
+        cause: "is or includes an actual object of type `dict`",
+        title: "Cannot assign to literal - 4",
+    },
+    "assign_to_literal_int": {
+        cause: "is or includes an actual object of type `int`",
+        title: "Cannot assign to literal int",
+        "other causes": ["Perhaps you meant to write"],
+    },
+    "assign_to_literal_int_2": {
+        cause: "is or includes an actual object of type `int`",
+        title: "Cannot assign to literal int - 2",
+    },
+    "assign_to_literal_int_3": {
+        cause: "is or includes an actual object",
+        title: "Cannot assign to literal - 5",
+    },
+    "assign_to_literal_set": {
+        cause: "is or includes an actual object of type `set`",
+        title: "Cannot assign to literal - 3",
+    },
     "assign_to_keyword_def": {  # = sign is flagged
         cause: "assign a value to the Python keyword `def`",
         title: "Assign to keyword def",
@@ -48,41 +87,6 @@ descriptions = {
     "break_outside_loop": {
         cause: "The Python keyword `break` can only be used",
         title: "break outside loop",
-    },
-    "cannot_assign_to_function_call_1": {
-        cause: "function call and is not simply the name of a variable",
-        title: "Cannot assign to function call: single = sign",
-        "other causes": ["len('a')"],
-    },
-    "cannot_assign_to_function_call_2": {
-        cause: "function call and not the name of a variable",
-        title: "Cannot assign to function call: two = signs",
-        "other causes": ["func(...)"],
-    },
-    "cannot_assign_to_literal_dict": {
-        cause: "is or includes an actual object of type `dict`",
-        title: "Cannot assign to literal - 4",
-    },
-    "cannot_assign_to_literal_int": {
-        cause: "is or includes an actual object of type `int`",
-        title: "Cannot assign to literal int",
-        "other causes": ["Perhaps you meant to write"],
-    },
-    "cannot_assign_to_literal_int_2": {
-        cause: "is or includes an actual object of type `int`",
-        title: "Cannot assign to literal int - 2",
-    },
-    "cannot_assign_to_literal_int_3": {
-        cause: "is or includes an actual object",
-        title: "Cannot assign to literal - 5",
-    },
-    "cannot_assign_to_literal_set": {
-        cause: "is or includes an actual object of type `set`",
-        title: "Cannot assign to literal - 3",
-    },
-    "cannot_delete_function_call": {
-        cause: "instead of deleting the function's name",
-        title: "Cannot delete function call",
     },
     "continue_outside_loop": {
         cause: "The Python keyword `continue` can only be used",
@@ -144,6 +148,18 @@ descriptions = {
         cause: "You cannot have explicit tuples as function arguments.",
         title: "def: tuple as function argument - 2"
     },
+    "delete_constant_keyword": {
+        cause: "You cannot delete the constant",
+        title: "Deleting constant/keyword",
+    },
+    "delete_function_call": {
+        cause: "instead of deleting the function's name",
+        title: "Cannot delete function call",
+    },
+    "delete_string_literal": {
+        cause: "You cannot delete the literal",
+        title: "Deleting string literal",
+    },
     "else_if_instead_of_elif": {
         cause: "wrote `else if` instead",
         title: "Write elif, not else if",
@@ -164,9 +180,29 @@ descriptions = {
         cause: "you have another string, which starts with either",
         title: "f-string: unterminated string",
     },
+    "f_string_with_backslash": {
+        cause: "you can replace the part that contains a backslash",
+        title: "f-string with backslash",
+    },
     "import_from": {
         cause: "from turtle import pen",
         title: "Import inversion: import X from Y",
+    },
+    "indentation_error_1": {
+        cause: "expected to begin a new indented block",
+        title: "IndentationError: expected an indented block",
+    },
+    "indentation_error_2": {
+        cause: "is more indented than expected",
+        title: "IndentationError: unexpected indent",
+    },
+    "indentation_error_3": {
+        cause: "is less indented than expected",
+        title: "IndentationError: unindent does not match ...",
+    },
+    "indentation_error_4": {
+        cause: "meant to include a continuation character",
+        title: "IndentationError: missing continuation line",
     },
     "invalid_character_in_identifier": {
         cause: "unicode character",
@@ -429,38 +465,8 @@ descriptions = {
         cause: "the exact same object, use the operator `is`",
         title: "Triple-equal sign",
     },
-    "raise_syntax_error99": {
-        cause: "You do not need to declare variables in Python.",
-        title: "Would-be variable declaration",
-    },
-    "raise_syntax_error100": {
-        cause: "only be used for boolean expressions",
-        title: "Using 'and' in import statement",
-    },
-    "raise_syntax_error101": {
-        cause: "It cannot be declared to be a global variable.",
-        title: "Annotated name cannot be global",
-    },
-    "raise_syntax_error102": {
-        cause: "You do not need to declare variables in Python.",
-        title: "Would-be variable declaration - 2",
-    },
-    "raise_syntax_error103": {
-        cause: "You cannot delete the constant",
-        title: "Deleting constant/keyword",
-    },
-    "raise_syntax_error104": {
-        cause: "You cannot delete the literal",
-        title: "Deleting literal",
-    },
-    "raise_syntax_error105": {
-        cause: "Did you forget to escape a backslash character",
-        title: "EOL unescaped backslash",
-    },
-    "raise_syntax_error106": {
-        cause: "you can replace the part that contains a backslash",
-        title: "f-string with backslash",
-    },
+
+
     "raise_syntax_error107": {
         cause: "You started writing a triple-quoted string",
         title: "Unterminated triple quoted string",
@@ -505,25 +511,22 @@ descriptions = {
         cause: "You used a string as an argument",
         title: "Single string used as arg in function def",
     },
-    "raise_indentation_error1": {
-        cause: "expected to begin a new indented block",
-        title: "IndentationError: expected an indented block",
-    },
-    "raise_indentation_error2": {
-        cause: "is more indented than expected",
-        title: "IndentationError: unexpected indent",
-    },
-    "raise_indentation_error3": {
-        cause: "is less indented than expected",
-        title: "IndentationError: unindent does not match ...",
-    },
-    "raise_indentation_error4": {
-        cause: "meant to include a continuation character",
-        title: "IndentationError: missing continuation line",
-    },
-    "raise_tab_error": {
+
+    "tab_error": {
         cause: "A `TabError` indicates that you have used",
         title: "TabError",
+    },
+    "unescaped_backslash": {
+        cause: "Did you forget to escape a backslash character",
+        title: "EOL unescaped backslash",
+    },
+    "would_be_type_declaration_1": {
+        cause: "You do not need to declare variables in Python.",
+        title: "Would-be variable declaration",
+    },
+    "would_be_type_declaration_2": {
+        cause: "You do not need to declare variables in Python.",
+        title: "Would-be variable declaration - 2",
     },
 }
 
