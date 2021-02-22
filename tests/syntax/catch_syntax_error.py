@@ -5,13 +5,6 @@ import pytest
 import friendly_traceback
 from syntax_errors_descriptions import descriptions
 
-
-if sys.version_info < (3, 8):
-    descriptions["raise_syntax_error_walrus"]["cause"] = "walrus operator"
-    descriptions["raise_syntax_error55"]["cause"] = "walrus operator"
-if sys.version_info >= (3, 9):
-    descriptions["raise_syntax_error66"]["cause"] = "expected an indented block"
-
 friendly_traceback.set_lang("en")
 
 

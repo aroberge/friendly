@@ -37,6 +37,10 @@ descriptions = {
         cause: "You assigned a value to the variable `s`",
         title: "Name assigned prior to nonlocal declaration",
     },
+    "assign_to_conditional": {
+        cause: "variable = object if condition else other_object",
+        title: "Assign to conditional expression",
+    },
     "assign_to_debug": {
         cause: "`__debug__` is a constant in Python",
         title: "Assignment to keyword (__debug__)",
@@ -50,6 +54,10 @@ descriptions = {
         cause: "function call and not the name of a variable",
         title: "Cannot assign to function call: two = signs",
         "other causes": ["func(...)"],
+    },
+    "assign_to_generator": {
+        cause: "generator expression instead of the name of a variable",
+        title: "Assign to generator expression",
     },
     "assign_to_literal_dict": {
         cause: "is or includes an actual object of type `dict`",
@@ -84,6 +92,14 @@ descriptions = {
         cause: "`None` is a constant in Python",
         title: "Assignment to keyword (None)",
     },
+    "assign_to_operation": {
+        cause: "only used to assign a value to a variable",
+        title: "Assign to math operation",
+    },
+    "augmented_assigment_with_true": {  # May differ depending on Python version
+        cause: "`True` is a constant in Python",
+        title: "Walrus/Named assignment depending on Python version",
+    },
     "break_outside_loop": {
         cause: "The Python keyword `break` can only be used",
         title: "break outside loop",
@@ -95,6 +111,10 @@ descriptions = {
     "def_code_block": {
         cause: "tried to define a function",
         title: "def: misused as code block",
+    },
+    "def_duplicate_arg": {
+        cause: "keyword argument should appear only once in a function definition",
+        title: "def: Keyword arg only once in function definition",
     },
     "def_keyword_as_arg_1": {
         cause: "as an argument in the definition of a function",
@@ -212,6 +232,10 @@ descriptions = {
         cause: "where `invalid` is not a valid ",
         title: "Keyword can't be an expression",
     },
+    "keyword_arg_repeated": {
+        cause: "keyword argument should appear only once in a function call",
+        title: "Keyword arg only once in function call",
+    },
     "keyword_as_attribute": {
         cause: "keyword `pass` as an attribute",
         title: "Keyword as attribute",
@@ -223,6 +247,10 @@ descriptions = {
     "lambda_with_tuple_argument": {
         cause: "You cannot have explicit tuples as arguments.",
         title: "lambda with tuple as argument"
+    },
+    "missing_code_block": {  # May differ depending on Python version
+        cause: "it reached the end of the file and expected more content.",
+        title: "IndentationError/SyntaxError depending on version",
     },
     "missing_colon_if": {
         cause: "`if` but forgot to add a colon `:`",
@@ -247,6 +275,22 @@ descriptions = {
     "missing_comma_in_tuple": {
         cause: "The following lines of code",
         title: "Missing comma in a tuple",
+    },
+    "name_is_global_and_nonlocal": {
+        cause: "You declared `xy` as being both a global and nonlocal",
+        title: "Name is global and nonlocal",
+    },
+    "name_is_param_and_nonlocal": {
+        cause: "You used `x` as a parameter for a function",
+        title: "Name is parameter and nonlocal",
+    },
+    "no_binding_for_nonlocal": {
+        cause: "nonlocal variable but it cannot be found.",
+        title: "nonlocal variable not found",
+    },
+    "nonlocal_at_module": {
+        cause: "You used the nonlocal keyword at a module level",
+        title: "nonlocal variable not found at module level",
     },
     "print_is_a_function": {
         cause: "In older version of Python, `print` was a keyword",
@@ -289,54 +333,16 @@ descriptions = {
         title: "Mismatched brackets - 2",
     },
 
-    "raise_syntax_error55": {  # May differ depending on Python version
-        cause: "`True` is a constant in Python",
-        title: "Walrus/Named assignment depending on Python version",
-    },
-    "raise_syntax_error56": {
-        cause: "only used to assign a value to a variable",
-        title: "Named assignment with Python constant",
-    },
-    "raise_syntax_error57": {
-        cause: "use the function `repr(x)`.",
-        title: "Using the backquote character",
-    },
-    "raise_syntax_error58": {
-        cause: "generator expression instead of the name of a variable",
-        title: "Assign to generator expression",
-    },
-    "raise_syntax_error59": {
-        cause: "variable = object if condition else other_object",
-        title: "Assign to conditional expression",
-    },
-    "raise_syntax_error60": {
-        cause: "You used `x` as a parameter for a function",
-        title: "Name is parameter and nonlocal",
-    },
-    "raise_syntax_error61": {
-        cause: "You declared `xy` as being both a global and nonlocal",
-        title: "Name is global and nonlocal",
-    },
-    "raise_syntax_error62": {
-        cause: "nonlocal variable but it cannot be found.",
-        title: "nonlocal variable not found",
-    },
-    "raise_syntax_error63": {
-        cause: "You used the nonlocal keyword at a module level",
-        title: "nonlocal variable not found at module level",
-    },
-    "raise_syntax_error64": {
-        cause: "keyword argument should appear only once in a function definition",
-        title: "Keyword arg only once in function definition",
-    },
-    "raise_syntax_error65": {
-        cause: "keyword argument should appear only once in a function call",
-        title: "Keyword arg only once in function call",
-    },
-    "raise_syntax_error66": {  # May differ depending on Python version
-        cause: "it reached the end of the file and expected more content.",
-        title: "IndentationError/SyntaxError depending on version",
-    },
+
+
+
+
+
+
+
+
+
+
     "raise_syntax_error67": {
         cause: "In older version of Python, `print` was a keyword",
         title: "print is a function 2",
@@ -520,6 +526,10 @@ descriptions = {
         cause: "Did you forget to escape a backslash character",
         title: "EOL unescaped backslash",
     },
+    "use_backquote": {
+        cause: "use the function `repr(x)`.",
+        title: "Using the backquote character",
+    },
     "would_be_type_declaration_1": {
         cause: "You do not need to declare variables in Python.",
         title: "Would-be variable declaration",
@@ -532,19 +542,20 @@ descriptions = {
 
 
 if sys.version_info < (3, 8):
-    descriptions["raise_syntax_error55"]["cause"] = "walrus operator"
-    descriptions["raise_syntax_error_walrus"] = {
+    descriptions["augmented_assigment_with_true"]["cause"] = "walrus operator"
+    descriptions["walrus_does_not_exist"] = {
         cause: "walrus operator",
         title: "Walrus operator does not exist - yet",
     }
-    del descriptions["raise_syntax_error99"]
-    del descriptions["raise_syntax_error102"]
+    del descriptions["would_be_type_declaration_1"]
+    del descriptions["would_be_type_declaration_2"]
 
 if sys.version_info >= (3, 9):
-    descriptions["raise_syntax_error66"]["cause"] = "expected an indented block"
+    descriptions["missing_code_block"]["cause"] = "expected an indented block"
 
 if sys.version_info >= (3, 10):
     descriptions["quote_inside_string"]["cause"] = "ended the string with another quote"
     del descriptions["missing_comma_in_set"]  # Temporary due to a bug in CPython
     del descriptions["missing_comma_in_list"]  # Temporary due to a bug in CPython
     del descriptions["unclosed_bracket"]  # Temporary due to a bug in CPython
+
