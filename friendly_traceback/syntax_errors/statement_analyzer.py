@@ -996,19 +996,19 @@ def _comma_first_cause(bracket):
             "It is possible that you "
             "forgot a comma between items in a tuple, \n"
             "or between function arguments, \n"
-            "before the position indicated by --> and ^.\n"
+            "before the position indicated by ^.\n"
         )
     elif bracket == "[":
         return _(
             "It is possible that you "
             "forgot a comma between items in a list\n"
-            "before the position indicated by --> and ^.\n"
+            "before the position indicated by ^.\n"
         )
     else:
         return _(
             "It is possible that you "
             "forgot a comma between items in a set or dict\n"
-            "before the position indicated by --> and ^.\n"
+            "before the position indicated by ^.\n"
         )
 
 
@@ -1191,7 +1191,7 @@ def equal_instead_of_colon_in_dict(statement):
         "It is possible that "
         "you used an equal sign `=` instead of a colon `:`\n"
         "to assign values to keys in a dict\n"
-        "before or at the position indicated by --> and ^.\n"
+        "before or at the position indicated by ^.\n"
     )
     return {"cause": cause}
 

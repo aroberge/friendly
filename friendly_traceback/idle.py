@@ -108,7 +108,7 @@ def format_text(info, item, indentation):
 def idle_formatter(info, include="friendly_tb"):
     """Formatter that takes care of color definitions."""
     # The explanation for SyntaxError and subclasses states that the
-    # location of the error is indicated by --> and ^
+    # location of the error is indicated by ^
     keep_caret = (
         "SyntaxError" in info["shortened_traceback"]
         or "IndentationError" in info["shortened_traceback"]
