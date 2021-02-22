@@ -425,7 +425,11 @@ def missing_colon(statement):
     _ = current_lang.translate
 
     # TODO: need to add test for each case
-    if statement.last_token == ":" or statement.bad_token != statement.last_token:
+    if (
+        statement.last_token == ":"
+        or statement.bad_token != statement.last_token
+        or statement.statement_brackets
+    ):
         return {}
     cause = _("A function definition statement must end with a colon.\n")
 
