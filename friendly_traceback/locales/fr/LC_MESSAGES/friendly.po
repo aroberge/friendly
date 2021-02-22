@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-02-22 15:52-0400\n"
-"PO-Revision-Date: 2021-02-22 15:53-0400\n"
+"POT-Creation-Date: 2021-02-22 16:27-0400\n"
+"PO-Revision-Date: 2021-02-22 16:27-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1967,7 +1967,7 @@ msgstr ""
 "Vous ne pouvez pas avoir de listes explicites comme arguments de fonction.\n"
 
 #: syntax_errors\error_in_def.py:401 syntax_errors\error_in_def.py:416
-#: syntax_errors\error_in_def.py:443
+#: syntax_errors\error_in_def.py:483
 msgid "You can only use identifiers (variable names) as function arguments.\n"
 msgstr ""
 "Vous ne pouvez utiliser que des identifiants (noms de variables) comme "
@@ -1979,15 +1979,47 @@ msgstr ""
 "Vous ne pouvez pas avoir des `dict` ou des `set` explicite comme arguments "
 "de fonction.\n"
 
-#: syntax_errors\error_in_def.py:431
+#: syntax_errors\error_in_def.py:430
+msgid "A function definition statement must end with a colon.\n"
+msgstr "Une définition de fonction doit se terminer par deux point, `:`.\n"
+
+#: syntax_errors\error_in_def.py:434
+msgid "Did you mean to write a colon?\n"
+msgstr "Avez-vous oublié d’ajouter les deux points `:` ?\n"
+
+#: syntax_errors\error_in_def.py:435
+msgid "You wrote `{bad}` instead of a colon.\n"
+msgstr "Tu as écrit `{bad}` au lieu de deux points, `:`.\n"
+
+#: syntax_errors\error_in_def.py:442
+msgid "Did you write something by mistake after the colon?\n"
+msgstr "Avez-vous écrit quelque chose par erreur après les deux points `:` ?\n"
+
+#: syntax_errors\error_in_def.py:443
+msgid "You wrote `{bad}` after the colon.\n"
+msgstr "Vous avez écrit `{bad}` après les deux points, `:`.\n"
+
+#: syntax_errors\error_in_def.py:452
+msgid ""
+"However, simply adding a colon at the end would\n"
+"not be sufficient to fix the problems with your code.\n"
+msgstr ""
+"Toutefois, le simple fait d’ajouter les deux points à la fin\n"
+"ne serait pas suffisant pour résoudre tous les problèmes avec votre code.\n"
+
+#: syntax_errors\error_in_def.py:458 syntax_errors\statement_analyzer.py:599
+msgid "Did you forget a colon `:`?\n"
+msgstr "Avez-vous oublié d’ajouter les deux points `:` ?\n"
+
+#: syntax_errors\error_in_def.py:471
 msgid "You cannot have operators as function arguments.\n"
 msgstr "Vous ne pouvez pas avoir d’opérateurs comme arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:435 syntax_errors\statement_analyzer.py:636
+#: syntax_errors\error_in_def.py:475 syntax_errors\statement_analyzer.py:636
 msgid "Did you mean to write a comma?\n"
 msgstr "Avez-vous oublié une virgule ?\n"
 
-#: syntax_errors\error_in_def.py:436
+#: syntax_errors\error_in_def.py:476
 msgid ""
 "I suspect you made a typo and wrote `{op}` instead of a comma.\n"
 "The following statement contains no syntax error:\n"
@@ -1999,16 +2031,16 @@ msgstr ""
 "\n"
 "    {new_statement}"
 
-#: syntax_errors\error_in_def.py:442
+#: syntax_errors\error_in_def.py:482
 msgid "You cannot use operators with function arguments.\n"
 msgstr ""
 "Vous ne pouvez pas utiliser des opérateurs avec des arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:462
+#: syntax_errors\error_in_def.py:502
 msgid "Positional arguments must come before keyword arguments.\n"
 msgstr "Les arguments positionnels doivent être avant les arguments nommés.\n"
 
-#: syntax_errors\error_in_def.py:463
+#: syntax_errors\error_in_def.py:503
 msgid ""
 "`{arg}` is a positional argument that appears after one or more\n"
 "keyword arguments in your function definition.\n"
@@ -3182,10 +3214,6 @@ msgstr ""
 "L’opérateur double astérisque, `**` est probablement interprété comme "
 "signifiant\n"
 "qu'un déballage de `dict` doit être utilisé ce qui n’a pas de sens ici.\n"
-
-#: syntax_errors\statement_analyzer.py:599
-msgid "Did you forget a colon `:`?\n"
-msgstr "Avez-vous oublié d’ajouter les deux points `:` ?\n"
 
 #: syntax_errors\statement_analyzer.py:602
 msgid ""

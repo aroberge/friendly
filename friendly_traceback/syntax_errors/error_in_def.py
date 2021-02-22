@@ -420,6 +420,46 @@ def dict_or_set_as_argument(statement):
 
 
 @add_statement_analyzer
+def missing_colon(statement):
+    """look for missing colon at the end of statement"""
+    _ = current_lang.translate
+
+    # TODO: need to add test for each case
+    if statement.last_token == ":" or statement.bad_token != statement.last_token:
+        return {}
+    cause = _("A function definition statement must end with a colon.\n")
+
+    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, ":")
+    if fixers.check_statement(new_statement):
+        hint = _("Did you mean to write a colon?\n")
+        cause += _("You wrote `{bad}` instead of a colon.\n").format(
+            bad=statement.bad_token
+        )
+        return {"cause": cause, "suggest": hint}
+
+    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "")
+    if fixers.check_statement(new_statement):
+        hint = _("Did you write something by mistake after the colon?\n")
+        cause += _("You wrote `{bad}` after the colon.\n").format(
+            bad=statement.bad_token
+        )
+        return {"cause": cause, "suggest": hint}
+
+    new_statement = fixers.modify_token(
+        statement.tokens, statement.bad_token, append=":"
+    )
+    if not fixers.check_statement(new_statement):
+        additional = _(
+            "However, simply adding a colon at the end would\n"
+            "not be sufficient to fix the problems with your code.\n"
+        )
+        return {"cause": cause + additional}
+
+    hint = _("Did you forget a colon `:`?\n")
+    return {"cause": cause + def_correct_syntax(), "suggest": hint}
+
+
+@add_statement_analyzer
 def operator_as_argument(statement):
     _ = current_lang.translate
     # TODO: add tests

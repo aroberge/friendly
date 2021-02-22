@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-02-22 15:52-0400\n"
+"POT-Creation-Date: 2021-02-22 16:27-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1545,7 +1545,7 @@ msgid ""
 msgstr ""
 
 #: syntax_errors\error_in_def.py:401 syntax_errors\error_in_def.py:416
-#: syntax_errors\error_in_def.py:443
+#: syntax_errors\error_in_def.py:483
 msgid ""
 "You can only use identifiers (variable names) as function arguments.\n"
 msgstr ""
@@ -1555,17 +1555,53 @@ msgid ""
 "You cannot have any explicit dict or set as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:431
+#: syntax_errors\error_in_def.py:430
+msgid ""
+"A function definition statement must end with a colon.\n"
+msgstr ""
+
+#: syntax_errors\error_in_def.py:434
+msgid ""
+"Did you mean to write a colon?\n"
+msgstr ""
+
+#: syntax_errors\error_in_def.py:435
+msgid ""
+"You wrote `{bad}` instead of a colon.\n"
+msgstr ""
+
+#: syntax_errors\error_in_def.py:442
+msgid ""
+"Did you write something by mistake after the colon?\n"
+msgstr ""
+
+#: syntax_errors\error_in_def.py:443
+msgid ""
+"You wrote `{bad}` after the colon.\n"
+msgstr ""
+
+#: syntax_errors\error_in_def.py:452
+msgid ""
+"However, simply adding a colon at the end would\n"
+"not be sufficient to fix the problems with your code.\n"
+msgstr ""
+
+#: syntax_errors\error_in_def.py:458 syntax_errors\statement_analyzer.py:599
+msgid ""
+"Did you forget a colon `:`?\n"
+msgstr ""
+
+#: syntax_errors\error_in_def.py:471
 msgid ""
 "You cannot have operators as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:435 syntax_errors\statement_analyzer.py:636
+#: syntax_errors\error_in_def.py:475 syntax_errors\statement_analyzer.py:636
 msgid ""
 "Did you mean to write a comma?\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:436
+#: syntax_errors\error_in_def.py:476
 msgid ""
 "I suspect you made a typo and wrote `{op}` instead of a comma.\n"
 "The following statement contains no syntax error:\n"
@@ -1573,17 +1609,17 @@ msgid ""
 "    {new_statement}"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:442
+#: syntax_errors\error_in_def.py:482
 msgid ""
 "You cannot use operators with function arguments.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:462
+#: syntax_errors\error_in_def.py:502
 msgid ""
 "Positional arguments must come before keyword arguments.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:463
+#: syntax_errors\error_in_def.py:503
 msgid ""
 "`{arg}` is a positional argument that appears after one or more\n"
 "keyword arguments in your function definition.\n"
@@ -2438,11 +2474,6 @@ msgstr ""
 msgid ""
 "The double star operator `**` is likely interpreted to mean that\n"
 "dict unpacking is to be used which does not make sense here.\n"
-msgstr ""
-
-#: syntax_errors\statement_analyzer.py:599
-msgid ""
-"Did you forget a colon `:`?\n"
 msgstr ""
 
 #: syntax_errors\statement_analyzer.py:602
