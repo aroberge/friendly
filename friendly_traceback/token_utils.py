@@ -103,6 +103,10 @@ class Token:
         """Returns True if the token represents a number of any type"""
         return self.type == py_tokenize.NUMBER
 
+    def is_operator(self):
+        """Returns true if the token is of type OP"""
+        return self.type == py_tokenize.OP
+
     def is_float(self):
         """Returns True if the token represents a float"""
         return self.is_number() and isinstance(ast.literal_eval(self.string), float)

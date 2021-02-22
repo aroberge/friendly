@@ -137,11 +137,11 @@ descriptions = {
         title: "def: positional argument follows keyword argument",
     },
     "def_tuple_as_arg_1": {
-        cause: "You cannot have explicit tuples as arguments.",
+        cause: "You cannot have explicit tuples as function arguments.",
         title: "def: tuple as function argument"
     },
     "def_tuple_as_arg_2": {
-        cause: "You cannot have explicit tuples as arguments.",
+        cause: "You cannot have explicit tuples as function arguments.",
         title: "def: tuple as function argument - 2"
     },
     "else_if_instead_of_elif": {
@@ -501,27 +501,9 @@ descriptions = {
         cause: "You used a number as an argument",
         title: "Single number used as arg in function def",
     },
-    "raise_syntax_error117": {
-        cause: "You used numbers as arguments",
-        title: "Numbers used as arg in function def",
-    },
-    "raise_syntax_error118": {
-        cause: "I suspect that you used a number as an argument",
-        title: "Number and string used as arg in function def",
-        "other causes": ["there might be other syntax errors"],
-    },
     "raise_syntax_error119": {
         cause: "You used a string as an argument",
         title: "Single string used as arg in function def",
-    },
-    "raise_syntax_error120": {
-        cause: "You used strings as arguments",
-        title: "Strings used as arg in function def",
-    },
-    "raise_syntax_error121": {
-        cause: "I suspect that you used a string as an argument",
-        title: "String and number used as arg in function def",
-        "other causes": ["there might be other syntax errors"],
     },
     "raise_indentation_error1": {
         cause: "expected to begin a new indented block",

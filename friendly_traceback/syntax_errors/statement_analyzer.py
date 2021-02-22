@@ -782,6 +782,7 @@ def malformed_class_begin_code_block(statement):
 def assign_to_a_keyword(statement):
     """Checks to see if line is of the form 'keyword = ...'"""
     _ = current_lang.translate
+    hint = _("Python keywords cannot be used as identifiers (variable names).\n")
     possible_cause = _(
         "You were trying to assign a value to the Python keyword `{keyword}`.\n"
         "This is not allowed.\n"
@@ -793,7 +794,7 @@ def assign_to_a_keyword(statement):
         cause = possible_cause.format(keyword=statement.bad_token)
     else:
         return {}
-    return {"cause": cause}
+    return {"cause": cause, "suggest": hint}
 
 
 @add_statement_analyzer

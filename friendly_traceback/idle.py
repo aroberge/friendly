@@ -3,7 +3,7 @@ as a replacement for the standard traceback in IDLE."""
 
 import inspect
 from pathlib import Path
-import sys
+import sys  # noqa
 
 from idlelib import rpc
 from idlelib import run as idlelib_run

@@ -1,11 +1,12 @@
 """In this module, we try to identify a remedy to a syntax error
 associated with a 'def' statement.
 """
+import platform
+import sys
 
 from . import fixers
 from ..my_gettext import current_lang, internal_error
 from .. import debug_helper
-from .. import token_utils
 
 STATEMENT_ANALYZERS = []
 
@@ -252,7 +253,7 @@ def def_begin_code_block(statement):
 
 
 @add_statement_analyzer
-def dotted_name_no_allowed(statement):
+def dotted_name_not_allowed(statement):
     _ = current_lang.translate
     if statement.bad_token != ".":
         return {}
@@ -268,28 +269,52 @@ def dotted_name_no_allowed(statement):
 def positional_arguments_in_def(statement):
     _ = current_lang.translate
 
-    if statement.bad_token != "/":
+    # TODO: add tests
+
+    if not (statement.bad_token == "/" and statement.prev_token.is_in("(,")):
         return {}
 
-    # TODO: check Python version. / not allowed prior to 3.8 I believe...
+    meaning = _(
+        "`/` indicates that the previous arguments in a function definition\n"
+        "are positional arguments.\n"
+    )
+
+    if sys.version_info < (3, 8):
+        hint = _(
+            "Function definitions cannot include the symbol `/` in this Python version.\n"
+        )
+        cause = meaning + _(
+            "This symbol can only be used with Python versions 3.8.0 or newer.\n"
+            "You are using Python version {version}.\n"
+        ).format(version=platform.python_version())
+        return {"cause": cause, "suggest": hint}
 
     prev_tok = ""
-    for tok in statement.tokens:
-        # TODO: revise this
-        if tok == "*":  # might be incorrect if used in *args
-            cause = _(
-                "`/` indicates that the previous arguments in a function definition\n"
-                "are positional arguments. However, `*` indicates that the arguments\n"
-                "that follow must be keyword arguments.\n"
-                "When they are used together, `/` must appear before `*`.\n"
+    for tok in statement.tokens[0 : statement.bad_token_index]:
+        if tok == "=" or tok == "**":
+            cause = meaning + _(
+                "You have some keyword arguments that appear before\n"
+                "the symbol `/`.\n"
             )
-            hint = _("`*` must appear after `/` in a function definition.\n")
+            hint = _("Keyword arguments must appear after the `/` symbol.\n")
             return {"cause": cause, "suggest": hint}
-        elif tok is statement.bad_token:
-            break
+        if prev_tok == "*":  # might be incorrect if used in *args
+            if tok == ",":
+                cause = meaning + _(
+                    "However, `*` indicates that the arguments\n"
+                    "that follow must be keyword arguments.\n"
+                    "When they are used together, `/` must appear before `*`.\n"
+                )
+                hint = _("`*` must appear after `/` in a function definition.\n")
+            else:
+                hint = _(
+                    "`*{name}` must appear after `/` in a function definition.\n"
+                ).format(name=tok.string)
+                cause = meaning + hint
+            return {"cause": cause, "suggest": hint}
         elif tok == "/" and prev_tok == ",":
             cause = _("You can only use `/` once in a function definition.\n")
-            return {"cause": cause}
+            return {"cause": cause, "suggest": cause}
         prev_tok = tok
     return {}
 
@@ -297,18 +322,23 @@ def positional_arguments_in_def(statement):
 @add_statement_analyzer
 def keyword_arguments_in_def(statement):
     _ = current_lang.translate
+    # TODO: add tests
 
-    if not (statement.bad_token == "*" and statement.first_token == "def"):
+    if not (statement.bad_token == "*" and statement.prev_token == ","):
         return {}
 
-    prev_tok = ""
-    for tok in statement.tokens:
-        if tok is statement.bad_token:
-            break
-        elif tok == "*" and prev_tok == ",":
+    for tok in statement.tokens[0 : statement.bad_token_index]:
+        if tok == "*":
             cause = _("You can only use `*` once in a function definition.\n")
-            return {"cause": cause}
-        prev_tok = tok
+            return {"cause": cause, "suggest": cause}
+        elif tok == "**" or tok == "=":
+            if statement.next_token.is_identifier():
+                cause = _(
+                    "`*{name}` must appear before any keyword argument.\n"
+                ).format(name=statement.next_token.string)
+            else:
+                cause = _("Keyword arguments must appear after the `*` operator.\n")
+            return {"cause": cause, "suggest": cause}
     return {}
 
 
@@ -316,36 +346,13 @@ def keyword_arguments_in_def(statement):
 def number_as_argument(statement):
     _ = current_lang.translate
 
-    if not statement.bad_token.is_number():
+    if not (statement.bad_token.is_number() and statement.prev_token.is_in("(,")):
         return {}
 
-    # TODO: add tests
-    hint = _("You cannot use a number here.\n")
-    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "name")
-    if fixers.check_statement(new_statement):
-        cause = _(
-            "You used a number as an argument when defining a function.\n"
-            "You can only use identifiers (variable names) as function arguments.\n"
-        )
-        return {"cause": cause, "suggest": hint}
-    new_tokens = []
-    for index, tok in enumerate(statement.statement_tokens):
-        if tok.is_number():
-            tok.string = "__name" + str(index)  # could be made more robust
-        new_tokens.append(tok)
-
-    new_statement = token_utils.untokenize(new_tokens).strip()
-    if fixers.check_statement(new_statement):
-        cause = _(
-            "You used numbers as arguments when defining a function.\n"
-            "You can only use identifiers (variable names) as function arguments.\n"
-        )
-        return {"cause": cause, "suggest": hint}
-
+    hint = _("You cannot use numbers as function arguments.\n")
     cause = _(
-        "I suspect that you used a number as an argument when defining a function.\n"
+        "You used a number as an argument when defining a function.\n"
         "You can only use identifiers (variable names) as function arguments.\n"
-        "However, there might be other syntax errors in your function definition.\n"
     )
     return {"cause": cause, "suggest": hint}
 
@@ -354,36 +361,13 @@ def number_as_argument(statement):
 def string_as_argument(statement):
     _ = current_lang.translate
 
-    if not statement.bad_token.is_string():
+    if not (statement.bad_token.is_string() and statement.prev_token.is_in("(,")):
         return {}
 
-    # TODO: add tests
-    hint = _("You cannot use a string here.\n")
-    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "name")
-    if fixers.check_statement(new_statement):
-        cause = _(
-            "You used a string as an argument when defining a function.\n"
-            "You can only use identifiers (variable names) as function arguments.\n"
-        )
-        return {"cause": cause, "suggest": hint}
-    new_tokens = []
-    for index, tok in enumerate(statement.tokens):
-        if tok.is_string():
-            tok.string = "__name" + str(index)  # could be made more robust
-        new_tokens.append(tok)
-
-    new_statement = token_utils.untokenize(new_tokens).strip()
-    if fixers.check_statement(new_statement):
-        cause = _(
-            "You used strings as arguments when defining a function.\n"
-            "You can only use identifiers (variable names) as function arguments.\n"
-        )
-        return {"cause": cause, "suggest": hint}
-
+    hint = _("You cannot use strings as function arguments.\n")
     cause = _(
-        "I suspect that you used a string as an argument when defining a function.\n"
+        "You used a string as an argument when defining a function.\n"
         "You can only use identifiers (variable names) as function arguments.\n"
-        "However, there might be other syntax errors in your function definition.\n"
     )
     return {"cause": cause, "suggest": hint}
 
@@ -395,9 +379,82 @@ def tuple_as_argument(statement):
     if not (statement.bad_token == "(" and statement.prev_token.is_in("(,")):
         return {}
 
-    cause = _(
-        "You cannot have explicit tuples as arguments.\n"
+    hint = _("You cannot have explicit tuples as function arguments.\n")
+
+    cause = hint + _(
+        "You can only use identifiers (variable names) as function arguments.\n"
         "Assign any tuple to a parameter and unpack it\n"
         "within the body of the function.\n"
     )
-    return {"cause": cause}
+    return {"cause": cause, "suggest": hint}
+
+
+@add_statement_analyzer
+def list_as_argument(statement):
+    _ = current_lang.translate
+    # TODO: add tests
+
+    if not (statement.bad_token == "[(]" and statement.prev_token.is_in("(,")):
+        return {}
+
+    hint = _("You cannot have explicit lists as function arguments.\n")
+    cause = hint + _(
+        "You can only use identifiers (variable names) as function arguments.\n"
+    )
+    return {"cause": cause, "suggest": hint}
+
+
+@add_statement_analyzer
+def dict_or_set_as_argument(statement):
+    _ = current_lang.translate
+    # TODO: add tests
+
+    if not (statement.bad_token == "[{]" and statement.prev_token.is_in("(,")):
+        return {}
+
+    hint = _("You cannot have any explicit dict or set as function arguments.\n")
+    cause = hint + _(
+        "You can only use identifiers (variable names) as function arguments.\n"
+    )
+    return {"cause": cause, "suggest": hint}
+
+
+@add_statement_analyzer
+def operator_as_argument(statement):
+    _ = current_lang.translate
+    # TODO: add tests
+
+    if not statement.bad_token.is_operator() or statement.prev_token == "def":
+        return {}
+
+    if statement.prev_token.is_in("(,"):
+        hint = _("You cannot have operators as function arguments.\n")
+    else:
+        hint = _("You cannot use operators with function arguments.\n")
+    cause = hint + _(
+        "You can only use identifiers (variable names) as function arguments.\n"
+    )
+    return {"cause": cause, "suggest": hint}
+
+
+@add_statement_analyzer
+def arg_after_kwarg(statement):
+    _ = current_lang.translate
+    # TODO: add tests
+
+    if not (
+        statement.bad_token.is_identifier()
+        and statement.prev_token == statement.next_token == ","
+    ):
+        return {}
+
+    for tok in statement.tokens[0 : statement.bad_token_index]:
+        if tok == "**" or tok == "=":
+            hint = _("Positional arguments must come before keyword arguments.\n")
+            cause = hint + _(
+                "`{arg}` is a positional argument that appears after one or more\n"
+                "keyword arguments in your function definition.\n"
+            ).format(arg=statement.bad_token.string)
+            return {"cause": cause, "suggest": hint}
+
+    return {}
