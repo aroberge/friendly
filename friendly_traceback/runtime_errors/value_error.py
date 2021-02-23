@@ -55,6 +55,8 @@ def _unpacking():
 def get_iterable(code, frame):
     """gets an iterable object and its type as a string."""
     try:
+        # As a ValueError exception has been raised, Python has already evaluated
+        # all the relevant code parts. Thus, using eval() should be completely safe.
         obj = eval(code, frame.f_globals, frame.f_locals)
     except Exception:
         return None, None

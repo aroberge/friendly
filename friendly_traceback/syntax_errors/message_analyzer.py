@@ -276,7 +276,7 @@ def assign_to_literal(message="", statement=None):
                     "You wrote an expression that has the f-string `{fstring}`\n"
                     "on the left-hand side of the equal sign.\n"
                     "An f-string should only appear on the right-hand "
-                    "side of the equal sign.\n"
+                    "side of an equal sign.\n"
                 ).format(fstring=statement.bad_token)
                 return {"cause": cause}
         else:

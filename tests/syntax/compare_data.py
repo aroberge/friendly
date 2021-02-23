@@ -92,46 +92,51 @@ all_names = (
     | set(info_310.keys())
 )
 
+not_an_error = (
+    "Either not a SyntaxError for this Python version,"
+    " or case excluded for some other reason."
+)
+
 
 for filename in all_names:
     if filename in info_36:
         data_36 = info_36[filename]
     else:
         data_36 = {
-            "message": "Likely not a SyntaxError",
-            "cause": "Likely not a SyntaxError",
+            "message": not_an_error,
+            "cause": not_an_error,
         }
 
     if filename in info_37:
         data_37 = info_37[filename]
     else:
         data_37 = {
-            "message": "Likely not a SyntaxError",
-            "cause": "Likely not a SyntaxError",
+            "message": not_an_error,
+            "cause": not_an_error,
         }
 
     if filename in info_38:
         data_38 = info_38[filename]
     else:
         data_38 = {
-            "message": "Likely not a SyntaxError",
-            "cause": "Likely not a SyntaxError",
+            "message": not_an_error,
+            "cause": not_an_error,
         }
 
     if filename in info_39:
         data_39 = info_39[filename]
     else:
         data_39 = {
-            "message": "Likely not a SyntaxError",
-            "cause": "Likely not a SyntaxError",
+            "message": not_an_error,
+            "cause": not_an_error,
         }
 
     if filename in info_310:
         data_310 = info_310[filename]
     else:
         data_310 = {
-            "message": "Likely not a SyntaxError",
-            "cause": "Likely not a SyntaxError",
+            "message": not_an_error,
+            "cause": not_an_error,
         }
 
     print_different(

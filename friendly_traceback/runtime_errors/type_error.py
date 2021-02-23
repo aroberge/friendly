@@ -455,6 +455,8 @@ def x_is_not_callable(message, frame, tb_data):
     ).format(fn_call=fn_call, obj_name=obj_name, obj_type=obj_type)
 
     try:
+        # As a TypeError exception has been raised, Python has already evaluated
+        # all the relevant code parts. Thus, using eval() should be completely safe..
         can_eval = eval(fn_call, frame.f_globals, frame.f_locals)
     except Exception:
         return {"cause": cause}
@@ -644,6 +646,8 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
     #    do we get a valid expression.
     # 2. if ... is something of another type that can be converted into an integer
     try:
+        # By this stage, Python should already have evaluated container_type.
+        # Thus, using eval() should be completely safe.
         container_type = eval(container_type, frame.f_globals, frame.f_locals)
     except Exception:
         if additional_cause:
@@ -683,6 +687,8 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
     index = index[1:-1]
 
     try:
+        # As a TypeError exception has been raised, Python has already evaluated
+        # all the relevant code parts. Thus, using eval() should be completely safe.
         index = eval(index, frame.f_globals, frame.f_locals)
         index_type = eval(index_type)
     except Exception:
@@ -703,6 +709,8 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
             .replace(" ", "")
         )
         try:
+            # As a TypeError exception has been raised, Python has already evaluated
+            # all the relevant code parts. Thus, using eval() should be completely safe.
             result = [] == eval(newline, frame.f_globals, frame.f_locals)
         except Exception:
             result = False

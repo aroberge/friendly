@@ -250,13 +250,13 @@ def start_console(
 # =========================================================================
 
 
-def set_lang(lang):
+def set_lang(lang="en"):
     """Sets the language to be used for the display.
 
     If no translations exist for that language, the original
     English strings will be used.
     """
-    session.set_lang(lang)
+    session.set_lang(lang=lang)
 
 
 def get_lang():

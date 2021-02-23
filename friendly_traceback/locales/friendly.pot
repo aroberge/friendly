@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-02-22 17:51-0400\n"
+"POT-Creation-Date: 2021-02-23 11:06-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -353,7 +353,7 @@ msgstr ""
 msgid "a `frozenset`"
 msgstr ""
 
-#: info_variables.py:455
+#: info_variables.py:454
 msgid ""
 "A type hint found for `{name}` in the {scope} scope.\n"
 "Perhaps you had used a colon instead of an equal sign and wrote\n"
@@ -404,7 +404,7 @@ msgstr ""
 
 #: runtime_errors\attribute_error.py:78 runtime_errors\attribute_error.py:119
 #: runtime_errors\attribute_error.py:228 runtime_errors\import_error.py:103
-#: runtime_errors\key_error.py:46 runtime_errors\key_error.py:52
+#: runtime_errors\key_error.py:56 runtime_errors\key_error.py:62
 #: runtime_errors\module_not_found_error.py:47 runtime_errors\name_error.py:73
 #: runtime_errors\unbound_local_error.py:38
 #: syntax_errors\message_analyzer.py:343 syntax_errors\message_analyzer.py:970
@@ -657,36 +657,36 @@ msgid ""
 "In your program, the key that cannot be found is `{key}`.\n"
 msgstr ""
 
-#: runtime_errors\key_error.py:33
+#: runtime_errors\key_error.py:43
 msgid ""
 "`{key}` is a string.\n"
 "There is a key of `{name}` whose string representation\n"
 "is identical to `{key}`.\n"
 msgstr ""
 
-#: runtime_errors\key_error.py:38
+#: runtime_errors\key_error.py:48
 msgid ""
 "Did you convert '{key}' into a string by mistake?\n"
 msgstr ""
 
-#: runtime_errors\key_error.py:47
+#: runtime_errors\key_error.py:57
 msgid ""
 "`{name}` is a key of `{dict_}` which is similar to `{key}`.\n"
 msgstr ""
 
-#: runtime_errors\key_error.py:53
+#: runtime_errors\key_error.py:63
 msgid ""
 "`{dict_}` has some keys similar to `{key}` including:\n"
 "`{names}`\n"
 msgstr ""
 
-#: runtime_errors\key_error.py:59
+#: runtime_errors\key_error.py:69
 msgid ""
 "`{name}` contains a string key which is identical to `str({key})`.\n"
 "Perhaps you forgot to convert the key into a string.\n"
 msgstr ""
 
-#: runtime_errors\key_error.py:63
+#: runtime_errors\key_error.py:73
 msgid ""
 "Did you forget to convert '{key}' into a string?\n"
 msgstr ""
@@ -884,8 +884,8 @@ msgid ""
 "{first} and {second}.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:204 runtime_errors\type_error.py:715
-#: runtime_errors\type_error.py:812 syntax_errors\statement_analyzer.py:990
+#: runtime_errors\type_error.py:204 runtime_errors\type_error.py:723
+#: runtime_errors\type_error.py:820 syntax_errors\statement_analyzer.py:990
 #: syntax_errors\statement_analyzer.py:998
 #: syntax_errors\statement_analyzer.py:1165
 msgid ""
@@ -897,7 +897,7 @@ msgid ""
 "Outside of Python, `^` is often used to indicate exponentiation.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:208 runtime_errors\type_error.py:718
+#: runtime_errors\type_error.py:208 runtime_errors\type_error.py:726
 msgid ""
 "Perhaps you meant `{line}`.\n"
 msgstr ""
@@ -1002,7 +1002,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:463
+#: runtime_errors\type_error.py:465
 msgid ""
 "However, `{fn_call}` is a `tuple`.\n"
 "Either the object `{obj_name}` was meant to be a function\n"
@@ -1011,24 +1011,24 @@ msgid ""
 "`{obj_name}, {fn_call}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:470
+#: runtime_errors\type_error.py:472
 msgid ""
 "Did you forget a comma between `{obj_name}` and `{fn_call}`?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:476
+#: runtime_errors\type_error.py:478
 msgid ""
 "However, `{obj_name}` is a sequence.\n"
 "Perhaps you meant to use `[]` instead of `()` and write\n"
 "`{obj_name}[{slice}]`\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:481
+#: runtime_errors\type_error.py:483
 msgid ""
 "Did you mean `{obj_name}[{slice}]`?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:492
+#: runtime_errors\type_error.py:494
 msgid ""
 "However, both `{obj_name}` and `{fn_call}` are numbers.\n"
 "Perhaps you forgot a multiplication operator, `*`,\n"
@@ -1036,52 +1036,52 @@ msgid ""
 "."
 msgstr ""
 
-#: runtime_errors\type_error.py:497
+#: runtime_errors\type_error.py:499
 msgid ""
 "Did you mean `{obj_name} * {fn_call}`?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:510
+#: runtime_errors\type_error.py:512
 msgid ""
 "Did you forget to convert `{name}` into an integer?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:511
+#: runtime_errors\type_error.py:513
 msgid ""
 "Perhaps you forgot to convert `{name}` into an integer.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:524
+#: runtime_errors\type_error.py:526
 msgid ""
 "You can only multiply sequences, such as list, tuples,\n"
 " strings, etc., by integers.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:545
+#: runtime_errors\type_error.py:547
 msgid ""
 "Did you forget to convert `{name1}` and `{name2}` into integers?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:548
+#: runtime_errors\type_error.py:550
 msgid ""
 "Perhaps you forgot to convert `{name1}` and `{name2}` into integers.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:585
+#: runtime_errors\type_error.py:587
 msgid ""
 "You wrote an object of type `{obj}` where an integer was expected.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:596
+#: runtime_errors\type_error.py:598
 msgid ""
 "Did you forget to convert `{names}` into integers?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:599
+#: runtime_errors\type_error.py:601
 msgid "Perhaps you forgot to convert `{names}` into integers."
 msgstr ""
 
-#: runtime_errors\type_error.py:620
+#: runtime_errors\type_error.py:622
 msgid ""
 "In the expression `{line}`\n"
 "what is included between the square brackets, `[...]`,\n"
@@ -1090,39 +1090,39 @@ msgid ""
 "and you have used {obj_type} instead.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:631
+#: runtime_errors\type_error.py:633
 msgid ""
 "Note: sometimes this exception is raised because what Python\n"
 "interprets as indices was meant to be a separate list, and a comma\n"
 "should have been written before the opening `[` of that list.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:636 syntax_errors\statement_analyzer.py:916
+#: runtime_errors\type_error.py:638 syntax_errors\statement_analyzer.py:916
 #: syntax_errors\statement_analyzer.py:1161
 msgid ""
 "Did you forget a comma?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:670
+#: runtime_errors\type_error.py:674
 msgid ""
 "Perhaps you have forgotten a comma between two identical lists\n"
 "`{container}`.  The second list had been interpreted as\n"
 "the indexation the first one by the index `{new_index}`\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:676
+#: runtime_errors\type_error.py:680
 msgid ""
 "Perhaps you have forgotten a comma between the object `{container}`\n"
 "and the list `{index}`.  The list `{index}` had been interpreted as\n"
 "the indexation of object `{container}` by the index `{new_index}`\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:681
+#: runtime_errors\type_error.py:685
 msgid ""
 "Did you forget a comma before `{index}`?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:744
+#: runtime_errors\type_error.py:752
 msgid ""
 "When using a slice to extract a range of elements\n"
 "from a sequence, that is something like\n"
@@ -1131,7 +1131,7 @@ msgid ""
 "or possibly some other object having an `__index__` method.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:762
+#: runtime_errors\type_error.py:770
 msgid ""
 "Only hashable objects can be used\n"
 "as elements of `set` or keys of `dict`.\n"
@@ -1139,62 +1139,62 @@ msgid ""
 "once they have been created."
 msgstr ""
 
-#: runtime_errors\type_error.py:772
+#: runtime_errors\type_error.py:780
 msgid ""
 "Instead of using {original}, consider using {replacement}.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:792
+#: runtime_errors\type_error.py:800
 msgid ""
 "Subscriptable objects are typically containers from which\n"
 "you can retrieve item using the notation `[...]`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:804
+#: runtime_errors\type_error.py:812
 msgid ""
 "Using this notation, you attempted to retrieve an item\n"
 "from an object of type `{obj_type}` which is not allowed.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:813
+#: runtime_errors\type_error.py:821
 msgid ""
 "Perhaps you meant to write `{line}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:816
+#: runtime_errors\type_error.py:824
 msgid ""
 "Using this notation, you attempted to retrieve an item\n"
 "from `{name}`, an object of type `{obj_type}`. This is not allowed.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:832
+#: runtime_errors\type_error.py:840
 msgid ""
 "An iterable is an object capable of returning its members one at a time.\n"
 "Python containers (`list, tuple, dict`, etc.) are iterables.\n"
 "An iterable is required here.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:848 runtime_errors\value_error.py:49
+#: runtime_errors\type_error.py:856 runtime_errors\value_error.py:49
 msgid ""
 "Unpacking is a convenient way to assign a name,\n"
 "to each item of an iterable.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:852
+#: runtime_errors\type_error.py:860
 msgid ""
 "An iterable is an object capable of returning its members one at a time.\n"
 "Python containers (`list, tuple, dict`, etc.) are iterables,\n"
 "but not objects of type `{obj_type}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:866
+#: runtime_errors\type_error.py:874
 msgid ""
 "{function} does not accept a sequence as an argument.\n"
 "Instead of writing `{line}`\n"
 "perhaps you should use the `dict.fromkeys()` method: `{new_line}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:871
+#: runtime_errors\type_error.py:879
 msgid ""
 "Perhaps you need to use the `dict.fromkeys()` method.\n"
 msgstr ""
@@ -1239,25 +1239,25 @@ msgstr ""
 msgid "The similar name `{name}` was found in the local scope. "
 msgstr ""
 
-#: runtime_errors\value_error.py:95 runtime_errors\value_error.py:104
+#: runtime_errors\value_error.py:97 runtime_errors\value_error.py:106
 msgid ""
 "In this instance, there are more names ({nb_names})\n"
 "than {length}, the length of the iterable.\n"
 msgstr ""
 
-#: runtime_errors\value_error.py:110
+#: runtime_errors\value_error.py:112
 msgid ""
 "In this instance, there are more names ({nb_names})\n"
 "than the length of the iterable, {iter_type} of length {length}.\n"
 msgstr ""
 
-#: runtime_errors\value_error.py:128 runtime_errors\value_error.py:138
+#: runtime_errors\value_error.py:130 runtime_errors\value_error.py:140
 msgid ""
 "In this instance, there are fewer names ({nb_names})\n"
 "than the length of the iterable.\n"
 msgstr ""
 
-#: runtime_errors\value_error.py:144
+#: runtime_errors\value_error.py:146
 msgid ""
 "In this instance, there are fewer names ({nb_names})\n"
 "than the length of the iterable, {iter_type} of length {length}.\n"
@@ -1724,7 +1724,7 @@ msgid ""
 "generator expression instead of the name of a variable.\n"
 msgstr ""
 
-#: syntax_errors\message_analyzer.py:185
+#: syntax_errors\message_analyzer.py:185 syntax_errors\message_analyzer.py:275
 msgid ""
 "You wrote an expression that has the f-string `{fstring}`\n"
 "on the left-hand side of the equal sign.\n"
@@ -1782,13 +1782,6 @@ msgstr ""
 msgid ""
 "The object named `{name}` is defined with type annotation\n"
 "as a local variable. It cannot be declared to be a global variable.\n"
-msgstr ""
-
-#: syntax_errors\message_analyzer.py:275
-msgid ""
-"You wrote an expression that has the f-string `{fstring}`\n"
-"on the left-hand side of the equal sign.\n"
-"An f-string should only appear on the right-hand side of the equal sign.\n"
 msgstr ""
 
 #: syntax_errors\message_analyzer.py:284
