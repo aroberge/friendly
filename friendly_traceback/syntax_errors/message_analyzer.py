@@ -629,11 +629,21 @@ def unterminated_f_string(message="", statement=None):
         return {}
 
     hint = _("Perhaps you forgot a closing quote.\n")
+    # Depending on the Python version, the error points at the f-string itself
+    # or the previous or the next token.
+    if statement.bad_token.is_string():  # Python 3.9+
+        fstring = statement.bad_token
+    elif statement.prev_token.is_string():  # Python 3.8
+        fstring = statement.prev_token
+    elif statement.next_token.is_string():  # Python 3.6, 3.7
+        fstring = statement.next_token
+    else:
+        fstring = "<not found>"
     cause = _(
         "Inside the f-string `{fstring}`, \n"
         "you have another string, which starts with either a\n"
         "single quote (') or double quote (\"), without a matching closing one.\n"
-    ).format(fstring=statement.bad_token)
+    ).format(fstring=fstring)
     return {"cause": cause, "suggest": hint}
 
 
