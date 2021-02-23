@@ -24,9 +24,9 @@ def print_different(filename, in_36, in_37, in_38, in_39, in_310, topic):
     else:
         header = "<h5>Different explanation - by Friendly-traceback</h5>\n"
     header_added = False
-    printed_37 = False
-    printed_38 = False
-    printed_39 = False
+
+    inputs = {in_36, in_37, in_38, in_39, in_310}
+
     if in_36 != in_37:
         if filename not in files:
             output.write("<div class='filename-header'>\n")
@@ -39,8 +39,9 @@ def print_different(filename, in_36, in_37, in_38, in_39, in_310, topic):
         output.write("<pre class='highlight friendly-small-pre'>")
         output.write("<b>3.6: </b>" + in_36 + "\n")
         output.write("<b>3.7: </b>" + in_37 + "\n")
-        printed_37 = True
         output.write("</pre>\n")
+        inputs.remove(in_36)
+        inputs.remove(in_37)
     if in_37 != in_38:
         if filename not in files:
             output.write("<div class='filename-header'>\n")
@@ -51,10 +52,12 @@ def print_different(filename, in_36, in_37, in_38, in_39, in_310, topic):
             output.write(header)
             header_added = True
         output.write("<pre class='highlight friendly-small-pre'>")
-        if not printed_37:
+        if in_37 in inputs:
             output.write("<b>3.7: </b>" + in_37 + "\n")
+            inputs.remove(in_37)
         output.write("<b>3.8: </b>" + in_38 + "\n")
         output.write("</pre>\n")
+        inputs.remove(in_38)
     if in_38 != in_39:
         if filename not in files:
             output.write("<div class='filename-header'>")
@@ -65,10 +68,12 @@ def print_different(filename, in_36, in_37, in_38, in_39, in_310, topic):
             output.write(header)
             header_added = True
         output.write("<pre class='highlight friendly-small-pre'>")
-        if not printed_38:
+        if in_38 in inputs:
             output.write("<b>3.8: </b>" + in_38 + "\n")
+            inputs.remove(in_38)
         output.write("<b>3.9: </b>" + in_39 + "\n")
         output.write("</pre>\n")
+        inputs.remove(in_39)
     if in_39 != in_310:
         if filename not in files:
             output.write("<div class='filename-header'>")
@@ -78,10 +83,12 @@ def print_different(filename, in_36, in_37, in_38, in_39, in_310, topic):
         if not header_added:
             output.write(header)
         output.write("<pre class='highlight friendly-small-pre'>")
-        if not printed_39:
+        if in_39 in inputs:
             output.write("<b>3.9: </b>" + in_39 + "\n")
+            inputs.remove(in_39)
         output.write("<b>3.10: </b>" + in_310 + "\n")
         output.write("</pre>\n")
+        inputs.remove(in_310)
 
 
 all_names = (
@@ -138,6 +145,13 @@ for filename in all_names:
             "message": not_an_error,
             "cause": not_an_error,
         }
+
+    attempt = "I will attempt to be give a bit more information."
+    for data in [data_36, data_37, data_38, data_39, data_310]:
+        if "cause" in data and data["cause"]:
+            if attempt in data["cause"]:
+                data["cause"] = data["cause"].split(attempt)[1]
+            data["cause"] = data["cause"].strip()
 
     print_different(
         filename,

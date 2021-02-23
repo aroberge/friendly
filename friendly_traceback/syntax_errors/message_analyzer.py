@@ -967,7 +967,7 @@ def from__future__not_defined(message="", **_kwargs):
 
     names = __future__.all_feature_names
     available = _("The available features are `{names}`.\n").format(
-        names=utils.list_to_string(names)
+        names=utils.list_to_string(names).replace(",", ",\n")
     )
     feature = match.group(1)
     if feature == "*":
