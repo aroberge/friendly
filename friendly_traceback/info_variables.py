@@ -157,13 +157,12 @@ def get_all_objects(line, frame):
     dotted_names = get_dotted_names(line)
     for name in dotted_names:
         for scope, scope_dict in scopes:
-            try:  # TODO: see if pure_eval could not be used instead of eval
-                obj = eval(name, scope_dict)
-                if (name, obj) not in objects["name, obj"]:
-                    objects[scope].append((name, repr(obj), obj))
-                    objects["name, obj"].append((name, obj))
-            except Exception:
-                pass
+            if name not in scope_dict:
+                continue
+            obj = scope_dict[name]
+            if (name, obj) not in objects["name, obj"]:
+                objects[scope].append((name, repr(obj), obj))
+                objects["name, obj"].append((name, obj))
 
     # TODO: check to see if this is still needed
     objects["nonlocals"] = get_nonlocal_objects(frame)

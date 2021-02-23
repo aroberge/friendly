@@ -45,6 +45,10 @@ descriptions = {
         cause: "`__debug__` is a constant in Python",
         title: "Assignment to keyword (__debug__)",
     },
+    "assign_to_f_string": {
+        cause: "expression that has the f-string",
+        title: "Cannot assign to f-string",
+    },
     "assign_to_function_call_1": {
         cause: "function call and is not simply the name of a variable",
         title: "Cannot assign to function call: single = sign",
@@ -107,6 +111,10 @@ descriptions = {
     "continue_outside_loop": {
         cause: "The Python keyword `continue` can only be used",
         title: "continue outside loop",
+    },
+    "copy_pasted_code": {
+        cause: "copy-pasted code from an interactive interpreter",
+        title: "Copy/paste from interpreter",
     },
     "def_code_block": {
         cause: "tried to define a function",
@@ -180,6 +188,10 @@ descriptions = {
         cause: "You cannot delete the literal",
         title: "Deleting string literal",
     },
+    "dot_before_paren": {
+        cause: "dot `.` followed by `(`",
+        title: "Dot followed by parenthesis",
+    },
     "else_if_instead_of_elif": {
         cause: "wrote `else if` instead",
         title: "Write elif, not else if",
@@ -203,6 +215,10 @@ descriptions = {
     "f_string_with_backslash": {
         cause: "you can replace the part that contains a backslash",
         title: "f-string with backslash",
+    },
+    "generator_expression_parens": {
+        cause: "must add parentheses enclosing",
+        title: "Parenthesis around generator expression",
     },
     "import_from": {
         cause: "from turtle import pen",
@@ -292,13 +308,29 @@ descriptions = {
         cause: "You used the nonlocal keyword at a module level",
         title: "nonlocal variable not found at module level",
     },
+    "pip_install_1": {
+        cause: "`pip` is a command that needs to run in a terminal",
+        title: "Using pip from interpreter",
+    },
+    "pip_install_2": {
+        cause: "`pip` is a command that needs to run in a terminal",
+        title: "Using pip from interpreter 2",
+    },
     "print_is_a_function": {
         cause: "In older version of Python, `print` was a keyword",
         title: "print is a function",
     },
+    "print_is_a_function_2": {
+        cause: "In older version of Python, `print` was a keyword",
+        title: "print is a function 2",
+    },
     "quote_inside_string": {
         cause: "quote inside a string",
         title: "Quote inside a string",
+    },
+    "raise_multiple_exceptions": {
+        cause: "trying to raise an exception using Python 2 syntax.",
+        title: "Raising multiple exceptions",
     },
     "unclosed_bracket": {
         cause: "The opening square bracket `[`",
@@ -339,42 +371,6 @@ descriptions = {
 
 
 
-
-
-
-
-    "raise_syntax_error67": {
-        cause: "In older version of Python, `print` was a keyword",
-        title: "print is a function 2",
-    },
-    "raise_syntax_error68": {
-        cause: "copy-pasted code from an interactive interpreter",
-        title: "Copy/paste from interpreter",
-    },
-    "raise_syntax_error69": {
-        cause: "`pip` is a command that needs to run in a terminal",
-        title: "Using pip from interpreter",
-    },
-    "raise_syntax_error70": {
-        cause: "`pip` is a command that needs to run in a terminal",
-        title: "Using pip from interpreter 2",
-    },
-    "raise_syntax_error71": {
-        cause: "dot `.` followed by `(`",
-        title: "Dot followed by parenthesis",
-    },
-    "raise_syntax_error72": {
-        cause: "expression that has the f-string",
-        title: "Cannot assign to f-string",
-    },
-    "raise_syntax_error73": {
-        cause: "trying to raise an exception using Python 2 syntax.",
-        title: "Raising multiple exceptions",
-    },
-    "raise_syntax_error74": {
-        cause: "must add parentheses enclosing",
-        title: "Parenthesis around generator expression",
-    },
     "raise_syntax_error75": {
         cause: "fancy unicode quotation mark",
         title: "Invalid character (bad quote)",
@@ -558,4 +554,3 @@ if sys.version_info >= (3, 10):
     del descriptions["missing_comma_in_set"]  # Temporary due to a bug in CPython
     del descriptions["missing_comma_in_list"]  # Temporary due to a bug in CPython
     del descriptions["unclosed_bracket"]  # Temporary due to a bug in CPython
-

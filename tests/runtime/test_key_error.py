@@ -16,5 +16,20 @@ def test_Generic():
     return result, message
 
 
+def test_ChainMap():
+    from collections import ChainMap
+    d = ChainMap({}, {})
+    try:
+        d.pop(42)
+    except Exception as e:
+        message = str(e)
+        friendly_traceback.explain_traceback(redirect="capture")
+    result = friendly_traceback.get_output()
+
+    assert "KeyError: 42" in result
+    if friendly_traceback.get_lang() == "en":
+        assert "that cannot be found is `42`." in result
+    return result, message
+
 if __name__ == "__main__":
     print(test_Generic()[0])
