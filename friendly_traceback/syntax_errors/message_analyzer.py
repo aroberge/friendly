@@ -630,13 +630,18 @@ def unterminated_f_string(message="", statement=None):
 
     hint = _("Perhaps you forgot a closing quote.\n")
     # Depending on the Python version, the error points at the f-string itself
-    # or the previous or the next token.
-    if statement.bad_token.is_string():  # Python 3.9+
-        fstring = statement.bad_token
-    elif statement.prev_token.is_string():  # Python 3.8
-        fstring = statement.prev_token
-    elif statement.next_token.is_string():  # Python 3.6, 3.7
-        fstring = statement.next_token
+    # or the previous or the next token. We must guard against the case where
+    # someone writes three strings in a row.
+    for tok in [statement.prev_token, statement.bad_token, statement.next_token]:
+        # escaped quotes are not allowed in f-strings, so we can simply count the number
+        # of quotes of both kinds and look for an odd-number.
+        if (
+            tok.is_string()
+            and tok.string.startswith("f")
+            and (tok.string.count("'") % 2 or tok.string.count('"') % 2)
+        ):
+            fstring = tok
+            break
     else:
         fstring = "<not found>"
     cause = _(
