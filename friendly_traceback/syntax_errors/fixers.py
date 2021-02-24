@@ -123,6 +123,8 @@ def check_statement(statement):
     """
     if not statement:  # If an empty string has been the result of modifying the code.
         return False
+
+    statement = token_utils.strip_comment(statement)
     try:
         if statement.endswith(":"):
             statement += " pass"

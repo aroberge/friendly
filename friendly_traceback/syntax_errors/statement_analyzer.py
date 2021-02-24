@@ -948,7 +948,6 @@ def missing_in_with_for(statement):
         statement.bad_token,
         "in " + statement.bad_token.string,
     )
-    print(repr(new_statement))
     if fixers.check_statement(new_statement):
         hint = _("Did you forget to write `in`?\n")
         cause = _(

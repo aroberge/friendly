@@ -108,6 +108,14 @@ descriptions = {
         cause: "The Python keyword `break` can only be used",
         title: "break outside loop",
     },
+    "cannot_use_star": {
+        cause: "The star operator",
+        title: "Cannot use star operator",
+    },
+    "cannot_use_double_star": {
+        cause: "The double star operator",
+        title: "Cannot use double star operator",
+    },
     "continue_outside_loop": {
         cause: "The Python keyword `continue` can only be used",
         title: "continue outside loop",
@@ -220,6 +228,10 @@ descriptions = {
         cause: "must add parentheses enclosing",
         title: "Parenthesis around generator expression",
     },
+    "hyphen_instead_of_underscore": {
+        cause: "Did you mean `a_b`",
+        title: "Space between names",
+    },
     "import_from": {
         cause: "from turtle import pen",
         title: "Import inversion: import X from Y",
@@ -243,6 +255,18 @@ descriptions = {
     "invalid_character_in_identifier": {
         cause: "unicode character",
         title: "Invalid character in identifier",
+    },
+    "invalid_hexadecimal": {
+        cause: "Did you made a mistake in writing an hexadecimal integer",
+        title: "Invalid hexadecimal number",
+    },
+    "invalid_identifier": {
+        cause: "Valid names cannot begin with a number",
+        title: "Valid names cannot begin with a number",
+    },
+    "invalid_identifier_2": {
+        cause: "Perhaps you forgot a multiplication operator",
+        title: "Forgot a multiplication operator",
     },
     "invalid_keyword_argument": {
         cause: "where `invalid` is not a valid ",
@@ -332,6 +356,18 @@ descriptions = {
         cause: "trying to raise an exception using Python 2 syntax.",
         title: "Raising multiple exceptions",
     },
+    "single_equal_with_if": {
+        cause: "You used an assignment operator `=`",
+        title: "Single = instead of double == with if",
+    },
+    "single_equal_with_elif": {
+        cause: "You used an assignment operator `=`",
+        title: "Single = instead of double == with elif",
+    },
+    "single_equal_with_while": {
+        cause: "You used an assignment operator `=`",
+        title: "Single = instead of double == with while",
+    },
     "unclosed_bracket": {
         cause: "The opening square bracket `[`",
         title: "Unclosed bracket",
@@ -344,6 +380,10 @@ descriptions = {
         cause: "The opening parenthesis `(` on line",
         title: "Unclosed parenthesis - 2",
     },
+    "unclosed_paren_3": {
+        cause: "The opening parenthesis `(` on line 5 is not closed",
+        title: "Unclosed parenthesis - 3",
+    },
     "unexpected_after_continuation_character": {
         cause: "using the continuation character",
         title: "Content passed continuation line character",
@@ -351,6 +391,10 @@ descriptions = {
     "unexpected_eof": {
         cause: "The opening square bracket `[`",
         title: "Unexpected EOF while parsing",
+    },
+    "unicode_quote": {
+        cause: "fancy unicode quotation mark",
+        title: "Invalid character (unicode quote)",
     },
     "unmatched_closing_paren": {
         cause: "The closing parenthesis `)` on",
@@ -371,50 +415,13 @@ descriptions = {
 
 
 
-    "raise_syntax_error75": {
-        cause: "fancy unicode quotation mark",
-        title: "Invalid character (bad quote)",
-    },
-    "raise_syntax_error76": {
-        cause: "You used an assignment operator `=`",
-        title: "Single = instead of double == with if",
-    },
-    "raise_syntax_error77": {
-        cause: "You used an assignment operator `=`",
-        title: "Single = instead of double == with elif",
-    },
-    "raise_syntax_error78": {
-        cause: "You used an assignment operator `=`",
-        title: "Single = instead of double == with while",
-    },
-    "raise_syntax_error79": {
-        cause: "Did you made a mistake in writing an hexadecimal integer",
-        title: "Invalid hexadecimal number",
-    },
-    "raise_syntax_error80": {
-        cause: "Valid names cannot begin with a number",
-        title: "Valid names cannot begin with a number",
-    },
-    "raise_syntax_error81": {
-        cause: "The opening parenthesis `(` on line 5 is not closed",
-        title: "Unclosed parenthesis - 3",
-    },
-    "raise_syntax_error82": {
-        cause: "Perhaps you forgot a multiplication operator",
-        title: "Forgot a multiplication operator",
-    },
-    "raise_syntax_error83": {
-        cause: "Did you mean `a_b`",
-        title: "Space between names",
-    },
-    "raise_syntax_error84": {
-        cause: "The star operator",
-        title: "Cannot use star operator",
-    },
-    "raise_syntax_error85": {
-        cause: "The double star operator",
-        title: "Cannot use double star operator",
-    },
+
+
+
+
+
+
+
     "raise_syntax_error86": {
         cause: "You can only use a `return`",
         title: "Cannot use return outside function",
