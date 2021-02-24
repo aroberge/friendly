@@ -357,7 +357,7 @@ def space_between_operators(statement):
         first=bad.string, second=next_.string, correct=correct
     )
     new_statement = fixers.replace_two_tokens(
-        statement.tokens,
+        statement.statement_tokens,
         first_token,
         first_string=correct,
         second_token=second_token,
@@ -412,7 +412,7 @@ def inverted_comparison_operators(statement):
     )
 
     new_statement = fixers.replace_two_tokens(
-        statement.tokens,
+        statement.statement_tokens,
         first,
         first_string=correct,
         second_token=second,
@@ -430,7 +430,9 @@ def walrus_instead_of_equal(statement):
     if not statement.bad_token == ":=":
         return {}
 
-    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "=")
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.bad_token, "="
+    )
     if fixers.check_statement(new_statement):
         hint = _("Did you mean to use `=`?\n")
         cause = _(
@@ -455,7 +457,9 @@ def assign_instead_of_equal(statement):
     if not statement.first_token.is_in(["if", "elif", "while"]):
         return {}
 
-    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "==")
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.bad_token, "=="
+    )
     if not fixers.check_statement(new_statement):
         # TODO: find a way to confirm that new error is later.
         debug_helper.log("Fix did not work in assign_instead_of_equal")
@@ -542,7 +546,9 @@ def dot_followed_by_bracket(statement):
     else:
         return {}
 
-    new_statement = fixers.replace_token(statement.tokens, statement.prev_token, ",")
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.prev_token, ","
+    )
     if fixers.check_statement(new_statement):
         cause += _("Perhaps you need to replace the dot by a comma.\n")
 
@@ -606,7 +612,7 @@ def missing_colon(statement):
         return {}
 
     new_statement = fixers.modify_token(
-        statement.tokens, statement.bad_token, append=":"
+        statement.statement_tokens, statement.bad_token, append=":"
     )
     if not fixers.check_statement(new_statement):
         return {}
@@ -641,13 +647,17 @@ def semi_colon_instead_of_other(statement):
     if statement.bad_token != ";":
         return {}
 
-    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, ":")
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.bad_token, ":"
+    )
     if fixers.check_statement(new_statement):
         cause = _("You wrote a semi-colon, `;`, where a colon, `:`, was expected.\n")
         hint = _("Did you mean to write a colon `:`?\n")
         return {"cause": cause, "suggest": hint}
 
-    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, ",")
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.bad_token, ","
+    )
     if fixers.check_statement(new_statement):
         cause = _("You wrote a semi-colon, `;`, where a comma was expected.\n")
         hint = _("Did you mean to write a comma?\n")
@@ -859,7 +869,9 @@ def wrong_type_declaration(statement):
     ):
         return {}
 
-    new_statement = fixers.replace_token(statement.tokens, statement.prev_token, "")
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.prev_token, ""
+    )
     if fixers.check_statement(new_statement):
         additional = _(
             "If you remove `{type_decl}`, you will have a valid Python statement.\n"
@@ -900,7 +912,7 @@ def missing_comma_before_string_in_dict(statement):
         return {}
 
     new_statement = fixers.modify_token(
-        statement.tokens, statement.prev_token, prepend=","
+        statement.statement_tokens, statement.prev_token, prepend=","
     )
     if not fixers.check_statement(new_statement):
         return {}
@@ -910,12 +922,42 @@ def missing_comma_before_string_in_dict(statement):
         "when defining a dict.\n\n"
     ).format(kwd=statement.bad_token)
     new_statement = fixers.modify_token(
-        statement.tokens, statement.prev_token, prepend=" «,» "
+        statement.statement_tokens, statement.prev_token, prepend=" «,» "
     )
     cause += "```\n" + new_statement + "\n```"
     hint = _("Did you forget a comma?\n")
 
     return {"cause": cause, "suggest": hint}
+
+
+@add_statement_analyzer
+def missing_in_with_for(statement):
+    """Whenever we have a 'for' keyword, there should be a corresponding
+    'in' keyword. Cases where 'in' have been misspelled are taken care below.
+    """
+    _ = current_lang.translate
+
+    for tok in statement.tokens[: statement.bad_token_index]:
+        if tok == "for":
+            break
+    else:
+        return {}
+
+    new_statement = fixers.replace_token(
+        statement.statement_tokens,
+        statement.bad_token,
+        "in " + statement.bad_token.string,
+    )
+    print(repr(new_statement))
+    if fixers.check_statement(new_statement):
+        hint = _("Did you forget to write `in`?\n")
+        cause = _(
+            "It looks as though you forgot to use the keyword `in`\n"
+            "as part of a `for` statement. Perhaps you meant:\n\n"
+            "    {new_statement}\n\n"
+        ).format(new_statement=new_statement)
+        return {"cause": cause, "suggest": hint}
+    return {}
 
 
 def _perhaps_misspelled_keyword(tokens, wrong):
@@ -949,33 +991,6 @@ def _perhaps_misspelled_keyword(tokens, wrong):
     if len(results) > 1:
         results = [(word, line) for word, line in results if word not in excluded]
     return results
-
-
-@add_statement_analyzer
-def missing_in_with_for(statement):
-    """Whenever we have a 'for' keyword, there should be a corresponding
-    'in' keyword. Cases where 'in' have been misspelled are taken care below.
-    """
-    _ = current_lang.translate
-
-    for tok in statement.tokens[: statement.bad_token_index]:
-        if tok == "for":
-            break
-    else:
-        return {}
-
-    new_statement = fixers.replace_token(
-        statement.tokens, statement.bad_token, "in " + statement.bad_token.string
-    )
-    if fixers.check_statement(new_statement):
-        hint = _("Did you forget to write `in`?\n")
-        cause = _(
-            "It looks as though you forgot to use the keyword `in`\n"
-            "as part of a `for` statement. Perhaps you meant:\n\n"
-            "    {new_statement}\n\n"
-        ).format(new_statement=new_statement)
-        return {"cause": cause, "suggest": hint}
-    return {}
 
 
 def misspelled_python_keyword(tokens, bad_token):
@@ -1140,7 +1155,7 @@ def missing_comma_or_operator(statement):
         comma_first_cause = ""
 
     results = _add_comma_or_operator(
-        statement.tokens, prev_token, comma_first=comma_first
+        statement.statement_tokens, prev_token, comma_first=comma_first
     )
     if not results:
         return {}
@@ -1234,11 +1249,15 @@ def and_instead_of_comma(statement):
     )
 
     cause = None
-    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, ",")
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.bad_token, ","
+    )
     if fixers.check_statement(new_statement):
         cause = possible_cause.format(new_statement=new_statement)
     else:  # 'and' following a comma
-        new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "")
+        new_statement = fixers.replace_token(
+            statement.statement_tokens, statement.bad_token, ""
+        )
         if fixers.check_statement(new_statement):
             cause = possible_cause.format(new_statement=new_statement)
 

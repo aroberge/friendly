@@ -68,7 +68,8 @@ class Statement:
         self.all_statements = []  # useful to determine what lines to include in
         # the contextual display
 
-        self.statement_tokens = []  # all tokens, including newlines, comments, etc.
+        # statement_tokens includes all tokens, including newlines, etc., needed
+        self.statement_tokens = []  # for proper reconstruction of multiline statements
         self.tokens = []  # meaningful tokens, used for error analysis; see docstring
         self.nb_tokens = 0  # number of meaningful tokens
         self.formatted_partial_source = ""

@@ -141,7 +141,7 @@ def missing_parens(statement):
         return {}
 
     new_statement = fixers.modify_token(
-        statement.tokens, statement.bad_token, prepend="()"
+        statement.statement_tokens, statement.bad_token, prepend="()"
     )
     if fixers.check_statement(new_statement):
         hint = _("Did you forget parentheses?\n")
@@ -165,7 +165,7 @@ def missing_parens_2(statement):
         return {}
 
     new_statement = fixers.replace_two_tokens(
-        statement.tokens,
+        statement.statement_tokens,
         statement.bad_token,
         first_string="(" + statement.bad_token.string,
         second_token=statement.last_token,
@@ -220,7 +220,9 @@ def keyword_as_function_name(statement):
         "You tried to use the Python keyword `{kwd}` as a function name.\n"
     ).format(kwd=statement.bad_token)
 
-    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "name")
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.bad_token, "name"
+    )
     if not fixers.check_statement(new_statement):
         cause += "\n" + _("There are more syntax errors later in your code.\n")
 
@@ -236,7 +238,9 @@ def other_invalid_function_names(statement):
     ):
         return {}
 
-    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "name")
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.bad_token, "name"
+    )
     if not fixers.check_statement(new_statement):
         return {}
 
@@ -280,7 +284,9 @@ def keyword_not_allowed_as_function_argument(statement):
     if not (statement.bad_token.is_keyword() and statement.begin_brackets):
         return {}
 
-    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "name")
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.bad_token, "name"
+    )
     if not fixers.check_statement(new_statement):
         return {}
 
@@ -474,7 +480,9 @@ def missing_colon(statement):
         return {}
     cause = _("A function definition statement must end with a colon.\n")
 
-    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, ":")
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.bad_token, ":"
+    )
     if fixers.check_statement(new_statement):
         hint = _("Did you mean to write a colon?\n")
         cause += _("You wrote `{bad}` instead of a colon.\n").format(
@@ -482,7 +490,9 @@ def missing_colon(statement):
         )
         return {"cause": cause, "suggest": hint}
 
-    new_statement = fixers.replace_token(statement.tokens, statement.bad_token, "")
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.bad_token, ""
+    )
     if fixers.check_statement(new_statement):
         hint = _("Did you write something by mistake after the colon?\n")
         cause += _("You wrote `{bad}` after the colon.\n").format(
@@ -491,7 +501,7 @@ def missing_colon(statement):
         return {"cause": cause, "suggest": hint}
 
     new_statement = fixers.modify_token(
-        statement.tokens, statement.bad_token, append=":"
+        statement.statement_tokens, statement.bad_token, append=":"
     )
     if not fixers.check_statement(new_statement):
         additional = _(
@@ -515,7 +525,9 @@ def operator_as_argument(statement):
     if statement.prev_token.is_in("(,"):
         hint = _("You cannot have operators as function arguments.\n")
     else:
-        new_statement = fixers.replace_token(statement.tokens, statement.bad_token, ",")
+        new_statement = fixers.replace_token(
+            statement.statement_tokens, statement.bad_token, ","
+        )
         if fixers.check_statement(new_statement):
             hint = _("Did you mean to write a comma?\n")
             cause = _(

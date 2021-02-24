@@ -147,10 +147,13 @@ for filename in all_names:
         }
 
     attempt = "I will attempt to be give a bit more information."
+    guess = "guess what caused the problem, but I might be wrong."
     for data in [data_36, data_37, data_38, data_39, data_310]:
         if "cause" in data and data["cause"]:
             if attempt in data["cause"]:
                 data["cause"] = data["cause"].split(attempt)[1]
+            if guess in data["cause"]:
+                data["cause"] = data["cause"].split(guess)[1]
             data["cause"] = data["cause"].strip()
 
     print_different(
