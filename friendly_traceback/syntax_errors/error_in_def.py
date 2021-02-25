@@ -468,7 +468,8 @@ def dict_or_set_as_argument(statement):
 
 @add_statement_analyzer
 def missing_colon(statement):
-    """look for missing colon at the end of statement"""
+    """look for missing colon at the end of statement; includes the case where
+    something else has been written as a typo."""
     _ = current_lang.translate
 
     # TODO: need to add test for each case
@@ -495,23 +496,13 @@ def missing_colon(statement):
     )
     if fixers.check_statement(new_statement):
         hint = _("Did you write something by mistake after the colon?\n")
-        cause += _("You wrote `{bad}` after the colon.\n").format(
+        cause += _("And a block of code must come after the colon.\n")
+        cause += _("If you remove `{bad}`, this will fix the problem.\n").format(
             bad=statement.bad_token
         )
         return {"cause": cause, "suggest": hint}
 
-    new_statement = fixers.modify_token(
-        statement.statement_tokens, statement.bad_token, append=":"
-    )
-    if not fixers.check_statement(new_statement):
-        additional = _(
-            "However, simply adding a colon at the end would\n"
-            "not be sufficient to fix the problems with your code.\n"
-        )
-        return {"cause": cause + additional}
-
-    hint = _("Did you forget a colon `:`?\n")
-    return {"cause": cause + def_correct_syntax(), "suggest": hint}
+    return {}
 
 
 @add_statement_analyzer

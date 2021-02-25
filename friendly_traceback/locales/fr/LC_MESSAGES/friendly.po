@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-02-25 06:11-0400\n"
-"PO-Revision-Date: 2021-02-25 06:14-0400\n"
+"POT-Creation-Date: 2021-02-25 15:42-0400\n"
+"PO-Revision-Date: 2021-02-25 15:44-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1976,7 +1976,7 @@ msgstr ""
 "Vous ne pouvez pas avoir de listes explicites comme arguments de fonction.\n"
 
 #: syntax_errors\error_in_def.py:448 syntax_errors\error_in_def.py:463
-#: syntax_errors\error_in_def.py:540
+#: syntax_errors\error_in_def.py:531
 msgid "You can only use identifiers (variable names) as function arguments.\n"
 msgstr ""
 "Vous ne pouvez utiliser que des identifiants (noms de variables) comme "
@@ -1988,47 +1988,39 @@ msgstr ""
 "Vous ne pouvez pas avoir des `dict` ou des `set` explicite comme arguments "
 "de fonction.\n"
 
-#: syntax_errors\error_in_def.py:481
+#: syntax_errors\error_in_def.py:482
 msgid "A function definition statement must end with a colon.\n"
 msgstr "Une définition de fonction doit se terminer par deux point, `:`.\n"
 
-#: syntax_errors\error_in_def.py:487
+#: syntax_errors\error_in_def.py:488
 msgid "Did you mean to write a colon?\n"
 msgstr "Avez-vous oublié d’ajouter les deux points `:` ?\n"
 
-#: syntax_errors\error_in_def.py:488
+#: syntax_errors\error_in_def.py:489
 msgid "You wrote `{bad}` instead of a colon.\n"
 msgstr "Tu as écrit `{bad}` au lieu de deux points, `:`.\n"
 
-#: syntax_errors\error_in_def.py:497
+#: syntax_errors\error_in_def.py:498
 msgid "Did you write something by mistake after the colon?\n"
 msgstr "Avez-vous écrit quelque chose par erreur après les deux points `:` ?\n"
 
-#: syntax_errors\error_in_def.py:498
-msgid "You wrote `{bad}` after the colon.\n"
-msgstr "Vous avez écrit `{bad}` après les deux points, `:`.\n"
+#: syntax_errors\error_in_def.py:499
+msgid "And a block of code must come after the colon.\n"
+msgstr "Et un bloc de code doit venir après les deux points.\n"
 
-#: syntax_errors\error_in_def.py:507
-msgid ""
-"However, simply adding a colon at the end would\n"
-"not be sufficient to fix the problems with your code.\n"
-msgstr ""
-"Toutefois, le simple fait d’ajouter les deux points à la fin\n"
-"ne serait pas suffisant pour résoudre tous les problèmes avec votre code.\n"
+#: syntax_errors\error_in_def.py:500
+msgid "If you remove `{bad}`, this will fix the problem.\n"
+msgstr "Si vous supprimez `{bad}`, cela résout le problème.\n"
 
-#: syntax_errors\error_in_def.py:513 syntax_errors\statement_analyzer.py:622
-msgid "Did you forget a colon `:`?\n"
-msgstr "Avez-vous oublié d’ajouter les deux points `:` ?\n"
-
-#: syntax_errors\error_in_def.py:526
+#: syntax_errors\error_in_def.py:517
 msgid "You cannot have operators as function arguments.\n"
 msgstr "Vous ne pouvez pas avoir d’opérateurs comme arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:532 syntax_errors\statement_analyzer.py:663
+#: syntax_errors\error_in_def.py:523 syntax_errors\statement_analyzer.py:663
 msgid "Did you mean to write a comma?\n"
 msgstr "Avez-vous oublié une virgule ?\n"
 
-#: syntax_errors\error_in_def.py:533
+#: syntax_errors\error_in_def.py:524
 msgid ""
 "I suspect you made a typo and wrote `{op}` instead of a comma.\n"
 "The following statement contains no syntax error:\n"
@@ -2040,16 +2032,16 @@ msgstr ""
 "\n"
 "    {new_statement}"
 
-#: syntax_errors\error_in_def.py:539
+#: syntax_errors\error_in_def.py:530
 msgid "You cannot use operators with function arguments.\n"
 msgstr ""
 "Vous ne pouvez pas utiliser des opérateurs avec des arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:559
+#: syntax_errors\error_in_def.py:550
 msgid "Positional arguments must come before keyword arguments.\n"
 msgstr "Les arguments positionnels doivent être avant les arguments nommés.\n"
 
-#: syntax_errors\error_in_def.py:560
+#: syntax_errors\error_in_def.py:551
 msgid ""
 "`{arg}` is a positional argument that appears after one or more\n"
 "keyword arguments in your function definition.\n"
@@ -3226,6 +3218,10 @@ msgstr ""
 "signifiant\n"
 "qu'un déballage de `dict` doit être utilisé ce qui n’a pas de sens ici.\n"
 
+#: syntax_errors\statement_analyzer.py:622
+msgid "Did you forget a colon `:`?\n"
+msgstr "Avez-vous oublié d’ajouter les deux points `:` ?\n"
+
 #: syntax_errors\statement_analyzer.py:625
 msgid ""
 "You wrote a `{for_while}` loop but\n"
@@ -3683,6 +3679,17 @@ msgstr "accolade `{`"
 #: syntax_errors\syntax_utils.py:47
 msgid "curly bracket `}`"
 msgstr "accolade `}`"
+
+#~ msgid "You wrote `{bad}` after the colon.\n"
+#~ msgstr "Vous avez écrit `{bad}` après les deux points, `:`.\n"
+
+#~ msgid ""
+#~ "However, simply adding a colon at the end would\n"
+#~ "not be sufficient to fix the problems with your code.\n"
+#~ msgstr ""
+#~ "Toutefois, le simple fait d’ajouter les deux points à la fin\n"
+#~ "ne serait pas suffisant pour résoudre tous les problèmes avec votre "
+#~ "code.\n"
 
 #~ msgid ""
 #~ "You wrote an expression that has the f-string `{fstring}`\n"
