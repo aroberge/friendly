@@ -77,7 +77,7 @@ def create_tracebacks(target, intro_text, format="pre", messages=None):
                                 make_title(title, format=format, underline="~")
                                 write(result)
                                 nb_cases += 1
-                except Exception as e:
+                except Exception:
                     friendly_traceback.explain_traceback()
 
     print("    Number of cases in trb_common.py: ", nb_cases)

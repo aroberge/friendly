@@ -116,7 +116,7 @@ def test_Module_attribute_typo():
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
     
-    assert ("AttributeError: module 'math' has no attribute 'cost'") in result
+    assert "AttributeError: module 'math' has no attribute 'cost'" in result
     if friendly_traceback.get_lang() == "en":
         assert (
             "Instead of writing `math.cost`, perhaps you meant to write one of"
