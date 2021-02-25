@@ -88,7 +88,7 @@ items_in_order = [
 
 
 repl_indentation = {
-    "header": "single",
+    # "header": "single",  # no longer shown; keep for reference
     "message": "single",
     "simulated_python_traceback": "none",
     "original_python_traceback": "none",
@@ -367,7 +367,6 @@ def no_result(info, include):
 
 
 items_groups = {
-    "header": {"header"},
     "message": {"message"},  # Also included as last line of traceback
     "hint": {"suggest"},
     "generic": {"generic"},

@@ -227,8 +227,8 @@ explain: Combines most useful information in a single display
 
 friendly_tb, python_tb, debug_tb: three different choices for the traceback.
 
-The defaults are *friendly_tb* if the friendly-console is going to be shown,
-otherwise it is *explain*.
+The defaults are friendly_tb if the friendly-console is going to be shown,
+otherwise it is explain.
 
 The following lists all the available choices, automatically extracted
 from the source code.
@@ -245,7 +245,8 @@ friendly-console after an exception has been raised.
 def show_include_choices():
     print(include_choices)
     for key in formatters.items_groups:
-        print(key)
+        if key != "header":
+            print(key)
     print(third_party_choices)
 
 

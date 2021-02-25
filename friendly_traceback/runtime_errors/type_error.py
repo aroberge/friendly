@@ -593,7 +593,6 @@ def object_cannot_be_interpreted_as_an_integer(message, frame, tb_data):
             more_cause, hint = forgot_to_convert_name_to_int(names[0])
             cause += more_cause
         else:
-            names = [name for name in names]
             names = ", ".join(names)
             hint = _("Did you forget to convert `{names}` into integers?\n").format(
                 names=names

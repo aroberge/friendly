@@ -269,21 +269,22 @@ def get_lang():
     return session.lang
 
 
+def _include_choices():
+    """Prints the available choices for arguments to set_include()"""
+    choices = [repr(key) for key in formatters.items_groups if key != "header"]
+    return ",\n    ".join(choices)
+
+
 def set_include(include):
     """Specifies the information to include in the traceback.
 
-    Currently allowed values include "explain", "what", "where", "why",
-    "hint", "friendly_tb", "python_tb", "debug_tb".
-
-    The full list of available values is available from the command line::
-
-        python -m friendly_traceback --show-include
-
-    or, when using a friendly-console::
-
-        show_include_choices()
+    The allowed values are:
+        {choices}
     """
     session.set_include(include)
+
+
+set_include.__doc__ = set_include.__doc__.format(choices=_include_choices())
 
 
 def get_include():
@@ -291,12 +292,6 @@ def get_include():
     traceback. See ``set_include()`` for details.
     """
     return session.get_include()
-
-
-def show_include_choices():
-    """Prints the available choices for arguments to set_include()"""
-    for key in formatters.items_groups:
-        print(repr(key))
 
 
 def set_stream(redirect=None):

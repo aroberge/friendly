@@ -494,10 +494,10 @@ def expression_cannot_contain_assignment(message="", **_kwargs):
     if "expression cannot contain assignment, perhaps you meant" not in message:
         return {}
     cause = _(
-        "One of the following two possibilities could be the cause:\n\n"
-        "(1) You meant to do a comparison with == and wrote = instead.\n\n"
-        "(2) You called a function with a named argument:\n\n"
-        "    a_function(invalid=...)\n\n"
+        "One of the following two possibilities could be the cause:\n"
+        "1. You meant to do a comparison with == and wrote = instead.\n"
+        "2. You called a function with a named argument:\n\n"
+        "        a_function(invalid=...)\n\n"
         "where `invalid` is not a valid identifier (variable name) in Python\n"
         "either because it starts with a number, or is a string,\n"
         "or contains a period, etc.\n"
@@ -512,8 +512,8 @@ def generator_expression_must_be_parenthesized(message="", **_kwargs):
     if "Generator expression must be parenthesized" not in message:
         return {}
     cause = _(
-        "You are using a generator expression, something of the form\n"
-        "    `x for x in thing`\n"
+        "You are using a generator expression, something of the form\n\n"
+        "    x for x in thing\n\n"
         "You must add parentheses enclosing that expression.\n"
     )
     return {"cause": cause}
@@ -538,7 +538,7 @@ def keyword_cannot_be_expression(message="", **_kwargs):
         return {}
     cause = _(
         "You likely called a function with a named argument:\n\n"
-        "   `a_function(invalid=something)`\n\n"
+        "    a_function(invalid=something) \n\n"
         "where `invalid` is not a valid variable name in Python\n"
         "either because it starts with a number, or is a string,\n"
         "or contains a period, etc.\n"

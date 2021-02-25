@@ -219,7 +219,6 @@ get_lang = friendly_traceback.get_lang
 set_lang = friendly_traceback.set_lang
 get_include = friendly_traceback.get_include
 set_include = friendly_traceback.set_include
-show_include_choices = friendly_traceback.show_include_choices
 
 helpers = {
     "explain": explain,
@@ -231,7 +230,6 @@ helpers = {
     "set_lang": set_lang,
     "get_include": get_include,
     "set_include": set_include,
-    "show_include_choices": show_include_choices,
     "hint": hint,
     "friendly_tb": friendly_tb,
     "python_tb": python_tb,
