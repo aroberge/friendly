@@ -124,6 +124,10 @@ descriptions = {
         cause: "copy-pasted code from an interactive interpreter",
         title: "Copy/paste from interpreter",
     },
+    "def_bare_star_arg": {
+        cause: "replace `*` by either `*arguments` or ",
+        title: "Named arguments must follow bare *",
+    },
     "def_code_block": {
         cause: "tried to define a function",
         title: "def: misused as code block",
@@ -131,6 +135,14 @@ descriptions = {
     "def_duplicate_arg": {
         cause: "keyword argument should appear only once in a function definition",
         title: "def: Keyword arg only once in function definition",
+    },
+    "def_function_name_invalid": {
+        cause: "The name of a function must be a valid Python identifier",
+        title: "Non-identifier as a function name",
+    },
+    "def_function_name_string": {
+        cause: "use a string as a function name",
+        title: "Using a string as a function name",
     },
     "def_keyword_as_arg_1": {
         cause: "as an argument in the definition of a function",
@@ -224,6 +236,26 @@ descriptions = {
         cause: "you can replace the part that contains a backslash",
         title: "f-string with backslash",
     },
+    "future_braces": {
+        cause: "from __future__ import braces",
+        title: "Not a chance!",
+    },
+    "future_import_star": {
+        cause: "you must import specific named features",
+        title: "Do not import * from __future__",
+    },
+    "future_must_be_first": {
+        cause: "It must appear at the beginning of the file.",
+        title: "__future__ at beginning",
+    },
+    "future_typo": {
+        cause: "Did you mean `division`",
+        title: "Typo in __future__",
+    },
+    "future_unknown": {
+        cause: "print_function",
+        title: "Unknown feature in __future__",
+    },
     "generator_expression_parens": {
         cause: "must add parentheses enclosing",
         title: "Parenthesis around generator expression",
@@ -231,6 +263,10 @@ descriptions = {
     "hyphen_instead_of_underscore": {
         cause: "Did you mean `a_b`",
         title: "Space between names",
+    },
+    "imaginary_i": {
+        cause: "Did you mean `3.0j`",
+        title: "use j instead of i",
     },
     "import_from": {
         cause: "from turtle import pen",
@@ -271,6 +307,10 @@ descriptions = {
     "invalid_keyword_argument": {
         cause: "where `invalid` is not a valid ",
         title: "Keyword can't be an expression",
+    },
+    "invalid_octal": {
+        cause: "Did you made a mistake in writing an octal integer",
+        title: "Invalid octal number",
     },
     "keyword_arg_repeated": {
         cause: "keyword argument should appear only once in a function call",
@@ -356,6 +396,10 @@ descriptions = {
         cause: "trying to raise an exception using Python 2 syntax.",
         title: "Raising multiple exceptions",
     },
+    "return_outside_function": {
+        cause: "You can only use a `return`",
+        title: "Cannot use return outside function",
+    },
     "single_equal_with_if": {
         cause: "You used an assignment operator `=`",
         title: "Single = instead of double == with if",
@@ -367,6 +411,14 @@ descriptions = {
     "single_equal_with_while": {
         cause: "You used an assignment operator `=`",
         title: "Single = instead of double == with while",
+    },
+    "too_many_nested_blocks": {
+        cause: "Seriously",
+        title: "Too many nested blocks",
+    },
+    "triple_equal": {
+        cause: "the exact same object, use the operator `is`",
+        title: "Triple-equal sign",
     },
     "unclosed_bracket": {
         cause: "The opening square bracket `[`",
@@ -415,65 +467,6 @@ descriptions = {
 
 
 
-
-
-
-
-
-
-
-    "raise_syntax_error86": {
-        cause: "You can only use a `return`",
-        title: "Cannot use return outside function",
-    },
-    "raise_syntax_error87": {
-        cause: "Seriously",
-        title: "Too many nested blocks",
-    },
-    "raise_syntax_error88": {
-        cause: "replace `*` by either `*arguments` or ",
-        title: "Named arguments must follow bare *",
-    },
-    "raise_syntax_error89": {
-        cause: "Did you mean `3.0j`",
-        title: "use j instead of i",
-    },
-    "raise_syntax_error90": {
-        cause: "you must import specific named features",
-        title: "Do not import * from __future__",
-    },
-    "raise_syntax_error91": {
-        cause: "Did you mean `division`",
-        title: "Typo in __future__",
-    },
-    "raise_syntax_error92": {
-        cause: "print_function",
-        title: "Unknown feature in __future__",
-    },
-    "raise_syntax_error93": {
-        cause: "from __future__ import braces",
-        title: "Not a chance!",
-    },
-    "raise_syntax_error94": {
-        cause: "It must appear at the beginning of the file.",
-        title: "__future__ at beginning",
-    },
-    "raise_syntax_error95": {
-        cause: "Did you made a mistake in writing an octal integer",
-        title: "Invalid octal number",
-    },
-    "raise_syntax_error96": {
-        cause: "use a string as a function name",
-        title: "Using a string as a function name",
-    },
-    "raise_syntax_error97": {
-        cause: "The name of a function must be a valid Python identifier",
-        title: "Non-identifier as a function name",
-    },
-    "raise_syntax_error98": {
-        cause: "the exact same object, use the operator `is`",
-        title: "Triple-equal sign",
-    },
 
 
     "raise_syntax_error107": {
