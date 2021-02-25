@@ -272,13 +272,14 @@ def get_lang():
 def _include_choices():
     """Prints the available choices for arguments to set_include()"""
     choices = [repr(key) for key in formatters.items_groups if key != "header"]
-    return ",\n    ".join(choices)
+    return ",\n        ".join(choices)
 
 
 def set_include(include):
     """Specifies the information to include in the traceback.
 
     The allowed values are:
+
         {choices}
     """
     session.set_include(include)

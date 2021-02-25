@@ -21,6 +21,10 @@ descriptions = {
         cause: "It cannot be declared to be a global variable.",
         title: "Annotated name cannot be global",
     },
+    "as_instead_of_comma_in_import": {
+        cause: "and rename it using the Python keyword `as`",
+        title: "Incorrect use of 'from module import ... as ...",
+    },
     "assign_name_before_global_1": {
         cause: "before declaring it as a global variable.",
         title: "Name assigned prior to global declaration",
@@ -116,6 +120,18 @@ descriptions = {
         cause: "The double star operator",
         title: "Cannot use double star operator",
     },
+    "comprehension_missing_tuple_paren": {
+        cause: "and forgot to include parentheses around tuples",
+        title: "Missing () for tuples in comprehension",
+    },
+    "comprehension_with_condition_no_else": {
+        cause: "The correct order depends if there is an `else` clause or not",
+        title: "Comprehension with condition (no else)",
+    },
+    "comprehension_with_condition_with_else": {
+        cause: "The correct order depends if there is an `else` clause or not",
+        title: "Comprehension with condition (with else)",
+    },
     "continue_outside_loop": {
         cause: "The Python keyword `continue` can only be used",
         title: "continue outside loop",
@@ -184,9 +200,17 @@ descriptions = {
         cause: "define functions with only positional arguments",
         title: "def: non-default argument follows default argument",
     },
+    "def_number_as_arg": {
+        cause: "You used a number as an argument",
+        title: "Single number used as arg in function def",
+    },
     "def_positional_after_keyword_arg": {
         cause: "call functions with only positional arguments",
         title: "def: positional argument follows keyword argument",
+    },
+    "def_string_as_arg": {
+        cause: "You used a string as an argument",
+        title: "Single string used as arg in function def",
     },
     "def_tuple_as_arg_1": {
         cause: "You cannot have explicit tuples as function arguments.",
@@ -227,6 +251,14 @@ descriptions = {
     "equal_sign_instead_of_colon": {
         cause: "used an equal sign `=` instead of a colon `:`",
         title: "Used equal sign instead of colon",
+    },
+    "except_multiple_exceptions": {
+        cause: "with multiple exception types.",
+        title: "Parens around multiple exceptions",
+    },
+    "f_string_binary": {
+        cause: "`bf` is an illegal string prefix.",
+        title: "Binary f-string not allowed",
     },
     "f_string_unterminated": {
         cause: "you have another string, which starts with either",
@@ -287,6 +319,14 @@ descriptions = {
     "indentation_error_4": {
         cause: "meant to include a continuation character",
         title: "IndentationError: missing continuation line",
+    },
+    "integer_with_leading_zero_1": {
+        cause: "Did you mean `0o1`",
+        title: "Forgot 'o' for octal",
+    },
+    "integer_with_leading_zero_2": {
+        cause: "Did you mean `123_456`",
+        title: "Integer with leading zeros",
     },
     "invalid_character_in_identifier": {
         cause: "unicode character",
@@ -460,59 +500,16 @@ descriptions = {
         cause: "The closing square bracket `]` on line",
         title: "Mismatched brackets - 2",
     },
-
-
-
-
-
-
-
-
-
-    "raise_syntax_error107": {
+    "unterminated_triple_quote_string": {
         cause: "You started writing a triple-quoted string",
         title: "Unterminated triple quoted string",
     },
-    "raise_syntax_error108": {
-        cause: "and rename it using the Python keyword `as`",
-        title: "Incorrect use of 'from module import ... as ...",
-    },
-    "raise_syntax_error109": {
-        cause: "The correct order depends if there is an `else` clause or not",
-        title: "Comprehension with condition (no else)",
-    },
-    "raise_syntax_error110": {
-        cause: "The correct order depends if there is an `else` clause or not",
-        title: "Comprehension with condition (with else)",
-    },
-    "raise_syntax_error111": {
-        cause: "Did you mean `0o1`",
-        title: "Forgot 'o' for octal",
-    },
-    "raise_syntax_error112": {
-        cause: "Did you mean `123_456`",
-        title: "Integer with leading zeros",
-    },
-    "raise_syntax_error113": {
-        cause: "and forgot to include parentheses around tuples",
-        title: "Missing () for tuples in comprehension",
-    },
-    "raise_syntax_error114": {
-        cause: "`bf` is an illegal string prefix.",
-        title: "Binary f-string not allowed",
-    },
-    "raise_syntax_error115": {
-        cause: "with multiple exception types.",
-        title: "Parens around multiple exceptions",
-    },
-    "raise_syntax_error116": {
-        cause: "You used a number as an argument",
-        title: "Single number used as arg in function def",
-    },
-    "raise_syntax_error119": {
-        cause: "You used a string as an argument",
-        title: "Single string used as arg in function def",
-    },
+
+
+
+
+
+
 
     "tab_error": {
         cause: "A `TabError` indicates that you have used",
