@@ -162,7 +162,7 @@ def main():
     include = "friendly_tb"
     if args.include:
         include = args.include
-    elif args.source:
+    elif args.source and not sys.flags.interactive:
         include = "explain"
 
     if args.debug:

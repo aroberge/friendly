@@ -12,6 +12,7 @@ tests/messages_*.py
 # Simple test files
 test.py
 ignore.py
+example.py
 
 #=====================
 # Byte-compiled / optimized / DLL files
