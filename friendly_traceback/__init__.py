@@ -129,7 +129,7 @@ def uninstall():
 def run(
     filename,
     lang=None,
-    include="friendly_tb",
+    include=None,
     args=None,
     console=True,
     use_rich=False,
@@ -150,25 +150,32 @@ def run(
 
     Other arguments include:
 
-    ``lang``: language used; currently only ``en`` (default) and ``fr``
+    ``lang``: language used; currently only ``'en'`` (default) and ``'fr'``
     are available.
 
     ``include``: specifies what information is to be included if an
-    exception is raised.
+    exception is raised; the default is ``"friendly_tb"`` if console
+    is set to ``True``, otherwise it is ``"explain"``
 
     ``args``: strings tuple that is passed to the program as though it
     was run on the command line as follows::
 
         python filename.py arg1 arg2 ...
 
-    ``use_rich``: set to ``True`` if Rich is available and the environment
-    supports it.
+    ``use_rich``: ``False`` by default. Set it to ``True`` if Rich is available
+    and the environment supports it.
 
-    ``theme``: Theme to be used with Rich. Currently only ``dark``,
-    the default, and ``light`` are available. ``light`` is meant for
+    ``theme``: Theme to be used with Rich. Currently only ``"dark"``,
+    the default, and ``"light"`` are available. ``"light"`` is meant for
     light coloured background and has not been extensively tested.
     """
     _ = current_lang.translate
+    if include is None:
+        if console:
+            include = "friendly_tb"
+        else:
+            include = "explain"
+
     if args is not None:
         sys.argv = [filename]
         sys.argv.extend(list(args))

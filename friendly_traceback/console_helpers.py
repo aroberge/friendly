@@ -1,12 +1,9 @@
 """
 console_helpers.py
-==================
+------------------
 
 Functions that can be used in a friendly console or in other interactive
 environments such as in a Jupyter notebook.
-
-We suggest to use ``dir()`` to see all possible choices as some might
-not be listed here.
 """
 
 import sys
@@ -253,7 +250,7 @@ class Friendly:
 
 
 for helper in helpers:
-    setattr(Friendly, helper, helpers[helper])
+    setattr(Friendly, helper, staticmethod(helpers[helper]))
 
 helpers["Friendly"] = Friendly
 

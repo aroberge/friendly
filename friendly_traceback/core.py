@@ -337,6 +337,7 @@ class FriendlyTraceback:
         self.assign_generic()
         self.assign_location()
         self.assign_cause()
+        # removing null values
         to_remove = []
         for key in self.info:
             if not self.info[key]:

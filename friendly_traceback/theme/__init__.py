@@ -2,12 +2,9 @@
 """
 import sys
 
+pygments_available = True
 try:
-    import pygments
-    from pygments.styles import get_style_by_name
-    from . import brunante
-
-    pygments_available = True
+    from pygments import styles  # noqa
 except ImportError:
     pygments_available = False
 
@@ -17,13 +14,15 @@ current_style = "default"
 current_rich_style = "dark"
 
 if pygments_available:
-    # Monkeypatching pygments; inspired by
+    from . import brunante
+
+    # Monkey-patching pygments; inspired by
     # https://gist.github.com/crowsonkb/4e2eb4439e3fe514cc4755b217f164d5
     sys.modules["pygments.styles.brunante"] = brunante
-    pygments.styles.STYLE_MAP["brunante"] = "brunante::BrunanteStyle"
+    styles.STYLE_MAP["brunante"] = "brunante::BrunanteStyle"
 
     try:
-        from . import friendly_rich
+        from . import friendly_rich  # noqa
 
         rich_available = True
     except ImportError:
@@ -44,12 +43,12 @@ def set_theme(style):
         style = "brunante"
 
     try:
-        get_style_by_name(style)
+        styles.get_style_by_name(style)
         current_style = current_rich_style = style
     except Exception:
-        print("Could not find pygment style", style)
+        print("Could not find pygments style", style)
         try:
-            current_style = get_style_by_name("brunante")
+            current_style = styles.get_style_by_name("brunante")
             current_style = current_rich_style = style
             print("Using dark style brunante instead.")
         except Exception:

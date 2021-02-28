@@ -430,7 +430,7 @@ def x_is_not_callable(message, frame, tb_data):
         "Python indicates that you have an object of type `{obj_type}`,\n"
         "followed by something surrounded by parentheses, `(...)`,\n"
         "which Python took as an indication of a function call.\n"
-        "Either the object of type {obj_type} was meant to be a function,\n"
+        "Either the object of type `{obj_type}` was meant to be a function,\n"
         "or you forgot a comma before `(...)`.\n"
     ).format(obj_type=obj_type)
 
@@ -445,6 +445,14 @@ def x_is_not_callable(message, frame, tb_data):
         except Exception:
             continue
     else:
+        return {"cause": cause}
+
+    if fn_call.replace(" ", "") == "()":
+        cause = _(
+            "The parenthesis `()` following `{obj_name}` are interpreted\n"
+            "by Python as a function call for `{obj_name}`.\n"
+            "However, `{obj_name}` is not a function but an object of type `{obj_type}`.\n"
+        ).format(obj_name=obj_name, obj_type=obj_type)
         return {"cause": cause}
 
     cause = _(
