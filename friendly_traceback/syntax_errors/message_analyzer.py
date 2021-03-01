@@ -8,6 +8,7 @@ import ast
 import re
 import sys
 
+from . import fixers
 from . import syntax_utils
 from . import statement_analyzer
 from .. import utils
@@ -1148,3 +1149,31 @@ def parens_around_exceptions(message="", **_kwargs):
         "suggest": hint,
         "python_link": python_link,
     }
+
+
+@add_python_message
+def colon_expected(message="", statement=None):
+    _ = current_lang.translate
+
+    if message != "expected ':'":
+        return {}
+
+    hint = _("Did you forget a colon?\n")
+    cause = _("Python expected a colon at the position indicated.\n")
+
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.bad_token, ":"
+    )
+    if fixers.check_statement(new_statement):
+        cause += _("You wrote `{bad}` instead of a colon.\n").format(
+            bad=statement.bad_token
+        )
+        return {"cause": cause, "suggest": hint}
+
+    new_statement = fixers.modify_token(
+        statement.statement_tokens, statement.bad_token, append=":"
+    )
+    if fixers.check_statement(new_statement):
+        return {"cause": cause, "suggest": hint}
+
+    return {}

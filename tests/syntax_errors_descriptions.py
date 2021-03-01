@@ -504,13 +504,6 @@ descriptions = {
         cause: "You started writing a triple-quoted string",
         title: "Unterminated triple quoted string",
     },
-
-
-
-
-
-
-
     "tab_error": {
         cause: "A `TabError` indicates that you have used",
         title: "TabError",
@@ -548,6 +541,5 @@ if sys.version_info >= (3, 9):
 
 if sys.version_info >= (3, 10):
     descriptions["quote_inside_string"]["cause"] = "ended the string with another quote"
-    del descriptions["missing_comma_in_set"]  # Temporary due to a bug in CPython
-    del descriptions["missing_comma_in_list"]  # Temporary due to a bug in CPython
-    del descriptions["unclosed_bracket"]  # Temporary due to a bug in CPython
+    descriptions["missing_colon_if"]["cause"] = "Did you forget a colon"
+    descriptions["missing_colon_while"]["cause"] = "Did you forget a colon"
