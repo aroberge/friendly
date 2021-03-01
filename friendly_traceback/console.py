@@ -51,6 +51,7 @@ class FriendlyConsole(InteractiveConsole):
         if theme.rich_available and use_rich:
             try:
                 self.rich_console = theme.init_rich_console()
+                friendly_traceback.set_formatter("rich")
             except Exception:
                 print(_("\n    Installed version of Rich is too old.\n\n"))
         elif use_rich:

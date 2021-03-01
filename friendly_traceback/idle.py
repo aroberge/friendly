@@ -210,7 +210,7 @@ def start_console():
     friendly_traceback.start_console()
 
 
-def run(filename, lang=None, include="friendly_tb", args=None, console=False):
+def run(filename, lang=None, include="friendly_tb", args=None, console=True):
     """This function executes the code found in a python file.
 
     ``filename`` should be either an absolute path or, it should be the name of a
@@ -222,7 +222,7 @@ def run(filename, lang=None, include="friendly_tb", args=None, console=False):
     if a ``SyntaxError`` was raised, otherwise returns the dict in
     which the module (``filename``) was executed.
 
-    If console is set to ``True``, the execution continues
+    If console is set to ``True`` (the default), the execution continues
     as an interactive session in a Friendly console, with the module
     dict being used as the locals dict.
 
@@ -261,13 +261,13 @@ def run(filename, lang=None, include="friendly_tb", args=None, console=False):
         print(_("The file {filename} does not exist.").format(filename=filename))
         return
 
-    if sys.version_info >= (3, 10) and not console:
-        install_in_idle_shell()
-    elif sys.version_info < (3, 10) and console:
-        sys.stderr.write(
-            "Friendly-traceback cannot be installed in this version of IDLE.\n"
-        )
-        sys.stderr.write("Using Friendly's own console instead.\n")
+    if not console:
+        if sys.version_info >= (3, 10):
+            install_in_idle_shell()
+        elif sys.version_info < (3, 10):
+            sys.stderr.write(
+                "Friendly-traceback cannot be installed in this version of IDLE.\n"
+            )
 
     return friendly_traceback.run(
         filename, lang=lang, include=include, args=args, console=console
