@@ -217,7 +217,7 @@ def parse_unsupported_operand_type(message, frame, tb_data):
             first=convert_type(obj_type1),
             second=convert_type(obj_type2),
         )
-    elif operator == "** or pow()":
+    elif operator == "** or pow()" or operator == "**=":
         cause = _(
             "You tried to exponentiate (raise to a power)\n"
             "using two incompatible types of objects:\n"

@@ -212,7 +212,7 @@ def test_Unsupported_operand_types():
         friendly_traceback.explain_traceback(redirect="capture")
     result = friendly_traceback.get_output()
 
-    assert "TypeError: unsupported operand type(s) for ** or pow():" in result
+    assert "TypeError: unsupported operand type(s) for **" in result
     if friendly_traceback.get_lang() == "en":
         assert "You tried to exponentiate (raise to a power)" in result
 

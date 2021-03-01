@@ -1346,6 +1346,7 @@ def comprehension_condition_or_tuple(statement):
 
 @add_statement_analyzer
 def parens_around_exceptions(statement):
+    # keep in sync with message_analyzer.parens_around_exceptions
     _ = current_lang.translate
 
     if not (statement.bad_token == "," and statement.first_token == "except"):

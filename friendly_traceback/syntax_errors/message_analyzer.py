@@ -11,7 +11,7 @@ import sys
 from . import syntax_utils
 from . import statement_analyzer
 from .. import utils
-from ..my_gettext import current_lang
+from ..my_gettext import current_lang, use_www
 
 MESSAGE_ANALYZERS = []
 
@@ -1126,17 +1126,25 @@ def forgot_paren_around_comprehension(message="", **_kwargs):
     return {"cause": cause_tuple, "suggest": hint}
 
 
-# # --------- Keep this last
-# @add_python_message
-# def general_fstring_problem(message="", statement=None):
-#     # General f-string problems are outside of our main priorities.
-#     _ = current_lang.translate
-#     cause = hint = None
-#     if not statement.fstring_error:
-#         return cause, hint
-#
-#     cause = _(
-#         "The content of your f-string is invalid. Please consult the documentation:\n"
-#         "https://docs.python.org/3/reference/lexical_analysis.html#f-strings\n"
-#     )
-#     return cause, hint
+@add_python_message
+def parens_around_exceptions(message="", **_kwargs):
+    # keep in sync with statement_analyzer.parens_around_exceptions
+    _ = current_lang.translate
+
+    if message != "exception group must be parenthesized":
+        return {}
+
+    hint = _("Did you forget parentheses?\n")
+    cause = _(
+        "I am guessing that you wanted to use an `except` statement\n"
+        "with multiple exception types. If that is the case, you must\n"
+        "surround them with parentheses.\n"
+    )
+    python_link = _(
+        "https://docs.python.org/3/tutorial/errors.html#handling-exceptions"
+    )
+    return {
+        "cause": cause + "\n" + use_www(),
+        "suggest": hint,
+        "python_link": python_link,
+    }
