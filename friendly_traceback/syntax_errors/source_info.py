@@ -120,9 +120,11 @@ class Statement:
                     # own in a console session - so, we make sure to close
                     # the brackets in order to be able to find the true cause
                     # of the error
+                    # TODO: check this assumption; it appears to be incorrect
                     add_token = ""
-                    while self.statement_brackets:
-                        bracket = self.statement_brackets.pop()
+                    brackets = self.statement_brackets.copy()
+                    while brackets:
+                        bracket = brackets.pop()
                         if bracket == "(":
                             add_token += ")"
                         elif bracket == "[":

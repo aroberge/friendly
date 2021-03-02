@@ -195,7 +195,7 @@ def confused_elif(statement):
         hint = _("Perhaps you meant to write `elif`.\n")
         cause = _(
             "You likely meant to use Python's `elif` keyword\n"
-            "but wrote `{name}` instead\n"
+            "but wrote `{name}` instead.\n"
             "\n"
         ).format(name=name)
         return {"cause": cause, "suggest": hint}

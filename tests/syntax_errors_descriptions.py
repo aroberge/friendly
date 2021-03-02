@@ -526,7 +526,6 @@ descriptions = {
     },
 }
 
-
 if sys.version_info < (3, 8):
     descriptions["augmented_assigment_with_true"]["cause"] = "walrus operator"
     descriptions["walrus_does_not_exist"] = {

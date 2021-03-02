@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-03-01 18:06-0400\n"
-"PO-Revision-Date: 2021-03-01 18:17-0400\n"
+"POT-Creation-Date: 2021-03-02 16:55-0400\n"
+"PO-Revision-Date: 2021-03-02 17:01-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1728,7 +1728,18 @@ msgstr ""
 "https://github.com/aroberge/friendly-traceback/issues\n"
 "\n"
 
-#: syntax_errors\analyze_syntax.py:74
+#: syntax_errors\analyze_syntax.py:73
+msgid ""
+"Python expected a colon at the position indicated.\n"
+"However, adding a colon or replacing something else by a colon\n"
+"would not fix the problem.\n"
+msgstr ""
+"Python s’attendait à voir deux points, `:`, à la position indiquée.\n"
+"Cependant, l’ajout des deux points ou le remplacement d’autre chose par deux "
+"points\n"
+"ne réglerait pas le problème.\n"
+
+#: syntax_errors\analyze_syntax.py:86
 msgid ""
 "Python gave us the following informative message\n"
 "about the possible cause of the error:\n"
@@ -1748,17 +1759,6 @@ msgstr ""
 "Je vais tenter ce deviner la cause de l'erreur\n"
 "mais il est possible que me trompe.\n"
 "\n"
-
-#: syntax_errors\analyze_syntax.py:86
-msgid ""
-"Python expected a colon at the position indicated.\n"
-"However, adding a colon or replacing something else by a colon\n"
-"would not fix the problem.\n"
-msgstr ""
-"Python s’attendait à voir deux points, `:`, à la position indiquée.\n"
-"Cependant, l’ajout des deux points ou le remplacement d’autre chose par deux "
-"points\n"
-"ne réglerait pas le problème.\n"
 
 #: syntax_errors\error_in_def.py:21
 msgid ""
@@ -2962,6 +2962,14 @@ msgstr "Avez-vous oublié d’ajouter les deux points `:` ?\n"
 msgid "Python expected a colon at the position indicated.\n"
 msgstr "Python s’attendait à voir deux points, `:`, à la position indiquée.\n"
 
+#: syntax_errors\message_analyzer.py:1191
+msgid "Python tells us that the {bracket} was never closed.\n"
+msgstr "Python nous dit que le symbole {bracket} n’a jamais été fermé.\n"
+
+#: syntax_errors\message_analyzer.py:1194
+msgid "The {bracket} was never closed.\n"
+msgstr "Le symbole {bracket} n’a jamais été fermé.\n"
+
 #: syntax_errors\statement_analyzer.py:21
 msgid ""
 "However, making such a change would still not correct\n"
@@ -3031,7 +3039,7 @@ msgstr "Peut-être que vous vouliez plutôt `elif`.\n"
 #: syntax_errors\statement_analyzer.py:196
 msgid ""
 "You likely meant to use Python's `elif` keyword\n"
-"but wrote `{name}` instead\n"
+"but wrote `{name}` instead.\n"
 "\n"
 msgstr ""
 "Vous avez écrit `{name}`\n"

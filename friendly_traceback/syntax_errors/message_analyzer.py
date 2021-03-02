@@ -601,6 +601,10 @@ def mismatched_parenthesis(message="", statement=None):
     opening = match.group(2)
     closing = match.group(1)
 
+    cause = statement_analyzer.mismatched_brackets(statement)
+    if cause:
+        return cause
+
     if lineno is not None:
         cause = _(
             "Python tells us that the closing `{closing}` on the last line shown\n"
@@ -611,14 +615,6 @@ def mismatched_parenthesis(message="", statement=None):
             "Python tells us that the closing `{closing}` on the last line shown\n"
             "does not match the opening `{opening}`.\n\n"
         ).format(closing=closing, opening=opening)
-
-    additional_cause = statement_analyzer.mismatched_brackets(statement)
-
-    if additional_cause:
-        cause += (
-            _("I will attempt to be give a bit more information.\n\n")
-            + additional_cause["cause"]
-        )
 
     return {"cause": cause}
 
@@ -1155,9 +1151,15 @@ def parens_around_exceptions(message="", **_kwargs):
 def colon_expected(message="", statement=None):
     _ = current_lang.translate
 
-    if message != "expected ':'":
+    if message != "expected ':'":  # new in Python 3.10
         return {}
 
+    # Try to be consistent with older versions
+    cause = statement_analyzer.missing_colon(statement)
+    if cause:
+        return cause
+
+    # That did not work, so we try something else
     hint = _("Did you forget a colon?\n")
     cause = _("Python expected a colon at the position indicated.\n")
 
@@ -1177,3 +1179,24 @@ def colon_expected(message="", statement=None):
         return {"cause": cause, "suggest": hint}
 
     return {}
+
+
+@add_python_message
+def bracket_was_expected(message="", statement=None):
+    _ = current_lang.translate
+
+    pattern = re.compile("'(.)' was never closed")  # new in Python 3.10
+    match = re.search(pattern, message)
+    if not match:
+        return {}
+
+    cause = _("Python tells us that the {bracket} was never closed.\n").format(
+        bracket=syntax_utils.name_bracket(match.group(1))
+    )
+    hint = _("The {bracket} was never closed.\n").format(
+        bracket=syntax_utils.name_bracket(match.group(1))
+    )
+    rephrased_cause = statement_analyzer.unclosed_bracket(statement)
+    if rephrased_cause:
+        cause = rephrased_cause["cause"]
+    return {"cause": cause, "suggest": hint}
