@@ -213,10 +213,17 @@ def missing_colon(statement):
     )
     if fixers.check_statement(new_statement):
         hint = _("Did you write something by mistake after the colon?\n")
-        cause += _("And a block of code must come after the colon.\n")
+        cause += _("A block of code must come after the colon.\n")
         cause += _("If you remove `{bad}`, this will fix the problem.\n").format(
             bad=statement.bad_token
         )
+        return {"cause": cause, "suggest": hint}
+
+    new_statement = fixers.modify_token(
+        statement.statement_tokens, statement.bad_token, append=":"
+    )
+    if fixers.check_statement(new_statement):
+        hint = _("Did you forget to write a colon?\n")
         return {"cause": cause, "suggest": hint}
 
     return {}
