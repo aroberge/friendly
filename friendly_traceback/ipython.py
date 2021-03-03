@@ -7,18 +7,12 @@ try:
 except ImportError:
     raise ValueError("IPython cannot be imported.")
 
-from friendly_traceback import (
-    install,
-    exclude_file_from_traceback,
-    explain_traceback,
-    set_formatter,
-)
+from friendly_traceback import install, exclude_file_from_traceback, explain_traceback
 from friendly_traceback.console_helpers import *  # noqa
 from friendly_traceback.console_helpers import helpers  # noqa
 
 
 __all__ = list(helpers.keys())
-__all__.append("set_formatter")
 
 shell.InteractiveShell.showtraceback = lambda self, *args, **kwargs: explain_traceback()
 shell.InteractiveShell.showsyntaxerror = (
@@ -29,5 +23,5 @@ exclude_file_from_traceback(shell.__file__)
 exclude_file_from_traceback(compilerop.__file__)
 install(include="friendly_tb")
 
-set_formatter("repl")
+set_formatter("repl")  # noqa
 print("Friendly-traceback installed.")

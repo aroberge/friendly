@@ -20,7 +20,7 @@ def _write_err(text):
     if session.use_rich:
         session.console.print()
         md = theme.friendly_rich.Markdown(
-            text, inline_code_lexer="python", code_theme="brunante"
+            text, inline_code_lexer="python", code_theme=theme.current_rich_style
         )
         if formatters.RICH_HEADER:
             info = session.saved_info
@@ -126,6 +126,7 @@ class _State:
             theme.set_theme(style)
             self.formatter = formatters.rich_markdown
             self.console = theme.init_rich_console()
+            self.console = theme.friendly_rich.init_console(style=style)
             self.use_rich = True
             self.markdown = True
         elif formatter == "markdown":

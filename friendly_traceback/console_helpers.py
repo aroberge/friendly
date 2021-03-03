@@ -216,6 +216,7 @@ get_lang = friendly_traceback.get_lang
 set_lang = friendly_traceback.set_lang
 get_include = friendly_traceback.get_include
 set_include = friendly_traceback.set_include
+set_formatter = friendly_traceback.set_formatter
 
 helpers = {
     "explain": explain,
@@ -234,6 +235,7 @@ helpers = {
     "debug": debug,
     "show_paths": show_paths,
     "show_info": show_info,
+    "set_formatter": set_formatter,
     "_get_statement": _get_statement,
     "www": www,
 }

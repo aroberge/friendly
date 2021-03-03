@@ -53,6 +53,7 @@ def set_theme(style):
             print("Using dark style brunante instead.")
         except Exception:
             pass
+
     return current_style
 
 
