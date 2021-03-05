@@ -1,6 +1,6 @@
 import inspect
 
-import friendly_traceback as friendly
+import friendly_traceback as ft
 
 global_a = 1
 global_b = 2
@@ -11,7 +11,7 @@ def test_get_variables_in_frame_by_scope():
     # We cannot use pytest for this test as it messes with the frames
     # and generates a RuntimeError.
 
-    get = friendly.info_variables.get_variables_in_frame_by_scope
+    get = ft.info_variables.get_variables_in_frame_by_scope
     current_frame = None
 
     b = 2

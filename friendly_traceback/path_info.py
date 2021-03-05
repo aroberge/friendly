@@ -61,9 +61,9 @@ class PathUtil:
     def __init__(self):
         self.python = os.path.dirname(os.__file__)
         this_dir = os.path.dirname(__file__)
-        self.friendly = os.path.abspath(os.path.join(this_dir, ".."))
+        self.friendly_path = os.path.abspath(os.path.join(this_dir, ".."))
         self.tests = None
-        tests = os.path.join(self.friendly, "tests")
+        tests = os.path.join(self.friendly_path, "tests")
         if os.path.exists(tests):
             self.tests = tests
         self.home = os.path.expanduser("~")
@@ -78,8 +78,8 @@ class PathUtil:
         self.cwd = os.getcwd()  # make sure it is up to date
         if self.tests is not None and path_lower.startswith(self.tests.lower()):
             path = "TESTS:" + path[len(self.tests) :]
-        elif path_lower.startswith(self.friendly.lower()):
-            path = "FRIENDLY:" + path[len(self.friendly) :]
+        elif path_lower.startswith(self.friendly_path.lower()):
+            path = "FRIENDLY:" + path[len(self.friendly_path) :]
         elif path_lower.startswith(self.cwd.lower()):
             path = "CWD:" + path[len(self.cwd) :]
         elif path_lower.startswith(self.python.lower()):
