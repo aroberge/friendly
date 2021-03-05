@@ -1,16 +1,19 @@
-from .my_gettext import current_lang
+import sys
+
+exc_hook_name = repr(sys.excepthook)
+
+if "InteractiveShell" in exc_hook_name:
+    from .ipython import *  # noqa  Will automatically install
+
+else:
+    from friendly_traceback.console_helpers import *  # noqa
+    from friendly_traceback.console_helpers import helpers  # noqa
+    from friendly_traceback import install, run  # noqa
+
+    __all__ = list(helpers.keys())
+    __all__.append("install")
+    __all__.append("run")
 
 
-def info():
-    _ = current_lang.translate
-    return _(
-        "If you want to use Friendly-traceback with Mu's REPL, use\n\n"
-        "from friendly_traceback.mu_repl import *\n\n"
-        "If you wish to use to run a program, add\n\n"
-        "from friendly_traceback import *\n"
-        "install()\n\n"
-        "at the beginning of your program.\n"
-    )
-
-
-print(info())
+del exc_hook_name
+del sys
