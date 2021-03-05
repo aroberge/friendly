@@ -57,7 +57,5 @@ def set_theme(style):
     return current_style
 
 
-if rich_available:
-
-    def init_rich_console():
-        return friendly_rich.init_console(current_rich_style)
+def init_rich_console():
+    return friendly_rich.init_console(current_rich_style)

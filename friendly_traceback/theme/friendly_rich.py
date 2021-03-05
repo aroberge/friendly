@@ -19,7 +19,7 @@ except ImportError:
     brunante = None
 
 
-def init_console(style="dark"):
+def init_console(style="brunante"):
     def _patch_heading(self, console, options):  # noqa
         """By default, all headings are centered by Rich; I prefer to have
         them left-justified, except for <h3>
@@ -40,7 +40,7 @@ def init_console(style="dark"):
         if style == "light" or style == "tango":
             syntax = Syntax(code, self.lexer_name, theme="tango", word_wrap=True)
         else:
-            syntax = Syntax(code, self.lexer_name, theme=style, word_wrap=True)
+            syntax = Syntax(code, self.lexer_name, theme="brunante", word_wrap=True)
         yield syntax
 
     CodeBlock.__rich_console__ = _patch_code_block
