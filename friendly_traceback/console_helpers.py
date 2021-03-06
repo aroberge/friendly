@@ -42,8 +42,11 @@ def history():
     if not session.saved_info:
         print(_("Nothing to show: no exception recorded."))
         return
+    session.rich_add_vspace = False
     for info in session.saved_info:
-        print(info["message"], end="")
+        message = session.formatter(info, include="message").replace("\n", "")
+        session.write_err(message)
+    session.rich_add_vspace = True
 
 
 def explain(include="explain"):

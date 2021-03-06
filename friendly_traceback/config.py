@@ -15,10 +15,9 @@ def _write_err(text):
     """Default writer"""
     if not text.strip():
         return
-    if not text.endswith("\n"):
-        text += "\n"
     if session.use_rich:
-        session.console.print()
+        if session.rich_add_vspace:
+            session.console.print()
         md = theme.friendly_rich.Markdown(
             text, inline_code_lexer="python", code_theme=theme.current_rich_style
         )
@@ -32,6 +31,8 @@ def _write_err(text):
             formatters.RICH_HEADER = False
         session.console.print(md)
     else:
+        if not text.endswith("\n"):
+            text += "\n"
         sys.stderr.write(text)
 
 
@@ -50,6 +51,7 @@ class _State:
         self.formatter = formatters.repl
         self.console = None
         self.use_rich = False
+        self.rich_add_vspace = True
         self.use_jupyter = False
         self.markdown = False
         self.friendly_traceback = []

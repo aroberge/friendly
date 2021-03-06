@@ -85,38 +85,33 @@ def parse_must_be_str(message, *_args):
     return {"cause": cause}
 
 
-def _convert_str_to_number(obj_type1, obj_type2, operator, frame, tb_data):
+def _convert_str_to_number(obj_type1, obj_type2, frame, tb_data):
     """Determines if a suggestion should be made to convert a string to a
     number type; potentially useful for beginners that write programs
     that use input() and ask for numbers.
-
-    So, we want to give hints in cases like 'number + string',
-    'string + number', 'number += string', but not 'string += number'
     """
     _ = current_lang.translate
     types = obj_type1, obj_type2
-    if "str" not in types or obj_type1 == "str" and "=" in operator:
+    if "int" in types:
+        number_type = "int"
+        convert = int
+    elif "float" in types:
+        number_type = "float"
+        convert = float
+    elif "complex" in types:
+        number_type = "complex"
+        convert = complex
+    else:
         return None, None
 
-    if not ("int" in types or "float" in types or "complex" in types):
-        return None, None
-
-    types_str = ["int", "float", "complex"]
-    types_fn = [int, float, complex]
-
-    found = False
     all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
     # TODO: review this logic
     for name, obj in all_objects:
         if isinstance(obj, str):
-            for number_type, fn in zip(types_str, types_fn):
-                try:
-                    fn(obj)
-                except Exception:
-                    continue
-                found = True
-                break
-        if found:
+            try:
+                convert(obj)
+            except Exception:
+                continue
             break
     else:
         return None, None
@@ -157,7 +152,7 @@ def parse_unsupported_operand_type(message, frame, tb_data):
             "{first} and {second}.\n"
         ).format(first=convert_type(obj_type1), second=convert_type(obj_type2))
         more_cause, possible_hint = _convert_str_to_number(
-            obj_type1, obj_type2, operator, frame, tb_data
+            obj_type1, obj_type2, frame, tb_data
         )
     elif operator in ["-", "-="]:
         cause = _(
@@ -165,7 +160,7 @@ def parse_unsupported_operand_type(message, frame, tb_data):
             "{first} and {second}.\n"
         ).format(first=convert_type(obj_type1), second=convert_type(obj_type2))
         more_cause, possible_hint = _convert_str_to_number(
-            obj_type1, obj_type2, operator, frame, tb_data
+            obj_type1, obj_type2, frame, tb_data
         )
     elif operator in ["*", "*="]:
         cause = _(
@@ -173,7 +168,7 @@ def parse_unsupported_operand_type(message, frame, tb_data):
             "{first} and {second}.\n"
         ).format(first=convert_type(obj_type1), second=convert_type(obj_type2))
         more_cause, possible_hint = _convert_str_to_number(
-            obj_type1, obj_type2, operator, frame, tb_data
+            obj_type1, obj_type2, frame, tb_data
         )
     elif operator in ["/", "//", "/=", "//="]:
         cause = _(
@@ -181,7 +176,7 @@ def parse_unsupported_operand_type(message, frame, tb_data):
             "{first} and {second}.\n"
         ).format(first=convert_type(obj_type1), second=convert_type(obj_type2))
         more_cause, possible_hint = _convert_str_to_number(
-            obj_type1, obj_type2, operator, frame, tb_data
+            obj_type1, obj_type2, frame, tb_data
         )
     elif operator in ["&", "|", "^", "&=", "|=", "^="]:
         cause = _(
@@ -224,7 +219,7 @@ def parse_unsupported_operand_type(message, frame, tb_data):
             "{first} and {second}.\n"
         ).format(first=convert_type(obj_type1), second=convert_type(obj_type2))
         more_cause, possible_hint = _convert_str_to_number(
-            obj_type1, obj_type2, operator, frame, tb_data
+            obj_type1, obj_type2, frame, tb_data
         )
     elif operator in ["@", "@="]:
         cause = _(

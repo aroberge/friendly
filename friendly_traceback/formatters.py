@@ -125,13 +125,15 @@ def repl(info, include="friendly_tb"):
     items_to_show = select_items(include)
     spacing = {"single": " " * 4, "double": " " * 8, "none": ""}
     result = [""]
+    if include == "message":
+        return info["message"]
     for item in items_to_show:
         if item in info:
             indentation = spacing[repl_indentation[item]]
             for line in info[item].split("\n"):
                 result.append(indentation + line)
 
-    if result == [""]:
+    if result == [""] or not result:
         return no_result(info, include)
 
     return "\n".join(result)
@@ -347,6 +349,8 @@ def _markdown(info, include, rich=False, docs=False):
 
     if result == [""]:
         return no_result(info, include)
+    elif include == "message":
+        return result[1]
     return "\n\n".join(result)
 
 
