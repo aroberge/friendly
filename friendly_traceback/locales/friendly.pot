@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-03-03 17:12-0400\n"
+"POT-Creation-Date: 2021-03-06 06:53-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "The file {filename} does not exist."
 msgstr ""
 
-#: config.py:70 config.py:187
+#: config.py:70 config.py:191 console_helpers.py:43
 msgid "Nothing to show: no exception recorded."
 msgstr ""
 
@@ -54,26 +54,30 @@ msgstr ""
 msgid "Warning: you have redefined the python builtin {name}."
 msgstr ""
 
-#: console_helpers.py:166
+#: console_helpers.py:31
+msgid "Nothing to go back to: no exception recorded."
+msgstr ""
+
+#: console_helpers.py:195
 msgid ""
 "The first argument of `www()` must be either `None` or a string.\n"
 msgstr ""
 
-#: console_helpers.py:170
+#: console_helpers.py:199
 msgid ""
 "If you wish to open Python's documentation, use\n"
 "`www(python=True)`.\n"
 msgstr ""
 
-#: console_helpers.py:181
+#: console_helpers.py:210
 msgid "https://docs.python.org/3/"
 msgstr ""
 
-#: console_helpers.py:182
+#: console_helpers.py:211
 msgid "https://docs.python.org/3/search.html?q="
 msgstr ""
 
-#: console_helpers.py:212
+#: console_helpers.py:244
 msgid "The default web browser cannot be used for searching."
 msgstr ""
 
@@ -363,20 +367,6 @@ msgid ""
 "instead of\n"
 "\n"
 "    {name} = {hint}\n"
-msgstr ""
-
-#: mu.py:6
-msgid ""
-"If you want to use Friendly-traceback with Mu's REPL, use\n"
-"\n"
-"from friendly_traceback.mu_repl import *\n"
-"\n"
-"If you wish to use to run a program, add\n"
-"\n"
-"from friendly_traceback import *\n"
-"install()\n"
-"\n"
-"at the beginning of your program.\n"
 msgstr ""
 
 #: my_gettext.py:77

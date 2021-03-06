@@ -46,13 +46,13 @@ class _State:
         self.write_err = _write_err
         self.installed = False
         self.running_script = False
-        self.saved_info = None
+        self.saved_info = []
         self.formatter = formatters.repl
         self.console = None
         self.use_rich = False
         self.use_jupyter = False
         self.markdown = False
-        self.friendly_traceback = None
+        self.friendly_traceback = []
         self.include = "explain"
         self.lang = "en"
         self.install_gettext(self.lang)
@@ -66,10 +66,10 @@ class _State:
         to execute the code again.
         """
         _ = current_lang.translate
-        if self.saved_info is None:
+        if not self.saved_info:
             print(_("Nothing to show: no exception recorded."))
             return
-        explanation = self.formatter(self.saved_info, include=self.include)
+        explanation = self.formatter(self.saved_info[-1], include=self.include)
         self.write_err(explanation)
         # Do not combine with above as 'explanation' could be a list for IDLE
         self.write_err("\n")
@@ -94,8 +94,12 @@ class _State:
             return
         current_lang.install(lang)
         self.lang = lang
-        if self.saved_info is not None:
-            self.friendly_traceback.recompile_info()
+        if self.saved_info:
+            if not self.friendly_traceback:
+                debug_helper.log(
+                    "Problem: saved_info includes content but friendly_traceback doesn't."
+                )
+            self.friendly_traceback[-1].recompile_info()
 
     def install_gettext(self, lang):
         """Sets the current language for gettext."""
@@ -215,14 +219,15 @@ class _State:
             self.set_redirect(redirect=redirect)
 
         try:
-            self.friendly_traceback = core.FriendlyTraceback(etype, value, tb)
-            self.friendly_traceback.compile_info()
-            self.saved_info = info = self.friendly_traceback.info
+            self.friendly_traceback.append(core.FriendlyTraceback(etype, value, tb))
+            self.friendly_traceback[-1].compile_info()
+            info = self.friendly_traceback[-1].info
+            self.saved_info.append(info)
             explanation = self.formatter(info, include=self.include)
         except Exception as e:
             debug_helper.log("Exception raised in exception_hook().")
             try:
-                debug_helper.log(self.friendly_traceback.tb_data.filename)
+                debug_helper.log(self.friendly_traceback[-1].tb_data.filename)
             except Exception:
                 pass
             debug_helper.log_error(e)

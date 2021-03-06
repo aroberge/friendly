@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-03-03 17:12-0400\n"
-"PO-Revision-Date: 2021-03-03 17:14-0400\n"
+"POT-Creation-Date: 2021-03-06 06:53-0400\n"
+"PO-Revision-Date: 2021-03-06 06:54-0400\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "The file {filename} does not exist."
 msgstr "Le fichier {filename} n'existe pas."
 
-#: config.py:70 config.py:187
+#: config.py:70 config.py:191 console_helpers.py:43
 msgid "Nothing to show: no exception recorded."
 msgstr "Rien à montrer: pas d’exception enregistrée."
 
@@ -67,13 +67,18 @@ msgstr ""
 msgid "Warning: you have redefined the python builtin {name}."
 msgstr "Attention : vous avez redéfini l'identifiant Python (builtin) {name}."
 
-#: console_helpers.py:166
+#: console_helpers.py:31
+msgid "Nothing to go back to: no exception recorded."
+msgstr ""
+"Impossible de revenir en arrière: il n'y a pas d’exception enregistrée."
+
+#: console_helpers.py:195
 msgid "The first argument of `www()` must be either `None` or a string.\n"
 msgstr ""
 "Le premier argument de `www()` doit être soit `None` ou une chaîne de "
 "caractères.\n"
 
-#: console_helpers.py:170
+#: console_helpers.py:199
 msgid ""
 "If you wish to open Python's documentation, use\n"
 "`www(python=True)`.\n"
@@ -81,15 +86,15 @@ msgstr ""
 "Si vous désirez ouvrir la documentation Python, utilisez\n"
 "`www(python=True)`.\n"
 
-#: console_helpers.py:181
+#: console_helpers.py:210
 msgid "https://docs.python.org/3/"
 msgstr "https://docs.python.org/fr/3/"
 
-#: console_helpers.py:182
+#: console_helpers.py:211
 msgid "https://docs.python.org/3/search.html?q="
 msgstr "https://docs.python.org/fr/3/search.html?q="
 
-#: console_helpers.py:212
+#: console_helpers.py:244
 msgid "The default web browser cannot be used for searching."
 msgstr ""
 "Le navigateur Web par défaut ne peut pas être utilisé pour la recherche."
@@ -497,30 +502,6 @@ msgstr ""
 "au lieu de\n"
 "\n"
 "    {name} = {hint}\n"
-
-#: mu.py:6
-msgid ""
-"If you want to use Friendly-traceback with Mu's REPL, use\n"
-"\n"
-"from friendly_traceback.mu_repl import *\n"
-"\n"
-"If you wish to use to run a program, add\n"
-"\n"
-"from friendly_traceback import *\n"
-"install()\n"
-"\n"
-"at the beginning of your program.\n"
-msgstr ""
-"Si vous souhaitez utiliser Friendly-traceback avec le REPL de Mu, utilisez\n"
-"\n"
-"from friendly_traceback.mu_repl import *\n"
-"\n"
-"Si vous souhaitez l'utiliser pour exécuter un programme, ajoutez\n"
-"\n"
-"from friendly_traceback import *\n"
-"install()\n"
-"\n"
-"au début de votre programme.\n"
 
 #: my_gettext.py:77
 msgid ""
@@ -3745,6 +3726,35 @@ msgstr "accolade `{`"
 #: syntax_errors\syntax_utils.py:47
 msgid "curly bracket `}`"
 msgstr "accolade `}`"
+
+#, fuzzy
+#~| msgid "Nothing to show: no exception recorded."
+#~ msgid "No exception recorded."
+#~ msgstr "Rien à montrer: pas d’exception enregistrée."
+
+#~ msgid ""
+#~ "If you want to use Friendly-traceback with Mu's REPL, use\n"
+#~ "\n"
+#~ "from friendly_traceback.mu_repl import *\n"
+#~ "\n"
+#~ "If you wish to use to run a program, add\n"
+#~ "\n"
+#~ "from friendly_traceback import *\n"
+#~ "install()\n"
+#~ "\n"
+#~ "at the beginning of your program.\n"
+#~ msgstr ""
+#~ "Si vous souhaitez utiliser Friendly-traceback avec le REPL de Mu, "
+#~ "utilisez\n"
+#~ "\n"
+#~ "from friendly_traceback.mu_repl import *\n"
+#~ "\n"
+#~ "Si vous souhaitez l'utiliser pour exécuter un programme, ajoutez\n"
+#~ "\n"
+#~ "from friendly_traceback import *\n"
+#~ "install()\n"
+#~ "\n"
+#~ "au début de votre programme.\n"
 
 #~ msgid "You wrote `{bad}` after the colon.\n"
 #~ msgstr "Vous avez écrit `{bad}` après les deux points, `:`.\n"

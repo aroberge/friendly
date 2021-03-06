@@ -17,6 +17,35 @@ from .path_info import show_paths
 from .my_gettext import current_lang
 
 
+def back():
+    """Removes the last recorded traceback item.
+
+    The intention is to allow recovering from a typo when trying interactively
+    to find out specific information about a given exception.
+
+    Note that, if the language is changed at some point, going back in time does
+    not change the language in which a given traceback information was recorded.
+    """
+    _ = current_lang.translate
+    if not session.saved_info:
+        print(_("Nothing to go back to: no exception recorded."))
+        return
+    if not session.friendly_traceback:
+        debug_helper.log("Problem: saved info is not empty but friendly_traceback is")
+    session.saved_info.pop()
+    session.friendly_traceback.pop()
+
+
+def history():
+    """Prints the list of error messages recorded so far."""
+    _ = current_lang.translate
+    if not session.saved_info:
+        print(_("Nothing to show: no exception recorded."))
+        return
+    for info in session.saved_info:
+        print(info["message"], end="")
+
+
 def explain(include="explain"):
     """Shows the previously recorded traceback info again,
     with the specified verbosity level.
@@ -32,7 +61,7 @@ def show_info():
 
     Prints ``None`` for a given item if it is not present.
     """
-    info = session.saved_info if session.saved_info is not None else []
+    info = session.saved_info[-1] if session.saved_info else []
 
     for item in items_in_order:
         if item in info and info[item].strip():
@@ -180,7 +209,10 @@ def www(search=None, python=False):
     friendly_url = "https://aroberge.github.io/friendly-traceback-docs/docs/html/"
     python_docs_url = _("https://docs.python.org/3/")
     python_search_url = _("https://docs.python.org/3/search.html?q=")
-    info = session.saved_info
+    if session.saved_info:
+        info = session.saved_info[-1]
+    else:
+        info = None
 
     if search is None and not python:  # default search
         if info is None:
@@ -219,6 +251,8 @@ set_include = friendly_traceback.set_include
 set_formatter = friendly_traceback.set_formatter
 
 helpers = {
+    "back": back,
+    "history": history,
     "explain": explain,
     "what": what,
     "where": where,
