@@ -2,7 +2,7 @@
 
 import pprint
 import sys
-import friendly_traceback
+import friendly
 import os
 
 cur_dir = os.getcwd()
@@ -28,7 +28,7 @@ def _formatter(info, include=None):
     return str(items)  # formatter expect a string
 
 
-friendly_traceback.set_formatter(formatter=_formatter)
+friendly.set_formatter(formatter=_formatter)
 
 info = {}
 
@@ -36,8 +36,8 @@ for filename in catch_syntax_error.descriptions:
     try:
         exec("import %s" % filename)
     except Exception:
-        friendly_traceback.explain_traceback(redirect="capture")
-    out = eval(friendly_traceback.get_output())  # convert back to dict.
+        friendly.explain_traceback(redirect="capture")
+    out = eval(friendly.get_output())  # convert back to dict.
     info[filename] = out
 
 with open(out_file, "w", encoding="utf8") as f:

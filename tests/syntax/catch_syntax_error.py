@@ -2,10 +2,10 @@ import sys
 
 import pytest
 
-import friendly_traceback
+import friendly
 from syntax_errors_descriptions import descriptions
 
-friendly_traceback.set_lang("en")
+friendly.set_lang("en")
 
 
 @pytest.mark.parametrize("filename", descriptions.keys())
@@ -15,8 +15,8 @@ def test_syntax_errors(filename):
     try:
         exec("from . import %s" % filename)
     except Exception:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     if "tab_error" in filename:
         assert "TabError" in result, "TabError identified incorrectly; %s" % filename

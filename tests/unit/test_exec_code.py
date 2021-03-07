@@ -8,7 +8,7 @@ change any existing error handling settings.
 
 """
 
-import friendly_traceback as ft
+import friendly as ft
 
 
 def test_exec_code():
@@ -50,7 +50,7 @@ def test_exec_code():
     ft.editors_helpers.exec_code(source=bad_code_syntax, include="no_tb")
     assert not ft.is_installed()
 
-    # When friendly-traceback is "installed", a call to exec_code
+    # When friendly is "installed", a call to exec_code
     # leaves its include unchanged.
     ft.install(redirect="capture")
 

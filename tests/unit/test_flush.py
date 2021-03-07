@@ -1,16 +1,16 @@
-import friendly_traceback
+import friendly
 
 
 def test_flush():
     try:
         b = c
     except Exception:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output(flush=False)
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output(flush=False)
     assert "NameError: name 'c' is not defined" in result
-    result1 = friendly_traceback.get_output()  # flushes
+    result1 = friendly.get_output()  # flushes
     assert "NameError: name 'c' is not defined" in result1
-    result2 = friendly_traceback.get_output()  # returns empty string
+    result2 = friendly.get_output()  # returns empty string
     assert not result2
     return result, result2
 

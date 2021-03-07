@@ -51,7 +51,7 @@ of the existing batch files.
 
 ## Editable version
 
-To install friendly-traceback in editable mode (development version),
+To install friendly in editable mode (development version),
 simply do
 
     $ python -m pip install -e .
@@ -88,23 +88,23 @@ from the root directory of the repository.
 
 Install pytest-cov and run the following:
 
-     $ python -m pytest --cov=friendly_traceback --cov-report html
+     $ python -m pytest --cov=friendly --cov-report html
 
 ## Running a single test
 
 It is often useful to run a single test case as you develop.
 From the root directory, you can do something like the following:
 
-    $ python -m friendly_traceback tests/syntax/raise_syntax_error17.py
+    $ python -m friendly tests/syntax/raise_syntax_error17.py
 
 And, if you want to quickly check a translation:
 
-    $ python -m friendly_traceback --lang fr tests/syntax/raise_syntax_error17.py
+    $ python -m friendly --lang fr tests/syntax/raise_syntax_error17.py
 
 
 ## New translations
 
 If you want to work on a translation, please see the online documentation.
 
-Reminder note to self: the file friendly_traceback/make_pot.bat needs
+Reminder note to self: the file friendly/make_pot.bat needs
 to be run to update the catalog.

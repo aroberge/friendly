@@ -1,4 +1,4 @@
-import friendly_traceback
+import friendly
 
 
 def test_Division_operator():
@@ -7,11 +7,11 @@ def test_Division_operator():
         1 / zero
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "ZeroDivisionError: division by zero" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "You are dividing by the following term" in result
     return result, message
 
@@ -22,11 +22,11 @@ def test_Integer_division_operator():
         1 // zero
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "ZeroDivisionError: integer division or modulo by zero" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "You are dividing by the following term" in result
     return result, message
 
@@ -37,11 +37,11 @@ def test_Modulo_operator():
         1 % zero
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "ZeroDivisionError: integer division or modulo by zero" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Using the modulo operator" in result
     return result, message
 
@@ -52,11 +52,11 @@ def test_Divmod():
         divmod(1, zero)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "ZeroDivisionError: integer division or modulo by zero" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "The second argument of the `divmod()`" in result
     return result, message
 
@@ -67,11 +67,11 @@ def test_Float_modulo():
         1 % zero
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "ZeroDivisionError: float modulo" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Using the modulo operator" in result
     return result, message
 
@@ -82,11 +82,11 @@ def test_Float_division():
         1 / zero
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "ZeroDivisionError: float division by zero" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "You are dividing by the following term" in result
     return result, message
 
@@ -97,11 +97,11 @@ def test_Complex_division():
         1 / zero
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "ZeroDivisionError: complex division by zero" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "You are dividing by the following term" in result
     return result, message
 
@@ -112,11 +112,11 @@ def test_Raise_zero_negative_power():
         zero ** -1
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "cannot be raised to a negative power" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "You are attempting to raise the number 0 to a negative power" in result
     return result, message
 

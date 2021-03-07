@@ -2,32 +2,32 @@
 """
 
 from io import StringIO
-import friendly_traceback
+import friendly
 from contextlib import redirect_stdout
 
 def test_run_error_en():
-    friendly_traceback.run(
+    friendly.run(
         "../name_error.py",
         include="explain",  # comprehensive
         console=False,
         redirect="capture",
     )
-    result = friendly_traceback.get_output()
-    friendly_traceback.uninstall()
+    result = friendly.get_output()
+    friendly.uninstall()
     assert "The similar name `pi` was found in the local scope." in result
 
 
 def test_run_error_fr():
-    friendly_traceback.run(
+    friendly.run(
         "../name_error.py",
         lang="fr",
         include="why",  # more restricted than the English test
         console=False,
         redirect="capture",
     )
-    result = friendly_traceback.get_output()
-    friendly_traceback.set_lang('en')
-    friendly_traceback.uninstall()
+    result = friendly.get_output()
+    friendly.set_lang('en')
+    friendly.uninstall()
     assert "Le nom semblable `pi` a été trouvé dans la portée locale." in result
 
 
@@ -37,7 +37,7 @@ def test_run_get_mod_dict():
     """
     file_capture = StringIO()
     with redirect_stdout(file_capture):
-        mod_dict = friendly_traceback.run(
+        mod_dict = friendly.run(
             "tests/adder.py",  # run from where pytest is run
             console=False,
             args=("1", "2.5", "3")

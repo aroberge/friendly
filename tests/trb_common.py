@@ -6,7 +6,7 @@ import os
 import sys
 from contextlib import redirect_stderr
 
-import friendly_traceback
+import friendly
 
 
 def write(text):
@@ -78,7 +78,7 @@ def create_tracebacks(target, intro_text, format="pre", messages=None):
                                 write(result)
                                 nb_cases += 1
                 except Exception:
-                    friendly_traceback.explain_traceback()
+                    friendly.explain_traceback()
 
     print("    Number of cases in trb_common.py: ", nb_cases)
     if messages:

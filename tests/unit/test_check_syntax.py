@@ -6,7 +6,7 @@ change any existing error handling settings.
 
 """
 
-import friendly_traceback as ft
+import friendly as ft
 
 
 def test_check_syntax():
@@ -48,7 +48,7 @@ def test_check_syntax():
     ft.editors_helpers.check_syntax(source=bad_code_syntax, include="python_tb")
     assert not ft.is_installed()
 
-    # When friendly-traceback is "installed", a call to check_syntax
+    # When friendly is "installed", a call to check_syntax
     # leaves its include unchanged.
     ft.install(redirect="capture")
 

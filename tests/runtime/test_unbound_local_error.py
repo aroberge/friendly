@@ -1,5 +1,5 @@
 # More complex example than needed - used for documentation
-import friendly_traceback
+import friendly
 
 spam_missing_global = 1
 
@@ -27,13 +27,13 @@ def test_Missing_global():
         outer_missing_global()
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert (
         "UnboundLocalError: local variable 'spam_missing_global' referenced" in result
     )
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert (
             "Did you forget to add `global spam_missing_global`?\n"
             in result
@@ -48,13 +48,13 @@ def test_Missing_nonlocal():
         outer_missing_nonlocal()
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert (
         "UnboundLocalError: local variable 'spam_missing_nonlocal' referenced" in result
     )
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert (
             "Did you forget to add `nonlocal spam_missing_nonlocal`?\n"
             in result

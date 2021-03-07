@@ -16,7 +16,7 @@ as often as possible what went wrong while trying to avoid giving
 incorrect information.
 """
 
-from friendly_traceback.my_gettext import current_lang, internal_error
+from friendly.my_gettext import current_lang, internal_error
 from . import statement_analyzer
 from . import message_analyzer
 from .. import debug_helper

@@ -1,4 +1,4 @@
-import friendly_traceback
+import friendly
 
 
 def test_Generic():
@@ -6,14 +6,14 @@ def test_Generic():
         open("does_not_exist")
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert (
         "FileNotFoundError: [Errno 2] No such file or directory: 'does_not_exist'"
         in result
     )
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "that cannot be found is `does_not_exist`." in result
     return result, message
 

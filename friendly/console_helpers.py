@@ -7,7 +7,7 @@ environments such as in a Jupyter notebook.
 """
 
 import sys
-import friendly_traceback
+import friendly
 
 from . import debug_helper
 from .config import session
@@ -30,10 +30,10 @@ def back():
     if not session.saved_info:
         print(_("Nothing to go back to: no exception recorded."))
         return
-    if not session.friendly_traceback:
-        debug_helper.log("Problem: saved info is not empty but friendly_traceback is")
+    if not session.friendly:
+        debug_helper.log("Problem: saved info is not empty but friendly is")
     session.saved_info.pop()
-    session.friendly_traceback.pop()
+    session.friendly.pop()
 
 
 def history():
@@ -53,10 +53,10 @@ def explain(include="explain"):
     """Shows the previously recorded traceback info again,
     with the specified verbosity level.
     """
-    old_include = friendly_traceback.get_include()
-    friendly_traceback.set_include(include)
+    old_include = friendly.get_include()
+    friendly.set_include(include)
     session.show_traceback_info_again()
-    friendly_traceback.set_include(old_include)
+    friendly.set_include(old_include)
 
 
 def show_info():
@@ -127,7 +127,7 @@ def friendly_tb():
 
 
 def python_tb():
-    """Shows the Python traceback, excluding files from friendly-traceback
+    """Shows the Python traceback, excluding files from friendly
     itself.
     """
     explain("python_tb")
@@ -135,14 +135,14 @@ def python_tb():
 
 def debug_tb():
     """Shows the true Python traceback, which includes
-    files from friendly-traceback itself.
+    files from friendly itself.
     """
     explain("debug_tb")
 
 
 def debug(flag=True):
     """This functions displays the true traceback recorded, that
-    includes friendly-traceback's own code.
+    includes friendly's own code.
     It also sets a debug flag for the current session.
     """
     debug_helper.DEBUG = flag
@@ -155,7 +155,7 @@ def _get_statement():
 
     This is not intended for end-users but is useful in development.
     """
-    return session.friendly_traceback.tb_data.statement
+    return session.friendly.tb_data.statement
 
 
 def www(search=None, python=False):
@@ -209,7 +209,7 @@ def www(search=None, python=False):
     quote = urllib.parse.quote  # noqa
 
     ddg_url = "https://duckduckgo.com?q="
-    friendly_url = "https://aroberge.github.io/friendly-traceback-docs/docs/html/"
+    friendly_url = "https://aroberge.github.io/friendly-docs/docs/html/"
     python_docs_url = _("https://docs.python.org/3/")
     python_search_url = _("https://docs.python.org/3/search.html?q=")
     if session.saved_info:
@@ -231,7 +231,7 @@ def www(search=None, python=False):
         if info is not None and "python_link" in info:
             url = info["python_link"]
         elif info is not None:  # an exception has been raised
-            url = python_search_url + session.friendly_traceback.tb_data.exception_name
+            url = python_search_url + session.friendly.tb_data.exception_name
         else:
             url = python_docs_url
     elif python:
@@ -247,11 +247,11 @@ def www(search=None, python=False):
         sys.stderr.write(_("The default web browser cannot be used for searching."))
 
 
-get_lang = friendly_traceback.get_lang
-set_lang = friendly_traceback.set_lang
-get_include = friendly_traceback.get_include
-set_include = friendly_traceback.set_include
-set_formatter = friendly_traceback.set_formatter
+get_lang = friendly.get_lang
+set_lang = friendly.set_lang
+get_include = friendly.get_include
+set_include = friendly.set_include
+set_formatter = friendly.set_formatter
 
 helpers = {
     "back": back,

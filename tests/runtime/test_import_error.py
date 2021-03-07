@@ -1,4 +1,4 @@
-import friendly_traceback
+import friendly
 
 
 def test_Simple_import_error():
@@ -6,11 +6,11 @@ def test_Simple_import_error():
         from math import Pi
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "ImportError: cannot import name 'Pi'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Did you mean `pi`" in result
     return result, message
 
@@ -20,12 +20,12 @@ def test_Circular_import():
         import circular_a
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     # The actual message varies a lot depending on Python version.
     
     assert "ImportError" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "what is known as a 'circular import'" in result
 
     return result, message

@@ -54,7 +54,7 @@ class _State:
         self.rich_add_vspace = True
         self.use_jupyter = False
         self.markdown = False
-        self.friendly_traceback = []
+        self.friendly = []
         self.include = "explain"
         self.lang = "en"
         self.install_gettext(self.lang)
@@ -97,11 +97,11 @@ class _State:
         current_lang.install(lang)
         self.lang = lang
         if self.saved_info:
-            if not self.friendly_traceback:
+            if not self.friendly:
                 debug_helper.log(
-                    "Problem: saved_info includes content but friendly_traceback doesn't."
+                    "Problem: saved_info includes content but friendly doesn't."
                 )
-            self.friendly_traceback[-1].recompile_info()
+            self.friendly[-1].recompile_info()
 
     def install_gettext(self, lang):
         """Sets the current language for gettext."""
@@ -148,7 +148,7 @@ class _State:
             self.formatter = formatter  # could be provided as a function
 
     def install(self, lang=None, redirect=None, include="explain"):
-        """Replaces sys.excepthook by friendly_traceback's own version."""
+        """Replaces sys.excepthook by friendly's own version."""
         _ = current_lang.translate
 
         if lang is not None:
@@ -221,15 +221,15 @@ class _State:
             self.set_redirect(redirect=redirect)
 
         try:
-            self.friendly_traceback.append(core.FriendlyTraceback(etype, value, tb))
-            self.friendly_traceback[-1].compile_info()
-            info = self.friendly_traceback[-1].info
+            self.friendly.append(core.FriendlyTraceback(etype, value, tb))
+            self.friendly[-1].compile_info()
+            info = self.friendly[-1].info
             self.saved_info.append(info)
             explanation = self.formatter(info, include=self.include)
         except Exception as e:
             debug_helper.log("Exception raised in exception_hook().")
             try:
-                debug_helper.log(self.friendly_traceback[-1].tb_data.filename)
+                debug_helper.log(self.friendly[-1].tb_data.filename)
             except Exception:
                 pass
             debug_helper.log_error(e)

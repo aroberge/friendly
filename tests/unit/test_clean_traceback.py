@@ -2,7 +2,7 @@
 of all ignored files.
 """
 
-import friendly_traceback as ft
+import friendly as ft
 
 
 def test_uncleaned_traceback():

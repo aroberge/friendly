@@ -1,4 +1,4 @@
-import friendly_traceback
+import friendly
 
 
 def test_Generic():
@@ -7,11 +7,11 @@ def test_Generic():
         d["c"]
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "KeyError: 'c'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "that cannot be found is `c`." in result
     return result, message
 
@@ -23,11 +23,11 @@ def test_ChainMap():
         d.pop(42)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "KeyError: 42" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "that cannot be found is `42`." in result
     return result, message
 

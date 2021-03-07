@@ -5,7 +5,7 @@
 import os
 import sys
 from contextlib import redirect_stderr
-import friendly_traceback
+import friendly
 from syntax_errors_descriptions import descriptions
 
 
@@ -41,7 +41,7 @@ def create_tracebacks(target, intro_text, format="pre"):
                 try:
                     __import__(name)
                 except Exception:
-                    friendly_traceback.explain_traceback()
+                    friendly.explain_traceback()
 
 
 print("    Number of cases in trb_syntax_common.py: ", len(descriptions))

@@ -1,5 +1,5 @@
 """
-friendly_traceback.__init__.py
+friendly.__init__.py
 ==============================
 
 With the exceptions of the functions that are specific to the console,
@@ -98,7 +98,7 @@ def get_output(flush=True):
 
 def install(lang=None, redirect=None, include="explain"):
     """
-    Replaces ``sys.excepthook`` by friendly_traceback's own version.
+    Replaces ``sys.excepthook`` by friendly's own version.
     Intercepts, and provides an explanation for all Python exceptions except
     for ``SystemExist`` and ``KeyboardInterrupt``.
 

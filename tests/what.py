@@ -7,9 +7,9 @@ import sys
 import platform
 from contextlib import redirect_stderr
 
-import friendly_traceback
+import friendly
 
-from friendly_traceback import console_helpers
+from friendly import console_helpers
 
 
 # Make it possible to find docs
@@ -26,9 +26,9 @@ target = os.path.normpath(
 )
 
 LANG = "en"
-friendly_traceback.install()
-friendly_traceback.set_lang(LANG)
-friendly_traceback.set_formatter("pre")
+friendly.install()
+friendly.set_lang(LANG)
+friendly.set_formatter("pre")
 
 sys.path.insert(0, this_dir)
 py_version = f"{sys.version_info.major}.{sys.version_info.minor}"
@@ -70,7 +70,7 @@ Information compiled using Friendly-traceback version: {friendly},
 Python version: {python}
 
 """.format(
-    friendly=friendly_traceback.__version__, python=platform.python_version()
+    friendly=friendly.__version__, python=platform.python_version()
 )
 
 

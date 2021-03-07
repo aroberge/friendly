@@ -12,7 +12,7 @@
 import os
 import sys
 import platform
-import friendly_traceback
+import friendly
 
 
 # Make it possible to find docs and tests source
@@ -25,9 +25,9 @@ assert os.path.isdir(docs_root_dir), "Separate docs repo need to exist"
 # sys.path.insert(0, root_dir)
 
 LANG = "fr"
-friendly_traceback.install()
-friendly_traceback.set_lang(LANG)
-friendly_traceback.set_formatter("pre")
+friendly.install()
+friendly.set_lang(LANG)
+friendly.set_formatter("pre")
 
 sys.path.insert(0, this_dir)
 
@@ -59,7 +59,7 @@ Friendly-traceback version: {friendly}
 Python version: {python}
 
 """.format(
-    friendly=friendly_traceback.__version__,
+    friendly=friendly.__version__,
     python=platform.python_version(),
     name=__file__,
 )

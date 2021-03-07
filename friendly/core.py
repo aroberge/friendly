@@ -4,7 +4,7 @@ The exception hook at the heart of Friendly-traceback.
 
 You should not need to use any of the functions defined here;
 they are considered to be internal functions, subject to change at any
-time. If functions defined in friendly_traceback.__init__.py do not meet your needs,
+time. If functions defined in friendly.__init__.py do not meet your needs,
 please file an issue.
 """
 import inspect
@@ -488,7 +488,7 @@ class FriendlyTraceback:
 
     def locate_exception_raised(self, record):
         """Sets the values of the following attributes which are
-        part of a friendly-traceback:
+        part of a friendly
 
         * exception_raised_header
         * exception_raised_source
@@ -812,7 +812,7 @@ def get_partial_source(filename, linenumber, lines, index, text_range=None):
 
 
 def cannot_analyze_stdin():
-    """Typical case: friendly_traceback is imported in an ordinary Python
+    """Typical case: friendly is imported in an ordinary Python
     interpreter (REPL), and the user does not activate the friendly
     console.
     """

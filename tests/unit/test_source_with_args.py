@@ -8,7 +8,7 @@ def run(*args):
         [
             "venv-friendly3.8/scripts/python",
             "-m",
-            "friendly_traceback",
+            "friendly",
             "tests/adder.py",
             "--",
             *args,

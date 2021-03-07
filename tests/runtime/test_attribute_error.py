@@ -1,4 +1,4 @@
-import friendly_traceback
+import friendly
 
 # TODO: make sure that all these cases are captured in the documentation
 
@@ -24,11 +24,11 @@ def test_Generic():
         A.x  # testing type
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "AttributeError: type object 'A' has no attribute 'x'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "The object `A` has no attribute" in result
 
     try:
@@ -36,11 +36,11 @@ def test_Generic():
         a.x  # Testing instance
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "AttributeError: 'A' object has no attribute 'x'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "The object `a` has no attribute" in result
     return result, message
 
@@ -52,11 +52,11 @@ def test_Object_attribute_typo():
         a.appendh(4)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "AttributeError: 'list' object has no attribute 'appendh'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Did you mean `append`" in result
     return result, message
 
@@ -68,11 +68,11 @@ def test_Use_builtin():
         a.length()
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "AttributeError: 'list' object has no attribute 'length'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Did you mean `len(a)`" in result
     return result, message
 
@@ -84,11 +84,11 @@ def test_Use_synonym():
         a.add(4)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "AttributeError: 'list' object has no attribute 'add'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Did you mean `append`" in result
     return result, message
 
@@ -100,11 +100,11 @@ def test_Module_attribute_typo():
     try:
         string.ascii_lowecase
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "AttributeError: module 'string' has no attribute 'ascii_lowecase'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Did you mean `ascii_lowercase`" in result
 
     import math
@@ -113,11 +113,11 @@ def test_Module_attribute_typo():
         math.cost
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "AttributeError: module 'math' has no attribute 'cost'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert (
             "Instead of writing `math.cost`, perhaps you meant to write one of"
             in result
@@ -134,11 +134,11 @@ def test_Shadow_stdlib_module():
         turtle.Pen
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "AttributeError: module 'turtle' has no attribute 'Pen'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert (
             "There is also a module named `turtle` in Python's standard library."
             in result
@@ -152,11 +152,11 @@ def test_Nonetype():
         a.b
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "'NoneType' object has no attribute 'b'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "for a variable whose value is `None`" in result
 
     return result, message
@@ -173,11 +173,11 @@ def test_Perhaps_comma():
     # fmt: on
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "'str' object has no attribute 'defg'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Did you mean to separate object names by a comma" in result
     return result, message
 
@@ -188,11 +188,11 @@ def test_Builtin_function():
         len.text
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "'builtin_function_or_method'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Did you mean `len(text)`" in result
     return result, message
 
@@ -205,11 +205,11 @@ def test_Builtin_module_with_no_file():
         sys.foo
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "module 'sys' has no attribute 'foo'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Python tells us" in result
     return result, message
 
@@ -225,11 +225,11 @@ def test_Using_slots():
         f.b = 1
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "'F' object has no attribute 'b'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "object `f` uses `__slots__`" in result
     return result, message
 
@@ -240,11 +240,11 @@ def test_Tuple_by_accident():
         something.upper()
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "'tuple' object has no attribute 'upper'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Did you write a comma" in result
 
     return result, message

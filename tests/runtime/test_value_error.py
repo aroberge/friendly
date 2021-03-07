@@ -1,4 +1,4 @@
-import friendly_traceback
+import friendly
 
 
 def test_Not_enough_values_to_unpack():
@@ -6,21 +6,21 @@ def test_Not_enough_values_to_unpack():
     try:
         a, b, *c = d
     except Exception:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert (
         "ValueError: not enough values to unpack (expected at least 2, got 1)" in result
     )
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "a `tuple` of length 1" in result
 
     try:
         for x, y, z in enumerate(range(3)):
             pass
     except Exception:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     assert "ValueError: not enough values to unpack (expected 3, got 2)" in result
 
     d = "ab"
@@ -28,11 +28,11 @@ def test_Not_enough_values_to_unpack():
         a, b, c = d
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "ValueError: not enough values to unpack (expected 3, got 2)" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "a string (`str`) of length 2" in result
     return result, message
 
@@ -43,11 +43,11 @@ def test_Too_many_values_to_unpack():
         a, b = c
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "ValueError: too many values to unpack (expected 2)" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "a `list` of length 3" in result
     return result, message
 

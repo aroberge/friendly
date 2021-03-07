@@ -8,7 +8,7 @@ def run(lang):
         [
             "venv-friendly3.8/scripts/python",
             "-m",
-            "friendly_traceback",
+            "friendly",
             "--formatter",
             "tests.fake_formatter.get_cause",
             "tests/name_error.py",

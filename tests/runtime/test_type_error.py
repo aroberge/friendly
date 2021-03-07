@@ -1,4 +1,4 @@
-import friendly_traceback
+import friendly
 
 
 def test_Can_only_concatenate():
@@ -7,13 +7,13 @@ def test_Can_only_concatenate():
         one = 1
         result = a + one
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     py37 = "TypeError: can only concatenate" in result
     py36 = "must be str, not int" in result
     assert py37 or py36
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "a string (`str`) and an integer (`int`)" in result
 
     try:
@@ -21,13 +21,13 @@ def test_Can_only_concatenate():
         a_list = [1, 2, 3]
         result = a + a_list
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     py37 = "TypeError: can only concatenate" in result
     py36 = "must be str, not list" in result
     assert py37 or py36
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "a string (`str`) and a `list`" in result
 
     try:
@@ -36,11 +36,11 @@ def test_Can_only_concatenate():
         result = a_tuple + a_list
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: can only concatenate" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "a `tuple` and a `list`" in result
     return result, message
 
@@ -51,11 +51,11 @@ def test_Unsupported_operand_types():
         none = None
         result = one + none
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for +:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert (
             "an integer (`int`) and a variable equal to `None` (`NoneType`)" in result
         )
@@ -65,11 +65,11 @@ def test_Unsupported_operand_types():
         two = "two"
         one += two
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for +=:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "an integer (`int`) and a string (`str`)" in result
 
     try:
@@ -77,11 +77,11 @@ def test_Unsupported_operand_types():
         b = [3, 4]
         result = a - b
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for -:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "a `tuple` and a `list`" in result
 
     try:
@@ -89,11 +89,11 @@ def test_Unsupported_operand_types():
         b = [3, 4]
         b -= a
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for -=:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "a `list` and a `tuple`" in result
 
     try:
@@ -101,11 +101,11 @@ def test_Unsupported_operand_types():
         b = {2, 3}
         result = a * b
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for *:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "a complex number and a `set`" in result
 
     try:
@@ -113,11 +113,11 @@ def test_Unsupported_operand_types():
         b = {2, 3}
         b *= a
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for *=:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "a `set` and a complex number" in result
 
     try:
@@ -125,11 +125,11 @@ def test_Unsupported_operand_types():
         b = 3.1416
         result = a / b
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for /:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "a dictionary (`dict`) and a number (`float`)" in result
 
     try:
@@ -137,11 +137,11 @@ def test_Unsupported_operand_types():
         b = 3.1416
         b /= a
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for /=:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "a number (`float`) and a dictionary (`dict`)" in result
 
     try:
@@ -149,11 +149,11 @@ def test_Unsupported_operand_types():
         b = 1
         result = a // b
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for //:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "a dictionary (`dict`) and an integer (`int`)" in result
 
     try:
@@ -161,11 +161,11 @@ def test_Unsupported_operand_types():
         b = 3.1416
         b //= a
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for //=:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "an integer (`int`) and a dictionary (`dict`)"
 
     try:
@@ -173,11 +173,11 @@ def test_Unsupported_operand_types():
         b = 2
         result = a & b
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for &:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "a string (`str`) and an integer (`int`)" in result
 
     try:
@@ -185,11 +185,11 @@ def test_Unsupported_operand_types():
         b = 2
         b &= a
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for &=:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "an integer (`int`) and a string (`str`)" in result
 
     try:
@@ -197,11 +197,11 @@ def test_Unsupported_operand_types():
         b = 3.1416
         result = a ** b
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for ** or pow():" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "You tried to exponentiate (raise to a power)" in result
 
     try:
@@ -209,11 +209,11 @@ def test_Unsupported_operand_types():
         b = 3.1416
         a **= b
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for **" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "You tried to exponentiate (raise to a power)" in result
 
     try:
@@ -221,11 +221,11 @@ def test_Unsupported_operand_types():
         b = 42
         result = a ^ b
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for ^:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Did you mean `a ** b`" in result
 
     try:
@@ -233,11 +233,11 @@ def test_Unsupported_operand_types():
         b = 42
         a ^= b
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for ^=:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Did you mean `a **= b`" in result
 
     try:
@@ -245,11 +245,11 @@ def test_Unsupported_operand_types():
         b = 42
         result = a >> b
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for >>:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "You tried to perform the bit shifting operation >>" in result
 
     try:
@@ -257,11 +257,11 @@ def test_Unsupported_operand_types():
         b = 42
         a >>= b
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for >>=:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "You tried to perform the bit shifting operation >>" in result
 
     try:
@@ -269,11 +269,11 @@ def test_Unsupported_operand_types():
         b = 2
         result = a @ b
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for @:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "You tried to use the operator @" in result
 
     try:
@@ -282,11 +282,11 @@ def test_Unsupported_operand_types():
         a @= b
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: unsupported operand type(s) for @=:" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "You tried to use the operator @" in result
     return result, message
 
@@ -298,11 +298,11 @@ def test_Comparison_not_supported():
         b < a
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: '<' not supported between instances of 'int' and 'str'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "You tried to do an order comparison (<)" in result
     return result, message
 
@@ -312,34 +312,34 @@ def test_Bad_type_for_unary_operator():
         a = +"abc"
         print(a)
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: bad operand type for unary +: 'str'" in result
     assert not "+=" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "You tried to use the unary operator '+'" in result
 
     try:
         a = -[1, 2, 3]
         print(a)
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: bad operand type for unary -: 'list'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "You tried to use the unary operator '-'" in result
 
     try:
         a = ~(1, 2, 3)
         print(a)
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: bad operand type for unary ~: 'tuple'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "You tried to use the unary operator '~'" in result
 
     try:
@@ -350,11 +350,11 @@ def test_Bad_type_for_unary_operator():
         print(a)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: bad operand type for unary +: 'str'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Perhaps you meant to write `+=`" in result
         assert "You tried to use the unary operator '+'" in result
     return result, message
@@ -366,11 +366,11 @@ def test_Tuple_no_item_assignment():
         a[0] = 0
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: 'tuple' object does not support item assignment" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "In Python, some objects are known as immutable:" in result
         assert "Perhaps you meant to use a list" in result
     return result, message
@@ -383,12 +383,12 @@ def test_Too_many_positional_argument():
     try:
         fn(1)
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError" in result
     assert "fn() takes 0 positional arguments but 1 was given" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "1 positional argument(s) while it requires 0" in result
 
     class A:
@@ -399,12 +399,12 @@ def test_Too_many_positional_argument():
         A().f(1)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError" in result
     assert "f() takes 1 positional argument but 2 were given" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "2 positional argument(s) while it requires 1" in result
         # assert "Perhaps you forgot `self`" in result
     return result, message
@@ -418,12 +418,12 @@ def test_Too_few_positional_argument():
         fn(1)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError" in result
     assert "fn() missing 2 required positional argument" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "fewer positional arguments than it requires (2 missing)." in result
     return result, message
 
@@ -432,30 +432,30 @@ def test_Not_callable():
     try:
         _ = (1, 2)(3, 4)
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: 'tuple' object is not callable" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "you have a missing comma between the object" in result
 
     try:
         _ = 3(4 + 4)
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: 'int' object is not callable" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Perhaps you forgot a multiplication operator" in result
 
     try:
         _ = [1, 2](3, 4)
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     assert "TypeError: 'list' object is not callable" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "you have a missing comma between the object" in result
 
     # Test with dotted name
@@ -466,20 +466,20 @@ def test_Not_callable():
         b = A()
         b.a_list(3)
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     assert "TypeError: 'list' object is not callable" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "b.a_list[3]" in result
 
     try:
         _ = [1, 2](3 + 4)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     assert "TypeError: 'list' object is not callable" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Perhaps you meant to use `[]` instead of `()`" in result
     return result, message
 
@@ -489,11 +489,11 @@ def test_Derive_from_BaseException():
         raise "exception"  # noqa
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: exceptions must derive from BaseException" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "In Python 3, exceptions must be derived from BaseException." in result
     return result, message
 
@@ -503,54 +503,54 @@ def test_Cannot_multiply_by_non_int():
     try:
         "b" * "a"
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: can't multiply sequence by non-int of type 'str'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "You can only multiply sequences, such as" in result
 
     try:
         "3" * "a"
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: can't multiply sequence by non-int of type 'str'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert 'Did you forget to convert `"3"` into an integer?' in result
 
     a = b = c = "2"
     try:
         d = a * b * c
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: can't multiply sequence by non-int of type 'str'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Did you forget to convert `a` and `b` into integers?" in result
 
     a = "abc"
     try:
         a *= c
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: can't multiply sequence by non-int of type 'str'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Did you forget to convert `c` into an integer?" in result
 
     try:
         "a" * "2"
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: can't multiply sequence by non-int of type 'str'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert 'Did you forget to convert `"2"` into an integer?' in result
     return result, message
 
@@ -559,31 +559,31 @@ def test_Not_an_integer():
     try:
         range([1, 2])
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: 'list' object cannot be interpreted as an integer" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Perhaps you forgot to convert " not in result
 
     try:
         range("2")
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: 'str' object cannot be interpreted as an integer" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert 'Perhaps you forgot to convert `"2"` into an integer.' in result
 
     try:
         range(1.0)
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: 'float' object cannot be interpreted as an integer" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Perhaps you forgot to convert `1.0" in result
 
     c, d = "2", "3"
@@ -591,11 +591,11 @@ def test_Not_an_integer():
         range(c, d)
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: 'str' object cannot be interpreted as an integer" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Perhaps you forgot to convert `c, d` into integers." in result
     return result, message
 
@@ -606,33 +606,33 @@ def test_Indices_must_be_integers_or_slices():
     try:
         a[1, 2]
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: list indices must be integers or slices" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Did you mean `a[1:2]`" in result
 
     a = (1, 2, 3)
     try:
         a[2.0]
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: tuple indices must be integers or slices" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Perhaps you forgot to convert `2.0` into an integer." in result
 
     try:
         [1, 2, 3]["2"]
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: list indices must be integers or slices" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert 'Perhaps you forgot to convert `"2"` into an integer.' in result
     return result, message
 
@@ -642,14 +642,14 @@ def test_Slice_indices_must_be_integers_or_None():
         [1, 2, 3][1.0:2.0]
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert (
         "TypeError: slice indices must be integers or None "
         "or have an __index__ method"
     ) in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "When using a slice to extract a range of elements" in result
     return result, message
 
@@ -659,11 +659,11 @@ def test_Unhachable_type():
         {[1, 2]: 1}
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "unhashable type: 'list'" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "consider using a `tuple`" in result
     return result, message
 
@@ -672,11 +672,11 @@ def test_Object_is_not_subscriptable():
     try:
         a = 2[1]
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: 'int' object is not subscriptable" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "from `2`, an object of type `int`" in result
 
     def f():
@@ -686,11 +686,11 @@ def test_Object_is_not_subscriptable():
         a = f[1]
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: 'function' object is not subscriptable" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "Did you mean `f(1)`" in result
     return result, message
 
@@ -699,12 +699,12 @@ def test_Object_is_not_iterable():
     try:
         list(42)
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
+        friendly.explain_traceback(redirect="capture")
         message = str(e)
-    result = friendly_traceback.get_output()
+    result = friendly.get_output()
 
     assert "TypeError: 'int' object is not iterable" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "An iterable is required here." in result
     return result, message
 
@@ -713,15 +713,15 @@ def test_Cannot_unpack_non_iterable_object():
     try:
         a, b = 42.0
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
+        friendly.explain_traceback(redirect="capture")
         message = str(e)
-    result = friendly_traceback.get_output()
+    result = friendly.get_output()
 
     assert (
         "TypeError: cannot unpack non-iterable float object" in result
         or "TypeError: 'float' object is not iterable" in result
     )
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "An iterable is an object capable" in result
     return result, message
 
@@ -730,23 +730,23 @@ def test_Cannot_convert_dictionary_update_sequence():
     try:
         dict([1, 2, 3])
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
 
     assert "TypeError: cannot convert dictionary update" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "you should use the `dict.fromkeys()`" in result
 
     dd = {"a": "a"}
     try:
         dd.update([1, 2, 3])
     except Exception as e:
-        friendly_traceback.explain_traceback(redirect="capture")
+        friendly.explain_traceback(redirect="capture")
         message = str(e)
-    result = friendly_traceback.get_output()
+    result = friendly.get_output()
 
     assert "TypeError: cannot convert dictionary update" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert ".update( dict.fromkeys(" in result
     return result, message
 

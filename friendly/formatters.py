@@ -6,10 +6,10 @@ Default formatters showing all or only part of the available information.
 
 A formatter is a function that takes two arguments:
 
-1. a dict (named ``info`` everywhere in friendly-traceback files) containing
+1. a dict (named ``info`` everywhere in friendly files) containing
    all the information that can be shown to the user, as well as some
    entries that are meant to be used only internally as the full
-   friendly-traceback information is obtained.
+   friendly information is obtained.
 
 2. A second argument which is meant to convey what information should be shown.
    This second argument used to be a single integer ("verbosity level").
@@ -152,7 +152,7 @@ def html_escape(text):
     return text
 
 
-# For some reason, moving this to friendly_traceback.ipython
+# For some reason, moving this to friendly.ipython
 # and trying to import it from there uninstalls everything: it is as though
 # it starts a new iPython subprocess.
 def jupyter(info, include="friendly_tb"):

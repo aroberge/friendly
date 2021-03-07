@@ -44,7 +44,7 @@ def check_syntax(
     provided to temporarily set the values to be used during this function
     call. The original values are restored at the end.
 
-    If friendly-traceback exception hook has not been set up prior
+    If friendly exception hook has not been set up prior
     to calling check_syntax, it will only be used for the duration
     of this function call.
 
@@ -107,7 +107,7 @@ def exec_code(*, source=None, path=None, include=None, lang=None):
     provided to temporarily set the values to be used during this function
     call. The original values are restored at the end.
 
-    If friendly-traceback exception hook has not been set up prior
+    If friendly exception hook has not been set up prior
     to calling check_syntax, it will only be used for the duration
     of this function call.
     """

@@ -1,4 +1,4 @@
-# friendly-traceback
+# friendly
 Aimed at Python beginners: replacing standard traceback by something easier to understand, translatable into various languages.
 
 ![Example](https://raw.githubusercontent.com/aroberge/friendly-traceback/master/why_1.png)
@@ -6,7 +6,7 @@ Aimed at Python beginners: replacing standard traceback by something easier to u
 ## Installation
 
 ```
-pip install friendly-traceback
+pip install friendly
 ```
 
 ## Documentation
@@ -19,7 +19,7 @@ pip install friendly-traceback
 
 ## Contribute
 
-See the documentation. Note that Friendly-traceback uses Black.
+See the documentation. Note that Friendly uses Black.
 ![Black logo](https://img.shields.io/badge/code%20style-black-000000.svg)
 
 Some of the ideas were adopted from
@@ -37,6 +37,6 @@ are expected to do the same.
 ## JetBrains support
 
 We graciously acknowledge the support of [JetBrains](
-https://www.jetbrains.com/?from=friendly_traceback)
+https://www.jetbrains.com/?from=friendly-traceback)
 which enables us to use the professional version
-of PyCharm for developing Friendly-traceback.
+of PyCharm for developing Friendly.

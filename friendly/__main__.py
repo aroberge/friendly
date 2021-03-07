@@ -5,7 +5,7 @@ main.py
 Sets up the various options when Friendly-traceback is invoked from the
 command line. You can find more details by doing::
 
-    python -m friendly_traceback -h
+    python -m friendly -h
 
 """
 import argparse
@@ -39,7 +39,7 @@ def import_function(dotted_path: str) -> type:
     This is a utility function currently used when a custom formatter
     is used using a command line argument::
 
-        python -m friendly_traceback --format custom_formatter
+        python -m friendly --format custom_formatter
     """
     # Used by HackInScience.org
     try:
@@ -109,7 +109,7 @@ parser.add_argument(
     a custom formatter function, as a dotted path. By default, the console
     will use Rich if it is available.
 
-    For example: --formatter friendly_traceback.formatters.markdown is
+    For example: --formatter friendly.formatters.markdown is
     equivalent to --formatter markdown
     """,
 )

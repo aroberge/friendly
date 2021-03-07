@@ -1,4 +1,4 @@
-import friendly_traceback
+import friendly
 
 
 class MyException(Exception):
@@ -10,11 +10,11 @@ def test_Generic():
         raise MyException("Some informative message about an unknown exception.")
     except Exception as e:
         message = str(e)
-        friendly_traceback.explain_traceback(redirect="capture")
-    result = friendly_traceback.get_output()
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
     
     assert "Some informative message" in result
-    if friendly_traceback.get_lang() == "en":
+    if friendly.get_lang() == "en":
         assert "No information is known about this exception." in result
     return result, message
 

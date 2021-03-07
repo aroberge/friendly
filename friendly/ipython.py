@@ -7,9 +7,9 @@ try:
 except ImportError:
     raise ValueError("IPython cannot be imported.")
 
-from friendly_traceback import install, exclude_file_from_traceback, explain_traceback
-from friendly_traceback.console_helpers import *  # noqa
-from friendly_traceback.console_helpers import helpers  # noqa
+from friendly import install, exclude_file_from_traceback, explain_traceback
+from friendly.console_helpers import *  # noqa
+from friendly.console_helpers import helpers  # noqa
 
 
 __all__ = list(helpers.keys())

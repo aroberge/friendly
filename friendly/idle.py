@@ -8,11 +8,11 @@ import sys  # noqa
 from idlelib import rpc
 from idlelib import run as idlelib_run
 
-from friendly_traceback.console_helpers import *  # noqa
-from friendly_traceback.console_helpers import helpers  # noqa
-from friendly_traceback import source_cache
-from friendly_traceback.formatters import select_items, repl_indentation, no_result
-from friendly_traceback.my_gettext import current_lang
+from friendly.console_helpers import *  # noqa
+from friendly.console_helpers import helpers  # noqa
+from friendly import source_cache
+from friendly.formatters import select_items, repl_indentation, no_result
+from friendly.my_gettext import current_lang
 
 
 def idle_writer(output, color=None):
@@ -154,9 +154,9 @@ def install_in_idle_shell():
     Furthermore, Friendly-traceback is bypassed when code entered in IDLE's repl
     raises SyntaxErrors.
     """
-    import friendly_traceback
+    import friendly
 
-    friendly_traceback.exclude_file_from_traceback(idlelib_run.__file__)
+    friendly.exclude_file_from_traceback(idlelib_run.__file__)
     rpchandler = rpc.objecttable["exec"].rpchandler  # noqa
 
     def get_lines(filename, linenumber):
@@ -175,7 +175,7 @@ def install_in_idle_shell():
 
     source_cache.idle_get_lines = get_lines
 
-    friendly_traceback.install(include="friendly_tb", redirect=idle_writer)
+    friendly.install(include="friendly_tb", redirect=idle_writer)
     # Current limitation
     idle_writer("                                WARNING\n", "ERROR")  # noqa
     idle_writer(
@@ -188,10 +188,10 @@ def install():
     For Python versions before 3.10, this is not directly supported, so a
     Friendly console is used instead of IDLE's shell.
     """
-    import friendly_traceback
+    import friendly
 
     sys.stderr = sys.stdout.shell  # noqa
-    friendly_traceback.set_formatter(idle_formatter)
+    friendly.set_formatter(idle_formatter)
     if sys.version_info >= (3, 10):
         install_in_idle_shell()
     else:
@@ -202,12 +202,12 @@ def install():
 
 def start_console():
     """Starts a Friendly console with a custom formatter for IDLE"""
-    import friendly_traceback  # noqa
+    import friendly  # noqa
 
     sys.stderr = sys.stdout.shell  # noqa
-    friendly_traceback.set_formatter(idle_formatter)
-    friendly_traceback.set_stream(idle_writer)
-    friendly_traceback.start_console()
+    friendly.set_formatter(idle_formatter)
+    friendly.set_stream(idle_writer)
+    friendly.start_console()
 
 
 def run(filename, lang=None, include="friendly_tb", args=None, console=True):
@@ -241,13 +241,13 @@ def run(filename, lang=None, include="friendly_tb", args=None, console=True):
 
 
     """
-    import friendly_traceback
+    import friendly
 
     _ = current_lang.translate
 
     sys.stderr = sys.stdout.shell  # noqa
-    friendly_traceback.set_formatter(idle_formatter)
-    friendly_traceback.set_stream(idle_writer)
+    friendly.set_formatter(idle_formatter)
+    friendly.set_stream(idle_writer)
 
     filename = Path(filename)
     if not filename.is_absolute():
@@ -269,7 +269,7 @@ def run(filename, lang=None, include="friendly_tb", args=None, console=True):
                 "Friendly-traceback cannot be installed in this version of IDLE.\n"
             )
 
-    return friendly_traceback.run(
+    return friendly.run(
         filename, lang=lang, include=include, args=args, console=console
     )
 

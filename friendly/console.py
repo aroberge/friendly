@@ -13,7 +13,7 @@ import traceback
 from code import InteractiveConsole
 import codeop  # need to import to exclude from tracebacks
 
-import friendly_traceback
+import friendly
 
 from . import source_cache
 from . import theme
@@ -23,7 +23,7 @@ from .my_gettext import current_lang
 
 
 BANNER = "\nFriendly Console version {}. [Python version: {}]\n".format(
-    friendly_traceback.__version__, platform.python_version()
+    friendly.__version__, platform.python_version()
 )
 
 please_comment = (
@@ -40,7 +40,7 @@ class FriendlyConsole(InteractiveConsole):
         an individual source file.
         """
         _ = current_lang.translate
-        friendly_traceback.exclude_file_from_traceback(codeop.__file__)
+        friendly.exclude_file_from_traceback(codeop.__file__)
         self.fake_filename = "<friendly-console:%d>"
         self.counter = 1
         self.old_locals = {}
@@ -51,7 +51,7 @@ class FriendlyConsole(InteractiveConsole):
         if theme.rich_available and use_rich:
             try:
                 self.rich_console = theme.init_rich_console()
-                friendly_traceback.set_formatter("rich", style=theme.current_rich_style)
+                friendly.set_formatter("rich", style=theme.current_rich_style)
             except Exception:
                 print(_("\n    Installed version of Rich is too old.\n\n"))
         elif use_rich:
@@ -118,7 +118,7 @@ class FriendlyConsole(InteractiveConsole):
             code = self.compile(source, filename, symbol)
         except (OverflowError, SyntaxError, ValueError):
             # Case 1
-            friendly_traceback.explain_traceback()
+            friendly.explain_traceback()
             return False
 
         if code is None:
@@ -132,7 +132,7 @@ class FriendlyConsole(InteractiveConsole):
     def runcode(self, code):
         """Execute a code object.
 
-        When an exception occurs, friendly_traceback.explain_traceback() is called to
+        When an exception occurs, friendly.explain_traceback() is called to
         display a traceback.  All exceptions are caught except
         SystemExit, which, unlike the case for the original version in the
         standard library, cleanly exists the program. This is done
@@ -150,7 +150,7 @@ class FriendlyConsole(InteractiveConsole):
             os._exit(1)  # noqa -pycharm
         except Exception:
             try:
-                friendly_traceback.explain_traceback()
+                friendly.explain_traceback()
             except Exception:
                 print("Friendly-traceback Internal Error")
                 print("-" * 60)
@@ -268,10 +268,10 @@ class FriendlyConsole(InteractiveConsole):
     # that can be used if an explicit call is desired for some reason.
 
     def showsyntaxerror(self, filename=None):
-        friendly_traceback.explain_traceback()
+        friendly.explain_traceback()
 
     def showtraceback(self):
-        friendly_traceback.explain_traceback()
+        friendly.explain_traceback()
 
     def raw_input(self, prompt=""):
         """Write a prompt and read a line.
@@ -295,8 +295,8 @@ def start_console(
     if banner is None:
         banner = BANNER
 
-    if not friendly_traceback.is_installed():
-        friendly_traceback.install(include=include, lang=lang)
+    if not friendly.is_installed():
+        friendly.install(include=include, lang=lang)
 
     source_cache.idle_get_lines = None
 

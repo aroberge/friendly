@@ -1,5 +1,5 @@
-import friendly_traceback
+import friendly
 
-friendly_traceback.install()
+friendly.install()
 
 import raise_indentation_error1  # noqa

@@ -1,4 +1,4 @@
-from friendly_traceback import token_utils
+from friendly import token_utils
 
 # Note: most of the tests involving untokenize have
 # been adapted from https://github.com/myint/untokenize
