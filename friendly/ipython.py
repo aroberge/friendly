@@ -7,10 +7,15 @@ try:
 except ImportError:
     raise ValueError("IPython cannot be imported.")
 
+import colorama
+
 from friendly import install, exclude_file_from_traceback, explain_traceback
 from friendly.console_helpers import *  # noqa
 from friendly.console_helpers import helpers  # noqa
 
+
+colorama.deinit()
+colorama.init(convert=False, strip=False)
 
 __all__ = list(helpers.keys())
 
@@ -23,5 +28,4 @@ exclude_file_from_traceback(shell.__file__)
 exclude_file_from_traceback(compilerop.__file__)
 install(include="friendly_tb")
 
-set_formatter("repl")  # noqa
-print("Friendly-traceback installed.")
+set_formatter("rich")  # noqa
