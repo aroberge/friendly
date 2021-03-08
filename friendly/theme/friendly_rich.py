@@ -28,7 +28,9 @@ light_background_theme = Theme(
 )
 
 
-def init_console(style="dark", theme="brunante"):
+def init_console(
+    style="dark", theme="brunante", color_system="auto", force_jupyter=None
+):
     def _patch_heading(self, console, options):  # noqa
         """By default, all headings are centered by Rich; I prefer to have
         them left-justified, except for <h3>
@@ -52,9 +54,17 @@ def init_console(style="dark", theme="brunante"):
     CodeBlock.__rich_console__ = _patch_code_block
 
     if style == "light":
-        console = Console(theme=light_background_theme)
+        console = Console(
+            theme=light_background_theme,
+            color_system=color_system,
+            force_jupyter=force_jupyter,
+        )
     else:
-        console = Console(theme=dark_background_theme)
+        console = Console(
+            theme=dark_background_theme,
+            color_system=color_system,
+            force_jupyter=force_jupyter,
+        )
 
     pretty.install(console=console, indent_guides=True)
     return console

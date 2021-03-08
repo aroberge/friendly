@@ -15,11 +15,15 @@ sys.modules["pygments.styles.brunante"] = brunante
 styles.STYLE_MAP["brunante"] = "brunante::BrunanteStyle"
 
 
-def init_rich_console(style="dark"):
+def init_rich_console(style="dark", color_system="auto", force_jupyter=None):
     global CURRENT_THEME
     if style == "light":
         theme = "tango"
     else:
         theme = "brunante"
     CURRENT_THEME = theme
-    return friendly_rich.init_console(style=style, theme=theme)
+
+    console = friendly_rich.init_console(
+        style=style, theme=theme, color_system=color_system, force_jupyter=force_jupyter
+    )
+    return console

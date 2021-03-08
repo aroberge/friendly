@@ -116,7 +116,14 @@ class _State:
     def get_include(self):
         return self.include
 
-    def set_formatter(self, formatter=None, style="dark", markdown=False):
+    def set_formatter(
+        self,
+        formatter=None,
+        style="dark",
+        markdown=False,
+        color_system="auto",
+        force_jupyter=None,
+    ):
         """Sets the default formatter. If no argument is given, the default
         formatter is used.
         """
@@ -129,10 +136,10 @@ class _State:
         elif formatter == "jupyter":
             self.formatter = formatters.jupyter
         elif formatter == "rich":
-            # theme.set_theme(style)
             self.formatter = formatters.rich_markdown
-            self.console = theme.init_rich_console(style=style)
-            # self.console = theme.friendly_rich.init_console(style=style)
+            self.console = theme.init_rich_console(
+                style=style, color_system=color_system, force_jupyter=force_jupyter
+            )
             self.use_rich = True
             self.markdown = True
         elif formatter == "markdown":
