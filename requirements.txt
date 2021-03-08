@@ -1,5 +1,7 @@
+rich
+asttokens
+colorama
 executing
 pure_eval
-asttokens
-rich
 pygments
+

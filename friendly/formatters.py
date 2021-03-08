@@ -45,19 +45,19 @@ This module currently contains 6 formatters:
 """
 from .my_gettext import current_lang
 
-from .theme import pygments_available
+from pygments import highlight
+from pygments.lexers import PythonLexer, PythonTracebackLexer  # noqa
+from pygments.formatters import HtmlFormatter  # noqa
+
 
 ipython_available = False
-if pygments_available:
-    try:
-        from pygments import highlight  # noqa
-        from pygments.lexers import PythonLexer, PythonTracebackLexer  # noqa
-        from pygments.formatters import HtmlFormatter  # noqa
-        from IPython.display import display, HTML  # noqa
+try:
 
-        ipython_available = True
-    except ImportError:
-        pass
+    from IPython.display import display, HTML  # noqa
+
+    ipython_available = True
+except ImportError:
+    pass
 
 RICH_HEADER = False
 

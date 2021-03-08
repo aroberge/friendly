@@ -19,7 +19,7 @@ def _write_err(text):
         if session.rich_add_vspace:
             session.console.print()
         md = theme.friendly_rich.Markdown(
-            text, inline_code_lexer="python", code_theme=theme.current_rich_style
+            text, inline_code_lexer="python", code_theme=theme.CURRENT_THEME
         )
         if formatters.RICH_HEADER:
             info = session.saved_info
@@ -129,10 +129,10 @@ class _State:
         elif formatter == "jupyter":
             self.formatter = formatters.jupyter
         elif formatter == "rich":
-            theme.set_theme(style)
+            # theme.set_theme(style)
             self.formatter = formatters.rich_markdown
-            self.console = theme.init_rich_console()
-            self.console = theme.friendly_rich.init_console(style=style)
+            self.console = theme.init_rich_console(style=style)
+            # self.console = theme.friendly_rich.init_console(style=style)
             self.use_rich = True
             self.markdown = True
         elif formatter == "markdown":

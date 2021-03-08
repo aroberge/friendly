@@ -3,7 +3,3 @@ pytest
 pytest-cov
 flake8
 pre-commit
-rich
-executing
-pure_eval
-asttokens

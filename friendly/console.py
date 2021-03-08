@@ -18,6 +18,7 @@ import friendly
 from . import source_cache
 from . import theme
 
+from .config import session
 from .console_helpers import helpers
 from .my_gettext import current_lang
 
@@ -33,7 +34,7 @@ please_comment = (
 
 
 class FriendlyConsole(InteractiveConsole):
-    def __init__(self, locals=None, use_rich=False):  # noqa
+    def __init__(self, locals=None, use_rich=False, style="dark"):  # noqa
         """This class builds upon Python's code.InteractiveConsole
         so as to provide friendly tracebacks. It keeps track
         of code fragment executed by treating each of them as
@@ -48,14 +49,9 @@ class FriendlyConsole(InteractiveConsole):
         for name in dir(builtins):
             self.saved_builtins[name] = getattr(builtins, name)
         self.rich_console = False
-        if theme.rich_available and use_rich:
-            try:
-                self.rich_console = theme.init_rich_console()
-                friendly.set_formatter("rich", style=theme.current_rich_style)
-            except Exception:
-                print(_("\n    Installed version of Rich is too old.\n\n"))
-        elif use_rich:
-            print(_("\n    Rich is not installed.\n\n"))
+        if use_rich:
+            friendly.set_formatter("rich", style=style)
+            self.rich_console = session.console
 
         super().__init__(locals=locals)
         self.check_for_builtins_changes()
@@ -287,7 +283,12 @@ class FriendlyConsole(InteractiveConsole):
 
 
 def start_console(
-    local_vars=None, use_rich=False, include="friendly_tb", lang="en", banner=None
+    local_vars=None,
+    use_rich=False,
+    include="friendly_tb",
+    lang="en",
+    banner=None,
+    style="dark",
 ):
     """Starts a console; modified from code.interact"""
     # from . import config
@@ -304,5 +305,5 @@ def start_console(
         # Make sure we don't overwrite with our own functions
         helpers.update(local_vars)
 
-    console = FriendlyConsole(locals=helpers, use_rich=use_rich)
+    console = FriendlyConsole(locals=helpers, use_rich=use_rich, style=style)
     console.interact(banner=banner)

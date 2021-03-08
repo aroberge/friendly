@@ -40,7 +40,6 @@ from . import formatters
 from . import path_info
 from .config import session
 from .my_gettext import current_lang
-from .theme import rich_available
 from .version import __version__  # noqa
 
 # Ensure that warnings are not shown to the end user, as they could
@@ -194,9 +193,8 @@ def run(
 
     session.install(lang=lang, include=include, redirect=redirect)
     if use_rich:
-        if rich_available:
-            session.use_rich = True
-            session.set_formatter("rich", style=style)
+        session.use_rich = True
+        session.set_formatter("rich", style=style)
 
     module_globals = editors_helpers.exec_code(
         path=filename, lang=lang, include=include
@@ -231,7 +229,12 @@ def show_again():
 
 
 def start_console(
-    local_vars=None, use_rich=False, include="friendly_tb", lang="en", banner=None
+    local_vars=None,
+    use_rich=False,
+    include="friendly_tb",
+    lang="en",
+    banner=None,
+    style="dark",
 ):
     """Starts a Friendly console."""
     from . import console
@@ -242,6 +245,7 @@ def start_console(
         include=include,
         lang=lang,
         banner=banner,
+        style=style,
     )
 
 

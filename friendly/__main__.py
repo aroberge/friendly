@@ -16,14 +16,10 @@ import sys
 from importlib import import_module
 from pathlib import Path
 
-# Modules
 from . import console
 from . import debug_helper
-from . import formatters
-from . import theme
 from .my_gettext import current_lang
 
-# Objects from __init__.py
 from . import explain_traceback, exclude_file_from_traceback, install
 from . import set_formatter, __version__
 
@@ -121,8 +117,7 @@ parser.add_argument(
     "--style",
     help="""To use with 'rich' --format option.
     Indicates if the background colour of the console is 'dark' or 'light'.
-    The default is 'dark'. The light theme is just a proof of concept.
-    You could also try to specify a pygments style - it might work.
+    The default is 'dark'.
     """,
 )
 
@@ -132,12 +127,6 @@ parser.add_argument(
     The defaults are 'friendly_tb' if the friendly-console is going to be shown,
     otherwise it is 'explain'.
     """,
-)
-
-parser.add_argument(
-    "--show-include",
-    help="List some available choices for the --include parameter and quits.",
-    action="store_true",
 )
 
 
@@ -155,42 +144,37 @@ def main():
         if not args.source:
             sys.exit()
 
-    if args.show_include:
-        show_include_choices()
-        sys.exit()
-
     include = "friendly_tb"
     if args.include:
         include = args.include
     elif args.source and not sys.flags.interactive:
         include = "explain"
-
     if args.debug:
         debug_helper.DEBUG = True
         include = "debug_tb"
 
     install(lang=args.lang, include=include)
 
+    style = "dark"
     if args.style:
-        style = theme.set_theme(args.style)
-    else:
-        style = "dark"
+        if args.style not in ["light", "dark"]:
+            print("Only 'light' and 'dark' style are supported")
+            style = "dark"
+        else:
+            style = args.style
 
-    use_rich = False
+    use_rich = True
     if args.format:
         format = args.format  # noqa
-        if format in ["repl", "pre", "markdown"]:
-            set_formatter(format)
-        elif format == "rich":
-            if not theme.rich_available:
-                warn("Rich is not installed.")
-                set_formatter("rich", style=style)
-            else:
-                use_rich = True
+        if format == "rich":
+            set_formatter("rich", style=style)
         else:
-            set_formatter(import_function(args.format))
-    elif theme.rich_available:
-        use_rich = True
+            use_rich = False
+            if format in ["repl", "pre", "markdown"]:
+                set_formatter(format)
+            else:
+                set_formatter(import_function(args.format))
+    else:
         set_formatter("rich", style=style)  # use by default when available.
 
     console_defaults = {}
@@ -211,43 +195,14 @@ def main():
         except Exception:
             explain_traceback()
         if sys.flags.interactive:
-            console.start_console(local_vars=console_defaults, use_rich=use_rich)
+            console.start_console(
+                local_vars=console_defaults, use_rich=use_rich, style=style
+            )
 
     else:
-        console.start_console(local_vars=console_defaults, use_rich=use_rich)
-
-
-include_choices = """
-The main choices for the --include parameter are:
-
-what:    Explain what a given exception means.
-where:   Shows the location of the exception and values of variables
-why:     Attempts to explain the cause of an exception
-explain: Combines most useful information in a single display
-
-friendly_tb, python_tb, debug_tb: three different choices for the traceback.
-
-The defaults are friendly_tb if the friendly-console is going to be shown,
-otherwise it is explain.
-
-The following lists all the available choices, automatically extracted
-from the source code.
-"""
-
-third_party_choices = """
-Third-party users interested in writing their own formatters
-should consult the detailed *items_in_order* list in formatters.py.
-They might also find it useful to type `show_info()` in a
-friendly-console after an exception has been raised.
-"""
-
-
-def show_include_choices():
-    print(include_choices)
-    for key in formatters.items_groups:
-        if key != "header":
-            print(key)
-    print(third_party_choices)
+        console.start_console(
+            local_vars=console_defaults, use_rich=use_rich, style=style
+        )
 
 
 main()

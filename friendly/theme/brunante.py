@@ -7,7 +7,7 @@ Twilight can be translated in French as either crépuscule or as brunante,
 with the former being the most often-used term. However, I chose the second
 since the word 'brunante' starts with 'brun' which is French for 'brown',
 and many colours in Twilight are essentially different shades of brown, yellow,
-and orange. With these dominant colours, it might be more reminescent of
+and orange. With these dominant colours, it might be more reminiscent of
 autumn ... but there is already a pygments theme named autumn.
 """
 
