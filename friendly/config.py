@@ -53,7 +53,6 @@ class _State:
         self.use_rich = False
         self.rich_add_vspace = True
         self.use_jupyter = False
-        self.markdown = False
         self.friendly = []
         self.include = "explain"
         self.lang = "en"
@@ -116,38 +115,27 @@ class _State:
     def get_include(self):
         return self.include
 
-    def set_formatter(
-        self,
-        formatter=None,
-        style="dark",
-        markdown=False,
-        color_system="auto",
-        force_jupyter=None,
-    ):
+    def set_formatter(self, formatter=None, color_system="auto", force_jupyter=None):
         """Sets the default formatter. If no argument is given, the default
         formatter is used.
         """
         self.use_rich = False
-        self.markdown = markdown
-        if formatter is None or formatter == "repl":
+        if formatter is None or formatter == "bw":
             self.formatter = formatters.repl
-        elif formatter == "pre":
-            self.formatter = formatters.pre
+        elif formatter == "docs":
+            self.formatter = formatters.docs
         elif formatter == "jupyter":
             self.formatter = formatters.jupyter
-        elif formatter == "rich":
+        elif formatter in ["dark", "light"]:
             self.formatter = formatters.rich_markdown
             self.console = theme.init_rich_console(
-                style=style, color_system=color_system, force_jupyter=force_jupyter
+                style=formatter, color_system=color_system, force_jupyter=force_jupyter
             )
             self.use_rich = True
-            self.markdown = True
         elif formatter == "markdown":
             self.formatter = formatters.markdown
-            self.markdown = True
         elif formatter == "markdown_docs":
             self.formatter = formatters.markdown_docs
-            self.markdown = True
         elif isinstance(formatter, str):
             print("Unknown formatter", formatter)
             self.formatter = formatters.repl

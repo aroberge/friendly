@@ -219,7 +219,7 @@ if not ipython_available:
     jupyter = repl  # noqa
 
 
-def pre(info, include="friendly_tb"):
+def docs(info, include="friendly_tb"):
     """Formatter that produces an output that is suitable for
     insertion in a RestructuredText (.rst) code block,
     with pre-formatted indentation.
@@ -273,7 +273,7 @@ def markdown_docs(info, include="explain"):
     for nicer final display when the markdown generated content
     is further processed.
     """
-    return _markdown(info, include, docs=True)
+    return _markdown(info, include, documentation=True)
 
 
 def rich_markdown(info, include="friendly_tb"):
@@ -290,7 +290,7 @@ def rich_markdown(info, include="friendly_tb"):
     return _markdown(info, include, rich=True)
 
 
-def _markdown(info, include, rich=False, docs=False):
+def _markdown(info, include, rich=False, documentation=False):
     """Traceback formatted with with markdown syntax."""
     global RICH_HEADER
     RICH_HEADER = False
@@ -342,7 +342,7 @@ def _markdown(info, include, rich=False, docs=False):
                 content = ":".join(content)
 
             prefix, suffix = markdown_items[item]
-            if docs:
+            if documentation:
                 if prefix.startswith("#"):
                     prefix = "##" + prefix
             result.append(prefix + content + suffix)

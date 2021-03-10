@@ -131,8 +131,7 @@ def run(
     include=None,
     args=None,
     console=True,
-    use_rich=False,
-    style="dark",
+    formatter="dark",
     redirect=None,
 ):
     """Given a filename (relative or absolute path) ending with the ".py"
@@ -192,16 +191,14 @@ def run(
             return
 
     session.install(lang=lang, include=include, redirect=redirect)
-    if use_rich:
-        session.use_rich = True
-        session.set_formatter("rich", style=style)
+    session.set_formatter(formatter)
 
     module_globals = editors_helpers.exec_code(
         path=filename, lang=lang, include=include
     )
     if console:
         start_console(
-            local_vars=module_globals, use_rich=use_rich, banner="", include=include
+            local_vars=module_globals, formatter=formatter, banner="", include=include
         )
     else:
         return module_globals
@@ -229,23 +226,17 @@ def show_again():
 
 
 def start_console(
-    local_vars=None,
-    use_rich=False,
-    include="friendly_tb",
-    lang="en",
-    banner=None,
-    style="dark",
+    local_vars=None, formatter="dark", include="friendly_tb", lang="en", banner=None
 ):
     """Starts a Friendly console."""
     from . import console
 
     console.start_console(
         local_vars=local_vars,
-        use_rich=use_rich,
+        formatter=formatter,
         include=include,
         lang=lang,
         banner=banner,
-        style=style,
     )
 
 

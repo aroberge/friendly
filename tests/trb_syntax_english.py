@@ -26,7 +26,7 @@ assert os.path.isdir(docs_root_dir), "Separate docs repo need to exist"
 LANG = "en"
 friendly.install()
 friendly.set_lang(LANG)
-friendly.set_formatter("pre")
+friendly.set_formatter("docs")
 
 sys.path.insert(0, this_dir)
 py_version = f"{sys.version_info.major}.{sys.version_info.minor}"

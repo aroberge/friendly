@@ -155,7 +155,11 @@ def _get_statement():
 
     This is not intended for end-users but is useful in development.
     """
-    return session.friendly.tb_data.statement
+    _ = current_lang.translate
+    if not session.saved_info:
+        print(_("Nothing to show: no exception recorded."))
+        return
+    return session.friendly[-1].tb_data.statement
 
 
 def www(search=None, python=False):

@@ -35,7 +35,7 @@ def import_function(dotted_path: str) -> type:
     This is a utility function currently used when a custom formatter
     is used using a command line argument::
 
-        python -m friendly --format custom_formatter
+        python -m friendly --formatter custom_formatter
     """
     # Used by HackInScience.org
     try:
@@ -99,11 +99,11 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "--format",
+    "-f",
     "--formatter",
-    help="""Specifies an output format (repl, pre, markown, markdown_docs, or rich) or
-    a custom formatter function, as a dotted path. By default, the console
-    will use Rich if it is available.
+    help="""Specifies an output format (bw, dark, light, docs, markown, or markdown_docs)
+    or a custom formatter function, as a dotted path. By default, the console
+    will use dark if it is available.
 
     For example: --formatter friendly.formatters.markdown is
     equivalent to --formatter markdown
@@ -112,14 +112,6 @@ parser.add_argument(
 
 
 parser.add_argument("--debug", help="""For developer use.""", action="store_true")
-
-parser.add_argument(
-    "--style",
-    help="""To use with 'rich' --format option.
-    Indicates if the background colour of the console is 'dark' or 'light'.
-    The default is 'dark'.
-    """,
-)
 
 parser.add_argument(
     "--include",
@@ -155,27 +147,16 @@ def main():
 
     install(lang=args.lang, include=include)
 
-    style = "dark"
-    if args.style:
-        if args.style not in ["light", "dark"]:
-            print("Only 'light' and 'dark' style are supported")
-            style = "dark"
+    if args.formatter:
+        formatter = args.formatter  # noqa
+        if formatter in ["bw", "dark", "light", "docs", "markdown", "markdown_docs"]:
+            set_formatter("dark")
         else:
-            style = args.style
-
-    use_rich = True
-    if args.format:
-        format = args.format  # noqa
-        if format == "rich":
-            set_formatter("rich", style=style)
-        else:
-            use_rich = False
-            if format in ["repl", "pre", "markdown"]:
-                set_formatter(format)
-            else:
-                set_formatter(import_function(args.format))
+            set_formatter(import_function(args.formatter))
+            formatter = "bw"  # for the console - should not be needed
     else:
-        set_formatter("rich", style=style)  # use by default when available.
+        set_formatter("dark")  # use by default when available.
+        formatter = "dark"
 
     console_defaults = {}
     if args.source is not None:
@@ -195,14 +176,10 @@ def main():
         except Exception:
             explain_traceback()
         if sys.flags.interactive:
-            console.start_console(
-                local_vars=console_defaults, use_rich=use_rich, style=style
-            )
+            console.start_console(local_vars=console_defaults, formatter=formatter)
 
     else:
-        console.start_console(
-            local_vars=console_defaults, use_rich=use_rich, style=style
-        )
+        console.start_console(local_vars=console_defaults, formatter=formatter)
 
 
 main()
