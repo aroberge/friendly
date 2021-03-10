@@ -632,7 +632,7 @@ class FriendlyTraceback:
 
         tb = self.create_traceback()
         if len(tb) > 10:
-            shortened_tb = tb[0:2] + suppressed + tb[-6:]
+            shortened_tb = tb[0:2] + suppressed + tb[-7:]
         else:
             shortened_tb = tb[:]
 
