@@ -133,6 +133,7 @@ def run(
     console=True,
     formatter="bw",
     redirect=None,
+    background=None,
 ):
     """Given a filename (relative or absolute path) ending with the ".py"
     extension, this function uses the
@@ -198,7 +199,11 @@ def run(
     )
     if console:
         start_console(
-            local_vars=module_globals, formatter=formatter, banner="", include=include
+            local_vars=module_globals,
+            formatter=formatter,
+            banner="",
+            include=include,
+            background=background,
         )
     else:
         return module_globals
@@ -226,7 +231,12 @@ def show_again():
 
 
 def start_console(
-    local_vars=None, formatter="bw", include="friendly_tb", lang="en", banner=None
+    local_vars=None,
+    formatter="bw",
+    include="friendly_tb",
+    lang="en",
+    banner=None,
+    background=None,
 ):
     """Starts a Friendly console."""
     from . import console
@@ -237,6 +247,7 @@ def start_console(
         include=include,
         lang=lang,
         banner=banner,
+        background=background,
     )
 
 

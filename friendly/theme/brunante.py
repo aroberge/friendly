@@ -83,6 +83,7 @@ rich_style = {
 }
 
 my_style.update(**rich_style)
+BACKGROUND = colours["black"]
 
 
 class BrunanteStyle(Style):
@@ -90,7 +91,7 @@ class BrunanteStyle(Style):
     This style was originally inspired by the Twilight scheme
     """
 
-    background_color = colours["black"]
+    background_color = BACKGROUND
     default_style = "#363636"
 
     styles = {

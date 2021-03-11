@@ -79,11 +79,12 @@ rich_style = {
 }
 
 my_style.update(**rich_style)
+BACKGROUND = colours["white"]
 
 
 class AmicalStyle(Style):
 
-    background_color = colours["white"]
+    background_color = BACKGROUND
     default_style = "#363636"
 
     styles = {

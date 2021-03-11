@@ -110,6 +110,14 @@ parser.add_argument(
     """,
 )
 
+parser.add_argument(
+    "--background",
+    help="""Specifies a background color to be used if either the 'dark' or the 'light'
+    formatter is specified.  The color needs to be specified as an hexadecimal
+    value '#xxxxxx'. The default is black for 'dark' and white for 'light'.
+    """,
+)
+
 
 parser.add_argument("--debug", help="""For developer use.""", action="store_true")
 
@@ -147,15 +155,20 @@ def main():
 
     install(lang=args.lang, include=include)
 
+    if args.background:
+        background = args.background
+    else:
+        background = None
+
     if args.formatter:
         formatter = args.formatter  # noqa
         if formatter in ["bw", "dark", "light", "docs", "markdown", "markdown_docs"]:
-            set_formatter(formatter)
+            set_formatter(formatter, background=background)
         else:
             set_formatter(import_function(args.formatter))
             formatter = "bw"  # for the console - should not be needed
     else:
-        set_formatter("dark")  # use by default when available.
+        set_formatter("dark", background=background)
         formatter = "dark"
 
     console_defaults = {}
@@ -176,10 +189,14 @@ def main():
         except Exception:
             explain_traceback()
         if sys.flags.interactive:
-            console.start_console(local_vars=console_defaults, formatter=formatter)
+            console.start_console(
+                local_vars=console_defaults, formatter=formatter, background=background
+            )
 
     else:
-        console.start_console(local_vars=console_defaults, formatter=formatter)
+        console.start_console(
+            local_vars=console_defaults, formatter=formatter, background=background
+        )
 
 
 main()

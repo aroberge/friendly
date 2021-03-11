@@ -34,7 +34,7 @@ please_comment = (
 
 
 class FriendlyConsole(InteractiveConsole):
-    def __init__(self, locals=None, formatter="dark"):  # noqa
+    def __init__(self, locals=None, formatter="dark", background=None):  # noqa
         """This class builds upon Python's code.InteractiveConsole
         so as to provide friendly tracebacks. It keeps track
         of code fragment executed by treating each of them as
@@ -49,7 +49,7 @@ class FriendlyConsole(InteractiveConsole):
         for name in dir(builtins):
             self.saved_builtins[name] = getattr(builtins, name)
         self.rich_console = False
-        friendly.set_formatter(formatter)
+        friendly.set_formatter(formatter, background=background)
         if formatter in ["dark", "light"]:
             self.rich_console = session.console
 
@@ -283,7 +283,12 @@ class FriendlyConsole(InteractiveConsole):
 
 
 def start_console(
-    local_vars=None, formatter="dark", include="friendly_tb", lang="en", banner=None
+    local_vars=None,
+    formatter="dark",
+    include="friendly_tb",
+    lang="en",
+    banner=None,
+    background=None,
 ):
     """Starts a console; modified from code.interact"""
     # from . import config
@@ -300,5 +305,7 @@ def start_console(
         # Make sure we don't overwrite with our own functions
         helpers.update(local_vars)
 
-    console = FriendlyConsole(locals=helpers, formatter=formatter)
+    console = FriendlyConsole(
+        locals=helpers, formatter=formatter, background=background
+    )
     console.interact(banner=banner)
