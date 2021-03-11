@@ -28,4 +28,4 @@ exclude_file_from_traceback(shell.__file__)
 exclude_file_from_traceback(compilerop.__file__)
 install(include="friendly_tb")
 
-set_formatter("rich")  # noqa
+set_formatter("dark")  # noqa

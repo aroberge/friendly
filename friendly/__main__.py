@@ -150,7 +150,7 @@ def main():
     if args.formatter:
         formatter = args.formatter  # noqa
         if formatter in ["bw", "dark", "light", "docs", "markdown", "markdown_docs"]:
-            set_formatter("dark")
+            set_formatter(formatter)
         else:
             set_formatter(import_function(args.formatter))
             formatter = "bw"  # for the console - should not be needed

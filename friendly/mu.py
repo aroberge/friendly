@@ -9,7 +9,7 @@ if "InteractiveShell" in exc_hook_name:
 
     colorama.deinit()
     colorama.init(convert=False, strip=False)
-    set_formatter("rich", style="light", color_system="truecolor", force_jupyter=False)
+    set_formatter("light", color_system="truecolor", force_jupyter=False)
 
 
 else:

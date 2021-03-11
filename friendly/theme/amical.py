@@ -1,14 +1,8 @@
-"""Theme inspired from the Twilight coding scheme.
+"""Theme intended to be used on a white background.
 
-Currently, pygments does not include a "twilight" theme but this
-could happen at any time. To avoid a potential conflict, I chose a different name.
-
-Twilight can be translated in French as either crépuscule or as brunante,
-with the former being the most often-used term. However, I chose the second
-since the word 'brunante' starts with 'brun' which is French for 'brown',
-and many colours in Twilight are essentially different shades of brown, yellow,
-and orange. With these dominant colours, it might be more reminiscent of
-autumn ... but there is already a pygments theme named autumn.
+There exists already a Pygments theme called 'friendly';
+I thought that using the French translation 'amical' for the name of
+theme would be appropriate.
 """
 
 from pygments.style import Style
@@ -31,27 +25,29 @@ from pygments.token import (
 
 colours = {
     "yellow": "#F0E68C",
-    "orange": "#FF8243",
-    "red": "#D92121",
-    "white": "#F4F0EC",
-    "beige": "#DEB887",
-    "blue": "#87CEEB",
-    "gray": "#999999",
-    "green": "#87A96B",
+    "orange": "#EE4400",
+    "red": "#DD0000",
+    "white": "#FFFFFF",
+    "brown": "#884422",
+    "blue": "#266290",
+    "blue2": "#0011AA",
+    "purple": "#8b008b",
+    "gray": "#808080",
+    "green": "#005500",
     "mauve": "#9370DB",
     "black": "#101010",
 }
 
 my_style = {
-    "builtins": colours["yellow"],
-    "code": colours["beige"],
+    "builtins": colours["green"],
+    "code": colours["blue2"],
     "comments": colours["gray"],
-    "keywords": colours["yellow"],
-    "numbers": colours["white"],
-    "operators": colours["blue"],
-    "string": colours["green"],
-    "text": colours["white"],
-    "TrueFalseNone": colours["orange"],
+    "keywords": colours["green"],
+    "numbers": colours["black"],
+    "operators": colours["brown"],
+    "string": colours["purple"],
+    "text": colours["black"],
+    "TrueFalseNone": colours["blue"],
     "Exception": colours["red"],
     "diagnostics": "#FF00FF",  # Magenta; when trying to figure out a category
 }
@@ -85,12 +81,9 @@ rich_style = {
 my_style.update(**rich_style)
 
 
-class BrunanteStyle(Style):
-    """
-    This style was originally inspired by the Twilight scheme
-    """
+class AmicalStyle(Style):
 
-    background_color = colours["black"]
+    background_color = colours["white"]
     default_style = "#363636"
 
     styles = {

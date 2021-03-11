@@ -131,7 +131,7 @@ def run(
     include=None,
     args=None,
     console=True,
-    formatter="dark",
+    formatter="bw",
     redirect=None,
 ):
     """Given a filename (relative or absolute path) ending with the ".py"
@@ -226,7 +226,7 @@ def show_again():
 
 
 def start_console(
-    local_vars=None, formatter="dark", include="friendly_tb", lang="en", banner=None
+    local_vars=None, formatter="bw", include="friendly_tb", lang="en", banner=None
 ):
     """Starts a Friendly console."""
     from . import console

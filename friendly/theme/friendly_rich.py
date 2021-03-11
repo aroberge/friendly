@@ -11,21 +11,12 @@ from rich.panel import Panel  # noqa
 from rich.syntax import Syntax  # noqa
 from rich.text import Text  # noqa
 from rich.theme import Theme  # noqa
+from . import amical
 from . import brunante
 
 
 dark_background_theme = Theme(brunante.my_style)
-light_background_theme = Theme(
-    {
-        "markdown.h1": "bold #B22518",
-        "markdown.h2": "bold #B22518",  # Exception message; location header
-        "markdown.h3": "bold #0000cf",  # likely cause
-        "markdown.h4": "bold #CF6A4C",  # warning header
-        "markdown.link": "bold #3465a4 underline",
-        "markdown.item.bullet": "#3465a4",
-        "markdown.code": "#0000cf",
-    }
-)
+light_background_theme = Theme(amical.my_style)
 
 
 def init_console(
