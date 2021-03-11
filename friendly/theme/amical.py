@@ -25,7 +25,7 @@ from pygments.token import (
 
 colours = {
     "yellow": "#F0E68C",
-    "orange": "#EE4400",
+    "orange": "#CC4400",
     "red": "#DD0000",
     "white": "#FFFFFF",
     "brown": "#884422",

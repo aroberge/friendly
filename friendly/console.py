@@ -168,12 +168,12 @@ class FriendlyConsole(InteractiveConsole):
             return
 
         warning_builtins = _(
-            "Warning: you added a type hint to the python builtin {name}."
+            "Warning: you added a type hint to the python builtin `{name}`."
         )
         header_warning = _(
             "Warning: you used a type hint for a variable without assigning it a value.\n"
         )
-        suggest_str = _("Instead of {hint}, perhaps you meant {assignment}.")
+        suggest_str = _("Instead of `{hint}`, perhaps you meant `{assignment}`.")
 
         for name in hints:
             if name in dir(builtins):
@@ -245,7 +245,7 @@ class FriendlyConsole(InteractiveConsole):
                 continue
             if name in self.locals and self.saved_builtins[name] != self.locals[name]:
                 warning = _(
-                    "Warning: you have redefined the python builtin {name}."
+                    "Warning: you have redefined the python builtin `{name}`."
                 ).format(name=name)
                 if self.rich_console:
                     warning = theme.friendly_rich.Markdown("#### " + warning)
