@@ -52,6 +52,10 @@ class FriendlyConsole(InteractiveConsole):
         friendly.set_formatter(formatter, background=background)
         if formatter in ["dark", "light"]:
             self.rich_console = session.console
+            if formatter == "dark":
+                self.prompt_color = "[bold bright_green]"
+            else:
+                self.prompt_color = "[bold dark_violet]"
 
         super().__init__(locals=locals)
         self.check_for_builtins_changes()
@@ -278,7 +282,7 @@ class FriendlyConsole(InteractiveConsole):
         implementation.
         """
         if self.rich_console:
-            return self.rich_console.input("[bold #009999]" + prompt)
+            return self.rich_console.input(self.prompt_color + prompt)
         return input(prompt)
 
 
