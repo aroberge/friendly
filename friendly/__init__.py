@@ -298,7 +298,8 @@ def set_include(include):
     session.set_include(include)
 
 
-set_include.__doc__ = set_include.__doc__.format(choices=_include_choices())
+if set_include.__doc__ is not None:  # protect against -OO optimization
+    set_include.__doc__ = set_include.__doc__.format(choices=_include_choices())
 
 
 def get_include():
