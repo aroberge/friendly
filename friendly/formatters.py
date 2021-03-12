@@ -76,7 +76,6 @@ items_in_order = [
     "generic",
     "parsing_error",
     "parsing_error_source",
-    "cause_header",
     "cause",
     "last_call_header",
     "last_call_source",
@@ -97,7 +96,6 @@ repl_indentation = {
     "generic": "single",
     "parsing_error": "single",
     "parsing_error_source": "none",
-    "cause_header": "single",
     "cause": "single",
     "last_call_header": "single",
     "last_call_source": "none",
@@ -302,7 +300,6 @@ def _markdown(info, include, rich=False, documentation=False):
         "generic": ("", ""),
         "parsing_error": ("", ""),
         "parsing_error_source": ("```python\n", "\n```"),
-        "cause_header": ("### ", ""),
         "cause": ("", ""),
         "last_call_header": ("## ", ""),
         "last_call_source": ("```python\n", "\n```"),
@@ -330,11 +327,7 @@ def _markdown(info, include, rich=False, documentation=False):
             # Rich theme in file friendly_rich.
             content = info[item]
             if item.endswith("header"):
-                if not rich:
-                    content = content.rstrip(":")
-                else:
-                    if item != "cause_header":
-                        content = content.rstrip(":")
+                content = content.rstrip(":")
             if item == "message" and rich:
                 # Ensure that the exception name is highlighted.
                 content = content.split(":")

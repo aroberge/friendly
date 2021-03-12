@@ -66,7 +66,7 @@ rich_style = {
     "repr.tag_name": my_style["code"],  # for consistency with Python
     "markdown.h1": my_style["diagnostics"],
     # Exception message; location header H2
-    "markdown.h2": f"{colours['red']}",
+    "markdown.h2": my_style["Exception"],
     "markdown.h3": colours["mauve"],  # likely cause
     "markdown.h4": colours["orange"],  # warning header
     "markdown.link": f"underline {my_style['keywords']}",

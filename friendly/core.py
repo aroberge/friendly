@@ -398,10 +398,6 @@ class FriendlyTraceback:
             etype, value, self.tb_data.exception_frame, self.tb_data
         )  # [3]
         self.info.update(**cause)
-        if "cause" in self.info:
-            self.info["cause_header"] = _(
-                "Likely cause based on the information given by Python:"
-            )
 
     def set_cause_syntax(self):
         """For SyntaxError and subclasses. Sets the value of the following
@@ -435,20 +431,6 @@ class FriendlyTraceback:
 
         cause = analyze_syntax.set_cause_syntax(value, self.tb_data)
         self.info.update(**cause)
-
-        if "cause" in self.info:
-            if "invalid syntax" in self.message:
-                if self.tb_data.filename == "<string>":
-                    return
-                else:
-                    self.info["cause_header"] = _(
-                        "Python's error message (invalid syntax) "
-                        "cannot be used to identify the problem:"
-                    )
-            else:
-                self.info["cause_header"] = _(
-                    "Likely cause based on the information given by Python:"
-                )
 
     def assign_generic(self):
         """Assigns the generic information about a given error. This is
