@@ -28,7 +28,7 @@ colours = {
     "orange": "#CC4400",
     "red": "#DD0000",
     "white": "#FFFFFF",
-    "brown": "#884422",
+    "brown": "#783114",
     "blue": "#266290",
     "blue2": "#0011AA",
     "purple": "#8b008b",
