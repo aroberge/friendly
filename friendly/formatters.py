@@ -26,7 +26,7 @@ This module currently contains 6 formatters:
   including that found in IDLE.  The indentation of the traceback itself
   is chosen so as to reproduce that of a normal Python traceback.
 
-* ``pre()``: this produces output with leading spaces so that it can be
+* ``docs()``: this produces output with leading spaces so that it can be
   embedded as a code-block in a file (such as .rst). It can also be used
   to print the information in a traditional console, including that
   found in IDLE.

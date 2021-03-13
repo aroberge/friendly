@@ -1,5 +1,9 @@
 # friendly
-Aimed at Python beginners: replacing standard traceback by something easier to understand, translatable into various languages.
+
+Aimed at Python beginners: replacing standard traceback by something easier to understand,
+translatable into various languages.
+
+**friendly** used to be called **friendly-traceback**.
 
 ![Example](https://raw.githubusercontent.com/aroberge/friendly-traceback/master/why_1.png)
 
