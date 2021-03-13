@@ -1,6 +1,6 @@
 # Developer notes
 
-Friendly-traceback has no other dependencies than modules included in
+Friendly has no other dependencies than modules included in
 Python's standard library. Python versions supported include 3.6, 3.7 and 3.8.
 
 We use [black](https://github.com/python/black) for formatting and

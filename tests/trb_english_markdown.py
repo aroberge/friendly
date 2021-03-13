@@ -47,7 +47,7 @@ documentation using Sphinx.
 </p>
 </div>
 
-Friendly-traceback version: {friendly}
+Friendly version: {friendly}
 Python version: {python}
 
 """.format(

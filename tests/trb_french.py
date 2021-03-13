@@ -55,7 +55,7 @@ ici tous les exemples possibles tels qu'interprétés par friendly-traceback.
      faire des corrections ou des ajouts, avant de faire la mise
      à jour du reste de la documentation avec Sphinx.
 
-Friendly-traceback version: {friendly}
+Friendly version: {friendly}
 Python version: {python}
 
 """.format(

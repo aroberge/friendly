@@ -62,7 +62,7 @@ tels qu'interprétés par friendly-traceback.
      du répertoire de fichier. Si vous faites ceci, la documentation pour
      toutes les langues sera automatiquement mise à jour.
 
-Friendly-traceback version: {friendly}
+Friendly version: {friendly}
 Python version: {python}
 
 """.format(

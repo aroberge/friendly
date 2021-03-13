@@ -57,7 +57,7 @@ should be included here.
      This needs to be done explicitly, independently of updating the
      documentation using Sphinx.
 
-Friendly-traceback version: {friendly}
+Friendly version: {friendly}
 Python version: {python}
 
 """.format(
