@@ -145,7 +145,7 @@ def idle_formatter(info, include="friendly_tb"):
     return result
 
 
-def install_in_idle_shell():
+def install_in_idle_shell(lang="en"):
     """Installs Friendly-traceback in IDLE's shell so that it can retrieve
     code entered in IDLE's repl.
     Note that this requires Python version 3.10+ since IDLE did not support
@@ -175,7 +175,7 @@ def install_in_idle_shell():
 
     source_cache.idle_get_lines = get_lines
 
-    friendly.install(include="friendly_tb", redirect=idle_writer)
+    friendly.install(include="friendly_tb", redirect=idle_writer, lang=lang)
     # Current limitation
     idle_writer("                                WARNING\n", "ERROR")  # noqa
     idle_writer(
@@ -183,7 +183,7 @@ def install_in_idle_shell():
     )
 
 
-def install():
+def install(lang="en"):
     """Installs Friendly-traceback in the IDLE shell, with a custom formatter.
     For Python versions before 3.10, this is not directly supported, so a
     Friendly console is used instead of IDLE's shell.
@@ -193,21 +193,20 @@ def install():
     sys.stderr = sys.stdout.shell  # noqa
     friendly.set_formatter(idle_formatter)
     if sys.version_info >= (3, 10):
-        install_in_idle_shell()
+        install_in_idle_shell(lang=lang)
     else:
         idle_writer("Friendly-traceback cannot be installed in this version of IDLE.\n")
         idle_writer("Using Friendly's own console instead.\n")
-        start_console()
+        start_console(lang=lang)
 
 
-def start_console():
+def start_console(lang="en"):
     """Starts a Friendly console with a custom formatter for IDLE"""
     import friendly  # noqa
 
     sys.stderr = sys.stdout.shell  # noqa
-    friendly.set_formatter(idle_formatter)
     friendly.set_stream(idle_writer)
-    friendly.start_console()
+    friendly.start_console(formatter=idle_formatter, lang=lang)
 
 
 def run(filename, lang=None, include="friendly_tb", args=None, console=True):
@@ -270,7 +269,12 @@ def run(filename, lang=None, include="friendly_tb", args=None, console=True):
             )
 
     return friendly.run(
-        filename, lang=lang, include=include, args=args, console=console
+        filename,
+        lang=lang,
+        include=include,
+        args=args,
+        console=console,
+        formatter=idle_formatter,
     )
 
 
