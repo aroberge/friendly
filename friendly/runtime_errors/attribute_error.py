@@ -83,9 +83,7 @@ def attribute_error_in_module(module, attribute, frame):
             return {"cause": cause, "suggest": hint}
         else:
             names = list_to_string(similar_attributes)
-            hint = _("Did you mean one of the following: `{names}`?\n").format(
-                names=names
-            )
+            hint = _("Did you mean `{name}`?\n").format(name=similar_attributes[0])
             cause = _(
                 "Instead of writing `{module}.{typo}`, perhaps you meant to write one of \n"
                 "the following names which are attributes of module `{module}`:\n"
