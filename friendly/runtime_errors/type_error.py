@@ -10,6 +10,7 @@ from ..my_gettext import current_lang, no_information, internal_error
 from .. import info_variables
 from .. import debug_helper
 from .. import token_utils
+from .. import utils
 
 convert_type = info_variables.convert_type
 MESSAGES_PARSERS = []
@@ -460,7 +461,8 @@ def x_is_not_callable(message, frame, tb_data):
     try:
         # As a TypeError exception has been raised, Python has already evaluated
         # all the relevant code parts. Thus, using eval() should be completely safe..
-        can_eval = eval(fn_call, frame.f_globals, frame.f_locals)
+        can_eval = utils.eval_expr(fn_call, frame)
+        # can_eval = eval(fn_call, frame.f_globals, frame.f_locals)
     except Exception:
         return {"cause": cause}
 
@@ -650,7 +652,8 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
     try:
         # By this stage, Python should already have evaluated container_type.
         # Thus, using eval() should be completely safe.
-        container_type = eval(container_type, frame.f_globals, frame.f_locals)
+        container_type = utils.eval_expr(container_type, frame)
+        # container_type = eval(container_type, frame.f_globals, frame.f_locals)
     except Exception:
         if additional_cause:
             return {"cause": cause + additional_cause, "suggest": hint}
@@ -691,8 +694,10 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
     try:
         # As a TypeError exception has been raised, Python has already evaluated
         # all the relevant code parts. Thus, using eval() should be completely safe.
-        index = eval(index, frame.f_globals, frame.f_locals)
-        index_type = eval(index_type)
+        index = utils.eval_expr(index, frame)
+        # index = eval(index, frame.f_globals, frame.f_locals)
+        index_type = utils.eval_expr(index_type, frame)
+        # index_type = eval(index_type)
     except Exception:
         if additional_cause:
             return {"cause": cause + additional_cause, "suggest": hint}
@@ -713,7 +718,8 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
         try:
             # As a TypeError exception has been raised, Python has already evaluated
             # all the relevant code parts. Thus, using eval() should be completely safe.
-            result = [] == eval(newline, frame.f_globals, frame.f_locals)
+            result = [] == utils.eval_expr(newline, frame)
+            # result = [] == eval(newline, frame.f_globals, frame.f_locals)
         except Exception:
             result = False
 

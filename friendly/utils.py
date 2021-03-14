@@ -5,6 +5,13 @@ A few useful objects which do not naturally fit anywhere else.
 import difflib
 
 
+def eval_expr(expr, frame):
+    """WIP: meant to be an eventual 'safe' replacement for eval()."""
+    result = eval(expr, frame.f_globals, frame.f_locals)
+    # print(f"\n expr={expr} ; result={result} ; {frame.f_code.co_name}")
+    return result
+
+
 def get_similar_words(word_with_typo, words):
     """Returns a list of similar words.
 
