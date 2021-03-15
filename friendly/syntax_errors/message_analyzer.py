@@ -777,7 +777,7 @@ def no_binding_for_nonlocal(message="", **_kwargs):
 
 
 @add_python_message
-def unexpected_character_after_continuation(message="", **_kwargs):
+def unexpected_character_after_continuation(message="", statement=None):
     _ = current_lang.translate
     if "unexpected character after line continuation character" not in message:
         return {}
@@ -785,9 +785,19 @@ def unexpected_character_after_continuation(message="", **_kwargs):
     cause = _(
         "You are using the continuation character `\\` outside of a string,\n"
         "and it is followed by some other character(s).\n"
-        "I am guessing that you forgot to enclose some content in a string.\n"
-        "\n"
     )
+    if statement.bad_token.is_number():  # TODO: test this
+        cause += _(
+            "I am guessing that you wanted to divide by a number \n"
+            "and wrote `\\` instead of `/`."
+        )
+        hint = _("Did you mean to divide by a number?\n")
+        return {"cause": cause, "suggest": hint}
+    else:
+        cause += _(
+            "I am guessing that you forgot to enclose some content in a string.\n"
+        )
+
     return {"cause": cause}
 
 
@@ -1053,7 +1063,7 @@ def proper_decimal_or_octal_number(prev_str, bad_str):
     if not (set(prev_str).issubset("_0") and prev_str.startswith("0")):  # noqa
         return {}
 
-    if prev_str == "0" and set(bad_str).issubset("01234567_"):
+    if prev_str == "0" and set(bad_str).issubset("01234567_"):  # noqa
         correct = "0o" + bad_str
         hint = _("Did you mean `{num}`?\n").format(num=correct)
         cause = _(
