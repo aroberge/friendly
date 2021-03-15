@@ -44,6 +44,8 @@ def convert_type(short_form):
         return _("a `set`")
     elif short_form == "str":
         return _("a string (`str`)")
+    elif short_form == "string":
+        return _("a string (`str`)")
     elif short_form == "tuple":
         return _("a `tuple`")
     elif short_form == "frozenset":
