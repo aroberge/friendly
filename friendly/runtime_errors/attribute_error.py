@@ -243,7 +243,7 @@ def perhaps_builtin(attribute, known_attributes):
     if attribute in ["min", "max", "sorted", "reversed", "sum"]:
         return attribute
     if (
-        attribute in ["len", "length", "lenght"]  # noqa
+        attribute in ["len", "length", "lenght", "size"]  # noqa
         and "__len__" in known_attributes
     ):
         return "len"
