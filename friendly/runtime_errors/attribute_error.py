@@ -15,7 +15,7 @@ from . import stdlib_modules
 def get_cause(value, frame, tb_data):
     try:
         return _get_cause(value, frame, tb_data)
-    except Exception:
+    except Exception:  # noqa
         debug_helper.log_error()
         return None, None
 
@@ -63,7 +63,7 @@ def attribute_error_in_module(module, attribute, frame):
     _ = current_lang.translate
     try:
         mod = sys.modules[module]
-    except Exception:
+    except Exception:  # noqa
         cause = _(
             "This should not happen:\n"
             "Python tells us that module `{module}` does not have an "
@@ -102,13 +102,12 @@ def attribute_error_in_module(module, attribute, frame):
             ).format(module=module, mod_path=mod_path)
             return {"cause": cause, "suggest": hint}
 
-    # TODO: test this
-    # the following is untested
-    # We look for another module currently known for which such an attribute exists.
     relevant_modules = []
     for mod_name in sys.modules:
-        if mod_name in frame.f_globals or mod_name in frame.f_locals:
-            relevant_modules.append((mod_name, mod))
+        if mod_name in mod_name in frame.f_locals:
+            relevant_modules.append((mod_name, frame.f_locals[mod_name]))
+        elif mod_name in frame.f_globals:
+            relevant_modules.append((mod_name, frame.f_globals[mod_name]))
 
     for mod_name, mod in relevant_modules:
         # TODO: consider the case where more than one module could be

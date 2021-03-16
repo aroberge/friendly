@@ -250,5 +250,23 @@ def test_Tuple_by_accident():
     return result, message
 
 
+def test_Attribute_from_other_module():
+    import math
+    import keyword
+
+    try:
+        keyword.pi
+    except Exception as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+
+    result = friendly.get_output()
+    assert "module 'keyword' has no attribute 'pi'" in result
+    if friendly.get_lang() == "en":
+        assert "Did you mean `math`?" in result
+
+    return result, message
+
+
 if __name__ == "__main__":
     print(test_Generic()[0])
