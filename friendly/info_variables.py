@@ -166,8 +166,6 @@ def get_all_objects(line, frame):
                 objects[scope].append((name, repr(obj), obj))
                 objects["name, obj"].append((name, obj))
 
-    # TODO: check to see if this is still needed
-    objects["nonlocals"] = get_nonlocal_objects(frame)
     return objects
 
 
@@ -204,25 +202,6 @@ def get_dotted_names(line):
         if name not in dotted_names and "." in name:
             dotted_names.append(name)
     return dotted_names
-
-
-def get_nonlocal_objects(frame):
-    """Identifies objects found in a nonlocal scope, and return
-    a list of tuples of the form (name, repr(obj), obj) for each
-    such object found.
-    """
-    globals_ = frame.f_globals
-    non_locals = []
-    while frame.f_back is not None:
-        frame = frame.f_back
-        # By creating a new list here, we prevent a failure when
-        # running with pytest.
-        for name in list(frame.f_locals):
-            if name in globals_ or name in non_locals:
-                continue
-            obj = frame.f_locals[name]
-            non_locals.append((name, repr(obj), obj))
-    return non_locals
 
 
 def get_object_from_name(name, frame):
