@@ -208,6 +208,14 @@ descriptions = {
         cause: "call functions with only positional arguments",
         title: "def: positional argument follows keyword argument",
     },
+    "def_star_arg_before_slash": {
+        cause: "`*arg` must appear after `/` ",
+        title: "def: ``*arg`` before /"
+    },
+    "def_star_used_only_once": {
+        cause: "can only use `*` once in a function definition",
+        title: "def: ``*`` used twice"
+    },
     "def_string_as_arg": {
         cause: "You used a string as an argument",
         title: "Single string used as arg in function def",
@@ -534,6 +542,7 @@ if sys.version_info < (3, 8):
     }
     del descriptions["would_be_type_declaration_1"]
     del descriptions["would_be_type_declaration_2"]
+    descriptions["def_star_arg_before_slash"]["cause"] = "This symbol can only be used with Python versions"
 
 if sys.version_info >= (3, 9):
     descriptions["missing_code_block"]["cause"] = "expected an indented block"

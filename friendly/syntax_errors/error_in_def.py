@@ -363,6 +363,7 @@ def positional_arguments_in_def(statement):
     _ = current_lang.translate
 
     # TODO: add tests
+    # Note that this actually raises a TypeError and not a SyntaxError when used incorrectly.
 
     if not (statement.bad_token == "/" and statement.prev_token.is_in("(,")):
         return {}
@@ -415,15 +416,17 @@ def positional_arguments_in_def(statement):
 @add_statement_analyzer
 def keyword_arguments_in_def(statement):
     _ = current_lang.translate
-    # TODO: add tests
-
     if not (statement.bad_token == "*" and statement.prev_token == ","):
         return {}
 
     for tok in statement.tokens[0 : statement.bad_token_index]:
         if tok == "*":
-            cause = _("You can only use `*` once in a function definition.\n")
-            return {"cause": cause, "suggest": cause}
+            hint = _("You can only use `*` once in a function definition.\n")
+            cause = hint + _(
+                "It must either be used by itself, `..., *, ...`,\n"
+                "or in the form `..., *args ...`, but not both.\n"
+            )
+            return {"cause": cause, "suggest": hint}
         elif tok == "**" or tok == "=":
             if statement.next_token.is_identifier():
                 cause = _(
