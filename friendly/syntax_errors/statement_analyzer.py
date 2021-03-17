@@ -746,7 +746,6 @@ def invalid_name(statement):
     hint = _(
         "Perhaps you forgot a multiplication operator, `{first} * {second}`.\n"
     ).format(first=first, second=second)
-    cause = cause
 
     return {"cause": cause + hint + "\n" + note, "suggest": hint}
 

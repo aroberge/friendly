@@ -335,9 +335,8 @@ def _markdown(info, include, rich=False, documentation=False):
                 content = ":".join(content)
 
             prefix, suffix = markdown_items[item]
-            if documentation:
-                if prefix.startswith("#"):
-                    prefix = "##" + prefix
+            if documentation and prefix.startswith("#"):
+                prefix = "##" + prefix
             result.append(prefix + content + suffix)
 
     if result == [""]:

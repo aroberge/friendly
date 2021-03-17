@@ -113,42 +113,45 @@ class Statement:
                     self.tokens = [token_utils.tokenize("Internal_error")[0]]
 
             self.statement = token_utils.untokenize(self.statement_tokens)
-            if self.filename.startswith("<friendly-console"):
-                if self.statement_brackets and not self.end_bracket:
-                    # We got an error flagged before we had the chance to close
-                    # brackets. Unclosed brackets are never a problem on their
-                    # own in a console session - so, we make sure to close
-                    # the brackets in order to be able to find the true cause
-                    # of the error
-                    # TODO: check this assumption; it appears to be incorrect
-                    add_token = ""
-                    brackets = self.statement_brackets.copy()
-                    while brackets:
-                        bracket = brackets.pop()
-                        if bracket == "(":
-                            add_token += ")"
-                        elif bracket == "[":
-                            add_token += "]"
-                        else:
-                            add_token += "}"
+            if (
+                self.filename.startswith("<friendly-console")
+                and self.statement_brackets
+                and not self.end_bracket
+            ):
+                # We got an error flagged before we had the chance to close
+                # brackets. Unclosed brackets are never a problem on their
+                # own in a console session - so, we make sure to close
+                # the brackets in order to be able to find the true cause
+                # of the error
+                # TODO: check this assumption; it appears to be incorrect
+                add_token = ""
+                brackets = self.statement_brackets.copy()
+                while brackets:
+                    bracket = brackets.pop()
+                    if bracket == "(":
+                        add_token += ")"
+                    elif bracket == "[":
+                        add_token += "]"
+                    else:
+                        add_token += "}"
 
-                    if self.tokens[0].string in [
-                        "class",
-                        "def",
-                        "if",
-                        "elif",
-                        "while",
-                        "for",
-                        "except",
-                        "with",
-                    ]:
-                        add_token += ":"
+                if self.tokens[0].string in [
+                    "class",
+                    "def",
+                    "if",
+                    "elif",
+                    "while",
+                    "for",
+                    "except",
+                    "with",
+                ]:
+                    add_token += ":"
 
-                    last_token = self.tokens[-1]
-                    last_token = last_token.copy()
-                    last_token.start_row += 1
-                    last_token.string = last_token.line = add_token
-                    self.tokens.append(last_token)
+                last_token = self.tokens[-1]
+                last_token = last_token.copy()
+                last_token.start_row += 1
+                last_token.string = last_token.line = add_token
+                self.tokens.append(last_token)
 
         elif "too many statically nested blocks" not in self.message:
             debug_helper.log("linenumber is None in source_info.Statement")
@@ -323,10 +326,12 @@ class Statement:
                     break
                 elif self.bad_token == ":":
                     break
-                elif token.is_in(["if", "else", "for"]):
-                    if token.start_row > previous_row_non_space:
-                        # the keyword above likely starts a new statement
-                        break
+                elif (
+                    token.is_in(["if", "else", "for"])
+                    and token.start_row > previous_row_non_space
+                ):
+                    # the keyword above likely starts a new statement
+                    break
             if token.string.strip():
                 previous_row_non_space = token.end_row
 

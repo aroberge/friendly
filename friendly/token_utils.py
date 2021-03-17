@@ -439,9 +439,9 @@ def untokenize(tokens):
         if (
             last_non_whitespace_token_type != py_tokenize.COMMENT
             and token.start_row > last_row
+            and previous_line.endswith(("\\\n", "\\\r\n", "\\\r"))
         ):
-            if previous_line.endswith(("\\\n", "\\\r\n", "\\\r")):
-                words.append(previous_line[len(previous_line.rstrip(" \t\n\r\\")) :])
+            words.append(previous_line[len(previous_line.rstrip(" \t\n\r\\")) :])
 
         # Preserve spacing.
         if token.start_row > last_row:
