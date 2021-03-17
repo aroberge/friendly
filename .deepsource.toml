@@ -8,7 +8,7 @@ exclude_patterns = [
     "tests/runtime/**",
     "tests/circular**",
     "tests/name_error.py",
-    "tests/unit/test_clean**
+    "tests/unit/test_clean**"
     ]
 
 [[analyzers]]
