@@ -9,7 +9,8 @@ exclude_patterns = [
     "tests/circular**",
     "tests/name_error.py",
     "tests/unit/test_clean**",
-    "tests/unbound**"
+    "tests/unbound**",
+    "tests/test_flush.py"
     ]
 
 [[analyzers]]
