@@ -5,7 +5,10 @@ test_patterns = [
 ]
 exclude_patterns = [
     "tests/syntax/**",
-    "tests/runtime/**"
+    "tests/runtime/**",
+    "tests/circular**",
+    "tests/name_error.py",
+    "tests/unit/test_clean**
     ]
 
 [[analyzers]]
