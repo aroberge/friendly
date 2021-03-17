@@ -14,7 +14,7 @@ info_310 = messages_3_10.messages
 output = open("compare_messages.html", "w", encoding="utf8")
 
 output.write("<div>\n")
-files = set([])
+files = set()
 
 
 def print_different(fn_name, in_36, in_37, in_38, in_39, in_310):

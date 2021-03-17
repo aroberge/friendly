@@ -8,7 +8,7 @@ it might be desirable to exclude additional files.
 """
 import os
 
-EXCLUDED_FILE_PATH = set([])
+EXCLUDED_FILE_PATH = set()
 
 
 def exclude_file_from_traceback(full_path):

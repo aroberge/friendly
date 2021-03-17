@@ -109,7 +109,7 @@ def get_all_objects(line, frame):
         ("globals", frame.f_globals),
     )
 
-    names = set([])
+    names = set()
     try:
         atok = ASTTokens(line, parse=True)
     except SyntaxError:  # this should not happen

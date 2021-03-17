@@ -46,7 +46,7 @@ def index_out_of_range(obj_type, frame, tb_data):
 
     try:
         node = tb_data.node
-    except Exception:
+    except Exception:  # noqa
         debug_helper.log("node does not exist in index_out_of_range()")
         return {}
 
@@ -58,10 +58,10 @@ def index_out_of_range(obj_type, frame, tb_data):
     evaluator = pure_eval.Evaluator.from_frame(frame)
     try:
         index = evaluator[node.slice.value]
-    except Exception:
+    except Exception:  # noqa
         try:
             index = node.slice.value
-        except Exception:
+        except Exception:  # noqa
             index = "unknown"
 
     if index != "unknown":
