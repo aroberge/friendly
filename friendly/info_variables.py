@@ -79,7 +79,9 @@ def literal_expressions_grouped(self, root):
         pair
         for pair in self.find_expressions(root)
         if (
-            is_literal(*pair) or is_literal(*pair) in [list(), tuple(), dict(), set([])]
+            # TODO: check this
+            is_literal(*pair)
+            or is_literal(*pair) in [list(), tuple(), dict(), set([])]
         )
     )
 

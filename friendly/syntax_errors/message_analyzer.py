@@ -426,14 +426,14 @@ def delete_function_call(message="", statement=None):
 @add_python_message
 def delete_x(message="", statement=None):
     _ = current_lang.translate
-    if not (
-        message == "can't delete keyword"  # Python 3.6, 3.7
-        or message == "can't delete literal"
-        or message == "cannot delete literal"  # Python 3.8
-        or message == "cannot delete None"
-        or message == "cannot delete True"
-        or message == "cannot delete False"
-    ):
+    if message not in [
+        "can't delete keyword",  # Python 3.6, 3.7
+        "can't delete literal",
+        "cannot delete literal",
+        "cannot delete None",
+        "cannot delete True",
+        "cannot delete False",
+    ]:
         return {}
 
     if statement.bad_token.is_in(["None", "True", "False"]):
@@ -898,7 +898,7 @@ def python2_print(message="", **_kwargs):
 @add_python_message
 def cannot_use_starred_expression(message="", **_kwargs):
     _ = current_lang.translate
-    if not message == "can't use starred expression here":
+    if message != "can't use starred expression here":
         return {}
 
     cause = _(
@@ -913,7 +913,7 @@ def cannot_use_starred_expression(message="", **_kwargs):
 @add_python_message
 def return_outside_function(message="", **_kwargs):
     _ = current_lang.translate
-    if not message == "'return' outside function":
+    if message != "'return' outside function":
         return {}
 
     cause = _("You can only use a `return` statement inside a function or method.\n")
@@ -923,7 +923,7 @@ def return_outside_function(message="", **_kwargs):
 @add_python_message
 def too_many_nested_blocks(message="", **_kwargs):
     _ = current_lang.translate
-    if not message == "too many statically nested blocks":
+    if message != "too many statically nested blocks":
         return {}
 
     hint = _("Seriously?\n")
@@ -938,7 +938,7 @@ def too_many_nested_blocks(message="", **_kwargs):
 @add_python_message
 def named_arguments_must_follow_bare_star(message="", **_kwargs):
     _ = current_lang.translate
-    if not message == "named arguments must follow bare *":
+    if message != "named arguments must follow bare *":
         return {}
 
     hint = _("Did you forget something after `*`?\n")
@@ -953,7 +953,7 @@ def named_arguments_must_follow_bare_star(message="", **_kwargs):
 @add_python_message
 def you_found_it(message="", **_kwargs):
     _ = current_lang.translate
-    if not message == "You found it!":
+    if message != "You found it!":
         return {}
 
     cause = _(
@@ -1088,7 +1088,7 @@ def proper_decimal_or_octal_number(prev_str, bad_str):
 def invalid_token(message="", statement=None):
     # Seen this for Python 3.6, 3.7 for would-be decimal number starting with zero.
     _ = current_lang.translate
-    if not (message == "invalid token"):
+    if message != "invalid token":
         return {}
 
     prev_str = statement.prev_token.string
@@ -1116,7 +1116,7 @@ def leading_zeros_in_decimal_integers(message="", statement=None):
 def forgot_paren_around_comprehension(message="", **_kwargs):
     # Python 3.10+
     _ = current_lang.translate
-    if not message == "did you forget parentheses around the comprehension target?":
+    if message != "did you forget parentheses around the comprehension target?":
         return {}
 
     # message same as from statement_analyzer.comprehension_condition_or_tuple

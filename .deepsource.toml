@@ -2,14 +2,7 @@ version = 1
 
 test_patterns = [
     "test_patterns = [",
-    "    \"**/tests/unit/**\"",
-    "]"
-]
-
-exclude_patterns = [
-    "exclude_patterns = [",
-    "    \"**/tests/runtime/**\",",
-    "    \"**/tests/syntax/**\",",
+    "    \"**/unit/**\"",
     "]"
 ]
 
