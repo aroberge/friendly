@@ -33,7 +33,7 @@ import trb_syntax_common
 
 target = os.path.normpath(
     os.path.join(
-        docs_root_dir, f"docs/source/tracebacks_syntax_markdown.md"
+        docs_root_dir, "docs/source/tracebacks_syntax_markdown.md"
     )
 )
 

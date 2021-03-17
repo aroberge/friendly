@@ -32,7 +32,7 @@ py_version = f"{sys.version_info.major}.{sys.version_info.minor}"
 import trb_common
 
 target = os.path.normpath(
-    os.path.join(docs_root_dir, f"docs/source/tracebacks_markdown.md")
+    os.path.join(docs_root_dir, "docs/source/tracebacks_markdown.md")
 )
 
 intro_text = """

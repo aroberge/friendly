@@ -21,7 +21,7 @@ assert os.path.isdir(docs_root_dir), "Separate docs repo need to exist"
 
 target = os.path.normpath(
     os.path.join(
-        docs_root_dir, f"docs/source/known.rst"
+        docs_root_dir, "docs/source/known.rst"
     )
 )
 
