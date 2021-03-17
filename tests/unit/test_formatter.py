@@ -18,6 +18,7 @@ def run(lang):
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         universal_newlines=True,
+        check=False,
     )
     return proc.stderr
 
