@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-03-15 06:44-0300\n"
-"PO-Revision-Date: 2021-03-15 06:47-0300\n"
+"POT-Creation-Date: 2021-03-17 08:10-0300\n"
+"PO-Revision-Date: 2021-03-17 08:12-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -440,19 +440,19 @@ msgstr "une variable ayant la valeur `None` ('NoneType')"
 msgid "a `set`"
 msgstr "un ensemble (`set`)"
 
-#: info_variables.py:46
+#: info_variables.py:46 info_variables.py:48
 msgid "a string (`str`)"
 msgstr "une chaîne de caractères (`str`)"
 
-#: info_variables.py:48
+#: info_variables.py:50
 msgid "a `tuple`"
 msgstr "un `tuple`"
 
-#: info_variables.py:50
+#: info_variables.py:52
 msgid "a `frozenset`"
 msgstr "un ensemble de type `frozenset`"
 
-#: info_variables.py:454
+#: info_variables.py:435
 msgid ""
 "A type hint found for `{name}` in the {scope} scope.\n"
 "Perhaps you had used a colon instead of an equal sign and wrote\n"
@@ -530,7 +530,7 @@ msgstr ""
 "Toutefois, il ne semble pas que le module `{module}` ait été importé.\n"
 
 #: runtime_errors\attribute_error.py:78 runtime_errors\attribute_error.py:86
-#: runtime_errors\attribute_error.py:117 runtime_errors\attribute_error.py:226
+#: runtime_errors\attribute_error.py:116 runtime_errors\attribute_error.py:225
 #: runtime_errors\import_error.py:103 runtime_errors\key_error.py:56
 #: runtime_errors\key_error.py:62 runtime_errors\module_not_found_error.py:47
 #: runtime_errors\name_error.py:73 runtime_errors\unbound_local_error.py:38
@@ -572,7 +572,7 @@ msgstr ""
 "Python.\n"
 "Peut-être avez-vous besoin de renommer votre module.\n"
 
-#: runtime_errors\attribute_error.py:118
+#: runtime_errors\attribute_error.py:117
 msgid ""
 "Perhaps you meant to use the attribute `{attribute}` of \n"
 "module `{mod_name}` instead of module `{module}`.\n"
@@ -580,7 +580,7 @@ msgstr ""
 "Peut-être vouliez-vous utiliser l’attribut `{attribute}` du \n"
 "module `{mod_name}` au lieu du module `{module}`.\n"
 
-#: runtime_errors\attribute_error.py:124
+#: runtime_errors\attribute_error.py:123
 msgid ""
 "Python tells us that no object with name `{attribute}` is\n"
 "found in module `{module}`.\n"
@@ -588,7 +588,7 @@ msgstr ""
 "Python nous dit qu’aucun objet avec le nom `{attribute}` n’est\n"
 "dans le module `{module}`.\n"
 
-#: runtime_errors\attribute_error.py:142
+#: runtime_errors\attribute_error.py:141
 msgid ""
 "`{obj_name}` is a function. Perhaps you meant to write\n"
 "`{obj_name}({attribute})`\n"
@@ -596,11 +596,11 @@ msgstr ""
 "`{obj_name}` est une fonction. Peut-être que vous vouliez écrire\n"
 "`{obj_name}({attribute})`\n"
 
-#: runtime_errors\attribute_error.py:146
+#: runtime_errors\attribute_error.py:145
 msgid "Did you mean `{obj_name}({attribute})`?\n"
 msgstr "Vouliez-vous dire `{obj_name}({attribute})` ?\n"
 
-#: runtime_errors\attribute_error.py:151
+#: runtime_errors\attribute_error.py:150
 msgid ""
 "`{obj_name}` is a Python built-in function or method\n"
 "which does not have an attribute named `{attribute}.`\n"
@@ -608,11 +608,11 @@ msgstr ""
 "`{obj_name}` est une fonction ou une méthode Python de type 'builtin'\n"
 "qui n’a pas d’attribut nommé `{attribute}`.\n"
 
-#: runtime_errors\attribute_error.py:201
+#: runtime_errors\attribute_error.py:200
 msgid "The object `{obj}` has no attribute named `{attr}`.\n"
 msgstr "L’objet `{obj}` n’a pas d’attribut nommé `{attr}`.\n"
 
-#: runtime_errors\attribute_error.py:205
+#: runtime_errors\attribute_error.py:204
 msgid ""
 "Note that object `{obj}` uses `__slots__` which prevents\n"
 "the creation of new attributes.\n"
@@ -620,7 +620,7 @@ msgstr ""
 "Notez que l’objet `{obj}` utilise `__slots__` qui empêche\n"
 "la création de nouveaux attributs.\n"
 
-#: runtime_errors\attribute_error.py:213
+#: runtime_errors\attribute_error.py:212
 msgid ""
 "The following are some of its known attributes:\n"
 "`{names}`."
@@ -628,18 +628,18 @@ msgstr ""
 "Voici quelques-uns de ses attributs connus :\n"
 "`{names}`."
 
-#: runtime_errors\attribute_error.py:227
+#: runtime_errors\attribute_error.py:226
 msgid ""
 "Perhaps you meant to write `{obj}.{correct}` instead of `{obj}.{typo}`\n"
 msgstr ""
 "Peut-être que vous vouliez plutôt écrire : `{obj}.{correct}` au lieu de "
 "`{obj}.{typo}`.\n"
 
-#: runtime_errors\attribute_error.py:233 runtime_errors\import_error.py:110
+#: runtime_errors\attribute_error.py:232 runtime_errors\import_error.py:110
 msgid "Did you mean one of the following: `{names}`?\n"
 msgstr "Vouliez-vous dire l’un des éléments suivants: `{names}` ?\n"
 
-#: runtime_errors\attribute_error.py:234
+#: runtime_errors\attribute_error.py:233
 msgid ""
 "Instead of writing `{obj}.{typo}`, perhaps you meant to write one of \n"
 "the following names which are attributes of object `{obj}`:\n"
@@ -649,11 +649,11 @@ msgstr ""
 "l'un des attributs suivants de l'objet `{obj}` :\n"
 "{names}\n"
 
-#: runtime_errors\attribute_error.py:259
+#: runtime_errors\attribute_error.py:258
 msgid "Did you write a comma by mistake?\n"
 msgstr "Avez-vous écrit une virgule par erreur ?\n"
 
-#: runtime_errors\attribute_error.py:260
+#: runtime_errors\attribute_error.py:259
 msgid ""
 "`{obj_name}` is a tuple that contains a single item\n"
 "which does have `'{attribute}'` as an attribute.\n"
@@ -665,11 +665,11 @@ msgstr ""
 "Peut-être avez-vous ajouté une virgule par erreur à la fin de la ligne\n"
 "lorsque vous avez défini `{obj_name}`.\n"
 
-#: runtime_errors\attribute_error.py:273
+#: runtime_errors\attribute_error.py:272
 msgid "Did you mean `'...'.join({obj_name})`?\n"
 msgstr "Vouliez-vous utiliser `'...'.join({obj_name})` ?\n"
 
-#: runtime_errors\attribute_error.py:274
+#: runtime_errors\attribute_error.py:273
 msgid ""
 "The object `{obj_name}` has no attribute named `join`.\n"
 "Perhaps you wanted something like `'...'.join({obj_name})`.\n"
@@ -678,11 +678,11 @@ msgstr ""
 "Vous vouliez peut-être plutôt écrire quelque chose comme `'...'."
 "join({obj_name})`.\n"
 
-#: runtime_errors\attribute_error.py:283
+#: runtime_errors\attribute_error.py:282
 msgid "Did you mean `{known_builtin}({obj_name})`?\n"
 msgstr "Vouliez-vous utiliser `{known_builtin}({obj_name})` ?\n"
 
-#: runtime_errors\attribute_error.py:286
+#: runtime_errors\attribute_error.py:285
 msgid ""
 "The object `{obj_name}` has no attribute named `{attribute}`.\n"
 "Perhaps you can use the Python builtin function `{known_builtin}` instead:\n"
@@ -693,20 +693,20 @@ msgstr ""
 "à la place:\n"
 "`{known_builtin}({obj_name})`."
 
-#: runtime_errors\attribute_error.py:319
+#: runtime_errors\attribute_error.py:318
 msgid "Did you mean `{attr}`?\n"
 msgstr "Vouliez-vous dire `{attr}` ?\n"
 
-#: runtime_errors\attribute_error.py:321
+#: runtime_errors\attribute_error.py:320
 msgid "The object `{name}` has no attribute named `{attribute}`.\n"
 msgstr "L’objet `{name}` n’a pas d’attribut nommé `{attribute}`.\n"
 
-#: runtime_errors\attribute_error.py:326
+#: runtime_errors\attribute_error.py:325
 msgid "However, `{attr}` is an attribute of `{name}` with a similar meaning.\n"
 msgstr ""
 "Cependant, `{attr}` est un attribut de `{name}` avec une sens similaire.\n"
 
-#: runtime_errors\attribute_error.py:330
+#: runtime_errors\attribute_error.py:329
 msgid ""
 "However, `{name}` has the following attributes with similar meanings:\n"
 "`{attributes}`.\n"
@@ -714,11 +714,11 @@ msgstr ""
 "Toutefois, `{name}` a les attributs suivants avec des sens similaires:\n"
 "'{attributes}'.\n"
 
-#: runtime_errors\attribute_error.py:341
+#: runtime_errors\attribute_error.py:340
 msgid "Did you mean to separate object names by a comma?\n"
 msgstr "Vouliez-vous séparer les noms d’objets par une virgule ?\n"
 
-#: runtime_errors\attribute_error.py:343
+#: runtime_errors\attribute_error.py:342
 msgid ""
 "`{second}` is not an attribute of `{first}`.\n"
 "However, both `{first}` and `{second}` are known objects.\n"
@@ -1874,7 +1874,7 @@ msgid "You cannot use dots in function names.\n"
 msgstr ""
 "Vous avez tenté d'utiliser un objet avec un attribut comme nom de fonction.\n"
 
-#: syntax_errors\error_in_def.py:370
+#: syntax_errors\error_in_def.py:371
 msgid ""
 "`/` indicates that the previous arguments in a function definition\n"
 "are positional arguments.\n"
@@ -1882,14 +1882,14 @@ msgstr ""
 "`/` indique que les arguments précédents dans une définition de fonction\n"
 "sont des arguments positionnels.\n"
 
-#: syntax_errors\error_in_def.py:376
+#: syntax_errors\error_in_def.py:377
 msgid ""
 "Function definitions cannot include the symbol `/` in this Python version.\n"
 msgstr ""
 "Les définitions de fonction ne peuvent pas inclure le symbole `/` dans cette "
 "version de Python.\n"
 
-#: syntax_errors\error_in_def.py:379
+#: syntax_errors\error_in_def.py:380
 msgid ""
 "This symbol can only be used with Python versions 3.8.0 or newer.\n"
 "You are using Python version {version}.\n"
@@ -1898,7 +1898,7 @@ msgstr ""
 "récentes.\n"
 "Vous utilisez la version Python {version}.\n"
 
-#: syntax_errors\error_in_def.py:388
+#: syntax_errors\error_in_def.py:389
 msgid ""
 "You have some keyword arguments that appear before\n"
 "the symbol `/`.\n"
@@ -1906,11 +1906,11 @@ msgstr ""
 "Vous avez quelques arguments nommés qui apparaissent avant\n"
 "le symbole `/`.\n"
 
-#: syntax_errors\error_in_def.py:392
+#: syntax_errors\error_in_def.py:393
 msgid "Keyword arguments must appear after the `/` symbol.\n"
 msgstr "Les arguments nommés doivent apparaître après le symbole `/`.\n"
 
-#: syntax_errors\error_in_def.py:396
+#: syntax_errors\error_in_def.py:397
 msgid ""
 "However, `*` indicates that the arguments\n"
 "that follow must be keyword arguments.\n"
@@ -1920,39 +1920,47 @@ msgstr ""
 "qui suivent doivent être des arguments nommés.\n"
 "Lorsqu’ils sont utilisés ensemble, `/` doit apparaître avant `*`.\n"
 
-#: syntax_errors\error_in_def.py:401
+#: syntax_errors\error_in_def.py:402
 msgid "`*` must appear after `/` in a function definition.\n"
 msgstr "`*` doit apparaître après `/` dans une définition de fonction.\n"
 
-#: syntax_errors\error_in_def.py:403
+#: syntax_errors\error_in_def.py:404
 msgid "`*{name}` must appear after `/` in a function definition.\n"
 msgstr "`*{name}` doit apparaître après `/` dans une définition de fonction.\n"
 
-#: syntax_errors\error_in_def.py:409
+#: syntax_errors\error_in_def.py:410
 msgid "You can only use `/` once in a function definition.\n"
 msgstr ""
 "Vous ne pouvez utiliser `/` qu’une seule fois dans une définition de "
 "fonction.\n"
 
-#: syntax_errors\error_in_def.py:425
+#: syntax_errors\error_in_def.py:424
 msgid "You can only use `*` once in a function definition.\n"
 msgstr ""
 "Vous ne pouvez utiliser `*` qu’une seule fois dans une définition de "
 "fonction.\n"
 
-#: syntax_errors\error_in_def.py:429
+#: syntax_errors\error_in_def.py:425
+msgid ""
+"It must either be used by itself, `..., *, ...`,\n"
+"or in the form `..., *args ...`, but not both.\n"
+msgstr ""
+"Ce symbole doit soit être utilisé par lui-même, `..., *, ...`,\n"
+"ou soit sous la forme `..., *args ...`.\n"
+
+#: syntax_errors\error_in_def.py:432
 msgid "`*{name}` must appear before any keyword argument.\n"
 msgstr "`*{name}` doit apparaître avant tout argument nommé.\n"
 
-#: syntax_errors\error_in_def.py:433
+#: syntax_errors\error_in_def.py:436
 msgid "Keyword arguments must appear after the `*` operator.\n"
 msgstr "Les arguments nommés doivent apparaître après le symbole `*`.\n"
 
-#: syntax_errors\error_in_def.py:445
+#: syntax_errors\error_in_def.py:448
 msgid "You cannot use numbers as function arguments.\n"
 msgstr "Vous ne pouvez pas utiliser un nombre comme argument de fonction.\n"
 
-#: syntax_errors\error_in_def.py:446
+#: syntax_errors\error_in_def.py:449
 msgid ""
 "You used a number as an argument when defining a function.\n"
 "You can only use identifiers (variable names) as function arguments.\n"
@@ -1962,11 +1970,11 @@ msgstr ""
 "Vous ne pouvez utiliser que des identificateurs (noms de variables) comme "
 "arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:460
+#: syntax_errors\error_in_def.py:463
 msgid "You cannot use strings as function arguments.\n"
 msgstr "Vous ne pouvez pas utiliser les chaînes comme arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:461
+#: syntax_errors\error_in_def.py:464
 msgid ""
 "You used a string as an argument when defining a function.\n"
 "You can only use identifiers (variable names) as function arguments.\n"
@@ -1976,12 +1984,12 @@ msgstr ""
 "Vous ne pouvez utiliser que des identificateurs (noms de variables) comme "
 "arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:475
+#: syntax_errors\error_in_def.py:478
 msgid "You cannot have explicit tuples as function arguments.\n"
 msgstr ""
 "Vous ne pouvez pas avoir des tuples explicites comme arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:477
+#: syntax_errors\error_in_def.py:480
 msgid ""
 "You can only use identifiers (variable names) as function arguments.\n"
 "Assign any tuple to a parameter and unpack it\n"
@@ -1992,33 +2000,33 @@ msgstr ""
 "Assignez n’importe quel tuple à un paramètre et dépaquetez-le\n"
 "dans le corps de la fonction.\n"
 
-#: syntax_errors\error_in_def.py:493
+#: syntax_errors\error_in_def.py:496
 msgid "You cannot have explicit lists as function arguments.\n"
 msgstr ""
 "Vous ne pouvez pas avoir de listes explicites comme arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:494 syntax_errors\error_in_def.py:509
-#: syntax_errors\error_in_def.py:538
+#: syntax_errors\error_in_def.py:497 syntax_errors\error_in_def.py:512
+#: syntax_errors\error_in_def.py:541
 msgid "You can only use identifiers (variable names) as function arguments.\n"
 msgstr ""
 "Vous ne pouvez utiliser que des identifiants (noms de variables) comme "
 "arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:508
+#: syntax_errors\error_in_def.py:511
 msgid "You cannot have any explicit dict or set as function arguments.\n"
 msgstr ""
 "Vous ne pouvez pas avoir des `dict` ou des `set` explicite comme arguments "
 "de fonction.\n"
 
-#: syntax_errors\error_in_def.py:524
+#: syntax_errors\error_in_def.py:527
 msgid "You cannot have operators as function arguments.\n"
 msgstr "Vous ne pouvez pas avoir d’opérateurs comme arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:530 syntax_errors\statement_analyzer.py:663
+#: syntax_errors\error_in_def.py:533 syntax_errors\statement_analyzer.py:663
 msgid "Did you mean to write a comma?\n"
 msgstr "Avez-vous oublié une virgule ?\n"
 
-#: syntax_errors\error_in_def.py:531
+#: syntax_errors\error_in_def.py:534
 msgid ""
 "I suspect you made a typo and wrote `{op}` instead of a comma.\n"
 "The following statement contains no syntax error:\n"
@@ -2030,16 +2038,16 @@ msgstr ""
 "\n"
 "    {new_statement}"
 
-#: syntax_errors\error_in_def.py:537
+#: syntax_errors\error_in_def.py:540
 msgid "You cannot use operators with function arguments.\n"
 msgstr ""
 "Vous ne pouvez pas utiliser des opérateurs avec des arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:557
+#: syntax_errors\error_in_def.py:560
 msgid "Positional arguments must come before keyword arguments.\n"
 msgstr "Les arguments positionnels doivent être avant les arguments nommés.\n"
 
-#: syntax_errors\error_in_def.py:558
+#: syntax_errors\error_in_def.py:561
 msgid ""
 "`{arg}` is a positional argument that appears after one or more\n"
 "keyword arguments in your function definition.\n"
