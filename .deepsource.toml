@@ -8,8 +8,8 @@ test_patterns = [
 
 exclude_patterns = [
     "exclude_patterns = [",
-    "    \"**/runtime_errors/**\",",
-    "    \"**/syntax_errors/**\",",
+    "    \"**/tests/runtime/**\",",
+    "    \"**/tests/syntax/**\",",
     "]"
 ]
 
