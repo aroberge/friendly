@@ -111,7 +111,7 @@ def _convert_str_to_number(obj_type1, obj_type2, frame, tb_data):
         if isinstance(obj, str):
             try:
                 convert(obj)
-            except Exception:
+            except Exception:  # noqa
                 continue
             break
     else:
@@ -191,7 +191,7 @@ def parse_unsupported_operand_type(message, frame, tb_data):
         )
         if "^" in operator:
             can_exponentiate = True
-            for name, obj in all_objects:
+            for _name, obj in all_objects:
                 if not hasattr(obj, "__pow__"):
                     can_exponentiate = False
                     break
@@ -213,7 +213,7 @@ def parse_unsupported_operand_type(message, frame, tb_data):
             first=convert_type(obj_type1),
             second=convert_type(obj_type2),
         )
-    elif operator == "** or pow()" or operator == "**=":
+    elif operator in ("** or pow()", "**="):
         cause = _(
             "You tried to exponentiate (raise to a power)\n"
             "using two incompatible types of objects:\n"
@@ -327,7 +327,7 @@ def does_not_support_item_assignment(message, *_args):
         "You tried change part of such an immutable object: {obj},\n"
         "most likely by using an indexing operation.\n"
     ).format(obj=convert_type(name))
-    if name == "tuple" or name == "set":
+    if name in ("tuple", "set"):
         hint = _("Did you mean to use a list?\n")
         cause += _("Perhaps you meant to use a list instead.\n")
     cause = {"cause": cause}
@@ -438,7 +438,7 @@ def x_is_not_callable(message, frame, tb_data):
                 fn_call = tb_data.bad_line.replace(obj_name, "", 1).strip()
                 if fn_call.startswith("(") and fn_call.endswith(")"):
                     break
-        except Exception:
+        except Exception:  # noqa
             continue
     else:
         return {"cause": cause}
@@ -463,7 +463,7 @@ def x_is_not_callable(message, frame, tb_data):
         # all the relevant code parts. Thus, using eval() should be completely safe..
         can_eval = utils.eval_expr(fn_call, frame)
         # can_eval = eval(fn_call, frame.f_globals, frame.f_locals)
-    except Exception:
+    except Exception:  # noqa
         return {"cause": cause}
 
     if isinstance(can_eval, tuple):
@@ -568,7 +568,7 @@ def find_possible_integers(object_of_type, frame, line):
             try:
                 int(obj)
                 names.append(name)
-            except Exception:
+            except Exception:  # noqa
                 pass
 
     return names
@@ -654,7 +654,7 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
         # Thus, using eval() should be completely safe.
         container_type = utils.eval_expr(container_type, frame)
         # container_type = eval(container_type, frame.f_globals, frame.f_locals)
-    except Exception:
+    except Exception:  # noqa
         if additional_cause:
             return {"cause": cause + additional_cause, "suggest": hint}
         return {"cause": cause}
@@ -695,10 +695,8 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
         # As a TypeError exception has been raised, Python has already evaluated
         # all the relevant code parts. Thus, using eval() should be completely safe.
         index = utils.eval_expr(index, frame)
-        # index = eval(index, frame.f_globals, frame.f_locals)
         index_type = utils.eval_expr(index_type, frame)
-        # index_type = eval(index_type)
-    except Exception:
+    except Exception:  # noqa
         if additional_cause:
             return {"cause": cause + additional_cause, "suggest": hint}
         return {"cause": cause}
@@ -720,7 +718,7 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
             # all the relevant code parts. Thus, using eval() should be completely safe.
             result = [] == utils.eval_expr(newline, frame)
             # result = [] == eval(newline, frame.f_globals, frame.f_locals)
-        except Exception:
+        except Exception:  # noqa
             result = False
 
         if not result:

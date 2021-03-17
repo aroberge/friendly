@@ -53,7 +53,7 @@ def analyze_def_statement(statement):
         if statement is None:
             return {}
 
-    if statement.tokens[1] == "=" or statement.tokens[1] == ":=":
+    if str(statement.tokens[1]) in ("=", ":="):
         # Let the generic method handle the wrong assignment case
         return {}
 
@@ -385,7 +385,7 @@ def positional_arguments_in_def(statement):
 
     prev_tok = ""
     for tok in statement.tokens[0 : statement.bad_token_index]:
-        if tok == "=" or tok == "**":
+        if str(tok) in ("=", "**"):
             cause = meaning + _(
                 "You have some keyword arguments that appear before\n"
                 "the symbol `/`.\n"
@@ -427,7 +427,7 @@ def keyword_arguments_in_def(statement):
                 "or in the form `..., *args ...`, but not both.\n"
             )
             return {"cause": cause, "suggest": hint}
-        elif tok == "**" or tok == "=":
+        elif str(tok) in ("**", "="):
             if statement.next_token.is_identifier():
                 cause = _(
                     "`*{name}` must appear before any keyword argument.\n"
@@ -556,7 +556,7 @@ def arg_after_kwarg(statement):
         return {}
 
     for tok in statement.tokens[0 : statement.bad_token_index]:
-        if tok == "**" or tok == "=":
+        if str(tok) in ("**", "="):
             hint = _("Positional arguments must come before keyword arguments.\n")
             cause = hint + _(
                 "`{arg}` is a positional argument that appears after one or more\n"

@@ -86,7 +86,7 @@ def index_out_of_range(obj_type, frame, tb_data):
             obj_type=info_variables.convert_type(obj_type),
         )
 
-    if index == length or index == "unknown":
+    if index in (length, "unknown"):
         cause += _("The largest valid index of `{name}` is `{index}`.\n").format(
             name=name, index=length - 1
         )

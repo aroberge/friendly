@@ -104,7 +104,7 @@ def attribute_error_in_module(module, attribute, frame):
 
     relevant_modules = []
     for mod_name in sys.modules:
-        if mod_name in mod_name in frame.f_locals:
+        if mod_name in frame.f_locals:
             relevant_modules.append((mod_name, frame.f_locals[mod_name]))
         elif mod_name in frame.f_globals:
             relevant_modules.append((mod_name, frame.f_globals[mod_name]))

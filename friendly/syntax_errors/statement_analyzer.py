@@ -1055,7 +1055,7 @@ def space_in_variable_name(statement):
 
     first_tokens = []
     for tok in statement.tokens:
-        if tok == "=" or tok == ":=":
+        if str(tok) in ("=", ":="):
             cause = _("You cannot have spaces in identifiers (variable names).\n")
             hint = _("Did you mean `{name}`?\n").format(name="_".join(first_tokens))
             return {"cause": cause, "suggest": hint}

@@ -10,7 +10,7 @@ exclude_patterns = [
     "tests/name_error.py",
     "tests/unit/test_clean**",
     "tests/unbound**",
-    "tests/test_flush.py"
+    "tests/unit/test_flush.py"
     ]
 
 [[analyzers]]

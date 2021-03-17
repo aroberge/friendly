@@ -51,10 +51,10 @@ def expression_is_zero(expression, modulo=False):
 @add_message_parser
 def division_by_zero(message, _frame, tb_data):
     _ = current_lang.translate
-    if (
-        message != "division by zero"
-        and message != "float division by zero"
-        and message != "complex division by zero"
+    if message not in (
+        "division by zero",
+        "float division by zero",
+        "complex division by zero",
     ):
         return {}
 
