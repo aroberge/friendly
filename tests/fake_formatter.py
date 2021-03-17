@@ -4,5 +4,6 @@ See the actual tests in test_formatter.py
 
 """
 
-def get_cause(info, **ignore):
+
+def get_cause(info, **_ignore):
     return info["cause"]

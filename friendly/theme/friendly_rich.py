@@ -22,7 +22,7 @@ light_background_theme = Theme(amical.my_style)
 def init_console(
     style="dark", theme="brunante", color_system="auto", force_jupyter=None
 ):
-    def _patch_heading(self, console, options):  # noqa
+    def _patch_heading(self, *_args):
         """By default, all headings are centered by Rich; I prefer to have
         them left-justified, except for <h3>
         """
@@ -35,7 +35,7 @@ def init_console(
 
     Heading.__rich_console__ = _patch_heading
 
-    def _patch_code_block(self, console, options):  # noqa
+    def _patch_code_block(self, *_args):
         code = str(self.text).rstrip()
         if self.lexer_name == "default":
             self.lexer_name = "python"
@@ -47,13 +47,13 @@ def init_console(
     if style == "light":
         console = Console(
             theme=light_background_theme,
-            color_system=color_system,
+            color_system=color_system,  # noqa
             force_jupyter=force_jupyter,
         )
     else:
         console = Console(
             theme=dark_background_theme,
-            color_system=color_system,
+            color_system=color_system,  # noqa
             force_jupyter=force_jupyter,
         )
 
