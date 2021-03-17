@@ -243,7 +243,7 @@ def misplaced_quote(statement):
             try:
                 fn(bad_string)  # Definitely not a word!
                 return {}
-            except Exception:
+            except Exception:  # noqa
                 pass
 
         hint = _("Perhaps you misplaced a quote.\n")

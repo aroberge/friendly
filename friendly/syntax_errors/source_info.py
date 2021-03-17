@@ -302,7 +302,7 @@ class Statement:
                     break
                 # perhaps we have some unclosed bracket causing the error
                 # and we meant to start a new statement
-                elif token.is_in(
+                if token.is_in(
                     [
                         "async",
                         "await",
@@ -383,15 +383,16 @@ class Statement:
             elif token.is_in(")]}"):
                 self.end_bracket = token
                 last_closing = token
+
                 if not self.statement_brackets:
                     break
-                else:
-                    open_bracket = self.statement_brackets.pop()
-                    if not matching_brackets(open_bracket, token.string):
-                        self.statement_brackets.append(open_bracket)
-                        break
-                    else:
-                        self.end_bracket = None
+
+                open_bracket = self.statement_brackets.pop()
+                if not matching_brackets(open_bracket, token.string):
+                    self.statement_brackets.append(open_bracket)
+                    break
+
+                self.end_bracket = None
 
         if self.statement_tokens:  # Protecting against EOF while parsing
             last_line = token_utils.untokenize(self.statement_tokens)
