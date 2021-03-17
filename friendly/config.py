@@ -22,11 +22,7 @@ def _write_err(text):
             text, inline_code_lexer="python", code_theme=theme.CURRENT_THEME
         )
         if formatters.RICH_HEADER:
-            info = session.saved_info
-            if info and "header" in info and info["header"]:
-                title = info["header"].replace(":", "")
-            else:
-                title = "Traceback"
+            title = "Traceback"
             md = theme.friendly_rich.Panel(md, title=title)
             formatters.RICH_HEADER = False
         session.console.print(md)
