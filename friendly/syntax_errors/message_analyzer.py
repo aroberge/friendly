@@ -67,24 +67,24 @@ def add_python_message(func):
 @add_python_message
 def assign_to_keyword(message="", statement=None):
     _ = current_lang.translate
-    if not (
-        message == "can't assign to keyword"  # Python 3.6, 3.7
-        or message == "assignment to keyword"  # Python 3.6, 3.7
-        or message == "cannot assign to keyword"  # Python 3.8
-        or message == "cannot assign to None"  # Python 3.8
-        or message == "cannot assign to True"  # Python 3.8
-        or message == "cannot assign to False"  # Python 3.8
-        or message == "cannot assign to __debug__"  # Python 3.8
-        or message == "can't assign to Ellipsis"  # Python 3.6, 3.7
-        or message == "cannot assign to Ellipsis"  # Python 3.8
-        or message == "cannot use named assignment with True"  # Python 3.8
-        or message == "cannot use named assignment with False"  # Python 3.8
-        or message == "cannot use named assignment with None"  # Python 3.8
-        or message == "cannot use named assignment with Ellipsis"  # Python 3.8
-        or message == "cannot use assignment expressions with True"  # Python 3.8
-        or message == "cannot use assignment expressions with False"  # Python 3.8
-        or message == "cannot use assignment expressions with None"  # Python 3.8
-        or message == "cannot use assignment expressions with Ellipsis"  # Python 3.8
+    if message not in (
+        "can't assign to keyword",  # Python 3.6, 3.7
+        "assignment to keyword",  # Python 3.6, 3.7
+        "cannot assign to keyword",  # Python 3.8
+        "cannot assign to None",  # Python 3.8
+        "cannot assign to True",  # Python 3.8
+        "cannot assign to False",  # Python 3.8
+        "cannot assign to __debug__",  # Python 3.8
+        "can't assign to Ellipsis",  # Python 3.6, 3.7
+        "cannot assign to Ellipsis",  # Python 3.8
+        "cannot use named assignment with True",  # Python 3.8
+        "cannot use named assignment with False",  # Python 3.8
+        "cannot use named assignment with None",  # Python 3.8
+        "cannot use named assignment with Ellipsis",  # Python 3.8
+        "cannot use assignment expressions with True",  # Python 3.8
+        "cannot use assignment expressions with False",  # Python 3.8
+        "cannot use assignment expressions with None",  # Python 3.8
+        "cannot use assignment expressions with Ellipsis",  # Python 3.8
     ):
         return {}
 
@@ -106,27 +106,28 @@ def assign_to_keyword(message="", statement=None):
 @add_python_message
 def assign_to_conditional_expression(message="", **_kwargs):
     _ = current_lang.translate
-    if (
-        message == "can't assign to conditional expression"  # Python 3.6, 3.7
-        or message == "cannot assign to conditional expression"  # Python 3.8
+    if message not in (
+        "can't assign to conditional expression",  # Python 3.6, 3.7
+        "cannot assign to conditional expression",  # Python 3.8
     ):
-        hint = _("You can only assign objects to identifiers (variable names).\n")
-        cause = _(
-            "On the left-hand side of an equal sign, you have a\n"
-            "conditional expression instead of the name of a variable.\n"
-            "A conditional expression has the following form:\n\n"
-            "    variable = object if condition else other_object"
-        )
-        return {"cause": cause, "suggest": hint}
-    return {}
+        return {}
+
+    hint = _("You can only assign objects to identifiers (variable names).\n")
+    cause = _(
+        "On the left-hand side of an equal sign, you have a\n"
+        "conditional expression instead of the name of a variable.\n"
+        "A conditional expression has the following form:\n\n"
+        "    variable = object if condition else other_object"
+    )
+    return {"cause": cause, "suggest": hint}
 
 
 @add_python_message
 def assign_to_function_call(message="", statement=None):
     _ = current_lang.translate
-    if (
-        message != "can't assign to function call"  # Python 3.6, 3.7
-        and message != "cannot assign to function call"  # Python 3.8
+    if message not in (
+        "can't assign to function call",  # Python 3.6, 3.7
+        "cannot assign to function call",  # Python 3.8
     ):
         return {}
 
@@ -164,17 +165,18 @@ def assign_to_function_call(message="", statement=None):
 @add_python_message
 def assign_to_generator_expression(message="", **_kwargs):
     _ = current_lang.translate
-    if (
-        message == "can't assign to generator expression"  # Python 3.6, 3.7
-        or message == "cannot assign to generator expression"  # Python 3.8
+    if message not in (
+        "can't assign to generator expression",  # Python 3.6, 3.7
+        "cannot assign to generator expression",  # Python 3.8
     ):
-        hint = _("You can only assign objects to identifiers (variable names).\n")
-        cause = _(
-            "On the left-hand side of an equal sign, you have a\n"
-            "generator expression instead of the name of a variable.\n"
-        )
-        return {"cause": cause, "suggest": hint}
-    return {}
+        return {}
+
+    hint = _("You can only assign objects to identifiers (variable names).\n")
+    cause = _(
+        "On the left-hand side of an equal sign, you have a\n"
+        "generator expression instead of the name of a variable.\n"
+    )
+    return {"cause": cause, "suggest": hint}
 
 
 @add_python_message
@@ -217,7 +219,7 @@ def what_kind_of_literal(literal):
 
     try:
         a = ast.literal_eval(literal)
-    except Exception:
+    except Exception:  # noqa
         return None
 
     if isinstance(a, int):
@@ -259,98 +261,99 @@ def annotated_name_cannot_be_global(message="", **_kwargs):
 @add_python_message
 def assign_to_literal(message="", statement=None):
     _ = current_lang.translate
-    if (
-        message == "can't assign to literal"  # Python 3.6, 3.7
-        or message == "cannot assign to literal"  # Python 3.8
-        or message == "cannot assign to set display"  # Python 3.8
-        or message == "cannot assign to dict display"  # Python 3.8
+    if message not in (
+        "can't assign to literal",  # Python 3.6, 3.7
+        "cannot assign to literal",  # Python 3.8
+        "cannot assign to set display",  # Python 3.8
+        "cannot assign to dict display",  # Python 3.8
     ):
-        line = statement.bad_line.rstrip()
-        info = line.split("=")
-        if len(info) == 2:
-            literal = info[0].strip()
-            name = info[1].strip()
-            if sys.version_info < (3, 8) and (
-                literal.startswith("f'{") or literal.startswith('f"{')
-            ):
-                cause = _(
-                    "You wrote an expression that has the f-string `{fstring}`\n"
-                    "on the left-hand side of the equal sign.\n"
-                    "An f-string should only appear on the right-hand "
-                    "side of an equal sign.\n"
-                ).format(fstring=statement.bad_token)
-                return {"cause": cause}
-        else:
-            literal = None
-            name = _("variable_name")
+        return {}
 
-        if len(info) == 2 and name.isidentifier():
-            # fmt: off
-            suggest = _(
-                "Perhaps you meant to write:\n\n"
-                "    {name} = {literal}\n"
-                "\n"
-            ).format(literal=literal, name=name)
-            hint = _(
-                "Perhaps you meant to write `{name} = {literal}`"
-            ).format(literal=literal, name=name)
-            # fmt: on
-        else:
-            suggest = "\n"
-            hint = _("You can only assign objects to identifiers (variable names).\n")
+    line = statement.bad_line.rstrip()
+    info = line.split("=")
+    if len(info) == 2:
+        literal = info[0].strip()
+        name = info[1].strip()
+        if sys.version_info < (3, 8) and (
+            literal.startswith("f'{") or literal.startswith('f"{')
+        ):
+            cause = _(
+                "You wrote an expression that has the f-string `{fstring}`\n"
+                "on the left-hand side of the equal sign.\n"
+                "An f-string should only appear on the right-hand "
+                "side of an equal sign.\n"
+            ).format(fstring=statement.bad_token)
+            return {"cause": cause}
+    else:
+        literal = None
+        name = _("variable_name")
 
-        # Impose the right type when we know it.
-        if message == "cannot assign to set display":
-            of_type = what_kind_of_literal("{1}")
-        elif message == "cannot assign to dict display":
-            of_type = what_kind_of_literal("{1:2}")
-        else:
-            of_type = what_kind_of_literal(literal)
-        if of_type is None:
-            of_type = ""
+    if len(info) == 2 and name.isidentifier():
+        # fmt: off
+        suggest = _(
+            "Perhaps you meant to write:\n\n"
+            "    {name} = {literal}\n"
+            "\n"
+        ).format(literal=literal, name=name)
+        hint = _(
+            "Perhaps you meant to write `{name} = {literal}`"
+        ).format(literal=literal, name=name)
+        # fmt: on
+    else:
+        suggest = "\n"
+        hint = _("You can only assign objects to identifiers (variable names).\n")
 
-        if literal is None:
-            literal = "..."
+    # Impose the right type when we know it.
+    if message == "cannot assign to set display":
+        of_type = what_kind_of_literal("{1}")
+    elif message == "cannot assign to dict display":
+        of_type = what_kind_of_literal("{1:2}")
+    else:
+        of_type = what_kind_of_literal(literal)
+    if of_type is None:
+        of_type = ""
 
-        cause = (
-            _(
-                "You wrote an expression like\n\n"
-                "    {literal} = {name}\n"
-                "where `{literal}`, on the left-hand side of the equal sign,\n"
-                "is or includes an actual object {of_type}\n"
-                "and is not simply the name of a variable.\n"
-            ).format(literal=literal, name=name, of_type=of_type)
-            + suggest
-        )
-        return {"cause": cause, "suggest": hint}
-    return {}
+    if literal is None:
+        literal = "..."
+
+    cause = (
+        _(
+            "You wrote an expression like\n\n"
+            "    {literal} = {name}\n"
+            "where `{literal}`, on the left-hand side of the equal sign,\n"
+            "is or includes an actual object {of_type}\n"
+            "and is not simply the name of a variable.\n"
+        ).format(literal=literal, name=name, of_type=of_type)
+        + suggest
+    )
+    return {"cause": cause, "suggest": hint}
 
 
 @add_python_message
 def assign_to_operator(message="", statement=None):
     _ = current_lang.translate
     line = statement.bad_line.rstrip()
-    if (
-        message == "can't assign to operator"  # Python 3.6, 3.7
-        or message == "cannot assign to operator"  # Python 3.8
+    if message not in (
+        "can't assign to operator",  # Python 3.6, 3.7
+        "cannot assign to operator",  # Python 3.8
     ):
-        cause = _(
-            "You wrote an expression that includes some mathematical operations\n"
-            "on the left-hand side of the equal sign which should be\n"
-            "only used to assign a value to a variable.\n"
-        )
-        name = could_be_identifier(line)
-        if name:
-            hint = _("Did you mean `{name}`?\n").format(name=name)
-            cause += _(
-                "Perhaps you meant to write `{name}` instead of `{original}`\n"
-            ).format(name=name, original=name.replace("_", "-"))
-            return {"cause": cause, "suggest": hint}
-        else:
-            hint = _("You can only assign objects to identifiers (variable names).\n")
-            return {"cause": cause, "suggest": hint}
+        return {}
 
-    return {}
+    cause = _(
+        "You wrote an expression that includes some mathematical operations\n"
+        "on the left-hand side of the equal sign which should be\n"
+        "only used to assign a value to a variable.\n"
+    )
+    name = could_be_identifier(line)
+    if name:
+        hint = _("Did you mean `{name}`?\n").format(name=name)
+        cause += _(
+            "Perhaps you meant to write `{name}` instead of `{original}`\n"
+        ).format(name=name, original=name.replace("_", "-"))
+        return {"cause": cause, "suggest": hint}
+    else:
+        hint = _("You can only assign objects to identifiers (variable names).\n")
+        return {"cause": cause, "suggest": hint}
 
 
 def could_be_identifier(line):
@@ -362,7 +365,7 @@ def could_be_identifier(line):
                 if lhs.isidentifier():
                     return lhs
         return ""
-    except Exception:
+    except Exception:  # noqa
         print("exception raised")
         return ""
 
@@ -407,33 +410,34 @@ def continue_outside_loop(message="", **_kwargs):
 @add_python_message
 def delete_function_call(message="", statement=None):
     _ = current_lang.translate
-    if (
-        message == "can't delete function call"  # Python 3.6, 3.7
-        or message == "cannot delete function call"  # Python 3.8
+    if message not in (
+        "can't delete function call",  # Python 3.6, 3.7
+        "cannot delete function call",  # Python 3.8
     ):
-        line = statement.bad_line.rstrip()
-        correct = "del {name}".format(name=statement.bad_token)
-        cause = _(
-            "You attempted to delete a function call\n\n"
-            "    {line}\n"
-            "instead of deleting the function's name\n\n"
-            "    {correct}\n"
-        ).format(line=line, correct=correct)
-        return {"cause": cause}
-    return {}
+        return {}
+
+    line = statement.bad_line.rstrip()
+    correct = "del {name}".format(name=statement.bad_token)
+    cause = _(
+        "You attempted to delete a function call\n\n"
+        "    {line}\n"
+        "instead of deleting the function's name\n\n"
+        "    {correct}\n"
+    ).format(line=line, correct=correct)
+    return {"cause": cause}
 
 
 @add_python_message
 def delete_x(message="", statement=None):
     _ = current_lang.translate
-    if message not in [
+    if message not in (
         "can't delete keyword",  # Python 3.6, 3.7
         "can't delete literal",
         "cannot delete literal",
         "cannot delete None",
         "cannot delete True",
         "cannot delete False",
-    ]:
+    ):
         return {}
 
     if statement.bad_token.is_in(["None", "True", "False"]):

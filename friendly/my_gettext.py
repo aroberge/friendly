@@ -30,7 +30,8 @@ class LangState:
         self.translate = None
         self.lang = "en"
 
-    def no_translation(self, text):  # noqa
+    @staticmethod
+    def no_translation(text):
         return text
 
     def install(self, lang=None):
