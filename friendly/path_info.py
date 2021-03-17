@@ -62,7 +62,7 @@ class PathUtil:
         self.python = os.path.dirname(os.__file__)
         this_dir = os.path.dirname(__file__)
         self.friendly_path = os.path.abspath(os.path.join(this_dir, ".."))
-        self.tests = None
+        self.tests = ""
         tests = os.path.join(self.friendly_path, "tests")
         if os.path.exists(tests):
             self.tests = tests
@@ -76,7 +76,7 @@ class PathUtil:
         path = os.path.normpath(path)
         path_lower = path.lower()
         self.cwd = os.getcwd()  # make sure it is up to date
-        if self.tests is not None and path_lower.startswith(self.tests.lower()):
+        if self.tests and path_lower.startswith(self.tests.lower()):
             path = "TESTS:" + path[len(self.tests) :]
         elif path_lower.startswith(self.friendly_path.lower()):
             path = "FRIENDLY:" + path[len(self.friendly_path) :]
@@ -103,7 +103,7 @@ def show_paths():
     """
     print("CWD =", path_utils.cwd)
     print("HOME =", path_utils.home)
-    print("FRIENDLY =", path_utils.friendly)
+    print("FRIENDLY =", path_utils.friendly_path)
     if path_utils.tests is not None:
         print("TESTS =", path_utils.tests)
     print("PYTHON_LIB =", path_utils.python)

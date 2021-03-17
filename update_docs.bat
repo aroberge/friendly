@@ -63,6 +63,6 @@ del compare_messages.html
 
 cd ..\..\friendly-traceback-docs\docs
 call make html
-cd ..\..\friendly-traceback
+cd ..\..\friendly
 call venv-friendly3.8\scripts\activate
 
