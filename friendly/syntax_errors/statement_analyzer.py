@@ -187,7 +187,7 @@ def keyword_as_attribute(statement):
 def confused_elif(statement):
     _ = current_lang.translate
     name = None
-    # skipcq PYL-R1714
+    # skipcq: PYL-R1714
     if statement.bad_token == "elseif" or statement.prev_token == "elseif":
         name = "elseif"
     elif statement.bad_token == "if" and statement.prev_token == "else":
@@ -1341,7 +1341,7 @@ def comprehension_condition_or_tuple(statement):
                     cause = cause_tuple
                     hint = _("Did you forget parentheses?\n")
                     return {"cause": cause, "suggest": hint}
-            else:  # skipcq PYL-W0120
+            else:  # skipcq: PYL-W0120
                 return {}
     else:
         return {}

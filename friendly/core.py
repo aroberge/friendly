@@ -487,6 +487,7 @@ class FriendlyTraceback:
 
         frame, filename, linenumber, _func, lines, index = record
         if lines == ["\n"] and source_cache.idle_get_lines is not None:
+            # skipcq: PYL-E1102
             lines = source_cache.idle_get_lines(filename, linenumber - 1)
 
         partial_source = get_partial_source(
@@ -533,6 +534,7 @@ class FriendlyTraceback:
 
         frame, filename, linenumber, _func, lines, index = record
         if lines == ["\n"] and source_cache.idle_get_lines is not None:
+            # skipcq: PYL-E1102
             lines = source_cache.idle_get_lines(filename, linenumber - 1)
         partial_source = get_partial_source(filename, linenumber, lines, index)
         filename = path_utils.shorten_path(filename)
