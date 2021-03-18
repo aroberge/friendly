@@ -44,8 +44,8 @@ def local_variable_referenced(unknown_name, frame):
             if cause:
                 hint = _("Did you use a colon instead of an equal sign?\n")
                 return {"cause": cause, "suggest": hint}
-            else:
-                return {}
+
+            return {}
 
     if "global" in scopes and "nonlocal" in scopes:
         cause = _(

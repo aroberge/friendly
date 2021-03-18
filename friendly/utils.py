@@ -53,9 +53,8 @@ def get_similar_words(word_with_typo, words):
     result = get(word_with_typo.lower(), words, n=1, cutoff=cutoff)
     if result:
         return result
-    else:
-        result = get(word_with_typo.upper(), words, n=1, cutoff=cutoff)
-    return result
+
+    return get(word_with_typo.upper(), words, n=1, cutoff=cutoff)
 
 
 def list_to_string(list_, sep=", "):

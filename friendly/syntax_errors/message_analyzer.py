@@ -222,24 +222,21 @@ def what_kind_of_literal(literal):
     except Exception:  # noqa
         return None
 
-    if isinstance(a, int):
-        return _("of type `int`")
-    elif isinstance(a, str):
-        return _("of type `str`")
-    elif isinstance(a, float):
-        return _("of type `float`")
-    elif isinstance(a, complex):
-        return _("of type `complex`")
-    elif isinstance(a, dict):
-        return _("of type `dict`")
-    elif isinstance(a, tuple):
-        return _("of type `tuple`")
-    elif isinstance(a, list):
-        return _("of type `list`")
-    elif isinstance(a, set):
-        return _("of type `set`")
-    else:
-        return None
+    kinds = (
+        (int, _("of type `int`")),
+        (complex, _("of type `complex`")),
+        (float, _("of type `float`")),
+        (str, _("of type `str`")),
+        (dict, _("of type `dict`")),
+        (list, _("of type `list`")),
+        (set, _("of type `set`")),
+        (tuple, _("of type `tuple`")),
+    )
+    for kind, result in kinds:
+        if isinstance(a, kind):
+            return result
+
+    return None
 
 
 @add_python_message
@@ -351,9 +348,9 @@ def assign_to_operator(message="", statement=None):
             "Perhaps you meant to write `{name}` instead of `{original}`\n"
         ).format(name=name, original=name.replace("_", "-"))
         return {"cause": cause, "suggest": hint}
-    else:
-        hint = _("You can only assign objects to identifiers (variable names).\n")
-        return {"cause": cause, "suggest": hint}
+
+    hint = _("You can only assign objects to identifiers (variable names).\n")
+    return {"cause": cause, "suggest": hint}
 
 
 def could_be_identifier(line):
@@ -798,11 +795,8 @@ def unexpected_character_after_continuation(message="", statement=None):
         )
         hint = _("Did you mean to divide by a number?\n")
         return {"cause": cause, "suggest": hint}
-    else:
-        cause += _(
-            "I am guessing that you forgot to enclose some content in a string.\n"
-        )
 
+    cause += _("I am guessing that you forgot to enclose some content in a string.\n")
     return {"cause": cause}
 
 
@@ -990,21 +984,20 @@ def from__future__not_defined(message="", **_kwargs):
         cause += "\n" + available
         return {"cause": cause}
 
-    else:
-        names = __future__.all_feature_names
-        similar = utils.get_similar_words(feature, names)
-        if similar:
-            hint = _("Did you mean `{name}`?\n").format(name=similar[0])
-            cause = _(
-                "Instead of `{feature}`, perhaps you meant to import `{name}`.\n"
-            ).format(feature=feature, name=similar[0])
-            return {"cause": cause, "suggest": hint}
-        else:
-            cause = _(
-                "`{feature}` is not a valid feature of module `__future__`.\n"
-            ).format(feature=feature)
-            cause += "\n" + available
-            return {"cause": cause}
+    names = __future__.all_feature_names
+    similar = utils.get_similar_words(feature, names)
+    if similar:
+        hint = _("Did you mean `{name}`?\n").format(name=similar[0])
+        cause = _(
+            "Instead of `{feature}`, perhaps you meant to import `{name}`.\n"
+        ).format(feature=feature, name=similar[0])
+        return {"cause": cause, "suggest": hint}
+
+    cause = _("`{feature}` is not a valid feature of module `__future__`.\n").format(
+        feature=feature
+    )
+    cause += "\n" + available
+    return {"cause": cause}
 
 
 @add_python_message
@@ -1077,7 +1070,8 @@ def proper_decimal_or_octal_number(prev_str, bad_str):
             "a decimal integer and did not know that it could not start with zeros.\n"
         ).format(num=correct)
         return {"cause": cause, "suggest": hint}
-    elif set(bad_str).issubset("0123456789_"):
+
+    if set(bad_str).issubset("0123456789_"):
         correct = bad_str.lstrip("_")
         hint = _("Did you mean `{num}`?\n").format(num=correct)
         cause = _(

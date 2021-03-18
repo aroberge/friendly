@@ -42,8 +42,7 @@ def expression_is_zero(expression, modulo=False):
             if modulo:
                 return _("Using the modulo operator, you are dividing by zero.\n")
             return _("You are dividing by zero.\n")
-        else:
-            return ""
+        return ""
     except Exception:
         return ""
 

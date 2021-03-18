@@ -38,11 +38,13 @@ def _get_cause(value, tb_data):
             return cannot_import_name_from(
                 match1.group(1), match1.group(2), tb_data, add_circular_hint=False
             )
-        else:
-            return cannot_import_name_from(match1.group(1), match1.group(2), tb_data)
-    elif match2:
+
+        return cannot_import_name_from(match1.group(1), match1.group(2), tb_data)
+
+    if match2:
         return cannot_import_name_from(match2.group(1), match2.group(2), tb_data)
-    elif match3:
+
+    if match3:
         return cannot_import_name(match3.group(1), tb_data)
 
     return {"cause": no_information()}
@@ -70,10 +72,10 @@ def cannot_import_name_from(name, module, tb_data, add_circular_hint=True):
     if circular_info:
         if hint is None:
             return {"cause": cause + "\n" + circular_info}
-        else:
-            return {"cause": cause + "\n" + circular_info, "suggest": hint}
 
-    elif not add_circular_hint:
+        return {"cause": cause + "\n" + circular_info, "suggest": hint}
+
+    if not add_circular_hint:
         return {
             "cause": cause
             + "\n"
@@ -88,7 +90,7 @@ def cannot_import_name_from(name, module, tb_data, add_circular_hint=True):
 
     try:
         mod = sys.modules[module]
-    except Exception:
+    except Exception:  # noqa
         cause += "\n" + _(
             "Inconsistent state: `'{module}'` was apparently not imported.\n"
             "As a result, no further analysis can be done.\n"

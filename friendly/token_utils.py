@@ -51,12 +51,11 @@ class Token:
         """
         if hasattr(other, "string"):
             return self.string == other.string
-        elif isinstance(other, str):
+
+        if isinstance(other, str):
             return self.string == other
-        else:
-            raise TypeError(
-                "A token can only be compared to another token or to a string."
-            )
+
+        raise TypeError("A token can only be compared to another token or to a string.")
 
     def __repr__(self):
         """Nicely formatted token to help with debugging session.

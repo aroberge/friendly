@@ -479,7 +479,7 @@ def x_is_not_callable(message, frame, tb_data):
         ).format(fn_call=fn_call, obj_name=obj_name)
         return {"cause": cause, "suggest": hint}
 
-    elif hasattr(obj, "__getitem__") and isinstance(can_eval, int):
+    if hasattr(obj, "__getitem__") and isinstance(can_eval, int):
         cause = cause + _(
             "However, `{obj_name}` is a sequence.\n"
             "Perhaps you meant to use `[]` instead of `()` and write\n"
@@ -490,7 +490,7 @@ def x_is_not_callable(message, frame, tb_data):
         )
         return {"cause": cause, "suggest": hint}
 
-    elif (  # Many objects can be multiplied, but only numbers should have __abs__
+    if (  # Many objects can be multiplied, but only numbers should have __abs__
         hasattr(obj, "__abs__")  # Should identify numbers: int, float, ...
         and hasattr(can_eval, "__abs__")  # complex, Fractions, Decimals, ...
         and hasattr(obj, "__mul__")  # Confirming that they can be multiplied
@@ -545,7 +545,8 @@ def cannot_multiply_by_str(message, frame, tb_data):
                 continue
         if not int_vars:  # should not happen, but better be safe
             return {"cause": cause}
-        elif len(int_vars) == 1:
+
+        if len(int_vars) == 1:
             more_cause, hint = forgot_to_convert_name_to_int(int_vars[0])
             cause += more_cause
         else:
@@ -733,14 +734,14 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
             line=container + newline.replace("[]", "", 1)
         )
         return {"cause": cause + "\n" + additional_cause, "suggest": hint}
-    else:
-        names = find_possible_integers(index_type, frame, tb_data.bad_line)
-        if len(names) == 1:  # This should usually be the case
-            more_cause, hint = forgot_to_convert_name_to_int(names[0])
-            cause += "\n" + more_cause
-            if hint is not None:
-                return {"cause": cause, "suggest": hint}
-            return {"cause": cause}
+
+    names = find_possible_integers(index_type, frame, tb_data.bad_line)
+    if len(names) == 1:  # This should usually be the case
+        more_cause, hint = forgot_to_convert_name_to_int(names[0])
+        cause += "\n" + more_cause
+        if hint is not None:
+            return {"cause": cause, "suggest": hint}
+        return {"cause": cause}
 
     if additional_cause:
         return {"cause": cause + additional_cause, "suggest": hint}

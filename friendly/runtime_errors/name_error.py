@@ -111,15 +111,16 @@ def format_similar_names(name, similar):
         if similar["locals"]:
             name = str(similar["locals"][0]).replace("'", "")
             return found_local.format(name=name)
-        elif similar["globals"]:
+
+        if similar["globals"]:
             similar_name = similar["globals"][0]
             if name != similar_name:
                 name = similar_name.replace("'", "")
                 return found_global.format(name=name)
-            else:
-                return name_found.format(name=name)
-        else:
-            return builtin_similar.format(name=name)
+
+            return name_found.format(name=name)
+
+        return builtin_similar.format(name=name)
 
     message = _(
         "Instead of writing `{name}`, perhaps you meant one of the following:\n"

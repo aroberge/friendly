@@ -28,30 +28,21 @@ MAX_LENGTH = 65
 
 def convert_type(short_form):
     _ = current_lang.translate
-    if short_form == "complex":
-        return _("a complex number")
-    elif short_form == "dict":
-        return _("a dictionary (`dict`)")
-    elif short_form == "float":
-        return _("a number (`float`)")
-    elif short_form == "int":
-        return _("an integer (`int`)")
-    elif short_form == "list":
-        return _("a `list`")
-    elif short_form == "NoneType":
-        return _("a variable equal to `None` (`NoneType`)")
-    elif short_form == "set":
-        return _("a `set`")
-    elif short_form == "str":
-        return _("a string (`str`)")
-    elif short_form == "string":
-        return _("a string (`str`)")
-    elif short_form == "tuple":
-        return _("a `tuple`")
-    elif short_form == "frozenset":
-        return _("a `frozenset`")
-    else:
-        return short_form
+
+    forms = {
+        "complex": _("a complex number"),
+        "dict": _("a dictionary (`dict`)"),
+        "float": _("a number (`float`)"),
+        "frozenset": _("a `frozenset`"),
+        "int": _("an integer (`int`)"),
+        "list": _("a `list`"),
+        "NoneType": _("a variable equal to `None` (`NoneType`)"),
+        "set": _("a `set`"),
+        "str": _("a string (`str`)"),
+        "string": _("a string (`str`)"),
+        "tuple": _("a `tuple`"),
+    }
+    return forms.get(short_form, short_form)
 
 
 # pure_eval is primarily designed to find "interesting" expressions,

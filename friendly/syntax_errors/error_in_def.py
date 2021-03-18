@@ -243,9 +243,9 @@ def not_enough_tokens(statement):
         )
         if not fixers.check_statement(new_statement):
             return {"cause": cause + def_correct_syntax()}
-        else:
-            cause = hint = _("You forgot to name your function.\n")
-            return {"cause": cause + def_correct_syntax(), "suggest": hint}
+
+        cause = hint = _("You forgot to name your function.\n")
+        return {"cause": cause + def_correct_syntax(), "suggest": hint}
 
     return {"cause": cause + def_correct_syntax()}
 
@@ -319,9 +319,9 @@ def function_definition_missing_name(statement):
     )
     if fixers.check_statement(new_statement):
         return {"cause": cause + def_correct_syntax()}
-    else:
-        cause += _("However, there are some other syntax errors in your code.\n")
-        return {"cause": cause + def_correct_syntax()}
+
+    cause += _("However, there are some other syntax errors in your code.\n")
+    return {"cause": cause + def_correct_syntax()}
 
 
 @add_statement_analyzer
@@ -392,6 +392,7 @@ def positional_arguments_in_def(statement):
             )
             hint = _("Keyword arguments must appear after the `/` symbol.\n")
             return {"cause": cause, "suggest": hint}
+
         if prev_tok == "*":  # might be incorrect if used in *args
             if tok == ",":
                 cause = meaning + _(
@@ -406,10 +407,13 @@ def positional_arguments_in_def(statement):
                 ).format(name=tok.string)
                 cause = meaning + hint
             return {"cause": cause, "suggest": hint}
-        elif tok == "/" and prev_tok == ",":
+
+        if tok == "/" and prev_tok == ",":
             cause = _("You can only use `/` once in a function definition.\n")
             return {"cause": cause, "suggest": cause}
+
         prev_tok = tok
+
     return {}
 
 
@@ -427,7 +431,8 @@ def keyword_arguments_in_def(statement):
                 "or in the form `..., *args ...`, but not both.\n"
             )
             return {"cause": cause, "suggest": hint}
-        elif str(tok) in ("**", "="):
+
+        if str(tok) in ("**", "="):
             if statement.next_token.is_identifier():
                 cause = _(
                     "`*{name}` must appear before any keyword argument.\n"

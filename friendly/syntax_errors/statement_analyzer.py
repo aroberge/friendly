@@ -421,8 +421,8 @@ def inverted_comparison_operators(statement):
     )
     if fixers.check_statement(new_statement):
         return {"cause": cause, "suggest": hint}
-    else:
-        return {"cause": cause + more_errors(), "suggest": hint}
+
+    return {"cause": cause + more_errors(), "suggest": hint}
 
 
 @add_statement_analyzer
