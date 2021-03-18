@@ -2,7 +2,7 @@
 main.py
 ---------------
 
-Sets up the various options when Friendly-traceback is invoked from the
+Sets up the various options when Friendly is invoked from the
 command line. You can find more details by doing::
 
     python -m friendly -h
@@ -24,7 +24,7 @@ from . import explain_traceback, exclude_file_from_traceback, install
 from . import set_formatter, __version__
 
 
-versions = "Friendly-traceback version {}. [Python version: {}]\n".format(
+versions = "Friendly version {}. [Python version: {}]\n".format(
     __version__, platform.python_version()
 )
 
@@ -56,11 +56,11 @@ def import_function(dotted_path: str) -> type:
 parser = argparse.ArgumentParser(
     formatter_class=argparse.RawDescriptionHelpFormatter,
     description=(
-        """Friendly-traceback makes Python tracebacks easier to understand.
+        """Friendly makes Python tracebacks easier to understand.
 
     {versions}
 
-    If no source is given Friendly-traceback will start an interactive console.
+    If no source is given Friendly will start an interactive console.
         """.format(
             versions=versions
         )
@@ -86,7 +86,7 @@ parser.add_argument(
 parser.add_argument(
     "--lang",
     default="en",
-    help="""This sets the language used by Friendly-tracebacks.
+    help="""This sets the language used by Friendly.
             Usually this is a two-letter code such as 'fr' for French.
          """,
 )
@@ -140,7 +140,7 @@ def main():
     _ = current_lang.translate
     args = parser.parse_args()
     if args.version:
-        print(f"\nFriendly-traceback version {__version__}")
+        print(f"\nFriendly version {__version__}")
         if not args.source:
             sys.exit()
 
@@ -186,7 +186,7 @@ def main():
         try:
             module_dict = runpy.run_path(args.source, run_name="__main__")
             console_defaults.update(module_dict)
-        except Exception:
+        except Exception:  # noqa
             explain_traceback()
         if sys.flags.interactive:
             console.start_console(

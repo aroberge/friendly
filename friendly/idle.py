@@ -1,4 +1,4 @@
-"""Experimental module to automatically install Friendly-traceback
+"""Experimental module to automatically install Friendly
 as a replacement for the standard traceback in IDLE."""
 
 import inspect
@@ -146,12 +146,12 @@ def idle_formatter(info, include="friendly_tb"):
 
 
 def install_in_idle_shell(lang="en"):
-    """Installs Friendly-traceback in IDLE's shell so that it can retrieve
+    """Installs Friendly in IDLE's shell so that it can retrieve
     code entered in IDLE's repl.
     Note that this requires Python version 3.10+ since IDLE did not support
     custom excepthook in previous versions of Python.
 
-    Furthermore, Friendly-traceback is bypassed when code entered in IDLE's repl
+    Furthermore, Friendly is bypassed when code entered in IDLE's repl
     raises SyntaxErrors.
     """
     import friendly
@@ -178,13 +178,11 @@ def install_in_idle_shell(lang="en"):
     friendly.install(include="friendly_tb", redirect=idle_writer, lang=lang)
     # Current limitation
     idle_writer("                                WARNING\n", "ERROR")  # noqa
-    idle_writer(
-        "Friendly-traceback cannot handle SyntaxErrors for code entered in the shell.\n"
-    )
+    idle_writer("Friendly cannot handle SyntaxErrors for code entered in the shell.\n")
 
 
 def install(lang="en"):
-    """Installs Friendly-traceback in the IDLE shell, with a custom formatter.
+    """Installs Friendly in the IDLE shell, with a custom formatter.
     For Python versions before 3.10, this is not directly supported, so a
     Friendly console is used instead of IDLE's shell.
     """
@@ -195,7 +193,7 @@ def install(lang="en"):
     if sys.version_info >= (3, 10):
         install_in_idle_shell(lang=lang)
     else:
-        idle_writer("Friendly-traceback cannot be installed in this version of IDLE.\n")
+        idle_writer("Friendly cannot be installed in this version of IDLE.\n")
         idle_writer("Using Friendly's own console instead.\n")
         start_console(lang=lang)
 
@@ -264,9 +262,7 @@ def run(filename, lang=None, include="friendly_tb", args=None, console=True):
         if sys.version_info >= (3, 10):
             install_in_idle_shell()
         elif sys.version_info < (3, 10):
-            sys.stderr.write(
-                "Friendly-traceback cannot be installed in this version of IDLE.\n"
-            )
+            sys.stderr.write("Friendly cannot be installed in this version of IDLE.\n")
 
     return friendly.run(
         filename,

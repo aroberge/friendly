@@ -5,7 +5,7 @@ translatable into various languages.
 
 **friendly** used to be called **friendly-traceback**.
 
-![Example](https://raw.githubusercontent.com/aroberge/friendly-traceback/master/why_1.png)
+![Example](https://raw.githubusercontent.com/aroberge/friendly/master/why_1.png)
 
 ## Installation
 
@@ -19,7 +19,7 @@ pip install friendly
 
 ## Example
 
-![Example](https://raw.githubusercontent.com/aroberge/friendly-traceback/master/explain.png)
+![Example](https://raw.githubusercontent.com/aroberge/friendly/master/explain.png)
 
 
 ## Contribute

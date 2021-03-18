@@ -29,7 +29,7 @@ BANNER = "\nFriendly Console version {}. [Python version: {}]\n".format(
 
 please_comment = (
     "   Do you find these warnings useful?\n"
-    "   Comment at https://github.com/aroberge/friendly-traceback/issues/112"
+    "   Comment at https://github.com/aroberge/friendly/issues/112"
 )
 
 
@@ -136,7 +136,7 @@ class FriendlyConsole(InteractiveConsole):
         display a traceback.  All exceptions are caught except
         SystemExit, which, unlike the case for the original version in the
         standard library, cleanly exists the program. This is done
-        so as to avoid our Friendly-traceback's exception hook to intercept
+        so as to avoid our Friendly's exception hook to intercept
         it and confuse the users.
 
         A note about KeyboardInterrupt: this exception may occur
@@ -148,11 +148,11 @@ class FriendlyConsole(InteractiveConsole):
             exec(code, self.locals)
         except SystemExit:
             os._exit(1)  # noqa -pycharm
-        except Exception:
+        except Exception:  # noqa
             try:
                 friendly.explain_traceback()
-            except Exception:
-                print("Friendly-traceback Internal Error")
+            except Exception:  # noqa
+                print("Friendly Internal Error")
                 print("-" * 60)
                 traceback.print_exc()
                 print("-" * 60)

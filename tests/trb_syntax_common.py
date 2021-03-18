@@ -1,5 +1,5 @@
 """Common information so that all traceback generating scripts
-   create files in the same format.
+   create files in the same formatter.
 
 """
 import os
@@ -13,16 +13,16 @@ def write(text):
     sys.stderr.write(text + "\n")
 
 
-def make_title(text, format="pre"):
-    if format == "pre":
+def make_title(text, formatter="pre"):
+    if formatter == "pre":
         write("\n" + text)
         write("-" * len(text) + "\n")
         write(".. code-block:: none\n")
-    elif format == "markdown_docs":
+    elif formatter == "markdown_docs":
         write("\n---\n")
         write("## " + text)
     else:
-        print("Unsupported format: ", format)
+        print("Unsupported formatter: ", formatter)
         sys.exit()
 
 
@@ -30,18 +30,17 @@ cur_dir = os.getcwd()
 sys.path.append(os.path.join(cur_dir, "syntax"))
 
 
-def create_tracebacks(target, intro_text, format="pre"):
-    with open(target, "w", encoding="utf8") as out:
-        with redirect_stderr(out):
-            write(intro_text)
+def create_tracebacks(target, intro_text, formatter="pre"):
+    with open(target, "w", encoding="utf8") as out, redirect_stderr(out):
+        write(intro_text)
 
-            for name in descriptions:
-                title = descriptions[name]["title"]
-                make_title(title, format=format)
-                try:
-                    __import__(name)
-                except Exception:
-                    friendly.explain_traceback()
+        for name in descriptions:
+            title = descriptions[name]["title"]
+            make_title(title, formatter=formatter)
+            try:
+                __import__(name)
+            except Exception:  # noqa
+                friendly.explain_traceback()
 
 
 print("    Number of cases in trb_syntax_common.py: ", len(descriptions))

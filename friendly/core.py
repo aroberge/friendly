@@ -1,6 +1,6 @@
 """core.py
 
-The exception hook at the heart of Friendly-traceback.
+The exception hook at the heart of Friendly.
 
 You should not need to use any of the functions defined here;
 they are considered to be internal functions, subject to change at any
@@ -309,7 +309,7 @@ class FriendlyTraceback:
         except Exception as e:
             debug_helper.log("Uncaught exception in TracebackData.")
             debug_helper.log_error(e)
-            print("Internal problem in Friendly-traceback.")
+            print("Internal problem in Friendly.")
             print("Please report this issue.")
             raise SystemExit
         self.info = {"header": _("Python exception:")}

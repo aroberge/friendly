@@ -23,7 +23,7 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Which Python version and Friendly-traceback version are you using**
+**Which Python version and Friendly version are you using**
 
 **Additional context**
 Add any other context about the problem here.

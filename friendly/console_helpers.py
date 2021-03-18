@@ -167,11 +167,11 @@ def www(search=None, python=False):
     default browser, linking to a specific url.
 
     * If no arguments are provided, and no exception has been raised, this opens
-      Friendly-traceback documentation.
+      Friendly documentation.
 
     * If no arguments are provided, and an exception has been raised, in most
       cases, an internet search will be done using the exception message as the
-      search string. In a few cases, Friendly-traceback will link to a
+      search string. In a few cases, Friendly will link to a
       specific site based on its determination of the cause of the exception.
 
     * If no search argument is provided, but ``python`` is specified to be ``True``,
@@ -181,7 +181,7 @@ def www(search=None, python=False):
 
         * If an exception has been raised, in most cases a search of the Python
           documentation will be done using the exception name as the search term.
-          In a few cases, Friendly-traceback will link to a
+          In a few cases, Friendly will link to a
           specific site based on its determination of the cause of the exception.
 
     * If a search (string) argument is provided, we have three possibilities:
@@ -189,7 +189,7 @@ def www(search=None, python=False):
       * If the ``python`` argument is ``True``, a search will be done in the
         Python documentation site; otherwise
       * if the search term contains the string "friendly" (independent of case),
-        Friendly-traceback documentation will open
+        Friendly documentation will open
       * otherwise, an internet search will be done using the search string provided.
     """
     import urllib

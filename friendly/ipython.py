@@ -1,4 +1,4 @@
-"""Experimental module to automatically install Friendly-traceback
+"""Experimental module to automatically install Friendly
 as a replacement for the standard traceback in IPython."""
 
 try:
