@@ -8,6 +8,7 @@ import sys  # noqa
 from idlelib import rpc
 from idlelib import run as idlelib_run
 
+import friendly  # noqa
 from friendly.console_helpers import *  # noqa
 from friendly.console_helpers import helpers  # noqa
 from friendly import source_cache
@@ -154,8 +155,6 @@ def install_in_idle_shell(lang="en"):
     Furthermore, Friendly is bypassed when code entered in IDLE's repl
     raises SyntaxErrors.
     """
-    import friendly
-
     friendly.exclude_file_from_traceback(idlelib_run.__file__)
     rpchandler = rpc.objecttable["exec"].rpchandler  # noqa
 
@@ -186,8 +185,6 @@ def install(lang="en"):
     For Python versions before 3.10, this is not directly supported, so a
     Friendly console is used instead of IDLE's shell.
     """
-    import friendly
-
     sys.stderr = sys.stdout.shell  # noqa
     friendly.set_formatter(idle_formatter)
     if sys.version_info >= (3, 10):
@@ -200,8 +197,6 @@ def install(lang="en"):
 
 def start_console(lang="en"):
     """Starts a Friendly console with a custom formatter for IDLE"""
-    import friendly  # noqa
-
     sys.stderr = sys.stdout.shell  # noqa
     friendly.set_stream(idle_writer)
     friendly.start_console(formatter=idle_formatter, lang=lang)
@@ -238,8 +233,6 @@ def run(filename, lang=None, include="friendly_tb", args=None, console=True):
 
 
     """
-    import friendly
-
     _ = current_lang.translate
 
     sys.stderr = sys.stdout.shell  # noqa
