@@ -123,15 +123,15 @@ class TracebackData:
             if value.text is not None:
                 self.bad_line = value.text  # typically includes "\n"
                 return
-            else:  # this can happen with editors_helpers.check_syntax()
-                try:
-                    self.bad_line = cache.get_source_lines(value.filename)[
-                        value.lineno - 1
-                    ]
-                except Exception:
-                    self.bad_line = "\n"
-                return
-        elif self.records:
+
+            # this can happen with editors_helpers.check_syntax()
+            try:
+                self.bad_line = cache.get_source_lines(value.filename)[value.lineno - 1]
+            except Exception:
+                self.bad_line = "\n"
+            return
+
+        if self.records:
             self.exception_frame, self.filename, linenumber, _, _, _ = self.records[-1]
             _, line = cache.get_formatted_partial_source(
                 self.filename, linenumber, None
@@ -361,7 +361,8 @@ class FriendlyTraceback:
         _ = current_lang.translate
         if self.tb_data.filename in ["<unknown>", "<string>"]:
             return
-        elif STR_FAILED in self.message:
+
+        if STR_FAILED in self.message:
             self.info["cause"] = _(
                 "Warning: improperly formed exception.\n"
                 "I suspect that a custom exception has been raised\n"
@@ -418,15 +419,18 @@ class FriendlyTraceback:
 
         if self.tb_data.filename == "<unknown>":
             return
-        elif self.tb_data.filename == "<stdin>":
+
+        if self.tb_data.filename == "<stdin>":
             self.info["cause"] = cannot_analyze_stdin()
             return
+
         if etype.__name__ == "IndentationError":
             self.info["cause"] = indentation_error.set_cause_indentation_error(
                 value, self.tb_data.statement
             )
             return
-        elif etype.__name__ == "TabError":
+
+        if etype.__name__ == "TabError":
             return
 
         cause = analyze_syntax.set_cause_syntax(value, self.tb_data)
@@ -464,6 +468,7 @@ class FriendlyTraceback:
         if not records:
             debug_helper.log("No record in assign_location().")
             return
+
         self.locate_exception_raised(records[-1])
         if len(records) > 1:
             self.locate_last_call(records[0])

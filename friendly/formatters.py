@@ -341,8 +341,10 @@ def _markdown(info, include, rich=False, documentation=False):
 
     if result == [""]:
         return no_result(info, include)
-    elif include == "message":
+
+    if include == "message":
         return result[1]
+
     return "\n\n".join(result)
 
 
@@ -353,13 +355,14 @@ def no_result(info, include):
     _ = current_lang.translate
     if include == "why":
         return _("I have no suggestion to offer.")
-    elif include == "hint":
+
+    if include == "hint":
         if info["cause"]:
             return _("I have no suggestion to offer; try `why()`.")
-        else:
-            return _("I have no suggestion to offer.")
-    else:
-        return f"Internal error: include = {include} in formatters.no_result()"
+
+        return _("I have no suggestion to offer.")
+
+    return f"Internal error: include = {include} in formatters.no_result()"
 
 
 items_groups = {

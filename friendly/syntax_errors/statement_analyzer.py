@@ -187,6 +187,7 @@ def keyword_as_attribute(statement):
 def confused_elif(statement):
     _ = current_lang.translate
     name = None
+    # skipcq PYL-R1714
     if statement.bad_token == "elseif" or statement.prev_token == "elseif":
         name = "elseif"
     elif statement.bad_token == "if" and statement.prev_token == "else":
@@ -308,7 +309,7 @@ def consecutive_operators(statement):
         hint = _("Did you mean to use `is` instead of `===`?\n")
         return {"cause": cause, "suggest": hint}
 
-    elif statement.bad_token == statement.prev_token:
+    if statement.bad_token == statement.prev_token:
         cause = _(
             "You cannot have write the same operator, `{op}`, twice in a row.\n"
             "Perhaps you wrote one of them by mistake\n"
@@ -365,8 +366,8 @@ def space_between_operators(statement):
     )
     if fixers.check_statement(new_statement):
         return {"cause": cause, "suggest": hint}
-    else:
-        return {"cause": cause + more_errors(), "suggest": hint}
+
+    return {"cause": cause + more_errors(), "suggest": hint}
 
 
 @add_statement_analyzer
@@ -473,20 +474,20 @@ def assign_instead_of_equal(statement):
             "You used an assignment operator `=` instead of an equality operator `==`.\n"
         )
         return {"cause": cause + additional_cause, "suggest": hint}
+
+    if statement.next_token == ":":
+        hint = _("Perhaps you needed `:=` instead of `=:`.\n")
+        cause = _(
+            "You used an assignment operator `=` followed by `:`; perhaps you meant to use \n"
+            "the walrus operator `:=`.\n"
+        )
     else:
-        if statement.next_token == ":":
-            hint = _("Perhaps you needed `:=` instead of `=:`.\n")
-            cause = _(
-                "You used an assignment operator `=` followed by `:`; perhaps you meant to use \n"
-                "the walrus operator `:=`.\n"
-            )
-        else:
-            hint = _("Perhaps you needed `==` or `:=` instead of `=`.\n")
-            cause = _(
-                "You used an assignment operator `=`; perhaps you meant to use \n"
-                "an equality operator, `==`, or the walrus operator `:=`.\n"
-            )
-        return {"cause": cause + additional_cause, "suggest": hint}
+        hint = _("Perhaps you needed `==` or `:=` instead of `=`.\n")
+        cause = _(
+            "You used an assignment operator `=`; perhaps you meant to use \n"
+            "an equality operator, `==`, or the walrus operator `:=`.\n"
+        )
+    return {"cause": cause + additional_cause, "suggest": hint}
 
 
 @add_statement_analyzer
@@ -621,14 +622,15 @@ def missing_colon(statement):
 
     hint = _("Did you forget a colon `:`?\n")
 
-    if name.is_in(["for", "while"]):
+    if name.string in ("for", "while"):
         cause = _(
             "You wrote a `{for_while}` loop but\n"
             "forgot to add a colon `:` at the end\n"
             "\n"
         ).format(for_while=name)
         return {"cause": cause, "suggest": hint}
-    elif name.is_in(["def", "elif", "else", "except", "finally", "if", "try", "with"]):
+
+    if name.string in ("def", "elif", "else", "except", "finally", "if", "try", "with"):
         cause = _(
             "You wrote a statement beginning with\n"
             "`{name}` but forgot to add a colon `:` at the end.\n"
@@ -765,12 +767,13 @@ def debug_fstring(statement):
                 "in Python version 3.8. You are using version {version}.\n"
             ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
             return {"cause": cause, "suggest": hint}
-        else:
-            cause = _(
-                "You are likely trying to assign a value within an f-string.\n"
-                "This is not allowed.\n"
-            )
-            return {"cause": cause}
+
+        cause = _(
+            "You are likely trying to assign a value within an f-string.\n"
+            "This is not allowed.\n"
+        )
+        return {"cause": cause}
+
     return {}
 
 
@@ -1058,10 +1061,12 @@ def space_in_variable_name(statement):
             cause = _("You cannot have spaces in identifiers (variable names).\n")
             hint = _("Did you mean `{name}`?\n").format(name="_".join(first_tokens))
             return {"cause": cause, "suggest": hint}
-        elif not tok.is_identifier():
+
+        if not tok.is_identifier():
             return {}
-        else:
-            first_tokens.append(tok.string)
+
+        first_tokens.append(tok.string)
+
     return {}
 
 
@@ -1107,18 +1112,19 @@ def _comma_first_cause(bracket):
             "or between function arguments, \n"
             "before the position indicated by ^.\n"
         )
-    elif bracket == "[":
+
+    if bracket == "[":
         return _(
             "It is possible that you "
             "forgot a comma between items in a list\n"
             "before the position indicated by ^.\n"
         )
-    else:
-        return _(
-            "It is possible that you "
-            "forgot a comma between items in a set or dict\n"
-            "before the position indicated by ^.\n"
-        )
+
+    return _(
+        "It is possible that you "
+        "forgot a comma between items in a set or dict\n"
+        "before the position indicated by ^.\n"
+    )
 
 
 @add_statement_analyzer
@@ -1335,7 +1341,7 @@ def comprehension_condition_or_tuple(statement):
                     cause = cause_tuple
                     hint = _("Did you forget parentheses?\n")
                     return {"cause": cause, "suggest": hint}
-            else:
+            else:  # skipcq PYL-W0120
                 return {}
     else:
         return {}

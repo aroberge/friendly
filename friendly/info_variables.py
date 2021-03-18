@@ -205,15 +205,15 @@ def get_object_from_name(name, frame):
     class A, returns a basic object of that type found in a frame,
     or None.
     """
-
     # We must guard against people defining their own type with a
     # standard name by checking standard types last.
-
     if name in frame.f_locals:
         return frame.f_locals[name]
-    elif name in frame.f_globals:
+
+    if name in frame.f_globals:
         return frame.f_globals[name]
-    elif name in dir(builtins):  # Do this last
+
+    if name in dir(builtins):  # Do this last
         return getattr(builtins, name)
     return None
 
@@ -224,9 +224,11 @@ def get_variables_in_frame_by_scope(frame, scope):
     """
     if scope == "local":
         return frame.f_locals
-    elif scope == "global":
+
+    if scope == "global":
         return frame.f_globals
-    elif scope == "nonlocal":
+
+    if scope == "nonlocal":
         globals_ = frame.f_globals
         non_locals = {}
         while frame.f_back is not None:
@@ -238,11 +240,11 @@ def get_variables_in_frame_by_scope(frame, scope):
                     continue
                 non_locals[key] = frame.f_locals[key]
         return non_locals
-    else:
-        debug_helper.log("Internal error in get_variable_in_frame_by_scope()")
-        debug_helper.log(f"unknown scope '{scope}'")
-        debug_helper.log_error()
-        return {}
+
+    debug_helper.log("Internal error in get_variable_in_frame_by_scope()")
+    debug_helper.log(f"unknown scope '{scope}'")
+    debug_helper.log_error()
+    return {}
 
 
 def get_definition_scope(variable_name, frame):
