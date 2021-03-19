@@ -152,6 +152,10 @@ descriptions = {
         cause: "tried to define a function",
         title: "def: misused as code block",
     },
+    "def_dict_as_arg": {
+        cause: "You cannot have any explicit dict or set as function arguments",
+        title: "def: dict as argument"
+    },
     "def_duplicate_arg": {
         cause: "keyword argument should appear only once in a function definition",
         title: "def: Keyword arg only once in function definition",
@@ -184,6 +188,14 @@ descriptions = {
         cause: "You tried to use the Python keyword",
         title: "def: Python keyword as function name",
     },
+    "def_list_as_arg_1": {
+        cause: "You cannot have explicit lists as function arguments",
+        title: "def: list as argument - 1"
+    },
+    "def_list_as_arg_2": {
+        cause: "You cannot have explicit lists as function arguments",
+        title: "def: list as argument - 2"
+    },
     "def_missing_comma": {
         cause: "Did you forget a comma",
         title: "def: missing comma between function args",
@@ -211,6 +223,10 @@ descriptions = {
     "def_positional_after_keyword_arg": {
         cause: "call functions with only positional arguments",
         title: "def: positional argument follows keyword argument",
+    },
+    "def_set_as_arg": {
+        cause: "You cannot have any explicit dict or set as function arguments",
+        title: "def: set as argument"
     },
     "def_star_arg_before_slash": {
         cause: "`*arg` must appear after `/` ",

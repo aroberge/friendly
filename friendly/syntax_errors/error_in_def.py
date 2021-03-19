@@ -493,9 +493,7 @@ def tuple_as_argument(statement):
 @add_statement_analyzer
 def list_as_argument(statement):
     _ = current_lang.translate
-    # TODO: add tests
-
-    if not (statement.bad_token == "[(]" and statement.prev_token.string in "(,"):
+    if not (statement.bad_token == "[" and statement.prev_token.string in "(,"):
         return {}
 
     hint = _("You cannot have explicit lists as function arguments.\n")
@@ -508,9 +506,7 @@ def list_as_argument(statement):
 @add_statement_analyzer
 def dict_or_set_as_argument(statement):
     _ = current_lang.translate
-    # TODO: add tests
-
-    if not (statement.bad_token == "[{]" and statement.prev_token.string in "(,"):
+    if not (statement.bad_token == "{" and statement.prev_token.string in "(,"):
         return {}
 
     hint = _("You cannot have any explicit dict or set as function arguments.\n")
