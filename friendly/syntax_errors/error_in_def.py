@@ -365,7 +365,7 @@ def positional_arguments_in_def(statement):
     # TODO: add tests
     # Note that this actually raises a TypeError and not a SyntaxError when used incorrectly.
 
-    if not (statement.bad_token == "/" and statement.prev_token.is_in("(,")):
+    if not (statement.bad_token == "/" and statement.prev_token.string in "(,"):
         return {}
 
     meaning = _(
@@ -447,7 +447,7 @@ def keyword_arguments_in_def(statement):
 def number_as_argument(statement):
     _ = current_lang.translate
 
-    if not (statement.bad_token.is_number() and statement.prev_token.is_in("(,")):
+    if not (statement.bad_token.is_number() and statement.prev_token.string in "(,"):
         return {}
 
     hint = _("You cannot use numbers as function arguments.\n")
@@ -462,7 +462,7 @@ def number_as_argument(statement):
 def string_as_argument(statement):
     _ = current_lang.translate
 
-    if not (statement.bad_token.is_string() and statement.prev_token.is_in("(,")):
+    if not (statement.bad_token.is_string() and statement.prev_token.string in "(,"):
         return {}
 
     hint = _("You cannot use strings as function arguments.\n")
@@ -477,7 +477,7 @@ def string_as_argument(statement):
 def tuple_as_argument(statement):
     _ = current_lang.translate
 
-    if not (statement.bad_token == "(" and statement.prev_token.is_in("(,")):
+    if not (statement.bad_token == "(" and statement.prev_token.string in "(,"):
         return {}
 
     hint = _("You cannot have explicit tuples as function arguments.\n")
@@ -495,7 +495,7 @@ def list_as_argument(statement):
     _ = current_lang.translate
     # TODO: add tests
 
-    if not (statement.bad_token == "[(]" and statement.prev_token.is_in("(,")):
+    if not (statement.bad_token == "[(]" and statement.prev_token.string in "(,"):
         return {}
 
     hint = _("You cannot have explicit lists as function arguments.\n")
@@ -510,7 +510,7 @@ def dict_or_set_as_argument(statement):
     _ = current_lang.translate
     # TODO: add tests
 
-    if not (statement.bad_token == "[{]" and statement.prev_token.is_in("(,")):
+    if not (statement.bad_token == "[{]" and statement.prev_token.string in "(,"):
         return {}
 
     hint = _("You cannot have any explicit dict or set as function arguments.\n")
@@ -528,7 +528,7 @@ def operator_as_argument(statement):
     if not statement.bad_token.is_operator() or statement.prev_token == "def":
         return {}
 
-    if statement.prev_token.is_in("(,"):
+    if statement.prev_token.string in "(,":
         hint = _("You cannot have operators as function arguments.\n")
     else:
         new_statement = fixers.replace_token(

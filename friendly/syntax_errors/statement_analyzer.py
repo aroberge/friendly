@@ -452,10 +452,10 @@ def assign_instead_of_equal(statement):
     # fix would work.
     _ = current_lang.translate
 
-    if not statement.bad_token == "=":
+    if statement.bad_token != "=":
         return {}
 
-    if not statement.first_token.is_in(["if", "elif", "while"]):
+    if statement.first_token.string not in ("if", "elif", "while"):
         return {}
 
     new_statement = fixers.replace_token(
@@ -515,7 +515,7 @@ def print_as_statement(statement):
 @add_statement_analyzer
 def calling_python_or_pip(statement):
     _ = current_lang.translate
-    if not statement.first_token.is_in(["pip", "python"]):
+    if statement.first_token.string not in ("pip", "python"):
         return {}
 
     cause = _(
@@ -540,7 +540,7 @@ def calling_python_or_pip(statement):
 def dot_followed_by_bracket(statement):
     _ = current_lang.translate
 
-    if statement.bad_token.is_in("()[]{}") and statement.prev_token == ".":
+    if statement.bad_token.string in "()[]{}" and statement.prev_token == ".":
         cause = _("You cannot have a dot `.` followed by `{bracket}`.\n").format(
             bracket=statement.bad_token
         )
@@ -595,20 +595,18 @@ def missing_colon(statement):
     name = statement.first_token
     # Note: "async def" statements are transformed into "def" statements
     # prior to reaching this stage.
-    if name.is_not_in(
-        [
-            "class",
-            "def",
-            "if",
-            "elif",
-            "else",
-            "for",
-            "while",
-            "try",
-            "except",
-            "finally",
-            "with",
-        ]
+    if name.string not in (
+        "class",
+        "def",
+        "if",
+        "elif",
+        "else",
+        "for",
+        "while",
+        "try",
+        "except",
+        "finally",
+        "with",
     ):
         return {}
 
@@ -867,8 +865,15 @@ def wrong_type_declaration(statement):
 
     if not statement.bad_token.is_identifier():
         return {}
-    if not statement.prev_token.is_in(
-        ["int", "float", "double", "var", "let", "str", "string", "complex"]
+    if statement.prev_token.string not in (
+        "int",
+        "float",
+        "double",
+        "var",
+        "let",
+        "str",
+        "string",
+        "complex",
     ):
         return {}
 
@@ -1076,7 +1081,7 @@ def impossible_binary_fstring(statement):
     _ = current_lang.translate
     if (
         statement.bad_token.is_string()
-        and statement.prev_token.is_in(["bf", "fb"])
+        and statement.prev_token.string in ("bf", "fb")
         and statement.prev_token.immediately_before(statement.bad_token)
     ):
         hint = _("`bf` is an illegal string prefix.\n")

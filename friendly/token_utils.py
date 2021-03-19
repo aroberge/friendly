@@ -138,16 +138,6 @@ class Token:
         """Returns True if the token is a string"""
         return self.type == py_tokenize.STRING
 
-    def is_in(self, iterable):  # TODO: add unit tests
-        """Returns True if the string attribute is found as an item of iterable."""
-        return self.string.strip() and self.string in iterable
-
-    def is_not_in(self, iterable):  # TODO: add unit tests
-        """Returns True if the string attribute is found as an item of iterable."""
-        if not self.string:
-            return True
-        return self.string not in iterable
-
     def immediately_before(self, other):  # TODO: add unit tests
         """Return True if the current token is immediately before other,
         without any intervening space in between the two tokens.

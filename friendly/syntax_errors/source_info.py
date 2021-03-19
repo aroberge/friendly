@@ -294,7 +294,7 @@ class Statement:
                 and previous_token is not None
                 and previous_token.string.strip()
                 and previous_token.start_row < token.start_row
-                and token.is_not_in(")]}")
+                and token.string not in ")]}"
             ):
                 break
             if (
@@ -375,14 +375,15 @@ class Statement:
                 self.prev_token = token
 
             previous_token = token
-            if token.is_not_in("()[]}{"):
+            # careful to not accidentally include null strings as brackets
+            if not token.string or token.string not in "()[]}{":
                 continue
 
-            if token.is_in("([{"):
+            if token.string in "([{":
                 self.statement_brackets.append(token.string)
                 if self.bad_token is None or self.bad_token is token:
                     self.begin_brackets.append(token)
-            elif token.is_in(")]}"):
+            elif token.string in ")]}":
                 self.end_bracket = token
                 last_closing = token
 

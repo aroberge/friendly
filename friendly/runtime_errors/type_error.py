@@ -537,9 +537,9 @@ def cannot_multiply_by_str(message, frame, tb_data):
         tokens = token_utils.get_significant_tokens(tb_data.bad_line)
         int_vars = []
         for prev_token, token in zip(tokens, tokens[1:]):
-            if prev_token.is_in(["*", "*="]) and token.is_in(names):
+            if prev_token.string in ("*", "*=") and token.string in names:
                 int_vars.append(token.string)
-            elif prev_token.is_in(names) and token == "*":
+            elif prev_token.string in names and token == "*":
                 int_vars.append(prev_token.string)
             else:
                 continue
