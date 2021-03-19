@@ -47,7 +47,7 @@ def convert_value_to_message(value):
     _ = current_lang.translate
     try:
         message = str(value)
-    except Exception:
+    except Exception:  # noqa
         message = STR_FAILED
     return message
 
@@ -127,7 +127,7 @@ class TracebackData:
             # this can happen with editors_helpers.check_syntax()
             try:
                 self.bad_line = cache.get_source_lines(value.filename)[value.lineno - 1]
-            except Exception:
+            except Exception:  # noqa
                 self.bad_line = "\n"
             return
 
@@ -671,6 +671,7 @@ class FriendlyTraceback:
         )
         # The following is needed for some determining the cause in at
         # least one case.
+        # skipcq: PYL-W0201
         self.tb_data.simulated_python_traceback = "\n".join(tb) + "\n"
 
     @staticmethod
@@ -737,7 +738,7 @@ class FriendlyTraceback:
             if _line is None:
                 try:
                     _line = lines[value.lineno - 1]
-                except Exception:
+                except Exception:  # noqa
                     pass
             if _line is not None:
                 if filename == "<fstring>" and lines == ["\n"]:

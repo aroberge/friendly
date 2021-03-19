@@ -62,7 +62,7 @@ def check_syntax(
             with open(path, encoding="utf8") as f:
                 source = f.read()
                 filename = path
-        except Exception:
+        except Exception:  # noqa
             print("Exception caught")
             # Do not show the Python traceback which would include
             #  the call to open() in the traceback
@@ -77,7 +77,7 @@ def check_syntax(
     cache.add(filename, source)
     try:
         code = compile(source, filename, "exec")
-    except Exception:
+    except Exception:  # noqa
         if include is None:
             session.set_include("explain")  # our default
         else:
@@ -121,7 +121,7 @@ def exec_code(*, source=None, path=None, include=None, lang=None):
     module_globals = {"__name__": "__main__"}
     try:
         exec(code, module_globals)
-    except Exception:
+    except Exception:  # noqa
         if include is None:
             session.set_include("explain")  # our default
         else:

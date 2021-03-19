@@ -60,7 +60,7 @@ def get_iterable(code, frame):
         # all the relevant code parts. Thus, using eval should be completely safe.
         obj = utils.eval_expr(code, frame)
         # obj = eval(code, frame.f_globals, frame.f_locals)
-    except Exception:
+    except Exception:  # noqa
         return None, None
 
     if isinstance(obj, dict):

@@ -20,7 +20,7 @@ def get_cause(value, frame, tb_data):
     message = str(value)
     try:
         return _get_cause(message, frame, tb_data)
-    except Exception:
+    except Exception:  # noqa
         debug_helper.log_error()
         return {"cause": internal_error(), "suggest": internal_error()}
 
@@ -43,7 +43,7 @@ def expression_is_zero(expression, modulo=False):
                 return _("Using the modulo operator, you are dividing by zero.\n")
             return _("You are dividing by zero.\n")
         return ""
-    except Exception:
+    except Exception:  # noqa
         return ""
 
 

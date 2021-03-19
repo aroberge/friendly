@@ -145,7 +145,7 @@ def missing_self(unknown_name, frame, tb_data, hint):
     message = ""
     try:
         tokens = token_utils.get_significant_tokens(tb_data.bad_line)
-    except Exception:
+    except Exception:  # noqa
         return message, hint
 
     if not tokens:
