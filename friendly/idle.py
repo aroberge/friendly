@@ -74,7 +74,8 @@ def format_source(text, keep_caret):
     for index, line in enumerate(lines):
         if index == error_line and not keep_caret:
             continue
-        elif index == error_line - 1:
+
+        if index == error_line - 1:
             new_lines.append((line[0:begin], "default"))
             new_lines.append((line[begin:end], "ERROR"))
             new_lines.append((line[end:], "default"))

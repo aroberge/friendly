@@ -177,8 +177,6 @@ def get_dotted_names(line):
                 names.append(previous_name + "." + tok.string)
                 dot_found = False
                 continue
-            else:
-                names.append(tok.string)
             names.append(tok.string)
         prev_token = tok
         dot_found = False

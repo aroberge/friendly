@@ -58,7 +58,8 @@ def _get_cause(value, frame, tb_data):
                 "`{name}` is a key of `{dict_}` which is similar to `{key}`.\n"
             ).format(name=similar[0], dict_=name, key=key)
             return {"cause": cannot_find_key(key) + additional, "suggest": hint}
-        elif similar:
+
+        if similar:
             hint = _("Did you mean `{name}`?\n").format(name=similar[0])
             additional = _(
                 "`{dict_}` has some keys similar to `{key}` including:\n" "`{names}`\n"

@@ -35,11 +35,13 @@ def _get_cause(value, frame, tb_data):
 
     if match1:
         return attribute_error_in_module(match1.group(1), match1.group(2), frame)
-    elif match2:
+
+    if match2:
         return attribute_error_in_object(
             match2.group(1), match2.group(2), tb_data, frame
         )
-    elif match3:
+
+    if match3:
         if match3.group(1) == "NoneType":
             return {
                 "cause": _(
@@ -47,12 +49,12 @@ def _get_cause(value, frame, tb_data):
                     "for a variable whose value is `None`."
                 ).format(attr=match3.group(2))
             }
-        else:
-            return attribute_error_in_object(
-                match3.group(1), match3.group(2), tb_data, frame
-            )
-    else:
-        return {"cause": no_information()}
+
+        return attribute_error_in_object(
+            match3.group(1), match3.group(2), tb_data, frame
+        )
+
+    return {"cause": no_information()}
 
 
 # ======= Attribute error in module =========
@@ -81,15 +83,15 @@ def attribute_error_in_module(module, attribute, frame):
                 "instead of `{module}.{typo}`\n"
             ).format(correct=similar_attributes[0], typo=attribute, module=module)
             return {"cause": cause, "suggest": hint}
-        else:
-            names = list_to_string(similar_attributes)
-            hint = _("Did you mean `{name}`?\n").format(name=similar_attributes[0])
-            cause = _(
-                "Instead of writing `{module}.{typo}`, perhaps you meant to write one of \n"
-                "the following names which are attributes of module `{module}`:\n"
-                "`{names}`\n"
-            ).format(names=names, typo=attribute, module=module)
-            return {"cause": cause, "suggest": hint}
+
+        names = list_to_string(similar_attributes)
+        hint = _("Did you mean `{name}`?\n").format(name=similar_attributes[0])
+        cause = _(
+            "Instead of writing `{module}.{typo}`, perhaps you meant to write one of \n"
+            "the following names which are attributes of module `{module}`:\n"
+            "`{names}`\n"
+        ).format(names=names, typo=attribute, module=module)
+        return {"cause": cause, "suggest": hint}
 
     if module in stdlib_modules.names and hasattr(mod, "__file__"):
         mod_path = path_utils.shorten_path(mod.__file__)
@@ -146,12 +148,12 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
                 obj_name=obj_name, attribute=attribute
             )
             return {"cause": cause, "suggest": hint}
-        else:
-            cause = _(
-                "`{obj_name}` is a Python built-in function or method\n"
-                "which does not have an attribute named `{attribute}.`\n"
-            ).format(obj_name=obj_name, attribute=attribute)
-            return {"cause": cause}
+
+        cause = _(
+            "`{obj_name}` is a Python built-in function or method\n"
+            "which does not have an attribute named `{attribute}.`\n"
+        ).format(obj_name=obj_name, attribute=attribute)
+        return {"cause": cause}
 
     obj = info_variables.get_object_from_name(obj_type, frame)
     if obj is None:

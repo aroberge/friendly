@@ -60,4 +60,4 @@ Python version: {python}
 
 print(f"Python version: {platform.python_version()}; --- markdown format")
 
-trb_syntax_common.create_tracebacks(target, intro_text, format="markdown_docs")
+trb_syntax_common.create_tracebacks(target, intro_text, formatter="markdown_docs")

@@ -208,7 +208,7 @@ class _State:
 
         if etype.__name__ == "SystemExit":
             raise SystemExit(str(value))
-        elif etype.__name__ == "KeyboardInterrupt":
+        if etype.__name__ == "KeyboardInterrupt":
             raise KeyboardInterrupt(str(value))
 
         saved_current_redirect = None
@@ -222,7 +222,7 @@ class _State:
             info = self.friendly[-1].info
             self.saved_info.append(info)
             explanation = self.formatter(info, include=self.include)
-        except Exception as e:
+        except Exception as e:  # noqa
             debug_helper.log("Exception raised in exception_hook().")
             try:
                 debug_helper.log(self.friendly[-1].tb_data.filename)

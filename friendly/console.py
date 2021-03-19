@@ -34,6 +34,7 @@ please_comment = (
 
 
 class FriendlyConsole(InteractiveConsole):
+    # skipcq: PYL-W0622
     def __init__(self, locals=None, formatter="dark", background=None):  # noqa
         """This class builds upon Python's code.InteractiveConsole
         so as to provide friendly tracebacks. It keeps track

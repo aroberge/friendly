@@ -54,6 +54,7 @@ class Statement:
         # From the traceback, we were previously able ot obtain the line
         # of code identified by Python as being problematic.
         self.bad_line = bad_line  # previously obtained from the traceback
+        # skipcq: PTC-W0052
         self.statement = bad_line  # temporary assignment
 
         # The following will be obtained using offset and bad_line
