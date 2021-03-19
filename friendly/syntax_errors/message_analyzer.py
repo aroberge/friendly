@@ -11,6 +11,7 @@ import sys
 from . import fixers
 from . import syntax_utils
 from . import statement_analyzer
+from .. import debug_helper
 from .. import utils
 from ..my_gettext import current_lang, use_www
 
@@ -788,12 +789,30 @@ def unexpected_character_after_continuation(message="", statement=None):
         "You are using the continuation character `\\` outside of a string,\n"
         "and it is followed by some other character(s).\n"
     )
-    if statement.bad_token.is_number():  # TODO: test this
+
+    # For 3.9.0 and 3.10.0a6 (and possibly others), the new peg parser is
+    # not giving us the correct location for the error; so we need to find it.
+    bad_token = statement.bad_token
+    if statement.prev_token != "\\":
+        found_continuation = False
+        for tok in statement.tokens:
+            if tok == "\\":
+                found_continuation = True
+                continue
+
+            if found_continuation:
+                bad_token = tok
+                break
+        else:
+            debug_helper.log("Could not find bad token after continuation character.")
+
+    if bad_token.is_number():
+        number = bad_token
         cause += _(
-            "I am guessing that you wanted to divide by a number \n"
-            "and wrote `\\` instead of `/`."
-        )
-        hint = _("Did you mean to divide by a number?\n")
+            "I am guessing that you wanted to divide by the number {number} \n"
+            "and wrote \\ instead of /."
+        ).format(number=number)
+        hint = _("Did you mean to divide by {number}?\n").format(number=number)
         return {"cause": cause, "suggest": hint}
 
     cause += _("I am guessing that you forgot to enclose some content in a string.\n")

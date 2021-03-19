@@ -108,6 +108,10 @@ descriptions = {
         cause: "`True` is a constant in Python",
         title: "Walrus/Named assignment depending on Python version",
     },
+    "backslash_instead_of_slash" : {
+        cause: "Did you mean to divide",
+        title: "Backslash instead of slash"
+    },
     "break_outside_loop": {
         cause: "The Python keyword `break` can only be used",
         title: "break outside loop",
