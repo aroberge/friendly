@@ -306,32 +306,28 @@ class Statement:
                     break
                 # perhaps we have some unclosed bracket causing the error
                 # and we meant to start a new statement
-                if token.is_in(
-                    [
-                        "async",
-                        "await",
-                        "class",
-                        "def",
-                        "return",
-                        "elif",
-                        "import",
-                        "try",
-                        "except",
-                        "finally",
-                        "with",
-                        "while",
-                        "yield",
-                        # ";",
-                    ]
+                if token.string in (
+                    "async",
+                    "await",
+                    "class",
+                    "def",
+                    "return",
+                    "elif",
+                    "import",
+                    "try",
+                    "except",
+                    "finally",
+                    "with",
+                    "while",
+                    "yield",
+                    # ";",
                 ):
                     break
-                elif self.bad_token == ":":
-                    break
-                elif (
-                    token.is_in(["if", "else", "for"])
+
+                if self.bad_token == ":" or (
+                    token.string in ("if", "else", "for")
                     and token.start_row > previous_row_non_space
                 ):
-                    # the keyword above likely starts a new statement
                     break
             if token.string.strip():
                 previous_row_non_space = token.end_row

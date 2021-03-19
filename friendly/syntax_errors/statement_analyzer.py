@@ -845,10 +845,11 @@ def lambda_with_paren(statement):
     for tok in tokens:
         if tok == "lambda":
             break
-        elif tok.is_identifier() or tok == ",":
+
+        if tok.is_identifier() or tok == ",":
             continue
-        else:
-            return {}
+
+        return {}
     else:
         return {}
 

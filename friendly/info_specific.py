@@ -48,7 +48,7 @@ def _attribute_error(value, frame, tb_data):
 
 
 @register("FileNotFoundError")
-def file_not_found_error(value, *_args):
+def _file_not_found_error(value, *_args):
     _ = current_lang.translate
     # str(value) is expected to be something like
     #
@@ -79,7 +79,7 @@ def _index_error(value, frame, tb_data):
 
 
 @register("KeyError")
-def key_error(value, frame, tb_data):
+def _key_error(value, frame, tb_data):
     _ = current_lang.translate
     from .runtime_errors import key_error
 
@@ -95,7 +95,7 @@ def _module_not_found_error(value, frame, tb_data):
 
 
 @register("NameError")
-def name_error(value, frame, tb_data):
+def _name_error(value, frame, tb_data):
 
     from .runtime_errors import name_error
 
@@ -103,7 +103,7 @@ def name_error(value, frame, tb_data):
 
 
 @register("OverflowError")
-def overflow_error(*_args):
+def _overflow_error(*_args):
     return {}  # TODO: check to see if additional information
     # can be provided for real test cases
 
@@ -130,7 +130,7 @@ def _unbound_local_error(value, frame, tb_data):
 
 
 @register("ZeroDivisionError")
-def zero_division_error(value, frame, tb_data):
+def _zero_division_error(value, frame, tb_data):
     from .runtime_errors import zero_division_error
 
     return zero_division_error.get_cause(value, frame, tb_data)
