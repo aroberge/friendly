@@ -144,9 +144,13 @@ descriptions = {
         cause: "copy-pasted code from an interactive interpreter",
         title: "Copy/paste from interpreter",
     },
+    "def_arg_after_kwarg": {
+        cause: "Positional arguments must come before keyword argument",
+        title: "def: positional arg after kwargs"
+    },
     "def_bare_star_arg": {
         cause: "replace `*` by either `*arguments` or ",
-        title: "Named arguments must follow bare *",
+        title: "def: named arguments must follow bare *",
     },
     "def_code_block": {
         cause: "tried to define a function",

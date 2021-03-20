@@ -547,17 +547,21 @@ def operator_as_argument(statement):
 
 @add_statement_analyzer
 def arg_after_kwarg(statement):
+    """This is only for something with positional argument after **kwargs;
+    the case where we have a positional argument after a named argument,
+    (..., a=1, b, ...) gets a specific error message.
+    """
     _ = current_lang.translate
-    # TODO: add tests
 
     if not (
         statement.bad_token.is_identifier()
-        and statement.prev_token == statement.next_token == ","
+        and statement.prev_token == ","
+        and statement.next_token in (",", ")")
     ):
         return {}
 
     for tok in statement.tokens[0 : statement.bad_token_index]:
-        if str(tok) in ("**", "="):
+        if tok == "**":
             hint = _("Positional arguments must come before keyword arguments.\n")
             cause = hint + _(
                 "`{arg}` is a positional argument that appears after one or more\n"
