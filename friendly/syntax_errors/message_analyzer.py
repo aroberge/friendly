@@ -475,7 +475,7 @@ def eol_while_scanning_string_literal(message="", statement=None):
     ):
         hint = _("Did you forget a closing quote?\n")
         cause = _(
-            "You starting writing a string with a single or double quote\n"
+            "You started writing a string with a single or double quote\n"
             "but never ended the string with another quote on that line.\n"
         )
         # skipcq: PYL-R1714
