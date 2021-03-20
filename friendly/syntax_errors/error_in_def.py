@@ -100,13 +100,6 @@ def remove_async(statement):
     return statement
 
 
-# TODO: rewrite this so that we first look at a series of fixers
-# like adding a colon at the end, replacing the last token by a colon,
-# adding parens, replacing the function name, etc. As soon as we find
-# a good fix, we can stop.  Otherwise, we continue the analysis as we currently
-# have.
-
-
 @add_statement_analyzer
 def def_begin_code_block(statement):  #
     # Thinking of trying to use def to begin a code block, i.e.
@@ -188,8 +181,6 @@ def missing_colon(statement):
     """look for missing colon at the end of statement; includes the case where
     something else has been written as a typo."""
     _ = current_lang.translate
-
-    # TODO: need to add test for each case
     if (
         statement.last_token == ":"
         or statement.bad_token != statement.last_token
@@ -214,7 +205,7 @@ def missing_colon(statement):
     if fixers.check_statement(new_statement):
         hint = _("Did you write something by mistake after the colon?\n")
         cause += _("A block of code must come after the colon.\n")
-        cause += _("If you remove `{bad}`, this will fix the problem.\n").format(
+        cause += _("Removing `{bad}`, might fix the problem.\n").format(
             bad=statement.bad_token
         )
         return {"cause": cause, "suggest": hint}

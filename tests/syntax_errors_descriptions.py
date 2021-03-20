@@ -108,9 +108,9 @@ descriptions = {
         cause: "`True` is a constant in Python",
         title: "Walrus/Named assignment depending on Python version",
     },
-    "backslash_instead_of_slash" : {
+    "backslash_instead_of_slash": {
         cause: "Did you mean to divide",
-        title: "Backslash instead of slash"
+        title: "Backslash instead of slash",
     },
     "break_outside_loop": {
         cause: "The Python keyword `break` can only be used",
@@ -146,7 +146,7 @@ descriptions = {
     },
     "def_arg_after_kwarg": {
         cause: "Positional arguments must come before keyword argument",
-        title: "def: positional arg after kwargs"
+        title: "def: positional arg after kwargs",
     },
     "def_bare_star_arg": {
         cause: "replace `*` by either `*arguments` or ",
@@ -158,11 +158,15 @@ descriptions = {
     },
     "def_dict_as_arg": {
         cause: "You cannot have any explicit dict or set as function arguments",
-        title: "def: dict as argument"
+        title: "def: dict as argument",
     },
     "def_duplicate_arg": {
         cause: "keyword argument should appear only once in a function definition",
         title: "def: Keyword arg only once in function definition",
+    },
+    "def_extra_semi_colon": {
+        cause: "Did you write something by mistake after the colon",
+        title: "def: semi-colon after colon",
     },
     "def_function_name_invalid": {
         cause: "The name of a function must be a valid Python identifier",
@@ -194,11 +198,15 @@ descriptions = {
     },
     "def_list_as_arg_1": {
         cause: "You cannot have explicit lists as function arguments",
-        title: "def: list as argument - 1"
+        title: "def: list as argument - 1",
     },
     "def_list_as_arg_2": {
         cause: "You cannot have explicit lists as function arguments",
-        title: "def: list as argument - 2"
+        title: "def: list as argument - 2",
+    },
+    "def_missing_colon": {
+        cause: "Did you forget to write a colon",
+        title: "def: missing colon",
     },
     "def_missing_comma": {
         cause: "Did you forget a comma",
@@ -228,17 +236,21 @@ descriptions = {
         cause: "call functions with only positional arguments",
         title: "def: positional argument follows keyword argument",
     },
+    "def_semi_colon_instead_of_colon": {
+        cause: "You wrote `;` instead of a colon",
+        title: "def: semi-colon instead of colon"
+    },
     "def_set_as_arg": {
         cause: "You cannot have any explicit dict or set as function arguments",
-        title: "def: set as argument"
+        title: "def: set as argument",
     },
     "def_star_arg_before_slash": {
         cause: "`*arg` must appear after `/` ",
-        title: "def: ``*arg`` before /"
+        title: "def: ``*arg`` before /",
     },
     "def_star_used_only_once": {
         cause: "can only use `*` once in a function definition",
-        title: "def: ``*`` used twice"
+        title: "def: ``*`` used twice",
     },
     "def_string_as_arg": {
         cause: "You used a string as an argument",
@@ -246,11 +258,11 @@ descriptions = {
     },
     "def_tuple_as_arg_1": {
         cause: "You cannot have explicit tuples as function arguments.",
-        title: "def: tuple as function argument"
+        title: "def: tuple as function argument",
     },
     "def_tuple_as_arg_2": {
         cause: "You cannot have explicit tuples as function arguments.",
-        title: "def: tuple as function argument - 2"
+        title: "def: tuple as function argument - 2",
     },
     "delete_constant_keyword": {
         cause: "You cannot delete the constant",
@@ -394,11 +406,11 @@ descriptions = {
     },
     "lambda_with_parens": {
         cause: "`lambda` does not allow parentheses ",
-        title: "lambda with parentheses around arguments"
+        title: "lambda with parentheses around arguments",
     },
     "lambda_with_tuple_argument": {
         cause: "You cannot have explicit tuples as arguments.",
-        title: "lambda with tuple as argument"
+        title: "lambda with tuple as argument",
     },
     "missing_code_block": {  # May differ depending on Python version
         cause: "it reached the end of the file and expected more content.",
@@ -566,7 +578,9 @@ if sys.version_info < (3, 8):
     }
     del descriptions["would_be_type_declaration_1"]
     del descriptions["would_be_type_declaration_2"]
-    descriptions["def_star_arg_before_slash"]["cause"] = "This symbol can only be used with Python versions"
+    descriptions["def_star_arg_before_slash"][
+        "cause"
+    ] = "This symbol can only be used with Python versions"
 
 if sys.version_info >= (3, 9):
     descriptions["missing_code_block"]["cause"] = "expected an indented block"
@@ -575,3 +589,4 @@ if sys.version_info >= (3, 10):
     descriptions["quote_inside_string"]["cause"] = "ended the string with another quote"
     descriptions["missing_colon_if"]["cause"] = "Did you forget a colon"
     descriptions["missing_colon_while"]["cause"] = "Did you forget a colon"
+    descriptions["def_missing_colon"]["cause"] = "but forgot to add a colon `:` at the end"
