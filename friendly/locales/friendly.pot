@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-03-20 17:25-0300\n"
+"POT-Creation-Date: 2021-03-21 16:26-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -289,7 +289,7 @@ msgid ""
 "by zero either directly or by using some other mathematical operation.\n"
 msgstr ""
 
-#: info_specific.py:60
+#: info_specific.py:76
 msgid ""
 "In your program, the name of the\n"
 "file that cannot be found is `{filename}`.\n"
@@ -385,7 +385,7 @@ msgid ""
 msgstr ""
 
 #: runtime_errors\attribute_error.py:80 runtime_errors\attribute_error.py:88
-#: runtime_errors\attribute_error.py:118 runtime_errors\attribute_error.py:227
+#: runtime_errors\attribute_error.py:122 runtime_errors\attribute_error.py:243
 #: runtime_errors\import_error.py:105 runtime_errors\key_error.py:56
 #: runtime_errors\key_error.py:63 runtime_errors\module_not_found_error.py:47
 #: runtime_errors\name_error.py:73 runtime_errors\unbound_local_error.py:38
@@ -420,75 +420,86 @@ msgid ""
 "Perhaps you need to rename your module.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:119
+#: runtime_errors\attribute_error.py:123
 msgid ""
 "Perhaps you meant to use the attribute `{attribute}` of \n"
 "module `{mod_name}` instead of module `{module}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:125
+#: runtime_errors\attribute_error.py:129
+msgid "Did you mean one of the following modules: `{names}`?"
+msgstr ""
+
+#: runtime_errors\attribute_error.py:132
+msgid ""
+"Instead of the module `{module}`, perhaps you wanted to use\n"
+"the attribute `{attribute}` of one of the following modules:\n"
+"`{names}`.\n"
+msgstr ""
+
+#: runtime_errors\attribute_error.py:141
 msgid ""
 "Python tells us that no object with name `{attribute}` is\n"
 "found in module `{module}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:143
+#: runtime_errors\attribute_error.py:159
 msgid ""
 "`{obj_name}` is a function. Perhaps you meant to write\n"
 "`{obj_name}({attribute})`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:147
+#: runtime_errors\attribute_error.py:163
 msgid ""
 "Did you mean `{obj_name}({attribute})`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:152
+#: runtime_errors\attribute_error.py:168
 msgid ""
 "`{obj_name}` is a Python built-in function or method\n"
 "which does not have an attribute named `{attribute}.`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:202
+#: runtime_errors\attribute_error.py:218
 msgid ""
 "The object `{obj}` has no attribute named `{attr}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:206
+#: runtime_errors\attribute_error.py:222
 msgid ""
 "Note that object `{obj}` uses `__slots__` which prevents\n"
 "the creation of new attributes.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:214
+#: runtime_errors\attribute_error.py:230
 msgid ""
 "The following are some of its known attributes:\n"
 "`{names}`."
 msgstr ""
 
-#: runtime_errors\attribute_error.py:228
+#: runtime_errors\attribute_error.py:244
 msgid ""
 "Perhaps you meant to write `{obj}.{correct}` instead of `{obj}.{typo}`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:234 runtime_errors\import_error.py:112
+#: runtime_errors\attribute_error.py:250 runtime_errors\import_error.py:112
 msgid ""
 "Did you mean one of the following: `{names}`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:235
+#: runtime_errors\attribute_error.py:251
 msgid ""
 "Instead of writing `{obj}.{typo}`, perhaps you meant to write one of \n"
 "the following names which are attributes of object `{obj}`:\n"
 "`{names}`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:260
+#: runtime_errors\attribute_error.py:276
 msgid ""
 "Did you write a comma by mistake?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:261
+#: runtime_errors\attribute_error.py:277
 msgid ""
 "`{obj_name}` is a tuple that contains a single item\n"
 "which does have `'{attribute}'` as an attribute.\n"
@@ -496,56 +507,56 @@ msgid ""
 "where you defined `{obj_name}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:274
+#: runtime_errors\attribute_error.py:290
 msgid ""
 "Did you mean `'...'.join({obj_name})`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:275
+#: runtime_errors\attribute_error.py:291
 msgid ""
 "The object `{obj_name}` has no attribute named `join`.\n"
 "Perhaps you wanted something like `'...'.join({obj_name})`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:284
+#: runtime_errors\attribute_error.py:300
 msgid ""
 "Did you mean `{known_builtin}({obj_name})`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:287
+#: runtime_errors\attribute_error.py:303
 msgid ""
 "The object `{obj_name}` has no attribute named `{attribute}`.\n"
 "Perhaps you can use the Python builtin function `{known_builtin}` instead:\n"
 "`{known_builtin}({obj_name})`."
 msgstr ""
 
-#: runtime_errors\attribute_error.py:320
+#: runtime_errors\attribute_error.py:336
 msgid ""
 "Did you mean `{attr}`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:322
+#: runtime_errors\attribute_error.py:338
 msgid ""
 "The object `{name}` has no attribute named `{attribute}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:327
+#: runtime_errors\attribute_error.py:343
 msgid ""
 "However, `{attr}` is an attribute of `{name}` with a similar meaning.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:331
+#: runtime_errors\attribute_error.py:347
 msgid ""
 "However, `{name}` has the following attributes with similar meanings:\n"
 "`{attributes}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:342
+#: runtime_errors\attribute_error.py:358
 msgid ""
 "Did you mean to separate object names by a comma?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:344
+#: runtime_errors\attribute_error.py:360
 msgid ""
 "`{second}` is not an attribute of `{first}`.\n"
 "However, both `{first}` and `{second}` are known objects.\n"
@@ -819,86 +830,86 @@ msgid ""
 "Perhaps you should have written `self.{unknown_name}` instead of `{unknown_name}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:62 runtime_errors\type_error.py:82
+#: runtime_errors\type_error.py:80
+msgid ""
+"Did you forget to convert the string `{name}` into {number_type}?\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:85
+msgid ""
+"Perhaps you forgot to convert the string `{name}` into {number_type}.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:105 runtime_errors\type_error.py:129
 msgid ""
 "You tried to concatenate (add) two different types of objects:\n"
 "{first} and {second}.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:120
-msgid ""
-"Did you forget to convert the string `{name}` into {number_type}?\n"
-msgstr ""
-
-#: runtime_errors\type_error.py:125
-msgid ""
-"Perhaps you forgot to convert the string `{name}` into {number_type}.\n"
-msgstr ""
-
-#: runtime_errors\type_error.py:151
+#: runtime_errors\type_error.py:162
 msgid ""
 "You tried to add two incompatible types of objects:\n"
 "{first} and {second}.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:159
+#: runtime_errors\type_error.py:170
 msgid ""
 "You tried to subtract two incompatible types of objects:\n"
 "{first} and {second}.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:167
+#: runtime_errors\type_error.py:178
 msgid ""
 "You tried to multiply two incompatible types of objects:\n"
 "{first} and {second}.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:175
+#: runtime_errors\type_error.py:186
 msgid ""
 "You tried to divide two incompatible types of objects:\n"
 "{first} and {second}.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:183
+#: runtime_errors\type_error.py:194
 msgid ""
 "You tried to perform the bitwise operation {operator}\n"
 "on two incompatible types of objects:\n"
 "{first} and {second}.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:200 runtime_errors\type_error.py:730
-#: runtime_errors\type_error.py:827 syntax_errors\statement_analyzer.py:1012
+#: runtime_errors\type_error.py:211 runtime_errors\type_error.py:741
+#: runtime_errors\type_error.py:838 syntax_errors\statement_analyzer.py:1012
 #: syntax_errors\statement_analyzer.py:1020
 #: syntax_errors\statement_analyzer.py:1190
 msgid ""
 "Did you mean `{line}`?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:201
+#: runtime_errors\type_error.py:212
 msgid ""
 "Outside of Python, `^` is often used to indicate exponentiation.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:204 runtime_errors\type_error.py:733
+#: runtime_errors\type_error.py:215 runtime_errors\type_error.py:744
 msgid ""
 "Perhaps you meant `{line}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:207
+#: runtime_errors\type_error.py:218
 msgid ""
 "You tried to perform the bit shifting operation {operator}\n"
 "on two incompatible types of objects:\n"
 "{first} and {second}.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:217
+#: runtime_errors\type_error.py:228
 msgid ""
 "You tried to exponentiate (raise to a power)\n"
 "using two incompatible types of objects:\n"
 "{first} and {second}.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:226
+#: runtime_errors\type_error.py:237
 msgid ""
 "You tried to use the operator {operator}\n"
 "using two incompatible types of objects:\n"
@@ -907,25 +918,25 @@ msgid ""
 "for multiplication of matrices.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:261
+#: runtime_errors\type_error.py:272
 msgid ""
 "You tried to do an order comparison ({operator})\n"
 "between two incompatible types of objects:\n"
 "{first} and {second}.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:295
+#: runtime_errors\type_error.py:306
 msgid "Perhaps you meant to write `{operator}=` instead of `={operator}`"
 msgstr ""
 
-#: runtime_errors\type_error.py:299
+#: runtime_errors\type_error.py:310
 msgid ""
 "You tried to use the unary operator '{operator}'\n"
 "with the following type of object: {obj}.\n"
 "This operation is not defined for this type of object.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:324
+#: runtime_errors\type_error.py:335
 msgid ""
 "In Python, some objects are known as immutable:\n"
 "once defined, their value cannot be changed.\n"
@@ -933,40 +944,40 @@ msgid ""
 "most likely by using an indexing operation.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:331
+#: runtime_errors\type_error.py:342
 msgid ""
 "Did you mean to use a list?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:332
+#: runtime_errors\type_error.py:343
 msgid ""
 "Perhaps you meant to use a list instead.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:345
+#: runtime_errors\type_error.py:356
 msgid ""
 "In Python 3, exceptions must be derived from BaseException.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:380
+#: runtime_errors\type_error.py:391
 msgid ""
 "You apparently have called the function `{fn_name}` with\n"
 "{nb_given} positional argument(s) while it requires {nb_required}\n"
 "such positional argument(s).\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:386
+#: runtime_errors\type_error.py:397
 msgid ""
 "Perhaps you forgot `self` when defining `{fn_name}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:407
+#: runtime_errors\type_error.py:418
 msgid ""
 "You apparently have called the function '{fn_name}' with\n"
 "fewer positional arguments than it requires ({nb_required} missing).\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:425
+#: runtime_errors\type_error.py:436
 msgid ""
 "Python indicates that you have an object of type `{obj_type}`,\n"
 "followed by something surrounded by parentheses, `(...)`,\n"
@@ -975,14 +986,14 @@ msgid ""
 "or you forgot a comma before `(...)`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:447
+#: runtime_errors\type_error.py:458
 msgid ""
 "The parenthesis `()` following `{obj_name}` are interpreted\n"
 "by Python as a function call for `{obj_name}`.\n"
 "However, `{obj_name}` is not a function but an object of type `{obj_type}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:454
+#: runtime_errors\type_error.py:465
 msgid ""
 "Because of the surrounding parenthesis, `{fn_call}` \n"
 "is interpreted by Python as indicating a function call for \n"
@@ -991,7 +1002,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:470
+#: runtime_errors\type_error.py:481
 msgid ""
 "However, `{fn_call}` is a `tuple`.\n"
 "Either the object `{obj_name}` was meant to be a function\n"
@@ -1000,24 +1011,24 @@ msgid ""
 "`{obj_name}, {fn_call}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:477
+#: runtime_errors\type_error.py:488
 msgid ""
 "Did you forget a comma between `{obj_name}` and `{fn_call}`?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:483
+#: runtime_errors\type_error.py:494
 msgid ""
 "However, `{obj_name}` is a sequence.\n"
 "Perhaps you meant to use `[]` instead of `()` and write\n"
 "`{obj_name}[{slice}]`\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:488
+#: runtime_errors\type_error.py:499
 msgid ""
 "Did you mean `{obj_name}[{slice}]`?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:499
+#: runtime_errors\type_error.py:510
 msgid ""
 "However, both `{obj_name}` and `{fn_call}` are numbers.\n"
 "Perhaps you forgot a multiplication operator, `*`,\n"
@@ -1025,52 +1036,52 @@ msgid ""
 "."
 msgstr ""
 
-#: runtime_errors\type_error.py:504
+#: runtime_errors\type_error.py:515
 msgid ""
 "Did you mean `{obj_name} * {fn_call}`?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:517
+#: runtime_errors\type_error.py:528
 msgid ""
 "Did you forget to convert `{name}` into an integer?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:518
+#: runtime_errors\type_error.py:529
 msgid ""
 "Perhaps you forgot to convert `{name}` into an integer.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:531
+#: runtime_errors\type_error.py:542
 msgid ""
 "You can only multiply sequences, such as list, tuples,\n"
 " strings, etc., by integers.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:553
+#: runtime_errors\type_error.py:564
 msgid ""
 "Did you forget to convert `{name1}` and `{name2}` into integers?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:556
+#: runtime_errors\type_error.py:567
 msgid ""
 "Perhaps you forgot to convert `{name1}` and `{name2}` into integers.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:593
+#: runtime_errors\type_error.py:604
 msgid ""
 "You wrote an object of type `{obj}` where an integer was expected.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:603
+#: runtime_errors\type_error.py:614
 msgid ""
 "Did you forget to convert `{names}` into integers?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:606
+#: runtime_errors\type_error.py:617
 msgid "Perhaps you forgot to convert `{names}` into integers."
 msgstr ""
 
-#: runtime_errors\type_error.py:627
+#: runtime_errors\type_error.py:638
 msgid ""
 "In the expression `{line}`\n"
 "what is included between the square brackets, `[...]`,\n"
@@ -1079,39 +1090,39 @@ msgid ""
 "and you have used {obj_type} instead.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:638
+#: runtime_errors\type_error.py:649
 msgid ""
 "Note: sometimes this exception is raised because what Python\n"
 "interprets as indices was meant to be a separate list, and a comma\n"
 "should have been written before the opening `[` of that list.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:643 syntax_errors\statement_analyzer.py:936
+#: runtime_errors\type_error.py:654 syntax_errors\statement_analyzer.py:936
 #: syntax_errors\statement_analyzer.py:1186
 msgid ""
 "Did you forget a comma?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:680
+#: runtime_errors\type_error.py:691
 msgid ""
 "Perhaps you have forgotten a comma between two identical lists\n"
 "`{container}`.  The second list had been interpreted as\n"
 "the indexation the first one by the index `{new_index}`\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:686
+#: runtime_errors\type_error.py:697
 msgid ""
 "Perhaps you have forgotten a comma between the object `{container}`\n"
 "and the list `{index}`.  The list `{index}` had been interpreted as\n"
 "the indexation of object `{container}` by the index `{new_index}`\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:691
+#: runtime_errors\type_error.py:702
 msgid ""
 "Did you forget a comma before `{index}`?\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:759
+#: runtime_errors\type_error.py:770
 msgid ""
 "When using a slice to extract a range of elements\n"
 "from a sequence, that is something like\n"
@@ -1120,7 +1131,7 @@ msgid ""
 "or possibly some other object having an `__index__` method.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:777
+#: runtime_errors\type_error.py:788
 msgid ""
 "Only hashable objects can be used\n"
 "as elements of `set` or keys of `dict`.\n"
@@ -1128,62 +1139,62 @@ msgid ""
 "once they have been created."
 msgstr ""
 
-#: runtime_errors\type_error.py:787
+#: runtime_errors\type_error.py:798
 msgid ""
 "Instead of using {original}, consider using {replacement}.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:807
+#: runtime_errors\type_error.py:818
 msgid ""
 "Subscriptable objects are typically containers from which\n"
 "you can retrieve item using the notation `[...]`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:819
+#: runtime_errors\type_error.py:830
 msgid ""
 "Using this notation, you attempted to retrieve an item\n"
 "from an object of type `{obj_type}` which is not allowed.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:828
+#: runtime_errors\type_error.py:839
 msgid ""
 "Perhaps you meant to write `{line}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:831
+#: runtime_errors\type_error.py:842
 msgid ""
 "Using this notation, you attempted to retrieve an item\n"
 "from `{name}`, an object of type `{obj_type}`. This is not allowed.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:847
+#: runtime_errors\type_error.py:858
 msgid ""
 "An iterable is an object capable of returning its members one at a time.\n"
 "Python containers (`list, tuple, dict`, etc.) are iterables.\n"
 "An iterable is required here.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:863 runtime_errors\value_error.py:50
+#: runtime_errors\type_error.py:874 runtime_errors\value_error.py:50
 msgid ""
 "Unpacking is a convenient way to assign a name,\n"
 "to each item of an iterable.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:867
+#: runtime_errors\type_error.py:878
 msgid ""
 "An iterable is an object capable of returning its members one at a time.\n"
 "Python containers (`list, tuple, dict`, etc.) are iterables,\n"
 "but not objects of type `{obj_type}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:881
+#: runtime_errors\type_error.py:892
 msgid ""
 "{function} does not accept a sequence as an argument.\n"
 "Instead of writing `{line}`\n"
 "perhaps you should use the `dict.fromkeys()` method: `{new_line}`.\n"
 msgstr ""
 
-#: runtime_errors\type_error.py:886
+#: runtime_errors\type_error.py:897
 msgid ""
 "Perhaps you need to use the `dict.fromkeys()` method.\n"
 msgstr ""
@@ -1383,232 +1394,232 @@ msgid ""
 "    {line}\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:192
+#: syntax_errors\error_in_def.py:190
 msgid ""
 "A function definition statement must end with a colon.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:198 syntax_errors\error_in_def.py:219
+#: syntax_errors\error_in_def.py:196 syntax_errors\error_in_def.py:217
 msgid ""
 "Did you forget to write a colon?\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:199 syntax_errors\message_analyzer.py:1198
+#: syntax_errors\error_in_def.py:197 syntax_errors\message_analyzer.py:1198
 msgid ""
 "You wrote `{bad}` instead of a colon.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:208
+#: syntax_errors\error_in_def.py:206
 msgid ""
 "Did you write something by mistake after the colon?\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:209
+#: syntax_errors\error_in_def.py:207
 msgid ""
 "A block of code must come after the colon.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:210
+#: syntax_errors\error_in_def.py:208
 msgid ""
 "Removing `{bad}`, might fix the problem.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:232
+#: syntax_errors\error_in_def.py:230
 msgid ""
 "You did not write a valid function definition.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:240 syntax_errors\error_in_def.py:308
+#: syntax_errors\error_in_def.py:238 syntax_errors\error_in_def.py:306
 msgid ""
 "You forgot to name your function.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:257
+#: syntax_errors\error_in_def.py:255
 msgid ""
 "You cannot use a Python keyword as a function name.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:258
+#: syntax_errors\error_in_def.py:256
 msgid ""
 "You tried to use the Python keyword `{kwd}` as a function name.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:266
+#: syntax_errors\error_in_def.py:264
 msgid ""
 "There are more syntax errors later in your code.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:286
+#: syntax_errors\error_in_def.py:284
 msgid ""
 "You wrote an invalid function name.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:287
+#: syntax_errors\error_in_def.py:285
 msgid ""
 "The name of a function must be a valid Python identifier,\n"
 "that is a name that begins with a letter or an underscore character, `_`,\n"
 "and which contains only letters, digits or the underscore character.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:293
+#: syntax_errors\error_in_def.py:291
 msgid ""
 "You attempted to use a string as a function name.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:316
+#: syntax_errors\error_in_def.py:314
 msgid ""
 "However, there are some other syntax errors in your code.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:332
+#: syntax_errors\error_in_def.py:330
 msgid ""
 "I am guessing that you tried to use the Python keyword\n"
 "`{kwd}` as an argument in the definition of a function\n"
 "where an identifier (variable name) was expected.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:348
+#: syntax_errors\error_in_def.py:346
 msgid ""
 "You cannot use dotted names as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:350
+#: syntax_errors\error_in_def.py:348
 msgid ""
 "You cannot use dots in function names.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:364
+#: syntax_errors\error_in_def.py:359
 msgid ""
 "`/` indicates that the previous arguments in a function definition\n"
 "are positional arguments.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:370
+#: syntax_errors\error_in_def.py:365
 msgid ""
 "Function definitions cannot include the symbol `/` in this Python version.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:373
+#: syntax_errors\error_in_def.py:368
 msgid ""
 "This symbol can only be used with Python versions 3.8.0 or newer.\n"
 "You are using Python version {version}.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:382
+#: syntax_errors\error_in_def.py:377
 msgid ""
-"You have some keyword arguments that appear before\n"
+"You have unspecified keyword arguments that appear before\n"
 "the symbol `/`.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:386
+#: syntax_errors\error_in_def.py:381
 msgid ""
 "Keyword arguments must appear after the `/` symbol.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:391
+#: syntax_errors\error_in_def.py:386
 msgid ""
 "However, `*` indicates that the arguments\n"
 "that follow must be keyword arguments.\n"
 "When they are used together, `/` must appear before `*`.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:396
+#: syntax_errors\error_in_def.py:391
 msgid ""
 "`*` must appear after `/` in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:398
+#: syntax_errors\error_in_def.py:393
 msgid ""
 "`*{name}` must appear after `/` in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:405
+#: syntax_errors\error_in_def.py:400
 msgid ""
 "You can only use `/` once in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:421
+#: syntax_errors\error_in_def.py:416
 msgid ""
 "You can only use `*` once in a function definition.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:422
+#: syntax_errors\error_in_def.py:417
 msgid ""
 "It must either be used by itself, `..., *, ...`,\n"
 "or in the form `..., *args ...`, but not both.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:430
+#: syntax_errors\error_in_def.py:425
 msgid ""
 "`*{name}` must appear before any keyword argument.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:434
+#: syntax_errors\error_in_def.py:429
 msgid ""
 "Keyword arguments must appear after the `*` operator.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:446
+#: syntax_errors\error_in_def.py:441
 msgid ""
 "You cannot use numbers as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:447
+#: syntax_errors\error_in_def.py:442
 msgid ""
 "You used a number as an argument when defining a function.\n"
 "You can only use identifiers (variable names) as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:461
+#: syntax_errors\error_in_def.py:456
 msgid ""
 "You cannot use strings as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:462
+#: syntax_errors\error_in_def.py:457
 msgid ""
 "You used a string as an argument when defining a function.\n"
 "You can only use identifiers (variable names) as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:476
+#: syntax_errors\error_in_def.py:471
 msgid ""
 "You cannot have explicit tuples as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:478
+#: syntax_errors\error_in_def.py:473
 msgid ""
 "You can only use identifiers (variable names) as function arguments.\n"
 "Assign any tuple to a parameter and unpack it\n"
 "within the body of the function.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:492
+#: syntax_errors\error_in_def.py:487
 msgid ""
 "You cannot have explicit lists as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:493 syntax_errors\error_in_def.py:506
-#: syntax_errors\error_in_def.py:535
+#: syntax_errors\error_in_def.py:488 syntax_errors\error_in_def.py:501
+#: syntax_errors\error_in_def.py:530
 msgid ""
 "You can only use identifiers (variable names) as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:505
+#: syntax_errors\error_in_def.py:500
 msgid ""
 "You cannot have any explicit dict or set as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:521
+#: syntax_errors\error_in_def.py:516
 msgid ""
 "You cannot have operators as function arguments.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:527 syntax_errors\statement_analyzer.py:663
+#: syntax_errors\error_in_def.py:522 syntax_errors\statement_analyzer.py:663
 msgid ""
 "Did you mean to write a comma?\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:528
+#: syntax_errors\error_in_def.py:523
 msgid ""
 "I suspect you made a typo and wrote `{op}` instead of a comma.\n"
 "The following statement contains no syntax error:\n"
@@ -1616,17 +1627,17 @@ msgid ""
 "    {new_statement}"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:534
+#: syntax_errors\error_in_def.py:529
 msgid ""
 "You cannot use operators with function arguments.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:558
+#: syntax_errors\error_in_def.py:553
 msgid ""
 "Positional arguments must come before keyword arguments.\n"
 msgstr ""
 
-#: syntax_errors\error_in_def.py:559
+#: syntax_errors\error_in_def.py:554
 msgid ""
 "`{arg}` is a positional argument that appears after one or more\n"
 "keyword arguments in your function definition.\n"

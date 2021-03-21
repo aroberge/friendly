@@ -265,6 +265,17 @@ def test_Attribute_from_other_module():
     if friendly.get_lang() == "en":
         assert "Did you mean `math`?" in result
 
+    import cmath
+    try:
+        keyword.pi
+    except Exception as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+
+    result = friendly.get_output()
+    if friendly.get_lang() == "en":
+        assert "Did you mean one of the following modules:" in result
+
     return result, message
 
 

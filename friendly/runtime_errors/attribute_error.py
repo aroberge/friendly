@@ -104,23 +104,39 @@ def attribute_error_in_module(module, attribute, frame):
             ).format(module=module, mod_path=mod_path)
             return {"cause": cause, "suggest": hint}
 
-    relevant_modules = []
+    imported_modules = []
     for mod_name in sys.modules:
         if mod_name in frame.f_locals:
-            relevant_modules.append((mod_name, frame.f_locals[mod_name]))
+            imported_modules.append((mod_name, frame.f_locals[mod_name]))
         elif mod_name in frame.f_globals:
-            relevant_modules.append((mod_name, frame.f_globals[mod_name]))
+            imported_modules.append((mod_name, frame.f_globals[mod_name]))
 
-    for mod_name, mod in relevant_modules:
-        # TODO: consider the case where more than one module could be
-        # meant
+    possible_modules = []
+    for mod_name, mod in imported_modules:
         if attribute in dir(mod):
+            possible_modules.append(mod_name)
+
+    if possible_modules:
+        if len(possible_modules) == 1:
+            mod_name = possible_modules[0]
             hint = _("Did you mean `{name}`?\n").format(name=mod_name)
             cause = _(
                 "Perhaps you meant to use the attribute `{attribute}` of \n"
                 "module `{mod_name}` instead of module `{module}`.\n"
             ).format(attribute=attribute, mod_name=mod_name, module=module)
             return {"cause": cause, "suggest": hint}
+
+        hint = _("Did you mean one of the following modules: `{names}`?").format(
+            names=list_to_string(possible_modules)
+        )
+        cause = _(
+            "Instead of the module `{module}`, perhaps you wanted to use\n"
+            "the attribute `{attribute}` of one of the following modules:\n"
+            "`{names}`.\n"
+        ).format(
+            attribute=attribute, module=module, names=list_to_string(possible_modules)
+        )
+        return {"cause": cause, "suggest": hint}
 
     cause = _(
         "Python tells us that no object with name `{attribute}` is\n"
