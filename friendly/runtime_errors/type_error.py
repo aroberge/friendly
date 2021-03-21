@@ -130,11 +130,12 @@ def parse_must_be_str(message, frame, tb_data):
         "You tried to concatenate (add) two different types of objects:\n"
         "{first} and {second}.\n"
     ).format(first=convert_type("str"), second=convert_type(match.group(1)))
-    more_cause, possible_hint = _convert_str_to_number(
-        "str", match.group(1), frame, tb_data
-    )
-    if more_cause is not None:
-        return {"cause": cause + more_cause, "suggest": possible_hint}
+    if match.group(1) in ["int", "float", "complex"]:
+        more_cause, possible_hint = _convert_str_to_number(
+            "str", match.group(1), frame, tb_data
+        )
+        if more_cause is not None:
+            return {"cause": cause + more_cause, "suggest": possible_hint}
     return {"cause": cause}
 
 
