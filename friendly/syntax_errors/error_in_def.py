@@ -353,9 +353,6 @@ def dotted_name_not_allowed(statement):
 def positional_arguments_in_def(statement):
     _ = current_lang.translate
 
-    # TODO: add tests
-    # Note that this actually raises a TypeError and not a SyntaxError when used incorrectly.
-
     if not (statement.bad_token == "/" and statement.prev_token.string in "(,"):
         return {}
 
@@ -376,12 +373,12 @@ def positional_arguments_in_def(statement):
 
     prev_tok = ""
     for tok in statement.tokens[0 : statement.bad_token_index]:
-        if str(tok) in ("=", "**"):
+        if tok == "**":
             cause = meaning + _(
-                "You have some keyword arguments that appear before\n"
+                "You have unspecified keyword arguments that appear before\n"
                 "the symbol `/`.\n"
             )
-            hint = _("Keyword arguments must appear after the `/` symbol.\n")
+            hint = _("Keyword arguments must appear after the `/` symbol.\n")  # yes
             return {"cause": cause, "suggest": hint}
 
         if prev_tok == "*":  # might be incorrect if used in *args

@@ -168,13 +168,29 @@ descriptions = {
         cause: "Did you write something by mistake after the colon",
         title: "def: semi-colon after colon",
     },
+    "def_forward_slash_1": {
+        cause: "You have unspecified keyword arguments that appear before",
+        title: "def: unspecified keywords before /",
+    },
+    "def_forward_slash_2": {
+        cause: "When they are used together, `/` must appear before `*`",
+        title: "def: / before star",
+    },
+    "def_forward_slash_3": {
+        cause: "`*arg` must appear after `/` in a function definition",
+        title: "def: / before star arg",
+    },
+    "def_forward_slash_4": {
+        cause: "You can only use `/` once in a function definition",
+        title: "def: / used twice",
+    },
     "def_function_name_invalid": {
         cause: "The name of a function must be a valid Python identifier",
-        title: "Non-identifier as a function name",
+        title: "def: non-identifier as a function name",
     },
     "def_function_name_string": {
         cause: "use a string as a function name",
-        title: "Using a string as a function name",
+        title: "def: using a string as a function name",
     },
     "def_keyword_as_arg_1": {
         cause: "as an argument in the definition of a function",
@@ -238,7 +254,7 @@ descriptions = {
     },
     "def_semi_colon_instead_of_colon": {
         cause: "You wrote `;` instead of a colon",
-        title: "def: semi-colon instead of colon"
+        title: "def: semi-colon instead of colon",
     },
     "def_set_as_arg": {
         cause: "You cannot have any explicit dict or set as function arguments",
@@ -576,6 +592,14 @@ if sys.version_info < (3, 8):
         cause: "walrus operator",
         title: "Walrus operator does not exist - yet",
     }
+    no_slash = (
+        "Function definitions cannot include the symbol `/` in this Python version"
+    )
+    descriptions["def_forward_slash_1"]["cause"] = no_slash
+    descriptions["def_forward_slash_2"]["cause"] = no_slash
+    descriptions["def_forward_slash_3"]["cause"] = no_slash
+    descriptions["def_forward_slash_4"]["cause"] = no_slash
+
     del descriptions["would_be_type_declaration_1"]
     del descriptions["would_be_type_declaration_2"]
     descriptions["def_star_arg_before_slash"][
@@ -589,4 +613,6 @@ if sys.version_info >= (3, 10):
     descriptions["quote_inside_string"]["cause"] = "ended the string with another quote"
     descriptions["missing_colon_if"]["cause"] = "Did you forget a colon"
     descriptions["missing_colon_while"]["cause"] = "Did you forget a colon"
-    descriptions["def_missing_colon"]["cause"] = "but forgot to add a colon `:` at the end"
+    descriptions["def_missing_colon"][
+        "cause"
+    ] = "but forgot to add a colon `:` at the end"

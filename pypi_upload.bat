@@ -1,4 +1,3 @@
-echo off
 :Ask
 echo Did you update the version?(y/n)
 set ANSWER=
