@@ -3,7 +3,7 @@ import friendly
 
 def test_Can_only_concatenate():
     try:
-        a = "a"
+        a = "2"
         one = 1
         result = a + one
     except Exception as e:
@@ -15,6 +15,7 @@ def test_Can_only_concatenate():
     assert py37 or py36
     if friendly.get_lang() == "en":
         assert "a string (`str`) and an integer (`int`)" in result
+        assert "Perhaps you forgot to convert the string" in result
 
     try:
         a = "a"

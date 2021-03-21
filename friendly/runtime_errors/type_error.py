@@ -46,46 +46,6 @@ def _get_cause(value, frame, tb_data):
     return {"cause": no_information()}
 
 
-@add_message_parser
-def parse_can_only_concatenate(message, *_args):
-    _ = current_lang.translate
-    # example: can only concatenate str (not "int") to str
-    pattern = re.compile(
-        r"can only concatenate (\w+) \(not [\'\"](\w+)[\'\"]\) to (\w+)"
-    )
-    match = re.search(pattern, message)
-    if match is None:
-        return {}
-
-    # TODO: add hint if one of them could be converted to make this possible
-
-    cause = _(
-        "You tried to concatenate (add) two different types of objects:\n"
-        "{first} and {second}.\n"
-    ).format(first=convert_type(match.group(1)), second=convert_type(match.group(2)))
-    return {"cause": cause}
-
-
-@add_message_parser
-def parse_must_be_str(message, *_args):
-    _ = current_lang.translate
-    # python 3.6 version: must be str, not int
-    # example: can only concatenate str (not "int") to str
-
-    pattern = re.compile(r"must be str, not (\w+)")
-    match = re.search(pattern, message)
-    if match is None:
-        return {}
-
-    # TODO: add hint if one of them could be converted to make this possible
-    # also see if can be generalized
-    cause = _(
-        "You tried to concatenate (add) two different types of objects:\n"
-        "{first} and {second}.\n"
-    ).format(first=convert_type("str"), second=convert_type(match.group(1)))
-    return {"cause": cause}
-
-
 def _convert_str_to_number(obj_type1, obj_type2, frame, tb_data):
     """Determines if a suggestion should be made to convert a string to a
     number type; potentially useful for beginners that write programs
@@ -126,6 +86,56 @@ def _convert_str_to_number(obj_type1, obj_type2, frame, tb_data):
         "Perhaps you forgot to convert the string `{name}` into {number_type}.\n"
     ).format(name=name, number_type=convert_type(number_type))
     return cause, hint
+
+
+@add_message_parser
+def parse_can_only_concatenate(message, frame, tb_data):
+    _ = current_lang.translate
+    # example: can only concatenate str (not "int") to str
+    pattern = re.compile(
+        r"can only concatenate (\w+) \(not [\'\"](\w+)[\'\"]\) to (\w+)"
+    )
+    match = re.search(pattern, message)
+    if match is None:
+        return {}
+
+    obj_type1 = match.group(1)
+    obj_type2 = match.group(2)
+
+    cause = _(
+        "You tried to concatenate (add) two different types of objects:\n"
+        "{first} and {second}.\n"
+    ).format(first=convert_type(obj_type1), second=convert_type(obj_type2))
+    if obj_type1 == "str":
+        more_cause, possible_hint = _convert_str_to_number(
+            obj_type1, obj_type2, frame, tb_data
+        )
+        if more_cause is not None:
+            return {"cause": cause + more_cause, "suggest": possible_hint}
+    return {"cause": cause}
+
+
+@add_message_parser
+def parse_must_be_str(message, frame, tb_data):
+    _ = current_lang.translate
+    # python 3.6 version: must be str, not int
+    # example: can only concatenate str (not "int") to str
+
+    pattern = re.compile(r"must be str, not (\w+)")
+    match = re.search(pattern, message)
+    if match is None:
+        return {}
+
+    cause = _(
+        "You tried to concatenate (add) two different types of objects:\n"
+        "{first} and {second}.\n"
+    ).format(first=convert_type("str"), second=convert_type(match.group(1)))
+    more_cause, possible_hint = _convert_str_to_number(
+        "str", match.group(1), frame, tb_data
+    )
+    if more_cause is not None:
+        return {"cause": cause + more_cause, "suggest": possible_hint}
+    return {"cause": cause}
 
 
 @add_message_parser
