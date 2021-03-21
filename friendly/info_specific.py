@@ -4,6 +4,9 @@ Attempts to provide some specific information about the likely cause
 of a given exception.
 """
 
+import re
+
+
 from . import debug_helper
 from .my_gettext import current_lang, internal_error
 
@@ -53,14 +56,27 @@ def _file_not_found_error(value, *_args):
     # str(value) is expected to be something like
     #
     # fileNotFoundError: No module named 'does_not_exist'
+    # or
+    # [Error 2] No such file or directory: 'does_not_exist'
     #
     # By splitting value using ', we can extract the module name.
-    # TODO: use re instead for added robustness
+    message = str(value)
+    pattern1 = re.compile("No module named '(.*)'")
+    match1 = re.search(pattern1, message)
+    pattern2 = re.compile("No such file or directory: '(.*)'")
+    match2 = re.search(pattern2, message)
+    if match1 is None:
+        if match2 is None:
+            return {}
+        filename = match2.group(1)
+    else:
+        filename = match1.group(1)
+
     return {
         "cause": _(
             "In your program, the name of the\n"
             "file that cannot be found is `{filename}`.\n"
-        ).format(filename=str(value).split("'")[1])
+        ).format(filename=filename)
     }
 
 
