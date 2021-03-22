@@ -4,7 +4,8 @@ Aimed at Python beginners: replacing standard traceback by something easier to u
 translatable into various languages. **friendly** can provide additional
 information such as `why()` a certain exception occurred,
 `what()` it is, exactly `where()` it occurred including
-the value of relevant variables, and more.
+the value of relevant variables, and
+[more](https://aroberge.github.io/friendly-traceback-docs/docs/html/).
 
 
 ![Example](https://raw.githubusercontent.com/aroberge/friendly/master/why_1.png)
