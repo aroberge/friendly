@@ -1,11 +1,16 @@
 # friendly
 
 Aimed at Python beginners: replacing standard traceback by something easier to understand,
-translatable into various languages.
+translatable into various languages. **friendly** can provide additional
+information such as `why()` a certain exception occurred,
+`what()` it is, exactly `where()` it occurred including
+the value of relevant variables, and more.
+
+
+![Example](https://raw.githubusercontent.com/aroberge/friendly/master/why_1.png)
 
 **friendly** used to be called **friendly-traceback**.
 
-![Example](https://raw.githubusercontent.com/aroberge/friendly/master/why_1.png)
 
 ## Installation
 
