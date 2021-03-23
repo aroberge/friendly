@@ -175,7 +175,7 @@ def calculate_token_shift(old_statement, new_statement):
     The original bad token is returned as well as the
     difference in position (new - old).
     """
-    # TODO: this is currently unused.
+    # Note: this is currently unused.
     old_tokens = token_utils.get_significant_tokens(old_statement)
     try:
         compile(old_statement, "fake-file", "exec")

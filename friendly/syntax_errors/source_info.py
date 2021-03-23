@@ -120,11 +120,10 @@ class Statement:
                 and not self.end_bracket
             ):
                 # We got an error flagged before we had the chance to close
-                # brackets. Unclosed brackets are never a problem on their
+                # brackets. Unclosed brackets should not be a problem on their
                 # own in a console session - so, we make sure to close
                 # the brackets in order to be able to find the true cause
                 # of the error
-                # TODO: check this assumption; it appears to be incorrect
                 add_token = ""
                 brackets = self.statement_brackets.copy()
                 while brackets:

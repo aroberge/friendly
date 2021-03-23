@@ -3,6 +3,13 @@
 A few useful objects which do not naturally fit anywhere else.
 """
 import difflib
+import uuid
+
+
+def unique_variable_name():
+    """creates a unique variable name"""
+    name = uuid.uuid4()
+    return "_%s" % name.hex
 
 
 def eval_expr(expr, frame):

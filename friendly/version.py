@@ -1,4 +1,4 @@
-__version__ = "0.3.23"
+__version__ = "0.3.27"
 
 
 def doc_version():

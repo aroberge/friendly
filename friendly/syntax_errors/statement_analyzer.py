@@ -448,8 +448,6 @@ def walrus_instead_of_equal(statement):
 def assign_instead_of_equal(statement):
     """Checks to see if an assignment sign, '=', has been used instead of
     an equal sign, '==', in an if, elif or while statement."""
-    # TODO: generalize this for other situations by checking that the proposed
-    # fix would work.
     _ = current_lang.translate
 
     if statement.bad_token != "=":
@@ -462,7 +460,6 @@ def assign_instead_of_equal(statement):
         statement.statement_tokens, statement.bad_token, "=="
     )
     if not fixers.check_statement(new_statement):
-        # TODO: find a way to confirm that new error is later.
         debug_helper.log("Fix did not work in assign_instead_of_equal")
         additional_cause = more_errors()
     else:

@@ -66,7 +66,6 @@ def _convert_str_to_number(obj_type1, obj_type2, frame, tb_data):
         return None, None
 
     all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
-    # TODO: review this logic
     for name, obj in all_objects:
         if isinstance(obj, str):
             try:
@@ -150,9 +149,6 @@ def parse_unsupported_operand_type(message, frame, tb_data):
     match = re.search(pattern, message)
     if match is None:
         return {}
-
-    # TODO: look if can be done by converting from str to other type.
-    # think of adding hint if that is the case.
 
     all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
     operator = match.group(1)

@@ -7,6 +7,7 @@ import sys
 from . import fixers
 from ..my_gettext import current_lang, internal_error
 from .. import debug_helper
+from .. import utils
 
 STATEMENT_ANALYZERS = []
 
@@ -506,31 +507,89 @@ def dict_or_set_as_argument(statement):
 
 @add_statement_analyzer
 def operator_as_argument(statement):
+    """This looks at various possible fixes when the bad token is an operator.
+    The following cases are considered:
+    1. operator instead of comma
+    1. operator instead of equal sign
+    """
     _ = current_lang.translate
     # TODO: add tests
 
     if not statement.bad_token.is_operator() or statement.prev_token == "def":
         return {}
 
+    no_op = _("You cannot have operators as function arguments.\n")
+
+    # def test(a+b): -> def test(a, b):
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.bad_token, ","
+    )
+    if fixers.check_statement(new_statement):
+        hint = _("Did you mean to write a comma?\n")
+        cause = no_op + _(
+            "I suspect you made a typo and wrote `{op}` instead of a comma.\n"
+            "The following statement contains no syntax error:\n\n"
+            "    {new_statement}"
+        ).format(op=statement.bad_token, new_statement=new_statement)
+        return {"cause": cause, "suggest": hint}
+
+    # def test(a=1, b+2):  -> def test(a=1, b=2):
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.bad_token, "="
+    )
+    if fixers.check_statement(new_statement):
+        hint = _("Did you mean to write an equal sign?\n")
+        cause = no_op + _(
+            "I suspect you made a typo and wrote `{op}` instead of an equal sign.\n"
+            "The following statement contains no syntax error:\n\n"
+            "    {new_statement}"
+        ).format(op=statement.bad_token, new_statement=new_statement)
+        return {"cause": cause, "suggest": hint}
+
+    # def test(a,,b):  -> def test(a,b):
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.bad_token, ""
+    )
+    if fixers.check_statement(new_statement):
+        hint = _("Did you mean to write `{op}`?\n").format(op=statement.bad_token)
+        cause = _(
+            "I suspect you made a typo and added `{op}` by mistake.\n"
+            "The following statement contains no syntax error:\n\n"
+            "    {new_statement}"
+        ).format(op=statement.bad_token, new_statement=new_statement)
+        if statement.bad_token != ",":
+            cause = no_op + cause
+        return {"cause": cause, "suggest": hint}
+
+    # def test(a, **, b): -> def test(a, c, b):
     if statement.prev_token.string in "(,":
-        hint = _("You cannot have operators as function arguments.\n")
-    else:
+        # prevent getting an error because of repeated argument
+        unique_name = utils.unique_variable_name()
         new_statement = fixers.replace_token(
-            statement.statement_tokens, statement.bad_token, ","
+            statement.statement_tokens, statement.bad_token, unique_name
         )
         if fixers.check_statement(new_statement):
-            hint = _("Did you mean to write a comma?\n")
+            hint = _("You cannot use `{op}` as an argument.\n").format(
+                op=statement.bad_token
+            )
             cause = _(
-                "I suspect you made a typo and wrote `{op}` instead of a comma.\n"
-                "The following statement contains no syntax error:\n\n"
-                "    {new_statement}"
-            ).format(op=statement.bad_token, new_statement=new_statement)
+                "I suspect you made a typo and wrote `{op}` by mistake.\n"
+                "If you replace it by a unique variable name, the result\n"
+                "will contain no syntax error.\n"
+            ).format(op=statement.bad_token)
             return {"cause": cause, "suggest": hint}
-        hint = _("You cannot use operators with function arguments.\n")
-    cause = hint + _(
-        "You can only use identifiers (variable names) as function arguments.\n"
-    )
-    return {"cause": cause, "suggest": hint}
+
+    # The following has no corresponding unit test, but has been tested in a repl
+    if statement.prev_token.string in ("(", ","):
+        hint = _("You cannot use `{op}` as an argument.\n").format(
+            op=statement.bad_token
+        )
+        cause = hint + _(
+            "You can only use identifiers (variable names) as function arguments.\n"
+        )
+        return {"cause": cause, "suggest": hint}
+
+    return {}
 
 
 @add_statement_analyzer

@@ -168,6 +168,10 @@ descriptions = {
         cause: "Did you write something by mistake after the colon",
         title: "def: semi-colon after colon",
     },
+    "def_extra_comma": {
+        cause: "Did you mean to write `,`",
+        title: "def: extra comma"
+    },
     "def_forward_slash_1": {
         cause: "You have unspecified keyword arguments that appear before",
         title: "def: unspecified keywords before /",
@@ -247,6 +251,18 @@ descriptions = {
     "def_number_as_arg": {
         cause: "You used a number as an argument",
         title: "Single number used as arg in function def",
+    },
+    "def_operator_instead_of_comma": {
+        cause: "Did you mean to write a comma",
+        title: "def: operator instead of comma"
+    },
+    "def_operator_instead_of_equal": {
+        cause: "Did you mean to write an equal sign",
+        title: "def: operator instead of equal"
+    },
+    "def_operator_instead_of_name": {
+        cause: "If you replace it by a unique variable name",
+        title: "def: operator instead of name"
     },
     "def_positional_after_keyword_arg": {
         cause: "call functions with only positional arguments",
