@@ -138,7 +138,7 @@ class Token:
         """Returns True if the token is a string"""
         return self.type == py_tokenize.STRING
 
-    def immediately_before(self, other):  # TODO: add unit tests
+    def immediately_before(self, other):
         """Return True if the current token is immediately before other,
         without any intervening space in between the two tokens.
         """
@@ -146,7 +146,7 @@ class Token:
             return False
         return self.end_row == other.start_row and self.end_col == other.start_col
 
-    def immediately_after(self, other):  # TODO: add unit tests
+    def immediately_after(self, other):
         """Return True if the current token is immediately after other,
         without any intervening space in between the two tokens.
         """
@@ -348,7 +348,6 @@ def strip_comment(line):
     return untokenize(tokens)
 
 
-# TODO: add unit test for this
 def find_substring_index(main, substring):
     """Somewhat similar to the find() method for strings,
     this function determines if the tokens for substring appear
@@ -358,11 +357,12 @@ def find_substring_index(main, substring):
     main_tokens = [tok.string for tok in get_significant_tokens(main)]
     sub_tokens = [tok.string for tok in get_significant_tokens(substring)]
     for index, token in enumerate(main_tokens):
-        if (
-            token == sub_tokens[0]
-            and main_tokens[index : index + len(sub_tokens)] == sub_tokens
-        ):
-            return index
+        if token == sub_tokens[0]:
+            for i, tok in enumerate(main_tokens[index : index + len(sub_tokens)]):
+                if tok != sub_tokens[i]:
+                    break
+            else:
+                return index
     return -1
 
 

@@ -79,12 +79,12 @@ def test_last_line_empty():
     a fix in our utility functions"""
 
     source = "a\n  "
-    source2 = "a\n\t"
+    source_2 = "a\n\t"
     check(source)
-    check(source2)
+    check(source_2)
 
     check_lines(source)
-    check_lines(source2)
+    check_lines(source_2)
 
 
 source1 = "a = b"
@@ -114,3 +114,16 @@ def test_self():
     with open(__file__, "r") as f:
         source = f.read()
     check(source)
+
+
+def test_find_substring_index():
+    assert token_utils.find_substring_index(source2, source3) == -1
+    assert token_utils.find_substring_index(source3, source2) == 3
+
+
+def test_immediately_before_and_after():
+    tokens = token_utils.get_significant_tokens("**/ =")
+    assert tokens[0].immediately_before(tokens[1])
+    assert tokens[1].immediately_after(tokens[0])
+    assert not tokens[1].immediately_before(tokens[2])
+    assert not tokens[2].immediately_after(tokens[1])

@@ -258,16 +258,23 @@ def parse_unsupported_operand_type(message, frame, tb_data):
 
 
 @add_message_parser
-def parse_order_comparison(message, *_args):
+def parse_order_comparison(message, frame, tb_data):
     _ = current_lang.translate
     # example: '<' not supported between instances of 'int' and 'str'
     pattern = re.compile(
         r"[\'\"](.+)[\'\"] not supported between instances of [\'\"](\w+)[\'\"] and [\'\"](\w+)[\'\"]"  # noqa
     )
-    # TODO: check if one is string that could be converted to number
     match = re.search(pattern, message)
     if match is None:
         return {}
+
+    if match.group(2) == match.group(3) == "complex":
+        hint = _("Complex numbers cannot be ordered.\n")
+        cause = _(
+            "You tried to do an order comparison ({operator})\n"
+            "between two complex numbers.\n"
+        ).format(operator=match.group(1))
+        return {"cause": cause, "suggest": hint}
 
     cause = _(
         "You tried to do an order comparison ({operator})\n"
@@ -278,6 +285,20 @@ def parse_order_comparison(message, *_args):
         first=convert_type(match.group(2)),
         second=convert_type(match.group(3)),
     )
+
+    number = None
+    if match.group(2) in ["int", "float"] and match.group(3) == "str":
+        number = match.group(2)
+    elif match.group(3) in ["int", "float"] and match.group(2) == "str":
+        number = match.group(3)
+
+    if number is not None:
+        more_cause, possible_hint = _convert_str_to_number(
+            "str", number, frame, tb_data
+        )
+        if more_cause is not None:
+            return {"cause": cause + more_cause, "suggest": possible_hint}
+
     return {"cause": cause}
 
 

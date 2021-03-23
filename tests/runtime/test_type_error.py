@@ -6,7 +6,7 @@ def test_Can_only_concatenate():
         a = "2"
         one = 1
         result = a + one
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -21,7 +21,7 @@ def test_Can_only_concatenate():
         a = "a"
         a_list = [1, 2, 3]
         result = a + a_list
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -35,7 +35,7 @@ def test_Can_only_concatenate():
         a_tuple = (1, 2, 3)
         a_list = [1, 2, 3]
         result = a_tuple + a_list
-    except Exception as e:
+    except TypeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -51,7 +51,7 @@ def test_Unsupported_operand_types():
         one = 1
         none = None
         result = one + none
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -65,7 +65,7 @@ def test_Unsupported_operand_types():
         one = 1
         two = "two"
         one += two
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -77,7 +77,7 @@ def test_Unsupported_operand_types():
         a = (1, 2)
         b = [3, 4]
         result = a - b
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -89,7 +89,7 @@ def test_Unsupported_operand_types():
         a = (1, 2)
         b = [3, 4]
         b -= a
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -101,7 +101,7 @@ def test_Unsupported_operand_types():
         a = 1j
         b = {2, 3}
         result = a * b
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -113,7 +113,7 @@ def test_Unsupported_operand_types():
         a = 1j
         b = {2, 3}
         b *= a
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -125,7 +125,7 @@ def test_Unsupported_operand_types():
         a = {1: 1, 2: 2}
         b = 3.1416
         result = a / b
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -137,7 +137,7 @@ def test_Unsupported_operand_types():
         a = {1: 1, 2: 2}
         b = 3.1416
         b /= a
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -149,7 +149,7 @@ def test_Unsupported_operand_types():
         a = {1: 1, 2: 2}
         b = 1
         result = a // b
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -161,7 +161,7 @@ def test_Unsupported_operand_types():
         a = {1: 1, 2: 2}
         b = 3.1416
         b //= a
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -173,7 +173,7 @@ def test_Unsupported_operand_types():
         a = "a"
         b = 2
         result = a & b
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -185,7 +185,7 @@ def test_Unsupported_operand_types():
         a = "a"
         b = 2
         b &= a
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -197,7 +197,7 @@ def test_Unsupported_operand_types():
         a = {1: 1, 2: 2}
         b = 3.1416
         result = a ** b
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -209,7 +209,7 @@ def test_Unsupported_operand_types():
         a = {1: 1, 2: 2}
         b = 3.1416
         a **= b
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -221,7 +221,7 @@ def test_Unsupported_operand_types():
         a = 3.0
         b = 42
         result = a ^ b
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -233,7 +233,7 @@ def test_Unsupported_operand_types():
         a = 3.0
         b = 42
         a ^= b
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -245,7 +245,7 @@ def test_Unsupported_operand_types():
         a = "a"
         b = 42
         result = a >> b
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -257,7 +257,7 @@ def test_Unsupported_operand_types():
         a = "a"
         b = 42
         a >>= b
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -269,7 +269,7 @@ def test_Unsupported_operand_types():
         a = "a"
         b = 2
         result = a @ b
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -281,7 +281,7 @@ def test_Unsupported_operand_types():
         a = "a"
         b = 2
         a @= b
-    except Exception as e:
+    except TypeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -294,10 +294,18 @@ def test_Unsupported_operand_types():
 
 def test_Comparison_not_supported():
     try:
+        3j < 4j
+    except TypeError:
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
+    if friendly.get_lang() == "en":
+        assert "Complex numbers cannot be ordered." in result
+
+    try:
         a = "a"
         b = 42
         b < a
-    except Exception as e:
+    except TypeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -305,6 +313,20 @@ def test_Comparison_not_supported():
     assert "TypeError: '<' not supported between instances of 'int' and 'str'" in result
     if friendly.get_lang() == "en":
         assert "You tried to do an order comparison (<)" in result
+
+    try:
+        a = "2"
+        b = 42
+        b >= a
+    except TypeError as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
+
+    if friendly.get_lang() == "en":
+        assert "You tried to do an order comparison (>=" in result
+        assert "Did you forget to convert the string" in result
+
     return result, message
 
 
@@ -312,7 +334,7 @@ def test_Bad_type_for_unary_operator():
     try:
         a = +"abc"
         print(a)
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -324,7 +346,7 @@ def test_Bad_type_for_unary_operator():
     try:
         a = -[1, 2, 3]
         print(a)
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -335,7 +357,7 @@ def test_Bad_type_for_unary_operator():
     try:
         a = ~(1, 2, 3)
         print(a)
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -349,7 +371,7 @@ def test_Bad_type_for_unary_operator():
         a =+ "def"
         # fmt: on
         print(a)
-    except Exception as e:
+    except TypeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -365,7 +387,7 @@ def test_Tuple_no_item_assignment():
     a = (1, 2, 3)
     try:
         a[0] = 0
-    except Exception as e:
+    except TypeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -383,7 +405,7 @@ def test_Too_many_positional_argument():
 
     try:
         fn(1)
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -398,7 +420,7 @@ def test_Too_many_positional_argument():
 
     try:
         A().f(1)
-    except Exception as e:
+    except TypeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -417,7 +439,7 @@ def test_Too_few_positional_argument():
 
     try:
         fn(1)
-    except Exception as e:
+    except TypeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -432,7 +454,7 @@ def test_Too_few_positional_argument():
 def test_Not_callable():
     try:
         _ = (1, 2)(3, 4)
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -442,7 +464,7 @@ def test_Not_callable():
 
     try:
         _ = 3(4 + 4)
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -452,7 +474,7 @@ def test_Not_callable():
 
     try:
         _ = [1, 2](3, 4)
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
     assert "TypeError: 'list' object is not callable" in result
@@ -466,7 +488,7 @@ def test_Not_callable():
     try:
         b = A()
         b.a_list(3)
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
     assert "TypeError: 'list' object is not callable" in result
@@ -475,7 +497,7 @@ def test_Not_callable():
 
     try:
         _ = [1, 2](3 + 4)
-    except Exception as e:
+    except TypeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -488,7 +510,7 @@ def test_Not_callable():
 def test_Derive_from_BaseException():
     try:
         raise "exception"  # noqa
-    except Exception as e:
+    except TypeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -503,7 +525,7 @@ def test_Cannot_multiply_by_non_int():
 
     try:
         "b" * "a"
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -513,7 +535,7 @@ def test_Cannot_multiply_by_non_int():
 
     try:
         "3" * "a"
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -524,7 +546,7 @@ def test_Cannot_multiply_by_non_int():
     a = b = c = "2"
     try:
         d = a * b * c
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -535,7 +557,7 @@ def test_Cannot_multiply_by_non_int():
     a = "abc"
     try:
         a *= c
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -545,7 +567,7 @@ def test_Cannot_multiply_by_non_int():
 
     try:
         "a" * "2"
-    except Exception as e:
+    except TypeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -559,7 +581,7 @@ def test_Cannot_multiply_by_non_int():
 def test_Not_an_integer():
     try:
         range([1, 2])
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -569,7 +591,7 @@ def test_Not_an_integer():
 
     try:
         range("2")
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -579,7 +601,7 @@ def test_Not_an_integer():
 
     try:
         range(1.0)
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -590,7 +612,7 @@ def test_Not_an_integer():
     c, d = "2", "3"
     try:
         range(c, d)
-    except Exception as e:
+    except TypeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -606,7 +628,7 @@ def test_Indices_must_be_integers_or_slices():
 
     try:
         a[1, 2]
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -617,7 +639,7 @@ def test_Indices_must_be_integers_or_slices():
     a = (1, 2, 3)
     try:
         a[2.0]
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -627,7 +649,7 @@ def test_Indices_must_be_integers_or_slices():
 
     try:
         [1, 2, 3]["2"]
-    except Exception as e:
+    except TypeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -641,7 +663,7 @@ def test_Indices_must_be_integers_or_slices():
 def test_Slice_indices_must_be_integers_or_None():
     try:
         [1, 2, 3][1.0:2.0]
-    except Exception as e:
+    except TypeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -658,7 +680,7 @@ def test_Slice_indices_must_be_integers_or_None():
 def test_Unhachable_type():
     try:
         {[1, 2]: 1}
-    except Exception as e:
+    except TypeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -672,7 +694,7 @@ def test_Unhachable_type():
 def test_Object_is_not_subscriptable():
     try:
         a = 2[1]
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -685,7 +707,7 @@ def test_Object_is_not_subscriptable():
 
     try:
         a = f[1]
-    except Exception as e:
+    except TypeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -699,7 +721,7 @@ def test_Object_is_not_subscriptable():
 def test_Object_is_not_iterable():
     try:
         list(42)
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
         message = str(e)
     result = friendly.get_output()
@@ -713,7 +735,7 @@ def test_Object_is_not_iterable():
 def test_Cannot_unpack_non_iterable_object():
     try:
         a, b = 42.0
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
         message = str(e)
     result = friendly.get_output()
@@ -730,7 +752,7 @@ def test_Cannot_unpack_non_iterable_object():
 def test_Cannot_convert_dictionary_update_sequence():
     try:
         dict([1, 2, 3])
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
@@ -741,7 +763,7 @@ def test_Cannot_convert_dictionary_update_sequence():
     dd = {"a": "a"}
     try:
         dd.update([1, 2, 3])
-    except Exception as e:
+    except TypeError as e:
         friendly.explain_traceback(redirect="capture")
         message = str(e)
     result = friendly.get_output()

@@ -120,7 +120,7 @@ def _name_error(value, frame, tb_data):
 
 @register("OverflowError")
 def _overflow_error(*_args):
-    return {}  # TODO: check to see if additional information
+    return {}
     # can be provided for real test cases
 
 
