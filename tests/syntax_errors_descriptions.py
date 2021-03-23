@@ -472,6 +472,10 @@ descriptions = {
         cause: "The following lines of code",
         title: "Missing comma in a tuple",
     },
+    "missing_parens_for_range": {
+        cause: "you forgot to use to use parenthesis with `range`",
+        title: "Missing parenthesis for range"
+    },
     "name_is_global_and_nonlocal": {
         cause: "You declared `xy` as being both a global and nonlocal",
         title: "Name is global and nonlocal",

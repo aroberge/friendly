@@ -939,13 +939,18 @@ def missing_comma_before_string_in_dict(statement):
 def missing_in_with_for(statement):
     """Whenever we have a 'for' keyword, there should be a corresponding
     'in' keyword. Cases where 'in' have been misspelled are taken care below.
+    Note that 'in' could be used with 'if' and 'while' as well, but here
+    we only consider the simplest cases.
     """
     _ = current_lang.translate
 
+    nb_for = nb_in = 0
     for tok in statement.tokens[: statement.bad_token_index]:
         if tok == "for":
-            break
-    else:
+            nb_for += 1
+        elif tok == "in":
+            nb_in += 1
+    if nb_for == 0 or nb_in >= nb_for:
         return {}
 
     new_statement = fixers.replace_token(
@@ -958,6 +963,31 @@ def missing_in_with_for(statement):
         cause = _(
             "It looks as though you forgot to use the keyword `in`\n"
             "as part of a `for` statement. Perhaps you meant:\n\n"
+            "    {new_statement}\n\n"
+        ).format(new_statement=new_statement)
+        return {"cause": cause, "suggest": hint}
+    return {}
+
+
+@add_statement_analyzer
+def missing_parens_for_range(statement):
+    _ = current_lang.translate
+
+    if statement.prev_token != "range" or statement.last_token != ":":
+        return {}
+
+    new_statement = fixers.replace_two_tokens(
+        statement.tokens,
+        statement.prev_token,
+        statement.prev_token.string + "(",
+        statement.last_token,
+        ")" + statement.last_token.string,
+    )
+    if fixers.check_statement(new_statement):
+        hint = _("Did you forget to write parenthesis?\n")
+        cause = _(
+            "It looks as though you forgot to use to use parenthesis with `range`.\n"
+            "Perhaps you meant:\n\n"
             "    {new_statement}\n\n"
         ).format(new_statement=new_statement)
         return {"cause": cause, "suggest": hint}
@@ -1100,8 +1130,8 @@ def _add_comma_or_operator(tokens, tok, comma_first=True):
             break
         new_statement = fixers.modify_token(tokens, tok, append=operator)
         if fixers.check_statement(new_statement):
-            if operator == "," and results:  # So that it prints correctly
-                operator = '","'
+            # if operator == "," and results:  # So that it prints correctly
+            #     operator = ','
             results.append((operator.strip(), new_statement))
     return results
 
