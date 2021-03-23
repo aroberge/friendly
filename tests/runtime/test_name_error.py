@@ -4,7 +4,7 @@ from math import *
 def test_Generic():
     try:
         this = something
-    except Exception as e:
+    except NameError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -19,7 +19,7 @@ x: 3
 def test_Annotated_variable():
     try:
         y = x
-    except Exception as e:
+    except NameError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -33,7 +33,7 @@ def test_Annotated_variable():
 def test_Synonym():
     try:
         a = i
-    except Exception:
+    except NameError:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
     
@@ -43,7 +43,7 @@ def test_Synonym():
 
     try:
         a = j
-    except Exception:
+    except NameError:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
     
@@ -54,7 +54,7 @@ def test_Synonym():
     nabs = 1
     try:
         x = babs(-1)
-    except Exception as e:
+    except NameError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
     
@@ -64,7 +64,7 @@ def test_Synonym():
 
     try:
         cost  # wrote from math import * above
-    except Exception as e:
+    except NameError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()

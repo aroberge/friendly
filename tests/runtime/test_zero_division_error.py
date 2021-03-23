@@ -5,7 +5,7 @@ def test_Division_operator():
     zero = 0
     try:
         1 / zero
-    except Exception as e:
+    except ZeroDivisionError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -20,7 +20,7 @@ def test_Integer_division_operator():
     zero = 0
     try:
         1 // zero
-    except Exception as e:
+    except ZeroDivisionError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -35,7 +35,7 @@ def test_Modulo_operator():
     zero = 0
     try:
         1 % zero
-    except Exception as e:
+    except ZeroDivisionError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -50,7 +50,7 @@ def test_Divmod():
     zero = 0
     try:
         divmod(1, zero)
-    except Exception as e:
+    except ZeroDivisionError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -65,7 +65,7 @@ def test_Float_modulo():
     zero = 0.
     try:
         1 % zero
-    except Exception as e:
+    except ZeroDivisionError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -80,7 +80,7 @@ def test_Float_division():
     zero = 0.
     try:
         1 / zero
-    except Exception as e:
+    except ZeroDivisionError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -95,7 +95,7 @@ def test_Complex_division():
     zero = 0j
     try:
         1 / zero
-    except Exception as e:
+    except ZeroDivisionError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -110,7 +110,7 @@ def test_Raise_zero_negative_power():
     zero = 0
     try:
         zero ** -1
-    except Exception as e:
+    except ZeroDivisionError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()

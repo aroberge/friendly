@@ -4,7 +4,7 @@ import friendly
 def test_Generic():
     try:
         2.0 ** 1600
-    except Exception as e:
+    except OverflowError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()

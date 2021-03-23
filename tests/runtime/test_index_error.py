@@ -6,7 +6,7 @@ def test_Short_tuple():
     b = [1, 2, 3]
     try:
         print(a[3], b[2])
-    except Exception as e:
+    except IndexError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -22,7 +22,7 @@ def test_Long_list():
     b = tuple(range(50))
     try:
         print(a[50], b[0])
-    except Exception as e:
+    except IndexError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()

@@ -22,7 +22,7 @@ def test_Generic():
 
     try:
         A.x  # testing type
-    except Exception as e:
+    except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -34,7 +34,7 @@ def test_Generic():
     try:
         a = A()
         a.x  # Testing instance
-    except Exception as e:
+    except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -50,7 +50,7 @@ def test_Object_attribute_typo():
     try:
         a = [1, 2, 3]
         a.appendh(4)
-    except Exception as e:
+    except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -66,7 +66,7 @@ def test_Use_builtin():
     try:
         a = [1, 2, 3]
         a.length()
-    except Exception as e:
+    except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -82,7 +82,7 @@ def test_Use_synonym():
     try:
         a = [1, 2, 3]
         a.add(4)
-    except Exception as e:
+    except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -99,7 +99,7 @@ def test_Module_attribute_typo():
 
     try:
         string.ascii_lowecase
-    except Exception as e:
+    except AttributeError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
     
@@ -111,7 +111,7 @@ def test_Module_attribute_typo():
 
     try:
         math.cost
-    except Exception as e:
+    except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -132,7 +132,7 @@ def test_Shadow_stdlib_module():
 
     try:
         turtle.Pen
-    except Exception as e:
+    except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -150,7 +150,7 @@ def test_Nonetype():
     a = None
     try:
         a.b
-    except Exception as e:
+    except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -171,7 +171,7 @@ def test_Perhaps_comma():
         a = [abcd
         .defg]
     # fmt: on
-    except Exception as e:
+    except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -186,7 +186,7 @@ def test_Builtin_function():
     text = 'Hello world!'
     try:
         len.text
-    except Exception as e:
+    except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -203,7 +203,7 @@ def test_Builtin_module_with_no_file():
 
     try:
         sys.foo
-    except Exception as e:
+    except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -223,7 +223,7 @@ def test_Using_slots():
     f = F()
     try:
         f.b = 1
-    except Exception as e:
+    except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -238,7 +238,7 @@ def test_Tuple_by_accident():
     something = "abc",  # note trailing comma
     try:
         something.upper()
-    except Exception as e:
+    except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -256,7 +256,7 @@ def test_Attribute_from_other_module():
 
     try:
         keyword.pi
-    except Exception as e:
+    except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
 
@@ -268,7 +268,7 @@ def test_Attribute_from_other_module():
     import cmath
     try:
         keyword.pi
-    except Exception as e:
+    except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
 

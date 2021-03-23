@@ -4,7 +4,7 @@ import friendly
 def test_Generic():
     try:
         open("does_not_exist")
-    except Exception as e:
+    except FileNotFoundError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()

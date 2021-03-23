@@ -4,7 +4,7 @@ import friendly
 def test_Standard_library_module():
     try:
         import Tkinter
-    except Exception as e:
+    except ModuleNotFoundError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -19,7 +19,7 @@ def test_Not_a_package():
 
     try:
         import os.xxx
-    except Exception as e:
+    except ModuleNotFoundError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
     
@@ -29,7 +29,7 @@ def test_Not_a_package():
 
     try:
         import os.open
-    except Exception as e:
+    except ModuleNotFoundError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
     
@@ -39,7 +39,7 @@ def test_Not_a_package():
 
     try:
         import os.pathh
-    except Exception as e:
+    except ModuleNotFoundError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()

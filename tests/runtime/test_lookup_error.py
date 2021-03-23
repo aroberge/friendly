@@ -8,7 +8,7 @@ def test_Generic():
         # other than possibly codecs.lookup(), which is why we raise
         # it directly here for our example.
         raise LookupError("Fake message")
-    except Exception as e:
+    except LookupError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()

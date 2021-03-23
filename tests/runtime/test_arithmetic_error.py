@@ -7,7 +7,7 @@ def test_Generic():
         # Usually, a subclass such as ZeroDivisionError, etc., would
         # likely be raised.
         raise ArithmeticError('error')
-    except Exception as e:
+    except ArithmeticError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()

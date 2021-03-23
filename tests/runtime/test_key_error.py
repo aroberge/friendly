@@ -5,7 +5,7 @@ def test_Generic():
     d = {"a": 1, "b": 2}
     try:
         d["c"]
-    except Exception as e:
+    except KeyError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -21,7 +21,7 @@ def test_ChainMap():
     d = ChainMap({}, {})
     try:
         d.pop(42)
-    except Exception as e:
+    except KeyError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()

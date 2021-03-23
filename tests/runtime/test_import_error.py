@@ -4,7 +4,7 @@ import friendly
 def test_Simple_import_error():
     try:
         from math import Pi
-    except Exception as e:
+    except ImportError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -18,13 +18,12 @@ def test_Simple_import_error():
 def test_Circular_import():
     try:
         import circular_a
-    except Exception as e:
+    except ImportError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
     # The actual message varies a lot depending on Python version.
-    
-    assert "ImportError" in result
+
     if friendly.get_lang() == "en":
         assert "what is known as a 'circular import'" in result
 

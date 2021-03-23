@@ -6,7 +6,7 @@ def test_Generic():
         return a()
     try:
         a()
-    except Exception as e:
+    except RecursionError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()

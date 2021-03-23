@@ -25,7 +25,7 @@ def test_Missing_global():
 
     try:
         outer_missing_global()
-    except Exception as e:
+    except UnboundLocalError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
@@ -46,7 +46,7 @@ def test_Missing_nonlocal():
 
     try:
         outer_missing_nonlocal()
-    except Exception as e:
+    except UnboundLocalError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
