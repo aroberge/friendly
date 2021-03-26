@@ -104,23 +104,15 @@ def format_similar_names(name, similar):
 
     found_local = _("The similar name `{name}` was found in the local scope.\n")
     found_global = _("The similar name `{name}` was found in the global scope.\n")
-    name_found = _("The name `{name}` was found in the global scope.\n")
+    # name_found = _("The name `{name}` was found in the global scope.\n")
     builtin_similar = _("The Python builtin `{name}` has a similar name.\n")
 
     if nb_similar_names == 1:
         if similar["locals"]:
-            name = str(similar["locals"][0]).replace("'", "")
-            return found_local.format(name=name)
-
+            return found_local.format(name=similar["locals"][0])
         if similar["globals"]:
-            similar_name = similar["globals"][0]
-            if name != similar_name:
-                name = similar_name.replace("'", "")
-                return found_global.format(name=name)
-
-            return name_found.format(name=name)
-
-        return builtin_similar.format(name=str(similar["builtins"][0]).replace("'", ""))
+            return found_global.format(name=similar["globals"][0])
+        return builtin_similar.format(name=similar["builtins"][0])
 
     message = _(
         "Instead of writing `{name}`, perhaps you meant one of the following:\n"

@@ -29,6 +29,8 @@ def test_Annotated_variable():
         assert "x = 3" in result
     return result, message
 
+alphabet = 'abc'
+
 
 def test_Synonym():
     try:
@@ -61,6 +63,24 @@ def test_Synonym():
     assert "NameError: name 'babs' is not defined" in result
     if friendly.get_lang() == "en":
         assert "perhaps you meant one of the following" in result
+
+    try:
+        alphabets
+    except NameError as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
+    if friendly.get_lang() == "en":
+        assert "The similar name `alphabet` was found in the global scope" in result
+
+    try:
+        char
+    except NameError as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
+    if friendly.get_lang() == "en":
+        assert "The Python builtin `chr` has a similar name." in result
 
     try:
         cost  # wrote from math import * above
