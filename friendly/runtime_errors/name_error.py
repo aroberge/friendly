@@ -120,7 +120,7 @@ def format_similar_names(name, similar):
 
             return name_found.format(name=name)
 
-        return builtin_similar.format(name=name)
+        return builtin_similar.format(name=str(similar["builtins"][0]).replace("'", ""))
 
     message = _(
         "Instead of writing `{name}`, perhaps you meant one of the following:\n"
