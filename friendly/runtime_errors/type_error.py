@@ -487,10 +487,7 @@ def x_is_not_callable(message, frame, tb_data):
     ).format(fn_call=fn_call, obj_name=obj_name, obj_type=obj_type)
 
     try:
-        # As a TypeError exception has been raised, Python has already evaluated
-        # all the relevant code parts. Thus, using eval() should be completely safe..
         can_eval = utils.eval_expr(fn_call, frame)
-        # can_eval = eval(fn_call, frame.f_globals, frame.f_locals)
     except Exception:  # noqa
         return {"cause": cause}
 
@@ -679,10 +676,7 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
     #    do we get a valid expression.
     # 2. if ... is something of another type that can be converted into an integer
     try:
-        # By this stage, Python should already have evaluated container_type.
-        # Thus, using eval() should be completely safe.
         container_type = utils.eval_expr(container_type, frame)
-        # container_type = eval(container_type, frame.f_globals, frame.f_locals)
     except Exception:  # noqa
         if additional_cause:
             return {"cause": cause + additional_cause, "suggest": hint}
@@ -721,8 +715,6 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
     index = index[1:-1]
 
     try:
-        # As a TypeError exception has been raised, Python has already evaluated
-        # all the relevant code parts. Thus, using eval() should be completely safe.
         index = utils.eval_expr(index, frame)
         index_type = utils.eval_expr(index_type, frame)
     except Exception:  # noqa
@@ -743,10 +735,7 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
             .replace(" ", "")
         )
         try:
-            # As a TypeError exception has been raised, Python has already evaluated
-            # all the relevant code parts. Thus, using eval() should be completely safe.
             result = [] == utils.eval_expr(newline, frame)
-            # result = [] == eval(newline, frame.f_globals, frame.f_locals)
         except Exception:  # noqa
             result = False
 

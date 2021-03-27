@@ -496,7 +496,8 @@ def test_Not_callable():
         assert "b.a_list[3]" in result
 
     try:
-        _ = [1, 2](3 + 4)
+        a, b = 3, 7
+        _ = [1, 2](a + b)
     except TypeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")

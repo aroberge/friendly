@@ -2,8 +2,11 @@
 
 A few useful objects which do not naturally fit anywhere else.
 """
+import ast
 import difflib
 import uuid
+
+import pure_eval
 
 
 def unique_variable_name():
@@ -13,10 +16,16 @@ def unique_variable_name():
 
 
 def eval_expr(expr, frame):
-    """WIP: meant to be an eventual 'safe' replacement for eval()."""
-    result = eval(expr, frame.f_globals, frame.f_locals)
-    # print(f"\n expr={expr} ; result={result} ; {frame.f_code.co_name}")
-    return result
+    """Attempts to evaluate the expression 'expr' in a frame.
+    Note that 'expr' might be a string containing leading spaces which need
+    to be removed prior to being evaluated.
+
+    This can raise some exceptions which are meant to be caught by the
+    calling function.
+    """
+    node = ast.parse(expr.strip()).body[0].value
+    evaluator = pure_eval.Evaluator.from_frame(frame)
+    return evaluator[node]  # can raise an exception
 
 
 def get_similar_words(word_with_typo, words):
