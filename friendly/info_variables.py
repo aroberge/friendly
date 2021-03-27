@@ -3,7 +3,6 @@
 Used to provide basic variable information in a way that
 can be useful for beginners without overwhelming them.
 """
-import ast
 import builtins
 import sys
 
@@ -53,22 +52,14 @@ def convert_type(short_form):
 # and one very simple function.
 
 
-def literal_expressions_grouped(self, root):
-    """Find all literal in the given tree parsed by ASTTokens.
+def all_expressions_grouped(self, root):
+    """Find all expressions that can be evaluated safely
+    in the given tree parsed by ASTTokens.
     It returns a list of pairs (tuples) containing the text of a node
-    that is a literal and its actual value.
+    and its actual value
     """
-    # Except for the inner function is_literal
-    # this is modeled after interesting_expressions_grouped
-    def is_literal(node, _ignore):
-        try:
-            return ast.literal_eval(node)
-        except ValueError:
-            pass
 
-    return group_expressions(
-        pair for pair in self.find_expressions(root) if (is_literal(*pair))
-    )
+    return group_expressions(pair for pair in self.find_expressions(root))
 
 
 def get_all_objects(line, frame):
@@ -90,7 +81,7 @@ def get_all_objects(line, frame):
     objects = {
         "locals": [],
         "globals": [],
-        "literals": [],
+        "expressions": [],
         "builtins": [],
         "name, obj": [],
     }
@@ -118,12 +109,6 @@ def get_all_objects(line, frame):
                 objects[scope].append((name, repr(obj), obj))
                 objects["name, obj"].append((name, obj))
 
-        Evaluator.literal_expressions_grouped = literal_expressions_grouped
-        for nodes, obj in Evaluator({}).literal_expressions_grouped(atok.tree):  # noqa
-            name = atok.get_text(nodes[0])
-            objects["literals"].append((name, obj))
-            objects["name, obj"].append((name, obj))
-
     tokens = token_utils.get_significant_tokens(line)
     for tok in tokens:
         if tok.is_identifier():
@@ -139,6 +124,7 @@ def get_all_objects(line, frame):
                     break
             else:
                 if name in dir(builtins):
+                    names.add(name)
                     obj = getattr(builtins, name)
                     objects["builtins"].append((name, repr(obj), obj))
                     objects["name, obj"].append((name, obj))
@@ -152,6 +138,20 @@ def get_all_objects(line, frame):
             if (name, obj) not in objects["name, obj"]:
                 objects[scope].append((name, repr(obj), obj))
                 objects["name, obj"].append((name, obj))
+
+    if atok is not None:
+        Evaluator.all_expressions_grouped = all_expressions_grouped
+        for nodes, obj in Evaluator.from_frame(frame).all_expressions_grouped(
+            atok.tree
+        ):  # noqa
+            name = atok.get_text(nodes[0])
+            if name in names:
+                continue
+            names.add(name)
+            objects["name, obj"].append((name, obj))
+            if name.startswith("'") or name.startswith('"') or str(name) == str(obj):
+                continue
+            objects["expressions"].append((name, obj))
 
     return objects
 
@@ -272,6 +272,10 @@ def get_var_info(line, frame):
 
     for name, value, obj in objects["builtins"]:
         result = format_var_info(name, value, obj)
+        names_info.append(result)
+
+    for name, obj in objects["expressions"]:
+        result = format_var_info(name, repr(obj), obj)
         names_info.append(result)
 
     if names_info:
