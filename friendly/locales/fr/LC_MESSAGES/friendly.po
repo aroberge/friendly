@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-03-23 16:29-0300\n"
-"PO-Revision-Date: 2021-03-23 16:30-0300\n"
+"POT-Creation-Date: 2021-03-27 06:06-0300\n"
+"PO-Revision-Date: 2021-03-27 06:07-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -477,14 +477,14 @@ msgstr ""
 msgid ""
 "No information is known about this exception.\n"
 "Please report this example to\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
+"https://github.com/aroberge/friendly/issues\n"
 "\n"
 "If you are using the Friendly console, use `www()` to\n"
 "do an Internet search for this particular case.\n"
 msgstr ""
 "Aucune information n’est connue à propos de cette exception.\n"
 "Veuillez signaler cet exemple à\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
+"https://github.com/aroberge/friendly/issues\n"
 "\n"
 "Si vous utilisez la console Friendly, utilisez `www()` pour\n"
 "faire une recherche sur Internet pour ce cas particulier.\n"
@@ -493,11 +493,11 @@ msgstr ""
 msgid ""
 "Internal error for Friendly-traceback.\n"
 "Please report this example to\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
+"https://github.com/aroberge/friendly/issues\n"
 msgstr ""
 "Exception soulevée par Friendly-traceback.\n"
 "Veuillez signaler cet exemple à\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
+"https://github.com/aroberge/friendly/issues\n"
 
 #: my_gettext.py:98
 msgid ""
@@ -1016,37 +1016,33 @@ msgstr "Le nom semblable `{name}` a été trouvé dans la portée locale.\n"
 msgid "The similar name `{name}` was found in the global scope.\n"
 msgstr "Le nom semblable `{name}` a été trouvé dans la portée globale.\n"
 
-#: runtime_errors\name_error.py:107
-msgid "The name `{name}` was found in the global scope.\n"
-msgstr "Le nom `{name}` a été trouvé dans la portée globale.\n"
-
 #: runtime_errors\name_error.py:108
 msgid "The Python builtin `{name}` has a similar name.\n"
 msgstr "L'identifiant Python (builtin) `{name}` a un nom semblable.\n"
 
-#: runtime_errors\name_error.py:125 runtime_errors\unbound_local_error.py:100
+#: runtime_errors\name_error.py:117 runtime_errors\unbound_local_error.py:100
 msgid "Instead of writing `{name}`, perhaps you meant one of the following:\n"
 msgstr ""
 "Au lieu d’écrire `{name}`, peut-être que vous vouliez écrire l'un des noms "
 "suivants :\n"
 
-#: runtime_errors\name_error.py:130 runtime_errors\unbound_local_error.py:104
+#: runtime_errors\name_error.py:122 runtime_errors\unbound_local_error.py:104
 msgid "*   Local scope: "
 msgstr "*    Portée locale : "
 
-#: runtime_errors\name_error.py:131
+#: runtime_errors\name_error.py:123
 msgid "*   Global scope: "
 msgstr "*    Portée globale : "
 
-#: runtime_errors\name_error.py:132
+#: runtime_errors\name_error.py:124
 msgid "*   Python builtins: "
 msgstr "*    Identifiant Python (builtins) : "
 
-#: runtime_errors\name_error.py:172
+#: runtime_errors\name_error.py:164
 msgid "Did you forget to add `self`?"
 msgstr "Avez-vous oublié d’ajouter `self` ?"
 
-#: runtime_errors\name_error.py:177
+#: runtime_errors\name_error.py:169
 msgid ""
 "The {scope} object `{obj}` has an attribute named `{unknown_name}`.\n"
 "Perhaps you should have written `self.{unknown_name}` instead of "
@@ -1716,8 +1712,8 @@ msgid ""
 "\n"
 "Unless your code uses type annotations, which are beyond our scope,\n"
 "if you think that this is something which should be handled\n"
-"by Friendly-traceback, please report this case to\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
+"by friendly, please report this case to\n"
+"https://github.com/aroberge/friendly/issues\n"
 "\n"
 msgstr ""
 "Présentement, je ne peux pas deviner la cause probable de cette erreur.\n"
@@ -1726,9 +1722,9 @@ msgstr ""
 "un mot mal orthographié, ou des symboles manquants, comme (,), [,],:, etc.\n"
 "\n"
 "Si votre code n'utilise pas d'annotations de type,\n"
-"et que vous pensez que Friendly-traceback devrait\n"
+"et que vous pensez que friendly devrait\n"
 "pouvoir l'analyser correctement, SVP rapporter ce cas au site suivant:\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
+"https://github.com/aroberge/friendly/issues\n"
 "\n"
 
 #: syntax_errors\analyze_syntax.py:73
@@ -3807,6 +3803,9 @@ msgstr "accolade `{`"
 #: syntax_errors\syntax_utils.py:39
 msgid "curly bracket `}`"
 msgstr "accolade `}`"
+
+#~ msgid "The name `{name}` was found in the global scope.\n"
+#~ msgstr "Le nom `{name}` a été trouvé dans la portée globale.\n"
 
 #~ msgid "You cannot use operators with function arguments.\n"
 #~ msgstr ""

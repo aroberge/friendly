@@ -32,8 +32,8 @@ def unknown_cause():
         "\n"
         "Unless your code uses type annotations, which are beyond our scope,\n"
         "if you think that this is something which should be handled\n"
-        "by Friendly-traceback, please report this case to\n"
-        "https://github.com/aroberge/friendly-traceback/issues\n"
+        "by friendly, please report this case to\n"
+        "https://github.com/aroberge/friendly/issues\n"
         "\n"
     )
 

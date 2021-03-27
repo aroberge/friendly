@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-03-23 16:29-0300\n"
+"POT-Creation-Date: 2021-03-27 06:06-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -351,7 +351,7 @@ msgstr ""
 msgid ""
 "No information is known about this exception.\n"
 "Please report this example to\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
+"https://github.com/aroberge/friendly/issues\n"
 "\n"
 "If you are using the Friendly console, use `www()` to\n"
 "do an Internet search for this particular case.\n"
@@ -361,7 +361,7 @@ msgstr ""
 msgid ""
 "Internal error for Friendly-traceback.\n"
 "Please report this example to\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
+"https://github.com/aroberge/friendly/issues\n"
 msgstr ""
 
 #: my_gettext.py:98
@@ -793,38 +793,33 @@ msgid ""
 "The similar name `{name}` was found in the global scope.\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:107
-msgid ""
-"The name `{name}` was found in the global scope.\n"
-msgstr ""
-
 #: runtime_errors\name_error.py:108
 msgid ""
 "The Python builtin `{name}` has a similar name.\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:125 runtime_errors\unbound_local_error.py:100
+#: runtime_errors\name_error.py:117 runtime_errors\unbound_local_error.py:100
 msgid ""
 "Instead of writing `{name}`, perhaps you meant one of the following:\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:130 runtime_errors\unbound_local_error.py:104
+#: runtime_errors\name_error.py:122 runtime_errors\unbound_local_error.py:104
 msgid "*   Local scope: "
 msgstr ""
 
-#: runtime_errors\name_error.py:131
+#: runtime_errors\name_error.py:123
 msgid "*   Global scope: "
 msgstr ""
 
-#: runtime_errors\name_error.py:132
+#: runtime_errors\name_error.py:124
 msgid "*   Python builtins: "
 msgstr ""
 
-#: runtime_errors\name_error.py:172
+#: runtime_errors\name_error.py:164
 msgid "Did you forget to add `self`?"
 msgstr ""
 
-#: runtime_errors\name_error.py:177
+#: runtime_errors\name_error.py:169
 msgid ""
 "The {scope} object `{obj}` has an attribute named `{unknown_name}`.\n"
 "Perhaps you should have written `self.{unknown_name}` instead of `{unknown_name}`.\n"
@@ -1347,8 +1342,8 @@ msgid ""
 "\n"
 "Unless your code uses type annotations, which are beyond our scope,\n"
 "if you think that this is something which should be handled\n"
-"by Friendly-traceback, please report this case to\n"
-"https://github.com/aroberge/friendly-traceback/issues\n"
+"by friendly, please report this case to\n"
+"https://github.com/aroberge/friendly/issues\n"
 "\n"
 msgstr ""
 
