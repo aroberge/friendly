@@ -3,6 +3,7 @@
 Used to provide basic variable information in a way that
 can be useful for beginners without overwhelming them.
 """
+import ast
 import builtins
 import sys
 
@@ -44,24 +45,6 @@ def convert_type(short_form):
     return forms.get(short_form, short_form)
 
 
-# pure_eval is primarily designed to find "interesting" expressions,
-# which do not include literals. However, when trying to determine
-# the cause of an object, we sometimes might want to find literals
-# that are in a given line where an exception is raised.
-# For this reason, we monkeypatch pure_eval to add one method
-# and one very simple function.
-
-
-def all_expressions_grouped(self, root):
-    """Find all expressions that can be evaluated safely
-    in the given tree parsed by ASTTokens.
-    It returns a list of pairs (tuples) containing the text of a node
-    and its actual value
-    """
-
-    return group_expressions(pair for pair in self.find_expressions(root))
-
-
 def get_all_objects(line, frame):
     """Given a (partial) line of code and a frame,
     obtains a dict containing all the relevant information about objects
@@ -69,20 +52,20 @@ def get_all_objects(line, frame):
     answer to "where()" or they can be used during the analysis
     of the cause of the exception.
 
-    The dict returned has four keys.
-    The first three, 'locals', 'globals', 'nonlocals',
+    The dict returned has five keys.
+    The first three, 'locals', 'globals', 'builtins',
     each containing a list of tuples, each tuple being of the form
     (name, repr(obj), obj) where name --> obj.
 
-    The fourth key, 'literals', contains a list of tuples of the form
+    The fourth key, 'expressions', contains a list of tuples of the form
     ('name', obj). It is only occasionally used in helping to make
     suggestions regarding the cause of some exception.
     """
     objects = {
         "locals": [],
         "globals": [],
-        "expressions": [],
         "builtins": [],
+        "expressions": [],
         "name, obj": [],
     }
 
@@ -92,22 +75,6 @@ def get_all_objects(line, frame):
     )
 
     names = set()
-    try:
-        atok = ASTTokens(line, parse=True)
-    except SyntaxError:  # this should not happen
-        atok = None
-
-    if atok is not None:
-        for scope, scope_dict in scopes:
-            for nodes, obj in Evaluator(scope_dict).interesting_expressions_grouped(
-                atok.tree
-            ):
-                name = atok.get_text(nodes[0])
-                if name in names:
-                    continue
-                names.add(name)
-                objects[scope].append((name, repr(obj), obj))
-                objects["name, obj"].append((name, obj))
 
     tokens = token_utils.get_significant_tokens(line)
     for tok in tokens:
@@ -139,19 +106,26 @@ def get_all_objects(line, frame):
                 objects[scope].append((name, repr(obj), obj))
                 objects["name, obj"].append((name, obj))
 
+    try:
+        atok = ASTTokens(line, parse=True)
+    except SyntaxError:  # this should not happen
+        return objects
+
     if atok is not None:
-        Evaluator.all_expressions_grouped = all_expressions_grouped
-        for nodes, obj in Evaluator.from_frame(frame).all_expressions_grouped(
-            atok.tree
-        ):  # noqa
+        evaluator = Evaluator.from_frame(frame)
+        for nodes, obj in group_expressions(
+            pair for pair in evaluator.find_expressions(atok.tree)
+        ):
             name = atok.get_text(nodes[0])
             if name in names:
                 continue
             names.add(name)
             objects["name, obj"].append((name, obj))
-            if name.startswith("'") or name.startswith('"') or str(name) == str(obj):
-                continue
-            objects["expressions"].append((name, obj))
+            try:
+                # We're not interested in showing literals in the list of variables
+                ast.literal_eval(name)
+            except Exception:  # noqa
+                objects["expressions"].append((name, obj))
 
     return objects
 
