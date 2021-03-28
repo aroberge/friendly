@@ -163,6 +163,49 @@ def detect_backquote(statement):
 
 
 @add_statement_analyzer
+def wrong_code_block(statement):
+    _ = current_lang.translate
+    if not (
+        statement.bad_token == ":"
+        and statement.nb_tokens == 2
+        and statement.prev_token.string in ("if", "for", "while", "class")
+    ):
+        return {}
+
+    word = statement.prev_token.string
+    if word in ("if", "while"):
+        hint = _("You forgot to add a condition.\n")
+        if word == "if":
+            cause = _(
+                "An `if` statement requires a condition:\n\n"
+                "    if condition:\n"
+                "        ...\n\n"
+            )
+        else:
+            cause = _(
+                "A `while` loop requires a condition:\n\n"
+                "    while condition:\n"
+                "        ...\n\n"
+            )
+    elif word == "for":
+        hint = _("A `for` loop requires at least 3 more terms.\n")
+        cause = _(
+            "A `for` loop is an iteration over a sequence:\n\n"
+            "    for element in sequence:\n"
+            "        ...\n\n"
+        )
+    else:
+        hint = _("A class needs a name.\n")
+        cause = _(
+            "A `class` statement requires a name:\n\n"
+            "    class SomeName:\n"
+            "        ...\n\n"
+        )
+
+    return {"cause": cause, "suggest": hint}
+
+
+@add_statement_analyzer
 def keyword_as_attribute(statement):
     """Will identify something like  obj.True ..."""
     _ = current_lang.translate

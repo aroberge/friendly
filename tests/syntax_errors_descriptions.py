@@ -124,6 +124,10 @@ descriptions = {
         cause: "The double star operator",
         title: "Cannot use double star operator",
     },
+    "class_missing_name" : {
+        cause: "A class needs a name.",
+        title: "Missing class name"
+    },
     "comprehension_missing_tuple_paren": {
         cause: "and forgot to include parentheses around tuples",
         title: "Missing () for tuples in comprehension",
@@ -344,6 +348,10 @@ descriptions = {
         cause: "you can replace the part that contains a backslash",
         title: "f-string with backslash",
     },
+    "for_missing_terms": {
+        cause: "A `for` loop is an iteration over a sequence",
+        title: "Missing terms in for statement"
+    },
     "future_braces": {
         cause: "from __future__ import braces",
         title: "Not a chance!",
@@ -371,6 +379,10 @@ descriptions = {
     "hyphen_instead_of_underscore": {
         cause: "Did you mean `a_b`",
         title: "Space between names",
+    },
+    "if_missing_condition": {
+        cause: "An `if` statement requires a condition",
+        title: "Missing condition in if statement"
     },
     "imaginary_i": {
         cause: "Did you mean `3.0j`",
@@ -595,6 +607,10 @@ descriptions = {
     "use_backquote": {
         cause: "use the function `repr(x)`.",
         title: "Using the backquote character",
+    },
+    "while_missing_condition": {
+        cause: "A `while` loop requires a condition",
+        title: "Missing condition in while statement"
     },
     "would_be_type_declaration_1": {
         cause: "You do not need to declare variables in Python.",

@@ -110,15 +110,17 @@ def def_begin_code_block(statement):  #
         return {}
 
     if statement.first_token.start_col == 0:
+        hint = _("A function needs a name.\n")
         cause = _(
             "You tried to define a function and did not use the correct syntax.\n"
         )
     else:
+        hint = _("Functions and methods need a name.\n")
         cause = _(
             "You tried to define a function or method and did not use the correct syntax.\n"
         )
 
-    return {"cause": cause + def_correct_syntax()}
+    return {"cause": cause + def_correct_syntax(), "suggest": hint}
 
 
 @add_statement_analyzer
