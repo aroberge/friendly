@@ -456,6 +456,10 @@ descriptions = {
         cause: "You cannot have explicit tuples as arguments.",
         title: "lambda with tuple as argument",
     },
+    "literal_in_for_loop": {
+        cause: "where `...` must contain only identifiers",
+        title: "Assign to literal in for loop"
+    },
     "missing_code_block": {  # May differ depending on Python version
         cause: "it reached the end of the file and expected more content.",
         title: "IndentationError/SyntaxError depending on version",

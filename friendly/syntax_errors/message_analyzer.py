@@ -267,6 +267,28 @@ def assign_to_literal(message="", statement=None):
     ):
         return {}
 
+    # This error can happen if we use a literal as an element of
+    # a for loop; we take care of this case first.
+
+    tokens = statement.tokens[0 : statement.bad_token_index]
+    for_loop = False
+    for tok in tokens[::-1]:
+        if tok == "in":
+            break
+        elif tok == "for":
+            for_loop = True
+            break
+
+    if for_loop:
+        hint = _("You can only assign objects to identifiers (variable names).\n")
+        cause = _(
+            "A for loop must have the form:\n\n"
+            "    for ... in sequence:\n\n"
+            "where `...` must contain only identifiers (variable names)\n"
+            "and not literals like `{bad_token}`.\n"
+        ).format(bad_token=statement.bad_token)
+        return {"cause": cause, "suggest": hint}
+
     line = statement.bad_line.rstrip()
     info = line.split("=")
     if len(info) == 2:
