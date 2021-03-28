@@ -323,7 +323,9 @@ def detect_walrus(statement):
     if (prev == ":" and bad == "=" and bad.immediately_after(prev)) or (
         bad == ":" and next_token == "=" and bad.immediately_before(next_token)
     ):
-        hint = _("Your Python version does not support this f-string feature.\n")
+        hint = _(
+            "The augmented assignment operator is not allowed in Python version {version}.\n"
+        ).format(version=f"{sys.version_info.major}.{sys.version_info.minor}")
         cause = _(
             "You appear to be using the operator `:=`, sometimes called\n"
             "the walrus operator. This operator requires the use of\n"

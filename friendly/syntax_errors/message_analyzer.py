@@ -391,6 +391,22 @@ def could_be_identifier(line):
 
 
 @add_python_message
+def augmented_assignment_with_literal(message="", statement=None):
+    _ = current_lang.translate
+    if message != "cannot use assignment expressions with literal":
+        return {}
+
+    hint = _("You can only assign objects to identifiers (variable names).\n")
+
+    cause = _(
+        "You cannot use the augmented assignment operator `:=`,\n"
+        "sometimes called the walrus operator, with literals like `{bad_token}`.\n"
+        "You can only assign objects to identifiers (variable names).\n"
+    ).format(bad_token=statement.bad_token)
+    return {"cause": cause, "suggest": hint}
+
+
+@add_python_message
 def both_nonlocal_and_global(message="", statement=None):
     _ = current_lang.translate
     if "is nonlocal and global" in message:

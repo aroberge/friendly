@@ -104,6 +104,10 @@ descriptions = {
         cause: "only used to assign a value to a variable",
         title: "Assign to math operation",
     },
+    "augmented_assignment_to_literal": {  # May differ depending on Python version
+        cause: "the walrus operator, with literals like",
+        title: "Augmented assignment to literal"
+    },
     "augmented_assigment_with_true": {  # May differ depending on Python version
         cause: "`True` is a constant in Python",
         title: "Walrus/Named assignment depending on Python version",
@@ -628,6 +632,7 @@ descriptions = {
 
 if sys.version_info < (3, 8):
     descriptions["augmented_assigment_with_true"]["cause"] = "walrus operator"
+    descriptions["augmented_assignment_to_literal"]["cause"] = "walrus operator"
     descriptions["walrus_does_not_exist"] = {
         cause: "walrus operator",
         title: "Walrus operator does not exist - yet",
