@@ -6,6 +6,11 @@ from .. import debug_helper
 from .. import token_utils
 
 
+# The following is intended to be used in custom environments.
+# Currently, it is only used with running a program in Mu.
+CUSTOM_NAMES = {}
+
+
 def get_cause(value, frame, tb_data):
     try:
         return _get_cause(value, frame, tb_data)
@@ -59,6 +64,11 @@ def name_not_defined(unknown_name, frame, tb_data):
     cause = _("In your program, `{var_name}` is an unknown name.\n").format(
         var_name=unknown_name
     )
+
+    if unknown_name in CUSTOM_NAMES:
+        cause = CUSTOM_NAMES[unknown_name]()
+        return {"cause": cause, "suggest": cause}
+
     if unknown_name in ["i", "j"]:
         hint = _("Did you mean `1j`?\n")
         cause += _(
