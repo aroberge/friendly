@@ -9,8 +9,41 @@ if "InteractiveShell" in exc_hook_name:
 
     colorama.deinit()
     colorama.init(convert=False, strip=False)
-    set_formatter("light", color_system="truecolor", force_jupyter=False)
 
+    def day():
+        """Day theme for Mu's REPL"""
+        set_formatter(
+            "light", color_system="truecolor", force_jupyter=False, background="#FEFEF7"
+        )
+
+    def night():
+        """Night theme for Mu's REPL"""
+        set_formatter(
+            "dark", color_system="truecolor", force_jupyter=False, background="#373737"
+        )
+
+    def ft():
+        """ft = Friendly Theme Mu's REPL (high contrast).
+        This uses the standard colours for Friendly with dark consoles.
+        """
+        set_formatter(
+            "dark", color_system="truecolor", force_jupyter=False, background="#000000"
+        )
+
+    def bw():
+        """Black and White theme for Mu's REPL.
+        This is like the normal high contrast theme chosen by Mu."""
+        set_formatter(
+            "bw", color_system="truecolor", force_jupyter=False, background="#000000"
+        )
+
+    Friendly.bw = bw  # noqa
+    Friendly.ft = ft  # noqa
+    Friendly.day = day  # noqa
+    Friendly.night = night  # noqa
+
+    day()
+    del colorama
 
 else:
     from friendly.console_helpers import *  # noqa
