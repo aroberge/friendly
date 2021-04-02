@@ -13,6 +13,7 @@ tests/messages_*.py
 test.py
 ignore.py
 example.py
+ignore*.*
 
 #=====================
 # Byte-compiled / optimized / DLL files

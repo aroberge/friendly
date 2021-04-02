@@ -53,6 +53,15 @@ def attribute_error():
     )
 
 
+@register("EOFError")
+def eof_error():
+    _ = current_lang.translate
+    return _(
+        "An `EOFError` is raised when the `input()` function hits\n"
+        "an end-of-file condition (EOF) without reading any data.\n"
+    )
+
+
 @register("FileNotFoundError")
 def file_not_found_error():
     _ = current_lang.translate
