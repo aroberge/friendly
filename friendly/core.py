@@ -338,10 +338,7 @@ class FriendlyTraceback:
         self.assign_location()
         self.assign_cause()
         # removing null values
-        to_remove = []
-        for key in self.info:
-            if not self.info[key]:
-                to_remove.append(key)
+        to_remove = [key for key in self.info if not self.info[key]]
         for key in to_remove:
             del self.info[key]
 
@@ -620,11 +617,7 @@ class FriendlyTraceback:
         python_tb = [line.rstrip() for line in self.tb_data.formatted_tb]
 
         tb = self.create_traceback()
-        if len(tb) > 10:
-            shortened_tb = tb[0:2] + suppressed + tb[-7:]
-        else:
-            shortened_tb = tb[:]
-
+        shortened_tb = tb[0:2] + suppressed + tb[-7:] if len(tb) > 10 else tb[:]
         pattern = re.compile(r'File "(.*)", ')
         temp = []
         for line in shortened_tb:
@@ -647,11 +640,7 @@ class FriendlyTraceback:
             for line in python_tb:  # excluding our own code
                 if exclude and line.strip() == "exec(code, self.locals)":
                     continue
-                exclude = False
-                for filename in EXCLUDED_FILE_PATH:
-                    if filename in line:
-                        exclude = True
-                        break
+                exclude = any(filename in line for filename in EXCLUDED_FILE_PATH)
                 if exclude:
                     continue
                 tb.append(line)

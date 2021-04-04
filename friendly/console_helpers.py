@@ -216,11 +216,7 @@ def www(search=None, python=False):
     friendly_url = "https://aroberge.github.io/friendly-docs/docs/html/"
     python_docs_url = _("https://docs.python.org/3/")
     python_search_url = _("https://docs.python.org/3/search.html?q=")
-    if session.saved_info:
-        info = session.saved_info[-1]
-    else:
-        info = None
-
+    info = session.saved_info[-1] if session.saved_info else None
     if search is None and not python:  # default search
         if info is None:
             url = friendly_url

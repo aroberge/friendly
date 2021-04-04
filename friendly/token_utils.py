@@ -383,10 +383,7 @@ def indent(tokens, nb, tab=False):
     instead of spaces.
     """
     line = untokenize(tokens)
-    if tab:
-        line = "\t" * nb + line
-    else:
-        line = " " * nb + line
+    line = "\t" * nb + line if tab else " " * nb + line
     return tokenize(line)
 
 

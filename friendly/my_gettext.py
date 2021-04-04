@@ -64,10 +64,7 @@ class LangState:
                 # is not available.
             )
         self.lang = lang
-        if lang == "en":
-            self.translate = self.no_translation
-        else:
-            self.translate = _lang.gettext
+        self.translate = self.no_translation if lang == "en" else _lang.gettext
 
 
 current_lang = LangState()  # noqa

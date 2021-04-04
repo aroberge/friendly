@@ -10,12 +10,11 @@ GENERIC = {}
 def get_generic_explanation(exception_name):
     """Provides a generic explanation about a particular exception."""
     if exception_name in GENERIC:
-        explanation = GENERIC[exception_name]()
+        return GENERIC[exception_name]()
     elif exception_name.endswith("Warning"):
-        explanation = GENERIC["UnknownWarning"]()
+        return GENERIC["UnknownWarning"]()
     else:
-        explanation = no_information()
-    return explanation
+        return no_information()
 
 
 def register(error_name):

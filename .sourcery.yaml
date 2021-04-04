@@ -1,0 +1,2 @@
+refactor:
+  skip: [move-assign]

@@ -157,7 +157,7 @@ def jupyter(info, include="friendly_tb"):
     """Jupyter formatter using pygments and html format."""
     _ = current_lang.translate
     css = HtmlFormatter().get_style_defs(".highlight")
-    display(HTML(f"<style>{css}</style>"))
+    display(HTML(f"<style>{css}</style>"))  # noqa
     items_to_show = select_items(include)
     result = False
     for item in items_to_show:
@@ -166,18 +166,15 @@ def jupyter(info, include="friendly_tb"):
             if "source" in item or "variable" in item:
                 text = info[item]
                 text = highlight(text, PythonLexer(), HtmlFormatter())
-                display(HTML(text))
+                display(HTML(text))  # noqa
             elif "traceback" in item:
                 text = info[item]
                 text = highlight(text, PythonTracebackLexer(), HtmlFormatter())
-                display(HTML(text))
+                display(HTML(text))  # noqa
             elif item == "message":  # format like last line of traceback
                 content = info[item].split(":")
                 error_name = content[0]
-                if len(content) > 1:
-                    message = ":".join(content[1:])
-                else:
-                    message = ""
+                message = ":".join(content[1:]) if len(content) > 1 else ""
                 text = "".join(
                     [
                         '<div class="highlight"><pre><span class="gr">',
@@ -187,16 +184,16 @@ def jupyter(info, include="friendly_tb"):
                         "</span></pre></div>",
                     ]
                 )
-                display(HTML(text))
+                display(HTML(text))  # noqa
             elif item == "suggest":
                 text = html_escape(info[item])
-                display(HTML(f"<p><i>{text}<i><p>"))
+                display(HTML(f"<p><i>{text}<i><p>"))  # noqa
             else:
                 text = html_escape(info[item])
                 if "header" in item:
-                    display(HTML(f"<p><b>{text}</b></p>"))
+                    display(HTML(f"<p><b>{text}</b></p>"))  # noqa
                 else:
-                    display(HTML(f'<p style="width: 70ch">{text}</p>'))
+                    display(HTML(f'<p style="width: 70ch">{text}</p>'))  # noqa
     if not result:
         text = ""
         if include == "why":
@@ -208,7 +205,7 @@ def jupyter(info, include="friendly_tb"):
                 text = _("I have no suggestion to offer.")
         if not text:
             return ""
-        display(HTML(f'<p style="width: 70ch;">{text}</p>'))
+        display(HTML(f'<p style="width: 70ch;">{text}</p>'))  # noqa
 
     return ""
 
@@ -397,8 +394,4 @@ items_groups["no_tb"].discard(items_groups["friendly_tb"])
 
 def select_items(group_name):
     items = items_groups[group_name]
-    ordered_items = []
-    for item in items_in_order:
-        if item in items:
-            ordered_items.append(item)
-    return ordered_items
+    return [item for item in items_in_order if item in items]

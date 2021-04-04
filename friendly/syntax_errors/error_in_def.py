@@ -72,7 +72,7 @@ def remove_async(statement):
     def ...
     """
 
-    if not (statement.tokens[0] == "async" and statement.tokens[1] == "def"):
+    if statement.tokens[0] != "async" or statement.tokens[1] != "def":
         debug_helper.log("Problem in remove_async: inconsistent state")
         return None
 
@@ -356,7 +356,7 @@ def dotted_name_not_allowed(statement):
 def positional_arguments_in_def(statement):
     _ = current_lang.translate
 
-    if not (statement.bad_token == "/" and statement.prev_token.string in "(,"):
+    if statement.bad_token != "/" or statement.prev_token.string not in "(,":
         return {}
 
     meaning = _(
@@ -411,7 +411,7 @@ def positional_arguments_in_def(statement):
 @add_statement_analyzer
 def keyword_arguments_in_def(statement):
     _ = current_lang.translate
-    if not (statement.bad_token == "*" and statement.prev_token == ","):
+    if statement.bad_token != "*" or statement.prev_token != ",":
         return {}
 
     for tok in statement.tokens[0 : statement.bad_token_index]:
@@ -468,7 +468,7 @@ def string_as_argument(statement):
 def tuple_as_argument(statement):
     _ = current_lang.translate
 
-    if not (statement.bad_token == "(" and statement.prev_token.string in "(,"):
+    if statement.bad_token != "(" or statement.prev_token.string not in "(,":
         return {}
 
     hint = _("You cannot have explicit tuples as function arguments.\n")
@@ -484,7 +484,7 @@ def tuple_as_argument(statement):
 @add_statement_analyzer
 def list_as_argument(statement):
     _ = current_lang.translate
-    if not (statement.bad_token == "[" and statement.prev_token.string in "(,"):
+    if statement.bad_token != "[" or statement.prev_token.string not in "(,":
         return {}
 
     hint = _("You cannot have explicit lists as function arguments.\n")
@@ -497,7 +497,7 @@ def list_as_argument(statement):
 @add_statement_analyzer
 def dict_or_set_as_argument(statement):
     _ = current_lang.translate
-    if not (statement.bad_token == "{" and statement.prev_token.string in "(,"):
+    if statement.bad_token != "{" or statement.prev_token.string not in "(,":
         return {}
 
     hint = _("You cannot have any explicit dict or set as function arguments.\n")
