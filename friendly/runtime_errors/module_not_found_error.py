@@ -1,6 +1,7 @@
 """Getting specific information for ModuleNotFoundError"""
 
 import re
+import sys
 
 from . import stdlib_modules
 from .. import debug_helper
@@ -36,6 +37,17 @@ def _get_cause(value, *_args):
 
 def no_module_named(name):
     _ = current_lang.translate
+
+    if name == "_curses":
+        if sys.platform.startswith("win"):
+            hint = _("The curses module is rarely installed with Python on Windows.\n")
+        else:
+            hint = _("The curses module is often not installed with Python.\n")
+
+        cause = _("You have tried to import the curses module.\n")
+
+        return {"cause": cause + hint, "suggest": hint}
+
     similar = get_similar_words(name, stdlib_modules.names)
 
     cause = _(

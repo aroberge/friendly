@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-04-02 10:07-0300\n"
+"POT-Creation-Date: 2021-04-04 16:13-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -165,33 +165,33 @@ msgid ""
 "and `x` is not a method or attribute (variable) belonging to `object`.\n"
 msgstr ""
 
-#: info_generic.py:58
+#: info_generic.py:59
 msgid ""
 "An `EOFError` is raised when the `input()` function hits\n"
 "an end-of-file condition (EOF) without reading any data.\n"
 msgstr ""
 
-#: info_generic.py:66
+#: info_generic.py:68
 msgid ""
 "A `FileNotFoundError` exception indicates that you\n"
 "are trying to open a file that cannot be found by Python.\n"
 "This could be because you misspelled the name of the file.\n"
 msgstr ""
 
-#: info_generic.py:76
+#: info_generic.py:78
 msgid ""
 "An `ImportError` exception indicates that a certain object could not\n"
 "be imported from a module or package. Most often, this is\n"
 "because the name of the object is not spelled correctly.\n"
 msgstr ""
 
-#: info_generic.py:86
+#: info_generic.py:88
 msgid ""
 "An `IndentationError` occurs when a given line of code is\n"
 "not indented (aligned vertically with other lines) as expected.\n"
 msgstr ""
 
-#: info_generic.py:95
+#: info_generic.py:97
 msgid ""
 "An `IndexError` occurs when you are try to get an item from a list,\n"
 "a tuple, or a similar object (sequence), by using an index which\n"
@@ -199,20 +199,20 @@ msgid ""
 "is greater than the length of the sequence.\n"
 msgstr ""
 
-#: info_generic.py:106
+#: info_generic.py:108
 msgid ""
 "A `KeyError` is raised when a value is not found as a\n"
 "key in a Python dict.\n"
 msgstr ""
 
-#: info_generic.py:115
+#: info_generic.py:117
 msgid ""
 "`LookupError` is the base class for the exceptions that are raised\n"
 "when a key or index used on a mapping or sequence is invalid.\n"
 "It can also be raised directly by codecs.lookup().\n"
 msgstr ""
 
-#: info_generic.py:125
+#: info_generic.py:127
 msgid ""
 "A `ModuleNotFoundError` exception indicates that you\n"
 "are trying to import a module that cannot be found by Python.\n"
@@ -220,7 +220,7 @@ msgid ""
 "or because it is not installed on your computer.\n"
 msgstr ""
 
-#: info_generic.py:136
+#: info_generic.py:138
 msgid ""
 "A `NameError` exception indicates that a variable or\n"
 "function name is not known to Python.\n"
@@ -229,13 +229,13 @@ msgid ""
 "before being defined or given a value.\n"
 msgstr ""
 
-#: info_generic.py:148
+#: info_generic.py:150
 msgid ""
 "An `OverflowError` is raised when the result of an arithmetic operation\n"
 "is too large to be handled by the computer's processor.\n"
 msgstr ""
 
-#: info_generic.py:157
+#: info_generic.py:159
 msgid ""
 "A `RecursionError` is raised when a function calls itself,\n"
 "directly or indirectly, too many times.\n"
@@ -243,12 +243,12 @@ msgid ""
 "and that your program would never stop.\n"
 msgstr ""
 
-#: info_generic.py:168
+#: info_generic.py:170
 msgid ""
 "A `SyntaxError` occurs when Python cannot understand your code.\n"
 msgstr ""
 
-#: info_generic.py:174
+#: info_generic.py:176
 msgid ""
 "A `TabError` indicates that you have used both spaces\n"
 "and tab characters to indent your code.\n"
@@ -258,7 +258,7 @@ msgid ""
 "Python's recommendation is to always use spaces to indent your code.\n"
 msgstr ""
 
-#: info_generic.py:187
+#: info_generic.py:189
 msgid ""
 "A `TypeError` is usually caused by trying\n"
 "to combine two incompatible types of objects,\n"
@@ -266,13 +266,13 @@ msgid ""
 "or by trying to do an operation not allowed on a given type of object.\n"
 msgstr ""
 
-#: info_generic.py:198
+#: info_generic.py:200
 msgid ""
 "A `ValueError` indicates that a function or an operation\n"
 "received an argument of the right type, but an inappropriate value.\n"
 msgstr ""
 
-#: info_generic.py:207
+#: info_generic.py:209
 msgid ""
 "In Python, variables that are used inside a function are known as \n"
 "local variables. Before they are used, they must be assigned a value.\n"
@@ -284,12 +284,12 @@ msgid ""
 "an `UnboundLocalError`.\n"
 msgstr ""
 
-#: info_generic.py:222
+#: info_generic.py:224
 msgid ""
 "No information is available about this warning.\n"
 msgstr ""
 
-#: info_generic.py:228
+#: info_generic.py:230
 msgid ""
 "A `ZeroDivisionError` occurs when you are attempting to divide a value\n"
 "by zero either directly or by using some other mathematical operation.\n"
@@ -398,7 +398,7 @@ msgstr ""
 #: runtime_errors\attribute_error.py:80 runtime_errors\attribute_error.py:88
 #: runtime_errors\attribute_error.py:122 runtime_errors\attribute_error.py:243
 #: runtime_errors\import_error.py:105 runtime_errors\key_error.py:56
-#: runtime_errors\key_error.py:63 runtime_errors\module_not_found_error.py:47
+#: runtime_errors\key_error.py:63 runtime_errors\module_not_found_error.py:59
 #: runtime_errors\name_error.py:83 runtime_errors\unbound_local_error.py:38
 #: syntax_errors\message_analyzer.py:369
 #: syntax_errors\message_analyzer.py:1047
@@ -695,68 +695,83 @@ msgid ""
 "Did you forget to convert '{key}' into a string?\n"
 msgstr ""
 
-#: runtime_errors\module_not_found_error.py:41
+#: runtime_errors\module_not_found_error.py:43
+msgid ""
+"The curses module is rarely installed with Python on Windows.\n"
+msgstr ""
+
+#: runtime_errors\module_not_found_error.py:45
+msgid ""
+"The curses module is often not installed with Python.\n"
+msgstr ""
+
+#: runtime_errors\module_not_found_error.py:47
+msgid ""
+"You have tried to import the curses module.\n"
+msgstr ""
+
+#: runtime_errors\module_not_found_error.py:53
 msgid ""
 "The name of the module that could not be imported is `{name}`.\n"
 msgstr ""
 
-#: runtime_errors\module_not_found_error.py:50
+#: runtime_errors\module_not_found_error.py:62
 msgid ""
 "The following existing modules have names that are similar \n"
 "to the module you tried to import: `{names}`\n"
 msgstr ""
 
-#: runtime_errors\module_not_found_error.py:55
+#: runtime_errors\module_not_found_error.py:67
 msgid ""
 "`{name}` is an existing module that has a similar name.\n"
 msgstr ""
 
-#: runtime_errors\module_not_found_error.py:72
+#: runtime_errors\module_not_found_error.py:84
 msgid ""
 "No additional information available since `{name}` cannot be imported.\n"
 msgstr ""
 
-#: runtime_errors\module_not_found_error.py:83
+#: runtime_errors\module_not_found_error.py:95
 msgid ""
 "Did you mean `from {name} import {rest}`?\n"
 msgstr ""
 
-#: runtime_errors\module_not_found_error.py:86
+#: runtime_errors\module_not_found_error.py:98
 msgid ""
 "`{rest}` is not a separate module but an object that is part of `{name}`.\n"
 msgstr ""
 
-#: runtime_errors\module_not_found_error.py:96
+#: runtime_errors\module_not_found_error.py:108
 msgid ""
 "Did you mean `import {name}.{attr}`?\n"
 msgstr ""
 
-#: runtime_errors\module_not_found_error.py:99
+#: runtime_errors\module_not_found_error.py:111
 msgid ""
 "Perhaps you meant `import {name}.{attr}`.\n"
 "`{attr}` is a name similar to `{rest}` and is a module that\n"
 "can be imported from `{name}`.\n"
 msgstr ""
 
-#: runtime_errors\module_not_found_error.py:107
+#: runtime_errors\module_not_found_error.py:119
 msgid ""
 "Did you mean `from {name} import {attr}`?\n"
 msgstr ""
 
-#: runtime_errors\module_not_found_error.py:110
+#: runtime_errors\module_not_found_error.py:122
 msgid ""
 "Perhaps you meant `from {name} import {attr}`.\n"
 "`{attr}` is a name similar to `{rest}` and is an object that\n"
 "can be imported from `{name}`.\n"
 msgstr ""
 
-#: runtime_errors\module_not_found_error.py:117
+#: runtime_errors\module_not_found_error.py:129
 msgid ""
 "Other objects with similar names that are part of\n"
 " `{name}` include `{others}`.\n"
 msgstr ""
 
-#: runtime_errors\module_not_found_error.py:123
+#: runtime_errors\module_not_found_error.py:135
 msgid ""
 "`{rest}` cannot be imported from `{name}`.\n"
 msgstr ""
@@ -1278,6 +1293,17 @@ msgstr ""
 msgid ""
 "In this instance, there are fewer names ({nb_names})\n"
 "than the length of the iterable, {iter_type} of length {length}.\n"
+msgstr ""
+
+#: runtime_errors\value_error.py:176
+msgid ""
+"You need to convert to a float first.\n"
+msgstr ""
+
+#: runtime_errors\value_error.py:177
+msgid ""
+"The string `'{value}'` needs to be first converted using `float()`\n"
+"before the result can be converted into an integer using `int()`.\n"
 msgstr ""
 
 #: runtime_errors\zero_division_error.py:43
