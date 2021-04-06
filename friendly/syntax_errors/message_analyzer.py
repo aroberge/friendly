@@ -1266,3 +1266,21 @@ def bracket_was_expected(message="", statement=None):
     if rephrased_cause:
         cause = rephrased_cause["cause"]
     return {"cause": cause, "suggest": hint}
+
+
+@add_python_message
+def invalid_double_star_operator(message="", **_kwargs):
+    _ = current_lang.translate
+
+    # Used to be "invalid syntax" prior to Python version 3.10
+    if (
+        message == "f-string: can't use double starred expression here"  # 3.10.0a7
+        or message == "f-string: cannot use double starred expression here"  # future?
+    ):
+        cause = _(
+            "The double star operator `**` is likely interpreted to mean that\n"
+            "dict unpacking is to be used which is not allowed or does not make sense here.\n"
+        )
+        return {"cause": cause}
+
+    return {}

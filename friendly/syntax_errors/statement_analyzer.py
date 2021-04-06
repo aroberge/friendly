@@ -619,7 +619,7 @@ def invalid_double_star_operator(statement):
     if statement.bad_token == "**":
         cause = _(
             "The double star operator `**` is likely interpreted to mean that\n"
-            "dict unpacking is to be used which does not make sense here.\n"
+            "dict unpacking is to be used which is not allowed or does not make sense here.\n"
         )
         return {"cause": cause}
 

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-04-04 16:13-0300\n"
-"PO-Revision-Date: 2021-04-04 16:16-0300\n"
+"POT-Creation-Date: 2021-04-06 11:17-0300\n"
+"PO-Revision-Date: 2021-04-06 11:18-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -76,16 +76,16 @@ msgstr "https://docs.python.org/fr/3/"
 msgid "https://docs.python.org/3/search.html?q="
 msgstr "https://docs.python.org/fr/3/search.html?q="
 
-#: console_helpers.py:251
+#: console_helpers.py:247
 msgid "The default web browser cannot be used for searching."
 msgstr ""
 "Le navigateur Web par défaut ne peut pas être utilisé pour la recherche."
 
-#: core.py:315 core.py:353
+#: core.py:315 core.py:350
 msgid "Python exception:"
 msgstr "Exception Python:"
 
-#: core.py:366
+#: core.py:363
 msgid ""
 "Warning: improperly formed exception.\n"
 "I suspect that a custom exception has been raised\n"
@@ -99,23 +99,23 @@ msgstr ""
 "Cela peut se produire si une méthode `__repr__` ou `__str__`\n"
 "soulève une exception ou ne retourne pas une chaîne.\n"
 
-#: core.py:500
+#: core.py:497
 msgid ""
 "{filename} is not a regular Python file whose contents can be analyzed.\n"
 msgstr ""
 "{filename} n’est pas un fichier Python dont le contenu\n"
 "peut être analysé.\n"
 
-#: core.py:506
+#: core.py:503
 msgid "Exception raised on line {linenumber} of file {filename}.\n"
 msgstr "Exception levée à la ligne {linenumber} du fichier {filename}.\n"
 
-#: core.py:544
+#: core.py:541
 msgid "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
 "L'exécution s'est arrêtée à la ligne {linenumber} du fichier {filename}\n"
 
-#: core.py:563
+#: core.py:560
 msgid ""
 "`{filename}` is not a regular Python file whose contents\n"
 "can be analyzed.\n"
@@ -123,7 +123,7 @@ msgstr ""
 "`{filename}` n’est pas un fichier Python dont le contenu\n"
 "peut être analysé.\n"
 
-#: core.py:574
+#: core.py:571
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -133,7 +133,7 @@ msgstr ""
 "'{filename}'\n"
 "jusqu'à l'endroit indiqué par ^.\n"
 
-#: core.py:580
+#: core.py:577
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
@@ -144,7 +144,7 @@ msgstr ""
 "La fin du fichier a été atteinte et Python s'attendait à voir plus de code.\n"
 "\n"
 
-#: core.py:586
+#: core.py:583
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -154,15 +154,15 @@ msgstr ""
 "'{filename}'\n"
 "pour une raison non spécifiée.\n"
 
-#: core.py:618
+#: core.py:615
 msgid "More lines not shown."
 msgstr "Plus de lignes non affichées."
 
-#: core.py:766
+#: core.py:755
 msgid "Problem: source of `{filename}` is not available\n"
 msgstr "Problème : la source de `{filename}` n'est pas disponible.\n"
 
-#: core.py:810
+#: core.py:799
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -173,19 +173,19 @@ msgstr ""
 "Est-ce que vous utilisez une console Python plutôt que la console \"Friendly"
 "\" ?\n"
 
-#: formatters.py:203
+#: formatters.py:200
 msgid "I do not know."
 msgstr "Je ne sais pas."
 
-#: formatters.py:206 formatters.py:361
+#: formatters.py:203 formatters.py:358
 msgid "I have no suggestion to offer; try `why()`."
 msgstr "Je n’ai aucune suggestion à offrir; essayez `why()`."
 
-#: formatters.py:208 formatters.py:357 formatters.py:363
+#: formatters.py:205 formatters.py:354 formatters.py:360
 msgid "I have no suggestion to offer."
 msgstr "Je n’ai aucune suggestion à offrir."
 
-#: info_generic.py:38
+#: info_generic.py:37
 msgid ""
 "`ArithmeticError` is the base class for those built-in exceptions\n"
 "that are raised for various arithmetic errors.\n"
@@ -197,7 +197,7 @@ msgstr ""
 "Il est inhabituel que vous voyiez cette exception;\n"
 "normalement, une exception plus spécifique aurait dû être soulevée.\n"
 
-#: info_generic.py:49
+#: info_generic.py:48
 msgid ""
 "An `AttributeError` occurs when the code contains something like\n"
 "    `object.x`\n"
@@ -209,7 +209,7 @@ msgstr ""
 "et `x` n’est pas une méthode ou un attribut (variable) appartenant à "
 "`objet`.\n"
 
-#: info_generic.py:59
+#: info_generic.py:58
 msgid ""
 "An `EOFError` is raised when the `input()` function hits\n"
 "an end-of-file condition (EOF) without reading any data.\n"
@@ -218,7 +218,7 @@ msgstr ""
 "atteint\n"
 "une condition de fin de fichier (EOF) sans lire aucune données.\n"
 
-#: info_generic.py:68
+#: info_generic.py:67
 msgid ""
 "A `FileNotFoundError` exception indicates that you\n"
 "are trying to open a file that cannot be found by Python.\n"
@@ -229,7 +229,7 @@ msgstr ""
 "Cela pourrait être parce que vous fait une faute d'orthographe en\n"
 "écrivant le nom du fichier.\n"
 
-#: info_generic.py:78
+#: info_generic.py:77
 msgid ""
 "An `ImportError` exception indicates that a certain object could not\n"
 "be imported from a module or package. Most often, this is\n"
@@ -239,7 +239,7 @@ msgstr ""
 "être importé à partir d’un module ou d’un paquet. Très souvent, c’est\n"
 "parce que le nom de l’objet n’est pas écrit correctement.\n"
 
-#: info_generic.py:88
+#: info_generic.py:87
 msgid ""
 "An `IndentationError` occurs when a given line of code is\n"
 "not indented (aligned vertically with other lines) as expected.\n"
@@ -250,7 +250,7 @@ msgstr ""
 "lignes)\n"
 "de la façon attendue.\n"
 
-#: info_generic.py:97
+#: info_generic.py:96
 msgid ""
 "An `IndexError` occurs when you are try to get an item from a list,\n"
 "a tuple, or a similar object (sequence), by using an index which\n"
@@ -264,7 +264,7 @@ msgstr ""
 "n’existe pas; typiquement, c’est parce que l’index que vous donnez\n"
 "est plus grand que la longueur de la séquence.\n"
 
-#: info_generic.py:108
+#: info_generic.py:107
 msgid ""
 "A `KeyError` is raised when a value is not found as a\n"
 "key in a Python dict.\n"
@@ -272,7 +272,7 @@ msgstr ""
 "Une exception `KeyError` est levée lorsqu’une valeur n’est pas trouvée\n"
 "en tant que clé dans un dictionnaire (dict) Python.\n"
 
-#: info_generic.py:117
+#: info_generic.py:116
 msgid ""
 "`LookupError` is the base class for the exceptions that are raised\n"
 "when a key or index used on a mapping or sequence is invalid.\n"
@@ -283,7 +283,7 @@ msgstr ""
 "séquence est invalide.\n"
 "Elle peut également être levée directement par codecs.lookup().\n"
 
-#: info_generic.py:127
+#: info_generic.py:126
 msgid ""
 "A `ModuleNotFoundError` exception indicates that you\n"
 "are trying to import a module that cannot be found by Python.\n"
@@ -296,7 +296,7 @@ msgstr ""
 "écrivant le nom du module, ou parce qu’il n’est pas installé sur votre "
 "ordinateur.\n"
 
-#: info_generic.py:138
+#: info_generic.py:137
 msgid ""
 "A `NameError` exception indicates that a variable or\n"
 "function name is not known to Python.\n"
@@ -310,7 +310,7 @@ msgstr ""
 "Cependant, cela peut également indiquer que le nom a été\n"
 "utilisé avant qu'on ne lui ait associé une valeur.\n"
 
-#: info_generic.py:150
+#: info_generic.py:149
 msgid ""
 "An `OverflowError` is raised when the result of an arithmetic operation\n"
 "is too large to be handled by the computer's processor.\n"
@@ -319,7 +319,7 @@ msgstr ""
 "opération arithmétique\n"
 "est trop grand pour être manipulé par le processeur de l’ordinateur.\n"
 
-#: info_generic.py:159
+#: info_generic.py:158
 msgid ""
 "A `RecursionError` is raised when a function calls itself,\n"
 "directly or indirectly, too many times.\n"
@@ -333,13 +333,13 @@ msgstr ""
 "votre code\n"
 "et que votre programme ne terminerait jamais.\n"
 
-#: info_generic.py:170
+#: info_generic.py:169
 msgid "A `SyntaxError` occurs when Python cannot understand your code.\n"
 msgstr ""
 "Une exception de type `SyntaxError` se produit lorsque Python ne peut pas "
 "comprendre votre code.\n"
 
-#: info_generic.py:176
+#: info_generic.py:175
 msgid ""
 "A `TabError` indicates that you have used both spaces\n"
 "and tab characters to indent your code.\n"
@@ -357,7 +357,7 @@ msgstr ""
 "La recommandation de Python est de toujours utiliser des espaces\n"
 "pour indenter votre code.\n"
 
-#: info_generic.py:189
+#: info_generic.py:188
 msgid ""
 "A `TypeError` is usually caused by trying\n"
 "to combine two incompatible types of objects,\n"
@@ -370,7 +370,7 @@ msgstr ""
 "ou en tentant d'effectuer une opération non permise sur un type d'objet "
 "donné.\n"
 
-#: info_generic.py:200
+#: info_generic.py:199
 msgid ""
 "A `ValueError` indicates that a function or an operation\n"
 "received an argument of the right type, but an inappropriate value.\n"
@@ -378,7 +378,7 @@ msgstr ""
 "Une exception `ValueError` indique qu'une fonction ou une opération\n"
 "a reçu un argument du bon type, mais une valeur inappropriée.\n"
 
-#: info_generic.py:209
+#: info_generic.py:208
 msgid ""
 "In Python, variables that are used inside a function are known as \n"
 "local variables. Before they are used, they must be assigned a value.\n"
@@ -402,11 +402,11 @@ msgstr ""
 "qu’il s’agit d’une variable globale, sinon vous verrez une exception "
 "`UnboundLocalError`.\n"
 
-#: info_generic.py:224
+#: info_generic.py:223
 msgid "No information is available about this warning.\n"
 msgstr "Aucune information n’est disponible sur cet avertissement.\n"
 
-#: info_generic.py:230
+#: info_generic.py:229
 msgid ""
 "A `ZeroDivisionError` occurs when you are attempting to divide a value\n"
 "by zero either directly or by using some other mathematical operation.\n"
@@ -487,7 +487,7 @@ msgid "Friendly themes are only available in Mu's REPL.\n"
 msgstr ""
 "Les thèmes pour friendly ne peuvent être utilisés que dans le REPL de Mu.\n"
 
-#: my_gettext.py:78
+#: my_gettext.py:75
 msgid ""
 "No information is known about this exception.\n"
 "Please report this example to\n"
@@ -503,7 +503,7 @@ msgstr ""
 "Si vous utilisez la console Friendly, utilisez `www()` pour\n"
 "faire une recherche sur Internet pour ce cas particulier.\n"
 
-#: my_gettext.py:89
+#: my_gettext.py:86
 msgid ""
 "Internal error for Friendly-traceback.\n"
 "Please report this example to\n"
@@ -513,7 +513,7 @@ msgstr ""
 "Veuillez signaler cet exemple à\n"
 "https://github.com/aroberge/friendly/issues\n"
 
-#: my_gettext.py:98
+#: my_gettext.py:95
 msgid ""
 "If you are using a Friendly console, you might want to\n"
 "use the function `www()` which will open a browser at\n"
@@ -3106,6 +3106,18 @@ msgstr "Python nous dit que le symbole {bracket} n’a jamais été fermé.\n"
 msgid "The {bracket} was never closed.\n"
 msgstr "Le symbole {bracket} n’a jamais été fermé.\n"
 
+#: syntax_errors\message_analyzer.py:1280
+#: syntax_errors\statement_analyzer.py:620
+msgid ""
+"The double star operator `**` is likely interpreted to mean that\n"
+"dict unpacking is to be used which is not allowed or does not make sense "
+"here.\n"
+msgstr ""
+"L’opérateur double astérisque, `**` est probablement interprété comme "
+"signifiant\n"
+"qu'un déballage de `dict` doit être utilisé ce qui n'est soit par permis\n"
+"ou n’a pas de sens ici.\n"
+
 #: syntax_errors\statement_analyzer.py:21
 msgid ""
 "However, making such a change would still not correct\n"
@@ -3469,15 +3481,6 @@ msgid ""
 msgstr ""
 "Je crois que vous essayez de lever une exception en utilisant la syntaxe de "
 "Python 2.\n"
-
-#: syntax_errors\statement_analyzer.py:620
-msgid ""
-"The double star operator `**` is likely interpreted to mean that\n"
-"dict unpacking is to be used which does not make sense here.\n"
-msgstr ""
-"L’opérateur double astérisque, `**` est probablement interprété comme "
-"signifiant\n"
-"qu'un déballage de `dict` doit être utilisé ce qui n’a pas de sens ici.\n"
 
 #: syntax_errors\statement_analyzer.py:663
 msgid "Did you forget a colon `:`?\n"
