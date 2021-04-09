@@ -510,7 +510,11 @@ def assign_instead_of_equal(statement):
     else:
         additional_cause = ""
 
-    if sys.version_info < (3, 8):
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.bad_token, ":="
+    )
+
+    if sys.version_info < (3, 8) or not fixers.check_statement(new_statement):
         hint = _("Perhaps you needed `==` instead of `=`.\n")
         cause = _(
             "You used an assignment operator `=` instead of an equality operator `==`.\n"
