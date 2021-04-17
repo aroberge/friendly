@@ -549,7 +549,7 @@ descriptions = {
         title: "Single = instead of double == with elif",
     },
     "single_equal_with_while": {
-        cause: "You used an assignment operator `=`",
+        cause: " used an assignment operator `=`",
         title: "Single = instead of double == with while",
     },
     "too_many_nested_blocks": {
