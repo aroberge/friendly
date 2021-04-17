@@ -517,7 +517,7 @@ def assign_instead_of_equal(statement):
     if sys.version_info < (3, 8) or not fixers.check_statement(new_statement):
         hint = _("Perhaps you needed `==` instead of `=`.\n")
         cause = _(
-            "You used an assignment operator `=` instead of an equality operator `==`.\n"
+            "You likely used an assignment operator `=` instead of an equality operator `==`.\n"
         )
         return {"cause": cause + additional_cause, "suggest": hint}
 

@@ -71,7 +71,7 @@ def find_syntax_error_cause(value, tb_data):
         cause = statement_analyzer.analyze_statement(statement)
         if message == "expected ':'":  # Python 3.10:
             new_cause = _(
-                "Python expected a colon at the position indicated.\n"
+                "Python told us that it expected a colon at the position indicated.\n"
                 "However, adding a colon or replacing something else by a colon\n"
                 "would not fix the problem.\n"
             )

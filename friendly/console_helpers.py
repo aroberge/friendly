@@ -167,7 +167,7 @@ def www(search=None, python=False):
     default browser, linking to a specific url.
 
     * If no arguments are provided, and no exception has been raised, this opens
-      Friendly documentation.
+      Friendly's documentation.
 
     * If no arguments are provided, and an exception has been raised, in most
       cases, an internet search will be done using the exception message as the
@@ -213,7 +213,7 @@ def www(search=None, python=False):
     quote = urllib.parse.quote  # noqa
 
     ddg_url = "https://duckduckgo.com?q="
-    friendly_url = "https://aroberge.github.io/friendly-docs/docs/html/"
+    friendly_url = "https://aroberge.github.io/friendly-traceback-docs/docs/html/"
     python_docs_url = _("https://docs.python.org/3/")
     python_search_url = _("https://docs.python.org/3/search.html?q=")
     info = session.saved_info[-1] if session.saved_info else None
@@ -243,7 +243,7 @@ def www(search=None, python=False):
 
     try:
         webbrowser.open_new_tab(url)
-    except Exception:
+    except Exception:  # noqa
         sys.stderr.write(_("The default web browser cannot be used for searching."))
 
 

@@ -541,11 +541,11 @@ descriptions = {
         title: "Cannot use return outside function",
     },
     "single_equal_with_if": {
-        cause: "You used an assignment operator `=`",
+        cause: "You likely used an assignment operator `=`",
         title: "Single = instead of double == with if",
     },
     "single_equal_with_elif": {
-        cause: "You used an assignment operator `=`",
+        cause: "You likely used an assignment operator `=`",
         title: "Single = instead of double == with elif",
     },
     "single_equal_with_while": {
