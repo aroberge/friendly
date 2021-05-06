@@ -1,7 +1,7 @@
 # friendly
 
 Created with Python beginners in mind, but also useful for experienced users,
-**friendly** replaces standard traceback
+**friendly** replaces standard tracebacks
 by something easier to understand, translatable into various languages. 
 Currently, the information provided by **friendly** is only available
 in two languages: English and French.
@@ -78,6 +78,15 @@ be provided by **friendly**.
 
             global pi: 3.141592653589793
 ```
+
+## Projects using friendly
+
+The following sites or projects use **friendly**:
+
+- https://futurecoder.io/
+- https://www.hackinscience.org/
+
+Feel free to file an issue to add your site or project if it uses **friendly**.
 
 ## Contribute
 
