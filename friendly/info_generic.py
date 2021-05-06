@@ -94,9 +94,9 @@ def indentation_error():
 def index_error():
     _ = current_lang.translate
     return _(
-        "An `IndexError` occurs when you are try to get an item from a list,\n"
-        "a tuple, or a similar object (sequence), by using an index which\n"
-        "does not exists; typically, this is because the index you give\n"
+        "An `IndexError` occurs when you try to get an item from a list,\n"
+        "a tuple, or a similar object (sequence), and use an index which\n"
+        "does not exist; typically, this happens because the index you give\n"
         "is greater than the length of the sequence.\n"
     )
 
