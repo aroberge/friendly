@@ -24,6 +24,9 @@ def _get_cause(value, frame, tb_data):
     _ = current_lang.translate
     message = str(value)
 
+    pattern0 = re.compile(r"partially initialized module '(.*)' has")
+    match0 = re.search(pattern0, message)
+
     pattern1 = re.compile(r"module '(.*)' has no attribute '(.*)'")
     match1 = re.search(pattern1, message)
 
@@ -32,6 +35,9 @@ def _get_cause(value, frame, tb_data):
 
     pattern3 = re.compile(r"'(.*)' object has no attribute '(.*)'")
     match3 = re.search(pattern3, message)
+
+    if match0:
+        return circular_import(match0.group(1), message)
 
     if match1:
         return attribute_error_in_module(match1.group(1), match1.group(2), frame)
@@ -55,6 +61,31 @@ def _get_cause(value, frame, tb_data):
         )
 
     return {"cause": no_information()}
+
+
+def circular_import(module, message):
+    _ = current_lang.translate
+    if module in stdlib_modules.names:
+        hint = _("Did you give your program the same name as a Python module?\n")
+        cause = _(
+            "I suspect that you used the name `{module}.py` for your program\n"
+            "and that you also wanted to import a module with the same name\n"
+            "from Python's standard library.\n"
+            "If so, you should use a different name for your program.\n"
+        ).format(module=module)
+        return {"cause": cause, "suggest": hint}
+
+    if "circular import" in message:
+        hint = _("You have a circular import.\n")
+    else:
+        hint = _("You likely have a circular import.\n")
+    cause = _(
+        "Python indicated that the module `{module}` was not fully imported.\n"
+        "This can occur if, during the execution of the code in module `{module}`.\n"
+        "some other module is imported where an attempt to import\n"
+        "and execute the code in `{module}` is made again!\n"
+    ).format(module=module)
+    return {"cause": cause, "suggest": hint}
 
 
 # ======= Attribute error in module =========
