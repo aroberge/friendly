@@ -223,7 +223,9 @@ def www(search=None, python=False):
         elif "python_link" in info:
             url = info["python_link"]
         else:
-            message = info["message"]
+            # avoid including quotes around variable names as this would
+            # make them be misinterpreted as important by search engines
+            message = info["message"].replace("'", "")
             if " (" in message:
                 message = message.split("(")[0]
             url = ddg_url + quote(message)

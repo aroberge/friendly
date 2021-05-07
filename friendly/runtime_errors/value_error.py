@@ -150,3 +150,35 @@ def too_many_values_to_unpack(message, frame, tb_data):
         "than the length of the iterable, {iter_type} of length {length}.\n"
     ).format(nb_names=nb_names, iter_type=convert_type(iterable), length=len(obj))
     return {"cause": cause}
+
+
+# TODO: complete the work below; note noqa to be removed
+
+
+@add_message_parser
+def invalid_literal_for_int(message, *_args):
+    _ = current_lang.translate
+    pattern = re.compile(r"invalid literal for int\(\) with base (\d+): '(.*)'")
+    match = re.search(pattern, message)
+    if match is None:
+        return {}
+    base, value = int(match.group(1)), match.group(2).strip()
+    if base == 10:
+        try:
+            _value = float(value)  # noqa
+            return _convert_to_float(value)
+        except ValueError:
+            pass
+
+    return {}
+
+
+def _convert_to_float(value):
+    _ = current_lang.translate
+
+    hint = _("You need to convert to a float first.\n")
+    cause = _(
+        "The string `'{value}'` needs to be first converted using `float()`\n"
+        "before the result can be converted into an integer using `int()`.\n"
+    ).format(value=value)
+    return {"cause": cause, "suggest": hint}
