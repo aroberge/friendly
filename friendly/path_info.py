@@ -101,7 +101,7 @@ class PathUtil:
             path = "HOME:" + path[len(self.home) :]
         elif path.startswith("<ipython-input"):
             parts = path.split("-")
-            path = "-".join(parts[:-1]) + ">"
+            path = "In [" + parts[-2] + "]"
         return path
 
 
