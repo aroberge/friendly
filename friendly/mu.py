@@ -7,6 +7,7 @@ exc_hook_name = repr(sys.excepthook)
 
 if "InteractiveShell" in exc_hook_name:
     from .ipython import *  # noqa  Will automatically install
+    from .ipython import __all__
     from friendly import set_formatter
     import colorama
 
@@ -46,12 +47,17 @@ if "InteractiveShell" in exc_hook_name:
     Friendly.night = night  # noqa
 
     day()
+    __all__.append("bw")
+    __all__.append("ft")
+    __all__.append("day")
+    __all__.append("night")
+
     del colorama
 
 else:
     from friendly.console_helpers import *  # noqa
     from friendly.console_helpers import helpers  # noqa
-    from friendly import install, run  # noqa
+    from friendly import install, run, start_console  # noqa
     from .config import session
 
     session.run_with_mu = True
@@ -67,11 +73,7 @@ else:
     __all__ = list(helpers.keys())
     __all__.append("install")
     __all__.append("run")
-    __all__.append("bw")
-    __all__.append("ft")
-    __all__.append("day")
-    __all__.append("night")
-
+    __all__.append("start_console")
 
 del exc_hook_name
 del sys
