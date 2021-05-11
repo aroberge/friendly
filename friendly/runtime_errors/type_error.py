@@ -448,6 +448,12 @@ def x_is_not_callable(message, frame, tb_data):
         return {}
 
     obj_type = match.group(1)
+    if obj_type == "NoneType":
+        none_type = _(
+            "\nNote: `NoneType` means that the object has a value of `None`.\n"
+        )
+    else:
+        none_type = ""
 
     # Start with default cause, in case we cannot do better
     cause = _(
@@ -469,7 +475,7 @@ def x_is_not_callable(message, frame, tb_data):
         except Exception:  # noqa
             continue
     else:
-        return {"cause": cause}
+        return {"cause": cause + none_type}
 
     if fn_call.replace(" ", "") == "()":
         cause = _(
@@ -477,7 +483,7 @@ def x_is_not_callable(message, frame, tb_data):
             "by Python as a function call for `{obj_name}`.\n"
             "However, `{obj_name}` is not a function but an object of type `{obj_type}`.\n"
         ).format(obj_name=obj_name, obj_type=obj_type)
-        return {"cause": cause}
+        return {"cause": cause + none_type}
 
     cause = _(
         "Because of the surrounding parenthesis, `{fn_call}` \n"
@@ -489,7 +495,7 @@ def x_is_not_callable(message, frame, tb_data):
     try:
         can_eval = utils.eval_expr(fn_call, frame)
     except Exception:  # noqa
-        return {"cause": cause}
+        return {"cause": cause + none_type}
 
     if isinstance(can_eval, tuple):
         cause = cause + _(
@@ -609,6 +615,11 @@ def object_cannot_be_interpreted_as_an_integer(message, frame, tb_data):
         return {}
 
     obj_name = match.group(1)
+    if obj_name == "NoneType":
+        cause = _(
+            "You wrote an object whose value is `None` where an integer was expected.\n"
+        ).format(obj=obj_name)
+        return {"cause": cause}
     object_of_type = info_variables.get_object_from_name(obj_name, frame)
     if object_of_type is None:
         return {}
@@ -820,6 +831,12 @@ def object_is_not_subscriptable(message, frame, tb_data):
         return {}
 
     obj_type = match.group(1)
+    if obj_type == "NoneType":
+        none_type = _(
+            "\nNote: `NoneType` means that the object has a value of `None`.\n"
+        )
+    else:
+        none_type = ""
 
     cause = _(
         "Subscriptable objects are typically containers from which\n"
@@ -837,7 +854,7 @@ def object_is_not_subscriptable(message, frame, tb_data):
             "Using this notation, you attempted to retrieve an item\n"
             "from an object of type `{obj_type}` which is not allowed.\n"
         ).format(obj_type=obj_type)
-        return {"cause": cause}
+        return {"cause": cause + none_type}
 
     if callable(obj):
         line = name + "(" + truncated[1:-1] + ")"
@@ -850,7 +867,7 @@ def object_is_not_subscriptable(message, frame, tb_data):
         "from `{name}`, an object of type `{obj_type}`. This is not allowed.\n"
     ).format(obj_type=obj_type, name=name)
 
-    return {"cause": cause}
+    return {"cause": cause + none_type}
 
 
 @add_message_parser

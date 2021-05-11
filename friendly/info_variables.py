@@ -22,7 +22,7 @@ except ImportError:
     pass  # ignore errors when processed by Sphinx
 
 
-INDENT = "        "
+INDENT = " " * 8
 MAX_LENGTH = 65
 
 
@@ -233,21 +233,24 @@ def get_var_info(line, frame):
     """
 
     names_info = []
-
     objects = get_all_objects(line.strip(), frame)
 
+    objects["locals"].sort()
     for name, value, obj in objects["locals"]:
         result = format_var_info(name, value, obj)
         names_info.append(result)
 
+    objects["globals"].sort()
     for name, value, obj in objects["globals"]:
         result = format_var_info(name, value, obj, "globals")
         names_info.append(result)
 
+    objects["builtins"].sort()
     for name, value, obj in objects["builtins"]:
         result = format_var_info(name, value, obj)
         names_info.append(result)
 
+    objects["expressions"].sort()
     for name, obj in objects["expressions"]:
         result = format_var_info(name, repr(obj), obj)
         names_info.append(result)
@@ -340,9 +343,10 @@ def format_var_info(name, value, obj, _global=""):
         except TypeError:
             pass
 
-    result = f"    {_global}{name}: {value}"
+    result = f"    {_global}{name}:  {value}"
     if length_info:
-        result += f"\n{INDENT}len({name}): {length_info}"
+        _indent = " " * (7 + len(name))
+        result += f"\n{_indent}len({name}): {length_info}\n"
     return result
 
 
