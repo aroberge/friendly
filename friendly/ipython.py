@@ -13,6 +13,13 @@ from friendly import install, exclude_file_from_traceback, explain_traceback
 from friendly.console_helpers import *  # noqa
 from friendly.console_helpers import helpers  # noqa
 
+try:
+    from IPython.utils import py3compat
+
+    exclude_file_from_traceback(py3compat.__file__)
+except Exception:  # noqa
+    pass
+
 
 colorama.deinit()
 colorama.init(convert=False, strip=False)
