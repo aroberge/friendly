@@ -117,6 +117,6 @@ def show_paths():
     print("CWD =", path_utils.cwd)
     print("HOME =", path_utils.home)
     print("FRIENDLY =", path_utils.friendly_path)
-    if path_utils.tests is not None:
+    if path_utils.tests:
         print("TESTS =", path_utils.tests)
     print("PYTHON_LIB =", path_utils.python)
