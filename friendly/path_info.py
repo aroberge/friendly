@@ -17,6 +17,12 @@ def exclude_file_from_traceback(full_path):
     Friendly-traceback.  Note that this does not apply to
     the true Python traceback obtained using "debug_tb".
     """
+    if not os.path.isfile(full_path):
+        raise RuntimeError(
+            f"{full_path} is not a valid file path; it cannot be excluded."
+        )
+    # full_path could be a pathlib.Path instance
+    full_path = str(full_path)
     EXCLUDED_FILE_PATH.add(full_path)
 
 
@@ -26,6 +32,14 @@ def exclude_directory_from_traceback(dir_name):
     Note that this does not apply to the true Python traceback
     obtained using "debug_tb".
     """
+    if not os.path.isdir(dir_name):
+        raise RuntimeError(f"{dir_name} is not a directory; it cannot be excluded.")
+    # dir_name could be a pathlib.Path instance.
+    dir_name = str(dir_name)
+    # Suppose we have dir_name = "this/path" instead of "this/path/".
+    # Later, when we want to exclude a directory, we get the following file path:
+    # "this/path2/name.py". If we don't append the ending "/", we would exclude
+    # this file by error in is_excluded_file below.
     if dir_name[-1] != os.path.sep:
         dir_name += os.path.sep
     EXCLUDED_DIR_NAMES.add(dir_name)
@@ -39,6 +53,8 @@ def is_excluded_file(full_path):
     """Determines if the file belongs to the group that is excluded from tracebacks."""
     if full_path.startswith("<frozen "):
         return True
+    # full_path could be a pathlib.Path instance
+    full_path = str(full_path)
     for dirs in EXCLUDED_DIR_NAMES:
         if full_path.startswith(dirs):
             return True
