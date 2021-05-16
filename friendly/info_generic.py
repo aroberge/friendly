@@ -42,6 +42,16 @@ def arithmetic_error():
     )
 
 
+@register("AssertionError")
+def assertion_error():
+    _ = current_lang.translate
+    return _(
+        "In Python, the keyword `assert` is used in statements of the form\n"
+        "`assert condition`, to confirm that `condition` is not `False`.\n\n"
+        "If `condition` is `False`, an `AssertionError` is raised.\n"
+    )
+
+
 @register("AttributeError")
 def attribute_error():
     _ = current_lang.translate
