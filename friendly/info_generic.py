@@ -173,6 +173,16 @@ def recursion_error():
     )
 
 
+@register("StopIteration")
+def stop_iteration():
+    _ = current_lang.translate
+    return _(
+        "`StopIteration` is raised to indicate that an iterator has no more\n"
+        "item to provide when its `__next__` method is called by\n"
+        "the `next()` builtin function.\n"
+    )
+
+
 @register("SyntaxError")
 def syntax_error():
     _ = current_lang.translate
