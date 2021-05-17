@@ -59,7 +59,7 @@ def explain(include="explain"):
     friendly.set_include(old_include)
 
 
-def show_info():
+def _show_info():
     """Debugging tool: shows the complete content of traceback info.
 
     Prints ``None`` for a given item if it is not present.
@@ -133,14 +133,14 @@ def python_tb():
     explain("python_tb")
 
 
-def debug_tb():
+def _debug_tb():
     """Shows the true Python traceback, which includes
     files from friendly itself.
     """
     explain("debug_tb")
 
 
-def debug(flag=True):
+def _debug(flag=True):
     """This functions displays the true traceback recorded, that
     includes friendly's own code.
     It also sets a debug flag for the current session.
@@ -270,10 +270,10 @@ helpers = {
     "hint": hint,
     "friendly_tb": friendly_tb,
     "python_tb": python_tb,
-    "debug_tb": debug_tb,
-    "debug": debug,
+    "_debug_tb": _debug_tb,
+    "_debug": _debug,
     "show_paths": show_paths,
-    "show_info": show_info,
+    "_show_info": _show_info,
     "set_formatter": set_formatter,
     "_get_statement": _get_statement,
     "www": www,
