@@ -9,7 +9,7 @@ except ImportError:
 
 import colorama
 
-from friendly import install, exclude_file_from_traceback, explain_traceback
+from friendly import install, exclude_file_from_traceback, explain_traceback, session
 from friendly.console_helpers import *  # noqa
 from friendly.console_helpers import helpers  # noqa
 
@@ -25,6 +25,20 @@ colorama.deinit()
 colorama.init(convert=False, strip=False)
 
 __all__ = list(helpers.keys())
+
+
+def set_width(width=80):
+    """Sets the width in a Jupyter session using Rich."""
+    if session.use_rich:
+        session.console._width = width
+    else:
+        print(
+            "set_width() is only available using 'light' or 'dark' mode.",
+            session.use_rich,
+        )
+
+
+__all__.append("set_width")
 
 shell.InteractiveShell.showtraceback = lambda self, *args, **kwargs: explain_traceback()
 shell.InteractiveShell.showsyntaxerror = (

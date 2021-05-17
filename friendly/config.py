@@ -48,7 +48,6 @@ class _State:
         self.console = None
         self.use_rich = False
         self.rich_add_vspace = True
-        self.use_jupyter = False
         self.friendly = []
         self.include = "explain"
         self.lang = "en"
@@ -226,7 +225,7 @@ class _State:
             debug_helper.log("Exception raised in exception_hook().")
             try:
                 debug_helper.log(self.friendly[-1].tb_data.filename)
-            except Exception:
+            except Exception:  # noqa
                 pass
             debug_helper.log_error(e)
             return

@@ -115,9 +115,9 @@ class PathUtil:
             path = "PYTHON_LIB:" + path[len(self.python) :]
         elif path_lower.startswith(self.home.lower()):
             path = "HOME:" + path[len(self.home) :]
-        elif path.startswith("<ipython-input"):
+        elif path.startswith("<ipython-input-"):
             parts = path.split("-")
-            path = "In [" + parts[-2] + "]"
+            path = "[" + parts[-2] + "]"
         return path
 
 

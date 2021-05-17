@@ -11,6 +11,11 @@ if "InteractiveShell" in exc_hook_name:
     from friendly import set_formatter
     import colorama
 
+    try:
+        __all__.remove("set_width")
+    except ValueError:
+        pass
+
     colorama.deinit()
     colorama.init(convert=False, strip=False)
 

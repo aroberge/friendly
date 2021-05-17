@@ -179,14 +179,9 @@ def run(
     """
     _ = current_lang.translate
     if include is None:
-        if console:
-            include = "friendly_tb"
-        else:
-            include = "explain"
-
+        include = "friendly_tb" if console else "explain"
     if args is not None:
-        sys.argv = [filename]
-        sys.argv.extend(list(args))
+        sys.argv = [filename, *list(args)]
     else:
         filename = Path(filename)
         if not filename.is_absolute():
