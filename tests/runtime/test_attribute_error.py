@@ -34,22 +34,26 @@ def test_Generic():
 
 
 def test_Generic_different_frame():
+    class A:
+        attr = 1
+
     def f():
         class A:
-            pass
+            attr2 = 1
         return A()
 
     a = f()
     try:
-        a.x
+        a.attr
     except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
 
-    assert "AttributeError: 'A' object has no attribute 'x'" in result
+    assert "AttributeError: 'A' object has no attribute 'attr'" in result
     if friendly.get_lang() == "en":
         assert "The object `a` has no attribute" in result
+        assert "Did you mean `attr2`" in result
     return result, message
 
 

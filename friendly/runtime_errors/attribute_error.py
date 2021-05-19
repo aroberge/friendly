@@ -4,7 +4,7 @@ import re
 import sys
 
 
-from ..my_gettext import current_lang, no_information, internal_error
+from ..my_gettext import current_lang, no_information
 from ..utils import get_similar_words, list_to_string
 from ..path_info import path_utils
 from .. import info_variables
@@ -142,10 +142,9 @@ def attribute_error_in_module(module, attribute, frame):
         elif mod_name in frame.f_globals:
             imported_modules.append((mod_name, frame.f_globals[mod_name]))
 
-    possible_modules = []
-    for mod_name, mod in imported_modules:
-        if attribute in dir(mod):
-            possible_modules.append(mod_name)
+    possible_modules = [
+        mod_name for mod_name, mod in imported_modules if attribute in dir(mod)
+    ]
 
     if possible_modules:
         if len(possible_modules) == 1:
@@ -214,15 +213,43 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
                 instance = _obj
                 break
         else:
-            debug_helper.log("Cannot identify object in attribute_error_in_object.")
-            return {"cause": internal_error()}
+            cause = _(
+                "An object of type `{obj_type}` has no attribute named `{attr}`.\n"
+                "Unfortunately I cannot find such an object on the line where\n"
+                "the problem occurs.\n"
+            ).format(obj_type=obj_type, attr=attribute)
+            return {"cause": cause}
     else:
         for obj_name, instance in all_objects:
             if isinstance(instance, obj) or instance == obj:
                 break
         else:
-            debug_helper.log("object is not on bad_line in attribute_error_in_object.")
-            return {"cause": internal_error()}
+            possible_objects = []
+            for obj_name, _obj in all_objects:
+                t = str(type(_obj))
+                if (
+                    t.endswith(f".{obj_type}'>") or t.endswith(f"'{obj_type}'>")
+                ) and not hasattr(_obj, attribute):
+                    possible_objects.append((obj_name, _obj))
+
+            if not possible_objects:
+                cause = _(
+                    "An object of type `{obj_type}` has no attribute named `{attr}`.\n\n"
+                    "I cannot give additional information:\n"
+                    "I found one object of this type in the current scope\n"
+                    "but it does not appear to be the object causing the problem.\n"
+                ).format(obj_type=obj_type, attr=attribute)
+                return {"cause": cause}
+            elif len(possible_objects) > 1:
+                names = ", ".join(name for name, _obj in possible_objects)
+                cause = _(
+                    "An object of type `{obj_type}` has no attribute named `{attr}`.\n\n"
+                    "The following objects might be the cause of the problem: \n"
+                    "{names}.\n"
+                ).format(obj_type=obj_type, attr=attribute, names=names)
+                return {"cause": cause}
+
+            obj_name, instance = possible_objects[0]
 
     possible_cause = tuple_by_accident(instance, obj_name, attribute)
     if possible_cause:
@@ -278,17 +305,19 @@ def handle_attribute_typo(obj_name, attribute, similar):
     name could be identified.
     """
     _ = current_lang.translate
-
+    cause = _("The object `{obj_name}` has no attribute named `{attribute}`.\n").format(
+        obj_name=obj_name, attribute=attribute
+    )
     if len(similar) == 1:
         hint = _("Did you mean `{name}`?\n").format(name=similar[0])
-        cause = _(
+        cause += _(
             "Perhaps you meant to write `{obj}.{correct}` "
             "instead of `{obj}.{typo}`\n"
         ).format(correct=similar[0], typo=attribute, obj=obj_name)
     else:
         names = list_to_string(similar)
         hint = _("Did you mean one of the following: `{names}`?\n").format(names=names)
-        cause = _(
+        cause += _(
             "Instead of writing `{obj}.{typo}`, perhaps you meant to write one of \n"
             "the following names which are attributes of object `{obj}`:\n"
             "`{names}`\n"
@@ -362,12 +391,7 @@ def perhaps_synonym(attribute, known_attributes):
     ]
     for syn_list in synonyms:
         if attribute in syn_list:
-            result = []
-            for attr in syn_list:
-                if attr in known_attributes:
-                    result.append(attr)
-            if result:
-                return result
+            return [attr for attr in syn_list if attr in known_attributes]
 
 
 def use_synonym(obj_name, attribute, synonyms):
