@@ -14,6 +14,9 @@ the value of relevant variables, and
 
 
 ![Example](https://raw.githubusercontent.com/aroberge/friendly/master/why_1.png)
+The screenshot above was taken on Windows. In some other operating systems
+you might need to type `python3` instead of `python`: **friendly**
+requires Python version 3.6 or newer.
 
 **friendly** used to be called **friendly-traceback**.
 
