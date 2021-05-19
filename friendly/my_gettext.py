@@ -70,24 +70,29 @@ class LangState:
 current_lang = LangState()  # noqa
 
 
-def no_information():
+def please_report():
     _ = current_lang.translate
     return _(
-        "No information is known about this exception.\n"
         "Please report this example to\n"
         "https://github.com/aroberge/friendly/issues\n\n"
-        "If you are using the Friendly console, use `www()` to\n"
-        "do an Internet search for this particular case.\n"
+    )
+
+
+def no_information():
+    _ = current_lang.translate
+    return (
+        _("No information is known about this exception.\n")
+        + please_report()
+        + _(
+            "If you are using the Friendly console, use `www()` to\n"
+            "do an Internet search for this particular case.\n"
+        )
     )
 
 
 def internal_error():
     _ = current_lang.translate
-    return _(
-        "Internal error for Friendly-traceback.\n"
-        "Please report this example to\n"
-        "https://github.com/aroberge/friendly/issues\n"
-    )
+    return _("Internal error for Friendly.\n") + please_report()
 
 
 def use_www():

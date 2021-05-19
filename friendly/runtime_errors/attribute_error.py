@@ -4,7 +4,7 @@ import re
 import sys
 
 
-from ..my_gettext import current_lang, no_information
+from ..my_gettext import current_lang, no_information, please_report
 from ..utils import get_similar_words, list_to_string
 from ..path_info import path_utils
 from .. import info_variables
@@ -218,7 +218,7 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
                 "Unfortunately I cannot find such an object on the line where\n"
                 "the problem occurs.\n"
             ).format(obj_type=obj_type, attr=attribute)
-            return {"cause": cause}
+            return {"cause": cause + please_report()}
     else:
         for obj_name, instance in all_objects:
             if isinstance(instance, obj) or instance == obj:
@@ -239,7 +239,7 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
                     "I found one object of this type in the current scope\n"
                     "but it does not appear to be the object causing the problem.\n"
                 ).format(obj_type=obj_type, attr=attribute)
-                return {"cause": cause}
+                return {"cause": cause + please_report()}
             elif len(possible_objects) > 1:
                 names = ", ".join(name for name, _obj in possible_objects)
                 cause = _(

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-05-19 07:49-0300\n"
+"POT-Creation-Date: 2021-05-19 11:11-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -375,22 +375,28 @@ msgstr ""
 
 #: my_gettext.py:75
 msgid ""
-"No information is known about this exception.\n"
 "Please report this example to\n"
 "https://github.com/aroberge/friendly/issues\n"
 "\n"
-"If you are using the Friendly console, use `www()` to\n"
-"do an Internet search for this particular case.\n"
+msgstr ""
+
+#: my_gettext.py:84
+msgid ""
+"No information is known about this exception.\n"
 msgstr ""
 
 #: my_gettext.py:86
 msgid ""
-"Internal error for Friendly-traceback.\n"
-"Please report this example to\n"
-"https://github.com/aroberge/friendly/issues\n"
+"If you are using the Friendly console, use `www()` to\n"
+"do an Internet search for this particular case.\n"
 msgstr ""
 
 #: my_gettext.py:95
+msgid ""
+"Internal error for Friendly.\n"
+msgstr ""
+
+#: my_gettext.py:99
 msgid ""
 "If you are using a Friendly console, you might want to\n"
 "use the function `www()` which will open a browser at\n"
@@ -442,7 +448,7 @@ msgid ""
 msgstr ""
 
 #: runtime_errors\attribute_error.py:111 runtime_errors\attribute_error.py:119
-#: runtime_errors\attribute_error.py:153 runtime_errors\attribute_error.py:319
+#: runtime_errors\attribute_error.py:152 runtime_errors\attribute_error.py:312
 #: runtime_errors\import_error.py:105 runtime_errors\key_error.py:56
 #: runtime_errors\key_error.py:63 runtime_errors\module_not_found_error.py:59
 #: runtime_errors\name_error.py:83 runtime_errors\unbound_local_error.py:38
@@ -472,54 +478,54 @@ msgid ""
 "Perhaps you need to rename your module.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:154
+#: runtime_errors\attribute_error.py:153
 msgid ""
 "Perhaps you meant to use the attribute `{attribute}` of \n"
 "module `{mod_name}` instead of module `{module}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:160
+#: runtime_errors\attribute_error.py:159
 msgid "Did you mean one of the following modules: `{names}`?"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:163
+#: runtime_errors\attribute_error.py:162
 msgid ""
 "Instead of the module `{module}`, perhaps you wanted to use\n"
 "the attribute `{attribute}` of one of the following modules:\n"
 "`{names}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:172
+#: runtime_errors\attribute_error.py:171
 msgid ""
 "Python tells us that no object with name `{attribute}` is\n"
 "found in module `{module}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:190
+#: runtime_errors\attribute_error.py:189
 msgid ""
 "`{obj_name}` is a function. Perhaps you meant to write\n"
 "`{obj_name}({attribute})`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:194
+#: runtime_errors\attribute_error.py:193
 msgid ""
 "Did you mean `{obj_name}({attribute})`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:199
+#: runtime_errors\attribute_error.py:198
 msgid ""
 "`{obj_name}` is a Python built-in function or method\n"
 "which does not have an attribute named `{attribute}.`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:205 runtime_errors\attribute_error.py:223
+#: runtime_errors\attribute_error.py:216
 msgid ""
 "An object of type `{obj_type}` has no attribute named `{attr}`.\n"
 "Unfortunately I cannot find such an object on the line where\n"
 "the problem occurs.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:243
+#: runtime_errors\attribute_error.py:236
 msgid ""
 "An object of type `{obj_type}` has no attribute named `{attr}`.\n"
 "\n"
@@ -528,7 +534,7 @@ msgid ""
 "but it does not appear to be the object causing the problem.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:252
+#: runtime_errors\attribute_error.py:245
 msgid ""
 "An object of type `{obj_type}` has no attribute named `{attr}`.\n"
 "\n"
@@ -536,51 +542,51 @@ msgid ""
 "{names}.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:292
+#: runtime_errors\attribute_error.py:285
 msgid ""
 "The object `{obj}` has no attribute named `{attr}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:296
+#: runtime_errors\attribute_error.py:289
 msgid ""
 "Note that object `{obj}` uses `__slots__` which prevents\n"
 "the creation of new attributes.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:304
+#: runtime_errors\attribute_error.py:297
 msgid ""
 "The following are some of its known attributes:\n"
 "`{names}`."
 msgstr ""
 
-#: runtime_errors\attribute_error.py:315
+#: runtime_errors\attribute_error.py:308
 msgid ""
 "The object `{obj_name}` has no attribute named `{attribute}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:320
+#: runtime_errors\attribute_error.py:313
 msgid ""
 "Perhaps you meant to write `{obj}.{correct}` instead of `{obj}.{typo}`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:326 runtime_errors\import_error.py:112
+#: runtime_errors\attribute_error.py:319 runtime_errors\import_error.py:112
 msgid ""
 "Did you mean one of the following: `{names}`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:327
+#: runtime_errors\attribute_error.py:320
 msgid ""
 "Instead of writing `{obj}.{typo}`, perhaps you meant to write one of \n"
 "the following names which are attributes of object `{obj}`:\n"
 "`{names}`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:352
+#: runtime_errors\attribute_error.py:345
 msgid ""
 "Did you write a comma by mistake?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:353
+#: runtime_errors\attribute_error.py:346
 msgid ""
 "`{obj_name}` is a tuple that contains a single item\n"
 "which does have `'{attribute}'` as an attribute.\n"
@@ -588,56 +594,56 @@ msgid ""
 "where you defined `{obj_name}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:366
+#: runtime_errors\attribute_error.py:359
 msgid ""
 "Did you mean `'...'.join({obj_name})`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:367
+#: runtime_errors\attribute_error.py:360
 msgid ""
 "The object `{obj_name}` has no attribute named `join`.\n"
 "Perhaps you wanted something like `'...'.join({obj_name})`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:376
+#: runtime_errors\attribute_error.py:369
 msgid ""
 "Did you mean `{known_builtin}({obj_name})`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:379
+#: runtime_errors\attribute_error.py:372
 msgid ""
 "The object `{obj_name}` has no attribute named `{attribute}`.\n"
 "Perhaps you can use the Python builtin function `{known_builtin}` instead:\n"
 "`{known_builtin}({obj_name})`."
 msgstr ""
 
-#: runtime_errors\attribute_error.py:412
+#: runtime_errors\attribute_error.py:400
 msgid ""
 "Did you mean `{attr}`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:414
+#: runtime_errors\attribute_error.py:402
 msgid ""
 "The object `{name}` has no attribute named `{attribute}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:419
+#: runtime_errors\attribute_error.py:407
 msgid ""
 "However, `{attr}` is an attribute of `{name}` with a similar meaning.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:423
+#: runtime_errors\attribute_error.py:411
 msgid ""
 "However, `{name}` has the following attributes with similar meanings:\n"
 "`{attributes}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:434
+#: runtime_errors\attribute_error.py:422
 msgid ""
 "Did you mean to separate object names by a comma?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:436
+#: runtime_errors\attribute_error.py:424
 msgid ""
 "`{second}` is not an attribute of `{first}`.\n"
 "However, both `{first}` and `{second}` are known objects.\n"
