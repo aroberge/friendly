@@ -126,10 +126,14 @@ def assign_to_conditional_expression(message="", **_kwargs):
 @add_python_message
 def assign_to_function_call(message="", statement=None):
     _ = current_lang.translate
-    if message not in (
-        "can't assign to function call",  # Python 3.6, 3.7
-        "cannot assign to function call",  # Python 3.8
+    if (
+        message != "can't assign to function call"  # Python 3.6, 3.7
+        and "cannot assign to function call" not in message
     ):
+        # if message not in (
+        #     "can't assign to function call",  # Python 3.6, 3.7
+        #     "cannot assign to function call",  # Python 3.8
+        # ):
         return {}
 
     hint = _("You can only assign objects to identifiers (variable names).\n")
@@ -184,7 +188,7 @@ def assign_to_generator_expression(message="", **_kwargs):
 def assign_to_f_expression(message="", statement=None):
     _ = current_lang.translate
 
-    if message == "cannot assign to f-string expression":
+    if "cannot assign to f-string expression" in message:
         hint = _("You can only assign objects to identifiers (variable names).\n")
         cause = _(
             "You wrote an expression that has the f-string `{fstring}`\n"
@@ -264,6 +268,9 @@ def assign_to_literal(message="", statement=None):
         "cannot assign to literal",  # Python 3.8
         "cannot assign to set display",  # Python 3.8
         "cannot assign to dict display",  # Python 3.8
+        "cannot assign to dict literal here. Maybe you meant '==' instead of '='?",  # 3.10
+        "cannot assign to literal here. Maybe you meant '==' instead of '='?",  # 3.10
+        "cannot assign to set display here. Maybe you meant '==' instead of '='?",  # 3.10
     ):
         return {}
 
@@ -356,6 +363,7 @@ def assign_to_operator(message="", statement=None):
     if message not in (
         "can't assign to operator",  # Python 3.6, 3.7
         "cannot assign to operator",  # Python 3.8
+        "cannot assign to expression here. Maybe you meant '==' instead of '='?",  # Python 3.10
     ):
         return {}
 

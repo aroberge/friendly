@@ -661,3 +661,19 @@ if sys.version_info >= (3, 10):
     descriptions["def_missing_colon"][
         "cause"
     ] = "but forgot to add a colon `:` at the end"
+
+    # Temporary removal while taking into account changes in Python 3.10
+    del descriptions["equal_sign_instead_of_colon"]
+    del descriptions["imaginary_i"]
+    del descriptions["invalid_hexadecimal"]
+    del descriptions["invalid_identifier"]
+    del descriptions["invalid_identifier_2"]
+    del descriptions["missing_comma_in_list"]
+    del descriptions["missing_comma_in_set"]
+    del descriptions["missing_comma_in_tuple"]
+    del descriptions["print_is_a_function_2"]
+    del descriptions["single_equal_with_if"]
+    del descriptions["single_equal_with_elif"]
+    del descriptions["single_equal_with_while"]
+    del descriptions["would_be_type_declaration_1"]
+    del descriptions["would_be_type_declaration_2"]
