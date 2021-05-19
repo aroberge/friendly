@@ -168,6 +168,24 @@ def get_object_from_name(name, frame):
     class A, returns a basic object of that type found in a frame,
     or None.
     """
+    # TODO:
+    """
+    There might be multiple objects with the same name (in different scope)
+    in a given frame.  For example:
+
+    class A: pass  # first A
+    def f():
+       class A: pass   # second A
+       return A()
+    a = f()
+    a.x  # raise AttributeError: 'A' object has no attribute 'x'
+
+    Here, we would identify 'A' as being the first, even though 'a' is an
+    instance of the second 'A'.
+
+    This should be tested thoroughly and likely result in a warning given
+    about possibly not being able to identify the correct object.
+    """
     # We must guard against people defining their own type with a
     # standard name by checking standard types last.
     if name in frame.f_locals:
@@ -283,7 +301,10 @@ def simplify_name(name):
     if name.startswith("<"):
         name = name.replace("'", "")
     if ".<locals>." in name:
-        file_name, obj_name = name.split(".<locals>.")
+        parts = name.split(".<locals>.")
+        file_name = parts[0]
+        obj_name = ".".join(parts[1:])
+        # file_name, obj_name = name.split(".<locals>.")
         if name.startswith("<function "):
             start = "<function "
         elif name.startswith("<class "):

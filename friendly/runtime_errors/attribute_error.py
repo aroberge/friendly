@@ -202,18 +202,27 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
         ).format(obj_name=obj_name, attribute=attribute)
         return {"cause": cause}
 
-    obj = info_variables.get_object_from_name(obj_type, frame)
-    if obj is None:
-        debug_helper.log("obj is None in attribute_error_in_object.")
-        return {"cause": internal_error()}
-
     all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
-    for obj_name, instance in all_objects:
-        if isinstance(instance, obj) or instance == obj:
-            break
+    obj = info_variables.get_object_from_name(obj_type, frame)
+    if obj is None:  # object could be an instance of obj_type
+        # this is to fix issue #212
+        for obj_name, _obj in all_objects:
+            t = str(type(_obj))
+            if (
+                t.endswith(f".{obj_type}'>") or t.endswith(f"'{obj_type}'>")
+            ) and not hasattr(_obj, attribute):
+                instance = _obj
+                break
+        else:
+            debug_helper.log("Cannot identify object in attribute_error_in_object.")
+            return {"cause": internal_error()}
     else:
-        debug_helper.log("object is not on bad_line in attribute_error_in_object.")
-        return {"cause": internal_error()}
+        for obj_name, instance in all_objects:
+            if isinstance(instance, obj) or instance == obj:
+                break
+        else:
+            debug_helper.log("object is not on bad_line in attribute_error_in_object.")
+            return {"cause": internal_error()}
 
     possible_cause = tuple_by_accident(instance, obj_name, attribute)
     if possible_cause:

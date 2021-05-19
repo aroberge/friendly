@@ -30,10 +30,35 @@ def test_Generic():
     assert "AttributeError: type object 'A' has no attribute 'x'" in result
     if friendly.get_lang() == "en":
         assert "The object `A` has no attribute" in result
+    return result, message
 
+
+def test_Generic_different_frame():
+    def f():
+        class A:
+            pass
+        return A()
+
+    a = f()
     try:
-        a = A()
-        a.x  # Testing instance
+        a.x
+    except AttributeError as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
+
+    assert "AttributeError: 'A' object has no attribute 'x'" in result
+    if friendly.get_lang() == "en":
+        assert "The object `a` has no attribute" in result
+    return result, message
+
+
+def test_Generic_instance():
+    class A:
+        pass
+    a = A()
+    try:
+        a.x
     except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
