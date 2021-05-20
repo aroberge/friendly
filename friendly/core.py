@@ -755,11 +755,15 @@ class FriendlyTraceback:
                     # Note end_lineno and end_offset are new in Python 3.10
                     # However, we ensured prior to reaching this point that
                     # they would be defined for other Python versions
-                    if value.end_lineno != value.lineno or value.end_offset < 1:
+                    if (
+                        value.end_lineno != value.lineno
+                        or value.end_offset
+                        and value.end_offset < 1
+                    ):
                         nb_carets = len(bad_line) - offset + 1
                         continuation = "-->"
                     else:
-                        nb_carets = value.end_offset - offset
+                        nb_carets = value.end_offset - offset if value.end_offset else 1
                         continuation = ""
                     offset = offset - (len(_line) - len(bad_line))  # removing indent
                     result.append("    {}".format(bad_line))
