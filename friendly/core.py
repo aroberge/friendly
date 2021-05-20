@@ -738,9 +738,20 @@ class FriendlyTraceback:
                 _line = _line.rstrip()
                 bad_line = _line.strip()
                 if bad_line:
+                    # Note end_lineno and end_offset are new in Python 3.10
+                    nb_carets = 1  # was always the case prior to 3.10
+                    if hasattr(value, "end_offset"):
+                        if value.end_offset:
+                            if (
+                                value.end_lineno != value.lineno
+                                or value.end_offset == -1
+                            ):
+                                nb_carets = len(bad_line) - offset
+                            else:
+                                nb_carets = value.end_offset - offset
                     offset = offset - (len(_line) - len(bad_line))  # removing indent
                     result.append("    {}".format(bad_line))
-                    result.append(" " * (3 + offset) + "^")
+                    result.append(" " * (3 + offset) + "^" * nb_carets)
         result.append(self.info["message"].strip())
         return result
 
