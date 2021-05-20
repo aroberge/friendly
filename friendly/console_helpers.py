@@ -76,6 +76,16 @@ def _show_info():
             print(f"{item}: None")
 
 
+def _get_exception():
+    """Debugging tool: returns the exception instance or None if no exception
+    has been raised.
+    """
+    if not session.saved_info:
+        return None
+    info = session.saved_info[-1]
+    return info["_exc_instance"]
+
+
 def more():
     """Used to display information additional to the minimal traceback,
     with the exception of the generic information.
@@ -267,6 +277,7 @@ helpers = {
     "set_lang": set_lang,
     "get_include": get_include,
     "set_include": set_include,
+    "_get_exception": _get_exception,
     "hint": hint,
     "friendly_tb": friendly_tb,
     "python_tb": python_tb,

@@ -313,6 +313,8 @@ class FriendlyTraceback:
             print("Please report this issue.")
             raise SystemExit
         self.info = {"header": _("Python exception:")}
+        self.info["_exc_type"] = etype
+        self.info["_exc_instance"] = value
         self.message = self.assign_message()  # language independent
         self.assign_tracebacks()
 
