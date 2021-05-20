@@ -78,7 +78,7 @@ class TracebackData:
         self.bad_line = "\n"
         self.filename = ""
         self.exception_frame = None
-        self.get_source_info(etype, value)
+        self.get_source_info()
 
         # The following four attributes get their correct values in locate_error()
         self.node = None
@@ -114,19 +114,31 @@ class TracebackData:
             return inspect.getinnerframes(tb, cache.context)
         return records
 
-    def get_source_info(self, etype, value):
+    def get_source_info(self):
         """Retrieves the file name and the line of code where the exception
         was raised.
         """
-        if issubclass(etype, SyntaxError):
-            self.filename = value.filename
-            if value.text is not None:
-                self.bad_line = value.text  # typically includes "\n"
+        if issubclass(self.exception_type, SyntaxError):
+            self.filename = self.value.filename
+            # Python 3.10 introduced new arguments. For simplicity,
+            # we give them some default values for other Python versions
+            # so that we can use these elsewhere without having to perform
+            # additional checks.
+            if not hasattr(self.value, "end_offset"):
+                if self.value.offset:
+                    self.value.end_offset = self.value.offset + 1
+                else:
+                    self.value.end_offset = 0
+                self.value.end_lineno = self.value.lineno
+            if self.value.text is not None:
+                self.bad_line = self.value.text  # typically includes "\n"
                 return
 
             # this can happen with editors_helpers.check_syntax()
             try:
-                self.bad_line = cache.get_source_lines(value.filename)[value.lineno - 1]
+                self.bad_line = cache.get_source_lines(self.filename)[
+                    self.value.lineno - 1
+                ]
             except Exception:  # noqa
                 self.bad_line = "\n"
             return
@@ -142,8 +154,8 @@ class TracebackData:
         # We should never reach this stage.
         debug_helper.log("Internal error in TracebackData.get_source_info.")
         debug_helper.log("No records found.")
-        debug_helper.log("etype:" + str(etype))
-        debug_helper.log("value:" + str(value))
+        debug_helper.log("self.exception_type:" + str(self.exception_type))
+        debug_helper.log("self.value:" + str(self.value))
         debug_helper.log_error()
 
     def locate_error(self, tb):
@@ -741,19 +753,17 @@ class FriendlyTraceback:
                 bad_line = _line.strip()
                 if bad_line:
                     # Note end_lineno and end_offset are new in Python 3.10
-                    nb_carets = 1  # was always the case prior to 3.10
-                    if hasattr(value, "end_offset"):
-                        if value.end_offset:
-                            if (
-                                value.end_lineno != value.lineno
-                                or value.end_offset == -1
-                            ):
-                                nb_carets = len(bad_line) - offset
-                            else:
-                                nb_carets = value.end_offset - offset
+                    # However, we ensured prior to reaching this point that
+                    # they would be defined for other Python versions
+                    if value.end_lineno != value.lineno or value.end_offset < 1:
+                        nb_carets = len(bad_line) - offset + 1
+                        continuation = "-->"
+                    else:
+                        nb_carets = value.end_offset - offset
+                        continuation = ""
                     offset = offset - (len(_line) - len(bad_line))  # removing indent
                     result.append("    {}".format(bad_line))
-                    result.append(" " * (3 + offset) + "^" * nb_carets)
+                    result.append(" " * (3 + offset) + "^" * nb_carets + continuation)
         result.append(self.info["message"].strip())
         return result
 
