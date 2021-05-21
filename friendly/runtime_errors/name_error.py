@@ -65,6 +65,9 @@ def name_not_defined(unknown_name, frame, tb_data):
         var_name=unknown_name
     )
 
+    if unknown_name == "ꓺ":
+        return flipfloperator()
+
     if unknown_name in CUSTOM_NAMES:
         cause = CUSTOM_NAMES[unknown_name]()
         return {"cause": cause, "suggest": cause}
@@ -100,6 +103,18 @@ def name_not_defined(unknown_name, frame, tb_data):
         return cause
     cause["suggest"] = hint
     return cause
+
+
+def flipfloperator():
+    _ = current_lang.translate
+    hint = _("You must be a fan of PyConAu!\n")
+    cause = _(
+        "I am guessing that you tried to use (one of) the flipfloperators\n"
+        "shown during the second Lightning Talk session of PyConAu 2018,\n"
+        "but that you forgot to import the module from PyPI.\n\n"
+        "#### Note that it is still a bad idea.\n"
+    )
+    return {"cause": cause, "suggest": hint}
 
 
 def format_similar_names(name, similar):
