@@ -1,3 +1,6 @@
+import pydoc
+import tkinter
+
 import friendly
 from math import *
 
@@ -92,6 +95,20 @@ def test_Synonym():
     assert "NameError: name 'cost' is not defined" in result
     if friendly.get_lang() == "en":
         assert "perhaps you meant one of the following" in result
+    return result, message
+
+
+def test_Missing_import():
+    try:
+        unicodedata.something
+    except NameError as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
+
+    assert "NameError: name 'unicodedata' is not defined" in result
+    if friendly.get_lang() == "en":
+        assert "Perhaps you forgot to import `unicodedata`" in result
     return result, message
 
 if __name__ == "__main__":

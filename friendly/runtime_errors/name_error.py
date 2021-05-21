@@ -1,6 +1,7 @@
 import re
 
 from ..my_gettext import current_lang, no_information, internal_error
+from . import stdlib_modules
 from .. import info_variables
 from .. import debug_helper
 from .. import token_utils
@@ -68,6 +69,10 @@ def name_not_defined(unknown_name, frame, tb_data):
     if unknown_name == "ꓺ":
         return flipfloperator()
 
+    known = is_stdlib_module(unknown_name, tb_data)
+    if known:
+        return known
+
     if unknown_name in CUSTOM_NAMES:
         cause = CUSTOM_NAMES[unknown_name]()
         return {"cause": cause, "suggest": cause}
@@ -115,6 +120,42 @@ def flipfloperator():
         "#### Note that it is still a bad idea.\n"
     )
     return {"cause": cause, "suggest": hint}
+
+
+def is_stdlib_module(name, tb_data):
+    """Determine if an unknown name is to be found in the Python standard library.
+    We're looking for something like name.attribute ... with the exception of
+    'Turtle' which might be used in Turtle() ..."""
+    _ = current_lang.translate
+    if name != "Turtle":  # Turtle is a special case
+        try:
+            tokens = token_utils.get_significant_tokens(tb_data.bad_line)
+        except Exception:  # noqa
+            return {}
+
+        prev = "0"
+        for tok in tokens:
+            if tok == "." and prev == name:
+                break
+            prev = tok
+        else:
+            return {}
+
+    # Some Python 2 libraries used names with uppercase letters.
+    lowercase = name.lower()
+    if name in stdlib_modules.names or lowercase in stdlib_modules.names:
+        hint = _("Did you forget to import `{name}`?\n").format(name=lowercase)
+        cause = _(
+            "The name `{name}` is not defined in your program.\n"
+            "Perhaps you forgot to import `{lowercase}` which is found\n"
+            "in Python's standard library.\n"
+        ).format(name=name, lowercase=lowercase)
+        if name != lowercase:
+            cause += _(
+                "Note that the name of the module is `{lowercase}` and not `{name}`.\n"
+            ).format(lowercase=lowercase, name=name)
+        return {"cause": cause, "suggest": hint}
+    return {}
 
 
 def format_similar_names(name, similar):

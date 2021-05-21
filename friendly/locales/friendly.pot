@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-05-21 11:23-0300\n"
+"POT-Creation-Date: 2021-05-21 13:50-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -451,7 +451,7 @@ msgstr ""
 #: runtime_errors\attribute_error.py:152 runtime_errors\attribute_error.py:312
 #: runtime_errors\import_error.py:105 runtime_errors\key_error.py:56
 #: runtime_errors\key_error.py:63 runtime_errors\module_not_found_error.py:59
-#: runtime_errors\name_error.py:86 runtime_errors\unbound_local_error.py:38
+#: runtime_errors\name_error.py:91 runtime_errors\unbound_local_error.py:38
 #: syntax_errors\message_analyzer.py:377
 #: syntax_errors\message_analyzer.py:1055
 #: syntax_errors\statement_analyzer.py:1144
@@ -847,45 +847,45 @@ msgid ""
 "`{rest}` cannot be imported from `{name}`.\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:54
+#: runtime_errors\name_error.py:55
 msgid ""
 "In your program, `{var_name}` is an unknown name\n"
 "that had been declared as belonging in a nonlocal scope;\n"
 "however, no such name could not be found.\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:64
+#: runtime_errors\name_error.py:65
 msgid ""
 "In your program, `{var_name}` is an unknown name.\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:76
+#: runtime_errors\name_error.py:81
 msgid ""
 "Did you mean `1j`?\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:77
+#: runtime_errors\name_error.py:82
 msgid ""
 "However, sometimes `{name}` is intended to represent\n"
 "the square root of `-1` which is written as `1j` in Python.\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:88 runtime_errors\unbound_local_error.py:45
+#: runtime_errors\name_error.py:93 runtime_errors\unbound_local_error.py:45
 msgid ""
 "Did you use a colon instead of an equal sign?\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:99
+#: runtime_errors\name_error.py:104
 msgid ""
 "I have no additional information for you.\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:110
+#: runtime_errors\name_error.py:115
 msgid ""
 "You must be a fan of PyConAu!\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:111
+#: runtime_errors\name_error.py:116
 msgid ""
 "I am guessing that you tried to use (one of) the flipfloperators\n"
 "shown during the second Lightning Talk session of PyConAu 2018,\n"
@@ -894,43 +894,60 @@ msgid ""
 "#### Note that it is still a bad idea.\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:130
+#: runtime_errors\name_error.py:147
+msgid ""
+"Did you forget to import `{name}`?\n"
+msgstr ""
+
+#: runtime_errors\name_error.py:148
+msgid ""
+"The name `{name}` is not defined in your program.\n"
+"Perhaps you forgot to import `{lowercase}` which is found\n"
+"in Python's standard library.\n"
+msgstr ""
+
+#: runtime_errors\name_error.py:154
+msgid ""
+"Note that the name of the module is `{lowercase}` and not `{name}`.\n"
+msgstr ""
+
+#: runtime_errors\name_error.py:171
 msgid ""
 "The similar name `{name}` was found in the local scope.\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:131
+#: runtime_errors\name_error.py:172
 msgid ""
 "The similar name `{name}` was found in the global scope.\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:133
+#: runtime_errors\name_error.py:174
 msgid ""
 "The Python builtin `{name}` has a similar name.\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:142 runtime_errors\unbound_local_error.py:100
+#: runtime_errors\name_error.py:183 runtime_errors\unbound_local_error.py:100
 msgid ""
 "Instead of writing `{name}`, perhaps you meant one of the following:\n"
 msgstr ""
 
-#: runtime_errors\name_error.py:147 runtime_errors\unbound_local_error.py:104
+#: runtime_errors\name_error.py:188 runtime_errors\unbound_local_error.py:104
 msgid "*   Local scope: "
 msgstr ""
 
-#: runtime_errors\name_error.py:148
+#: runtime_errors\name_error.py:189
 msgid "*   Global scope: "
 msgstr ""
 
-#: runtime_errors\name_error.py:149
+#: runtime_errors\name_error.py:190
 msgid "*   Python builtins: "
 msgstr ""
 
-#: runtime_errors\name_error.py:189
+#: runtime_errors\name_error.py:230
 msgid "Did you forget to add `self`?"
 msgstr ""
 
-#: runtime_errors\name_error.py:194
+#: runtime_errors\name_error.py:235
 msgid ""
 "The {scope} object `{obj}` has an attribute named `{unknown_name}`.\n"
 "Perhaps you should have written `self.{unknown_name}` instead of `{unknown_name}`.\n"
