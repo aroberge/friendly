@@ -118,6 +118,14 @@ def _name_error(value, frame, tb_data):
     return name_error.get_cause(value, frame, tb_data)
 
 
+@register("OSError")
+def _os_error(value, *_args):
+
+    from .runtime_errors import os_error
+
+    return os_error.get_cause(value)
+
+
 @register("OverflowError")
 def _overflow_error(*_args):
     return {}

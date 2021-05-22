@@ -110,7 +110,7 @@ class PathUtil:
         if self.tests and path_lower.startswith(self.tests.lower()):
             path = "TESTS:" + path[len(self.tests) :]
         elif path_lower.startswith(self.friendly_path.lower()) and path_lower.endswith(
-            "site-packages"
+            "-packages"
         ):
             path = "INSTALLED:" + path[len(self.friendly_path) :]
             SITE_PACKAGES = self.friendly_path

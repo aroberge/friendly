@@ -5,14 +5,21 @@ Generic information about Python exceptions.
 from .my_gettext import current_lang, no_information
 
 GENERIC = {}
+SUBCLASS = {}
 
 
-def get_generic_explanation(exception_name):
+def get_generic_explanation(exception_type):
     """Provides a generic explanation about a particular exception."""
+    if hasattr(exception_type, "__name__"):
+        exception_name = exception_type.__name__
+    else:
+        exception_name = exception_type
     if exception_name in GENERIC:
         return GENERIC[exception_name]()
     elif exception_name.endswith("Warning"):
         return GENERIC["UnknownWarning"]()
+    elif hasattr(exception_type, "__name__") and issubclass(exception_type, OSError):
+        return os_error_subclass(exception_type.__name__)
     else:
         return no_information()
 
@@ -151,6 +158,26 @@ def name_error():
         "However, sometimes it is because the name is used\n"
         "before being defined or given a value.\n"
     )
+
+
+register("OSError")
+
+
+def os_error():
+    _ = current_lang.translate
+    return _(
+        "An `OSError` exception is usually raised by the Operating System\n"
+        "to indicate that an operation is not allowed or that\n"
+        "a resource is not available.\n"
+    )
+
+
+def os_error_subclass(name):
+    _ = current_lang.translate
+    explanation = _(
+        "An exception of type `{name}` is a subclass of `OSError`.\n"
+    ).format(name=name)
+    return explanation + os_error()
 
 
 @register("OverflowError")

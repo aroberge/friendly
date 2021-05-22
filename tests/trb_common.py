@@ -48,6 +48,7 @@ test_files = [
     "test_lookup_error",
     "test_module_not_found_error",
     "test_name_error",
+    "test_os_error",
     "test_overflow_error",
     "test_recursion_error",
     "test_type_error",

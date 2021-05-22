@@ -456,7 +456,7 @@ class FriendlyTraceback:
         * generic
         """
         self.info["generic"] = info_generic.get_generic_explanation(
-            self.tb_data.exception_name
+            self.tb_data.exception_type
         )
 
     def assign_location(self):
@@ -632,7 +632,7 @@ class FriendlyTraceback:
 
         tb = self.create_traceback()
         shortened_tb = tb[0:2] + suppressed + tb[-7:] if len(tb) > 10 else tb[:]
-        pattern = re.compile(r'File "(.*)", ')
+        pattern = re.compile(r'^  File "(.*)", ')
         temp = []
         for line in shortened_tb:
             match = re.search(pattern, line)
@@ -662,13 +662,34 @@ class FriendlyTraceback:
                 tb = tb[0:4] + suppressed + tb[-5:]
 
         exc = self.tb_data.value
+        chain_info = ""
+        short_chain_info = ""
         if exc.__cause__ or exc.__context__:
             chain_info = self.process_exception_chain(self.tb_data.exception_type, exc)
-        else:
-            chain_info = ""
+            parts = chain_info.split("\n\n")
+            # suppress line
+            temp = []
+            for part in parts:
+                part = part.split("\n")
+                if len(part) > 10:
+                    part = part[0:4] + suppressed + part[-3:]
+                temp.append("\n".join(part))
+            short_chain_info = "\n\n".join(temp)
+            # shorten file paths
+            temp = []
+            for line in short_chain_info.split("\n"):
+                match = re.search(pattern, line)
+                if match:
+                    line = line.replace(
+                        match.group(1), path_utils.shorten_path(match.group(1))
+                    )
+                temp.append(line)
+            short_chain_info = "\n".join(temp)
 
         self.info["simulated_python_traceback"] = chain_info + "\n".join(tb) + "\n"
-        self.info["shortened_traceback"] = chain_info + "\n".join(shortened_tb) + "\n"
+        self.info["shortened_traceback"] = (
+            short_chain_info + "\n".join(shortened_tb) + "\n"
+        )
         self.info["original_python_traceback"] = (
             chain_info + "\n".join(python_tb) + "\n"
         )
