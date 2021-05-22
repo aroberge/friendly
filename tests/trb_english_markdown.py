@@ -12,15 +12,18 @@
 import os
 import sys
 import platform
+this_dir = os.path.dirname(__file__)
+sys.path.append(os.path.join(this_dir, ".."))
 import friendly
 
 
 # Make it possible to find docs and tests source
-this_dir = os.path.dirname(__file__)
 docs_root_dir = os.path.abspath(
     os.path.join(this_dir, "..", "..", "friendly-traceback-docs")
 )
 assert os.path.isdir(docs_root_dir), "Separate docs repo need to exist"
+sys.path.append(os.path.join(this_dir, ".."))
+
 
 friendly.install()
 friendly.set_lang("en")

@@ -5,6 +5,11 @@
 import os
 import sys
 from contextlib import redirect_stderr
+
+this_dir = os.path.dirname(__file__)
+sys.path.append(os.path.join(this_dir, ".."))
+
+
 import friendly
 from syntax_errors_descriptions import descriptions
 

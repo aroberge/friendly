@@ -88,7 +88,10 @@ def print_different(filename, in_36, in_37, in_38, in_39, in_310, topic):
             inputs.remove(in_39)
         output.write("<b>3.10: </b>" + in_310 + "\n")
         output.write("</pre>\n")
-        inputs.remove(in_310)
+        try:
+            inputs.remove(in_310)
+        except KeyError:
+            pass
 
 
 all_names = (

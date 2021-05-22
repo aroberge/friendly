@@ -6,6 +6,8 @@ import os
 import sys
 import platform
 from contextlib import redirect_stderr
+this_dir = os.path.dirname(__file__)
+sys.path.append(os.path.join(this_dir, ".."))
 
 import friendly
 
@@ -13,7 +15,6 @@ from friendly import console_helpers
 
 
 # Make it possible to find docs
-this_dir = os.path.dirname(__file__)
 docs_root_dir = os.path.abspath(
     os.path.join(this_dir, "..", "..", "friendly-traceback-docs")
 )

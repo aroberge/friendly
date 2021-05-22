@@ -2,11 +2,12 @@
 
 import pprint
 import sys
-import friendly
 import os
 
 cur_dir = os.getcwd()
 sys.path.append(os.path.join(cur_dir, ".."))
+sys.path.append(os.path.join(cur_dir, "..", ".."))
+import friendly
 
 import catch_syntax_error
 
