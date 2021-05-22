@@ -86,13 +86,17 @@ def index_out_of_range(obj_type, frame, tb_data):
             obj_type=info_variables.convert_type(obj_type),
         )
 
-    if index in (length, "unknown"):
-        cause += _("The largest valid index of `{name}` is `{index}`.\n").format(
-            name=name, index=length - 1
-        )
+    if index in (length, "unknown") and length != 0:
+        cause += _(
+            "The valid index values of `{name}` are integers ranging from\n"
+            "`{min}` to `{max}`.\n"
+        ).format(name=name, min=-length, max=length - 1)
         hint = _("Remember: the first item of {obj_type} is at index 0.\n").format(
             obj_type=info_variables.convert_type(obj_type)
         )
+        return {"cause": cause, "suggest": hint}
+    elif length == 0:
+        hint = _("`{name}` contains no item.\n")
         return {"cause": cause, "suggest": hint}
 
     return {"cause": cause}

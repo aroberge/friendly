@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-05-21 13:50-0300\n"
+"POT-Creation-Date: 2021-05-22 08:40-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -719,12 +719,18 @@ msgstr ""
 
 #: runtime_errors\index_error.py:90
 msgid ""
-"The largest valid index of `{name}` is `{index}`.\n"
+"The valid index values of `{name}` are integers ranging from\n"
+"`{min}` to `{max}`.\n"
 msgstr ""
 
-#: runtime_errors\index_error.py:93
+#: runtime_errors\index_error.py:94
 msgid ""
 "Remember: the first item of {obj_type} is at index 0.\n"
+msgstr ""
+
+#: runtime_errors\index_error.py:99
+msgid ""
+"`{name}` contains no item.\n"
 msgstr ""
 
 #: runtime_errors\key_error.py:19

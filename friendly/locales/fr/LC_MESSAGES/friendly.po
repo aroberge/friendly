@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-05-21 13:50-0300\n"
-"PO-Revision-Date: 2021-05-21 13:50-0300\n"
+"POT-Creation-Date: 2021-05-22 08:40-0300\n"
+"PO-Revision-Date: 2021-05-22 08:43-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -958,14 +958,22 @@ msgstr ""
 "que je ne peux pas déterminer, mais qui n’est pas valide.\n"
 
 #: runtime_errors\index_error.py:90
-msgid "The largest valid index of `{name}` is `{index}`.\n"
-msgstr "Le plus grand indice valide de `{name}` est `{index}`.\n"
+msgid ""
+"The valid index values of `{name}` are integers ranging from\n"
+"`{min}` to `{max}`.\n"
+msgstr ""
+"Les indices valides de `{name}` sont les entiers allant de `{min}` à `{max}"
+"`.\n"
 
-#: runtime_errors\index_error.py:93
+#: runtime_errors\index_error.py:94
 msgid "Remember: the first item of {obj_type} is at index 0.\n"
 msgstr ""
 "N’oubliez pas : le premier élément d'un objet de type `{obj_type}` est à "
 "l’indice 0.\n"
+
+#: runtime_errors\index_error.py:99
+msgid "`{name}` contains no item.\n"
+msgstr "`{name}` ne contient aucun élément.\n"
 
 #: runtime_errors\key_error.py:19
 msgid "In your program, the key that cannot be found is `{key}`.\n"

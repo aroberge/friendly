@@ -13,7 +13,7 @@ def test_Short_tuple():
     
     assert "IndexError: tuple index out of range" in result
     if friendly.get_lang() == "en":
-        assert "The largest valid index of" in result
+        assert "The valid index values of" in result
     return result, message
 
 
@@ -29,7 +29,7 @@ def test_Long_list():
     
     assert "IndexError: list index out of range" in result
     if friendly.get_lang() == "en":
-        assert "The largest valid index of" not in result  # only if off by 1
+        assert "The valid index values of" not in result  # only if off by 1
     return result, message
 
 
