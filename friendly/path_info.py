@@ -10,6 +10,7 @@ import os
 
 EXCLUDED_FILE_PATH = set()
 EXCLUDED_DIR_NAMES = set()
+SITE_PACKAGES = None
 
 
 def exclude_file_from_traceback(full_path):
@@ -99,6 +100,7 @@ class PathUtil:
         self.cwd = os.getcwd()
 
     def shorten_path(self, path):
+        global SITE_PACKAGES
         if path is None:  # can happen in some rare cases
             return path
         path = path.replace("'", "")  # We might get passed a path repr
@@ -107,8 +109,11 @@ class PathUtil:
         self.cwd = os.getcwd()  # make sure it is up to date
         if self.tests and path_lower.startswith(self.tests.lower()):
             path = "TESTS:" + path[len(self.tests) :]
-        elif path_lower.startswith(self.friendly_path.lower()):
-            path = "FRIENDLY:" + path[len(self.friendly_path) :]
+        elif path_lower.startswith(self.friendly_path.lower()) and path_lower.endswith(
+            "site-packages"
+        ):
+            path = "INSTALLED:" + path[len(self.friendly_path) :]
+            SITE_PACKAGES = self.friendly_path
         elif path_lower.startswith(self.cwd.lower()):
             path = "CWD:" + path[len(self.cwd) :]
         elif path_lower.startswith(self.python.lower()):
@@ -132,7 +137,8 @@ def show_paths():
     """
     print("CWD =", path_utils.cwd)
     print("HOME =", path_utils.home)
-    print("FRIENDLY =", path_utils.friendly_path)
+    if SITE_PACKAGES:
+        print("INSTALLED =", path_utils.friendly_path)
     if path_utils.tests:
         print("TESTS =", path_utils.tests)
     print("PYTHON_LIB =", path_utils.python)
