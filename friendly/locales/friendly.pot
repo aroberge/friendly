@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-05-22 08:40-0300\n"
+"POT-Creation-Date: 2021-05-22 09:09-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -723,12 +723,12 @@ msgid ""
 "`{min}` to `{max}`.\n"
 msgstr ""
 
-#: runtime_errors\index_error.py:94
+#: runtime_errors\index_error.py:95
 msgid ""
-"Remember: the first item of {obj_type} is at index 0.\n"
+"Remember: the first item of {obj_type} is not at index 1 but at index 0.\n"
 msgstr ""
 
-#: runtime_errors\index_error.py:99
+#: runtime_errors\index_error.py:100
 msgid ""
 "`{name}` contains no item.\n"
 msgstr ""

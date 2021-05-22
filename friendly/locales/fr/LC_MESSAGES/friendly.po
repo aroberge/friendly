@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-05-22 08:40-0300\n"
-"PO-Revision-Date: 2021-05-22 08:43-0300\n"
+"POT-Creation-Date: 2021-05-22 09:09-0300\n"
+"PO-Revision-Date: 2021-05-22 09:10-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -965,13 +965,15 @@ msgstr ""
 "Les indices valides de `{name}` sont les entiers allant de `{min}` à `{max}"
 "`.\n"
 
-#: runtime_errors\index_error.py:94
-msgid "Remember: the first item of {obj_type} is at index 0.\n"
+#: runtime_errors\index_error.py:95
+msgid ""
+"Remember: the first item of {obj_type} is not at index 1 but at index 0.\n"
 msgstr ""
 "N’oubliez pas : le premier élément d'un objet de type `{obj_type}` est à "
-"l’indice 0.\n"
+"l’indice 0\n"
+"et non pas à l'indice 1.\n"
 
-#: runtime_errors\index_error.py:99
+#: runtime_errors\index_error.py:100
 msgid "`{name}` contains no item.\n"
 msgstr "`{name}` ne contient aucun élément.\n"
 
