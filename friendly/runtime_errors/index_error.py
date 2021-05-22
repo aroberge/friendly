@@ -95,7 +95,7 @@ def index_out_of_range(obj_type, frame, tb_data):
             hint = _(
                 "Remember: the first item of {obj_type} is not at index 1 but at index 0.\n"
             ).format(obj_type=info_variables.convert_type(obj_type))
-        return {"cause": cause, "suggest": hint}
+            return {"cause": cause, "suggest": hint}
     elif length == 0:
         hint = _("`{name}` contains no item.\n")
         return {"cause": cause, "suggest": hint}

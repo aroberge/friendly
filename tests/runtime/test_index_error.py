@@ -21,15 +21,15 @@ def test_Long_list():
     a = list(range(40))
     b = tuple(range(50))
     try:
-        print(a[50], b[0])
+        print(a[60], b[0])
     except IndexError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
-    
+
     assert "IndexError: list index out of range" in result
     if friendly.get_lang() == "en":
-        assert "The valid index values of" not in result  # only if off by 1
+        assert "The valid index values of" in result
     return result, message
 
 
