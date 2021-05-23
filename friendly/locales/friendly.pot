@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-05-23 15:40-0300\n"
+"POT-Creation-Date: 2021-05-23 17:00-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: __init__.py:195 __main__.py:180 idle.py:252
+#: __init__.py:204 __main__.py:180 idle.py:252
 msgid "The file {filename} does not exist."
 msgstr ""
 
@@ -222,13 +222,20 @@ msgstr ""
 
 #: info_generic.py:143
 msgid ""
+"Like the name indicates, a `MemoryError` occurs when Python\n"
+"runs out of memory. This can happen if you create an object\n"
+"that is too big, like a list with too many items.\n"
+msgstr ""
+
+#: info_generic.py:153
+msgid ""
 "A `ModuleNotFoundError` exception indicates that you\n"
 "are trying to import a module that cannot be found by Python.\n"
 "This could be because you misspelled the name of the module\n"
 "or because it is not installed on your computer.\n"
 msgstr ""
 
-#: info_generic.py:154
+#: info_generic.py:164
 msgid ""
 "A `NameError` exception indicates that a variable or\n"
 "function name is not known to Python.\n"
@@ -237,25 +244,25 @@ msgid ""
 "before being defined or given a value.\n"
 msgstr ""
 
-#: info_generic.py:168
+#: info_generic.py:178
 msgid ""
 "An `OSError` exception is usually raised by the Operating System\n"
 "to indicate that an operation is not allowed or that\n"
 "a resource is not available.\n"
 msgstr ""
 
-#: info_generic.py:177
+#: info_generic.py:187
 msgid ""
 "An exception of type `{name}` is a subclass of `OSError`.\n"
 msgstr ""
 
-#: info_generic.py:186
+#: info_generic.py:196
 msgid ""
 "An `OverflowError` is raised when the result of an arithmetic operation\n"
 "is too large to be handled by the computer's processor.\n"
 msgstr ""
 
-#: info_generic.py:195
+#: info_generic.py:205
 msgid ""
 "A `RecursionError` is raised when a function calls itself,\n"
 "directly or indirectly, too many times.\n"
@@ -263,19 +270,19 @@ msgid ""
 "and that your program would never stop.\n"
 msgstr ""
 
-#: info_generic.py:206
+#: info_generic.py:216
 msgid ""
 "`StopIteration` is raised to indicate that an iterator has no more\n"
 "item to provide when its `__next__` method is called by\n"
 "the `next()` builtin function.\n"
 msgstr ""
 
-#: info_generic.py:216
+#: info_generic.py:226
 msgid ""
 "A `SyntaxError` occurs when Python cannot understand your code.\n"
 msgstr ""
 
-#: info_generic.py:222
+#: info_generic.py:232
 msgid ""
 "A `TabError` indicates that you have used both spaces\n"
 "and tab characters to indent your code.\n"
@@ -285,7 +292,7 @@ msgid ""
 "Python's recommendation is to always use spaces to indent your code.\n"
 msgstr ""
 
-#: info_generic.py:235
+#: info_generic.py:245
 msgid ""
 "A `TypeError` is usually caused by trying\n"
 "to combine two incompatible types of objects,\n"
@@ -293,13 +300,13 @@ msgid ""
 "or by trying to do an operation not allowed on a given type of object.\n"
 msgstr ""
 
-#: info_generic.py:246
+#: info_generic.py:256
 msgid ""
 "A `ValueError` indicates that a function or an operation\n"
 "received an argument of the right type, but an inappropriate value.\n"
 msgstr ""
 
-#: info_generic.py:255
+#: info_generic.py:265
 msgid ""
 "In Python, variables that are used inside a function are known as \n"
 "local variables. Before they are used, they must be assigned a value.\n"
@@ -311,12 +318,12 @@ msgid ""
 "an `UnboundLocalError`.\n"
 msgstr ""
 
-#: info_generic.py:270
+#: info_generic.py:280
 msgid ""
 "No information is available about this warning.\n"
 msgstr ""
 
-#: info_generic.py:276
+#: info_generic.py:286
 msgid ""
 "A `ZeroDivisionError` occurs when you are attempting to divide a value\n"
 "by zero either directly or by using some other mathematical operation.\n"

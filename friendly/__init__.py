@@ -28,6 +28,8 @@ if not valid_version:
     sys.exit()
 
 del valid_version
+__version__ = "0.3.58"  # friendly version
+
 
 # ===========================================
 
@@ -46,7 +48,6 @@ from .my_gettext import current_lang
 # we do for Exceptions.
 _warnings.simplefilter("ignore")
 del _warnings
-__version__ = "0.3.58"
 
 
 def _doc_version():

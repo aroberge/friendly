@@ -137,6 +137,16 @@ def lookup_error():
     )
 
 
+@register("MemoryError")
+def memory_error():
+    _ = current_lang.translate
+    return _(
+        "Like the name indicates, a `MemoryError` occurs when Python\n"
+        "runs out of memory. This can happen if you create an object\n"
+        "that is too big, like a list with too many items.\n"
+    )
+
+
 @register("ModuleNotFoundError")
 def module_not_found_error():
     _ = current_lang.translate
