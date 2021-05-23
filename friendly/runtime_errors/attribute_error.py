@@ -4,7 +4,7 @@ import re
 import sys
 
 
-from ..my_gettext import current_lang, no_information, please_report
+from ..my_gettext import current_lang, no_information, please_report, internal_error
 from ..utils import get_similar_words, list_to_string
 from ..path_info import path_utils
 from .. import info_variables
@@ -17,7 +17,7 @@ def get_cause(value, frame, tb_data):
         return _get_cause(value, frame, tb_data)
     except Exception:  # noqa
         debug_helper.log_error()
-        return None, None
+        return {"cause": internal_error(), "suggest": internal_error()}
 
 
 def _get_cause(value, frame, tb_data):
