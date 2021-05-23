@@ -40,13 +40,21 @@ from . import formatters
 from . import path_info
 from .config import session
 from .my_gettext import current_lang
-from .version import __version__  # noqa
 
 # Ensure that warnings are not shown to the end user, as they could
 # cause confusion.  Eventually, we might want to interpret them like
 # we do for Exceptions.
 _warnings.simplefilter("ignore")
 del _warnings
+__version__ = "0.3.58"
+
+
+def _doc_version():
+    """Use this number in the documentation to avoid triggering updates
+    of the whole documentation each time the last part of the version is
+    changed."""
+    parts = __version__.split(".")
+    return parts[0] + "." + parts[1]
 
 
 def exclude_file_from_traceback(full_path):
