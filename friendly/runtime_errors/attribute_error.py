@@ -398,15 +398,13 @@ def use_synonym(obj_name, attribute, synonyms):
     _ = current_lang.translate
 
     hint = _("Did you mean `{attr}`?\n").format(attr=synonyms[0])
-
     cause = _("The object `{name}` has no attribute named `{attribute}`.\n").format(
         name=obj_name, attribute=attribute
     )
-
     if len(synonyms) == 1:
         cause += _(
             "However, `{attr}` is an attribute of `{name}` with a similar meaning.\n"
-        ).format(name=obj_name, attribute=attribute)
+        ).format(name=obj_name, attr=synonyms[0])
     else:
         cause += _(
             "However, `{name}` has the following attributes with similar meanings:\n"
