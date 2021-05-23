@@ -7,11 +7,14 @@ itself for most users by redirecting them here, and have them
 printed only when debugging mode is activated.
 """
 import sys
+import os
 
 # DEBUG is set to True for me. It can also be set to True from __main__ or when
 # using the debug() command in the console.
 
-DEBUG = r"users\andre\github\friendly" in __file__.lower()
+IS_PYDEV = bool(os.environ.get("PYTHONDEVMODE", False))
+IS_ANDRE = r"users\andre\github\friendly" in __file__.lower()
+DEBUG = IS_PYDEV or IS_ANDRE
 EXIT = False
 
 
