@@ -324,6 +324,7 @@ class FriendlyTraceback:
             print("Internal problem in Friendly.")
             print("Please report this issue.")
             raise SystemExit
+        self.suppressed = ["       ... " + _("More lines not shown.") + " ..."]
         self.info = {"header": _("Python exception:")}
         self.info["_exc_type"] = etype
         self.info["_exc_instance"] = value
@@ -626,22 +627,10 @@ class FriendlyTraceback:
         _ = current_lang.translate
         if not hasattr(self, "message"):
             self.assign_message()
-        suppressed = ["\n       ... " + _("More lines not shown.") + " ...\n"]
-
         python_tb = [line.rstrip() for line in self.tb_data.formatted_tb]
 
         tb = self.create_traceback()
-        shortened_tb = tb[0:2] + suppressed + tb[-7:] if len(tb) > 10 else tb[:]
-        pattern = re.compile(r'^  File "(.*)", ')
-        temp = []
-        for line in shortened_tb:
-            match = re.search(pattern, line)
-            if match:
-                line = line.replace(
-                    match.group(1), path_utils.shorten_path(match.group(1))
-                )
-            temp.append(line)
-        shortened_tb = temp
+        shortened_tb = self.shorten(tb)
 
         header = "Traceback (most recent call last):"  # not included in records
         if python_tb[0].startswith(header):
@@ -659,7 +648,7 @@ class FriendlyTraceback:
                     continue
                 tb.append(line)
             if len(tb) > 12:
-                tb = tb[0:4] + suppressed + tb[-5:]
+                tb = tb[0:4] + self.suppressed + tb[-5:]
 
         exc = self.tb_data.value
         chain_info = ""
@@ -670,21 +659,9 @@ class FriendlyTraceback:
             # suppress line
             temp = []
             for part in parts:
-                part = part.split("\n")
-                if len(part) > 10:
-                    part = part[0:4] + suppressed + part[-3:]
-                temp.append("\n".join(part))
+                part = "\n".join(self.shorten(part.split("\n")))
+                temp.append(part)
             short_chain_info = "\n\n".join(temp)
-            # shorten file paths
-            temp = []
-            for line in short_chain_info.split("\n"):
-                match = re.search(pattern, line)
-                if match:
-                    line = line.replace(
-                        match.group(1), path_utils.shorten_path(match.group(1))
-                    )
-                temp.append(line)
-            short_chain_info = "\n".join(temp)
 
         self.info["simulated_python_traceback"] = chain_info + "\n".join(tb) + "\n"
         self.info["shortened_traceback"] = (
@@ -697,6 +674,23 @@ class FriendlyTraceback:
         # least one case.
         # skipcq: PYL-W0201
         self.tb_data.simulated_python_traceback = "\n".join(tb) + "\n"
+
+    def shorten(self, tb):
+        """Shortens a traceback (as list of lines)
+        by removing lines if it exceeds a certain length
+        and by using short synonyms for some common directories."""
+        _ = current_lang.translate
+        shortened_tb = tb[0:2] + self.suppressed + tb[-5:] if len(tb) > 12 else tb[:]
+        pattern = re.compile(r'^  File "(.*)", ')
+        temp = []
+        for line in shortened_tb:
+            match = re.search(pattern, line)
+            if match:
+                line = line.replace(
+                    match.group(1), path_utils.shorten_path(match.group(1))
+                )
+            temp.append(line)
+        return temp
 
     @staticmethod
     def process_exception_chain(etype, value):
