@@ -1,5 +1,6 @@
 black
 pytest
 pytest-cov
+coverage
 flake8
 pre-commit
