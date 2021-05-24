@@ -1,0 +1,10 @@
+[run]
+omit =
+    .tox/*
+    Fake_filename
+    *mu.py
+    *ipython.py
+    *idle.py
+    *jupyter.py
+    *console.py
+    *theme/*
