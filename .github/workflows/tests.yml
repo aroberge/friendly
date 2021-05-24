@@ -13,28 +13,22 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest] # , windows-latest]  # see https://github.com/tox-dev/tox/issues/1570
-        tox:
-          - env: py36
-            python-version: '3.6'
-          - env: py37
-            python-version: '3.7'
-          - env: py38
-            python-version: '3.8'
-          - env: py39
-            python-version: '3.9'
-        include:
-          - tox:
-              env: flake8,black
-              python-version: '3.9'
-            os: ubuntu-latest
-
     name: ${{ matrix.tox.env }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.tox.python-version }}
+          python-version: 3.6
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
       - uses: actions/cache@v2
         with:
           path: |
@@ -47,4 +41,4 @@ jobs:
           python -m pip install --upgrade tox
       - name: run ${{ matrix.tox.env }}
         run: |
-          tox -q -e ${{ matrix.tox.env }} -p all
+          tox -q -p all
