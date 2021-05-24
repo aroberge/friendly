@@ -2,11 +2,13 @@
 """
 
 import subprocess
+import sys
+
 
 def run(lang):
     proc = subprocess.run(
         [
-            "venv-friendly3.8/scripts/python",
+            sys.executable,
             "-m",
             "friendly",
             "--formatter",

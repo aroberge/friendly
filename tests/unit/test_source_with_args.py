@@ -1,12 +1,14 @@
 """Tests of running a program that uses command line arguments.
 """
 
+import sys
 import subprocess
+
 
 def run(*args):
     proc = subprocess.run(
         [
-            "venv-friendly3.8/scripts/python",
+            sys.executable,
             "-m",
             "friendly",
             "tests/adder.py",
