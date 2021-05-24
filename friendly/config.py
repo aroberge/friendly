@@ -11,7 +11,7 @@ from . import theme
 from .my_gettext import current_lang
 
 
-def _write_err(text):
+def _write_err(text):  # pragma: no cover
     """Default writer"""
     if not text.strip():
         return
@@ -91,7 +91,7 @@ class _State:
         current_lang.install(lang)
         self.lang = lang
         if self.saved_info:
-            if not self.friendly:
+            if not self.friendly:  # pragma: no cover
                 debug_helper.log(
                     "Problem: saved_info includes content but friendly doesn't."
                 )
@@ -103,7 +103,7 @@ class _State:
         self.lang = lang
 
     def set_include(self, include):
-        if include not in formatters.items_groups:
+        if include not in formatters.items_groups:  # pragma: no cover
             raise ValueError(f"{include} is not a valid value.")
         self.include = include
 
@@ -119,11 +119,11 @@ class _State:
         self.use_rich = False
         if formatter is None or formatter == "bw":
             self.formatter = formatters.repl
-        elif formatter == "docs":
+        elif formatter == "docs":  # pragma: no cover
             self.formatter = formatters.docs
-        elif formatter == "jupyter":
+        elif formatter == "jupyter":  # pragma: no cover
             self.formatter = formatters.jupyter
-        elif formatter in ["dark", "light"]:
+        elif formatter in ["dark", "light"]:  # pragma: no cover
             self.formatter = formatters.rich_markdown
             self.console = theme.init_rich_console(
                 style=formatter,
@@ -132,11 +132,11 @@ class _State:
                 background=background,
             )
             self.use_rich = True
-        elif formatter == "markdown":
+        elif formatter == "markdown":  # pragma: no cover
             self.formatter = formatters.markdown
-        elif formatter == "markdown_docs":
+        elif formatter == "markdown_docs":  # pragma: no cover
             self.formatter = formatters.markdown_docs
-        elif isinstance(formatter, str):
+        elif isinstance(formatter, str):  # pragma: no cover
             print("Unknown formatter", formatter)
             self.formatter = formatters.repl
         else:
@@ -205,9 +205,9 @@ class _State:
         but the session settings is restored afterwards.
         """
 
-        if etype.__name__ == "SystemExit":
+        if etype.__name__ == "SystemExit":  # pragma: no cover
             raise SystemExit(str(value))
-        if etype.__name__ == "KeyboardInterrupt":
+        if etype.__name__ == "KeyboardInterrupt":  # pragma: no cover
             raise KeyboardInterrupt(str(value))
 
         saved_current_redirect = None
@@ -221,7 +221,7 @@ class _State:
             info = self.friendly[-1].info
             self.saved_info.append(info)
             explanation = self.formatter(info, include=self.include)
-        except Exception as e:  # noqa
+        except Exception as e:  # pragma: no cover
             debug_helper.log("Exception raised in exception_hook().")
             try:
                 debug_helper.log(self.friendly[-1].tb_data.filename)

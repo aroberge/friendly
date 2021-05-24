@@ -19,7 +19,7 @@ from .config import session
 
 
 def check_syntax(
-    *, source=None, filename="Fake filename", path=None, include=None, lang=None
+    *, source=None, filename="Fake_filename", path=None, include=None, lang=None
 ):
     """This uses Python's ``compile()`` builtin which does some analysis of
     its code argument and will raise an exception if it identifies

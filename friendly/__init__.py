@@ -233,16 +233,6 @@ def set_formatter(formatter=None, **kwargs):
     session.set_formatter(formatter=formatter, **kwargs)
 
 
-def show_again():
-    """Shows the previously recorded traceback info again, on the default stream.
-
-    Primarily intended to be used when the user changes
-    a verbosity level to view the last computed traceback
-    in a given language.
-    """
-    session.show_traceback_info_again()
-
-
 def start_console(
     local_vars=None,
     formatter="bw",

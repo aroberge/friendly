@@ -19,13 +19,13 @@ EXIT = False
 
 
 def log(text):
-    if DEBUG:
+    if DEBUG:  # pragma: no cover
         print(text)
 
 
 def log_error(exc=None):
     global EXIT
-    if DEBUG:
+    if DEBUG:  # pragma: no cover
         from . import explain_traceback
 
         if exc is not None:
