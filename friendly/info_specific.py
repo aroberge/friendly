@@ -22,10 +22,18 @@ def get_likely_cause(etype, value, frame, tb_data):
     try:
         if etype.__name__ in get_cause:
             return get_cause[etype.__name__](value, frame, tb_data)
-    except Exception as e:
+    except Exception as e:  # noqa
         debug_helper.log("Exception caught in get_likely_cause().")
         debug_helper.log_error(e)
         return {"cause": internal_error()}
+
+    try:
+        # see if it could be the result of using socket, or urllib, urllib3, etc.
+        if issubclass(etype, OSError):
+            return get_cause["OSError"](value, frame, tb_data)
+    except Exception:  # noqa
+        pass
+
     return {}
 
 
@@ -119,11 +127,11 @@ def _name_error(value, frame, tb_data):
 
 
 @register("OSError")
-def _os_error(value, *_args):
+def _os_error(value, frame, tb_data):
 
     from .runtime_errors import os_error
 
-    return os_error.get_cause(value)
+    return os_error.get_cause(value, frame, tb_data)
 
 
 @register("OverflowError")

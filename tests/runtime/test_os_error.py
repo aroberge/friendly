@@ -13,6 +13,7 @@ def test_Urllib_error():
     assert "URLError" in result
     if friendly.get_lang() == "en":
         assert "An exception of type `URLError` is a subclass of `OSError`." in result
+        assert "I suspect that you are trying to connect to a server" in result
     return result, message
 
 
