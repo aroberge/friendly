@@ -54,8 +54,9 @@ def assertion_error():
     _ = current_lang.translate
     return _(
         "In Python, the keyword `assert` is used in statements of the form\n"
-        "`assert condition`, to confirm that `condition` is not `False`.\n\n"
-        "If `condition` is `False`, an `AssertionError` is raised.\n"
+        "`assert condition`, to confirm that `condition` is not `False`,\n"
+        "nor equivalent to `False` such as an empty list, etc.\n\n"
+        "If `condition` is `False` or equivalent, an `AssertionError` is raised.\n"
     )
 
 

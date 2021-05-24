@@ -40,6 +40,7 @@ save_messages = {}
 
 test_files = [
     "test_arithmetic_error",
+    "test_assertion_error",
     "test_attribute_error",
     "test_file_not_found_error",
     "test_import_error",
