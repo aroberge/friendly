@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-05-24 05:59-0300\n"
-"PO-Revision-Date: 2021-05-24 06:01-0300\n"
+"POT-Creation-Date: 2021-05-24 15:37-0300\n"
+"PO-Revision-Date: 2021-05-24 15:39-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -469,7 +469,7 @@ msgstr ""
 "diviser une valeur\n"
 "par zéro soit directement ou en utilisant une autre opération mathématique.\n"
 
-#: info_specific.py:76
+#: info_specific.py:84
 msgid ""
 "In your program, the name of the\n"
 "file that cannot be found is `{filename}`.\n"
@@ -1249,7 +1249,7 @@ msgstr ""
 "Peut-être que vous auriez dû écrire `moi-même.{unknown_name}` au lieu de "
 "`{unknown_name}`.\n"
 
-#: runtime_errors\os_error.py:28
+#: runtime_errors\os_error.py:20
 msgid ""
 "I suspect that you are trying to connect to a server and\n"
 "that a connection cannot be made.\n"
@@ -1257,6 +1257,11 @@ msgid ""
 "If that is the case, check for typos in the URL\n"
 "and check your internet connectivity.\n"
 msgstr ""
+"Je soupçonne que vous essayez de vous connecter à un serveur et\n"
+"qu’une connexion ne peut être faite.\n"
+"\n"
+"Si c’est le cas, vérifiez les fautes de frappe dans l’URL\n"
+"et vérifiez votre connectivité Internet.\n"
 
 #: runtime_errors\type_error.py:79
 msgid "Did you forget to convert the string `{name}` into {number_type}?\n"
@@ -1752,6 +1757,21 @@ msgstr ""
 msgid "Perhaps you need to use the `dict.fromkeys()` method.\n"
 msgstr ""
 "Peut-être que vous vouliez plutôt utiliser la méthode `dict.fromkeys()`.\n"
+
+#: runtime_errors\type_error.py:957 runtime_errors\type_error.py:980
+msgid "Did you forget to call `{name}`?\n"
+msgstr "Avez-vous oublié d’invoquer `{name}` ?\n"
+
+#: runtime_errors\type_error.py:958 runtime_errors\type_error.py:981
+msgid ""
+"I suspect that you forgot to add parentheses to call `{name}`.\n"
+"You might have meant to write:\n"
+"`{line}`\n"
+msgstr ""
+"Je soupçonne que vous avez oublié d’ajouter des parenthèses pour invoquer "
+"`{name}`.\n"
+"Vous avez peut-être voulu écrire :\n"
+"`{line}`\n"
 
 #: runtime_errors\unbound_local_error.py:51
 msgid ""

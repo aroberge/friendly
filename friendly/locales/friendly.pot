@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-05-24 05:59-0300\n"
+"POT-Creation-Date: 2021-05-24 15:37-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -330,7 +330,7 @@ msgid ""
 "by zero either directly or by using some other mathematical operation.\n"
 msgstr ""
 
-#: info_specific.py:76
+#: info_specific.py:84
 msgid ""
 "In your program, the name of the\n"
 "file that cannot be found is `{filename}`.\n"
@@ -979,7 +979,7 @@ msgid ""
 "Perhaps you should have written `self.{unknown_name}` instead of `{unknown_name}`.\n"
 msgstr ""
 
-#: runtime_errors\os_error.py:28
+#: runtime_errors\os_error.py:20
 msgid ""
 "I suspect that you are trying to connect to a server and\n"
 "that a connection cannot be made.\n"
@@ -1377,6 +1377,18 @@ msgstr ""
 #: runtime_errors\type_error.py:920
 msgid ""
 "Perhaps you need to use the `dict.fromkeys()` method.\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:957 runtime_errors\type_error.py:980
+msgid ""
+"Did you forget to call `{name}`?\n"
+msgstr ""
+
+#: runtime_errors\type_error.py:958 runtime_errors\type_error.py:981
+msgid ""
+"I suspect that you forgot to add parentheses to call `{name}`.\n"
+"You might have meant to write:\n"
+"`{line}`\n"
 msgstr ""
 
 #: runtime_errors\unbound_local_error.py:51

@@ -938,3 +938,49 @@ def cannot_convert_dictionary_update_sequence(message, _frame, tb_data):
         return {}
 
     return {"cause": cause, "suggest": hint}
+
+
+@add_message_parser
+def builtin_callable_has_no_len(message, frame, tb_data):
+    _ = current_lang.translate
+    if message != "object of type 'builtin_function_or_method' has no len()":
+        return {}
+    all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
+    for name, obj in all_objects:
+        if name == "len":
+            continue
+        if str(obj).startswith("<built-in"):
+            break
+    else:
+        return {}
+
+    hint = _("Did you forget to call `{name}`?\n").format(name=name)
+    cause = _(
+        "I suspect that you forgot to add parentheses to call `{name}`.\n"
+        "You might have meant to write:\n"
+        "`{line}`\n"
+    ).format(name=name, line=tb_data.bad_line.replace(name, name + "()"))
+    return {"cause": cause, "suggest": hint}
+
+
+@add_message_parser
+def function_has_no_len(message, frame, tb_data):
+    _ = current_lang.translate
+    if message != "object of type 'function' has no len()":
+        return {}
+    all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
+    for name, obj in all_objects:
+        if name == "len":
+            continue
+        if str(obj).startswith("<function"):
+            break
+    else:
+        return {}
+
+    hint = _("Did you forget to call `{name}`?\n").format(name=name)
+    cause = _(
+        "I suspect that you forgot to add parentheses to call `{name}`.\n"
+        "You might have meant to write:\n"
+        "`{line}`\n"
+    ).format(name=name, line=tb_data.bad_line.replace(name, name + "()"))
+    return {"cause": cause, "suggest": hint}

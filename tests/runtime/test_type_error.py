@@ -775,5 +775,34 @@ def test_Cannot_convert_dictionary_update_sequence():
     return result, message
 
 
+def test_Builtin_has_no_len():
+    try:
+        len("Hello world".split)
+    except TypeError as e:
+        friendly.explain_traceback(redirect="capture")
+        message = str(e)
+    result = friendly.get_output()
+
+    assert "TypeError: object of type 'builtin_function_or_method' has no len()"
+    if friendly.get_lang() == "en":
+        assert 'Did you forget to call `"Hello world".split`?' in result
+    return result, message
+
+
+def test_function_has_no_len():
+    def bad():
+        pass
+    try:
+        len(bad)
+    except TypeError as e:
+        friendly.explain_traceback(redirect="capture")
+        message = str(e)
+    result = friendly.get_output()
+
+    assert "TypeError: object of type 'function' has no len()" in result
+    if friendly.get_lang() == "en":
+        assert 'Did you forget to call `bad`?' in result
+    return result, message
+
 if __name__ == "__main__":
     print(test_Not_an_integer()[0])
