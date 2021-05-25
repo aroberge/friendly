@@ -444,6 +444,15 @@ descriptions = {
         cause: "Did you made a mistake in writing an octal integer",
         title: "Invalid octal number",
     },
+    "inverted_operators" :{
+        cause: "Did you write operators in an incorrect order?",
+        title: "Inverted operators 1"
+    },
+    "inverted_operators_2": {
+        cause: "Did you write operators in an incorrect order?",
+        title: "Inverted operators 2",
+        "other causes": ["all the syntax problems in the code you wrote"]
+    },
     "keyword_arg_repeated": {
         cause: "keyword argument should appear only once in a function call",
         title: "Keyword arg only once in function call",

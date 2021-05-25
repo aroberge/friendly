@@ -32,7 +32,7 @@ from . import token_utils
 
 try:
     import executing  # noqa
-except ImportError:
+except ImportError:  # pragma: no cover
     pass  # ignore errors when processed by Sphinx
 
 
@@ -106,13 +106,13 @@ class TracebackData:
             dropwhile(lambda record: is_excluded_file(record.filename), records)
         )
         records.reverse()
+        if records or issubclass(self.exception_type, SyntaxError):
+            return records
         # If all the records are removed, it means that all the error
         # is in our own code - or that of the user who chose to exclude
         # some files. If so, we make sure to have something to analyze
         # and help identify the problem.
-        if not records and not issubclass(self.exception_type, SyntaxError):
-            return inspect.getinnerframes(tb, cache.context)
-        return records
+        return inspect.getinnerframes(tb, cache.context)  # pragma: no cover
 
     def get_source_info(self):
         """Retrieves the file name and the line of code where the exception
@@ -152,15 +152,17 @@ class TracebackData:
             return
 
         # We should never reach this stage.
-        debug_helper.log("Internal error in TracebackData.get_source_info.")
-        debug_helper.log("No records found.")
-        debug_helper.log("self.exception_type:" + str(self.exception_type))
-        debug_helper.log("self.value:" + str(self.value))
-        debug_helper.log_error()
+        if True:  # pragma: no cover
+            debug_helper.log("Internal error in TracebackData.get_source_info.")
+            debug_helper.log("No records found.")
+            debug_helper.log("self.exception_type:" + str(self.exception_type))
+            debug_helper.log("self.value:" + str(self.value))
+            debug_helper.log_error()
 
     def locate_error(self, tb):
         """Attempts to narrow down the location of the error."""
-        if not self.records:
+        if not self.records:  # pragma: no cover
+            debug_helper.log("No records in locate_error().")
             return
 
         # 1) If we can find the precise location (node) on a line of code
@@ -195,7 +197,8 @@ class TracebackData:
             if tb.tb_frame == self.exception_frame:
                 break
             tb = tb.tb_next
-            if not tb:
+            if not tb:  # pragma: no cover
+                debug_helper.log("No tb in locate_error().")
                 return
 
         try:
@@ -222,7 +225,7 @@ class TracebackData:
             if self.node_text.strip():
                 self.original_bad_line = self.bad_line
                 self.bad_line = self.node_text
-        except Exception as e:
+        except Exception as e:  # pragma: no cover
             debug_helper.log("Exception raised in TracebackData.use_executing.")
             debug_helper.log(str(e))
 
@@ -318,7 +321,7 @@ class FriendlyTraceback:
         _ = current_lang.translate
         try:
             self.tb_data = TracebackData(etype, value, tb)
-        except Exception as e:
+        except Exception as e:  # pragma: no cover
             debug_helper.log("Uncaught exception in TracebackData.")
             debug_helper.log_error(e)
             print("Internal problem in Friendly.")
@@ -403,7 +406,7 @@ class FriendlyTraceback:
         _ = current_lang.translate
         etype = self.tb_data.exception_type
         value = self.tb_data.value
-        if self.tb_data.filename == "<stdin>":
+        if self.tb_data.filename == "<stdin>":  # pragma: no cover
             self.info["cause"] = cannot_analyze_stdin()
             return
 
@@ -432,7 +435,7 @@ class FriendlyTraceback:
         if self.tb_data.filename == "<unknown>":
             return
 
-        if self.tb_data.filename == "<stdin>":
+        if self.tb_data.filename == "<stdin>":  # pragma: no cover
             self.info["cause"] = cannot_analyze_stdin()
             return
 
@@ -477,7 +480,7 @@ class FriendlyTraceback:
             return
 
         records = self.tb_data.records
-        if not records:
+        if not records:  # pragma: no cover
             debug_helper.log("No record in assign_location().")
             return
 
@@ -498,7 +501,9 @@ class FriendlyTraceback:
         _ = current_lang.translate
 
         frame, filename, linenumber, _func, lines, index = record
-        if lines == ["\n"] and source_cache.idle_get_lines is not None:
+        if (
+            lines == ["\n"] and source_cache.idle_get_lines is not None
+        ):  # pragma: no cover
             # skipcq: PYL-E1102
             lines = source_cache.idle_get_lines(filename, linenumber - 1)
 
@@ -805,7 +810,7 @@ def get_partial_source(filename, linenumber, lines, index, text_range=None):
         source, line = highlight_source(
             linenumber, index, lines, offset=None, text_range=text_range
         )
-        if not source:
+        if not source:  # pragma: no cover
             line = ""
             if filename == "<stdin>":
                 source = "\n"  # Using a normal Python REPL - source unavailable.
@@ -815,12 +820,12 @@ def get_partial_source(filename, linenumber, lines, index, text_range=None):
                 source = file_not_found
                 debug_helper.log("Problem in get_partial_source().")
                 debug_helper.log(file_not_found)
-    elif not filename:
+    elif not filename:  # pragma: no cover
         source = file_not_found
         line = ""
         debug_helper.log("Problem in get_partial_source().")
         debug_helper.log(file_not_found)
-    else:
+    else:  # pragma: no cover
         source = line = ""
         debug_helper.log("Problem in get_partial_source().")
         debug_helper.log("Should not have reached this option")
@@ -832,7 +837,7 @@ def get_partial_source(filename, linenumber, lines, index, text_range=None):
     return {"source": source, "line": line}
 
 
-def cannot_analyze_stdin():
+def cannot_analyze_stdin():  # pragma: no cover
     """Typical case: friendly is imported in an ordinary Python
     interpreter (REPL), and the user does not activate the friendly
     console.

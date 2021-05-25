@@ -43,7 +43,7 @@ def add_statement_analyzer(func):
 def analyze_statement(statement):
     """Analyzes the statement as identified by Python as that
     on which the error occurred."""
-    if not statement.tokens:
+    if not statement.tokens:  # pragma: no cover
         debug_helper.log("Statement with no tokens in statement_analyser.py")
         return {"cause": internal_error()}
 
@@ -337,6 +337,57 @@ def detect_walrus(statement):
 
 
 @add_statement_analyzer
+def inverted_operators(statement):
+    """Detect if operators might have been inverted"""
+    _ = current_lang.translate
+
+    is_op = token_utils.is_operator
+    if not is_op(statement.bad_token):
+        return {}
+
+    prev = statement.prev_token
+    bad = statement.bad_token
+    next_ = statement.next_token
+
+    if is_op(prev) and is_op(bad.string + prev.string) and prev.immediately_before(bad):
+        first = prev
+        second = bad
+    elif (
+        is_op(next_)
+        and is_op(next_.string + bad.string)
+        and bad.immediately_before(next_)
+    ):
+        first = bad
+        second = next_
+    else:
+        return {}
+
+    correct = second.string + first.string
+    hint = _("Did you write operators in an incorrect order?\n")
+    cause = _(
+        "It looks like you wrote two operators (`{first}` and `{second}`)\n"
+        "in the wrong order: `{wrong}` instead of `{correct}`.\n"
+    ).format(
+        first=first.string,
+        second=second.string,
+        correct=correct,
+        wrong=first.string + second.string,
+    )
+
+    new_statement = fixers.replace_two_tokens(
+        statement.statement_tokens,
+        first,
+        first_string=correct,
+        second_token=second,
+        second_string="",
+    )
+    if fixers.check_statement(new_statement):
+        return {"cause": cause, "suggest": hint}
+
+    return {"cause": cause + more_errors(), "suggest": hint}
+
+
+@add_statement_analyzer
 def consecutive_operators(statement):
     _ = current_lang.translate
     is_op = token_utils.is_operator
@@ -416,64 +467,9 @@ def space_between_operators(statement):
 
 
 @add_statement_analyzer
-def inverted_comparison_operators(statement):
-    """Detect if comparison operators might have been inverted"""
-    _ = current_lang.translate
-
-    is_op = token_utils.is_operator
-    if not is_op(statement.bad_token):
-        return {}
-
-    prev = statement.prev_token
-    bad = statement.bad_token
-    next_ = statement.next_token
-
-    if (
-        is_op(prev)
-        and token_utils.is_comparison(bad.string + prev.string)
-        and prev.immediately_before(bad)
-    ):
-        first = prev
-        second = bad
-    elif (
-        is_op(next_)
-        and token_utils.is_comparison(next_.string + bad.string)
-        and bad.immediately_before(next_)
-    ):
-        first = bad
-        second = next_
-    else:
-        return {}
-
-    correct = second.string + first.string
-    hint = _("Did you write operators in an incorrect order?\n")
-    cause = _(
-        "It looks like you wrote two operators (`{first}` and `{second}`)\n"
-        "in the wrong order: `{wrong}` instead of `{correct}`.\n"
-    ).format(
-        first=first.string,
-        second=second.string,
-        correct=correct,
-        wrong=first.string + second.string,
-    )
-
-    new_statement = fixers.replace_two_tokens(
-        statement.statement_tokens,
-        first,
-        first_string=correct,
-        second_token=second,
-        second_string="",
-    )
-    if fixers.check_statement(new_statement):
-        return {"cause": cause, "suggest": hint}
-
-    return {"cause": cause + more_errors(), "suggest": hint}
-
-
-@add_statement_analyzer
 def walrus_instead_of_equal(statement):
     _ = current_lang.translate
-    if not statement.bad_token == ":=":
+    if statement.bad_token != ":=":
         return {}
 
     new_statement = fixers.replace_token(
@@ -844,7 +840,7 @@ def malformed_class_begin_code_block(statement):
     if statement.first_token != "class" or statement.bad_token != ":":
         return {}
 
-    if not statement.prev_token == statement.first_token:
+    if statement.prev_token != statement.first_token:
         return {}
 
     cause = _("You tried to define a class and did not use the correct syntax.\n")
@@ -874,7 +870,7 @@ def assign_to_a_keyword(statement):
 def lambda_with_paren(statement):
     _ = current_lang.translate
 
-    if not statement.bad_token == "(":
+    if statement.bad_token != "(":
         return {}
 
     if statement.prev_token == "lambda":
@@ -1325,7 +1321,7 @@ def and_instead_of_comma(statement):
     # Example: from math import sin and cos
     _ = current_lang.translate
 
-    if not statement.bad_token == "and":
+    if statement.bad_token != "and":
         return {}
 
     possible_cause = _(
@@ -1436,11 +1432,11 @@ def parens_around_exceptions(statement):
     # keep in sync with message_analyzer.parens_around_exceptions
     _ = current_lang.translate
 
-    if not (statement.bad_token == "," and statement.first_token == "except"):
+    if statement.bad_token != "," or statement.first_token != "except":
         return {}
 
     for tok in statement.tokens[1 : statement.bad_token_index]:
-        if not (tok.is_identifier() or tok == ","):
+        if not tok.is_identifier() and tok != ",":
             return {}
 
     hint = _("Did you forget parentheses?\n")

@@ -17,15 +17,18 @@ from syntax_errors_descriptions import descriptions
 def write(text):
     sys.stderr.write(text + "\n")
 
+nb = 0
 
 def make_title(text, formatter="pre"):
+    global nb
+    nb += 1
     if formatter == "pre":
-        write("\n" + text)
-        write("-" * len(text) + "\n")
+        write("\n" + f"({nb}) " + text)
+        write("-" * len(f"({nb}) " + text) + "\n")
         write(".. code-block:: none\n")
     elif formatter == "markdown_docs":
         write("\n---\n")
-        write("## " + text)
+        write("## " + f"({nb}) " + text)
     else:
         print("Unsupported formatter: ", formatter)
         sys.exit()
