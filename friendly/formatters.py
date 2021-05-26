@@ -51,7 +51,7 @@ from pygments.formatters import HtmlFormatter  # noqa
 
 
 ipython_available = False
-try:
+try:  # pragma: no cover
 
     from IPython.display import display, HTML  # noqa
 
@@ -137,7 +137,7 @@ def repl(info, include="friendly_tb"):
     return "\n".join(result)
 
 
-def html_escape(text):
+def html_escape(text):  # pragma: no cover
     text = (
         text.replace("&", "&amp;")
         .replace("<", "&lt;")
@@ -153,7 +153,7 @@ def html_escape(text):
 # For some reason, moving this to friendly.ipython
 # and trying to import it from there uninstalls everything: it is as though
 # it starts a new iPython subprocess.
-def jupyter(info, include="friendly_tb"):
+def jupyter(info, include="friendly_tb"):  # pragma: no cover
     """Jupyter formatter using pygments and html format."""
     _ = current_lang.translate
     css = HtmlFormatter().get_style_defs(".highlight")
@@ -214,7 +214,7 @@ if not ipython_available:
     jupyter = repl  # noqa
 
 
-def docs(info, include="friendly_tb"):
+def docs(info, include="friendly_tb"):  # pragma: no cover
     """Formatter that produces an output that is suitable for
     insertion in a RestructuredText (.rst) code block,
     with pre-formatted indentation.
@@ -248,7 +248,7 @@ def docs(info, include="friendly_tb"):
     return "\n".join(result)
 
 
-def markdown(info, include="friendly_tb"):
+def markdown(info, include="friendly_tb"):  # pragma: no cover
     """Traceback formatted with markdown syntax.
 
     Some minor changes of the traceback info content are done,
@@ -258,7 +258,7 @@ def markdown(info, include="friendly_tb"):
     return _markdown(info, include)
 
 
-def markdown_docs(info, include="explain"):
+def markdown_docs(info, include="explain"):  # pragma: no cover
     """Traceback formatted with markdown syntax, where each
     header is shifted down by 2 (h1 -> h3, etc.) so that they
     can be inserted in a document, without creating artificial
@@ -271,7 +271,7 @@ def markdown_docs(info, include="explain"):
     return _markdown(info, include, documentation=True)
 
 
-def rich_markdown(info, include="friendly_tb"):
+def rich_markdown(info, include="friendly_tb"):  # pragma: no cover
     """Traceback formatted with with markdown syntax suitable for
     printing in color in the console using Rich.
 
@@ -285,7 +285,7 @@ def rich_markdown(info, include="friendly_tb"):
     return _markdown(info, include, rich=True)
 
 
-def _markdown(info, include, rich=False, documentation=False):
+def _markdown(info, include, rich=False, documentation=False):  # pragma: no cover
     """Traceback formatted with with markdown syntax."""
     global RICH_HEADER
     RICH_HEADER = False

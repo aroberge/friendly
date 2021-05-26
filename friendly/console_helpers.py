@@ -9,7 +9,7 @@ environments such as in a Jupyter notebook.
 import sys
 import friendly
 
-from . import debug_helper
+from . import debug_helper, __version__
 from .config import session
 from .formatters import items_in_order
 from .info_generic import get_generic_explanation
@@ -265,8 +265,25 @@ get_include = friendly.get_include
 set_include = friendly.set_include
 set_formatter = friendly.set_formatter
 
+
+def light():
+    """Synonym of set_formatter('light') designed to be used
+    within iPython/Jupyter programming environments or at a terminal.
+    """
+    set_formatter("light")
+
+
+def dark():
+    """Synonym of set_formatter('dark') designed to be used
+    within iPython/Jupyter programming environments or at a terminal.
+    """
+    set_formatter("dark")
+
+
 helpers = {
     "back": back,
+    "dark": dark,
+    "light": light,
     "history": history,
     "explain": explain,
     "what": what,
@@ -298,7 +315,7 @@ class Friendly:
     For example, we can write Friendly.explain() as equivalent to explain().
     """
 
-    pass
+    version = __version__
 
 
 for helper in helpers:

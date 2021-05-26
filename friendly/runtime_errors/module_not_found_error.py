@@ -12,7 +12,7 @@ from ..utils import get_similar_words, list_to_string
 def get_cause(value, frame, tb_data):
     try:
         return _get_cause(value, frame, tb_data)
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         debug_helper.log_error(e)
         return {"cause": internal_error(), "suggest": internal_error()}
 

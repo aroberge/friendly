@@ -28,7 +28,7 @@ if not valid_version:
     sys.exit()
 
 del valid_version
-__version__ = "0.3.61"  # friendly version
+__version__ = "0.3.62"  # friendly version
 
 
 # ===========================================

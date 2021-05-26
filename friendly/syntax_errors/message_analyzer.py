@@ -17,6 +17,14 @@ from ..my_gettext import current_lang, use_www
 
 MESSAGE_ANALYZERS = []
 
+
+def add_python_message(func):
+    """A simple decorator that adds a function the the list of functions
+    that process a message given by Python.
+    """
+    MESSAGE_ANALYZERS.append(func)
+
+
 # The following has been taken from https://unicode-table.com/en/sets/quotation-marks/
 bad_quotation_marks = [
     "«",
@@ -51,18 +59,6 @@ def analyze_message(message="", statement=None):
         if cause:
             return cause
     return {}
-
-
-def add_python_message(func):
-    """A simple decorator that adds a function the the list of functions
-    that process a message given by Python.
-    """
-    MESSAGE_ANALYZERS.append(func)
-
-    def wrapper(**_kwargs):
-        return func(**_kwargs)
-
-    return wrapper
 
 
 @add_python_message

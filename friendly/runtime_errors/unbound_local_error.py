@@ -10,7 +10,7 @@ from .. import debug_helper
 def get_cause(value, frame, _tb_data):
     try:
         return _get_cause(value, frame)
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         debug_helper.log_error(e)
         return {}
 

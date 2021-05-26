@@ -272,3 +272,9 @@ __all__ = list(helpers.keys())
 __all__.append("install")
 __all__.append("start_console")
 __all__.append("run")
+
+try:
+    __all__.remove("dark")
+    __all__.remove("light")
+except ValueError:
+    pass
