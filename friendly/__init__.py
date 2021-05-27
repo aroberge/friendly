@@ -23,7 +23,7 @@ import sys
 
 valid_version = sys.version_info.major >= 3 and sys.version_info.minor >= 6
 
-if not valid_version:
+if not valid_version:  # pragma: no cover
     print("Python 3.6 or newer is required.")
     sys.exit()
 
@@ -73,14 +73,6 @@ def exclude_directory_from_traceback(dir_name):
     obtained using "debug_tb".
     """
     path_info.exclude_directory_from_traceback(dir_name)
-
-
-def explain(redirect=None):
-    """Deprecated: Use explain_traceback() instead."""
-    # The reason for removing this is to avoid confusion with
-    # explain() used in the console.
-    print("explain() is deprecated; please use explain_traceback().")
-    session.explain_traceback(redirect=redirect)
 
 
 def explain_traceback(redirect=None):
@@ -210,7 +202,7 @@ def run(
     module_globals = editors_helpers.exec_code(
         path=filename, lang=lang, include=include
     )
-    if console:
+    if console:  # pragma: no cover
         start_console(
             local_vars=module_globals,
             formatter=formatter,
@@ -233,7 +225,7 @@ def set_formatter(formatter=None, **kwargs):
     session.set_formatter(formatter=formatter, **kwargs)
 
 
-def start_console(
+def start_console(  # pragma: no cover
     local_vars=None,
     formatter="bw",
     include="friendly_tb",

@@ -5,13 +5,11 @@ console_helpers.py
 Functions that can be used in a friendly console or in other interactive
 environments such as in a Jupyter notebook.
 """
-
-import sys
 import friendly
 
 from . import debug_helper, __version__
 from .config import session
-from .formatters import items_in_order
+from . import formatters
 from .info_generic import get_generic_explanation
 from .path_info import show_paths
 from .my_gettext import current_lang
@@ -28,25 +26,19 @@ def back():
     """
     _ = current_lang.translate
     if not session.saved_info:
-        print(_("Nothing to go back to: no exception recorded."))
+        session.write_err(_("Nothing to go back to: no exception recorded.") + "\n")
         return
-    if not session.friendly:
+    if not session.friendly:  # pragma: no cover
         debug_helper.log("Problem: saved info is not empty but friendly is")
     session.saved_info.pop()
     session.friendly.pop()
 
 
-def history():
-    """Prints the list of error messages recorded so far."""
-    _ = current_lang.translate
-    if not session.saved_info:
-        print(_("Nothing to show: no exception recorded."))
-        return
-    session.rich_add_vspace = False
-    for info in session.saved_info:
-        message = session.formatter(info, include="message").replace("\n", "")
-        session.write_err(message)
-    session.rich_add_vspace = True
+def dark():  # pragma: no cover
+    """Synonym of set_formatter('dark') designed to be used
+    within iPython/Jupyter programming environments or at a terminal.
+    """
+    set_formatter("dark")
 
 
 def explain(include="explain"):
@@ -59,31 +51,36 @@ def explain(include="explain"):
     friendly.set_include(old_include)
 
 
-def _show_info():
-    """Debugging tool: shows the complete content of traceback info.
-
-    Prints ``None`` for a given item if it is not present.
+def friendly_tb():
+    """Shows the friendly traceback, which includes the hint/suggestion
+    if available.
     """
-    info = session.saved_info[-1] if session.saved_info else []
-
-    for item in items_in_order:
-        if item in info and info[item].strip():
-            print(f"{item}:")
-            for line in info[item].split("\n"):
-                print("   ", line)
-            print()
-        else:
-            print(f"{item}: None")
+    explain("friendly_tb")
 
 
-def _get_exception():
-    """Debugging tool: returns the exception instance or None if no exception
-    has been raised.
-    """
+def hint():
+    """Shows hint/suggestion if available."""
+    explain("hint")
+
+
+def history():
+    """Prints the list of error messages recorded so far."""
+    _ = current_lang.translate
     if not session.saved_info:
-        return None
-    info = session.saved_info[-1]
-    return info["_exc_instance"]
+        session.write_err(_("Nothing to show: no exception recorded.") + "\n")
+        return
+    session.rich_add_vspace = False
+    for info in session.saved_info:
+        message = session.formatter(info, include="message").replace("\n", "")
+        session.write_err(message)
+    session.rich_add_vspace = True
+
+
+def light():  # pragma: no cover
+    """Synonym of set_formatter('light') designed to be used
+    within iPython/Jupyter programming environments or at a terminal.
+    """
+    set_formatter("light")
 
 
 def more():
@@ -92,6 +89,13 @@ def more():
     Potentially useful for advanced users.
     """
     explain("more")
+
+
+def python_tb():
+    """Shows the Python traceback, excluding files from friendly
+    itself.
+    """
+    explain("python_tb")
 
 
 def what(exception=None, pre=False):
@@ -104,7 +108,7 @@ def what(exception=None, pre=False):
         exception = exception.__name__
     result = get_generic_explanation(exception)
 
-    if pre:  # for documentation
+    if pre:  # for documentation # pragma: no cover
         lines = result.split("\n")
         for line in lines:
             session.write_err("    " + line + "\n")
@@ -124,55 +128,7 @@ def why():
     explain("why")
 
 
-def hint():
-    """Shows hint/suggestion if available."""
-    explain("hint")
-
-
-def friendly_tb():
-    """Shows the friendly traceback, which includes the hint/suggestion
-    if available.
-    """
-    explain("friendly_tb")
-
-
-def python_tb():
-    """Shows the Python traceback, excluding files from friendly
-    itself.
-    """
-    explain("python_tb")
-
-
-def _debug_tb():
-    """Shows the true Python traceback, which includes
-    files from friendly itself.
-    """
-    explain("debug_tb")
-
-
-def _debug(flag=True):
-    """This functions displays the true traceback recorded, that
-    includes friendly's own code.
-    It also sets a debug flag for the current session.
-    """
-    debug_helper.DEBUG = flag
-    explain("debug_tb")
-
-
-def _get_statement():
-    """This returns a 'Statement' instance obtained for SyntaxErrors and
-    subclasses.
-
-    This is not intended for end-users but is useful in development.
-    """
-    _ = current_lang.translate
-    if not session.saved_info:
-        print(_("Nothing to show: no exception recorded."))
-        return
-    return session.friendly[-1].tb_data.statement
-
-
-def www(search=None, python=False):
+def www(search=None, python=False):  # pragma: no cover
     """This uses the ``webbrowser`` module to open a tab (or window) in the
     default browser, linking to a specific url.
 
@@ -208,11 +164,11 @@ def www(search=None, python=False):
     _ = current_lang.translate
 
     if search is not None and not isinstance(search, str):
-        sys.stderr.write(
+        session.write_err(
             _("The first argument of `www()` must be either `None` or a string.\n")
         )
         if search is True and not python:
-            sys.stderr.write(
+            session.write_err(
                 _(
                     "If you wish to open Python's documentation, use\n"
                     "`www(python=True)`.\n"
@@ -256,7 +212,7 @@ def www(search=None, python=False):
     try:
         webbrowser.open_new_tab(url)
     except Exception:  # noqa
-        sys.stderr.write(_("The default web browser cannot be used for searching."))
+        session.write_err(_("The default web browser cannot be used for searching."))
 
 
 get_lang = friendly.get_lang
@@ -266,18 +222,63 @@ set_include = friendly.set_include
 set_formatter = friendly.set_formatter
 
 
-def light():
-    """Synonym of set_formatter('light') designed to be used
-    within iPython/Jupyter programming environments or at a terminal.
-    """
-    set_formatter("light")
+# ===== Debugging functions are not unit tested by choice =====
 
 
-def dark():
-    """Synonym of set_formatter('dark') designed to be used
-    within iPython/Jupyter programming environments or at a terminal.
+def _debug(flag=True):  # pragma: no cover
+    """This functions displays the true traceback recorded, that
+    includes friendly's own code.
+    It also sets a debug flag for the current session.
     """
-    set_formatter("dark")
+    debug_helper.DEBUG = flag
+    explain("debug_tb")
+
+
+def _debug_tb():  # pragma: no cover
+    """Shows the true Python traceback, which includes
+    files from friendly itself.
+    """
+    explain("debug_tb")
+
+
+def _get_statement():  # pragma: no cover
+    """This returns a 'Statement' instance obtained for SyntaxErrors and
+    subclasses.
+
+    This is not intended for end-users but is useful in development.
+    """
+    _ = current_lang.translate
+    if not session.saved_info:
+        print(_("Nothing to show: no exception recorded."))
+        return
+    return session.friendly[-1].tb_data.statement
+
+
+def _get_exception():  # pragma: no cover
+    """Debugging tool: returns the exception instance or None if no exception
+    has been raised.
+    """
+    if not session.saved_info:
+        return None
+    info = session.saved_info[-1]
+    return info["_exc_instance"]
+
+
+def _show_info():  # pragma: no cover
+    """Debugging tool: shows the complete content of traceback info.
+
+    Prints ``None`` for a given item if it is not present.
+    """
+    info = session.saved_info[-1] if session.saved_info else []
+
+    for item in formatters.items_in_order:
+        if item in info and info[item].strip():
+            print(f"{item}:")
+            for line in info[item].split("\n"):
+                print("   ", line)
+            print()
+        else:
+            print(f"{item}: None")
 
 
 helpers = {

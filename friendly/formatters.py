@@ -354,12 +354,14 @@ def no_result(info, include):
         return _("I have no suggestion to offer.")
 
     if include == "hint":
-        if info["cause"]:
+        if "cause" in info:
             return _("I have no suggestion to offer; try `why()`.")
 
         return _("I have no suggestion to offer.")
 
-    return f"Internal error: include = {include} in formatters.no_result()"
+    return (
+        f"Internal error: include = {include} in formatters.no_result()"
+    )  # pragma: no cover
 
 
 items_groups = {
