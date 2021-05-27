@@ -44,6 +44,7 @@ This module currently contains 6 formatters:
     in colour in a console using Rich (https://github.com/willmcgugan/rich).
 """
 from .my_gettext import current_lang
+from . import debug_helper
 
 from pygments import highlight
 from pygments.lexers import PythonLexer, PythonTracebackLexer  # noqa
@@ -359,9 +360,10 @@ def no_result(info, include):
 
         return _("I have no suggestion to offer.")
 
-    return (
-        f"Internal error: include = {include} in formatters.no_result()"
-    )  # pragma: no cover
+    if True:  # pragma: no cover
+        debug_helper.log(
+            f"Internal error: include = {include} in formatters.no_result()"
+        )
 
 
 items_groups = {
