@@ -11,6 +11,8 @@ from .. import utils
 
 STATEMENT_ANALYZERS = []
 
+ASYNC = ""
+
 
 def def_correct_syntax():
     # Note that a valid function definition must have at least 5 tokens.
@@ -21,8 +23,8 @@ def def_correct_syntax():
     # fmt: off
     return _(
         "The correct syntax is:\n\n"
-        "    def name ( ... ):"
-    ) + "\n"
+        "    {async_}def name ( ... ):"
+    ).format(async_=ASYNC) + "\n"
     # fmt: on
 
 
@@ -45,16 +47,20 @@ def add_statement_analyzer(func):
 def analyze_def_statement(statement):
     """Analyzes the statement as identified by Python as that
     on which the error occurred."""
+    global ASYNC
     if not statement.tokens:
         debug_helper.log("Statement with no tokens in error_in_def.py")
         return {"cause": internal_error()}
 
     if statement.tokens[0] == "async":
+        ASYNC = "async "
         statement = remove_async(statement)
         if statement is None:
             return {}
+    else:
+        ASYNC = ""
 
-    if str(statement.tokens[1]) in ("=", ":="):
+    if len(statement.tokens) > 1 and str(statement.tokens[1]) in ("=", ":="):
         # Let the generic method handle the wrong assignment case
         return {}
 
