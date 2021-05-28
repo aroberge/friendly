@@ -320,6 +320,10 @@ descriptions = {
         cause: "dot `.` followed by `(`",
         title: "Dot followed by parenthesis",
     },
+    "duplicate_token": {
+        cause: "wrote [`,`] twice in a row by mistake",
+        title: "Extra token"
+    },
     "else_if_instead_of_elif": {
         cause: "wrote `else if` instead",
         title: "Write elif, not else if",
@@ -339,6 +343,10 @@ descriptions = {
     "except_multiple_exceptions": {
         cause: "with multiple exception types.",
         title: "Parens around multiple exceptions",
+    },
+    "extra_token" : {
+      cause: "wrote `==` by mistake",
+      title: "Extra token"
     },
     "f_string_binary": {
         cause: "`bf` is an illegal string prefix.",
@@ -451,7 +459,7 @@ descriptions = {
     "inverted_operators_2": {
         cause: "Did you write operators in an incorrect order?",
         title: "Inverted operators 2",
-        "other causes": ["all the syntax problems in the code you wrote"]
+        "other causes": ["all the syntax errors in the code you wrote"]
     },
     "keyword_arg_repeated": {
         cause: "keyword argument should appear only once in a function call",

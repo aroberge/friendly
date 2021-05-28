@@ -20,7 +20,7 @@ def more_errors():
     _ = current_lang.translate
     return "\n" + _(
         "However, making such a change would still not correct\n"
-        "all the syntax problems in the code you wrote.\n"
+        "all the syntax errors in the code you wrote.\n"
     )
 
 
@@ -1453,6 +1453,53 @@ def parens_around_exceptions(statement):
         "suggest": hint,
         "python_link": python_link,
     }
+
+
+@add_statement_analyzer
+def duplicate_token(statement):
+    _ = current_lang.translate
+    if statement.bad_token != statement.prev_token:
+        return {}
+    if len(statement.bad_token.string) == 1:
+        bad_token = "[`{bad_token}`]".format(bad_token=statement.bad_token)
+    else:
+        bad_token = "`{bad_token}`".format(bad_token=statement.bad_token)
+    cause = _(
+        "I am guessing that you wrote {bad_token} twice in a row by mistake.\n"
+        "If that is the case, you need to remove the second one.\n"
+    ).format(bad_token=bad_token)
+    hint = _("Did you write {bad_token} twice by mistake?\n").format(
+        bad_token=bad_token
+    )
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.bad_token, ""
+    )
+    if fixers.check_statement(new_statement):
+        return {"cause": cause, "suggest": hint}
+    else:
+        return {"cause": cause + more_errors(), "suggest": hint}
+
+
+@add_statement_analyzer
+def extra_token(statement):
+    _ = current_lang.translate
+    new_statement = fixers.replace_token(
+        statement.statement_tokens, statement.bad_token, ""
+    )
+
+    if fixers.check_statement(new_statement):
+        if len(statement.bad_token.string) == 1:
+            bad_token = "[`{bad_token}`]".format(bad_token=statement.bad_token)
+        else:
+            bad_token = "`{bad_token}`".format(bad_token=statement.bad_token)
+        cause = _(
+            "I am guessing that you wrote {bad_token} by mistake.\n"
+            "Removing it and writing `{line}` seems to fix the error.\n"
+        ).format(bad_token=bad_token, line=new_statement)
+        hint = _("Did you write {bad_token} by mistake?\n").format(bad_token=bad_token)
+        return {"cause": cause, "suggest": hint}
+    else:
+        return {}
 
 
 # Keep last

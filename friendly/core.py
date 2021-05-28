@@ -88,6 +88,17 @@ class TracebackData:
 
         if issubclass(etype, SyntaxError):
             self.statement = source_info.Statement(self.value, self.bad_line)
+            # Removing extra ending spaces for potentially shorter displays later on
+
+            def remove_space(text):
+                if text.rstrip():
+                    if text.endswith("\n"):
+                        return text.rstrip() + "\n"
+                    return text.rstrip()
+                return text
+
+            self.statement.statement = remove_space(self.statement.statement)
+            self.statement.bad_line = remove_space(self.statement.bad_line)
         else:
             self.statement = None
             self.locate_error(tb)
