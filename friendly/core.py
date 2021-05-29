@@ -340,10 +340,13 @@ class FriendlyTraceback:
             raise SystemExit
         self.suppressed = ["       ... " + _("More lines not shown.") + " ..."]
         self.info = {"header": _("Python exception:")}
-        self.info["_exc_type"] = etype
-        self.info["_exc_instance"] = value
         self.message = self.assign_message()  # language independent
         self.assign_tracebacks()
+
+        # include some values for debugging purpose in an interactive session
+        self.info["_exc_instance"] = value
+        self.info["_frame"] = self.tb_data.exception_frame
+        self.info["_tb_data"] = self.tb_data
 
     def assign_message(self):
         """Assigns the error message, as the attribute ``message``

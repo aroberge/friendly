@@ -5,6 +5,7 @@ console_helpers.py
 Functions that can be used in a friendly console or in other interactive
 environments such as in a Jupyter notebook.
 """
+# NOTE: __all__ is defined at the very bottom of this file
 import friendly
 
 from . import debug_helper, __version__
@@ -220,67 +221,6 @@ set_lang = friendly.set_lang
 get_include = friendly.get_include
 set_include = friendly.set_include
 set_formatter = friendly.set_formatter
-
-
-# ===== Debugging functions are not unit tested by choice =====
-
-
-def _debug(flag=True):  # pragma: no cover
-    """This functions displays the true traceback recorded, that
-    includes friendly's own code.
-    It also sets a debug flag for the current session.
-    """
-    debug_helper.DEBUG = flag
-    explain("debug_tb")
-
-
-def _debug_tb():  # pragma: no cover
-    """Shows the true Python traceback, which includes
-    files from friendly itself.
-    """
-    explain("debug_tb")
-
-
-def _get_statement():  # pragma: no cover
-    """This returns a 'Statement' instance obtained for SyntaxErrors and
-    subclasses.
-
-    This is not intended for end-users but is useful in development.
-    """
-    _ = current_lang.translate
-    if not session.saved_info:
-        print(_("Nothing to show: no exception recorded."))
-        return
-    return session.friendly[-1].tb_data.statement
-
-
-def _get_exception():  # pragma: no cover
-    """Debugging tool: returns the exception instance or None if no exception
-    has been raised.
-    """
-    if not session.saved_info:
-        return None
-    info = session.saved_info[-1]
-    return info["_exc_instance"]
-
-
-def _show_info():  # pragma: no cover
-    """Debugging tool: shows the complete content of traceback info.
-
-    Prints ``None`` for a given item if it is not present.
-    """
-    info = session.saved_info[-1] if session.saved_info else []
-
-    for item in formatters.items_in_order:
-        if item in info and info[item].strip():
-            print(f"{item}:")
-            for line in info[item].split("\n"):
-                print("   ", line)
-            print()
-        else:
-            print(f"{item}: None")
-
-
 helpers = {
     "back": back,
     "dark": dark,
@@ -295,17 +235,111 @@ helpers = {
     "set_lang": set_lang,
     "get_include": get_include,
     "set_include": set_include,
-    "_get_exception": _get_exception,
     "hint": hint,
     "friendly_tb": friendly_tb,
     "python_tb": python_tb,
-    "_debug_tb": _debug_tb,
-    "_debug": _debug,
     "show_paths": show_paths,
-    "_show_info": _show_info,
     "set_formatter": set_formatter,
-    "_get_statement": _get_statement,
     "www": www,
+}
+
+
+# ===== Debugging functions are not unit tested by choice =====
+
+
+def _debug_tb():  # pragma: no cover
+    """Shows the true Python traceback, which includes
+    files from friendly itself.
+    """
+    explain("debug_tb")
+
+
+def _get_exception():  # pragma: no cover
+    """Debugging tool: returns the exception instance or None if no exception
+    has been raised.
+    """
+    if not session.saved_info:
+        print("Nothing to show: no exception recorded.")
+        return
+    info = session.saved_info[-1]
+    return info["_exc_instance"]
+
+
+def _get_frame():  # pragma: no cover
+    """This returns the frame in which the exception occurred.
+
+    This is not intended for end-users but is useful in development.
+    """
+    if not session.saved_info:
+        print("Nothing to show: no exception recorded.")
+        return
+    info = session.saved_info[-1]
+    return info["_frame"]
+
+
+def _get_statement():  # pragma: no cover
+    """This returns a 'Statement' instance obtained for SyntaxErrors and
+    subclasses.  Such a Statement instance contains essentially all
+    the known information about the statement where the error occurred.
+
+    This is not intended for end-users but is useful in development.
+    """
+    if not session.saved_info:
+        print("Nothing to show: no exception recorded.")
+        return
+    if isinstance(session.saved_info[-1]["_exc_instance"], SyntaxError):
+        return session.friendly[-1].tb_data.statement
+    print("No statement: not a SyntaxError.")
+    return
+
+
+def _get_tb_data():  # pragma: no cover
+    """This returns the TracebackData instance containing all the
+    information we have obtained.
+
+    This is not intended for end-users but is useful in development.
+    """
+    if not session.saved_info:
+        print("Nothing to show: no exception recorded.")
+        return
+    info = session.saved_info[-1]
+    return info["_tb_data"]
+
+
+def _set_debug(flag=True):  # pragma: no cover
+    """This functions displays the true traceback recorded, that
+    includes friendly's own code.
+    It also sets a debug flag for the current session.
+    """
+    debug_helper.DEBUG = flag
+    explain("debug_tb")
+
+
+def _show_info():  # pragma: no cover
+    """Debugging tool: shows the complete content of traceback info.
+
+    Prints ``None`` for a given item if it is not present.
+    """
+    info = session.saved_info[-1] if session.saved_info else []
+
+    for item in formatters.items_in_order:
+        if item in info and info[item].strip():
+            print(f"{item}:")
+            for line in info[item].strip().split("\n"):
+                print("   ", line)
+            print()
+        else:
+            print(f"{item}: None")
+
+
+_debug_helpers = {
+    "_debug_tb": _debug_tb,
+    "_show_info": _show_info,
+    "_get_exception": _get_exception,
+    "_get_frame": _get_frame,
+    "_get_statement": _get_statement,
+    "_get_tb_data": _get_tb_data,
+    "_set_debug": _set_debug,
 }
 
 
@@ -321,6 +355,8 @@ class Friendly:
 
 for helper in helpers:
     setattr(Friendly, helper, staticmethod(helpers[helper]))
+for helper in _debug_helpers:
+    setattr(Friendly, helper, staticmethod(_debug_helpers[helper]))
 
 helpers["Friendly"] = Friendly
 

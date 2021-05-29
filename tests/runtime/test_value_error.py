@@ -52,5 +52,19 @@ def test_Too_many_values_to_unpack():
     return result, message
 
 
+def test_Date_invalid_month():
+    from datetime import date
+    try:
+        d = date(2021, 13, 1)
+    except ValueError as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
+
+    assert "month must be in 1..12" in result
+    if friendly.get_lang() == "en":
+        assert "Valid values are integers, from 1 to 12" in result
+
+
 if __name__ == "__main__":
     print(test_Too_many_values_to_unpack()[0])

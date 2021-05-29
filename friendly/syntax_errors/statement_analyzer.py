@@ -29,6 +29,10 @@ def add_statement_analyzer(func):
     of all functions that analyze a single statement."""
     STATEMENT_ANALYZERS.append(func)
 
+    # The following is needed if we wish to call explicitly
+    # one of the functions below from another file.
+    # We sometimes do this for consistency when later version of
+    # Python give us a specific message instead of just 'invalid syntax'.
     def wrapper(statement):
         return func(statement)
 
@@ -131,6 +135,7 @@ def copy_pasted_code(statement):
     """Detecting code that starts with a Python prompt"""
     _ = current_lang.translate
     if statement.nb_tokens < 2:
+        print("single token!")
         return {}
 
     tokens = statement.tokens
@@ -356,7 +361,10 @@ def inverted_operators(statement):
         is_op(next_)
         and is_op(next_.string + bad.string)
         and bad.immediately_before(next_)
-    ):
+    ):  # pragma: no cover
+        # I cannot think of a situation where Python would highlight the first
+        # of two consecutive operators as being the incorrect one.
+        debug_helper.log("inverted_operators: new case")
         first = bad
         second = next_
     else:
@@ -630,6 +638,9 @@ def invalid_double_star_operator(statement):
 def missing_colon(statement):
     """look for missing colon at the end of statement"""
     _ = current_lang.translate
+
+    # TODO: check all keywords listed here, with single keyword missing colon, like:
+    # if
 
     if statement.last_token == ":" or statement.bad_token != statement.last_token:
         return {}

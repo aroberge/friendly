@@ -9,6 +9,7 @@ import re
 from ..my_gettext import current_lang, no_information, internal_error
 from .. import info_variables
 from .. import debug_helper
+from .. import token_utils
 from .. import utils
 
 convert_type = info_variables.convert_type
@@ -37,6 +38,9 @@ def _get_cause(value, frame, tb_data):
         cause = parser(message, frame, tb_data)
         if cause:
             return cause
+    cause = unrecognized_message(value, frame, tb_data)
+    if cause:
+        return cause
     return {"cause": no_information()}
 
 
@@ -177,3 +181,52 @@ def _convert_to_float(value):
         "before the result can be converted into an integer using `int()`.\n"
     ).format(value=value)
     return {"cause": cause, "suggest": hint}
+
+
+@add_message_parser
+def date_month_must_be_between_1_and_12(message, *_args):
+    _ = current_lang.translate
+
+    if message != "month must be in 1..12":
+        return {}
+
+    hint = _("Did you specify an invalid month?\n")
+    cause = _(
+        "I am guessing that you specify an invalid value for a month\n"
+        "in a `date` object. Valid values are integers, from 1 to 12.\n"
+    )
+    return {"cause": cause, "suggest": hint}
+
+
+def unrecognized_message(_value, frame, tb_data):
+    """This attempts to provide some help when a message is not recognized."""
+    _ = current_lang.translate
+    bad_line = tb_data.bad_line.strip()
+    if bad_line.startswith("raise ") or bad_line.startswith("raise\t"):
+        return {}
+
+    all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
+
+    callables = []
+    for name, obj in all_objects:
+        if callable(obj):
+            callables.append((name, obj))
+
+    if not callables:
+        return {}
+
+    tokens = token_utils.get_significant_tokens(tb_data.bad_line)
+    name, obj = callables[0]
+    if name == tokens[0]:
+        cause = _(
+            "I do not recognize this error message.\n"
+            "I am guessing that the problem is with the function `{name}`.\n"
+        ).format(name=name)
+        if hasattr(obj, "__doc__") and obj.__doc__ is not None:
+            cause += _("Its docstring is:\n\n{docstring}\n").format(
+                docstring=obj.__doc__
+            )
+        else:
+            cause += _("I have no more information.\n")
+        return {"cause": cause}
+    return {}

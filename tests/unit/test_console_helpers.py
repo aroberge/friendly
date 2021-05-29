@@ -21,24 +21,26 @@ _why = "Perhaps you meant to write"
 
 
 def test_back():
-    assert empty_history()
-    nothing = "Nothing to go back to: no exception recorded."
+    while not empty_history():
+        helpers.back()
+    nothing_back = "Nothing to go back to: no exception recorded."
     helpers.back()
-    assert nothing in friendly.get_output()
+    assert nothing_back in friendly.get_output()
     try:
         a
     except NameError:
         friendly.explain_traceback(redirect="capture")
         friendly.get_output()
     helpers.back()
-    assert nothing not in friendly.get_output()
+    assert nothing_back not in friendly.get_output()
     helpers.back()
-    assert nothing in friendly.get_output()
+    assert nothing_back in friendly.get_output()
     assert empty_history()
 
 
 def test_friendly_tb():
-    assert empty_history()
+    while not empty_history():
+        helpers.back()
     try:
         math.Pi
     except AttributeError:
@@ -54,7 +56,8 @@ def test_friendly_tb():
 
 
 def test_hint():
-    assert empty_history()
+    while not empty_history():
+        helpers.back()
     try:
         math.Pi
     except AttributeError:
@@ -70,7 +73,8 @@ def test_hint():
 
 
 def test_history():
-    assert empty_history()
+    while not empty_history():
+        helpers.back()
     try:
         a
     except NameError:
@@ -84,7 +88,8 @@ def test_history():
 
 
 def test_more():
-    assert empty_history()
+    while not empty_history():
+        helpers.back()
     try:
         math.Pi
     except AttributeError:
@@ -103,7 +108,8 @@ def test_more():
 
 
 def test_python_tb():
-    assert empty_history()
+    while not empty_history():
+        helpers.back()
     try:
         math.Pi
     except AttributeError:
@@ -119,7 +125,8 @@ def test_python_tb():
 
 
 def test_what():
-    assert empty_history()
+    while not empty_history():
+        helpers.back()
     try:
         math.Pi
     except AttributeError:
@@ -138,7 +145,8 @@ def test_what():
 
 
 def test_what_name():
-    assert empty_history()
+    while not empty_history():
+        helpers.back()
     try:
         math.Pi
     except AttributeError:
@@ -158,7 +166,8 @@ def test_what_name():
 
 
 def test_what_type():
-    assert empty_history()
+    while not empty_history():
+        helpers.back()
     try:
         math.Pi
     except AttributeError:
@@ -177,7 +186,8 @@ def test_what_type():
     assert empty_history()
 
 def test_where():
-    assert empty_history()
+    while not empty_history():
+        helpers.back()
     try:
         math.Pi
     except AttributeError:
@@ -196,7 +206,8 @@ def test_where():
 
 
 def test_why():
-    assert empty_history()
+    while not empty_history():
+        helpers.back()
     try:
         math.Pi
     except AttributeError:
@@ -217,7 +228,8 @@ def test_why():
 # The following are processed in formatters.py
 
 def test_why_no_hint():
-    assert empty_history()
+    while not empty_history():
+        helpers.back()
     try:
         math.PiPiPi
     except AttributeError:
@@ -233,7 +245,8 @@ def test_why_no_hint():
     assert empty_history()
 
 def test_no_why():
-    assert empty_history()
+    while not empty_history():
+        helpers.back()
     try:
         raise ArithmeticError
     except ArithmeticError:

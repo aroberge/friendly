@@ -36,6 +36,8 @@ def set_width(width=80):
 
 
 __all__.append("set_width")
+Friendly.set_width = set_width  # noqa
+
 
 shell.InteractiveShell.showtraceback = lambda self, *args, **kwargs: explain_traceback()
 shell.InteractiveShell.showsyntaxerror = (
