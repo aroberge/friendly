@@ -4,6 +4,7 @@ Collection of functions useful in parsing ValueError messages and
 providing a more detailed explanation.
 """
 
+import inspect
 import re
 
 from ..my_gettext import current_lang, no_information, internal_error
@@ -203,30 +204,34 @@ def unrecognized_message(_value, frame, tb_data):
     _ = current_lang.translate
     bad_line = tb_data.bad_line.strip()
     if bad_line.startswith("raise ") or bad_line.startswith("raise\t"):
-        return {}
+        try:
+            name = inspect.getframeinfo(frame).function
+            fn_obj = frame.f_globals[name]
+        except Exception:
+            return {}
+    else:
+        all_objects = info_variables.get_all_objects(bad_line, frame)["name, obj"]
+        callables = []
+        for name, obj in all_objects:
+            if callable(obj):
+                callables.append((name, obj))
+        if not callables:
+            return {}
 
-    all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
+        tokens = token_utils.get_significant_tokens(tb_data.bad_line)
+        name, fn_obj = callables[0]
+        if name != tokens[0]:
+            return {}
 
-    callables = []
-    for name, obj in all_objects:
-        if callable(obj):
-            callables.append((name, obj))
+    cause = _(
+        "I do not recognize this error message.\n"
+        "I am guessing that the problem is with the function `{name}`.\n"
+    ).format(name=name)
 
-    if not callables:
-        return {}
-
-    tokens = token_utils.get_significant_tokens(tb_data.bad_line)
-    name, obj = callables[0]
-    if name == tokens[0]:
-        cause = _(
-            "I do not recognize this error message.\n"
-            "I am guessing that the problem is with the function `{name}`.\n"
-        ).format(name=name)
-        if hasattr(obj, "__doc__") and obj.__doc__ is not None:
-            cause += _("Its docstring is:\n\n{docstring}\n").format(
-                docstring=obj.__doc__
-            )
-        else:
-            cause += _("I have no more information.\n")
-        return {"cause": cause}
-    return {}
+    if hasattr(fn_obj, "__doc__") and fn_obj.__doc__ is not None:
+        cause += _("Its docstring is:\n\n`'''{docstring}'''`\n").format(
+            docstring=fn_obj.__doc__
+        )
+    else:
+        cause += _("I have no more information.\n")
+    return {"cause": cause}
