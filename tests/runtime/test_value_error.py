@@ -64,6 +64,7 @@ def test_Date_invalid_month():
     assert "month must be in 1..12" in result
     if friendly.get_lang() == "en":
         assert "Valid values are integers, from 1 to 12" in result
+    return result, message
 
 
 if __name__ == "__main__":

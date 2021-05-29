@@ -63,7 +63,7 @@ Friendly version: {friendly}
 Python version: {python}
 
 """.format(
-    friendly=friendly._doc_version(),
+    friendly=friendly.__version__,
     python=platform.python_version(),
     name=__file__,
 )

@@ -28,7 +28,7 @@ if not valid_version:  # pragma: no cover
     sys.exit()
 
 del valid_version
-__version__ = "0.3.63"  # friendly version
+__version__ = "0.3.64"  # friendly version
 
 
 # ===========================================
@@ -49,13 +49,13 @@ from .my_gettext import current_lang
 _warnings.simplefilter("ignore")
 del _warnings
 
-
-def _doc_version():
-    """Use this number in the documentation to avoid triggering updates
-    of the whole documentation each time the last part of the version is
-    changed."""
-    parts = __version__.split(".")
-    return parts[0] + "." + parts[1]
+#
+# def _doc_version():
+#     """Use this number in the documentation to avoid triggering updates
+#     of the whole documentation each time the last part of the version is
+#     changed."""
+#     parts = __version__.split(".")
+#     return parts[0] + "." + parts[1]
 
 
 def exclude_file_from_traceback(full_path):
