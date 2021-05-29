@@ -3,9 +3,12 @@ name: Bug report
 about: Create a report to help us improve
 title: ''
 labels: ''
-assignees: ''
+assignees: aroberge
 
 ---
+
+**You do not have to provide all the information mentioned below. Write what you think is enough and I will try to take care of the rest.**
+
 
 **Describe the bug**
 A clear and concise description of what the bug is.
