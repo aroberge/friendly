@@ -156,9 +156,7 @@ class TracebackData:
 
         if self.records:
             self.exception_frame, self.filename, linenumber, _, _, _ = self.records[-1]
-            _, line = cache.get_formatted_partial_source(
-                self.filename, linenumber, None
-            )
+            _, line = cache.get_formatted_partial_source(self.filename, linenumber)
             self.bad_line = line.rstrip()
             return
 
@@ -818,12 +816,10 @@ def get_partial_source(filename, linenumber, lines, index, text_range=None):
     )
     if filename in cache.cache:
         source, line = cache.get_formatted_partial_source(
-            filename, linenumber, offset=None, text_range=text_range
+            filename, linenumber, text_range=text_range
         )
     elif filename and os.path.abspath(filename):
-        source, line = highlight_source(
-            linenumber, index, lines, offset=None, text_range=text_range
-        )
+        source, line = highlight_source(linenumber, index, lines, text_range=text_range)
         if not source:  # pragma: no cover
             line = ""
             if filename == "<stdin>":

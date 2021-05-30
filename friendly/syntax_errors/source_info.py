@@ -17,6 +17,7 @@ from ..my_gettext import internal_error
 # neighbours, the code for the analysis can be greatly simplified as we do
 # not have to verify the existence of these neighbours.
 MEANINGLESS_TOKEN = token_utils.tokenize(" ")[0]
+TOO_MANY_BLOCKS = "too many statically nested blocks"
 
 
 class Statement:
@@ -89,9 +90,10 @@ class Statement:
         self.using_friendly_console = False
         if self.filename is not None:
             self.using_friendly_console = self.filename.startswith("<friendly")
-        elif "too many statically nested blocks" not in self.message:
+        elif TOO_MANY_BLOCKS not in self.message:  # pragma: no cover
             # We know of only one case where filename should be None.
             debug_helper.log("filename is None in source_info.Statement")
+            debug_helper.log("Add this as a new test.")
 
         self.get_token_info()
 
@@ -105,7 +107,8 @@ class Statement:
             # self.all_statements and self.statement_tokens are set in the following
             self.obtain_statement(source_tokens)
             self.tokens = self.remove_meaningless_tokens()
-            if not self.tokens:
+            if not self.tokens:  # pragma: no cover
+                debug_helper.log("self.tokens is empty; add this as new test.")
                 if len(self.all_statements) > 1:
                     self.statement_tokens = self.all_statements[-2]
                     self.tokens = self.remove_meaningless_tokens()
@@ -118,7 +121,7 @@ class Statement:
                 self.filename.startswith("<friendly-console")
                 and self.statement_brackets
                 and not self.end_bracket
-            ):
+            ):  # pragma: no cover
                 # We got an error flagged before we had the chance to close
                 # brackets. Unclosed brackets should not be a problem on their
                 # own in a console session - so, we make sure to close
@@ -153,12 +156,13 @@ class Statement:
                 last_token.string = last_token.line = add_token
                 self.tokens.append(last_token)
 
-        elif "too many statically nested blocks" not in self.message:
+        elif TOO_MANY_BLOCKS not in self.message:  # pragma: no cover
             debug_helper.log("linenumber is None in source_info.Statement")
+            debug_helper.log("Add this as new test case")
 
         if self.tokens:
             self.assign_individual_token_values()
-        elif "too many statically nested blocks" not in self.message:
+        elif TOO_MANY_BLOCKS not in self.message:  # pragma: no cover
             debug_helper.log("No meaningful tokens in source_info.Statement")
 
     def get_source_tokens(self):
@@ -197,7 +201,8 @@ class Statement:
 
             if self.bad_token_index == 0:
                 self.prev_token = MEANINGLESS_TOKEN
-            elif self.prev_token is None:
+            elif self.prev_token is None:  # pragma: no cover
+                debug_helper.log("This case should be added as new test.")
                 self.prev_token = self.tokens[self.bad_token_index - 1]
 
         if self.last_token != self.bad_token:

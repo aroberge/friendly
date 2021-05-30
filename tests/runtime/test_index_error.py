@@ -32,6 +32,20 @@ def test_Long_list():
         assert "The valid index values of" in result
     return result, message
 
+def test_Empty():
+    a = []
+    try:
+        c = a[1]
+    except IndexError as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
+
+    assert "IndexError: list index out of range" in result
+    if friendly.get_lang() == "en":
+        assert "contains no item" in result
+    return result, message
+
 
 if __name__ == "__main__":
     print(test_index_error1()[0])

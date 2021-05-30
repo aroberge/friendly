@@ -28,7 +28,8 @@ def _get_cause(value, frame, tb_data):
     if match:
         return index_out_of_range(match.group(1), frame, tb_data)
 
-    return {"cause": no_information()}
+    debug_helper.log("New case to consider.")  # pragma: no cover
+    return {"cause": no_information()}  # pragma: no cover
 
 
 def index_out_of_range(obj_type, frame, tb_data):
@@ -40,17 +41,17 @@ def index_out_of_range(obj_type, frame, tb_data):
         truncated = tb_data.bad_line.replace(name, "", 1)
         if truncated.startswith("[") and truncated.endswith("]"):
             break
-    else:
+    else:  # pragma: no cover
         debug_helper.log("Cannot identify object in index_out_of_range().")
         return {}
 
     try:
         node = tb_data.node
-    except Exception:  # noqa
+    except Exception:  # noqa # pragma: no cover
         debug_helper.log("node does not exist in index_out_of_range()")
         return {}
 
-    if not (node and isinstance(node, ast.Subscript)):
+    if not (node and isinstance(node, ast.Subscript)):  # pragma: no cover
         debug_helper.log("node is not Subscript in index_out_of_range().")
         return {}
 
@@ -61,7 +62,8 @@ def index_out_of_range(obj_type, frame, tb_data):
     except Exception:  # noqa
         try:
             index = node.slice.value
-        except Exception:  # noqa
+        except Exception:  # noqa  # pragma: no cover
+            debug_helper.log("New case to consider.")
             index = "unknown"
 
     if index != "unknown":
@@ -74,7 +76,8 @@ def index_out_of_range(obj_type, frame, tb_data):
             length=length,
             obj_type=info_variables.convert_type(obj_type),
         )
-    else:
+    else:  # pragma: no cover
+        debug_helper.log("New case to consider")
         cause = _(
             "You have tried to get an item from `{name}`,\n"
             "{obj_type} of length `{length}`, by using a value for the index\n"

@@ -60,7 +60,7 @@ class Cache:
         The contents is stored as a string and returned as a list of lines,
         each line ending with a newline character.
         """
-        if idle_get_lines is not None:
+        if idle_get_lines is not None:  # pragma: no cover
             lines = idle_get_lines(filename, None)  # noqa
         else:
             lines = old_getlines(filename, module_globals=module_globals)
@@ -69,9 +69,7 @@ class Cache:
         lines.append("\n")  # required when dealing with EOF errors
         return lines
 
-    def get_formatted_partial_source(
-        self, filename, linenumber, offset=None, text_range=None
-    ):
+    def get_formatted_partial_source(self, filename, linenumber, text_range=None):
         """Formats a few lines around a 'bad line', and returns
         the formatted source as well as the content of the 'bad line'.
         """
@@ -86,7 +84,6 @@ class Cache:
             # it is useful to show at least one more line when a statement
             # continues beyond the current line.
             lines[begin : linenumber + 1],
-            offset=offset,
             text_range=text_range,
         )
         return partial_source, bad_line
@@ -98,7 +95,7 @@ cache = Cache()
 linecache.getlines = cache.get_source_lines
 
 
-def highlight_source(linenumber, index, lines, offset=None, text_range=None):
+def highlight_source(linenumber, index, lines, text_range=None):
     """Extracts a few relevant lines from a file content given as a list
     of lines, adding line number information and identifying
     a particular line.
@@ -122,10 +119,6 @@ def highlight_source(linenumber, index, lines, offset=None, text_range=None):
     no_mark = "       {:%d}: " % nb_digits
     with_mark = "    -->{:%d}: " % nb_digits
 
-    offset_mark = None
-    if offset is not None:
-        offset_mark = " " * (8 + nb_digits + offset) + "^"
-
     text_range_mark = None
     if text_range is not None:
         begin, end = text_range
@@ -136,10 +129,8 @@ def highlight_source(linenumber, index, lines, offset=None, text_range=None):
         if i == linenumber:
             num = with_mark.format(i)
             problem_line = line
-            new_lines.append(num + line.rstrip())
-            if offset_mark is not None:
-                new_lines.append(offset_mark)
-            elif text_range_mark is not None:
+            new_lines.append(num + problem_line.rstrip())
+            if text_range_mark is not None:
                 new_lines.append(text_range_mark)
             marked = True
         elif marked:

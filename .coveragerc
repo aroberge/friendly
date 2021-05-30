@@ -1,4 +1,6 @@
 [run]
+branch = true
+parallel = true
 omit =
     .tox/*
     Fake_filename
