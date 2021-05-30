@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-05-29 08:57-0300\n"
-"PO-Revision-Date: 2021-05-29 08:58-0300\n"
+"POT-Creation-Date: 2021-05-30 14:10-0300\n"
+"PO-Revision-Date: 2021-05-30 14:11-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -81,15 +81,15 @@ msgid "The default web browser cannot be used for searching."
 msgstr ""
 "Le navigateur Web par défaut ne peut pas être utilisé pour la recherche."
 
-#: core.py:341
+#: core.py:339
 msgid "More lines not shown."
 msgstr "Plus de lignes non affichées."
 
-#: core.py:342 core.py:382
+#: core.py:340 core.py:380
 msgid "Python exception:"
 msgstr "Exception Python:"
 
-#: core.py:395
+#: core.py:393
 msgid ""
 "Warning: improperly formed exception.\n"
 "I suspect that a custom exception has been raised\n"
@@ -103,23 +103,23 @@ msgstr ""
 "Cela peut se produire si une méthode `__repr__` ou `__str__`\n"
 "soulève une exception ou ne retourne pas une chaîne.\n"
 
-#: core.py:531
+#: core.py:529
 msgid ""
 "{filename} is not a regular Python file whose contents can be analyzed.\n"
 msgstr ""
 "{filename} n’est pas un fichier Python dont le contenu\n"
 "peut être analysé.\n"
 
-#: core.py:537
+#: core.py:535
 msgid "Exception raised on line {linenumber} of file {filename}.\n"
 msgstr "Exception levée à la ligne {linenumber} du fichier {filename}.\n"
 
-#: core.py:575
+#: core.py:573
 msgid "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
 "L'exécution s'est arrêtée à la ligne {linenumber} du fichier {filename}\n"
 
-#: core.py:594
+#: core.py:592
 msgid ""
 "`{filename}` is not a regular Python file whose contents\n"
 "can be analyzed.\n"
@@ -127,7 +127,7 @@ msgstr ""
 "`{filename}` n’est pas un fichier Python dont le contenu\n"
 "peut être analysé.\n"
 
-#: core.py:605
+#: core.py:603
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -137,7 +137,7 @@ msgstr ""
 "'{filename}'\n"
 "jusqu'à l'endroit indiqué par ^.\n"
 
-#: core.py:611
+#: core.py:609
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
@@ -148,7 +148,7 @@ msgstr ""
 "La fin du fichier a été atteinte et Python s'attendait à voir plus de code.\n"
 "\n"
 
-#: core.py:617
+#: core.py:615
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -158,11 +158,11 @@ msgstr ""
 "'{filename}'\n"
 "pour une raison non spécifiée.\n"
 
-#: core.py:816
+#: core.py:814
 msgid "Problem: source of `{filename}` is not available\n"
 msgstr "Problème : la source de `{filename}` n'est pas disponible.\n"
 
-#: core.py:860
+#: core.py:856
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -967,7 +967,7 @@ msgstr ""
 "pour importer le module d’origine `{last_module}`\n"
 "une deuxième fois, avant que Python n’ait terminé la première importation.\n"
 
-#: runtime_errors\index_error.py:68
+#: runtime_errors\index_error.py:70
 msgid ""
 "You have tried to get the item with index `{index}` of `{name}`,\n"
 "{obj_type} of length `{length}`.\n"
@@ -975,7 +975,7 @@ msgstr ""
 "Vous avez essayé d’obtenir l’élément avec l’index `{index}` de `{name}`,\n"
 "{obj_type} de longueur `{length}`.\n"
 
-#: runtime_errors\index_error.py:78
+#: runtime_errors\index_error.py:81
 msgid ""
 "You have tried to get an item from `{name}`,\n"
 "{obj_type} of length `{length}`, by using a value for the index\n"
@@ -985,7 +985,7 @@ msgstr ""
 "{obj_type} de longueur `{length}`, en utilisant une valeur pour l’indice\n"
 "que je ne peux pas déterminer, mais qui n’est pas valide.\n"
 
-#: runtime_errors\index_error.py:90
+#: runtime_errors\index_error.py:93
 msgid ""
 "The valid index values of `{name}` are integers ranging from\n"
 "`{min}` to `{max}`.\n"
@@ -993,7 +993,7 @@ msgstr ""
 "Les indices valides de `{name}` sont les entiers allant de `{min}` à `{max}"
 "`.\n"
 
-#: runtime_errors\index_error.py:95
+#: runtime_errors\index_error.py:98
 msgid ""
 "Remember: the first item of {obj_type} is not at index 1 but at index 0.\n"
 msgstr ""
@@ -1001,9 +1001,17 @@ msgstr ""
 "l’indice 0\n"
 "et non pas à l'indice 1.\n"
 
-#: runtime_errors\index_error.py:100
+#: runtime_errors\index_error.py:103
 msgid "`{name}` contains no item.\n"
 msgstr "`{name}` ne contient aucun élément.\n"
+
+#: runtime_errors\index_error.py:104
+msgid ""
+"You have tried to get the item with index `{index}` of `{name}`,\n"
+"{obj_type} which contains no item.\n"
+msgstr ""
+"Vous avez essayé d’obtenir l’élément avec l’indice `{index}` de `{name}`,\n"
+"{obj_type} qui ne contient aucun élément.\n"
 
 #: runtime_errors\key_error.py:19
 msgid "In your program, the key that cannot be found is `{key}`.\n"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-05-29 08:57-0300\n"
+"POT-Creation-Date: 2021-05-30 14:10-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,15 +67,15 @@ msgstr ""
 msgid "The default web browser cannot be used for searching."
 msgstr ""
 
-#: core.py:341
+#: core.py:339
 msgid "More lines not shown."
 msgstr ""
 
-#: core.py:342 core.py:382
+#: core.py:340 core.py:380
 msgid "Python exception:"
 msgstr ""
 
-#: core.py:395
+#: core.py:393
 msgid ""
 "Warning: improperly formed exception.\n"
 "I suspect that a custom exception has been raised\n"
@@ -84,54 +84,54 @@ msgid ""
 "raises an exception or does not return a string.\n"
 msgstr ""
 
-#: core.py:531
+#: core.py:529
 msgid ""
 "{filename} is not a regular Python file whose contents can be analyzed.\n"
 msgstr ""
 
-#: core.py:537
+#: core.py:535
 msgid ""
 "Exception raised on line {linenumber} of file {filename}.\n"
 msgstr ""
 
-#: core.py:575
+#: core.py:573
 msgid ""
 "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
 
-#: core.py:594
+#: core.py:592
 msgid ""
 "`{filename}` is not a regular Python file whose contents\n"
 "can be analyzed.\n"
 msgstr ""
 
-#: core.py:605
+#: core.py:603
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "beyond the location indicated by ^.\n"
 msgstr ""
 
-#: core.py:611
+#: core.py:609
 msgid ""
 "Python could not understand the code the file\n"
 "'{filename}'.\n"
 "It reached the end of the file and expected more content.\n"
 msgstr ""
 
-#: core.py:617
+#: core.py:615
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "for an unspecified reason.\n"
 msgstr ""
 
-#: core.py:816
+#: core.py:814
 msgid ""
 "Problem: source of `{filename}` is not available\n"
 msgstr ""
 
-#: core.py:860
+#: core.py:856
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -724,33 +724,39 @@ msgid ""
 "a second time, before Python had completed the first import.\n"
 msgstr ""
 
-#: runtime_errors\index_error.py:68
+#: runtime_errors\index_error.py:70
 msgid ""
 "You have tried to get the item with index `{index}` of `{name}`,\n"
 "{obj_type} of length `{length}`.\n"
 msgstr ""
 
-#: runtime_errors\index_error.py:78
+#: runtime_errors\index_error.py:81
 msgid ""
 "You have tried to get an item from `{name}`,\n"
 "{obj_type} of length `{length}`, by using a value for the index\n"
 "that I cannot determine but which is not allowed.\n"
 msgstr ""
 
-#: runtime_errors\index_error.py:90
+#: runtime_errors\index_error.py:93
 msgid ""
 "The valid index values of `{name}` are integers ranging from\n"
 "`{min}` to `{max}`.\n"
 msgstr ""
 
-#: runtime_errors\index_error.py:95
+#: runtime_errors\index_error.py:98
 msgid ""
 "Remember: the first item of {obj_type} is not at index 1 but at index 0.\n"
 msgstr ""
 
-#: runtime_errors\index_error.py:100
+#: runtime_errors\index_error.py:103
 msgid ""
 "`{name}` contains no item.\n"
+msgstr ""
+
+#: runtime_errors\index_error.py:104
+msgid ""
+"You have tried to get the item with index `{index}` of `{name}`,\n"
+"{obj_type} which contains no item.\n"
 msgstr ""
 
 #: runtime_errors\key_error.py:19

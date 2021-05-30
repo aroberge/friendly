@@ -100,7 +100,11 @@ def index_out_of_range(obj_type, frame, tb_data):
             ).format(obj_type=info_variables.convert_type(obj_type))
             return {"cause": cause, "suggest": hint}
     elif length == 0:
-        hint = _("`{name}` contains no item.\n")
+        hint = _("`{name}` contains no item.\n").format(name=name)
+        cause = _(
+            "You have tried to get the item with index `{index}` of `{name}`,\n"
+            "{obj_type} which contains no item.\n"
+        ).format(index=index, name=name, obj_type=info_variables.convert_type(obj_type))
         return {"cause": cause, "suggest": hint}
 
     return {"cause": cause}

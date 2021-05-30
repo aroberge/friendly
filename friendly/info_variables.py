@@ -18,7 +18,7 @@ from .my_gettext import current_lang
 try:
     from asttokens import ASTTokens  # noqa
     from pure_eval import Evaluator, group_expressions  # noqa
-except ImportError:
+except ImportError:  # pragma: no cover
     pass  # ignore errors when processed by Sphinx
 
 
