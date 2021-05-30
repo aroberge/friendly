@@ -192,11 +192,9 @@ def parse_unsupported_operand_type(message, frame, tb_data):
             second=convert_type(obj_type2),
         )
         if "^" in operator:
-            can_exponentiate = True
-            for _name, obj in all_objects:
-                if not hasattr(obj, "__pow__"):
-                    can_exponentiate = False
-                    break
+            can_exponentiate = any(
+                hasattr(obj, "__pow__") for _name, obj in all_objects
+            )
             if can_exponentiate:
                 line = tb_data.bad_line.replace("^", "**").strip()
                 hint = _("Did you mean `{line}`?\n").format(line=line)

@@ -129,7 +129,7 @@ class PathUtil:
 path_utils = PathUtil()
 
 
-def show_paths():
+def show_paths():  # pragma: no cover
     """To avoid displaying very long file paths to the user,
     Friendly-traceback tries to shorten them using some easily
     recognized synonyms. This function shows the path synonyms

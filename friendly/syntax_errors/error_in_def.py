@@ -48,7 +48,7 @@ def analyze_def_statement(statement):
     """Analyzes the statement as identified by Python as that
     on which the error occurred."""
     global ASYNC
-    if not statement.tokens:
+    if not statement.tokens:  # pragma: no cover
         debug_helper.log("Statement with no tokens in error_in_def.py")
         return {"cause": internal_error()}
 
@@ -78,7 +78,9 @@ def remove_async(statement):
     def ...
     """
 
-    if statement.tokens[0] != "async" or statement.tokens[1] != "def":
+    if (
+        statement.tokens[0] != "async" or statement.tokens[1] != "def"
+    ):  # pragma: no cover
         debug_helper.log("Problem in remove_async: inconsistent state")
         return None
 

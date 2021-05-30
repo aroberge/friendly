@@ -142,7 +142,7 @@ class Token:
         """Return True if the current token is immediately before other,
         without any intervening space in between the two tokens.
         """
-        if other is None:
+        if not isinstance(other, Token):
             return False
         return self.end_row == other.start_row and self.end_col == other.start_col
 
@@ -150,7 +150,7 @@ class Token:
         """Return True if the current token is immediately after other,
         without any intervening space in between the two tokens.
         """
-        if other is None:
+        if not isinstance(other, Token):
             return False
         return other.immediately_before(self)
 
@@ -211,22 +211,6 @@ def is_operator(op):
         or op in part_ops
         or (hasattr(op, "string") and op.string in part_ops)
     )
-
-
-def find_token_by_position(tokens, row, column):
-    """Given a list of tokens, a specific row (linenumber) and column,
-    a two-tuple is returned that includes the token
-    found at that position as well as its list index.
-
-    If no such token can be found, ``None, None`` is returned.
-    """
-    for index, tok in enumerate(tokens):
-        if (
-            tok.start_row <= row <= tok.end_row
-            and tok.start_col <= column < tok.end_col
-        ):
-            return tok, index
-    return None, None
 
 
 def fix_empty_line(source, tokens):
@@ -291,7 +275,7 @@ def get_significant_tokens(source):
     """
     try:
         tokens = tokenize(source)
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         debug_helper.log("Exception from token_utils.get_significant_tokens()")
         debug_helper.log_error(e)
         return []
@@ -324,9 +308,9 @@ def get_lines(source):
                     lines.append(new_line)
                 new_line = []
             new_line.append(token)
-        if new_line:
-            lines.append(new_line)
-    except (py_tokenize.TokenError, Exception):
+        lines.append(new_line)
+    except (py_tokenize.TokenError, Exception):  # pragma: no cover
+        debug_helper.log("Exception raise in token_utils.get_lines")
         return lines
 
     if source.endswith((" ", "\t")):
@@ -415,10 +399,10 @@ def untokenize(tokens):
     last_non_whitespace_token_type = None
 
     for token in tokens:
-        if isinstance(token, str):
+        if isinstance(token, str):  # pragma: no cover
             words.append(token)
             continue
-        if token.type == py_tokenize.ENCODING:
+        if token.type == py_tokenize.ENCODING:  # pragma: no cover
             continue
 
         # Preserve escaped newlines.

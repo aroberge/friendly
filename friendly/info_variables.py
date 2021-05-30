@@ -8,7 +8,6 @@ import builtins
 import sys
 
 from . import utils
-from . import debug_helper
 from . import token_utils
 
 from .path_info import path_utils
@@ -96,16 +95,6 @@ def get_all_objects(line, frame):
                     objects["builtins"].append((name, repr(obj), obj))
                     objects["name, obj"].append((name, obj))
 
-    dotted_names = get_dotted_names(line)
-    for name in dotted_names:
-        for scope, scope_dict in scopes:
-            if name not in scope_dict:
-                continue
-            obj = scope_dict[name]
-            if (name, obj) not in objects["name, obj"]:
-                objects[scope].append((name, repr(obj), obj))
-                objects["name, obj"].append((name, obj))
-
     try:
         atok = ASTTokens(line, parse=True)
     except SyntaxError:  # this should not happen
@@ -128,39 +117,6 @@ def get_all_objects(line, frame):
                 objects["expressions"].append((name, obj))
 
     return objects
-
-
-def get_dotted_names(line):
-    """Retrieve dotted names, i.e. something like A.x or A.x.y, etc.
-
-    In principle, pure_eval/ASTTokens used above should be able to
-    retrieve dotted names. However, I have not (yet) been able to do so
-    without this hack.
-    """
-    names = []
-    prev_token = token_utils.tokenize("")[0]  # convenient guard
-    dot_found = False
-    tokens = token_utils.get_significant_tokens(line)
-    for tok in tokens:
-        if tok == ".":
-            dot_found = True
-            continue
-        if tok.is_identifier():
-            if prev_token.is_identifier() and dot_found:
-                previous_name = names[-1]
-                names.append(previous_name + "." + tok.string)
-                dot_found = False
-                continue
-            names.append(tok.string)
-        prev_token = tok
-        dot_found = False
-
-    # remove duplicate and names without "."
-    dotted_names = []
-    for name in names:
-        if name not in dotted_names and "." in name:
-            dotted_names.append(name)
-    return dotted_names
 
 
 def get_object_from_name(name, frame):
@@ -222,11 +178,6 @@ def get_variables_in_frame_by_scope(frame, scope):
                 non_locals[key] = frame.f_locals[key]
         return non_locals
 
-    debug_helper.log("Internal error in get_variable_in_frame_by_scope()")
-    debug_helper.log(f"unknown scope '{scope}'")
-    debug_helper.log_error()
-    return {}
-
 
 def get_definition_scope(variable_name, frame):
     """Returns a list of scopes ('local', 'global', 'nonlocal')
@@ -247,7 +198,6 @@ def get_var_info(line, frame):
 
     We ignore values found *only* in nonlocal scope as they should not
     be relevant.
-
     """
 
     names_info = []

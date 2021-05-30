@@ -45,7 +45,7 @@ def set_cause_syntax(value, tb_data):
     _ = current_lang.translate
     try:
         return find_syntax_error_cause(value, tb_data)
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         debug_helper.log_error(e)
         return {"cause": internal_error()}
 
@@ -81,18 +81,18 @@ def find_syntax_error_cause(value, tb_data):
                 cause = {"cause": new_cause}
             return cause
 
-        if not cause:
+        if not cause:  # pragma: no cover
             return {"cause": unknown_cause()}
 
-        notice = _(
+        notice = _(  # pragma: no cover
             "Python gave us the following informative message\n"
             "about the possible cause of the error:\n\n"
             "    {message}\n\n"
             "However, I do not recognize this information and I have\n"
             "to guess what caused the problem, but I might be wrong.\n\n"
         ).format(message=message)
-        cause["cause"] = notice + cause["cause"]
-        return cause
+        cause["cause"] = notice + cause["cause"]  # pragma: no cover
+        return cause  # pragma: no cover
 
     cause = statement_analyzer.analyze_statement(statement)
     if cause:

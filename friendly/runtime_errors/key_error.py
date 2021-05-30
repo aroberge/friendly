@@ -88,14 +88,14 @@ def handle_chain_map_case(key):
     try:
         if not key.startswith("Key not found in the first mapping: "):
             return {}
-    except Exception:  # noqa
+    except Exception:  # noqa  # pragma: no cover
         return {}
 
     key = key.replace("Key not found in the first mapping: ", "", 1)
     if not (key.startswith("'") or key.startswith('"')):
         try:
             key = ast.literal_eval(key)
-        except Exception:  # noqa
+        except Exception:  # noqa  # pragma: no cover
             pass
 
     return {"cause": cannot_find_key(key)}
