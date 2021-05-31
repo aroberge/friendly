@@ -82,16 +82,33 @@ def assign_to_keyword(message="", statement=None):
         "cannot use assignment expressions with False",  # Python 3.8
         "cannot use assignment expressions with None",  # Python 3.8
         "cannot use assignment expressions with Ellipsis",  # Python 3.8
+        "cannot assign to Ellipsis here. Maybe you meant '==' instead of '='?",
     ):
         return {}
 
-    word = statement.bad_token
+    for word in ["None", "True", "False", "__debug__", "Ellipsis"]:
+        if word in message:
+            if word == "Ellipsis":
+                word = "Ellipsis (...)"
+            break
+    else:
+        if statement.bad_token.is_keyword():
+            word = statement.bad_token
+        else:  # something like name.constant = ?
+            for tok in statement.tokens[statement.bad_token_index :]:
+                if tok.is_keyword():
+                    word = tok
+                    break
+            else:  # pragma: no cover
+                debug_helper.log(f"Case not covered: {statement.bad_line}")
+                return {}
     hint = _("You cannot assign a value to `{keyword}`.").format(keyword=word)
     if word in ["None", "True", "False", "__debug__", "Ellipsis (...)"]:
         cause = _(
             "`{keyword}` is a constant in Python; you cannot assign it a value.\n" "\n"
         ).format(keyword=word)
-    else:
+    else:  # pragma: no cover
+        debug_helper.log(f"Case not covered: {statement.bad_line}")
         cause = _(
             "You were trying to assign a value to the Python keyword `{keyword}`.\n"
             "This is not allowed.\n"

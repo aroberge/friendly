@@ -135,7 +135,6 @@ def copy_pasted_code(statement):
     """Detecting code that starts with a Python prompt"""
     _ = current_lang.translate
     if statement.nb_tokens < 2:
-        print("single token!")
         return {}
 
     tokens = statement.tokens

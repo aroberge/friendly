@@ -96,7 +96,7 @@ class Token:
 
     def is_keyword(self):
         """Returns True if the token represents a Python keyword."""
-        return keyword.iskeyword(self.string)
+        return keyword.iskeyword(self.string) or self.string in ["__debug__", "..."]
 
     def is_number(self):
         """Returns True if the token represents a number of any type"""

@@ -49,6 +49,14 @@ descriptions = {
         cause: "`__debug__` is a constant in Python",
         title: "Assignment to keyword (__debug__)",
     },
+    "assign_to_debug2": {
+        cause: "`__debug__` is a constant in Python",
+        title: "Assignment to keyword (__debug__)",
+    },
+    "assign_to_ellipsis": {
+        cause: "`Ellipsis (...)` is a constant in Python",
+        title: "Assignment to Ellipsis",
+    },
     "assign_to_f_string": {
         cause: "expression that has the f-string",
         title: "Cannot assign to f-string",
