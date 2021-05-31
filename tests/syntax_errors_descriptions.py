@@ -324,6 +324,10 @@ descriptions = {
         cause: "You cannot delete the literal",
         title: "Deleting string literal",
     },
+    "different_operators_in_a_row": {
+        cause: "You cannot have these two operators, `*` and `/`",
+        title: "Different operators in a row"
+    },
     "dot_before_paren": {
         cause: "dot `.` followed by `(`",
         title: "Dot followed by parenthesis",
@@ -536,6 +540,10 @@ descriptions = {
     "nonlocal_at_module": {
         cause: "You used the nonlocal keyword at a module level",
         title: "nonlocal variable not found at module level",
+    },
+    "operator_twice_in_a_row": {
+        cause: "You cannot have write the same operator, `**`, twice in a row",
+        title: "Same operator twice in a row",
     },
     "pip_install_1": {
         cause: "`pip` is a command that needs to run in a terminal",

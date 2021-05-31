@@ -221,8 +221,6 @@ def keyword_as_attribute(statement):
         cause = _(
             "You cannot use the Python keyword `{word}` as an attribute.\n\n"
         ).format(word=word)
-    elif word == "__debug__":
-        cause = _("You cannot use the constant `__debug__` as an attribute.\n\n")
     else:
         return {}
 
@@ -286,14 +284,6 @@ def misplaced_quote(statement):
 
     bad_token = statement.bad_token
     if bad_token.is_identifier():
-        bad_string = statement.prev_token.string
-        for fn in [int, float, complex]:
-            try:
-                fn(bad_string)  # Definitely not a word!
-                return {}
-            except Exception:  # noqa
-                pass
-
         hint = _("Perhaps you misplaced a quote.\n")
         cause = _(
             "There appears to be a Python identifier (variable name)\n"
