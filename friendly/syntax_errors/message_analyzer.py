@@ -83,13 +83,14 @@ def assign_to_keyword(message="", statement=None):
         "cannot use assignment expressions with None",  # Python 3.8
         "cannot use assignment expressions with Ellipsis",  # Python 3.8
         "cannot assign to Ellipsis here. Maybe you meant '==' instead of '='?",
+        "cannot assign to ellipsis here. Maybe you meant '==' instead of '='?",
     ):
         return {}
 
-    for word in ["None", "True", "False", "__debug__", "Ellipsis"]:
+    for word in ["None", "True", "False", "__debug__", "Ellipsis", "ellipsis"]:
         if word in message:
-            if word == "Ellipsis":
-                word = "Ellipsis (...)"
+            if word == "ellipsis":
+                word = "Ellipsis"
             break
     else:
         if statement.bad_token.is_keyword():
@@ -103,9 +104,16 @@ def assign_to_keyword(message="", statement=None):
                 debug_helper.log(f"Case not covered: {statement.bad_line}")
                 return {}
     hint = _("You cannot assign a value to `{keyword}`.").format(keyword=word)
-    if word in ["None", "True", "False", "__debug__", "Ellipsis (...)"]:
+
+    if word == "Ellipsis":
+        hint = _("You cannot assign a value to the ellipsis symbol `...`.")
         cause = _(
-            "`{keyword}` is a constant in Python; you cannot assign it a value.\n" "\n"
+            "The ellipsis symbol `...` is a constant in Python;"
+            "you cannot assign it a different value.\n"
+        ).format(keyword=word)
+    elif word in ["None", "True", "False", "__debug__"]:
+        cause = _(
+            "`{keyword}` is a constant in Python; you cannot assign it a different value.\n"
         ).format(keyword=word)
     else:  # pragma: no cover
         debug_helper.log(f"Case not covered: {statement.bad_line}")

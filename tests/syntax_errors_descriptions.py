@@ -58,7 +58,7 @@ descriptions = {
         title: "Assignment to keyword (__debug__)",
     },
     "assign_to_ellipsis": {
-        cause: "`Ellipsis (...)` is a constant in Python",
+        cause: "The ellipsis symbol `...` is a constant in Python",
         title: "Assignment to Ellipsis",
     },
     "assign_to_f_string": {
