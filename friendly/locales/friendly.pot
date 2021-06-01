@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-06-01 09:11-0300\n"
+"POT-Creation-Date: 2021-06-01 09:27-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1954,7 +1954,8 @@ msgid "You cannot assign a value to `{keyword}`."
 msgstr ""
 
 #: syntax_errors\message_analyzer.py:109
-msgid "You cannot assign a value to the ellipsis symbol `...`."
+msgid ""
+"You cannot assign a value to the ellipsis symbol [`...`].\n"
 msgstr ""
 
 #: syntax_errors\message_analyzer.py:110
