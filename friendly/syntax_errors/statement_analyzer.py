@@ -423,15 +423,30 @@ def consecutive_operators(statement):
     return {"cause": cause}
 
 
+def _walrus_instead_of_equal_39(statement):
+    # Python version 3.9 identifies a token beyond :=
+    _ = current_lang.translate
+    for tok in statement.statement_tokens[: statement.bad_token_index + 1]:
+        if tok == ":=":
+            return tok
+    else:
+        return None
+
+
 @add_statement_analyzer
 def walrus_instead_of_equal(statement):
     _ = current_lang.translate
-    if statement.bad_token != ":=":
-        return {}
 
-    new_statement = fixers.replace_token(
-        statement.statement_tokens, statement.bad_token, "="
-    )
+    if (3, 8) < sys.version_info < (3, 10):
+        bad_token = _walrus_instead_of_equal_39(statement)
+        if bad_token is None:
+            return {}
+    elif statement.bad_token != ":=":
+        return {}
+    else:
+        bad_token = statement.bad_token
+
+    new_statement = fixers.replace_token(statement.statement_tokens, bad_token, "=")
     if fixers.check_statement(new_statement):
         hint = _("Did you mean to use `=`?\n")
         cause = _(
