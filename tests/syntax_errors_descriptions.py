@@ -1,15 +1,19 @@
 """In this file, descriptions is a dict whose keys are the names of
 Python files that raise a SyntaxError (or subclass) when they are imported.
 
-"cause" is some text that should be found in the explanation provided by
+"in cause" is some text that should be found in the explanation provided by
         Friendly-traceback when importing this file.
 
 "title" is the heading that should appear in the documentation for
         this particular case.
+
+"also in cause" is a list of text fragments that should also be found in the explanation
+
+"not in cause" is a list of text fragments that should not be found in the explanation.
 """
 import sys
 
-cause = "cause"
+cause = "in cause"
 title = "title"
 
 descriptions = {
@@ -64,12 +68,12 @@ descriptions = {
     "assign_to_function_call_1": {
         cause: "function call and is not simply the name of a variable",
         title: "Cannot assign to function call: single = sign",
-        "other causes": ["len('a')"],
+        "also in cause": ["len('a')"],
     },
     "assign_to_function_call_2": {
         cause: "function call and not the name of a variable",
         title: "Cannot assign to function call: two = signs",
-        "other causes": ["func(...)"],
+        "also in cause": ["func(...)"],
     },
     "assign_to_generator": {
         cause: "generator expression instead of the name of a variable",
@@ -82,7 +86,7 @@ descriptions = {
     "assign_to_literal_int": {
         cause: "is or includes an actual object of type `int`",
         title: "Cannot assign to literal int",
-        "other causes": ["Perhaps you meant to write"],
+        "also in cause": ["Perhaps you meant to write"],
     },
     "assign_to_literal_int_2": {
         cause: "is or includes an actual object of type `int`",
@@ -451,10 +455,27 @@ descriptions = {
     "invalid_identifier": {
         cause: "Valid names cannot begin with a number",
         title: "Valid names cannot begin with a number",
+        "not in cause": ["complex"],
     },
     "invalid_identifier_2": {
         cause: "Perhaps you forgot a multiplication operator",
-        title: "Forgot a multiplication operator",
+        title: "Valid names cannot begin with a number - 2",
+        "not in cause": ["complex"],
+    },
+    "invalid_identifier_3": {
+        cause: "Perhaps you forgot a multiplication operator",
+        title: "Valid names cannot begin with a number - 3",
+        "also in cause": ["complex"],
+    },
+    "invalid_identifier_4": {
+        cause: "Valid names cannot begin with a number",
+        title: "Valid names cannot begin with a number - 4",
+        "not in cause": ["multiplication operator"],
+    },
+    "invalid_identifier_5": {
+        cause: "Valid names cannot begin with a number",
+        title: "Valid names cannot begin with a number - 5",
+        "also in cause": ["complex", "multiplication operator"],
     },
     "invalid_keyword_argument": {
         cause: "where `invalid` is not a valid ",
@@ -471,7 +492,7 @@ descriptions = {
     "inverted_operators_2": {
         cause: "Did you write operators in an incorrect order?",
         title: "Inverted operators 2",
-        "other causes": ["all the syntax errors in the code you wrote"]
+        "also in cause": ["all the syntax errors in the code you wrote"]
     },
     "keyword_arg_repeated": {
         cause: "keyword argument should appear only once in a function call",
@@ -585,6 +606,14 @@ descriptions = {
         cause: " used an assignment operator `=`",
         title: "Single = instead of double == with while",
     },
+    "space_between_operators_1": {
+        cause : "meant to write `**` as a single operator",
+        title: "Space between operators 1"
+    },
+    "space_between_operators_2": {
+        cause: "meant to write `/=` as a single operator",
+        title: "Space between operators 2"
+    },
     "too_many_nested_blocks": {
         cause: "Seriously",
         title: "Too many nested blocks",
@@ -664,8 +693,8 @@ descriptions = {
 }
 
 if sys.version_info < (3, 8):
-    descriptions["augmented_assigment_with_true"]["cause"] = "walrus operator"
-    descriptions["augmented_assignment_to_literal"]["cause"] = "walrus operator"
+    descriptions["augmented_assigment_with_true"]["in cause"] = "walrus operator"
+    descriptions["augmented_assignment_to_literal"]["in cause"] = "walrus operator"
     descriptions["walrus_does_not_exist"] = {
         cause: "walrus operator",
         title: "Walrus operator does not exist - yet",
@@ -673,26 +702,26 @@ if sys.version_info < (3, 8):
     no_slash = (
         "Function definitions cannot include the symbol `/` in this Python version"
     )
-    descriptions["def_forward_slash_1"]["cause"] = no_slash
-    descriptions["def_forward_slash_2"]["cause"] = no_slash
-    descriptions["def_forward_slash_3"]["cause"] = no_slash
-    descriptions["def_forward_slash_4"]["cause"] = no_slash
+    descriptions["def_forward_slash_1"]["in cause"] = no_slash
+    descriptions["def_forward_slash_2"]["in cause"] = no_slash
+    descriptions["def_forward_slash_3"]["in cause"] = no_slash
+    descriptions["def_forward_slash_4"]["in cause"] = no_slash
 
     del descriptions["would_be_type_declaration_1"]
     del descriptions["would_be_type_declaration_2"]
     descriptions["def_star_arg_before_slash"][
-        "cause"
+        "in cause"
     ] = "This symbol can only be used with Python versions"
 
 if sys.version_info >= (3, 9):
-    descriptions["missing_code_block"]["cause"] = "expected an indented block"
+    descriptions["missing_code_block"]["in cause"] = "expected an indented block"
 
 if sys.version_info >= (3, 10):
-    descriptions["quote_inside_string"]["cause"] = "ended the string with another quote"
-    descriptions["missing_colon_if"]["cause"] = "Did you forget a colon"
-    descriptions["missing_colon_while"]["cause"] = "Did you forget a colon"
+    descriptions["quote_inside_string"]["in cause"] = "ended the string with another quote"
+    descriptions["missing_colon_if"]["in cause"] = "Did you forget a colon"
+    descriptions["missing_colon_while"]["in cause"] = "Did you forget a colon"
     descriptions["def_missing_colon"][
-        "cause"
+        "in cause"
     ] = "but forgot to add a colon `:` at the end"
 
     # Temporary removal while taking into account changes in Python 3.10
@@ -701,6 +730,9 @@ if sys.version_info >= (3, 10):
     del descriptions["invalid_hexadecimal"]
     del descriptions["invalid_identifier"]
     del descriptions["invalid_identifier_2"]
+    del descriptions["invalid_identifier_3"]
+    del descriptions["invalid_identifier_4"]
+    del descriptions["invalid_identifier_5"]
     del descriptions["missing_comma_in_list"]
     del descriptions["missing_comma_in_set"]
     del descriptions["missing_comma_in_tuple"]

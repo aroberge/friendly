@@ -10,7 +10,7 @@ friendly.set_lang("en")
 
 @pytest.mark.parametrize("filename", descriptions.keys())
 def test_syntax_errors(filename):
-    cause = descriptions[filename]["cause"]
+    cause = descriptions[filename]["in cause"]
 
     try:
         exec("from . import %s" % filename)
@@ -31,10 +31,17 @@ def test_syntax_errors(filename):
 
     unwrapped_result = " ".join(result.split())
     assert cause in unwrapped_result, "\nExpected to see: %s\nIn: %s" % (cause, result)
-    if "other causes" in descriptions[filename]:
-        other_causes = descriptions[filename]["other causes"]
+    if "also in cause" in descriptions[filename]:
+        other_causes = descriptions[filename]["also in cause"]
         for cause in other_causes:
             assert cause in unwrapped_result, "\nExpected to see: %s\nIn: %s" % (
+                cause,
+                result,
+            )
+    if "not in cause" in descriptions[filename]:
+        not_in_cause = descriptions[filename]["not in cause"]
+        for cause in not_in_cause:
+            assert cause not in unwrapped_result, "\nDid not expect to see: %s\nIn: %s" % (
                 cause,
                 result,
             )

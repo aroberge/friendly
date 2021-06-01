@@ -415,52 +415,12 @@ def consecutive_operators(statement):
             "or forgot to write something between them.\n"
         ).format(first=statement.prev_token, second=statement.bad_token)
 
+    if is_op(statement.prev_token.string + statement.bad_token.string):
+        cause += _(
+            "Or perhaps you included a space by mistake between the two operators\n"
+            "and meant to write `{oper}` as a single operator.\n"
+        ).format(oper=statement.prev_token.string + statement.bad_token.string)
     return {"cause": cause}
-
-
-@add_statement_analyzer
-def space_between_operators(statement):
-    """Detect if some space has been inserted between two operators"""
-    _ = current_lang.translate
-
-    is_op = token_utils.is_operator
-    if not is_op(statement.bad_token):
-        return {}
-
-    prev = statement.prev_token
-    bad = statement.bad_token
-    next_ = statement.next_token
-
-    if is_op(prev) and is_op(prev.string + bad.string):
-        first_token = prev
-        second_token = bad
-    elif is_op(next_) and is_op(bad.string + next_.string):
-        first_token = bad
-        second_token = next_
-    else:
-        return {}
-
-    hint = _("Did you leave some spaces between operators?\n")
-    possible_cause = _(
-        "It looks like you wrote two operators, `{first}` and `{second}`,\n"
-        "separated by spaces instead of writing them as a single operator:\n"
-        "`{correct}`"
-    )
-    correct = first_token.string + second_token.string
-    cause = possible_cause.format(
-        first=bad.string, second=next_.string, correct=correct
-    )
-    new_statement = fixers.replace_two_tokens(
-        statement.statement_tokens,
-        first_token,
-        first_string=correct,
-        second_token=second_token,
-        second_string="",
-    )
-    if fixers.check_statement(new_statement):
-        return {"cause": cause, "suggest": hint}
-
-    return {"cause": cause + more_errors(), "suggest": hint}
 
 
 @add_statement_analyzer
@@ -670,15 +630,12 @@ def missing_colon(statement):
         ).format(for_while=name)
         return {"cause": cause, "suggest": hint}
 
-    if name.string in ("def", "elif", "else", "except", "finally", "if", "try", "with"):
-        cause = _(
-            "You wrote a statement beginning with\n"
-            "`{name}` but forgot to add a colon `:` at the end.\n"
-            "\n"
-        ).format(name=name)
-        return {"cause": cause, "suggest": hint}
-
-    return {}
+    cause = _(
+        "You wrote a statement beginning with\n"
+        "`{name}` but forgot to add a colon `:` at the end.\n"
+        "\n"
+    ).format(name=name)
+    return {"cause": cause, "suggest": hint}
 
 
 @add_statement_analyzer
@@ -765,7 +722,9 @@ def invalid_name(statement):
 
     cause = _("Valid names cannot begin with a number.\n")
     if first == statement.first_token:  # statement begins with this invalid identifier
-        return {"cause": cause, "suggest": cause}
+        for token in statement.tokens:
+            if token == "=":  # Trying to assign a value to an invalid name
+                return {"cause": cause, "suggest": cause}
 
     if second == "i" and not first.is_complex():
         hint = _("Did you mean `{number}j`?\n").format(number=first)
@@ -779,7 +738,10 @@ def invalid_name(statement):
         return {"cause": cause, "suggest": hint}
 
     if first.is_complex():
-        note = _("[Note: `{first}` is a complex number.]\n").format(first=first)
+        note = _(
+            "[Note: `{first} * {second}` would also be valid\n"
+            "since `{first}` is a complex number.]\n"
+        ).format(first=first, second=second)
         second.string = first.string[-1] + second.string
         first.string = first.string[:-1]
     else:
