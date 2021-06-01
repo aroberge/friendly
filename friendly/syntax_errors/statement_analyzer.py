@@ -716,6 +716,13 @@ def invalid_name(statement):
 
     first = statement.prev_token
     second = statement.bad_token
+    # New in Python 3.10
+    if (
+        statement.highlighted_tokens is not None
+        and len(statement.highlighted_tokens) > 1
+    ):
+        first = statement.highlighted_tokens[0]
+        second = statement.highlighted_tokens[1]
 
     if not (first.is_number() and second.is_name() and first.end == second.start):
         return {}
@@ -1128,12 +1135,12 @@ def impossible_binary_fstring(statement):
 
 def _add_comma_or_operator(tokens, tok, comma_first=True):
     if comma_first:
-        operators = ",", " +", " -", " *", " in"
+        operators = ",", " +", " -", " *", " in "
     else:
-        operators = " +", " -", " *", ",", " in"
+        operators = " +", " -", " *", ",", " in "
     results = []
     for operator in operators:
-        if operator == " in" and results:
+        if operator == " in " and results:
             break
         new_statement = fixers.modify_token(tokens, tok, append=operator)
         if fixers.check_statement(new_statement):

@@ -52,6 +52,19 @@ class Statement:
         self.message = value.msg
         self.offset = value.offset
 
+        # Python 3.10 introduced new attributes for 'value'.
+        # We already have taken care of assigning some default values
+        # to it in core.py.
+        self.end_offset = value.end_offset
+        self.end_linenumber = value.end_lineno
+
+        if self.end_offset is None or self.offset is None:
+            self.highlighted_tokens = None
+        elif self.end_offset - self.offset == 1:
+            self.highlighted_tokens = None
+        else:
+            self.highlighted_tokens = []
+
         # From the traceback, we were previously able ot obtain the line
         # of code identified by Python as being problematic.
         self.bad_line = bad_line  # previously obtained from the traceback
@@ -362,7 +375,20 @@ class Statement:
             # sometimes matching the beginning of a token, sometimes the end.
             # Furthermore, the end of a token (end_col) might be equal to
             # the beginning of the next (start_col).
-            if (
+            # Additionally, for Python 3.10, multiple tokens can be highlighted
+            # if they are on the same line.
+            if self.highlighted_tokens:  # not None and not empty list
+                if (
+                    self.linenumber == token.start_row
+                    and self.end_offset is not None
+                    and (
+                        self.offset < token.end_col < self.end_offset
+                        or self.end_offset == 0
+                    )
+                    and token.string.strip()
+                ):
+                    self.highlighted_tokens.append(token)
+            elif (
                 token.start_row == self.linenumber
                 and token.start_col <= self.offset <= token.end_col
                 and self.bad_token is None
@@ -371,6 +397,8 @@ class Statement:
                 self.bad_token = token
                 if self.bad_token.is_comment():
                     self.bad_token = self.prev_token
+                if self.highlighted_tokens is not None:
+                    self.highlighted_tokens.append(self.bad_token)
             elif (
                 token.string.strip()
                 and not token.is_comment()
