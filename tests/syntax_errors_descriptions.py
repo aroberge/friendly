@@ -59,7 +59,7 @@ descriptions = {
     },
     "assign_to_ellipsis": {
         cause: "The ellipsis symbol `...` is a constant in Python",
-        title: "Assignment to Ellipsis",
+        title: "Assignment to Ellipsis symbol",
     },
     "assign_to_f_string": {
         cause: "expression that has the f-string",

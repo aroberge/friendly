@@ -106,7 +106,7 @@ def assign_to_keyword(message="", statement=None):
     hint = _("You cannot assign a value to `{keyword}`.").format(keyword=word)
 
     if word == "Ellipsis":
-        hint = _("You cannot assign a value to the ellipsis symbol `...`.")
+        hint = _("You cannot assign a value to the ellipsis symbol [`...`].\n")
         cause = _(
             "The ellipsis symbol `...` is a constant in Python;"
             "you cannot assign it a different value.\n"
@@ -1223,7 +1223,7 @@ def parens_around_exceptions(message="", **_kwargs):
     # keep in sync with statement_analyzer.parens_around_exceptions
     _ = current_lang.translate
 
-    if message != "exception group must be parenthesized":
+    if message != "multiple exception types must be parenthesized":
         return {}
 
     hint = _("Did you forget parentheses?\n")
