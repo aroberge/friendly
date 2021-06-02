@@ -840,22 +840,6 @@ def general_fstring_problem(statement=None):
 
 
 @add_statement_analyzer
-def malformed_class_begin_code_block(statement):
-    # Thinking of class simply beginning a code block; something like
-    # class : ...
-    _ = current_lang.translate
-
-    if statement.first_token != "class" or statement.bad_token != ":":
-        return {}
-
-    if statement.prev_token != statement.first_token:
-        return {}
-
-    cause = _("You tried to define a class and did not use the correct syntax.\n")
-    return {"cause": cause}
-
-
-@add_statement_analyzer
 def assign_to_a_keyword(statement):
     """Checks to see if line is of the form 'keyword = ...'"""
     _ = current_lang.translate
