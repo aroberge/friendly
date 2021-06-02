@@ -676,6 +676,10 @@ descriptions = {
         cause: "fancy unicode quotation mark",
         title: "Invalid character (unicode quote)",
     },
+    "unmatched_closing_curly": {
+        cause: "The closing curly bracket `}` on",
+        title: "Unmatched closing curly bracket",
+    },
     "unmatched_closing_paren": {
         cause: "The closing parenthesis `)` on",
         title: "Unmatched closing parenthesis",
@@ -687,6 +691,10 @@ descriptions = {
     "unmatched_closing_bracket_2": {
         cause: "The closing square bracket `]` on line",
         title: "Mismatched brackets - 2",
+    },
+    "unmatched_closing_bracket_3": {
+        cause: "The closing square bracket `]` on line",
+        title: "Unmatched brackets - 3",
     },
     "unterminated_triple_quote_string": {
         cause: "You started writing a triple-quoted string",

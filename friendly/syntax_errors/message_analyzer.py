@@ -262,7 +262,8 @@ def what_kind_of_literal(literal):
         if isinstance(a, kind):
             return result
 
-    return None
+    debug_helper.log("New kind of literal" + str(a))  # pragma: no cover
+    return None  # pragma: no cover
 
 
 @add_python_message
@@ -301,7 +302,8 @@ def assign_to_literal(message="", statement=None):
     tokens = statement.tokens[0 : statement.bad_token_index]
     for_loop = False
     for tok in tokens[::-1]:
-        if tok == "in":
+        if tok == "in":  # pragma: no cover
+            debug_helper.log("New case for assign_to_literal")
             break
         elif tok == "for":
             for_loop = True
@@ -414,8 +416,8 @@ def could_be_identifier(line):
                 if lhs.isidentifier():
                     return lhs
         return ""
-    except Exception:  # noqa
-        print("exception raised")
+    except Exception as e:  # pragma: no cover
+        debug_helper.log("Problem in could_be_idenfier:" + str(e))
         return ""
 
 
@@ -675,18 +677,20 @@ def mismatched_parenthesis(message="", statement=None):
     if cause:
         return cause
 
-    if lineno is not None:
-        cause = _(
-            "Python tells us that the closing `{closing}` on the last line shown\n"
-            "does not match the opening `{opening}` on line {lineno}.\n\n"
-        ).format(closing=closing, opening=opening, lineno=lineno)
-    else:
-        cause = _(
-            "Python tells us that the closing `{closing}` on the last line shown\n"
-            "does not match the opening `{opening}`.\n\n"
-        ).format(closing=closing, opening=opening)
+    if True:  # pragma: no cover
+        debug_helper.log("statement_analyzer.mismatched_brackets failed.")
+        if lineno is not None:
+            cause = _(
+                "Python tells us that the closing `{closing}` on the last line shown\n"
+                "does not match the opening `{opening}` on line {lineno}.\n\n"
+            ).format(closing=closing, opening=opening, lineno=lineno)
+        else:
+            cause = _(
+                "Python tells us that the closing `{closing}` on the last line shown\n"
+                "does not match the opening `{opening}`.\n\n"
+            ).format(closing=closing, opening=opening)
 
-    return {"cause": cause}
+        return {"cause": cause}
 
 
 @add_python_message
@@ -709,7 +713,8 @@ def unterminated_f_string(message="", statement=None):
         ):
             fstring = tok
             break
-    else:
+    else:  # pragma: no cover
+        debug_helper.log("Need to record case in unterminated_f_string")
         fstring = "<not found>"
     cause = _(
         "Inside the f-string `{fstring}`, \n"
@@ -730,7 +735,8 @@ def name_is_parameter_and_global(message="", statement=None):
     name = message.split("'")[1]
     if name in line and "global" in line:
         newline = line
-    else:
+    else:  # pragma: no cover
+        debug_helper.log("New case for name_is_parameter_and_global")
         newline = f"global {name}"
     cause = _(
         "You are including the statement\n\n"
@@ -870,7 +876,7 @@ def unexpected_character_after_continuation(message="", statement=None):
             if found_continuation:
                 bad_token = tok
                 break
-        else:
+        else:  # pragma: no cover
             debug_helper.log("Could not find bad token after continuation character.")
 
     if bad_token.is_number():
@@ -1036,9 +1042,9 @@ def named_arguments_must_follow_bare_star(message="", **_kwargs):
 
 
 @add_python_message
-def you_found_it(message="", **_kwargs):
+def you_found_it(message="", statement=None):  # pragma: no cover
     _ = current_lang.translate
-    if message != "You found it!":
+    if message != "You found it!" or statement.bad_token != "__peg_parser__":
         return {}
 
     cause = _(
@@ -1144,10 +1150,13 @@ def eof_unclosed_triple_quoted(message="", **_kwargs):
 def proper_decimal_or_octal_number(prev_str, bad_str):
     # see next two cases
     _ = current_lang.translate
-    if not (set(prev_str).issubset("_0") and prev_str.startswith("0")):  # noqa
+    if not (
+        set(prev_str).issubset("_0") and prev_str.startswith("0")
+    ):  # pragma: no cover
+        debug_helper.log("proper_decimal_or_octal_number should not have been called")
         return {}
 
-    if prev_str == "0" and set(bad_str).issubset("01234567_"):  # noqa
+    if prev_str == "0" and set(bad_str).issubset("01234567_"):
         correct = "0o" + bad_str
         hint = _("Did you mean `{num}`?\n").format(num=correct)
         cause = _(
@@ -1166,7 +1175,7 @@ def proper_decimal_or_octal_number(prev_str, bad_str):
         ).format(num=correct)
         return {"cause": cause, "suggest": hint}
 
-    return {}
+    return {}  # pragma: no cover
 
 
 @add_python_message
@@ -1270,7 +1279,8 @@ def colon_expected(message="", statement=None):
     new_statement = fixers.modify_token(
         statement.statement_tokens, statement.bad_token, append=":"
     )
-    if fixers.check_statement(new_statement):
+    if fixers.check_statement(new_statement):  # pragma: no cover
+        debug_helper.log("New case for colon_expected.")
         return {"cause": cause, "suggest": hint}
 
     return {}
