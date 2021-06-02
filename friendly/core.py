@@ -605,17 +605,9 @@ class FriendlyTraceback:
                 "'{filename}'\n"
                 "beyond the location indicated by ^.\n"
             ).format(filename=path_utils.shorten_path(filepath))
-        elif "unexpected EOF while parsing" in repr(value):
-            self.info["parsing_error"] = _(
-                "Python could not understand the code the file\n"
-                "'{filename}'.\n"
-                "It reached the end of the file and expected more content.\n"
-            ).format(filename=path_utils.shorten_path(filepath))
         elif filepath:  # could be None
             self.info["parsing_error"] = _(
-                "Python could not understand the code in the file\n"
-                "'{filename}'\n"
-                "for an unspecified reason.\n"
+                "Python could not understand the code in the file\n" "'{filename}'\n"
             ).format(filename=path_utils.shorten_path(filepath))
 
         self.info["parsing_error_source"] = f"{partial_source}\n"
