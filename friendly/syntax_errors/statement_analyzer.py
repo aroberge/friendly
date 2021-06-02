@@ -822,11 +822,11 @@ def debug_fstring(statement):
         )
         return {"cause": cause}
 
-    return {}
+    return {}  # pragma: no cover
 
 
 @add_statement_analyzer
-def general_fstring_problem(statement=None):
+def general_fstring_problem(statement):  # pragma: no cover
     # General f-string problems are outside of our main priorities.
     _ = current_lang.translate
     if not statement.fstring_error:
@@ -881,9 +881,7 @@ def lambda_with_paren(statement):
         if tok.is_identifier() or tok == ",":
             continue
 
-        return {}
-    else:
-        return {}
+        return {}  # pragma: no cover
 
     cause = _(
         "You cannot have explicit tuples as arguments.\n"

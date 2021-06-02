@@ -55,9 +55,11 @@ class Token:
         if isinstance(other, str):
             return self.string == other
 
-        raise TypeError("A token can only be compared to another token or to a string.")
+        raise TypeError(
+            "A token can only be compared to another token or to a string."
+        )  # pragma: no cover
 
-    def __repr__(self):
+    def __repr__(self):  # pragma: no cover
         """Nicely formatted token to help with debugging session.
 
         Note that it does **not** print a string representation that could be
@@ -142,7 +144,7 @@ class Token:
         """Return True if the current token is immediately before other,
         without any intervening space in between the two tokens.
         """
-        if not isinstance(other, Token):
+        if not isinstance(other, Token):  # pragma: no cover
             return False
         return self.end_row == other.start_row and self.end_col == other.start_col
 
@@ -150,7 +152,7 @@ class Token:
         """Return True if the current token is immediately after other,
         without any intervening space in between the two tokens.
         """
-        if not isinstance(other, Token):
+        if not isinstance(other, Token):  # pragma: no cover
             return False
         return other.immediately_before(self)
 
@@ -253,7 +255,7 @@ def tokenize(source):
             token = Token((type_, string, start, end, line))
             tokens.append(token)
             return tokens
-        except Exception as e:
+        except Exception as e:  # pragma: no cover
             debug_helper.log(
                 "after IndentationError, error from token_utils.tokenize()"
             )
@@ -430,7 +432,7 @@ def untokenize(tokens):
     return "".join(words)
 
 
-def print_tokens(source):
+def print_tokens(source):  # pragma: no cover
     """Prints tokens found in source, excluding spaces and comments.
 
     ``source`` is either a string to be tokenized, or a list of Token objects.
