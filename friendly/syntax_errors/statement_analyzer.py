@@ -1032,32 +1032,14 @@ def _perhaps_misspelled_keyword(tokens, wrong):
     kwlist = list(keyword.kwlist)
     # Make sure we try possible typos first
     similar = utils.get_similar_words(wrong.string, kwlist)
+    if not similar:
+        return []
 
-    # The 'except' and 'with' keywords can apparently appear in similar situations
-    # as 'for', 'if', etc., without raising any SyntaxErrors.
-    # Furthermore, while it might be syntactically correct to have something like
-    # else: statement_on_one_Line
-    # it should be avoided as it could lead to incorrect suggestions.
-    # Also, since 'if' can be used wherever 'elif' is acceptable, we exclude elif
-    excluded = [
-        word
-        for word in ["except", "with", "else", "finally", "try", "elif"]
-        if word not in similar
-    ]
-
-    # 'not' can be used in many places, most of which would likely not make sense
-    # as additional suggestions
-    kwlist.remove("not")
-    words = [word for word in kwlist if word not in similar]
-    similar.extend(words)
     results = []
     for word in similar:
         new_statement = fixers.replace_token(tokens, wrong, word)
         if fixers.check_statement(new_statement):
             results.append((word, new_statement))
-
-    if len(results) > 1:
-        results = [(word, line) for word, line in results if word not in excluded]
     return results
 
 
