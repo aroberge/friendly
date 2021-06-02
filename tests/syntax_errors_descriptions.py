@@ -118,7 +118,7 @@ descriptions = {
     },
     "augmented_assignment_to_literal": {  # May differ depending on Python version
         cause: "the walrus operator, with literals like",
-        title: "Augmented assignment to literal"
+        title: "Augmented assignment to literal",
     },
     "augmented_assigment_with_true": {  # May differ depending on Python version
         cause: "`True` is a constant in Python",
@@ -140,10 +140,7 @@ descriptions = {
         cause: "The double star operator",
         title: "Cannot use double star operator",
     },
-    "class_missing_name" : {
-        cause: "A class needs a name.",
-        title: "Missing class name"
-    },
+    "class_missing_name": {cause: "A class needs a name.", title: "Missing class name"},
     "comprehension_missing_tuple_paren": {
         cause: "and forgot to include parentheses around tuples",
         title: "Missing () for tuples in comprehension",
@@ -188,10 +185,7 @@ descriptions = {
         cause: "Did you write something by mistake after the colon",
         title: "def: semi-colon after colon",
     },
-    "def_extra_comma": {
-        cause: "Did you mean to write `,`",
-        title: "def: extra comma"
-    },
+    "def_extra_comma": {cause: "Did you mean to write `,`", title: "def: extra comma"},
     "def_forward_slash_1": {
         cause: "You have unspecified keyword arguments that appear before",
         title: "def: unspecified keywords before /",
@@ -274,15 +268,15 @@ descriptions = {
     },
     "def_operator_instead_of_comma": {
         cause: "Did you mean to write a comma",
-        title: "def: operator instead of comma"
+        title: "def: operator instead of comma",
     },
     "def_operator_instead_of_equal": {
         cause: "Did you mean to write an equal sign",
-        title: "def: operator instead of equal"
+        title: "def: operator instead of equal",
     },
     "def_operator_instead_of_name": {
         cause: "If you replace it by a unique variable name",
-        title: "def: operator instead of name"
+        title: "def: operator instead of name",
     },
     "def_positional_after_keyword_arg": {
         cause: "call functions with only positional arguments",
@@ -330,7 +324,7 @@ descriptions = {
     },
     "different_operators_in_a_row": {
         cause: "You cannot have these two operators, `*` and `/`",
-        title: "Different operators in a row"
+        title: "Different operators in a row",
     },
     "dot_before_paren": {
         cause: "dot `.` followed by `(`",
@@ -338,7 +332,7 @@ descriptions = {
     },
     "duplicate_token": {
         cause: "wrote [`,`] twice in a row by mistake",
-        title: "Extra token"
+        title: "Extra token",
     },
     "else_if_instead_of_elif": {
         cause: "wrote `else if` instead",
@@ -360,10 +354,7 @@ descriptions = {
         cause: "with multiple exception types.",
         title: "Parens around multiple exceptions",
     },
-    "extra_token" : {
-      cause: "wrote `==` by mistake",
-      title: "Extra token"
-    },
+    "extra_token": {cause: "wrote `==` by mistake", title: "Extra token"},
     "f_string_binary": {
         cause: "`bf` is an illegal string prefix.",
         title: "Binary f-string not allowed",
@@ -378,7 +369,7 @@ descriptions = {
     },
     "for_missing_terms": {
         cause: "A `for` loop is an iteration over a sequence",
-        title: "Missing terms in for statement"
+        title: "Missing terms in for statement",
     },
     "future_braces": {
         cause: "from __future__ import braces",
@@ -410,7 +401,7 @@ descriptions = {
     },
     "if_missing_condition": {
         cause: "An `if` statement requires a condition",
-        title: "Missing condition in if statement"
+        title: "Missing condition in if statement",
     },
     "imaginary_i": {
         cause: "Did you mean `3.0j`",
@@ -485,14 +476,14 @@ descriptions = {
         cause: "Did you made a mistake in writing an octal integer",
         title: "Invalid octal number",
     },
-    "inverted_operators" :{
+    "inverted_operators": {
         cause: "Did you write operators in an incorrect order?",
-        title: "Inverted operators 1"
+        title: "Inverted operators 1",
     },
     "inverted_operators_2": {
         cause: "Did you write operators in an incorrect order?",
         title: "Inverted operators 2",
-        "also in cause": ["all the syntax errors in the code you wrote"]
+        "also in cause": ["all the syntax errors in the code you wrote"],
     },
     "keyword_arg_repeated": {
         cause: "keyword argument should appear only once in a function call",
@@ -512,7 +503,7 @@ descriptions = {
     },
     "literal_in_for_loop": {
         cause: "where `...` must contain only identifiers",
-        title: "Assign to literal in for loop"
+        title: "Assign to literal in for loop",
     },
     "missing_code_block": {  # May differ depending on Python version
         cause: "it reached the end of the file and expected more content.",
@@ -544,7 +535,7 @@ descriptions = {
     },
     "missing_parens_for_range": {
         cause: "you forgot to use to use parenthesis with `range`",
-        title: "Missing parenthesis for range"
+        title: "Missing parenthesis for range",
     },
     "name_is_global_and_nonlocal": {
         cause: "You declared `xy` as being both a global and nonlocal",
@@ -582,6 +573,21 @@ descriptions = {
         cause: "In older version of Python, `print` was a keyword",
         title: "print is a function 2",
     },
+    "print_is_a_function_3": {
+        cause: "In older version of Python, `print` was a keyword",
+        title: "print is a function 3",
+        "also in cause": ['print("""This is a very long'],
+    },
+    "print_is_a_function_4": {
+        cause: "In older version of Python, `print` was a keyword",
+        title: "print is a function 4",
+        "also in cause": ["print(...)"],
+    },
+    "print_is_a_function_5": {
+        cause: "In older version of Python, `print` was a keyword",
+        title: "print is a function 5",
+        "also in cause": ["print(len('This ", " ... ", "line."],
+    },
     "quote_inside_string": {
         cause: "quote inside a string",
         title: "Quote inside a string",
@@ -607,12 +613,12 @@ descriptions = {
         title: "Single = instead of double == with while",
     },
     "space_between_operators_1": {
-        cause : "meant to write `**` as a single operator",
-        title: "Space between operators 1"
+        cause: "meant to write `**` as a single operator",
+        title: "Space between operators 1",
     },
     "space_between_operators_2": {
         cause: "meant to write `/=` as a single operator",
-        title: "Space between operators 2"
+        title: "Space between operators 2",
     },
     "too_many_nested_blocks": {
         cause: "Seriously",
@@ -685,7 +691,7 @@ descriptions = {
     },
     "while_missing_condition": {
         cause: "A `while` loop requires a condition",
-        title: "Missing condition in while statement"
+        title: "Missing condition in while statement",
     },
     "would_be_type_declaration_1": {
         cause: "You do not need to declare variables in Python.",
@@ -723,7 +729,9 @@ if sys.version_info >= (3, 9):
     descriptions["missing_code_block"]["in cause"] = "expected an indented block"
 
 if sys.version_info >= (3, 10):
-    descriptions["quote_inside_string"]["in cause"] = "ended the string with another quote"
+    descriptions["quote_inside_string"][
+        "in cause"
+    ] = "ended the string with another quote"
     descriptions["missing_colon_if"]["in cause"] = "Did you forget a colon"
     descriptions["missing_colon_while"]["in cause"] = "Did you forget a colon"
     descriptions["def_missing_colon"][
@@ -736,7 +744,6 @@ if sys.version_info >= (3, 10):
     del descriptions["missing_comma_in_list"]
     del descriptions["missing_comma_in_set"]
     del descriptions["missing_comma_in_tuple"]
-    del descriptions["print_is_a_function_2"]
     del descriptions["single_equal_with_if"]
     del descriptions["single_equal_with_elif"]
     del descriptions["single_equal_with_while"]

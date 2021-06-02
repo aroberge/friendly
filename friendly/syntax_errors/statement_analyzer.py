@@ -473,7 +473,6 @@ def assign_instead_of_equal(statement):
         statement.statement_tokens, statement.bad_token, "=="
     )
     if not fixers.check_statement(new_statement):
-        debug_helper.log("Fix did not work in assign_instead_of_equal")
         additional_cause = more_errors()
     else:
         additional_cause = ""
@@ -489,41 +488,47 @@ def assign_instead_of_equal(statement):
         )
         return {"cause": cause + additional_cause, "suggest": hint}
 
-    if statement.next_token == ":":
-        hint = _("Perhaps you needed `:=` instead of `=:`.\n")
-        cause = _(
-            "You used an assignment operator `=` followed by `:`; perhaps you meant to use \n"
-            "the walrus operator `:=`.\n"
-        )
-    else:
-        hint = _("Perhaps you needed `==` or `:=` instead of `=`.\n")
-        cause = _(
-            "You used an assignment operator `=`; perhaps you meant to use \n"
-            "an equality operator, `==`, or the walrus operator `:=`.\n"
-        )
+    hint = _("Perhaps you needed `==` or `:=` instead of `=`.\n")
+    cause = _(
+        "You used an assignment operator `=`; perhaps you meant to use \n"
+        "an equality operator, `==`, or the walrus operator `:=`.\n"
+    )
     return {"cause": cause + additional_cause, "suggest": hint}
 
 
 @add_statement_analyzer
 def print_as_statement(statement):
+    # example: print len('hello')
     _ = current_lang.translate
 
-    if statement.prev_token == "print" and statement.bad_token != "(":
-        cause = _(
-            "In older version of Python, `print` was a keyword.\n"
-            "Now, `print` is a function; you need to use parentheses to call it.\n"
-        )
-        bad_line = statement.bad_line
-        if bad_line.count("(") == bad_line.count(")"):
-            new_line = bad_line.replace("print", "", 1).strip()
-            if len(new_line) > 30:
-                new_line = new_line[0:10] + " ... " + new_line[-10:]
-            new_line = "print(" + new_line + ")"
-        else:
-            new_line = "print(...)"
-        hint = _("Did you mean `{new_line}`?\n").format(new_line=new_line)
-        return {"cause": cause, "suggest": hint}
-    return {}
+    if (  # Python 3.10
+        statement.bad_token == statement.first_token == "print"
+        and statement.highlighted_tokens is not None
+    ):
+        pass
+    elif (  # Python < 3.10
+        statement.prev_token == statement.first_token == "print"
+        and statement.bad_token != "("
+    ):
+        pass
+    else:
+        return {}
+
+    cause = _(
+        "In older version of Python, `print` was a keyword.\n"
+        "Now, `print` is a function; you need to use parentheses to call it.\n"
+    )
+    bad_line = statement.bad_line
+    if bad_line.count("(") == bad_line.count(")"):
+        new_line = bad_line.replace("print", "", 1).strip()
+        if len(new_line) > 30:
+            parts = new_line.split(" ")
+            new_line = parts[0] + " ... " + parts[-1]
+        new_line = "print(" + new_line + ")"
+    else:
+        new_line = "print(...)"
+    hint = _("Did you mean `{new_line}`?\n").format(new_line=new_line)
+    return {"cause": cause, "suggest": hint}
 
 
 @add_statement_analyzer
