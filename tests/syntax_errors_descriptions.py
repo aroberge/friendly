@@ -608,6 +608,18 @@ descriptions = {
         cause: "You can only use a `return`",
         title: "Cannot use return outside function",
     },
+    "semi_colon_instead_of_comma_1": {
+        cause: "You wrote a semi-colon, `;`, where a comma was expected.",
+        title: "Semi-colon instead of comma - 1"
+    },
+    "semi_colon_instead_of_comma_2": {
+        cause: "You wrote semi-colons, `;`, where commas were expected.",
+        title: "Semi-colon instead of commas - 2"
+    },
+    "semi_colon_instead_of_comma_3": {
+        cause: "You wrote semi-colons, `;`, where commas were expected.",
+        title: "Semi-colon instead of commas - 3"
+    },
     "single_equal_with_if": {
         cause: "You likely used an assignment operator `=`",
         title: "Single = instead of double == with if",
@@ -725,6 +737,16 @@ if sys.version_info < (3, 8):
     descriptions["def_forward_slash_2"]["in cause"] = no_slash
     descriptions["def_forward_slash_3"]["in cause"] = no_slash
     descriptions["def_forward_slash_4"]["in cause"] = no_slash
+
+    descriptions["debug_fstring_not_supported"] = {
+        cause: "You are likely using a 'debug' syntax of f-strings",
+        title: "Debug-feature of f-string not supported"
+    }
+
+    descriptions["fstring_assign_value"] = {
+        cause: "You are likely trying to assign a value within an f-string.",
+        title: "Cannot assign a value within an fstring"
+    }
 
     del descriptions["walrus_insted_of_equal"]
     del descriptions["would_be_type_declaration_1"]

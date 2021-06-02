@@ -7,16 +7,14 @@ from .. import debug_helper
 from .. import token_utils
 
 
-# The following is intended to be used in custom environments.
-# Currently, it is only used with running a program in Mu.
-CUSTOM_NAMES = {}
-
-
-def using_python():
+def using_python():  # pragma: no cover
     _ = current_lang.translate
     return _("You are already using Python!")
 
 
+# The following is also intended to be used in custom environments;
+# we currently use it in Mu.
+CUSTOM_NAMES = {}
 CUSTOM_NAMES["python"] = using_python
 
 

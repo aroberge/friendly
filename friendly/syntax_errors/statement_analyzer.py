@@ -666,20 +666,12 @@ def missing_colon(statement):
 
 
 @add_statement_analyzer
-def semi_colon_instead_of_other(statement):
+def semi_colon_instead_of_comma(statement):
     """Writing a semi colon as a typo"""
     _ = current_lang.translate
 
     if statement.bad_token != ";":
         return {}
-
-    new_statement = fixers.replace_token(
-        statement.statement_tokens, statement.bad_token, ":"
-    )
-    if fixers.check_statement(new_statement):
-        cause = _("You wrote a semi-colon, `;`, where a colon, `:`, was expected.\n")
-        hint = _("Did you mean to write a colon `:`?\n")
-        return {"cause": cause, "suggest": hint}
 
     new_statement = fixers.replace_token(
         statement.statement_tokens, statement.bad_token, ","
@@ -689,7 +681,27 @@ def semi_colon_instead_of_other(statement):
         hint = _("Did you mean to write a comma?\n")
         return {"cause": cause, "suggest": hint}
 
-    return {}
+    # perhaps used multiple semi-colons instead of comma
+    if statement.last_token == ";":
+        new_statement = fixers.replace_token(
+            statement.statement_tokens, statement.last_token, ""
+        )
+    else:
+        new_statement = statement.statement
+    while True:
+        tokens = token_utils.tokenize(new_statement)
+        for tok in tokens:
+            if tok == ";":
+                break
+        else:
+            break
+        new_statement = fixers.replace_token(tokens, tok, ",")
+    if fixers.check_statement(new_statement):
+        cause = _("You wrote semi-colons, `;`, where commas were expected.\n")
+        hint = _("Did you mean to write commas?\n")
+        return {"cause": cause, "suggest": hint}
+
+    return {}  # pragma: no cover
 
 
 @add_statement_analyzer
