@@ -331,7 +331,7 @@ descriptions = {
         title: "Dot followed by parenthesis",
     },
     "duplicate_token": {
-        cause: "wrote [`,`] twice in a row by mistake",
+        cause: "wrote `,` twice in a row by mistake",
         title: "Extra token",
     },
     "else_if_instead_of_elif": {
@@ -587,6 +587,14 @@ descriptions = {
         cause: "In older version of Python, `print` was a keyword",
         title: "print is a function 5",
         "also in cause": ["print(len('This ", " ... ", "line."],
+    },
+    "python_interpreter": {
+        cause: " attempting to use Python to run a program",
+        title: "Calling python from interpreter",
+    },
+    "python_not_interpreter": {
+        cause: "Did you forget something between `a` and `b`",
+        title: "problem with assigning a variable to Python",
     },
     "quote_inside_string": {
         cause: "quote inside a string",

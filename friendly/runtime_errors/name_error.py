@@ -12,6 +12,14 @@ from .. import token_utils
 CUSTOM_NAMES = {}
 
 
+def using_python():
+    _ = current_lang.translate
+    return _("You are already using Python!")
+
+
+CUSTOM_NAMES["python"] = using_python
+
+
 def get_cause(value, frame, tb_data):
     try:
         return _get_cause(value, frame, tb_data)
@@ -74,8 +82,10 @@ def name_not_defined(unknown_name, frame, tb_data):
         return known
 
     if unknown_name in CUSTOM_NAMES:
-        cause = CUSTOM_NAMES[unknown_name]()
-        return {"cause": cause, "suggest": cause}
+        bad_line = tb_data.bad_line.replace("(", "").replace(")", "").strip()
+        if bad_line == unknown_name:
+            cause = CUSTOM_NAMES[unknown_name]()
+            return {"cause": cause, "suggest": cause}
 
     if unknown_name in ["i", "j"]:
         hint = _("Did you mean `1j`?\n")

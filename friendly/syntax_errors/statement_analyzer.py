@@ -534,7 +534,14 @@ def print_as_statement(statement):
 @add_statement_analyzer
 def calling_python_or_pip(statement):
     _ = current_lang.translate
-    if statement.first_token.string not in ("pip", "python"):
+    if statement.first_token.string not in ("pip", "python", "python3"):
+        return {}
+    # A single token statement with 'python' or 'pip' should not have
+    # caused a SyntaxError
+    second = statement.tokens[1]
+    # python followed by an operator is likely a valid statement.
+    # One exception is something like python -im friendly  :)
+    if second.is_operator() and second != "-":
         return {}
 
     cause = _(
@@ -1185,6 +1192,9 @@ def missing_comma_or_operator(statement):
 
     bad_token = statement.bad_token
     prev_token = statement.prev_token
+    if statement.highlighted_tokens:  # Python 3.10 may highlight two tokens
+        bad_token = statement.next_token
+        prev_token = statement.bad_token
     if not (
         bad_token.is_identifier() or bad_token.is_number() or bad_token.is_string()
     ) and not (
@@ -1431,10 +1441,7 @@ def duplicate_token(statement):
     _ = current_lang.translate
     if statement.bad_token != statement.prev_token:
         return {}
-    if len(statement.bad_token.string) == 1:
-        bad_token = "[`{bad_token}`]".format(bad_token=statement.bad_token)
-    else:
-        bad_token = "`{bad_token}`".format(bad_token=statement.bad_token)
+    bad_token = "`{bad_token}`".format(bad_token=statement.bad_token)
     cause = _(
         "I am guessing that you wrote {bad_token} twice in a row by mistake.\n"
         "If that is the case, you need to remove the second one.\n"
@@ -1459,10 +1466,7 @@ def extra_token(statement):
     )
 
     if fixers.check_statement(new_statement):
-        if len(statement.bad_token.string) == 1:
-            bad_token = "[`{bad_token}`]".format(bad_token=statement.bad_token)
-        else:
-            bad_token = "`{bad_token}`".format(bad_token=statement.bad_token)
+        bad_token = "`{bad_token}`".format(bad_token=statement.bad_token)
         cause = _(
             "I am guessing that you wrote {bad_token} by mistake.\n"
             "Removing it and writing `{line}` seems to fix the error.\n"

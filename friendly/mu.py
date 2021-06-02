@@ -59,7 +59,6 @@ else:
         _ = current_lang.translate
         return _("Friendly themes are only available in Mu's REPL.\n")
 
-    name_error.CUSTOM_NAMES = {}
     for name in ("bw", "day", "ft", "night"):
         name_error.CUSTOM_NAMES[name] = _cause
 
