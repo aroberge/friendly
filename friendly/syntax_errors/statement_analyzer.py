@@ -1147,8 +1147,7 @@ def _add_comma_or_operator(tokens, tok, comma_first=True):
             break
         new_statement = fixers.modify_token(tokens, tok, append=operator)
         if fixers.check_statement(new_statement):
-            # if operator == "," and results:  # So that it prints correctly
-            #     operator = ','
+
             results.append((operator.strip(), new_statement))
     return results
 

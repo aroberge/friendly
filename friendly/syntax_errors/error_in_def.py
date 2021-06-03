@@ -11,20 +11,17 @@ from .. import utils
 
 STATEMENT_ANALYZERS = []
 
-ASYNC = ""
+ASYNC = 0
 
 
 def def_correct_syntax():
-    # Note that a valid function definition must have at least 5 tokens.
-    # We make use of this in our analysis below, to ensure that we are
-    # making the proper identification of a mistake, as we go through the
-    # various possible cases.
     _ = current_lang.translate
+    async_ = "" if ASYNC == 0 else "async "
     # fmt: off
     return _(
         "The correct syntax is:\n\n"
         "    {async_}def name ( ... ):"
-    ).format(async_=ASYNC) + "\n"
+    ).format(async_=async_) + "\n"
     # fmt: on
 
 
@@ -32,11 +29,6 @@ def add_statement_analyzer(func):
     """A simple decorator that adds a function to the list
     of all functions that analyze a single statement."""
     STATEMENT_ANALYZERS.append(func)
-
-    def wrapper(statement):
-        return func(statement)
-
-    return wrapper
 
 
 # ========================================================
@@ -52,15 +44,14 @@ def analyze_def_statement(statement):
         debug_helper.log("Statement with no tokens in error_in_def.py")
         return {"cause": internal_error()}
 
+    ASYNC = 0
     if statement.tokens[0] == "async":
-        ASYNC = "async "
-        statement = remove_async(statement)
-        if statement is None:
-            return {}
-    else:
-        ASYNC = ""
+        ASYNC = 1
 
-    if len(statement.tokens) > 1 and str(statement.tokens[1]) in ("=", ":="):
+    if len(statement.tokens) > 1 + ASYNC and str(statement.tokens[1 + ASYNC]) in (
+        "=",
+        ":=",
+    ):
         # Let the generic method handle the wrong assignment case
         return {}
 
@@ -71,50 +62,12 @@ def analyze_def_statement(statement):
     return {}
 
 
-def remove_async(statement):
-    """To simplify the analysis, we replace any statement of the form
-    async def ...
-    by
-    def ...
-    """
-
-    if (
-        statement.tokens[0] != "async" or statement.tokens[1] != "def"
-    ):  # pragma: no cover
-        debug_helper.log("Problem in remove_async: inconsistent state")
-        return None
-
-    statement.tokens.pop(1)
-    statement.tokens[0].string = "def"
-    statement.bad_token_index -= 1
-    statement.nb_tokens -= 1
-    statement.prev_token = statement.tokens[statement.bad_token_index - 1]
-    try:
-        statement.next_token = statement.tokens[statement.bad_token_index + 1]
-    except IndexError:
-        pass  # undefined statement.next_token should have been already taken care of.
-
-    # We will want to make various text replacement, reconstruct (untokenize) the
-    # result to see if it is a valid statement. In doing so, we use the original
-    # logical line associated with a given token, and the row/col information.
-    # We need to make sure that the line content is consistent with the row/col
-    # information.  Thus, we want to replace
-    # async    def   something
-    # by
-    # def            something
-    for token in statement.tokens:
-        if token.line.strip().startswith("async"):
-            token.line = token.line.replace(" def", "", 1)
-            token.line = token.line.replace("async", "def      ", 1)
-    return statement
-
-
 @add_statement_analyzer
 def def_begin_code_block(statement):  #
     # Thinking of trying to use def to begin a code block, i.e.
     # def : ...
     _ = current_lang.translate
-    if statement.nb_tokens > 2 or statement.bad_token != ":":
+    if statement.nb_tokens > 2 + ASYNC or statement.bad_token != ":":
         return {}
 
     if statement.first_token.start_col == 0:
@@ -139,8 +92,8 @@ def missing_parens(statement):
 
     if (
         statement.bad_token != ":"
-        and statement.nb_tokens >= 3
-        and statement.bad_token != statement.tokens[2]
+        and statement.nb_tokens >= 3 + ASYNC
+        and statement.bad_token != statement.tokens[2 + ASYNC]
     ):
         return {}
 
@@ -165,7 +118,7 @@ def missing_parens_2(statement):
     # def test a, b:
     _ = current_lang.translate
 
-    if statement.bad_token_index != 2 and statement.last_token != ":":
+    if statement.bad_token_index != 2 + ASYNC and statement.last_token != ":":
         return {}
 
     new_statement = fixers.replace_two_tokens(
@@ -235,7 +188,7 @@ def missing_colon(statement):
 def not_enough_tokens(statement):
     _ = current_lang.translate
 
-    if statement.nb_tokens >= 5:
+    if statement.nb_tokens >= 5 + ASYNC:
         return {}
 
     cause = _("You did not write a valid function definition.\n")
@@ -255,12 +208,10 @@ def not_enough_tokens(statement):
 @add_statement_analyzer
 def keyword_as_function_name(statement):
     # Something like
-    # def pass() ...
+    # def pass(): ...
     _ = current_lang.translate
-    if not (
-        statement.bad_token.is_keyword()
-        and statement.prev_token == statement.first_token
-    ):
+    def_token = statement.tokens[ASYNC]
+    if not (statement.bad_token.is_keyword() and statement.prev_token == def_token):
         return {}
 
     hint = _("You cannot use a Python keyword as a function name.\n")
@@ -280,10 +231,8 @@ def keyword_as_function_name(statement):
 @add_statement_analyzer
 def other_invalid_function_names(statement):
     _ = current_lang.translate
-
-    if statement.bad_token.is_identifier() or not (
-        statement.prev_token == statement.first_token
-    ):
+    def_token = statement.tokens[ASYNC]
+    if statement.bad_token.is_identifier() or not (statement.prev_token == def_token):
         return {}
 
     new_statement = fixers.replace_token(
@@ -307,10 +256,11 @@ def other_invalid_function_names(statement):
 @add_statement_analyzer
 def function_definition_missing_name(statement):
     _ = current_lang.translate
+    def_token = statement.tokens[ASYNC]
     if not (
-        statement.first_token == "def"
+        def_token == "def"
         and statement.bad_token == "("
-        and statement.prev_token == statement.first_token
+        and statement.prev_token == def_token
     ):
         return {}
 
@@ -350,10 +300,11 @@ def keyword_not_allowed_as_function_argument(statement):
 @add_statement_analyzer
 def dotted_name_not_allowed(statement):
     _ = current_lang.translate
+    # TODO: add check to see if identifier before
     if statement.bad_token != ".":
         return {}
 
-    if statement.bad_token_index > 3:
+    if statement.bad_token_index > 3 + ASYNC:
         cause = _("You cannot use dotted names as function arguments.\n")
     else:
         cause = _("You cannot use dots in function names.\n")
@@ -383,7 +334,7 @@ def positional_arguments_in_def(statement):
         return {"cause": cause, "suggest": hint}
 
     prev_tok = ""
-    for tok in statement.tokens[0 : statement.bad_token_index]:
+    for tok in statement.tokens[ASYNC : statement.bad_token_index]:
         if tok == "**":
             cause = meaning + _(
                 "You have unspecified keyword arguments that appear before\n"
@@ -422,7 +373,7 @@ def keyword_arguments_in_def(statement):
     if statement.bad_token != "*" or statement.prev_token != ",":
         return {}
 
-    for tok in statement.tokens[0 : statement.bad_token_index]:
+    for tok in statement.tokens[ASYNC : statement.bad_token_index]:
         if tok == "*":
             hint = _("You can only use `*` once in a function definition.\n")
             cause = hint + _(
@@ -617,7 +568,7 @@ def arg_after_kwarg(statement):
     ):
         return {}
 
-    for tok in statement.tokens[0 : statement.bad_token_index]:
+    for tok in statement.tokens[ASYNC : statement.bad_token_index]:
         if tok == "**":
             hint = _("Positional arguments must come before keyword arguments.\n")
             cause = hint + _(
