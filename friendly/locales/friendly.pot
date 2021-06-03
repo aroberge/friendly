@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-06-02 16:58-0300\n"
+"POT-Creation-Date: 2021-06-03 09:55-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,12 +118,12 @@ msgid ""
 "'{filename}'\n"
 msgstr ""
 
-#: core.py:807
+#: core.py:806
 msgid ""
 "Problem: source of `{filename}` is not available\n"
 msgstr ""
 
-#: core.py:849
+#: core.py:848
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -3220,6 +3220,11 @@ msgstr ""
 #: syntax_errors\statement_analyzer.py:1491
 msgid ""
 "The opening {bracket} on line {linenumber} is not closed.\n"
+msgstr ""
+
+#: syntax_errors\statement_analyzer.py:1497
+msgid ""
+"If this is incorrect, please report this case.\n"
 msgstr ""
 
 #: syntax_errors\syntax_utils.py:17

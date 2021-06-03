@@ -297,57 +297,33 @@ class Statement:
         """
 
         previous_row = -1
-        previous_row_non_space = -1
         previous_token = None
         continuation_line = False
-        last_closing = None
+        # Some tokens cannot occur within brackets; if they are indicated as being
+        # the offending token, it might be because we have an unclosed bracket.
+        should_begin_statement = [
+            "async",
+            "await",
+            "class",
+            "def",
+            "return",
+            "elif",
+            "import",
+            "try",
+            "except",
+            "finally",
+            "with",
+            "while",
+            "yield",
+        ]
 
         for token in source_tokens:
-            # Did we collect all the tokens belonging to the bad statement?
-            if (  # is the bad token identified as the very first token of a new line
-                token.string.strip()
-                and token.start_row == self.linenumber
-                and token.start_col <= self.offset <= token.end_col
-                and previous_token is not None
-                and previous_token.string.strip()
-                and previous_token.start_row < token.start_row
-                and token.string not in ")]}"
-            ):
-                break
             if (
                 token.start_row > self.linenumber
-                and (last_closing is None or token.start_row > last_closing.start_row)
                 and not continuation_line
+                and not self.statement_brackets
             ):
-                if not self.statement_brackets:
-                    break
-                # perhaps we have some unclosed bracket causing the error
-                # and we meant to start a new statement
-                if token.string in (
-                    "async",
-                    "await",
-                    "class",
-                    "def",
-                    "return",
-                    "elif",
-                    "import",
-                    "try",
-                    "except",
-                    "finally",
-                    "with",
-                    "while",
-                    "yield",
-                    # ";",
-                ):
-                    break
-
-                if self.bad_token == ":" or (
-                    token.string in ("if", "else", "for")
-                    and token.start_row > previous_row_non_space
-                ):
-                    break
-            if token.string.strip():
-                previous_row_non_space = token.end_row
+                break
 
             # is this a new statement?
             # Valid statements will have matching brackets (), {}, [].
@@ -367,7 +343,6 @@ class Statement:
                         self.all_statements.append(self.statement_tokens[:])
                     self.statement_tokens = []
                     self.begin_brackets = []
-                    last_closing = None
                 previous_row = token.start_row
 
             self.statement_tokens.append(token)
@@ -407,6 +382,10 @@ class Statement:
                 self.prev_token = token
 
             previous_token = token
+
+            if self.bad_token in should_begin_statement and self.statement_brackets:
+                break  # we almost certainly have an unclosed bracket
+            # Note: '' in 'any string' == True
             # careful to not accidentally include null strings as brackets
             if not token.string or token.string not in "()[]}{":
                 continue
@@ -417,8 +396,6 @@ class Statement:
                     self.begin_brackets.append(token)
             elif token.string in ")]}":
                 self.end_bracket = token
-                last_closing = token
-
                 if not self.statement_brackets:
                     break
 

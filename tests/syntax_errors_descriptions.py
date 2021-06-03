@@ -664,6 +664,10 @@ descriptions = {
         cause: "The opening parenthesis `(` on line 5 is not closed",
         title: "Unclosed parenthesis - 3",
     },
+    "unclosed_paren_4": {
+        cause: "The opening parenthesis `(` on line 2 is not closed",
+        title: "Unclosed parenthesis - 4",
+    },
     "unexpected_after_continuation_character": {
         cause: "using the continuation character",
         title: "Content passed continuation line character",
@@ -712,7 +716,7 @@ descriptions = {
         cause: "use the function `repr(x)`.",
         title: "Using the backquote character",
     },
-    "walrus_insted_of_equal": {
+    "walrus_instead_of_equal": {
         cause: "You use the augmented assignment operator `:=` where",
         title: "Walrus instead of equal",
         "also in cause": ["the normal assignment operator `=` was required."],
@@ -756,7 +760,7 @@ if sys.version_info < (3, 8):
         title: "Cannot assign a value within an fstring"
     }
 
-    del descriptions["walrus_insted_of_equal"]
+    del descriptions["walrus_instead_of_equal"]
     del descriptions["would_be_type_declaration_1"]
     del descriptions["would_be_type_declaration_2"]
     descriptions["def_star_arg_before_slash"][

@@ -1475,7 +1475,7 @@ def extra_token(statement):
 @add_statement_analyzer
 def unclosed_bracket(statement):
     _ = current_lang.translate
-    if not statement.statement_brackets:
+    if not statement.begin_brackets:
         return {}
 
     bracket = statement.begin_brackets[0]
@@ -1493,4 +1493,6 @@ def unclosed_bracket(statement):
         )
         + source
     )
+    if not statement.statement_brackets:
+        cause += _("If this is incorrect, please report this case.\n")
     return {"cause": cause}
