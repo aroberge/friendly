@@ -185,27 +185,6 @@ def missing_colon(statement):
 
 
 @add_statement_analyzer
-def not_enough_tokens(statement):
-    _ = current_lang.translate
-
-    if statement.nb_tokens >= 5 + ASYNC:
-        return {}
-
-    cause = _("You did not write a valid function definition.\n")
-    if statement.bad_token == "(" and statement.bad_token_index == 1:
-        new_statement = fixers.replace_token(
-            statement.tokens, statement.bad_token, "name"
-        )
-        if not fixers.check_statement(new_statement):
-            return {"cause": cause + def_correct_syntax()}
-
-        cause = hint = _("You forgot to name your function.\n")
-        return {"cause": cause + def_correct_syntax(), "suggest": hint}
-
-    return {"cause": cause + def_correct_syntax()}
-
-
-@add_statement_analyzer
 def keyword_as_function_name(statement):
     # Something like
     # def pass(): ...

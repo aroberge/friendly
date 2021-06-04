@@ -116,6 +116,10 @@ descriptions = {
         cause: "only used to assign a value to a variable",
         title: "Assign to math operation",
     },
+    "async_def_missing_parens": {
+        cause: "Did you forget parentheses?",
+        title: "def: missing parentheses",
+    },
     "augmented_assignment_to_literal": {  # May differ depending on Python version
         cause: "the walrus operator, with literals like",
         title: "Augmented assignment to literal",
@@ -170,8 +174,12 @@ descriptions = {
         title: "def: named arguments must follow bare *",
     },
     "def_code_block": {
-        cause: "tried to define a function",
+        cause: "tried to define a function and did not",
         title: "def: misused as code block",
+    },
+    "def_code_block_2": {
+        cause: "tried to define a function or method and did not",
+        title: "def: misused as code block - 2",
     },
     "def_dict_as_arg": {
         cause: "You cannot have any explicit dict or set as function arguments",
@@ -249,6 +257,10 @@ descriptions = {
     "def_missing_parens": {
         cause: "Did you forget parentheses?",
         title: "def: missing parentheses",
+    },
+    "def_missing_parens_2": {
+        cause: "Did you forget parentheses?",
+        title: "def: missing parentheses around arguments",
     },
     "def_missing_name": {
         cause: "forgot to name your function",
