@@ -327,15 +327,22 @@ def get_similar_names(name, frame):
     Python's builtins.
     """
     similar = {}
-    locals_ = get_variables_in_frame_by_scope(frame, "local")
-    similar["locals"] = utils.get_similar_words(name, locals_)
-
-    globals_ = get_variables_in_frame_by_scope(frame, "global")
-    names = utils.get_similar_words(name, globals_)
-    similar["globals"] = [name for name in names if name not in similar["locals"]]
-
-    similar["builtins"] = utils.get_similar_words(name, dir(builtins))
-    all_similar = similar["locals"] + similar["globals"] + similar["builtins"]
+    # We need to first combine the candidates from all possible sources
+    # so as to treat them on an equal footing.
+    locals_ = list(frame.f_locals.keys())
+    globals_ = list(frame.f_globals.keys())
+    builtins_ = dir(builtins)
+    all_similar = utils.get_similar_words(name, locals_ + globals_ + builtins_)
+    similar["locals"] = []
+    similar["globals"] = []
+    similar["builtins"] = []
+    for word in all_similar:
+        if word in locals_:
+            similar["locals"].append(word)
+        elif word in globals_:
+            similar["globals"].append(word)
+        else:
+            similar["builtins"].append(word)
     if all_similar:
         most_similar = utils.get_similar_words(name, all_similar)
         similar["best"] = most_similar[0]
