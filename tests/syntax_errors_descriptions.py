@@ -21,6 +21,10 @@ descriptions = {
         cause: "only be used for boolean expressions",
         title: "Using 'and' in import statement",
     },
+    "and_in_import_statement_2": {
+        cause: "only be used for boolean expressions",
+        title: "Using 'and' after comma in import statement",
+    },
     "annotated_name_global": {
         cause: "It cannot be declared to be a global variable.",
         title: "Annotated name cannot be global",
@@ -136,6 +140,10 @@ descriptions = {
         cause: "The Python keyword `break` can only be used",
         title: "break outside loop",
     },
+    "cannot_guess_the_cause": {
+        cause: "Currently, I cannot guess the likely cause of this error.",
+        title: "Cannot guess the cause",
+    },
     "cannot_use_star": {
         cause: "The star operator",
         title: "Cannot use star operator",
@@ -164,6 +172,12 @@ descriptions = {
     "copy_pasted_code": {
         cause: "copy-pasted code from an interactive interpreter",
         title: "Copy/paste from interpreter",
+        "also in cause": ["`>>>`"],
+    },
+    "copy_pasted_code_2": {
+        cause: "copy-pasted code from an interactive interpreter",
+        title: "Copy/paste from interpreter - 2",
+        "also in cause": ["`...`"],
     },
     "def_arg_after_kwarg": {
         cause: "Positional arguments must come before keyword argument",
@@ -556,6 +570,10 @@ descriptions = {
     "missing_parens_for_range": {
         cause: "you forgot to use to use parenthesis with `range`",
         title: "Missing parenthesis for range",
+    },
+    "misspelled_keyword": {
+        cause: "if i in range(3)",
+        title: "Misspelled Python keyword"
     },
     "name_is_global_and_nonlocal": {
         cause: "You declared `xy` as being both a global and nonlocal",

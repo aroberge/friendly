@@ -55,7 +55,6 @@ def analyze_statement(statement):
         statement.first_token == "async" and statement.tokens[1] == "def"
     ):
         cause = error_in_def.analyze_def_statement(statement)
-        # The above call will have removed any "async" tokens for further analysis.
         if cause:
             return cause
 
@@ -134,18 +133,34 @@ def mismatched_brackets(statement):
 def copy_pasted_code(statement):
     """Detecting code that starts with a Python prompt"""
     _ = current_lang.translate
-    if statement.nb_tokens < 2:
+
+    first_token = statement.first_token
+    if first_token not in [">>", "..."]:
         return {}
 
-    tokens = statement.tokens
-    if tokens[0] == ">>" and tokens[1] == ">":
+    hint = _("Did you use copy-paste?\n")
+    if (
+        first_token == ">>"
+        and first_token == statement.bad_token
+        and statement.next_token == ">"
+    ):
         cause = _(
             "It looks like you copy-pasted code from an interactive interpreter.\n"
             "The Python prompt, `>>>`, should not be included in your code.\n"
         )
-        hint = _("Did you use copy-paste?\n")
         return {"cause": cause, "suggest": hint}
-    return {}
+    elif first_token == "...":
+        if statement.highlighted_tokens is not None:  # Python 3.10
+            is_ellipsis = statement.bad_token
+        else:
+            is_ellipsis = statement.prev_token
+        if is_ellipsis == first_token:
+            cause = _(
+                "It looks like you copy-pasted code from an interactive interpreter.\n"
+                "The Python prompt, `...`, should not be included in your code.\n"
+            )
+            return {"cause": cause, "suggest": hint}
+    return {}  # pragma: no cover
 
 
 @add_statement_analyzer
@@ -622,9 +637,8 @@ def missing_colon(statement):
         return {}
 
     name = statement.first_token
-    # Note: "async def" statements are transformed into "def" statements
-    # prior to reaching this stage.
     if name.string not in (
+        "async",
         "class",
         "def",
         "if",
@@ -1035,7 +1049,8 @@ def missing_parens_for_range(statement):
 
 def _perhaps_misspelled_keyword(tokens, wrong):
     kwlist = list(keyword.kwlist)
-    # Make sure we try possible typos first
+    if wrong in kwlist:
+        kwlist.remove(wrong)
     similar = utils.get_similar_words(wrong.string, kwlist)
     if not similar:
         return []
@@ -1055,25 +1070,12 @@ def misspelled_python_keyword(tokens, bad_token):
     if not results:
         return {}
 
-    if len(results) == 1:
-        word, line = results[0]
-        hint = _("Did you mean `{line}`?\n").format(line=line)
-
-        cause = _(
-            "Perhaps you meant to write `{keyword}` and made a typo.\n"
-            "The correct line would then be `{line}`\n"
-        ).format(keyword=word, line=line)
-    else:
-        lines = [line for _word, line in results]
-        hint = _("Did you mean `{line}`?\n").format(line=lines[0])
-
-        cause = _(
-            "Perhaps you wrote another word instead of a Python keyword.\n"
-            "If that is the case, perhaps you meant to write one of\n"
-            "the following lines of code which might not raise a `SyntaxError`:\n\n"
-        )
-        for line in lines:
-            cause += f"    {line}\n"
+    word, line = results[0]
+    hint = _("Did you mean `{line}`?\n").format(line=line)
+    cause = _(
+        "Perhaps you meant to write `{keyword}` and made a typo.\n"
+        "The correct line might be `{line}`\n"
+    ).format(keyword=word, line=line)
 
     return {"cause": cause, "suggest": hint}
 
@@ -1310,13 +1312,7 @@ def missing_comma_or_operator(statement):
     if not results:
         return {}
 
-    if (
-        len(results) == 1
-        # Note: "async def" statements should have been transformed
-        # into "def" statements prior to reaching this stage.
-        or statement.first_token == "def"
-        or statement.first_token == "class"
-    ):
+    if len(results) == 1 or statement.first_token.string in ["def", "async", "class"]:
         operator, line = results[0]
         # reducing multiple spaces to single space for nicer display
         temp = line.split(" ")
