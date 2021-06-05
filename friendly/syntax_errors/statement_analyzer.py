@@ -1036,9 +1036,7 @@ def missing_parens_for_range(statement):
 def _perhaps_misspelled_keyword(tokens, wrong):
     kwlist = list(keyword.kwlist)
     # Make sure we try possible typos first
-    print(wrong)
     similar = utils.get_similar_words(wrong.string, kwlist)
-    print(similar)
     if not similar:
         return []
 
@@ -1053,7 +1051,6 @@ def _perhaps_misspelled_keyword(tokens, wrong):
 def misspelled_python_keyword(tokens, bad_token):
     _ = current_lang.translate
 
-    print("entering misspelled_python_keyword", bad_token)
     results = _perhaps_misspelled_keyword(tokens, bad_token)
     if not results:
         return {}
@@ -1079,6 +1076,89 @@ def misspelled_python_keyword(tokens, bad_token):
             cause += f"    {line}\n"
 
     return {"cause": cause, "suggest": hint}
+
+
+@add_statement_analyzer
+def comprehension_condition_or_tuple(statement):
+    _ = current_lang.translate
+    if not statement.begin_brackets:
+        return {}
+
+    cause_condition = _(
+        "I am guessing that you were writing a comprehension or a generator expression\n"
+        "and use the wrong order for a condition.\n"
+        "The correct order depends if there is an `else` clause or not.\n"
+        "For example, the correct order for a list comprehensions with\n"
+        "condition can be either\n\n"
+        "    [f(x) if condition else other for x in sequence]  # 'if' before 'for'\n\n"
+        "or, if there is no `else`\n\n"
+        "    [f(x) for x in sequence if condition]  # 'if' after 'for'\n\n"
+    )
+
+    cause_tuple = _(
+        "I am guessing that you were writing a comprehension or a generator expression\n"
+        "and forgot to include parentheses around tuples.\n"
+        "As an example, instead of writing\n\n"
+        "    [i, i**2 for i in range(10)]\n\n"
+        "you would need to write\n\n"
+        "    [(i, i**2) for i in range(10)]\n\n"
+    )
+
+    if statement.bad_token == "else":
+        for tok in statement.tokens[0 : statement.bad_token_index]:
+            if tok == "for":
+                cause = cause_condition
+                break
+        else:
+            return {}
+    elif statement.bad_token == "for":
+        for tok in statement.tokens[0 : statement.bad_token_index]:
+            if tok == "if":
+                cause = cause_condition
+                break
+        else:
+            found_bracket = False
+            for tok in statement.tokens[0 : statement.bad_token_index]:
+                if tok.string in "([{":
+                    found_bracket = True
+                if tok == "," and found_bracket:
+                    cause = cause_tuple
+                    hint = _("Did you forget parentheses?\n")
+                    return {"cause": cause, "suggest": hint}
+            else:  # skipcq: PYL-W0120
+                return {}
+    else:
+        return {}
+
+    return {"cause": cause}
+
+
+@add_statement_analyzer
+def parens_around_exceptions(statement):
+    # keep in sync with message_analyzer.parens_around_exceptions
+    _ = current_lang.translate
+
+    if statement.bad_token != "," or statement.first_token != "except":
+        return {}
+
+    for tok in statement.tokens[1 : statement.bad_token_index]:
+        if not tok.is_identifier() and tok != ",":
+            return {}
+
+    hint = _("Did you forget parentheses?\n")
+    cause = _(
+        "I am guessing that you wanted to use an `except` statement\n"
+        "with multiple exception types. If that is the case, you must\n"
+        "surround them with parentheses.\n"
+    )
+    python_link = _(
+        "https://docs.python.org/3/tutorial/errors.html#handling-exceptions"
+    )
+    return {
+        "cause": cause + "\n" + use_www(),
+        "suggest": hint,
+        "python_link": python_link,
+    }
 
 
 @add_statement_analyzer
@@ -1351,89 +1431,6 @@ def from_import_as(statement):
         "    from {module} import object_2 as name_2  # if needed\n"
     ).format(module=statement.tokens[1])
     return {"cause": cause}
-
-
-@add_statement_analyzer
-def comprehension_condition_or_tuple(statement):
-    _ = current_lang.translate
-    if not statement.begin_brackets:
-        return {}
-
-    cause_condition = _(
-        "I am guessing that you were writing a comprehension or a generator expression\n"
-        "and use the wrong order for a condition.\n"
-        "The correct order depends if there is an `else` clause or not.\n"
-        "For example, the correct order for a list comprehensions with\n"
-        "condition can be either\n\n"
-        "    [f(x) if condition else other for x in sequence]  # 'if' before 'for'\n\n"
-        "or, if there is no `else`\n\n"
-        "    [f(x) for x in sequence if condition]  # 'if' after 'for'\n\n"
-    )
-
-    cause_tuple = _(
-        "I am guessing that you were writing a comprehension or a generator expression\n"
-        "and forgot to include parentheses around tuples.\n"
-        "As an example, instead of writing\n\n"
-        "    [i, i**2 for i in range(10)]\n\n"
-        "you would need to write\n\n"
-        "    [(i, i**2) for i in range(10)]\n\n"
-    )
-
-    if statement.bad_token == "else":
-        for tok in statement.tokens[0 : statement.bad_token_index]:
-            if tok == "for":
-                cause = cause_condition
-                break
-        else:
-            return {}
-    elif statement.bad_token == "for":
-        for tok in statement.tokens[0 : statement.bad_token_index]:
-            if tok == "if":
-                cause = cause_condition
-                break
-        else:
-            found_bracket = False
-            for tok in statement.tokens[0 : statement.bad_token_index]:
-                if tok.string in "([{":
-                    found_bracket = True
-                if tok == "," and found_bracket:
-                    cause = cause_tuple
-                    hint = _("Did you forget parentheses?\n")
-                    return {"cause": cause, "suggest": hint}
-            else:  # skipcq: PYL-W0120
-                return {}
-    else:
-        return {}
-
-    return {"cause": cause}
-
-
-@add_statement_analyzer
-def parens_around_exceptions(statement):
-    # keep in sync with message_analyzer.parens_around_exceptions
-    _ = current_lang.translate
-
-    if statement.bad_token != "," or statement.first_token != "except":
-        return {}
-
-    for tok in statement.tokens[1 : statement.bad_token_index]:
-        if not tok.is_identifier() and tok != ",":
-            return {}
-
-    hint = _("Did you forget parentheses?\n")
-    cause = _(
-        "I am guessing that you wanted to use an `except` statement\n"
-        "with multiple exception types. If that is the case, you must\n"
-        "surround them with parentheses.\n"
-    )
-    python_link = _(
-        "https://docs.python.org/3/tutorial/errors.html#handling-exceptions"
-    )
-    return {
-        "cause": cause + "\n" + use_www(),
-        "suggest": hint,
-        "python_link": python_link,
-    }
 
 
 @add_statement_analyzer
