@@ -979,8 +979,14 @@ def missing_in_with_for(statement):
     """
     _ = current_lang.translate
 
+    index = statement.bad_token_index
+    bad_token = statement.bad_token
+    if statement.highlighted_tokens:  # Python 3.10 may highlight two tokens
+        index += 1
+        bad_token = statement.next_token
+
     nb_for = nb_in = 0
-    for tok in statement.tokens[: statement.bad_token_index]:
+    for tok in statement.tokens[:index]:
         if tok == "for":
             nb_for += 1
         elif tok == "in":
@@ -989,9 +995,7 @@ def missing_in_with_for(statement):
         return {}
 
     new_statement = fixers.replace_token(
-        statement.statement_tokens,
-        statement.bad_token,
-        "in " + statement.bad_token.string,
+        statement.statement_tokens, bad_token, "in " + bad_token.string
     )
     if fixers.check_statement(new_statement):
         hint = _("Did you forget to write `in`?\n")
@@ -1032,7 +1036,9 @@ def missing_parens_for_range(statement):
 def _perhaps_misspelled_keyword(tokens, wrong):
     kwlist = list(keyword.kwlist)
     # Make sure we try possible typos first
+    print(wrong)
     similar = utils.get_similar_words(wrong.string, kwlist)
+    print(similar)
     if not similar:
         return []
 
@@ -1047,6 +1053,7 @@ def _perhaps_misspelled_keyword(tokens, wrong):
 def misspelled_python_keyword(tokens, bad_token):
     _ = current_lang.translate
 
+    print("entering misspelled_python_keyword", bad_token)
     results = _perhaps_misspelled_keyword(tokens, bad_token)
     if not results:
         return {}
@@ -1078,7 +1085,7 @@ def misspelled_python_keyword(tokens, bad_token):
 def current_is_misspelled_python_keyword(statement):
     _ = current_lang.translate
 
-    if not statement.bad_token.is_identifier():
+    if not statement.bad_token.is_name():
         return {}
     return misspelled_python_keyword(statement.tokens, statement.bad_token)
 
@@ -1087,7 +1094,7 @@ def current_is_misspelled_python_keyword(statement):
 def previous_is_misspelled_python_keyword(statement):
     _ = current_lang.translate
 
-    if not statement.prev_token.is_identifier():
+    if not statement.prev_token.is_name():
         return {}
     return misspelled_python_keyword(statement.tokens, statement.prev_token)
 

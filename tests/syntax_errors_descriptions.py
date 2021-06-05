@@ -533,6 +533,10 @@ descriptions = {
         cause: "forgot a comma",
         title: "Missing comma in a dict",
     },
+    "missing_comma_in_dict_2": {
+        cause: "I am guessing that you forgot a comma between two strings",
+        title: "Missing comma between strings in a dict",
+    },
     "missing_comma_in_list": {
         cause: "The following lines of code",
         title: "Missing comma in a list",
@@ -544,6 +548,10 @@ descriptions = {
     "missing_comma_in_tuple": {
         cause: "The following lines of code",
         title: "Missing comma in a tuple",
+    },
+    "missing_in_with_for": {
+        cause: "Did you forget to write `in`?",
+        title: "For loop missing 'in' operator"
     },
     "missing_parens_for_range": {
         cause: "you forgot to use to use parenthesis with `range`",

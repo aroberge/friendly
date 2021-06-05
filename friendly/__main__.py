@@ -40,14 +40,14 @@ def import_function(dotted_path: str) -> type:
     # Used by HackInScience.org
     try:
         module_path, function_name = dotted_path.rsplit(".", 1)
-    except ValueError as err:
+    except ValueError as err:  # pragma: no cover
         raise ImportError("%s doesn't look like a module path" % dotted_path) from err
 
     module = import_module(module_path)
 
     try:
         return getattr(module, function_name)
-    except AttributeError as err:
+    except AttributeError as err:  # pragma: no cover
         raise ImportError(
             'Module "%s" does not define a "%s" function' % (module_path, function_name)
         ) from err
@@ -130,32 +130,26 @@ parser.add_argument(
 )
 
 
-def warn(text):
-    print("   #")
-    print(f"   # Warning: {text}")
-    print("   #")
-
-
 def main():
     _ = current_lang.translate
     args = parser.parse_args()
-    if args.version:
+    if args.version:  # pragma: no cover
         print(f"\nFriendly version {__version__}")
         if not args.source:
             sys.exit()
 
     include = "friendly_tb"
-    if args.include:
+    if args.include:  # pragma: no cover
         include = args.include
     elif args.source and not sys.flags.interactive:
         include = "explain"
-    if args.debug:
+    if args.debug:  # pragma: no cover
         debug_helper.DEBUG = True
         include = "debug_tb"
 
     install(lang=args.lang, include=include)
 
-    if args.background:
+    if args.background:  # pragma: no cover
         background = args.background
     else:
         background = None
@@ -163,7 +157,7 @@ def main():
     if args.formatter:
         formatter = args.formatter  # noqa
         if formatter in ["bw", "dark", "light", "docs", "markdown", "markdown_docs"]:
-            set_formatter(formatter, background=background)
+            set_formatter(formatter, background=background)  # pragma: no cover
         else:
             set_formatter(import_function(args.formatter))
             formatter = "bw"  # for the console - should not be needed
@@ -174,7 +168,7 @@ def main():
     console_defaults = {}
     if args.source is not None:
         filename = Path(args.source)
-        if not filename.exists():
+        if not filename.exists():  # pragma: no cover
             print(
                 "\n",
                 _("The file {filename} does not exist.").format(filename=args.source),
@@ -188,12 +182,12 @@ def main():
             console_defaults.update(module_dict)
         except Exception:  # noqa
             explain_traceback()
-        if sys.flags.interactive:
+        if sys.flags.interactive:  # pragma: no cover
             console.start_console(
                 local_vars=console_defaults, formatter=formatter, background=background
             )
 
-    else:
+    else:  # pragma: no cover
         console.start_console(
             local_vars=console_defaults, formatter=formatter, background=background
         )

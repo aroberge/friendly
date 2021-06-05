@@ -7,10 +7,11 @@ If Friendly-traceback is used by some other program,
 it might be desirable to exclude additional files.
 """
 import os
+import rich  # Only use it to find site-packages
 
 EXCLUDED_FILE_PATH = set()
 EXCLUDED_DIR_NAMES = set()
-SITE_PACKAGES = None
+SITE_PACKAGES = os.path.join(os.path.dirname(rich.__file__), "..")
 
 
 def exclude_file_from_traceback(full_path):
@@ -91,31 +92,23 @@ class PathUtil:
     def __init__(self):
         self.python = os.path.dirname(os.__file__)
         this_dir = os.path.dirname(__file__)
-        self.friendly_path = os.path.abspath(os.path.join(this_dir, ".."))
+        self.home = os.path.expanduser("~")
         self.tests = ""
-        tests = os.path.join(self.friendly_path, "tests")
+        friendly_path = os.path.abspath(os.path.join(this_dir, ".."))
+        tests = os.path.join(friendly_path, "tests")
         if os.path.exists(tests):
             self.tests = tests
-        self.home = os.path.expanduser("~")
-        self.cwd = os.getcwd()
 
-    def shorten_path(self, path):
-        global SITE_PACKAGES
+    def shorten_path(self, path):  # pragma: no cover
         if path is None:  # can happen in some rare cases
             return path
         path = path.replace("'", "")  # We might get passed a path repr
         path = os.path.normpath(path)
         path_lower = path.lower()
-        self.cwd = os.getcwd()  # make sure it is up to date
         if self.tests and path_lower.startswith(self.tests.lower()):
             path = "TESTS:" + path[len(self.tests) :]
-        elif path_lower.startswith(self.friendly_path.lower()) and path_lower.endswith(
-            "-packages"
-        ):
-            path = "INSTALLED:" + path[len(self.friendly_path) :]
-            SITE_PACKAGES = self.friendly_path
-        elif path_lower.startswith(self.cwd.lower()):
-            path = "CWD:" + path[len(self.cwd) :]
+        elif path_lower.startswith(SITE_PACKAGES.lower()):
+            path = "LOCAL:" + path[len(SITE_PACKAGES) :]
         elif path_lower.startswith(self.python.lower()):
             path = "PYTHON_LIB:" + path[len(self.python) :]
         elif path_lower.startswith(self.home.lower()):
@@ -135,10 +128,8 @@ def show_paths():  # pragma: no cover
     recognized synonyms. This function shows the path synonyms
     currently used.
     """
-    print("CWD =", path_utils.cwd)
     print("HOME =", path_utils.home)
-    if SITE_PACKAGES:
-        print("INSTALLED =", path_utils.friendly_path)
+    print("LOCAL =", SITE_PACKAGES)
+    print("PYTHON_LIB =", path_utils.python)
     if path_utils.tests:
         print("TESTS =", path_utils.tests)
-    print("PYTHON_LIB =", path_utils.python)

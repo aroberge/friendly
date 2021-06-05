@@ -32,6 +32,7 @@ def local_variable_referenced(unknown_name, frame):
     scopes = info_variables.get_definition_scope(unknown_name, frame)
     if not scopes:
         similar = info_variables.get_similar_names(unknown_name, frame)
+        # TODO: rework this, looking for variables that have __add__ as method.
         if similar["best"] is not None:
             best_guess = similar["best"]
             if best_guess in similar["locals"]:
