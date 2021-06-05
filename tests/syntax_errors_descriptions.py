@@ -195,6 +195,20 @@ descriptions = {
         cause: "tried to define a function or method and did not",
         title: "def: misused as code block - 2",
     },
+    "def_dotted_argument": {
+        cause: "You cannot use dotted names as function arguments.",
+        title: "Dotted name as function argument",
+        "also in cause": ["Did you mean to write a comma?"],
+    },
+    "def_dotted_argument_2": {
+        cause: "You cannot use dotted names as function arguments.",
+        title: "Dotted name as function argument",
+        "not in cause": ["Did you mean to write a comma?"],
+    },
+    "def_dotted_function_name": {
+        cause: "You cannot use dots in function names.",
+        title: "Dotted function name",
+    },
     "def_dict_as_arg": {
         cause: "You cannot have any explicit dict or set as function arguments",
         title: "def: dict as argument",

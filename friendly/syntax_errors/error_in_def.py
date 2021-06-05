@@ -279,15 +279,19 @@ def keyword_not_allowed_as_function_argument(statement):
 @add_statement_analyzer
 def dotted_name_not_allowed(statement):
     _ = current_lang.translate
-    # TODO: add check to see if identifier before
-    if statement.bad_token != ".":
+    if not (statement.bad_token == "." and statement.prev_token.is_identifier()):
         return {}
 
     if statement.bad_token_index > 3 + ASYNC:
         cause = _("You cannot use dotted names as function arguments.\n")
+        if statement.next_token.is_identifier():
+            cause += _("Perhaps you meant to write a comma.\n")
+            hint = _("Did you mean to write a comma?\n")
+        else:
+            hint = cause
     else:
-        cause = _("You cannot use dots in function names.\n")
-    return {"cause": cause, "suggest": cause}
+        hint = cause = _("You cannot use dots in function names.\n")
+    return {"cause": cause, "suggest": hint}
 
 
 @add_statement_analyzer
