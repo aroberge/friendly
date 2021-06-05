@@ -660,6 +660,10 @@ descriptions = {
         cause: "meant to write `/=` as a single operator",
         title: "Space between operators 2",
     },
+    "space_in_variable_name": {
+      cause: "You cannot have spaces in identifiers (variable names).",
+      title: "Space in variable name"
+    },
     "too_many_nested_blocks": {
         cause: "Seriously",
         title: "Too many nested blocks",

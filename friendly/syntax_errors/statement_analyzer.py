@@ -1185,16 +1185,23 @@ def space_in_variable_name(statement):
     # my name = André
     _ = current_lang.translate
 
+    bad_token = statement.bad_token
+    prev_token = statement.prev_token
+    if statement.highlighted_tokens:  # Python 3.10
+        bad_token = statement.next_token
+        prev_token = statement.bad_token
+
     if not (
-        statement.bad_token.is_identifier()
-        and statement.prev_token.is_identifier
-        and statement.prev_token is statement.first_token
+        bad_token.is_identifier()
+        and prev_token.is_identifier
+        and prev_token is statement.first_token
     ):
         return {}
 
     first_tokens = []
     for tok in statement.tokens:
-        if str(tok) in ("=", ":="):
+        if tok == "=":
+            # Note: there could be other errors
             cause = _("You cannot have spaces in identifiers (variable names).\n")
             hint = _("Did you mean `{name}`?\n").format(name="_".join(first_tokens))
             return {"cause": cause, "suggest": hint}
