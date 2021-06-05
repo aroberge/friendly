@@ -57,20 +57,31 @@ def get_similar_words(word_with_typo, words):
     words = [word for word in words if len(word) > 1]
 
     get = difflib.get_close_matches
-    cutoff = min(0.8, 0.63 + 0.01 * len(word_with_typo))
-    result = get(word_with_typo, words, n=5, cutoff=cutoff)
-    if result:
-        return result
 
-    # The choice of parameters above might not be helpful in identifying
-    # typos based on wrong case like 'Pi' or 'PI' instead of 'pi'.
-    # In the absence of results, we try
-    # to see if the typos could have been caused by using the wrong case
+    cutoff = min(0.8, 0.63 + 0.01 * len(word_with_typo))
+    if len(word_with_typo) > 2:
+        result = get(word_with_typo, words, n=5, cutoff=cutoff)
+        if result:
+            return result
+    # In the absence of results, we try see if the typos could have been
+    # caused by using the wrong case; this works well also
+    # for words of length 2, such as writing Pi instead of pi.
     result = get(word_with_typo.lower(), words, n=1, cutoff=cutoff)
     if result:
         return result
+    result = get(word_with_typo.upper(), words, n=1, cutoff=cutoff)
+    if result:
+        return result
 
-    return get(word_with_typo.upper(), words, n=1, cutoff=cutoff)
+    # Finally, for words of length 2, such as writing 'it' instead of 'if',
+    # we lower the cutoff but make sure that the matched words
+    # are not too long: difflib finds that 'with' is much more similar to
+    # 'it' than 'if' would be!
+    if len(word_with_typo) == 2:
+        cutoff = 0.5
+        words = [word for word in words if len(word) <= 3]
+        result = get(word_with_typo, words, n=5, cutoff=cutoff)
+    return result
 
 
 def list_to_string(list_, sep=", "):
