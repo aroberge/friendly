@@ -45,10 +45,8 @@ intro_text = """
 |france| Friendly tracebacks - en Français
 ===========================================
 
-Le but principal de friendly-traceback est de fournir des rétroactions plus
+Le but principal de friendly est de fournir des rétroactions plus
 conviviales que les fameux **tracebacks** de Python lorsqu'une exception survient.
-Ci-dessous, on peut voir quelques exemples. Le but éventuel est de documenter
-ici tous les exemples possibles tels qu'interprétés par friendly-traceback.
 
 .. note::
 

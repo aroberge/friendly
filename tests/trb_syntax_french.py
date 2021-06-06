@@ -23,8 +23,6 @@ docs_root_dir = os.path.abspath(
 )
 assert os.path.isdir(docs_root_dir), "Separate docs repo need to exist"
 
-# sys.path.insert(0, root_dir)
-
 LANG = "fr"
 friendly.install()
 friendly.set_lang(LANG)
@@ -43,13 +41,13 @@ intro_text = """
 |france| Friendly SyntaxError tracebacks - en Français
 ======================================================
 
-Le but principal de friendly-traceback est de fournir des rétroactions plus
+Le but principal de friendly est de fournir des rétroactions plus
 conviviales que les fameux **tracebacks** de Python lorsqu'une exception survient.
-Ci-dessous, on peut voir quelques exemples, uniquement pour les
+Ci-dessous, on peut voir plusieurs exemples, uniquement pour les
 exceptions de type SyntaxError et des classes dérivées;
 les autres sont couvertes dans une autre page.
 Le but est de documenter ici tous les exemples possibles
-tels qu'interprétés par friendly-traceback.
+tels qu'interprétés par friendly.
 
 .. note::
 

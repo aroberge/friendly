@@ -21,7 +21,6 @@ docs_root_dir = os.path.abspath(
     os.path.join(this_dir, "..", "..", "friendly-traceback-docs")
 )
 assert os.path.isdir(docs_root_dir), "Separate docs repo need to exist"
-# sys.path.insert(0, root_dir)
 
 LANG = "en"
 friendly.install()
@@ -43,11 +42,11 @@ intro_text = """
 Friendly SyntaxError tracebacks - in English
 =============================================
 
-Friendly-traceback aims to provide friendlier feedback when an exception
+Friendly aims to provide friendlier feedback when an exception
 is raised than what is done by Python.
 This file contains only examples of SyntaxError and its sub-classes.
-Ideally, an example of each case handled by friendly-traceback
-should be included here.
+Some tests may appear to be repetitive to a human reader
+but they are may be included to ensure more complete test coverage..
 
 .. note::
 

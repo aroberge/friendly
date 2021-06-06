@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-06-06 08:35-0300\n"
-"PO-Revision-Date: 2021-06-06 08:37-0300\n"
+"POT-Creation-Date: 2021-06-06 09:03-0300\n"
+"PO-Revision-Date: 2021-06-06 09:04-0300\n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -2045,7 +2045,15 @@ msgstr ""
 "mais il est possible que me trompe.\n"
 "\n"
 
-#: syntax_errors\error_in_def.py:21
+#: syntax_errors\error_in_def.py:19 syntax_errors\statement_analyzer.py:21
+msgid ""
+"However, making such a change would still not correct\n"
+"all the syntax errors in the code you wrote.\n"
+msgstr ""
+"Toutefois, un tel changement ne corrigerait pas\n"
+"toutes les erreurs de syntaxe dans le code que vous avez écrit.\n"
+
+#: syntax_errors\error_in_def.py:29
 msgid ""
 "The correct syntax is:\n"
 "\n"
@@ -2055,21 +2063,21 @@ msgstr ""
 "\n"
 "    {async_}def nom ( ... ):"
 
-#: syntax_errors\error_in_def.py:74
+#: syntax_errors\error_in_def.py:82
 msgid "A function needs a name.\n"
 msgstr "Une fonction a besoin d’un nom.\n"
 
-#: syntax_errors\error_in_def.py:75
+#: syntax_errors\error_in_def.py:83
 msgid "You tried to define a function and did not use the correct syntax.\n"
 msgstr ""
 "Vous vouliez définir une fonction, mais vous avez fait des erreurs de "
 "syntaxe.\n"
 
-#: syntax_errors\error_in_def.py:79
+#: syntax_errors\error_in_def.py:87
 msgid "Functions and methods need a name.\n"
 msgstr "Les fonctions et les méthodes ont besoin d’un nom.\n"
 
-#: syntax_errors\error_in_def.py:80
+#: syntax_errors\error_in_def.py:88
 msgid ""
 "You tried to define a function or method and did not use the correct "
 "syntax.\n"
@@ -2077,7 +2085,7 @@ msgstr ""
 "Vous vouliez définir une fonction ou une méthode, mais vous avez fait des "
 "erreurs de syntaxe.\n"
 
-#: syntax_errors\error_in_def.py:104 syntax_errors\error_in_def.py:132
+#: syntax_errors\error_in_def.py:112 syntax_errors\error_in_def.py:140
 #: syntax_errors\message_analyzer.py:1227
 #: syntax_errors\message_analyzer.py:1239
 #: syntax_errors\statement_analyzer.py:1128
@@ -2085,7 +2093,7 @@ msgstr ""
 msgid "Did you forget parentheses?\n"
 msgstr "Avez-vous oublié d’ajouter des parenthèses ?\n"
 
-#: syntax_errors\error_in_def.py:105 syntax_errors\error_in_def.py:133
+#: syntax_errors\error_in_def.py:113 syntax_errors\error_in_def.py:141
 msgid ""
 "Perhaps you forgot to include parentheses.\n"
 "You might have meant to write\n"
@@ -2097,53 +2105,53 @@ msgstr ""
 "\n"
 "    {line}\n"
 
-#: syntax_errors\error_in_def.py:154
+#: syntax_errors\error_in_def.py:162
 msgid "A function definition statement must end with a colon.\n"
 msgstr "Une définition de fonction doit se terminer par deux point, `:`.\n"
 
-#: syntax_errors\error_in_def.py:160 syntax_errors\error_in_def.py:181
+#: syntax_errors\error_in_def.py:168 syntax_errors\error_in_def.py:189
 msgid "Did you forget to write a colon?\n"
 msgstr "Avez-vous oublié d’ajouter les deux points `:` ?\n"
 
-#: syntax_errors\error_in_def.py:161 syntax_errors\message_analyzer.py:1275
+#: syntax_errors\error_in_def.py:169 syntax_errors\message_analyzer.py:1275
 msgid "You wrote `{bad}` instead of a colon.\n"
 msgstr "Tu as écrit `{bad}` au lieu de deux points, `:`.\n"
 
-#: syntax_errors\error_in_def.py:170
+#: syntax_errors\error_in_def.py:178
 msgid "Did you write something by mistake after the colon?\n"
 msgstr "Avez-vous écrit quelque chose par erreur après les deux points `:` ?\n"
 
-#: syntax_errors\error_in_def.py:171
+#: syntax_errors\error_in_def.py:179
 msgid "A block of code must come after the colon.\n"
 msgstr "Un bloc de code doit venir après les deux points.\n"
 
-#: syntax_errors\error_in_def.py:172
+#: syntax_errors\error_in_def.py:180
 msgid "Removing `{bad}`, might fix the problem.\n"
 msgstr ""
 "Si vous supprimez `{bad}`, cela pourrait possiblement résoudre le problème.\n"
 
-#: syntax_errors\error_in_def.py:196
+#: syntax_errors\error_in_def.py:204
 msgid "You cannot use a Python keyword as a function name.\n"
 msgstr ""
 "Vous avez tenté d'utiliser le mot clé Python `{kwd}` comme nom de fonction.\n"
 
-#: syntax_errors\error_in_def.py:197
+#: syntax_errors\error_in_def.py:205
 msgid "You tried to use the Python keyword `{kwd}` as a function name.\n"
 msgstr ""
 "Vous avez tenté d'utiliser le mot clé Python `{kwd}` comme nom de fonction.\n"
 "Ceci n’est pas permis.\n"
 "\n"
 
-#: syntax_errors\error_in_def.py:205
+#: syntax_errors\error_in_def.py:213
 msgid "There are more syntax errors later in your code.\n"
 msgstr ""
 "Il y a au moins une autre erreur de syntaxe plus tard dans votre code.\n"
 
-#: syntax_errors\error_in_def.py:223
+#: syntax_errors\error_in_def.py:231
 msgid "You wrote an invalid function name.\n"
 msgstr "Vous avez écrit un nom de fonction invalide.\n"
 
-#: syntax_errors\error_in_def.py:224
+#: syntax_errors\error_in_def.py:232
 msgid ""
 "The name of a function must be a valid Python identifier,\n"
 "that is a name that begins with a letter or an underscore character, `_`,\n"
@@ -2155,21 +2163,21 @@ msgstr ""
 "et qui ne contient que des lettres, des chiffres ou le caractère de "
 "soulignement.\n"
 
-#: syntax_errors\error_in_def.py:230
+#: syntax_errors\error_in_def.py:238
 msgid "You attempted to use a string as a function name.\n"
 msgstr ""
 "Vous avez essayé d’utiliser une chaîne de caractères comme nom de fonction.\n"
 
-#: syntax_errors\error_in_def.py:246
+#: syntax_errors\error_in_def.py:254
 msgid "You forgot to name your function.\n"
 msgstr "Vous avez oublié de nommer votre fonction.\n"
 
-#: syntax_errors\error_in_def.py:254
+#: syntax_errors\error_in_def.py:262
 msgid "However, there are some other syntax errors in your code.\n"
 msgstr ""
 "Cependant, il y a au moins une autre erreur de syntaxe dans votre code.\n"
 
-#: syntax_errors\error_in_def.py:270
+#: syntax_errors\error_in_def.py:278
 msgid ""
 "I am guessing that you tried to use the Python keyword\n"
 "`{kwd}` as an argument in the definition of a function\n"
@@ -2179,27 +2187,27 @@ msgstr ""
 "dans la définition d'une fonction où un identificateur\n"
 "(nom de variable) était attendu.\n"
 
-#: syntax_errors\error_in_def.py:286
+#: syntax_errors\error_in_def.py:294
 msgid "You cannot use dotted names as function arguments.\n"
 msgstr ""
 "Vous avez tenté d'utiliser un objet avec un attribut comme argument de "
 "fonction.\n"
 
-#: syntax_errors\error_in_def.py:288
+#: syntax_errors\error_in_def.py:296
 msgid "Perhaps you meant to write a comma.\n"
 msgstr "Vous vouliez peut-être écrire une virgule.\n"
 
-#: syntax_errors\error_in_def.py:289 syntax_errors\error_in_def.py:489
+#: syntax_errors\error_in_def.py:297 syntax_errors\error_in_def.py:495
 #: syntax_errors\statement_analyzer.py:695
 msgid "Did you mean to write a comma?\n"
 msgstr "Avez-vous oublié une virgule ?\n"
 
-#: syntax_errors\error_in_def.py:293
+#: syntax_errors\error_in_def.py:301
 msgid "You cannot use dots in function names.\n"
 msgstr ""
 "Vous avez tenté d'utiliser un objet avec un attribut comme nom de fonction.\n"
 
-#: syntax_errors\error_in_def.py:304
+#: syntax_errors\error_in_def.py:312
 msgid ""
 "`/` indicates that the previous arguments in a function definition\n"
 "are positional arguments.\n"
@@ -2207,14 +2215,14 @@ msgstr ""
 "`/` indique que les arguments précédents dans une définition de fonction\n"
 "sont des arguments positionnels.\n"
 
-#: syntax_errors\error_in_def.py:310
+#: syntax_errors\error_in_def.py:318
 msgid ""
 "Function definitions cannot include the symbol `/` in this Python version.\n"
 msgstr ""
 "Les définitions de fonction ne peuvent pas inclure le symbole `/` dans cette "
 "version de Python.\n"
 
-#: syntax_errors\error_in_def.py:313
+#: syntax_errors\error_in_def.py:321
 msgid ""
 "This symbol can only be used with Python versions 3.8.0 or newer.\n"
 "You are using Python version {version}.\n"
@@ -2223,7 +2231,7 @@ msgstr ""
 "récentes.\n"
 "Vous utilisez la version Python {version}.\n"
 
-#: syntax_errors\error_in_def.py:322
+#: syntax_errors\error_in_def.py:330
 msgid ""
 "You have unspecified keyword arguments that appear before\n"
 "the symbol `/`.\n"
@@ -2231,11 +2239,11 @@ msgstr ""
 "Vous avez quelques arguments nommés arbitraires qui apparaissent avant\n"
 "le symbole `/`.\n"
 
-#: syntax_errors\error_in_def.py:326
+#: syntax_errors\error_in_def.py:334
 msgid "Keyword arguments must appear after the `/` symbol.\n"
 msgstr "Les arguments nommés doivent apparaître après le symbole `/`.\n"
 
-#: syntax_errors\error_in_def.py:331
+#: syntax_errors\error_in_def.py:339
 msgid ""
 "However, `*` indicates that the arguments\n"
 "that follow must be keyword arguments.\n"
@@ -2245,31 +2253,31 @@ msgstr ""
 "qui suivent doivent être des arguments nommés.\n"
 "Lorsqu’ils sont utilisés ensemble, `/` doit apparaître avant `*`.\n"
 
-#: syntax_errors\error_in_def.py:336
+#: syntax_errors\error_in_def.py:344
 msgid "`*` must appear after `/` in a function definition.\n"
 msgstr "`*` doit apparaître après `/` dans une définition de fonction.\n"
 
-#: syntax_errors\error_in_def.py:338
+#: syntax_errors\error_in_def.py:346
 msgid "`*{name}` must appear after `/` in a function definition.\n"
 msgstr "`*{name}` doit apparaître après `/` dans une définition de fonction.\n"
 
-#: syntax_errors\error_in_def.py:345
+#: syntax_errors\error_in_def.py:353
 msgid "You can only use `/` once in a function definition.\n"
 msgstr ""
 "Vous ne pouvez utiliser `/` qu’une seule fois dans une définition de "
 "fonction.\n"
 
-#: syntax_errors\error_in_def.py:360
+#: syntax_errors\error_in_def.py:368
 msgid "You can only use `*` once in a function definition.\n"
 msgstr ""
 "Vous ne pouvez utiliser `*` qu’une seule fois dans une définition de "
 "fonction.\n"
 
-#: syntax_errors\error_in_def.py:366
+#: syntax_errors\error_in_def.py:374
 msgid "You have used it twice, with `*{first}` and `*{second}`.\n"
 msgstr "Vous l'avez utilisé deux fois, avec `*{first}` et `*{second}`.\n"
 
-#: syntax_errors\error_in_def.py:374
+#: syntax_errors\error_in_def.py:382
 msgid ""
 "It must either be used by itself, `*`,\n"
 "or in the form `*{args}`, but not both.\n"
@@ -2277,19 +2285,19 @@ msgstr ""
 "Il doit être utilisé soit par lui-même, `*`,\n"
 "soit sous la forme `*{args}`, mais pas les deux.\n"
 
-#: syntax_errors\error_in_def.py:383
+#: syntax_errors\error_in_def.py:391
 msgid "`*{args}` must appear before `**{kwargs}`.\n"
 msgstr "`*{args}` doit apparaître avant `**{kwargs}`.\n"
 
-#: syntax_errors\error_in_def.py:387
+#: syntax_errors\error_in_def.py:395
 msgid "`**{kwargs}` must appear after the `*` operator.\n"
 msgstr "`**{kwargs}` doit apparaître après l'opérateur `*`.\n"
 
-#: syntax_errors\error_in_def.py:403
+#: syntax_errors\error_in_def.py:411
 msgid "You cannot use numbers as function arguments.\n"
 msgstr "Vous ne pouvez pas utiliser un nombre comme argument de fonction.\n"
 
-#: syntax_errors\error_in_def.py:404
+#: syntax_errors\error_in_def.py:412
 msgid ""
 "You used a number as an argument when defining a function.\n"
 "You can only use identifiers (variable names) as function arguments.\n"
@@ -2299,11 +2307,11 @@ msgstr ""
 "Vous ne pouvez utiliser que des identificateurs (noms de variables) comme "
 "arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:418
+#: syntax_errors\error_in_def.py:426
 msgid "You cannot use strings as function arguments.\n"
 msgstr "Vous ne pouvez pas utiliser les chaînes comme arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:419
+#: syntax_errors\error_in_def.py:427
 msgid ""
 "You used a string as an argument when defining a function.\n"
 "You can only use identifiers (variable names) as function arguments.\n"
@@ -2313,12 +2321,12 @@ msgstr ""
 "Vous ne pouvez utiliser que des identificateurs (noms de variables) comme "
 "arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:433
+#: syntax_errors\error_in_def.py:441
 msgid "You cannot have explicit tuples as function arguments.\n"
 msgstr ""
 "Vous ne pouvez pas avoir des tuples explicites comme arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:435
+#: syntax_errors\error_in_def.py:443
 msgid ""
 "You can only use identifiers (variable names) as function arguments.\n"
 "Assign any tuple to a parameter and unpack it\n"
@@ -2329,29 +2337,28 @@ msgstr ""
 "Assignez n’importe quel tuple à un paramètre et dépaquetez-le\n"
 "dans le corps de la fonction.\n"
 
-#: syntax_errors\error_in_def.py:449
+#: syntax_errors\error_in_def.py:457
 msgid "You cannot have explicit lists as function arguments.\n"
 msgstr ""
 "Vous ne pouvez pas avoir de listes explicites comme arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:450 syntax_errors\error_in_def.py:463
-#: syntax_errors\error_in_def.py:548
+#: syntax_errors\error_in_def.py:458 syntax_errors\error_in_def.py:471
 msgid "You can only use identifiers (variable names) as function arguments.\n"
 msgstr ""
 "Vous ne pouvez utiliser que des identifiants (noms de variables) comme "
 "arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:462
+#: syntax_errors\error_in_def.py:470
 msgid "You cannot have any explicit dict or set as function arguments.\n"
 msgstr ""
 "Vous ne pouvez pas avoir des `dict` ou des `set` explicite comme arguments "
 "de fonction.\n"
 
-#: syntax_errors\error_in_def.py:482
+#: syntax_errors\error_in_def.py:488
 msgid "You cannot have operators as function arguments.\n"
 msgstr "Vous ne pouvez pas avoir d’opérateurs comme arguments de fonction.\n"
 
-#: syntax_errors\error_in_def.py:490
+#: syntax_errors\error_in_def.py:496
 msgid ""
 "I suspect you made a typo and wrote `{op}` instead of a comma.\n"
 "The following statement contains no syntax error:\n"
@@ -2363,11 +2370,11 @@ msgstr ""
 "\n"
 "    {new_statement}"
 
-#: syntax_errors\error_in_def.py:502
+#: syntax_errors\error_in_def.py:508
 msgid "Did you mean to write an equal sign?\n"
 msgstr "Voulez-vous écrire un signe égal ?\n"
 
-#: syntax_errors\error_in_def.py:503
+#: syntax_errors\error_in_def.py:509
 msgid ""
 "I suspect you made a typo and wrote `{op}` instead of an equal sign.\n"
 "The following statement contains no syntax error:\n"
@@ -2379,11 +2386,11 @@ msgstr ""
 "\n"
 "    {new_statement}"
 
-#: syntax_errors\error_in_def.py:515
+#: syntax_errors\error_in_def.py:521
 msgid "Did you mean to write `{op}`?\n"
 msgstr "Voulez-vous écrire `{op}`?\n"
 
-#: syntax_errors\error_in_def.py:516
+#: syntax_errors\error_in_def.py:522
 msgid ""
 "I suspect you made a typo and added `{op}` by mistake.\n"
 "The following statement contains no syntax error:\n"
@@ -2395,11 +2402,11 @@ msgstr ""
 "\n"
 "    {new_statement}"
 
-#: syntax_errors\error_in_def.py:533 syntax_errors\error_in_def.py:545
+#: syntax_errors\error_in_def.py:538
 msgid "You cannot use `{op}` as an argument.\n"
 msgstr "Vous ne pouvez pas utiliser `{op}` comme argument.\n"
 
-#: syntax_errors\error_in_def.py:536
+#: syntax_errors\error_in_def.py:542
 msgid ""
 "I suspect you made a typo and wrote `{op}` by mistake.\n"
 "If you replace it by a unique variable name, the result\n"
@@ -2409,11 +2416,24 @@ msgstr ""
 "Si vous le remplacez par un nom de variable unique,\n"
 "le résultat n'aura aucun erreur de syntaxe.\n"
 
-#: syntax_errors\error_in_def.py:573
+#: syntax_errors\error_in_def.py:550
+msgid ""
+"I suspect you made a typo and wrote `{op}` by mistake,\n"
+"perhaps instead of writing an identifier (variable name).\n"
+msgstr ""
+"Je pense que vous avez écrit `{op}` par erreur,\n"
+"peut-être au lieu d'écrire un identifiant (nom de variable).\n"
+
+#: syntax_errors\error_in_def.py:559
+msgid ""
+"The `**` operator needs to be followed by an identifier (variable name).\n"
+msgstr "L'opérateur `**` doit être suivi d'un identifiant (nom de variable).\n"
+
+#: syntax_errors\error_in_def.py:582
 msgid "Positional arguments must come before keyword arguments.\n"
 msgstr "Les arguments positionnels doivent être avant les arguments nommés.\n"
 
-#: syntax_errors\error_in_def.py:574
+#: syntax_errors\error_in_def.py:583
 msgid ""
 "`{arg}` is a positional argument that appears after one or more\n"
 "keyword arguments in your function definition.\n"
@@ -3386,14 +3406,6 @@ msgstr ""
 "signifiant\n"
 "qu'un déballage de `dict` doit être utilisé ce qui n'est soit par permis\n"
 "ou n’a pas de sens ici.\n"
-
-#: syntax_errors\statement_analyzer.py:21
-msgid ""
-"However, making such a change would still not correct\n"
-"all the syntax errors in the code you wrote.\n"
-msgstr ""
-"Toutefois, un tel changement ne corrigerait pas\n"
-"toutes les erreurs de syntaxe dans le code que vous avez écrit.\n"
 
 #: syntax_errors\statement_analyzer.py:118
 msgid ""

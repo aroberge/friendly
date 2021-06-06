@@ -14,6 +14,14 @@ STATEMENT_ANALYZERS = []
 ASYNC = 0
 
 
+def more_errors():
+    _ = current_lang.translate
+    return "\n" + _(
+        "However, making such a change would still not correct\n"
+        "all the syntax errors in the code you wrote.\n"
+    )
+
+
 def def_correct_syntax():
     _ = current_lang.translate
     async_ = "" if ASYNC == 0 else "async "
@@ -474,8 +482,6 @@ def operator_as_argument(statement):
     1. operator instead of equal sign
     """
     _ = current_lang.translate
-    # TODO: add tests
-
     if not statement.bad_token.is_operator() or statement.prev_token == "def":
         return {}
 
@@ -523,34 +529,39 @@ def operator_as_argument(statement):
         return {"cause": cause, "suggest": hint}
 
     # def test(a, **, b): -> def test(a, c, b):
-    if statement.prev_token.string in "(,":
+    if statement.prev_token.string in ("(", ","):
         # prevent getting an error because of repeated argument
         unique_name = utils.unique_variable_name()
         new_statement = fixers.replace_token(
             statement.statement_tokens, statement.bad_token, unique_name
         )
+        hint = _("You cannot use `{op}` as an argument.\n").format(
+            op=statement.bad_token
+        )
         if fixers.check_statement(new_statement):
-            hint = _("You cannot use `{op}` as an argument.\n").format(
-                op=statement.bad_token
-            )
             cause = _(
                 "I suspect you made a typo and wrote `{op}` by mistake.\n"
                 "If you replace it by a unique variable name, the result\n"
                 "will contain no syntax error.\n"
             ).format(op=statement.bad_token)
-            return {"cause": cause, "suggest": hint}
 
-    # The following has no corresponding unit test, but has been tested in a repl
-    if statement.prev_token.string in ("(", ","):
-        hint = _("You cannot use `{op}` as an argument.\n").format(
-            op=statement.bad_token
-        )
-        cause = hint + _(
-            "You can only use identifiers (variable names) as function arguments.\n"
-        )
+        else:
+            cause = (
+                _(
+                    "I suspect you made a typo and wrote `{op}` by mistake,\n"
+                    "perhaps instead of writing an identifier (variable name).\n"
+                )
+                + more_errors()
+            )
         return {"cause": cause, "suggest": hint}
 
-    return {}
+    if statement.prev_token == "**":
+        cause = _(
+            "The `**` operator needs to be followed by an identifier (variable name).\n"
+        )
+        return {"cause": cause}
+
+    return {}  # pragma: no cover
 
 
 @add_statement_analyzer

@@ -306,6 +306,10 @@ descriptions = {
         cause: "You used a number as an argument",
         title: "Single number used as arg in function def",
     },
+    "def_operator_after_2star": {
+        cause: "The `**` operator needs to be followed by an identifier",
+        title: "Operator after ``**``",
+    },
     "def_operator_instead_of_comma": {
         cause: "Did you mean to write a comma",
         title: "def: operator instead of comma",
