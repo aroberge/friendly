@@ -356,24 +356,41 @@ def keyword_arguments_in_def(statement):
     if statement.bad_token != "*" or statement.prev_token != ",":
         return {}
 
-    for tok in statement.tokens[ASYNC : statement.bad_token_index]:
+    args = statement.next_token if statement.next_token.is_identifier() else ""
+    hint = _("You can only use `*` once in a function definition.\n")
+    tokens = statement.tokens
+    for index, tok in enumerate(tokens[ASYNC : statement.bad_token_index]):
+        next_token = tokens[index + 1]
         if tok == "*":
-            hint = _("You can only use `*` once in a function definition.\n")
-            cause = hint + _(
-                "It must either be used by itself, `..., *, ...`,\n"
-                "or in the form `..., *args ...`, but not both.\n"
-            )
-            return {"cause": cause, "suggest": hint}
+            if next_token.is_identifier() and args:
+                cause = hint + _(
+                    "You have used it twice, with `*{first}` and `*{second}`.\n"
+                ).format(first=next_token, second=args)
+                return {"cause": cause, "suggest": hint}
+            elif next_token.is_identifier():
+                args = next_token.string
 
-        if str(tok) in ("**", "="):
-            if statement.next_token.is_identifier():
-                cause = _(
-                    "`*{name}` must appear before any keyword argument.\n"
-                ).format(name=statement.next_token.string)
+            if args:
+                cause = hint + _(
+                    "It must either be used by itself, `*`,\n"
+                    "or in the form `*{args}`, but not both.\n"
+                ).format(args=args)
             else:
-                cause = _("Keyword arguments must appear after the `*` operator.\n")
-            return {"cause": cause, "suggest": cause}
-    return {}
+                cause = hint
+            return {"cause": cause, "suggest": hint}
+        elif tok == "**":
+            if args:
+                cause = _("`*{args}` must appear before `**{kwargs}`.\n").format(
+                    args=args, kwargs=next_token
+                )
+            else:
+                cause = _("`**{kwargs}` must appear after the `*` operator.\n").format(
+                    kwargs=next_token
+                )
+            return {"cause": cause, "suggest": hint}
+    else:  # pragma: no cover
+        debug_helper.log("New case to consider for * as bad token.")
+        return {"cause": hint, "suggest": hint}
 
 
 @add_statement_analyzer

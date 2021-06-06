@@ -337,6 +337,27 @@ descriptions = {
     "def_star_used_only_once": {
         cause: "can only use `*` once in a function definition",
         title: "def: ``*`` used twice",
+        "also in cause": ["`*arg`"],
+    },
+    "def_star_used_only_once_1": {
+        cause: "can only use `*` once in a function definition",
+        title: "def: ``*`` used twice",
+    },
+    "def_star_used_only_once_2": {
+        cause: "can only use `*` once in a function definition",
+        title: "def: ``*`` used twice",
+        "also in cause": ["`*arg`", "`*other`"],
+    },
+    "def_star_after_2star": {
+        cause: "can only use `*` once in a function definition",
+        title: "def: ``*`` after ``**``",
+        "also in cause": ["`**kw`"],
+        "not in cause": ["`*` operator"],
+    },
+    "def_star_after_2star_2": {
+        cause: "can only use `*` once in a function definition",
+        title: "def: ``*`` after ``**``",
+        "also in cause": ["`**kw`", "`*` operator"],
     },
     "def_string_as_arg": {
         cause: "You used a string as an argument",
@@ -579,7 +600,7 @@ descriptions = {
     },
     "missing_in_with_for": {
         cause: "Did you forget to write `in`?",
-        title: "For loop missing 'in' operator"
+        title: "For loop missing 'in' operator",
     },
     "missing_parens_for_range": {
         cause: "you forgot to use to use parenthesis with `range`",
@@ -587,7 +608,7 @@ descriptions = {
     },
     "misspelled_keyword": {
         cause: "if i in range(3)",
-        title: "Misspelled Python keyword"
+        title: "Misspelled Python keyword",
     },
     "name_is_global_and_nonlocal": {
         cause: "You declared `xy` as being both a global and nonlocal",
@@ -662,15 +683,15 @@ descriptions = {
     },
     "semi_colon_instead_of_comma_1": {
         cause: "You wrote a semi-colon, `;`, where a comma was expected.",
-        title: "Semi-colon instead of comma - 1"
+        title: "Semi-colon instead of comma - 1",
     },
     "semi_colon_instead_of_comma_2": {
         cause: "You wrote semi-colons, `;`, where commas were expected.",
-        title: "Semi-colon instead of commas - 2"
+        title: "Semi-colon instead of commas - 2",
     },
     "semi_colon_instead_of_comma_3": {
         cause: "You wrote semi-colons, `;`, where commas were expected.",
-        title: "Semi-colon instead of commas - 3"
+        title: "Semi-colon instead of commas - 3",
     },
     "single_equal_with_if": {
         cause: "You likely used an assignment operator `=`",
@@ -693,8 +714,8 @@ descriptions = {
         title: "Space between operators 2",
     },
     "space_in_variable_name": {
-      cause: "You cannot have spaces in identifiers (variable names).",
-      title: "Space in variable name"
+        cause: "You cannot have spaces in identifiers (variable names).",
+        title: "Space in variable name",
     },
     "too_many_nested_blocks": {
         cause: "Seriously",
@@ -808,12 +829,12 @@ if sys.version_info < (3, 8):
 
     descriptions["debug_fstring_not_supported"] = {
         cause: "You are likely using a 'debug' syntax of f-strings",
-        title: "Debug-feature of f-string not supported"
+        title: "Debug-feature of f-string not supported",
     }
 
     descriptions["fstring_assign_value"] = {
         cause: "You are likely trying to assign a value within an f-string.",
-        title: "Cannot assign a value within an fstring"
+        title: "Cannot assign a value within an fstring",
     }
 
     del descriptions["walrus_instead_of_equal"]

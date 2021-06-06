@@ -1029,6 +1029,7 @@ def too_many_nested_blocks(message="", **_kwargs):
 @add_python_message
 def named_arguments_must_follow_bare_star(message="", **_kwargs):
     _ = current_lang.translate
+    # TODO: revise this as it can be greatly improved
     if message != "named arguments must follow bare *":
         return {}
 
