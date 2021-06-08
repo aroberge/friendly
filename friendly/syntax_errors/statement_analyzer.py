@@ -478,23 +478,24 @@ def assign_instead_of_equal(statement):
     an equal sign, '==', in an if, elif or while statement."""
     _ = current_lang.translate
 
-    if statement.bad_token != "=":
+    if statement.highlighted_tokens:  # Python 3.10
+        bad_token = statement.next_token
+    else:
+        bad_token = statement.bad_token
+
+    if bad_token != "=":
         return {}
 
     if statement.first_token.string not in ("if", "elif", "while"):
         return {}
 
-    new_statement = fixers.replace_token(
-        statement.statement_tokens, statement.bad_token, "=="
-    )
+    new_statement = fixers.replace_token(statement.statement_tokens, bad_token, "==")
     if not fixers.check_statement(new_statement):
         additional_cause = more_errors()
     else:
         additional_cause = ""
 
-    new_statement = fixers.replace_token(
-        statement.statement_tokens, statement.bad_token, ":="
-    )
+    new_statement = fixers.replace_token(statement.statement_tokens, bad_token, ":=")
 
     if sys.version_info < (3, 8) or not fixers.check_statement(new_statement):
         hint = _("Perhaps you needed `==` instead of `=`.\n")

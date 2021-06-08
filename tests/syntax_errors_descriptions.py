@@ -698,15 +698,15 @@ descriptions = {
         title: "Semi-colon instead of commas - 3",
     },
     "single_equal_with_if": {
-        cause: "You likely used an assignment operator `=`",
+        cause: "Perhaps you needed `==`",
         title: "Single = instead of double == with if",
     },
     "single_equal_with_elif": {
-        cause: "You likely used an assignment operator `=`",
+        cause: "Perhaps you needed `==`",
         title: "Single = instead of double == with elif",
     },
     "single_equal_with_while": {
-        cause: " used an assignment operator `=`",
+        cause: "Perhaps you needed `==`",
         title: "Single = instead of double == with while",
     },
     "space_between_operators_1": {
@@ -862,12 +862,5 @@ if sys.version_info >= (3, 10):
     ] = "but forgot to add a colon `:` at the end"
 
     # Temporary removal while taking into account changes in Python 3.10
-    del descriptions["equal_sign_instead_of_colon"]
-    del descriptions["missing_comma_in_list"]
-    del descriptions["missing_comma_in_set"]
-    del descriptions["missing_comma_in_tuple"]
-    del descriptions["single_equal_with_if"]
-    del descriptions["single_equal_with_elif"]
-    del descriptions["single_equal_with_while"]
     del descriptions["would_be_type_declaration_1"]
     del descriptions["would_be_type_declaration_2"]

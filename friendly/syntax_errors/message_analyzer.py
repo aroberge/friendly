@@ -403,7 +403,7 @@ def assign_to_operator(message="", statement=None):
         ).format(name=name, original=name.replace("_", "-"))
         return {"cause": cause, "suggest": hint}
 
-    hint = _("You can only assign objects to identifiers (variable names).\n")
+    hint = _("Perhaps you needed `==` instead of `=`.\n")
     return {"cause": cause, "suggest": hint}
 
 
