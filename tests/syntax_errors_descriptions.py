@@ -860,7 +860,3 @@ if sys.version_info >= (3, 10):
     descriptions["def_missing_colon"][
         "in cause"
     ] = "but forgot to add a colon `:` at the end"
-
-    # Temporary removal while taking into account changes in Python 3.10
-    del descriptions["would_be_type_declaration_1"]
-    del descriptions["would_be_type_declaration_2"]

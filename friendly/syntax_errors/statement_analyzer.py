@@ -914,9 +914,16 @@ def lambda_with_paren(statement):
 def wrong_type_declaration(statement):
     _ = current_lang.translate
 
-    if not statement.bad_token.is_identifier():
+    if statement.highlighted_tokens:  # Python 3.10
+        bad_token = statement.next_token
+        prev_token = statement.bad_token
+    else:
+        bad_token = statement.bad_token
+        prev_token = statement.prev_token
+
+    if not bad_token.is_identifier():
         return {}
-    if statement.prev_token.string not in (
+    if prev_token.string not in (
         "int",
         "float",
         "double",
@@ -928,9 +935,7 @@ def wrong_type_declaration(statement):
     ):
         return {}
 
-    new_statement = fixers.replace_token(
-        statement.statement_tokens, statement.prev_token, ""
-    )
+    new_statement = fixers.replace_token(statement.statement_tokens, prev_token, "")
     if fixers.check_statement(new_statement):
         additional = _(
             "If you remove `{type_decl}`, you will have a valid Python statement.\n"
@@ -945,10 +950,8 @@ def wrong_type_declaration(statement):
     cause = _(
         "It looks like you were trying to declare that `{var}` was\n"
         "a variable using the word `{type_decl}`.\n"
-    ).format(
-        var=statement.bad_token, type_decl=statement.prev_token
-    ) + additional.format(
-        type_decl=statement.prev_token
+    ).format(var=statement.bad_token, type_decl=prev_token) + additional.format(
+        type_decl=prev_token
     )
     return {"cause": cause, "suggest": hint}
 
