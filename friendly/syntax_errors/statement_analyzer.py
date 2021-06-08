@@ -723,8 +723,12 @@ def invalid_hexadecimal(statement):
     """Identifies problem caused by invalid character in an hexadecimal number."""
     _ = current_lang.translate
 
-    prev = statement.prev_token
-    wrong = statement.bad_token
+    if statement.highlighted_tokens:  # Python 3.10
+        prev = statement.bad_token
+        wrong = statement.next_token
+    else:
+        prev = statement.prev_token
+        wrong = statement.bad_token
     if not (prev.immediately_before(wrong) and prev.string.lower().startswith("0x")):
         return {}
 

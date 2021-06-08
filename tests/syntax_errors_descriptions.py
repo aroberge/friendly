@@ -863,7 +863,6 @@ if sys.version_info >= (3, 10):
 
     # Temporary removal while taking into account changes in Python 3.10
     del descriptions["equal_sign_instead_of_colon"]
-    del descriptions["invalid_hexadecimal"]
     del descriptions["missing_comma_in_list"]
     del descriptions["missing_comma_in_set"]
     del descriptions["missing_comma_in_tuple"]
