@@ -35,6 +35,14 @@ def back():
     session.friendly.pop()
 
 
+def _back_repr():
+    _ = current_lang.translate
+    return (_("Removes the last recorded traceback item."),)
+
+
+back.__rich_repr__ = _back_repr
+
+
 def dark():  # pragma: no cover
     """Synonym of set_formatter('dark') designed to be used
     within iPython/Jupyter programming environments or at a terminal.
@@ -127,6 +135,14 @@ def where():
 def why():
     """Shows the likely cause of the exception."""
     explain("why")
+
+
+def _why_repr():
+    _ = current_lang.translate
+    return (_("Shows the likely cause of the exception."),)
+
+
+why.__rich_repr__ = _why_repr
 
 
 def www(search=None, python=False):  # pragma: no cover
@@ -352,12 +368,21 @@ class Friendly:
 
     version = __version__
 
+    def __repr__(self):
+        return "Friendly object"
+
+    def __rich_repr__(self):
+        _ = current_lang.translate
+        yield _("Object with the following methods:")
+        yield "back", Friendly.back
+        yield "why", Friendly.why
+
 
 for helper in helpers:
     setattr(Friendly, helper, staticmethod(helpers[helper]))
 for helper in _debug_helpers:
     setattr(Friendly, helper, staticmethod(_debug_helpers[helper]))
 
-helpers["Friendly"] = Friendly
+helpers["Friendly"] = Friendly()
 
 __all__ = list(helpers.keys())
