@@ -14,6 +14,15 @@ from . import formatters
 from .info_generic import get_generic_explanation
 from .path_info import show_paths
 from .my_gettext import current_lang
+from . import theme
+
+
+def _show_paths_repr():
+    _ = current_lang.translate
+    return (_("Shows the paths corresponding to synonyms used."),)  # noqa
+
+
+show_paths.__rich_repr__ = _show_paths_repr
 
 
 def back():
@@ -37,17 +46,10 @@ def back():
 
 def _back_repr():
     _ = current_lang.translate
-    return (_("Removes the last recorded traceback item."),)
+    return (_("Removes the last recorded traceback item."),)  # noqa
 
 
 back.__rich_repr__ = _back_repr
-
-
-def dark():  # pragma: no cover
-    """Synonym of set_formatter('dark') designed to be used
-    within iPython/Jupyter programming environments or at a terminal.
-    """
-    set_formatter("dark")
 
 
 def explain(include="explain"):
@@ -60,11 +62,27 @@ def explain(include="explain"):
     friendly.set_include(old_include)
 
 
+def _explain_repr():
+    _ = current_lang.translate
+    return (_("Shows all the information about the last traceback."),)  # noqa
+
+
+explain.__rich_repr__ = _explain_repr
+
+
 def friendly_tb():
     """Shows the friendly traceback, which includes the hint/suggestion
     if available.
     """
     explain("friendly_tb")
+
+
+def _friendly_tb_repr():
+    _ = current_lang.translate
+    return (_("Shows a simplified Python traceback"),)  # noqa
+
+
+friendly_tb.__rich_repr__ = _friendly_tb_repr
 
 
 def hint():
@@ -85,11 +103,12 @@ def history():
     session.rich_add_vspace = True
 
 
-def light():  # pragma: no cover
-    """Synonym of set_formatter('light') designed to be used
-    within iPython/Jupyter programming environments or at a terminal.
-    """
-    set_formatter("light")
+def _history_repr():
+    _ = current_lang.translate
+    return (_("Shows a list of recorded traceback messages."),)  # noqa
+
+
+history.__rich_repr__ = _history_repr
 
 
 def more():
@@ -100,11 +119,27 @@ def more():
     explain("more")
 
 
+def _more_repr():
+    _ = current_lang.translate
+    return (_("Equivalent to what() + where() + why()."),)  # noqa
+
+
+more.__rich_repr__ = _more_repr
+
+
 def python_tb():
     """Shows the Python traceback, excluding files from friendly
     itself.
     """
     explain("python_tb")
+
+
+def _python_tb_repr():
+    _ = current_lang.translate
+    return (_("Shows a normal Python traceback"),)  # noqa
+
+
+python_tb.__rich_repr__ = _python_tb_repr
 
 
 def what(exception=None, pre=False):
@@ -127,9 +162,25 @@ def what(exception=None, pre=False):
     return
 
 
+def _what_repr():
+    _ = current_lang.translate
+    return (_("Shows the generic meaning of a given exception"),)  # noqa
+
+
+what.__rich_repr__ = _what_repr
+
+
 def where():
     """Shows the information about where the exception occurred"""
     explain("where")
+
+
+def _where_repr():
+    _ = current_lang.translate
+    return (_("Shows where an exception was raised."),)  # noqa
+
+
+where.__rich_repr__ = _where_repr
 
 
 def why():
@@ -139,7 +190,7 @@ def why():
 
 def _why_repr():
     _ = current_lang.translate
-    return (_("Shows the likely cause of the exception."),)
+    return (_("Shows the likely cause of the exception."),)  # noqa
 
 
 why.__rich_repr__ = _why_repr
@@ -232,33 +283,53 @@ def www(search=None, python=False):  # pragma: no cover
         session.write_err(_("The default web browser cannot be used for searching."))
 
 
+def _www_repr():
+    _ = current_lang.translate
+    return (_("Opens a web browser at a useful location."),)  # noqa
+
+
+www.__rich_repr__ = _www_repr
+
+
 get_lang = friendly.get_lang
 set_lang = friendly.set_lang
 get_include = friendly.get_include
 set_include = friendly.set_include
 set_formatter = friendly.set_formatter
-helpers = {
-    "back": back,
-    "dark": dark,
-    "light": light,
-    "history": history,
-    "explain": explain,
-    "what": what,
-    "where": where,
-    "why": why,
-    "more": more,
-    "get_lang": get_lang,
-    "set_lang": set_lang,
-    "get_include": get_include,
-    "set_include": set_include,
-    "hint": hint,
-    "friendly_tb": friendly_tb,
-    "python_tb": python_tb,
-    "show_paths": show_paths,
-    "set_formatter": set_formatter,
-    "www": www,
-}
 
+
+def _get_lang_repr():
+    _ = current_lang.translate
+    return (_("Returns the language currently used."),)  # noqa
+
+
+def _set_lang_repr():
+    _ = current_lang.translate
+    return (_("Sets the language to be used."),)  # noqa
+
+
+def _get_include_repr():
+    _ = current_lang.translate
+    return (
+        _("Returns the current value used for items to include by default."),
+    )  # noqa
+
+
+def _set_include_repr():
+    _ = current_lang.translate
+    return (_("Sets the items to show when an exception is raised."),)  # noqa
+
+
+def _set_formatter_repr():
+    _ = current_lang.translate
+    return (_("Sets the formatter to use for display."),)  # noqa
+
+
+get_include.__rich_repr__ = _get_include_repr
+set_include.__rich_repr__ = _set_include_repr
+get_lang.__rich_repr__ = _get_lang_repr
+set_lang.__rich_repr__ = _set_lang_repr
+set_formatter.__rich_repr__ = _set_formatter_repr
 
 # ===== Debugging functions are not unit tested by choice =====
 
@@ -348,6 +419,31 @@ def _show_info():  # pragma: no cover
             print(f"{item}: None")
 
 
+basic_helpers = {  # Will appear in basic help
+    "back": back,
+    "history": history,
+    "explain": explain,
+    "what": what,
+    "where": where,
+    "why": why,
+    "more": more,
+    "set_lang": set_lang,
+    "friendly_tb": friendly_tb,
+    "python_tb": python_tb,
+    "show_paths": show_paths,
+    "www": www,
+}
+
+other_helpers = {
+    "hint": hint,
+    "get_lang": get_lang,
+    "get_include": get_include,
+    "set_include": set_include,
+    "set_formatter": set_formatter,
+}
+
+helpers = {**basic_helpers, **other_helpers}
+
 _debug_helpers = {
     "_debug_tb": _debug_tb,
     "_show_info": _show_info,
@@ -359,7 +455,7 @@ _debug_helpers = {
 }
 
 
-class Friendly:
+class FriendlyHelpers:
     """Helper class which can be used in a console if one of the
     helper functions gets redefined.
 
@@ -368,21 +464,82 @@ class Friendly:
 
     version = __version__
 
-    def __repr__(self):
-        return "Friendly object"
+    def __init__(self, color_schemes=None):
+        _include = list(basic_helpers)
+        if color_schemes is not None:
+            _include.extend(color_schemes)
+        _include = sorted(_include)  # first alphabetically
+        # then by word length, as it is easier to read.
+        self.include_in_rich_repr = sorted(_include, key=len)
+        self.__class__.__name__ = "Friendly"  # For a nicer Rich repr
 
     def __rich_repr__(self):
+        """Shows a brief description in the default language of what
+        each 'basic' function/method does.
+
+        'Advanced' and debugging helper functions are not included
+        in the display.
+        """
         _ = current_lang.translate
-        yield _("Object with the following methods:")
-        yield "back", Friendly.back
-        yield "why", Friendly.why
+        text = _("Use `help(Friendly)` and `dir(Friendly)` for more information.")
+        md = theme.friendly_rich.Markdown(
+            text, inline_code_lexer="python", code_theme=theme.CURRENT_THEME
+        )
+        session.console.print("", md, "")
+        yield _("Object with many methods, including:")
+        for item in self.include_in_rich_repr:
+            yield item, getattr(Friendly, item)
 
 
-for helper in helpers:
-    setattr(Friendly, helper, staticmethod(helpers[helper]))
 for helper in _debug_helpers:
-    setattr(Friendly, helper, staticmethod(_debug_helpers[helper]))
+    setattr(FriendlyHelpers, helper, staticmethod(_debug_helpers[helper]))
+for helper in helpers:
+    setattr(FriendlyHelpers, helper, staticmethod(helpers[helper]))
 
-helpers["Friendly"] = Friendly()
+# == Local version; something like the following needs
+# to be done in each specialized versions (e.g. Mu, Idle, IPython, etc.)
+
+
+class _FriendlyHelpers(FriendlyHelpers):  # local version
+    pass
+
+
+def dark():  # pragma: no cover
+    """Synonym of set_formatter('dark') designed to be used
+    within iPython/Jupyter programming environments or at a terminal.
+    """
+    set_formatter("dark")
+
+
+def _dark_repr():
+    _ = current_lang.translate
+    return (_("Colour scheme designed for a black background."),)  # noqa
+
+
+dark.__rich_repr__ = _dark_repr
+
+
+def light():  # pragma: no cover
+    """Synonym of set_formatter('light') designed to be used
+    within iPython/Jupyter programming environments or at a terminal.
+    """
+    set_formatter("light")
+
+
+def _light_repr():
+    _ = current_lang.translate
+    return (_("Colour scheme designed for a white background."),)  # noqa
+
+
+light.__rich_repr__ = _light_repr
+
+default_color_schemes = {"dark": dark, "light": light}
+
+Friendly = _FriendlyHelpers(default_color_schemes)
+for scheme in default_color_schemes:
+    setattr(_FriendlyHelpers, scheme, staticmethod(default_color_schemes[scheme]))
+
+helpers["Friendly"] = Friendly
 
 __all__ = list(helpers.keys())
+__all__.extend(list(default_color_schemes))

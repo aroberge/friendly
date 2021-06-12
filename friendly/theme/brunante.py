@@ -80,6 +80,10 @@ rich_style = {
     "repr.str": my_style["string"],
     "repr.error": my_style["Exception"],
     "repr.indent": my_style["comments"],
+    "repr.attrib_name": my_style["builtins"],
+    "repr.attrib_value": my_style["code"],
+    "repr.attrib_equal": my_style["operators"],
+    "repr.call": my_style["code"],
 }
 
 my_style.update(**rich_style)

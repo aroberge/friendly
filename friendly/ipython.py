@@ -11,7 +11,7 @@ import colorama
 
 from friendly import install, exclude_file_from_traceback, explain_traceback, session
 from friendly.console_helpers import *  # noqa
-from friendly.console_helpers import helpers  # noqa
+from friendly.console_helpers import __all__  # noqa
 
 try:
     from IPython.utils import py3compat  # noqa
@@ -23,8 +23,6 @@ except Exception:  # noqa
 
 colorama.deinit()
 colorama.init(convert=False, strip=False)
-
-__all__ = list(helpers.keys())
 
 
 def set_width(width=80):

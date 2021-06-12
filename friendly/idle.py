@@ -10,10 +10,15 @@ from idlelib import run as idlelib_run
 
 import friendly  # noqa
 from friendly.console_helpers import *  # noqa
-from friendly.console_helpers import helpers  # noqa
+from friendly.console_helpers import helpers, FriendlyHelpers  # noqa
 from friendly import source_cache
 from friendly.formatters import select_items, repl_indentation, no_result
 from friendly.my_gettext import current_lang
+
+del dark  # noqa
+del light  # noqa
+Friendly = FriendlyHelpers()
+helpers["Friendly"] = Friendly
 
 
 def idle_writer(output, color=None):
@@ -255,7 +260,7 @@ def run(filename, lang=None, include="friendly_tb", args=None, console=True):
     if not console:
         if sys.version_info >= (3, 10):
             install_in_idle_shell()
-        elif sys.version_info < (3, 10):
+        else:
             sys.stderr.write("Friendly cannot be installed in this version of IDLE.\n")
 
     return friendly.run(
@@ -268,13 +273,7 @@ def run(filename, lang=None, include="friendly_tb", args=None, console=True):
     )
 
 
-__all__ = list(helpers.keys())
+__all__ = list(helpers)
 __all__.append("install")
 __all__.append("start_console")
 __all__.append("run")
-
-try:
-    __all__.remove("dark")
-    __all__.remove("light")
-except ValueError:
-    pass

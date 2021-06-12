@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-06-10 12:50-0300\n"
+"POT-Creation-Date: 2021-06-12 09:58-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: __init__.py:196 __main__.py:174 idle.py:252
+#: __init__.py:196 __main__.py:174 idle.py:257
 msgid "The file {filename} does not exist."
 msgstr ""
 
-#: config.py:66 config.py:188 console_helpers.py:77
+#: config.py:66 config.py:188 console_helpers.py:97
 msgid "Nothing to show: no exception recorded."
 msgstr ""
 
@@ -40,43 +40,111 @@ msgstr ""
 msgid "Warning: you have redefined the python builtin `{name}`."
 msgstr ""
 
-#: console_helpers.py:30
+#: console_helpers.py:22
+msgid "Shows the paths corresponding to synonyms used."
+msgstr ""
+
+#: console_helpers.py:39
 msgid "Nothing to go back to: no exception recorded."
 msgstr ""
 
-#: console_helpers.py:40
+#: console_helpers.py:49
 msgid "Removes the last recorded traceback item."
 msgstr ""
 
+#: console_helpers.py:67
+msgid "Shows all the information about the last traceback."
+msgstr ""
+
+#: console_helpers.py:82
+msgid "Shows a simplified Python traceback"
+msgstr ""
+
+#: console_helpers.py:108
+msgid "Shows a list of recorded traceback messages."
+msgstr ""
+
+#: console_helpers.py:124
+msgid "Equivalent to what() + where() + why()."
+msgstr ""
+
 #: console_helpers.py:140
+msgid "Shows a normal Python traceback"
+msgstr ""
+
+#: console_helpers.py:168
+msgid "Shows the generic meaning of a given exception"
+msgstr ""
+
+#: console_helpers.py:181
+msgid "Shows where an exception was raised."
+msgstr ""
+
+#: console_helpers.py:194
 msgid "Shows the likely cause of the exception."
 msgstr ""
 
-#: console_helpers.py:182
+#: console_helpers.py:237
 msgid ""
 "The first argument of `www()` must be either `None` or a string.\n"
 msgstr ""
 
-#: console_helpers.py:186
+#: console_helpers.py:241
 msgid ""
 "If you wish to open Python's documentation, use\n"
 "`www(python=True)`.\n"
 msgstr ""
 
-#: console_helpers.py:197
+#: console_helpers.py:252
 msgid "https://docs.python.org/3/"
 msgstr ""
 
-#: console_helpers.py:198
+#: console_helpers.py:253
 msgid "https://docs.python.org/3/search.html?q="
 msgstr ""
 
-#: console_helpers.py:229
+#: console_helpers.py:284
 msgid "The default web browser cannot be used for searching."
 msgstr ""
 
-#: console_helpers.py:373
-msgid "Object with the following methods:"
+#: console_helpers.py:289
+msgid "Opens a web browser at a useful location."
+msgstr ""
+
+#: console_helpers.py:304
+msgid "Returns the language currently used."
+msgstr ""
+
+#: console_helpers.py:309
+msgid "Sets the language to be used."
+msgstr ""
+
+#: console_helpers.py:314
+msgid "Returns the current value used for items to include by default."
+msgstr ""
+
+#: console_helpers.py:319
+msgid "Sets the items to show when an exception is raised."
+msgstr ""
+
+#: console_helpers.py:324
+msgid "Sets the formatter to use for display."
+msgstr ""
+
+#: console_helpers.py:483
+msgid "Use `help(Friendly)` and `dir(Friendly)` for more information."
+msgstr ""
+
+#: console_helpers.py:488
+msgid "Object with many methods, including:"
+msgstr ""
+
+#: console_helpers.py:515
+msgid "Colour scheme designed for a black background."
+msgstr ""
+
+#: console_helpers.py:530
+msgid "Colour scheme designed for a white background."
 msgstr ""
 
 #: core.py:339
@@ -392,7 +460,19 @@ msgid ""
 "    {name} = {hint}\n"
 msgstr ""
 
-#: mu.py:60
+#: mu.py:24
+msgid "Colour scheme designed Mu's day theme."
+msgstr ""
+
+#: mu.py:38
+msgid "Colour scheme designed Mu's night theme."
+msgstr ""
+
+#: mu.py:54
+msgid "Colour scheme designed Mu's high contrast theme."
+msgstr ""
+
+#: mu.py:78
 msgid ""
 "Friendly themes are only available in Mu's REPL.\n"
 msgstr ""
