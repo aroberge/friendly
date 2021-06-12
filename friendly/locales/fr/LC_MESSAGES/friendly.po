@@ -49,7 +49,7 @@ msgstr ""
 
 #: console_helpers.py:22
 msgid "Shows the paths corresponding to synonyms used."
-msgstr ""
+msgstr "Affiche les chemins correspondant aux synonymes utilisés."
 
 #: console_helpers.py:39
 msgid "Nothing to go back to: no exception recorded."
