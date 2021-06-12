@@ -11,7 +11,7 @@ import rich  # Only use it to find site-packages
 
 EXCLUDED_FILE_PATH = set()
 EXCLUDED_DIR_NAMES = set()
-SITE_PACKAGES = os.path.join(os.path.dirname(rich.__file__), "..")
+SITE_PACKAGES = os.path.normpath(os.path.join(os.path.dirname(rich.__file__), ".."))
 
 
 def exclude_file_from_traceback(full_path):
