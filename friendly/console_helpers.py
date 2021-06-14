@@ -14,7 +14,6 @@ from . import formatters
 from .info_generic import get_generic_explanation
 from .path_info import show_paths
 from .my_gettext import current_lang
-from . import theme
 
 
 def _show_paths_repr():
@@ -473,7 +472,7 @@ class FriendlyHelpers:
         self.include_in_rich_repr = sorted(_include, key=len)
         self.__class__.__name__ = "Friendly"  # For a nicer Rich repr
 
-    def __rich_repr__(self):
+    def __repr__(self):
         """Shows a brief description in the default language of what
         each 'basic' function/method does.
 
@@ -482,13 +481,12 @@ class FriendlyHelpers:
         """
         _ = current_lang.translate
         text = _("Use `help(Friendly)` and `dir(Friendly)` for more information.")
-        md = theme.friendly_rich.Markdown(
-            text, inline_code_lexer="python", code_theme=theme.CURRENT_THEME
-        )
-        session.console.print("", md, "")
-        yield _("Object with many methods, including:")
+        parts = [text + "\n\n"]
         for item in self.include_in_rich_repr:
-            yield item, getattr(Friendly, item)
+            parts.append(item + "(): ")
+            parts.append(getattr(Friendly, item).__rich_repr__()[0] + "\n")
+
+        return "".join(parts)
 
 
 for helper in _debug_helpers:
@@ -541,5 +539,9 @@ for scheme in default_color_schemes:
 
 helpers["Friendly"] = Friendly
 
+new_set_lang = Friendly.set_lang
+
 __all__ = list(helpers.keys())
 __all__.extend(list(default_color_schemes))
+
+__all__.append(new_set_lang)
