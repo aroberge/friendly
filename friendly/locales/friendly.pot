@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-06-12 09:58-0300\n"
+"POT-Creation-Date: 2021-06-13 22:55-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,54 +68,54 @@ msgstr ""
 msgid "Equivalent to what() + where() + why()."
 msgstr ""
 
-#: console_helpers.py:140
+#: console_helpers.py:139
 msgid "Shows a normal Python traceback"
 msgstr ""
 
-#: console_helpers.py:168
+#: console_helpers.py:167
 msgid "Shows the generic meaning of a given exception"
 msgstr ""
 
-#: console_helpers.py:181
+#: console_helpers.py:180
 msgid "Shows where an exception was raised."
 msgstr ""
 
-#: console_helpers.py:194
+#: console_helpers.py:193
 msgid "Shows the likely cause of the exception."
 msgstr ""
 
-#: console_helpers.py:237
+#: console_helpers.py:236
 msgid ""
 "The first argument of `www()` must be either `None` or a string.\n"
 msgstr ""
 
-#: console_helpers.py:241
+#: console_helpers.py:240
 msgid ""
 "If you wish to open Python's documentation, use\n"
 "`www(python=True)`.\n"
 msgstr ""
 
-#: console_helpers.py:252
+#: console_helpers.py:251
 msgid "https://docs.python.org/3/"
 msgstr ""
 
-#: console_helpers.py:253
+#: console_helpers.py:252
 msgid "https://docs.python.org/3/search.html?q="
 msgstr ""
 
-#: console_helpers.py:284
+#: console_helpers.py:283
 msgid "The default web browser cannot be used for searching."
 msgstr ""
 
-#: console_helpers.py:289
+#: console_helpers.py:288
 msgid "Opens a web browser at a useful location."
 msgstr ""
 
-#: console_helpers.py:304
+#: console_helpers.py:303
 msgid "Returns the language currently used."
 msgstr ""
 
-#: console_helpers.py:309
+#: console_helpers.py:308
 msgid "Sets the language to be used."
 msgstr ""
 
@@ -123,27 +123,23 @@ msgstr ""
 msgid "Returns the current value used for items to include by default."
 msgstr ""
 
-#: console_helpers.py:319
+#: console_helpers.py:320
 msgid "Sets the items to show when an exception is raised."
 msgstr ""
 
-#: console_helpers.py:324
+#: console_helpers.py:325
 msgid "Sets the formatter to use for display."
 msgstr ""
 
-#: console_helpers.py:483
+#: console_helpers.py:501
 msgid "Use `help(Friendly)` and `dir(Friendly)` for more information."
 msgstr ""
 
-#: console_helpers.py:488
-msgid "Object with many methods, including:"
-msgstr ""
-
-#: console_helpers.py:515
+#: console_helpers.py:533
 msgid "Colour scheme designed for a black background."
 msgstr ""
 
-#: console_helpers.py:530
+#: console_helpers.py:548
 msgid "Colour scheme designed for a white background."
 msgstr ""
 
@@ -164,46 +160,51 @@ msgid ""
 "raises an exception or does not return a string.\n"
 msgstr ""
 
-#: core.py:529
+#: core.py:455
+msgid ""
+"The encoding of the file was not valid.\n"
+msgstr ""
+
+#: core.py:533
 msgid ""
 "{filename} is not a regular Python file whose contents can be analyzed.\n"
 msgstr ""
 
-#: core.py:535
+#: core.py:539
 msgid ""
 "Exception raised on line {linenumber} of file {filename}.\n"
 msgstr ""
 
-#: core.py:573
+#: core.py:577
 msgid ""
 "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
 
-#: core.py:592
+#: core.py:596
 msgid ""
 "`{filename}` is not a regular Python file whose contents\n"
 "can be analyzed.\n"
 msgstr ""
 
-#: core.py:603
+#: core.py:607
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "beyond the location indicated by ^.\n"
 msgstr ""
 
-#: core.py:609
+#: core.py:613
 msgid ""
 "Python could not understand the code in the file\n"
-"'{filename}'\n"
+"'{filename}'.\n"
 msgstr ""
 
-#: core.py:806
+#: core.py:810
 msgid ""
 "Problem: source of `{filename}` is not available\n"
 msgstr ""
 
-#: core.py:848
+#: core.py:852
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -460,19 +461,19 @@ msgid ""
 "    {name} = {hint}\n"
 msgstr ""
 
-#: mu.py:24
+#: mu.py:23
 msgid "Colour scheme designed Mu's day theme."
 msgstr ""
 
-#: mu.py:38
+#: mu.py:35
 msgid "Colour scheme designed Mu's night theme."
 msgstr ""
 
-#: mu.py:54
+#: mu.py:48
 msgid "Colour scheme designed Mu's high contrast theme."
 msgstr ""
 
-#: mu.py:78
+#: mu.py:71
 msgid ""
 "Friendly themes are only available in Mu's REPL.\n"
 msgstr ""

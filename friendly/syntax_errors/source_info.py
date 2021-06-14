@@ -6,7 +6,6 @@ from ..source_cache import cache
 from .syntax_utils import matching_brackets
 from .. import debug_helper
 from .. import token_utils
-from ..my_gettext import internal_error
 
 
 # During the analysis for finding the cause of the error, we typically examine
@@ -103,8 +102,10 @@ class Statement:
         self.using_friendly_console = False
         if self.filename is not None:
             self.using_friendly_console = self.filename.startswith("<friendly")
-        elif TOO_MANY_BLOCKS not in self.message:  # pragma: no cover
-            # We know of only one case where filename should be None.
+        elif (
+            TOO_MANY_BLOCKS not in self.message
+            and "encoding problem" not in self.message
+        ):  # pragma: no cover
             debug_helper.log("filename is None in source_info.Statement")
             debug_helper.log("Add this as a new test.")
 
@@ -120,13 +121,11 @@ class Statement:
             # self.all_statements and self.statement_tokens are set in the following
             self.obtain_statement(source_tokens)
             self.tokens = self.remove_meaningless_tokens()
-            if not self.tokens:  # pragma: no cover
-                debug_helper.log("self.tokens is empty; add this as new test.")
-                if len(self.all_statements) > 1:
+            if not self.tokens:
+                if len(self.all_statements) > 1:  # pragma: no cover
                     self.statement_tokens = self.all_statements[-2]
                     self.tokens = self.remove_meaningless_tokens()
                 else:
-                    print(internal_error())
                     self.tokens = [token_utils.tokenize("Internal_error")[0]]
 
             self.statement = token_utils.untokenize(self.statement_tokens)
@@ -169,13 +168,19 @@ class Statement:
                 last_token.string = last_token.line = add_token
                 self.tokens.append(last_token)
 
-        elif TOO_MANY_BLOCKS not in self.message:  # pragma: no cover
+        elif (
+            TOO_MANY_BLOCKS not in self.message
+            and "encoding problem" not in self.message
+        ):  # pragma: no cover
             debug_helper.log("linenumber is None in source_info.Statement")
             debug_helper.log("Add this as new test case")
 
         if self.tokens:
             self.assign_individual_token_values()
-        elif TOO_MANY_BLOCKS not in self.message:  # pragma: no cover
+        elif (
+            TOO_MANY_BLOCKS not in self.message
+            and "encoding problem" not in self.message
+        ):  # pragma: no cover
             debug_helper.log("No meaningful tokens in source_info.Statement")
 
     def get_source_tokens(self):

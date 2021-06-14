@@ -451,6 +451,10 @@ class FriendlyTraceback:
             self.info["cause"] = cannot_analyze_stdin()
             return
 
+        if "encoding problem" in str(self.tb_data.value):
+            self.info["cause"] = _("The encoding of the file was not valid.\n")
+            return
+
         if etype.__name__ == "IndentationError":
             self.info["cause"] = indentation_error.set_cause_indentation_error(
                 value, self.tb_data.statement
@@ -607,7 +611,7 @@ class FriendlyTraceback:
             ).format(filename=path_utils.shorten_path(filepath))
         elif filepath:  # could be None
             self.info["parsing_error"] = _(
-                "Python could not understand the code in the file\n" "'{filename}'\n"
+                "Python could not understand the code in the file\n" "'{filename}'.\n"
             ).format(filename=path_utils.shorten_path(filepath))
 
         self.info["parsing_error_source"] = f"{partial_source}\n"

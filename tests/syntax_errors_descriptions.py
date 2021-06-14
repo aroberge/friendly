@@ -504,6 +504,10 @@ descriptions = {
         cause: "unicode character",
         title: "Invalid character in identifier",
     },
+    "invalid_encoding": {
+        cause: "The encoding of the file was not valid.",
+        title: "Invalid encoding"
+    },
     "invalid_hexadecimal": {
         cause: "Did you made a mistake in writing an hexadecimal integer",
         title: "Invalid hexadecimal number",
