@@ -136,10 +136,9 @@ class TracebackData:
             # so that we can use these elsewhere without having to perform
             # additional checks.
             if not hasattr(self.value, "end_offset"):
-                if self.value.offset:
-                    self.value.end_offset = self.value.offset + 1
-                else:
-                    self.value.end_offset = 0
+                self.value.end_offset = (
+                    self.value.offset + 1 if self.value.offset else 0
+                )
                 self.value.end_lineno = self.value.lineno
             if self.value.text is not None:
                 self.bad_line = self.value.text  # typically includes "\n"

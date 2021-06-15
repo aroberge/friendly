@@ -8,9 +8,8 @@ environments such as in a Jupyter notebook.
 # NOTE: __all__ is defined at the very bottom of this file
 import friendly
 
-from . import debug_helper, __version__
+from friendly import debug_helper, formatters, __version__
 from .config import session
-from . import formatters
 from .info_generic import get_generic_explanation
 from .path_info import show_paths
 from .my_gettext import current_lang
@@ -494,8 +493,8 @@ for helper in _debug_helpers:
 for helper in helpers:
     setattr(FriendlyHelpers, helper, staticmethod(helpers[helper]))
 
-# == Local version; something like the following needs
-# to be done in each specialized versions (e.g. Mu, Idle, IPython, etc.)
+# == Local version; this may need to be removed/modified in
+# some programming environments (e.g. Mu, Idle, etc.) which do not support Rich.
 
 
 class _FriendlyHelpers(FriendlyHelpers):  # local version
@@ -539,9 +538,5 @@ for scheme in default_color_schemes:
 
 helpers["Friendly"] = Friendly
 
-new_set_lang = Friendly.set_lang
-
 __all__ = list(helpers.keys())
 __all__.extend(list(default_color_schemes))
-
-__all__.append(new_set_lang)
