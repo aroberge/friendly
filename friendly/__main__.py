@@ -120,6 +120,8 @@ parser.add_argument(
 
 
 parser.add_argument("--debug", help="""For developer use.""", action="store_true")
+parser.add_argument("--no_debug", help="""For developer use.""", action="store_true")
+
 
 parser.add_argument(
     "--include",
@@ -146,6 +148,8 @@ def main():
     if args.debug:  # pragma: no cover
         debug_helper.DEBUG = True
         include = "debug_tb"
+    elif args.no_debug:  # pragma: no cover
+        debug_helper.DEBUG = False
 
     install(lang=args.lang, include=include)
 
