@@ -78,6 +78,8 @@ class TracebackData:
         self.bad_line = "\n"
         self.filename = ""
         self.exception_frame = None
+        self.program_stopped_frame = None
+        self.program_stopped_bad_line = "\n"
         self.get_source_info()
 
         # The following four attributes get their correct values in locate_error()
@@ -85,6 +87,8 @@ class TracebackData:
         self.node_text = ""
         self.node_range = None
         self.original_bad_line = ""
+
+        self.program_stopped_node_range = None
 
         if issubclass(etype, SyntaxError):
             self.statement = source_info.Statement(self.value, self.bad_line)
@@ -157,15 +161,23 @@ class TracebackData:
             self.exception_frame, self.filename, linenumber, _, _, _ = self.records[-1]
             _, line = cache.get_formatted_partial_source(self.filename, linenumber)
             self.bad_line = line.rstrip()
+            if len(self.records) > 1:
+                self.program_stopped_frame, filename, linenumber, *_rest = self.records[
+                    0
+                ]
+                _, line = cache.get_formatted_partial_source(filename, linenumber)
+                self.program_stopped_bad_line = line.rstrip()
             return
 
         # We should never reach this stage.
-        if True:  # pragma: no cover
+        def log_error():
             debug_helper.log("Internal error in TracebackData.get_source_info.")
             debug_helper.log("No records found.")
             debug_helper.log("self.exception_type:" + str(self.exception_type))
             debug_helper.log("self.value:" + str(self.value))
             debug_helper.log_error()
+
+        log_error()  # pragma: no cover
 
     def locate_error(self, tb):
         """Attempts to narrow down the location of the error."""
@@ -197,6 +209,8 @@ class TracebackData:
         # Other than for NameError, we replace our definition (text) of
         # the line that caused the exception by that of the node itself,
         # to be used later for processing.
+        if self.program_stopped_frame is not None:
+            self.locate_program_stopped_range(tb)
         if self.exception_name == "NameError":
             # `executing` cannot give us the node location in this case
             return self.locate_name_error()
@@ -245,6 +259,39 @@ class TracebackData:
             begin = self.bad_line.find(name)
             end = begin + len(name)
             self.node_range = begin, end
+
+    def locate_program_stopped_range(self, tb):
+        while True:
+            if tb.tb_frame == self.program_stopped_frame:
+                break
+            tb = tb.tb_next
+            if not tb:  # pragma: no cover
+                debug_helper.log("No tb in locate_program_stopped_range().")
+                return
+
+        try:
+            ex = executing.Source.executing(tb)
+            node_text = ex.text()
+            # We want to transform logical line (or parts thereof) into
+            # something that fits on a single physical line.
+            # \n could be a valid newline token or a character within
+            # a string; we only want to replace newline tokens.
+            if "\n" in node_text:
+                tokens = token_utils.tokenize(node_text)
+                tokens = [tok for tok in tokens if tok != "\n"]
+                node_text = "".join(tok.string for tok in tokens)
+            _bad_line = token_utils.strip_comment(self.program_stopped_bad_line)
+            if (
+                node_text
+                and node_text in self.program_stopped_bad_line
+                and node_text.strip() != _bad_line.strip()
+            ):
+                begin = self.program_stopped_bad_line.find(node_text)
+                end = begin + len(node_text)
+                self.program_stopped_node_range = begin, end
+        except Exception as e:  # pragma: no cover
+            debug_helper.log("Exception raised in TracebackData.use_executing.")
+            debug_helper.log(str(e))
 
 
 # ====================
@@ -568,7 +615,9 @@ class FriendlyTraceback:
         if lines == ["\n"] and source_cache.idle_get_lines is not None:
             # skipcq: PYL-E1102
             lines = source_cache.idle_get_lines(filename, linenumber - 1)
-        partial_source = get_partial_source(filename, linenumber, lines, index)
+        partial_source = get_partial_source(
+            filename, linenumber, lines, index, self.tb_data.program_stopped_node_range
+        )
         filename = path_utils.shorten_path(filename)
         if session.use_rich:
             filename = f"`'{filename}'`"
