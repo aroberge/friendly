@@ -705,8 +705,8 @@ def indices_must_be_integers_or_slices(message, frame, tb_data):
     if container == index:
         additional_cause = "\n" + _(
             "Perhaps you have forgotten a comma between two identical lists\n"
-            "`{container}`.  The second list had been interpreted as\n"
-            "the indexation the first one by the index `{new_index}`\n"
+            "`{container}`. The second list had been interpreted as\n"
+            "the indexation of the first one by the index `{new_index}`\n"
         ).format(container=container, new_index=f"({index[1:-1]})")
     else:
         additional_cause = "\n" + _(

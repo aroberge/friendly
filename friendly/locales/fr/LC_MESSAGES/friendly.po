@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-06-13 22:55-0300\n"
+"POT-Creation-Date: 2021-06-16 08:46-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
@@ -15,11 +15,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.0\n"
 
-#: __init__.py:196 __main__.py:174 idle.py:257
+#: __init__.py:196 __main__.py:178 idle.py:257
 msgid "The file {filename} does not exist."
 msgstr "Le fichier {filename} n'existe pas."
 
-#: config.py:66 config.py:188 console_helpers.py:97
+#: config.py:66 config.py:188 console_helpers.py:95
 msgid "Nothing to show: no exception recorded."
 msgstr "Rien à montrer: pas d’exception enregistrée."
 
@@ -47,58 +47,58 @@ msgid "Warning: you have redefined the python builtin `{name}`."
 msgstr ""
 "Attention : vous avez redéfini l'identifiant Python (builtin) `{name}`."
 
-#: console_helpers.py:22
+#: console_helpers.py:20
 msgid "Shows the paths corresponding to synonyms used."
 msgstr "Affiche les chemins correspondant aux synonymes utilisés."
 
-#: console_helpers.py:39
+#: console_helpers.py:37
 msgid "Nothing to go back to: no exception recorded."
 msgstr ""
 "Impossible de revenir en arrière: il n'y a pas d’exception enregistrée."
 
-#: console_helpers.py:49
+#: console_helpers.py:47
 msgid "Removes the last recorded traceback item."
 msgstr "Supprime le dernier élément de traceback enregistré."
 
-#: console_helpers.py:67
+#: console_helpers.py:65
 msgid "Shows all the information about the last traceback."
 msgstr "Affiche toutes les informations sur le dernier traceback."
 
-#: console_helpers.py:82
+#: console_helpers.py:80
 msgid "Shows a simplified Python traceback"
 msgstr "Affiche un traceback Python simplifié."
 
-#: console_helpers.py:108
+#: console_helpers.py:106
 msgid "Shows a list of recorded traceback messages."
 msgstr "Affiche une liste des messages de traceback enregistrés."
 
-#: console_helpers.py:124
-msgid "Equivalent to what() + where() + why()."
-msgstr "Équivalent de what() + where() + why()."
+#: console_helpers.py:122
+msgid "Equivalent to why() + where()."
+msgstr "Équivalent de why() + where()."
 
-#: console_helpers.py:139
+#: console_helpers.py:137
 msgid "Shows a normal Python traceback"
 msgstr "Affiche un traceback Python normal."
 
-#: console_helpers.py:167
+#: console_helpers.py:165
 msgid "Shows the generic meaning of a given exception"
 msgstr "Indique la signification générique d'une exception donnée"
 
-#: console_helpers.py:180
+#: console_helpers.py:178
 msgid "Shows where an exception was raised."
 msgstr "Indique où une exception a été levée."
 
-#: console_helpers.py:193
+#: console_helpers.py:191
 msgid "Shows the likely cause of the exception."
 msgstr "Indique la cause probable de l'exception."
 
-#: console_helpers.py:236
+#: console_helpers.py:234
 msgid "The first argument of `www()` must be either `None` or a string.\n"
 msgstr ""
 "Le premier argument de `www()` doit être soit `None` ou une chaîne de "
 "caractères.\n"
 
-#: console_helpers.py:240
+#: console_helpers.py:238
 msgid ""
 "If you wish to open Python's documentation, use\n"
 "`www(python=True)`.\n"
@@ -106,65 +106,65 @@ msgstr ""
 "Si vous désirez ouvrir la documentation Python, utilisez\n"
 "`www(python=True)`.\n"
 
-#: console_helpers.py:251
+#: console_helpers.py:249
 msgid "https://docs.python.org/3/"
 msgstr "https://docs.python.org/fr/3/"
 
-#: console_helpers.py:252
+#: console_helpers.py:250
 msgid "https://docs.python.org/3/search.html?q="
 msgstr "https://docs.python.org/fr/3/search.html?q="
 
-#: console_helpers.py:283
+#: console_helpers.py:281
 msgid "The default web browser cannot be used for searching."
 msgstr ""
 "Le navigateur Web par défaut ne peut pas être utilisé pour la recherche."
 
-#: console_helpers.py:288
+#: console_helpers.py:286
 msgid "Opens a web browser at a useful location."
 msgstr "Ouvre un navigateur web à un endroit utile."
 
-#: console_helpers.py:303
+#: console_helpers.py:301
 msgid "Returns the language currently used."
 msgstr "Renvoie la langue actuellement utilisée."
 
-#: console_helpers.py:308
+#: console_helpers.py:306
 msgid "Sets the language to be used."
 msgstr "Définit la langue à utiliser."
 
-#: console_helpers.py:314
+#: console_helpers.py:312
 msgid "Returns the current value used for items to include by default."
 msgstr ""
 "Renvoie la valeur actuelle utilisée pour les éléments à inclure par défaut."
 
-#: console_helpers.py:320
+#: console_helpers.py:318
 msgid "Sets the items to show when an exception is raised."
 msgstr "Définit les éléments à afficher lorsqu'une exception est levée."
 
-#: console_helpers.py:325
+#: console_helpers.py:323
 msgid "Sets the formatter to use for display."
 msgstr "Définit le formateur à utiliser pour l'affichage."
 
-#: console_helpers.py:501
+#: console_helpers.py:482
 msgid "Use `help(Friendly)` and `dir(Friendly)` for more information."
 msgstr "Utilisez `help(Friendly)` et `dir(Friendly)` pour plus d'informations."
 
-#: console_helpers.py:533
+#: console_helpers.py:513
 msgid "Colour scheme designed for a black background."
 msgstr "Schéma de couleurs conçu pour un fond noir."
 
-#: console_helpers.py:548
+#: console_helpers.py:528
 msgid "Colour scheme designed for a white background."
 msgstr "Schéma de couleurs conçu pour un fond blanc."
 
-#: core.py:339
+#: core.py:385
 msgid "More lines not shown."
 msgstr "Plus de lignes non affichées."
 
-#: core.py:340 core.py:380
+#: core.py:386 core.py:426
 msgid "Python exception:"
 msgstr "Exception Python:"
 
-#: core.py:393
+#: core.py:439
 msgid ""
 "Warning: improperly formed exception.\n"
 "I suspect that a custom exception has been raised\n"
@@ -178,27 +178,27 @@ msgstr ""
 "Cela peut se produire si une méthode `__repr__` ou `__str__`\n"
 "soulève une exception ou ne retourne pas une chaîne.\n"
 
-#: core.py:455
+#: core.py:501
 msgid "The encoding of the file was not valid.\n"
 msgstr "L'encodage du fichier n'était pas valide.\n"
 
-#: core.py:533
+#: core.py:579
 msgid ""
 "{filename} is not a regular Python file whose contents can be analyzed.\n"
 msgstr ""
 "{filename} n’est pas un fichier Python dont le contenu\n"
 "peut être analysé.\n"
 
-#: core.py:539
+#: core.py:585
 msgid "Exception raised on line {linenumber} of file {filename}.\n"
 msgstr "Exception levée à la ligne {linenumber} du fichier {filename}.\n"
 
-#: core.py:577
+#: core.py:625
 msgid "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
 "L'exécution s'est arrêtée à la ligne {linenumber} du fichier {filename}\n"
 
-#: core.py:596
+#: core.py:644
 msgid ""
 "`{filename}` is not a regular Python file whose contents\n"
 "can be analyzed.\n"
@@ -206,7 +206,7 @@ msgstr ""
 "`{filename}` n’est pas un fichier Python dont le contenu\n"
 "peut être analysé.\n"
 
-#: core.py:607
+#: core.py:655
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
@@ -216,7 +216,7 @@ msgstr ""
 "'{filename}'\n"
 "jusqu'à l'endroit indiqué par ^.\n"
 
-#: core.py:613
+#: core.py:661
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'.\n"
@@ -224,11 +224,11 @@ msgstr ""
 "Python ne peut pas comprendre le code du fichier\n"
 "'{filename}'.\n"
 
-#: core.py:810
+#: core.py:858
 msgid "Problem: source of `{filename}` is not available\n"
 msgstr "Problème : la source de `{filename}` n'est pas disponible.\n"
 
-#: core.py:852
+#: core.py:900
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -342,8 +342,8 @@ msgstr ""
 "Une exception `IndexError` se produit lorsque vous essayez d’obtenir un "
 "élément\n"
 "d'une liste, d'un tuple, ou d'un objet similaire (séquence), à l’aide d’un "
-"index qui\n"
-"n’existe pas; typiquement, c’est parce que l’index que vous donnez\n"
+"indice qui\n"
+"n’existe pas; typiquement, c’est parce que l’indice que vous donnez\n"
 "est plus grand que la longueur de la séquence.\n"
 
 #: info_generic.py:125
@@ -361,7 +361,7 @@ msgid ""
 "It can also be raised directly by codecs.lookup().\n"
 msgstr ""
 "`LookupError` est la classe de base pour les exceptions qui sont levées\n"
-"lorsqu’une clé ou un index utilisé sur un tableau de correspondance ou une "
+"lorsqu’une clé ou un indice utilisé sur un tableau de correspondance ou une "
 "séquence est invalide.\n"
 "Elle peut également être levée directement par codecs.lookup().\n"
 
@@ -1050,7 +1050,7 @@ msgid ""
 "You have tried to get the item with index `{index}` of `{name}`,\n"
 "{obj_type} of length `{length}`.\n"
 msgstr ""
-"Vous avez essayé d’obtenir l’élément avec l’index `{index}` de `{name}`,\n"
+"Vous avez essayé d’obtenir l’élément avec l’indice `{index}` de `{name}`,\n"
 "{obj_type} de longueur `{length}`.\n"
 
 #: runtime_errors\index_error.py:81
@@ -1723,12 +1723,12 @@ msgstr "Avez-vous oublié une virgule ?\n"
 #: runtime_errors\type_error.py:706
 msgid ""
 "Perhaps you have forgotten a comma between two identical lists\n"
-"`{container}`.  The second list had been interpreted as\n"
-"the indexation the first one by the index `{new_index}`\n"
+"`{container}`. The second list had been interpreted as\n"
+"the indexation of the first one by the index `{new_index}`\n"
 msgstr ""
 "Peut-être avez-vous oublié une virgule entre deux listes identiques\n"
 "`{container}`. La deuxième liste avait été interprétée comme\n"
-"l’indexation la première par l’indice `{new_index}`\n"
+"l’indexation de la première par l’indice `{new_index}`\n"
 
 #: runtime_errors\type_error.py:712
 msgid ""

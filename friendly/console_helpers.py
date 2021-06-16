@@ -119,7 +119,7 @@ def more():
 
 def _more_repr():
     _ = current_lang.translate
-    return (_("Equivalent to what() + where() + why()."),)  # noqa
+    return (_("Equivalent to why() + where()."),)  # noqa
 
 
 more.__rich_repr__ = _more_repr

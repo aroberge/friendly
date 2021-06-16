@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-06-13 22:55-0300\n"
+"POT-Creation-Date: 2021-06-16 08:46-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: __init__.py:196 __main__.py:174 idle.py:257
+#: __init__.py:196 __main__.py:178 idle.py:257
 msgid "The file {filename} does not exist."
 msgstr ""
 
-#: config.py:66 config.py:188 console_helpers.py:97
+#: config.py:66 config.py:188 console_helpers.py:95
 msgid "Nothing to show: no exception recorded."
 msgstr ""
 
@@ -40,118 +40,118 @@ msgstr ""
 msgid "Warning: you have redefined the python builtin `{name}`."
 msgstr ""
 
-#: console_helpers.py:22
+#: console_helpers.py:20
 msgid "Shows the paths corresponding to synonyms used."
 msgstr ""
 
-#: console_helpers.py:39
+#: console_helpers.py:37
 msgid "Nothing to go back to: no exception recorded."
 msgstr ""
 
-#: console_helpers.py:49
+#: console_helpers.py:47
 msgid "Removes the last recorded traceback item."
 msgstr ""
 
-#: console_helpers.py:67
+#: console_helpers.py:65
 msgid "Shows all the information about the last traceback."
 msgstr ""
 
-#: console_helpers.py:82
+#: console_helpers.py:80
 msgid "Shows a simplified Python traceback"
 msgstr ""
 
-#: console_helpers.py:108
+#: console_helpers.py:106
 msgid "Shows a list of recorded traceback messages."
 msgstr ""
 
-#: console_helpers.py:124
-msgid "Equivalent to what() + where() + why()."
+#: console_helpers.py:122
+msgid "Equivalent to why() + where()."
 msgstr ""
 
-#: console_helpers.py:139
+#: console_helpers.py:137
 msgid "Shows a normal Python traceback"
 msgstr ""
 
-#: console_helpers.py:167
+#: console_helpers.py:165
 msgid "Shows the generic meaning of a given exception"
 msgstr ""
 
-#: console_helpers.py:180
+#: console_helpers.py:178
 msgid "Shows where an exception was raised."
 msgstr ""
 
-#: console_helpers.py:193
+#: console_helpers.py:191
 msgid "Shows the likely cause of the exception."
 msgstr ""
 
-#: console_helpers.py:236
+#: console_helpers.py:234
 msgid ""
 "The first argument of `www()` must be either `None` or a string.\n"
 msgstr ""
 
-#: console_helpers.py:240
+#: console_helpers.py:238
 msgid ""
 "If you wish to open Python's documentation, use\n"
 "`www(python=True)`.\n"
 msgstr ""
 
-#: console_helpers.py:251
+#: console_helpers.py:249
 msgid "https://docs.python.org/3/"
 msgstr ""
 
-#: console_helpers.py:252
+#: console_helpers.py:250
 msgid "https://docs.python.org/3/search.html?q="
 msgstr ""
 
-#: console_helpers.py:283
+#: console_helpers.py:281
 msgid "The default web browser cannot be used for searching."
 msgstr ""
 
-#: console_helpers.py:288
+#: console_helpers.py:286
 msgid "Opens a web browser at a useful location."
 msgstr ""
 
-#: console_helpers.py:303
+#: console_helpers.py:301
 msgid "Returns the language currently used."
 msgstr ""
 
-#: console_helpers.py:308
+#: console_helpers.py:306
 msgid "Sets the language to be used."
 msgstr ""
 
-#: console_helpers.py:314
+#: console_helpers.py:312
 msgid "Returns the current value used for items to include by default."
 msgstr ""
 
-#: console_helpers.py:320
+#: console_helpers.py:318
 msgid "Sets the items to show when an exception is raised."
 msgstr ""
 
-#: console_helpers.py:325
+#: console_helpers.py:323
 msgid "Sets the formatter to use for display."
 msgstr ""
 
-#: console_helpers.py:501
+#: console_helpers.py:482
 msgid "Use `help(Friendly)` and `dir(Friendly)` for more information."
 msgstr ""
 
-#: console_helpers.py:533
+#: console_helpers.py:513
 msgid "Colour scheme designed for a black background."
 msgstr ""
 
-#: console_helpers.py:548
+#: console_helpers.py:528
 msgid "Colour scheme designed for a white background."
 msgstr ""
 
-#: core.py:339
+#: core.py:385
 msgid "More lines not shown."
 msgstr ""
 
-#: core.py:340 core.py:380
+#: core.py:386 core.py:426
 msgid "Python exception:"
 msgstr ""
 
-#: core.py:393
+#: core.py:439
 msgid ""
 "Warning: improperly formed exception.\n"
 "I suspect that a custom exception has been raised\n"
@@ -160,51 +160,51 @@ msgid ""
 "raises an exception or does not return a string.\n"
 msgstr ""
 
-#: core.py:455
+#: core.py:501
 msgid ""
 "The encoding of the file was not valid.\n"
 msgstr ""
 
-#: core.py:533
+#: core.py:579
 msgid ""
 "{filename} is not a regular Python file whose contents can be analyzed.\n"
 msgstr ""
 
-#: core.py:539
+#: core.py:585
 msgid ""
 "Exception raised on line {linenumber} of file {filename}.\n"
 msgstr ""
 
-#: core.py:577
+#: core.py:625
 msgid ""
 "Execution stopped on line {linenumber} of file {filename}.\n"
 msgstr ""
 
-#: core.py:596
+#: core.py:644
 msgid ""
 "`{filename}` is not a regular Python file whose contents\n"
 "can be analyzed.\n"
 msgstr ""
 
-#: core.py:607
+#: core.py:655
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'\n"
 "beyond the location indicated by ^.\n"
 msgstr ""
 
-#: core.py:613
+#: core.py:661
 msgid ""
 "Python could not understand the code in the file\n"
 "'{filename}'.\n"
 msgstr ""
 
-#: core.py:810
+#: core.py:858
 msgid ""
 "Problem: source of `{filename}` is not available\n"
 msgstr ""
 
-#: core.py:852
+#: core.py:900
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -1380,8 +1380,8 @@ msgstr ""
 #: runtime_errors\type_error.py:706
 msgid ""
 "Perhaps you have forgotten a comma between two identical lists\n"
-"`{container}`.  The second list had been interpreted as\n"
-"the indexation the first one by the index `{new_index}`\n"
+"`{container}`. The second list had been interpreted as\n"
+"the indexation of the first one by the index `{new_index}`\n"
 msgstr ""
 
 #: runtime_errors\type_error.py:712
