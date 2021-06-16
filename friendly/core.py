@@ -82,12 +82,11 @@ class TracebackData:
         self.program_stopped_bad_line = "\n"
         self.get_source_info()
 
-        # The following four attributes get their correct values in locate_error()
+        # The following attributes get their correct values in self.locate_error()
         self.node = None
         self.node_text = ""
         self.node_range = None
-        self.original_bad_line = ""
-
+        self.original_bad_line = self.bad_line
         self.program_stopped_node_range = None
 
         if issubclass(etype, SyntaxError):
@@ -170,24 +169,83 @@ class TracebackData:
             return
 
         # We should never reach this stage.
-        def log_error():
+        def _log_error():  # pragma: no cover
             debug_helper.log("Internal error in TracebackData.get_source_info.")
             debug_helper.log("No records found.")
             debug_helper.log("self.exception_type:" + str(self.exception_type))
             debug_helper.log("self.value:" + str(self.value))
             debug_helper.log_error()
 
-        log_error()  # pragma: no cover
+        _log_error()  # pragma: no cover
 
     def locate_error(self, tb):
-        """Attempts to narrow down the location of the error."""
+        """Attempts to narrow down the location of the error so that,
+        if possible, the problem code is highlighted with ^^^^."""
         if not self.records:  # pragma: no cover
             debug_helper.log("No records in locate_error().")
             return
 
-        # 1) If we can find the precise location (node) on a line of code
-        #    causing the exception, we note this location
-        #    so that we can indicate it later with ^^^^^, something like:
+        if self.program_stopped_frame is not None:
+            exc_tb = self.find_tb_frame(tb, self.program_stopped_frame)
+            if exc_tb is not None:
+                _, self.program_stopped_node_range, _ = self.find_node(
+                    exc_tb, self.program_stopped_bad_line
+                )
+        if self.exception_name == "NameError":
+            # `executing` cannot give us the node location in this case
+            return self.locate_name_error()
+
+        tb = self.find_tb_frame(tb, self.exception_frame)
+        if tb is None:
+            debug_helper.log("Exception frame could not be found.")  # pragma: no cover
+            return  # pragma: no cover
+
+        self.node, self.node_range, self.node_text = self.find_node(tb, self.bad_line)
+        if self.node_text.strip():
+            # Replacing the line that caused the exception by the text
+            # of the 'node' facilitates the process of identifying the cause.
+            # However, in a few cases, we do need to keep the entire original line.
+            self.original_bad_line = self.bad_line
+            self.bad_line = self.node_text
+
+    @staticmethod
+    def find_tb_frame(tb, frame):
+        """Find a traceback object where a given frame resides."""
+        while True:
+            if tb.tb_frame == frame:
+                return tb
+            tb = tb.tb_next
+            if not tb:  # pragma: no cover
+                debug_helper.log("No tb_frame found.")
+                return None
+
+    def locate_name_error(self):
+        """Finds the location of an unknown name"""
+        name, _ignore = name_error.get_unknown_name(self.message)
+
+        if name is not None and name in self.bad_line:
+            begin = self.bad_line.find(name)
+            end = begin + len(name)
+            self.node_range = begin, end
+        else:  # pragma: no cover
+            debug_helper.log("Could not locate unknown name.")
+
+    @staticmethod
+    def find_node(tb, bad_line):
+        """Finds the 'node', that is the exact part of a line of code
+        that is related to the cause of the problem.
+        """
+        try:
+            ex = executing.Source.executing(tb)
+            node = ex.node
+            node_text = ex.text()
+        except Exception as e:  # pragma: no cover
+            debug_helper.log("Exception raised in TracebackData.use_executing.")
+            debug_helper.log(str(e))
+            return
+        # If we can find the precise location (node) on a line of code
+        # causing the exception, we note this location
+        # so that we can indicate it later with ^^^^^, something like:
         #
         #    20:     b = tuple(range(50))
         #    21:     try:
@@ -198,100 +256,33 @@ class TracebackData:
         # If the node spans the entire line, we do not bother to indicate
         # its specific location.
         #
-        # 2) Sometimes, a node will span multiple lines. For example,
-        #    line 22 shown above might have been written as:
+        # Sometimes, a node will span multiple lines. For example,
+        # line 22 shown above might have been written as:
         #
         #    print(a[
         #            50], b[0])
         #
         # If that is the case, we rewrite the node as a single line.
-        #
-        # Other than for NameError, we replace our definition (text) of
-        # the line that caused the exception by that of the node itself,
-        # to be used later for processing.
-        if self.program_stopped_frame is not None:
-            self.locate_program_stopped_range(tb)
-        if self.exception_name == "NameError":
-            # `executing` cannot give us the node location in this case
-            return self.locate_name_error()
 
-        while True:
-            if tb.tb_frame == self.exception_frame:
-                break
-            tb = tb.tb_next
-            if not tb:  # pragma: no cover
-                debug_helper.log("No tb in locate_error().")
-                return
-
-        try:
-            ex = executing.Source.executing(tb)
-            self.node = ex.node
-            self.node_text = ex.text()
-            # We want to transform logical line (or parts thereof) into
-            # something that fits on a single physical line.
-            # \n could be a valid newline token or a character within
-            # a string; we only want to replace newline tokens.
-            if "\n" in self.node_text:
-                tokens = token_utils.tokenize(self.node_text)
-                tokens = [tok for tok in tokens if tok != "\n"]
-                self.node_text = "".join(tok.string for tok in tokens)
-            _bad_line = token_utils.strip_comment(self.bad_line)
-            if (
-                self.node_text
-                and self.node_text in self.bad_line
-                and self.node_text.strip() != _bad_line.strip()
-            ):
-                begin = self.bad_line.find(self.node_text)
-                end = begin + len(self.node_text)
-                self.node_range = begin, end
-            if self.node_text.strip():
-                self.original_bad_line = self.bad_line
-                self.bad_line = self.node_text
-        except Exception as e:  # pragma: no cover
-            debug_helper.log("Exception raised in TracebackData.use_executing.")
-            debug_helper.log(str(e))
-
-    def locate_name_error(self):
-        """Finds the location of an unknown name"""
-        name, _ignore = name_error.get_unknown_name(self.message)
-
-        if name is not None and name in self.bad_line:
-            begin = self.bad_line.find(name)
-            end = begin + len(name)
-            self.node_range = begin, end
-
-    def locate_program_stopped_range(self, tb):
-        while True:
-            if tb.tb_frame == self.program_stopped_frame:
-                break
-            tb = tb.tb_next
-            if not tb:  # pragma: no cover
-                debug_helper.log("No tb in locate_program_stopped_range().")
-                return
-
-        try:
-            ex = executing.Source.executing(tb)
-            node_text = ex.text()
-            # We want to transform logical line (or parts thereof) into
-            # something that fits on a single physical line.
-            # \n could be a valid newline token or a character within
-            # a string; we only want to replace newline tokens.
-            if "\n" in node_text:
-                tokens = token_utils.tokenize(node_text)
-                tokens = [tok for tok in tokens if tok != "\n"]
-                node_text = "".join(tok.string for tok in tokens)
-            _bad_line = token_utils.strip_comment(self.program_stopped_bad_line)
-            if (
-                node_text
-                and node_text in self.program_stopped_bad_line
-                and node_text.strip() != _bad_line.strip()
-            ):
-                begin = self.program_stopped_bad_line.find(node_text)
-                end = begin + len(node_text)
-                self.program_stopped_node_range = begin, end
-        except Exception as e:  # pragma: no cover
-            debug_helper.log("Exception raised in TracebackData.use_executing.")
-            debug_helper.log(str(e))
+        # To start, we transform logical line (or parts thereof) into
+        # something that fits on a single physical line.
+        # \n could be a valid newline token or a character within
+        # a string; we only want to replace newline tokens.
+        node_range = None
+        if "\n" in node_text:
+            tokens = token_utils.tokenize(node_text)
+            tokens = [tok for tok in tokens if tok != "\n"]
+            node_text = "".join(tok.string for tok in tokens)
+        bad_code = token_utils.strip_comment(bad_line)
+        if (
+            node_text
+            and node_text in bad_line
+            and node_text.strip() != bad_code.strip()
+        ):
+            begin = bad_line.find(node_text)
+            end = begin + len(node_text)
+            node_range = begin, end
+        return node, node_range, node_text
 
 
 # ====================
@@ -619,7 +610,7 @@ class FriendlyTraceback:
             filename, linenumber, lines, index, self.tb_data.program_stopped_node_range
         )
         filename = path_utils.shorten_path(filename)
-        if session.use_rich:
+        if session.use_rich:  # pragma: no cover
             filename = f"`'{filename}'`"
 
         self.info["last_call_header"] = _(
