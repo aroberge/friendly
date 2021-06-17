@@ -115,7 +115,7 @@ def test_what():
     helpers.what()
     result = friendly.get_output()
     assert _hint not in result
-    assert _message in result
+    assert _message not in result
     assert "File" not in result
     assert _what in result
     assert _where not in result
