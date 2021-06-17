@@ -823,8 +823,9 @@ class FriendlyTraceback:
                     # However, we ensured prior to reaching this point that
                     # they would be defined for other Python versions
                     if (
-                        value.end_lineno != value.lineno
-                        or value.end_offset
+                        value.end_lineno is not None
+                        and value.end_lineno != value.lineno
+                        or value.end_offset is not None
                         and value.end_offset < 1
                     ):
                         nb_carets = len(bad_line) - offset + 1

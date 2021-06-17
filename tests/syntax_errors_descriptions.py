@@ -864,3 +864,12 @@ if sys.version_info >= (3, 10):
     descriptions["def_missing_colon"][
         "in cause"
     ] = "but forgot to add a colon `:` at the end"
+
+    del descriptions["invalid_identifier"]
+    del descriptions["invalid_identifier_2"]
+    del descriptions["invalid_identifier_3"]
+    del descriptions["invalid_identifier_4"]
+    del descriptions["invalid_identifier_5"]
+    del descriptions["invalid_hexadecimal"]
+    del descriptions["imaginary_i"]
+
