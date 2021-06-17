@@ -87,26 +87,6 @@ def test_history():
     assert empty_history()
 
 
-def test_more():
-    while not empty_history():
-        helpers.back()
-    try:
-        math.Pi
-    except AttributeError:
-        friendly.explain_traceback(redirect="capture")
-        friendly.get_output()
-    helpers.more()
-    result = friendly.get_output()
-    assert _hint not in result
-    assert _message not in result
-    assert "File" not in result
-    assert _what not in result
-    assert _where in result
-    assert _why in result
-    helpers.back()
-    assert empty_history()
-
-
 def test_python_tb():
     while not empty_history():
         helpers.back()

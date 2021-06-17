@@ -360,10 +360,9 @@ def no_result(info, include):
 
         return _("I have no suggestion to offer.")
 
-    if True:  # pragma: no cover
-        debug_helper.log(
-            f"Internal error: include = {include} in formatters.no_result()"
-        )
+    debug_helper.log(
+        f"Internal error: include = {include} in formatters.no_result()"
+    )  # pragma: no cover
 
 
 items_groups = {
@@ -386,13 +385,13 @@ items_groups = {
     "python_tb": {"simulated_python_traceback"},
     "debug_tb": {"original_python_traceback"},
 }
-items_groups["more"] = items_groups["why"].union(items_groups["where"])
 items_groups["explain"] = (
     items_groups["friendly_tb"]
     .union(items_groups["generic"])
-    .union(items_groups["more"])
+    .union(items_groups["why"])
+    .union(items_groups["where"])
 )
-items_groups["no_tb"] = items_groups["explain"]
+items_groups["no_tb"] = items_groups["explain"]  # used in check_syntax()
 items_groups["no_tb"].discard(items_groups["friendly_tb"])
 
 

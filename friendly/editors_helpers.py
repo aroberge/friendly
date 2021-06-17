@@ -63,7 +63,6 @@ def check_syntax(
                 source = f.read()
                 filename = path
         except Exception:  # noqa
-            print("Exception caught")
             # Do not show the Python traceback which would include
             #  the call to open() in the traceback
             if include is None:
