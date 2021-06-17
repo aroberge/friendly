@@ -8,7 +8,7 @@ import sys
 from . import error_in_def
 from . import fixers
 from . import syntax_utils
-from ..my_gettext import current_lang, internal_error, use_www
+from ..my_gettext import current_lang, internal_error
 from .. import debug_helper
 from .. import token_utils
 from .. import utils
@@ -1161,14 +1161,7 @@ def parens_around_exceptions(statement):
         "with multiple exception types. If that is the case, you must\n"
         "surround them with parentheses.\n"
     )
-    python_link = _(
-        "https://docs.python.org/3/tutorial/errors.html#handling-exceptions"
-    )
-    return {
-        "cause": cause + "\n" + use_www(),
-        "suggest": hint,
-        "python_link": python_link,
-    }
+    return {"cause": cause, "suggest": hint}
 
 
 @add_statement_analyzer

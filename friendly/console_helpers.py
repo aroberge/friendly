@@ -6,6 +6,7 @@ Functions that can be used in a friendly console or in other interactive
 environments such as in a Jupyter notebook.
 """
 # NOTE: __all__ is defined at the very bottom of this file
+import sys
 import friendly
 
 from friendly import debug_helper, formatters, __version__
@@ -109,22 +110,6 @@ def _history_repr():
 history.__rich_repr__ = _history_repr
 
 
-def more():
-    """Used to display information additional to the minimal traceback,
-    with the exception of the generic information.
-    Potentially useful for advanced users.
-    """
-    explain("more")
-
-
-def _more_repr():
-    _ = current_lang.translate
-    return (_("Equivalent to why() + where()."),)  # noqa
-
-
-more.__rich_repr__ = _more_repr
-
-
 def python_tb():
     """Shows the Python traceback, excluding files from friendly
     itself.
@@ -194,91 +179,75 @@ def _why_repr():
 why.__rich_repr__ = _why_repr
 
 
-def www(search=None, python=False):  # pragma: no cover
-    """This uses the ``webbrowser`` module to open a tab (or window) in the
-    default browser, linking to a specific url.
+def www(site=None):  # pragma: no cover
+    """This uses the ``webbrowser`` module to open a tab (or window)
+     in the default browser, linking to a specific url
+     or opening the default email client.
 
-    * If no arguments are provided, and no exception has been raised, this opens
-      Friendly's documentation.
+    * If the argument 'site' is not specified,
+      and an exception has been raised,
+      an internet search will be done using
+      the exception message as the search string.
 
-    * If no arguments are provided, and an exception has been raised, in most
-      cases, an internet search will be done using the exception message as the
-      search string. In a few cases, Friendly will link to a
-      specific site based on its determination of the cause of the exception.
+    * If the argument 'site' is not specified,
+      and NO exception has been raised,
+      Friendly's documentation will open.
 
-    * If no search argument is provided, but ``python`` is specified to be ``True``,
-      we will have the following:
+    * If the argument 'site' == "friendly",
+      Friendly's documentation will open.
 
-        * If no exception has been raised, this opens the Python documentation
+    * If the argument 'site' == "python", Python's documentation site
+      will open with the currently used Python version.
 
-        * If an exception has been raised, in most cases a search of the Python
-          documentation will be done using the exception name as the search term.
-          In a few cases, Friendly will link to a
-          specific site based on its determination of the cause of the exception.
+    * If the argument 'site' == "bug",
+      the Issues page for Friendly on Github will open.
 
-    * If a search (string) argument is provided, we have three possibilities:
-
-      * If the ``python`` argument is ``True``, a search will be done in the
-        Python documentation site; otherwise
-      * if the search term contains the string "friendly" (independent of case),
-        Friendly documentation will open
-      * otherwise, an internet search will be done using the search string provided.
+    * If the argument 'site' == "email",
+      the default email client should open with Friendly's
+      developer's address already filled in.
     """
     import urllib
     import webbrowser
 
     _ = current_lang.translate
-
-    if search is not None and not isinstance(search, str):
+    urls = {
+        "friendly": "https://aroberge.github.io/friendly-traceback-docs/docs/html/",
+        "python": "https://docs.python.org/3",
+        "bug": "https://github.com/aroberge/friendly/issues/new",
+        "email": "mailto:andre.roberge@gmail.com",
+    }
+    try:
+        site = site.lower()
+    except Exception:  # noqa
+        pass
+    if site not in urls and site is not None:
         session.write_err(
-            _("The first argument of `www()` must be either `None` or a string.\n")
+            _(
+                "Invalid argument for `www()`.\n"
+                "Valid arguments include `None` or one of `{sites}`.\n"
+            ).format(sites=repr(urls.keys()))
         )
-        if search is True and not python:
-            session.write_err(
-                _(
-                    "If you wish to open Python's documentation, use\n"
-                    "`www(python=True)`.\n"
-                )
-            )
         return
 
-    quote = urllib.parse.quote  # noqa
-
-    ddg_url = "https://duckduckgo.com?q="
-    friendly_url = "https://aroberge.github.io/friendly-traceback-docs/docs/html/"
-    python_docs_url = _("https://docs.python.org/3/")
-    python_search_url = _("https://docs.python.org/3/search.html?q=")
     info = session.saved_info[-1] if session.saved_info else None
-    if search is None and not python:  # default search
-        if info is None:
-            url = friendly_url
-        elif "python_link" in info:
-            url = info["python_link"]
-        else:
-            # avoid including quotes around variable names as this would
-            # make them be misinterpreted as important by search engines
-            message = info["message"].replace("'", "")
-            if " (" in message:
-                message = message.split("(")[0]
-            url = ddg_url + quote(message)
-    elif search is None:
-        if info is not None and "python_link" in info:
-            url = info["python_link"]
-        elif info is not None:  # an exception has been raised
-            url = python_search_url + session.friendly.tb_data.exception_name
-        else:
-            url = python_docs_url
-    elif python:
-        url = python_search_url + quote(search)
-    elif "friendly" in search.lower():
-        url = friendly_url
+    if site is None and info is not None:
+        message = info["message"].replace("'", "")
+        if " (" in message:
+            message = message.split("(")[0]
+        url = "https://duckduckgo.com?q=" + urllib.parse.quote(message)  # noqa
+    elif site is None:
+        url = urls["friendly"]
     else:
-        url = ddg_url + quote(search)
+        url = urls[site]
+
+    if site == "python":
+        url = url + f".{sys.version_info.minor}/"
 
     try:
         webbrowser.open_new_tab(url)
     except Exception:  # noqa
         session.write_err(_("The default web browser cannot be used for searching."))
+        return
 
 
 def _www_repr():
@@ -424,7 +393,6 @@ basic_helpers = {  # Will appear in basic help
     "what": what,
     "where": where,
     "why": why,
-    "more": more,
     "set_lang": set_lang,
     "friendly_tb": friendly_tb,
     "python_tb": python_tb,
