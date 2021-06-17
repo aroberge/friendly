@@ -368,8 +368,7 @@ def no_result(info, include):
 items_groups = {
     "message": {"message"},  # Also included as last line of traceback
     "hint": {"suggest"},
-    "generic": {"generic"},
-    "what": {"message", "generic"},  # Only include "message" here.
+    "what": {"generic"},
     "why": {"cause"},
     "where": {
         "parsing_error",
@@ -387,7 +386,7 @@ items_groups = {
 }
 items_groups["explain"] = (
     items_groups["friendly_tb"]
-    .union(items_groups["generic"])
+    .union(items_groups["what"])
     .union(items_groups["why"])
     .union(items_groups["where"])
 )
