@@ -431,13 +431,17 @@ class FriendlyHelpers:
     version = __version__
 
     def __init__(self, color_schemes=None):
-        _include = list(basic_helpers)
+        self.__include = list(basic_helpers)
         if color_schemes is not None:
-            _include.extend(color_schemes)
-        _include = sorted(_include)  # first alphabetically
+            self.__include.extend(color_schemes)
+        self.__include = sorted(self.__include)  # first alphabetically
         # then by word length, as it is easier to read.
-        self.include_in_rich_repr = sorted(_include, key=len)
+        self.include_in_rich_repr = sorted(self.__include, key=len)
         self.__class__.__name__ = "Friendly"  # For a nicer Rich repr
+
+    def __dir__(self):
+        """Only include useful friendly methods."""
+        return self.__include + list(other_helpers) + list(_debug_helpers)
 
     def __repr__(self):
         """Shows a brief description in the default language of what
