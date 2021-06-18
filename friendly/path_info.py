@@ -11,8 +11,9 @@ import rich  # Only use it to find site-packages
 
 EXCLUDED_FILE_PATH = set()
 EXCLUDED_DIR_NAMES = set()
-SITE_PACKAGES = os.path.normpath(os.path.join(os.path.dirname(rich.__file__), ".."))
-FRIENDLY = os.path.dirname(__file__)
+SITE_PACKAGES = os.path.abspath(os.path.join(os.path.dirname(rich.__file__), ".."))
+FRIENDLY = os.path.abspath(os.path.dirname(__file__))
+TESTS = os.path.abspath(os.path.join(FRIENDLY, "..", "tests"))
 
 
 def exclude_file_from_traceback(full_path):
@@ -48,7 +49,7 @@ def exclude_directory_from_traceback(dir_name):
     EXCLUDED_DIR_NAMES.add(dir_name)
 
 
-dirname = os.path.dirname(__file__)
+dirname = os.path.abspath(os.path.dirname(__file__))
 exclude_directory_from_traceback(dirname)
 
 
@@ -91,14 +92,14 @@ def include_file_in_traceback(full_path):
 
 class PathUtil:
     def __init__(self):
-        self.python = os.path.dirname(os.__file__)
+        self.python = os.path.abspath(os.path.dirname(os.__file__))
         self.home = os.path.expanduser("~")
 
     def shorten_path(self, path):  # pragma: no cover
         if path is None:  # can happen in some rare cases
             return path
         path = path.replace("'", "")  # We might get passed a path repr
-        path = os.path.normpath(path)
+        path = os.path.abspath(path)
         path_lower = path.lower()
         if path_lower.startswith(SITE_PACKAGES.lower()):
             path = "LOCAL:" + path[len(SITE_PACKAGES) :]
@@ -106,6 +107,8 @@ class PathUtil:
             path = "PYTHON_LIB:" + path[len(self.python) :]
         elif path_lower.startswith(FRIENDLY.lower()):
             path = "FRIENDLY:" + path[len(FRIENDLY) :]
+        elif path_lower.startswith(TESTS.lower()):
+            path = "TESTS:" + path[len(TESTS) :]
         elif path_lower.startswith(self.home.lower()):
             path = "HOME:" + path[len(self.home) :]
         elif path.startswith("<ipython-input-"):

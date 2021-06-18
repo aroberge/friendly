@@ -22,7 +22,7 @@ def get_likely_cause(etype, value, frame, tb_data):
     try:
         if etype.__name__ in get_cause:
             return get_cause[etype.__name__](value, frame, tb_data)
-    except Exception as e:  # noqa
+    except Exception as e:  # noqa  # pragma: no cover
         debug_helper.log("Exception caught in get_likely_cause().")
         debug_helper.log_error(e)
         return {"cause": internal_error()}
@@ -31,7 +31,7 @@ def get_likely_cause(etype, value, frame, tb_data):
         # see if it could be the result of using socket, or urllib, urllib3, etc.
         if issubclass(etype, OSError):
             return get_cause["OSError"](value, frame, tb_data)
-    except Exception:  # noqa
+    except Exception:  # noqa  # pragma: no cover
         pass
 
     return {}
@@ -42,11 +42,6 @@ def register(error_name):
 
     def add_exception(function):
         get_cause[error_name] = function
-
-        def wrapper(value, frame, tb_data):
-            return function(value, frame, tb_data)
-
-        return wrapper
 
     return add_exception
 
