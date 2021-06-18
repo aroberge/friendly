@@ -11,6 +11,7 @@ import sys
 from . import fixers
 from . import syntax_utils
 from . import statement_analyzer
+from . import error_in_def
 from .. import debug_helper
 from .. import utils
 from ..my_gettext import current_lang
@@ -1317,3 +1318,60 @@ def invalid_double_star_operator(message="", **_kwargs):
         return {"cause": cause}
 
     return {}
+
+
+@add_python_message
+def invalid_hexadecimal_literal(message="", statement=None):
+    _ = current_lang.translate
+
+    if message != "invalid hexadecimal literal":  # new in Python 3.10
+        return {}
+    if not statement.highlighted_tokens:
+        statement.highlighted_tokens = [statement.bad_token, statement.next_token]
+
+    if statement.first_token == "def" or (
+        statement.first_token == "async" and statement.tokens[1] == "def"
+    ):
+        cause = error_in_def.analyze_def_statement(statement)
+        if cause:
+            return cause
+
+    return statement_analyzer.invalid_hexadecimal(statement)
+
+
+@add_python_message
+def invalid_decimal_literal(message="", statement=None):
+    _ = current_lang.translate
+
+    if message != "invalid decimal literal":  # new in Python 3.10
+        return {}
+    if not statement.highlighted_tokens:
+        statement.highlighted_tokens = [statement.bad_token, statement.next_token]
+
+    if statement.first_token == "def" or (
+        statement.first_token == "async" and statement.tokens[1] == "def"
+    ):
+        cause = error_in_def.analyze_def_statement(statement)
+        if cause:
+            return cause
+
+    return statement_analyzer.invalid_name(statement)
+
+
+@add_python_message
+def invalid_imaginary_literal(message="", statement=None):
+    _ = current_lang.translate
+
+    if message != "invalid imaginary literal":  # new in Python 3.10
+        return {}
+    if not statement.highlighted_tokens:
+        statement.highlighted_tokens = [statement.bad_token, statement.next_token]
+
+    if statement.first_token == "def" or (
+        statement.first_token == "async" and statement.tokens[1] == "def"
+    ):
+        cause = error_in_def.analyze_def_statement(statement)
+        if cause:
+            return cause
+
+    return statement_analyzer.invalid_name(statement)
