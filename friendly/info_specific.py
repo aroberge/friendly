@@ -144,14 +144,14 @@ def _overflow_error(*_args):
 def _type_error(value, frame, tb_data):
     from .runtime_errors import type_error
 
-    return type_error.get_cause(value, frame, tb_data)
+    return type_error.parser.get_cause(value, frame, tb_data)
 
 
 @register("ValueError")
 def _value_error(value, frame, tb_data):
     from .runtime_errors import value_error
 
-    return value_error.get_cause(value, frame, tb_data)
+    return value_error.parser.get_cause(value, frame, tb_data)
 
 
 @register("UnboundLocalError")
@@ -165,4 +165,4 @@ def _unbound_local_error(value, frame, tb_data):
 def _zero_division_error(value, frame, tb_data):
     from .runtime_errors import zero_division_error
 
-    return zero_division_error.get_cause(value, frame, tb_data)
+    return zero_division_error.parser.get_cause(value, frame, tb_data)

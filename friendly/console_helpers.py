@@ -53,7 +53,8 @@ back.__rich_repr__ = _back_repr
 
 def explain(include="explain"):
     """Shows the previously recorded traceback info again,
-    with the specified verbosity level.
+    with the option to specify different items to include.
+    For example, ``explain("why")`` is equivalent to ``why()``.
     """
     old_include = friendly.get_include()
     friendly.set_include(include)
@@ -126,7 +127,12 @@ python_tb.__rich_repr__ = _python_tb_repr
 
 
 def what(exception=None, pre=False):
-    """If known, shows the generic explanation about a given exception."""
+    """If known, shows the generic explanation about a given exception.
+
+    If the ``pre`` argument is set to ``True``, the output is
+    formatted in a way that is suitable for inclusion in the
+    documentation.
+    """
     if exception is None:
         explain("what")
         return

@@ -1,32 +1,7 @@
-from .. import debug_helper
-from ..my_gettext import current_lang, no_information, internal_error
+from ..my_gettext import current_lang
+from ..utils import RuntimeMessageParser
 
-
-MESSAGES_PARSERS = []
-
-
-def add_message_parser(func):
-    """A simple decorator that adds a function to parse a specific message
-    to the list of known parsers."""
-    MESSAGES_PARSERS.append(func)
-
-
-def get_cause(value, frame, tb_data):
-    message = str(value)
-    try:
-        return _get_cause(message, frame, tb_data)
-    except Exception as e:  # pragma: no cover
-        debug_helper.log_error(e)
-        return {"cause": internal_error(), "suggest": internal_error()}
-
-
-def _get_cause(message, frame, tb_data):
-    for parser in MESSAGES_PARSERS:
-        cause = parser(message, frame, tb_data)
-        if cause:
-            return cause
-
-    return {"cause": no_information()}
+parser = RuntimeMessageParser()
 
 
 def expression_is_zero(expression, modulo=False):
@@ -42,7 +17,7 @@ def expression_is_zero(expression, modulo=False):
         return ""
 
 
-@add_message_parser
+@parser.add
 def division_by_zero(message, _frame, tb_data):
     _ = current_lang.translate
     if message not in (
@@ -70,7 +45,7 @@ def division_by_zero(message, _frame, tb_data):
     return {"cause": cause}
 
 
-@add_message_parser
+@parser.add
 def integer_or_modulo(message, _frame, tb_data):
     _ = current_lang.translate
     if message != "integer division or modulo by zero":
@@ -120,7 +95,7 @@ def integer_or_modulo(message, _frame, tb_data):
     return {"cause": cause}
 
 
-@add_message_parser
+@parser.add
 def zero_negative_power(message, *_ignore):
     _ = current_lang.translate
     if message != "0.0 cannot be raised to a negative power":
@@ -132,7 +107,7 @@ def zero_negative_power(message, *_ignore):
     return {"cause": cause}
 
 
-@add_message_parser
+@parser.add
 def float_modulo(message, _frame, tb_data):
     _ = current_lang.translate
     if message != "float modulo":
@@ -157,7 +132,7 @@ def float_modulo(message, _frame, tb_data):
     return {"cause": cause}
 
 
-@add_message_parser
+@parser.add
 def float_divmod(message, *_ignore):
     _ = current_lang.translate
     if message != "float divmod()":

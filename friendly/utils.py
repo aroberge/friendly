@@ -7,10 +7,47 @@ import difflib
 import uuid
 
 import pure_eval
+from . import debug_helper
+from .my_gettext import no_information, internal_error
+from .path_info import path_utils
+
+
+class RuntimeMessageParser:
+    """Used to collect message parsers and cycle through them in
+    an attempt at finding the cause of an exception.
+    """
+
+    def __init__(self):
+        self.parsers = []
+        self.current_parser = None
+
+    def add(self, func):
+        """Use as a decorator to add a message parser"""
+        self.parsers.append(func)
+
+    def get_cause(self, value, frame, tb_data):
+        """Called from info_specific.py"""
+        message = str(value)
+        try:
+            return self._get_cause(message, frame, tb_data)
+        except Exception as e:  # noqa # pragma: no cover
+            debug_helper.log(f"Problem with {self.current_parser.__name__}")
+            debug_helper.log(f"in module {path_utils.shorten_path(__file__)}")
+            return {"cause": internal_error(), "suggest": internal_error()}
+
+    def _get_cause(self, message, frame, tb_data):
+        """Cycle through the parsers, looking for one that can find a cause."""
+        for self.current_parser in self.parsers:
+            # This could be simpler if we could use the walrus operator
+            cause = self.current_parser(message, frame, tb_data)
+            if cause:
+                return cause
+        return {"cause": no_information()}
 
 
 def unique_variable_name():
-    """creates a unique variable name"""
+    """Creates a unique variable name. Useful when attempting to introduce
+    a new token to see if it can fix specific cases of SyntaxError."""
     name = uuid.uuid4()
     return "_%s" % name.hex
 

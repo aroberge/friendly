@@ -12,6 +12,7 @@ import rich  # Only use it to find site-packages
 EXCLUDED_FILE_PATH = set()
 EXCLUDED_DIR_NAMES = set()
 SITE_PACKAGES = os.path.normpath(os.path.join(os.path.dirname(rich.__file__), ".."))
+FRIENDLY = os.path.dirname(__file__)
 
 
 def exclude_file_from_traceback(full_path):
@@ -91,13 +92,7 @@ def include_file_in_traceback(full_path):
 class PathUtil:
     def __init__(self):
         self.python = os.path.dirname(os.__file__)
-        this_dir = os.path.dirname(__file__)
         self.home = os.path.expanduser("~")
-        self.tests = ""
-        friendly_path = os.path.abspath(os.path.join(this_dir, ".."))
-        tests = os.path.join(friendly_path, "tests")
-        if os.path.exists(tests):
-            self.tests = tests
 
     def shorten_path(self, path):  # pragma: no cover
         if path is None:  # can happen in some rare cases
@@ -105,12 +100,12 @@ class PathUtil:
         path = path.replace("'", "")  # We might get passed a path repr
         path = os.path.normpath(path)
         path_lower = path.lower()
-        if self.tests and path_lower.startswith(self.tests.lower()):
-            path = "TESTS:" + path[len(self.tests) :]
-        elif path_lower.startswith(SITE_PACKAGES.lower()):
+        if path_lower.startswith(SITE_PACKAGES.lower()):
             path = "LOCAL:" + path[len(SITE_PACKAGES) :]
         elif path_lower.startswith(self.python.lower()):
             path = "PYTHON_LIB:" + path[len(self.python) :]
+        elif path_lower.startswith(FRIENDLY.lower()):
+            path = "FRIENDLY:" + path[len(FRIENDLY) :]
         elif path_lower.startswith(self.home.lower()):
             path = "HOME:" + path[len(self.home) :]
         elif path.startswith("<ipython-input-"):
@@ -131,5 +126,5 @@ def show_paths():  # pragma: no cover
     print("HOME =", path_utils.home)
     print("LOCAL =", SITE_PACKAGES)
     print("PYTHON_LIB =", path_utils.python)
-    if path_utils.tests:
-        print("TESTS =", path_utils.tests)
+    if FRIENDLY != SITE_PACKAGES:
+        print("FRIENDLY = ", FRIENDLY)

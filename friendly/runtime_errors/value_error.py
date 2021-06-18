@@ -7,42 +7,13 @@ providing a more detailed explanation.
 import inspect
 import re
 
-from ..my_gettext import current_lang, no_information, internal_error
+from ..my_gettext import current_lang
 from .. import info_variables
-from .. import debug_helper
 from .. import token_utils
 from .. import utils
 
 convert_type = info_variables.convert_type
-MESSAGES_PARSERS = []
-
-
-def add_message_parser(func):
-    """A simple decorator that adds a function to parse a specific message
-    to the list of known parsers."""
-    MESSAGES_PARSERS.append(func)
-
-
-def get_cause(value, frame, tb_data):
-    try:
-        return _get_cause(value, frame, tb_data)
-    except Exception as e:  # pragma: no cover
-        debug_helper.log_error(e)
-        return {"cause": internal_error(), "suggest": internal_error()}
-
-
-def _get_cause(value, frame, tb_data):
-    _ = current_lang.translate
-
-    message = str(value)
-    for parser in MESSAGES_PARSERS:
-        cause = parser(message, frame, tb_data)
-        if cause:
-            return cause
-    cause = unrecognized_message(value, frame, tb_data)
-    if cause:
-        return cause
-    return {"cause": no_information()}
+parser = utils.RuntimeMessageParser()
 
 
 def _unpacking():
@@ -78,7 +49,7 @@ def get_iterable(code, frame):
     return obj, iterable
 
 
-@add_message_parser
+@parser.add
 def not_enough_values_to_unpack(message, frame, tb_data):
     _ = current_lang.translate
     pattern1 = re.compile(r"not enough values to unpack \(expected (\d+), got (\d+)\)")
@@ -118,7 +89,7 @@ def not_enough_values_to_unpack(message, frame, tb_data):
     return {"cause": cause}
 
 
-@add_message_parser
+@parser.add
 def too_many_values_to_unpack(message, frame, tb_data):
     _ = current_lang.translate
     pattern = re.compile(r"too many values to unpack \(expected (\d+)\)")
@@ -155,7 +126,7 @@ def too_many_values_to_unpack(message, frame, tb_data):
 # TODO: complete the work below; note noqa to be removed
 
 
-@add_message_parser
+@parser.add
 def invalid_literal_for_int(message, *_args):
     _ = current_lang.translate
     pattern = re.compile(r"invalid literal for int\(\) with base (\d+): '(.*)'")
@@ -184,7 +155,7 @@ def _convert_to_float(value):
     return {"cause": cause, "suggest": hint}
 
 
-@add_message_parser
+@parser.add
 def date_month_must_be_between_1_and_12(message, *_args):
     _ = current_lang.translate
 
