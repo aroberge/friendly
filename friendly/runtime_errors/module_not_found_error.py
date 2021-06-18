@@ -5,82 +5,30 @@ import sys
 
 from . import stdlib_modules
 from .. import debug_helper
-from ..my_gettext import current_lang, no_information, internal_error
-from ..utils import get_similar_words, list_to_string
+from ..my_gettext import current_lang
+from ..utils import get_similar_words, list_to_string, RuntimeMessageParser
+
+parser = RuntimeMessageParser()
 
 
-def get_cause(value, frame, tb_data):
-    try:
-        return _get_cause(value, frame, tb_data)
-    except Exception as e:  # pragma: no cover
-        debug_helper.log_error(e)
-        return {"cause": internal_error(), "suggest": internal_error()}
-
-
-def _get_cause(value, *_args):
+@parser.add
+def is_not_a_package(value, _frame, _tb_data):
     _ = current_lang.translate
-
     message = str(value)
-
     pattern = re.compile(r"No module named '(.*)'; '(.*)' is not a package")
     match = re.search(pattern, message)
-    if match:
-        return is_not_a_package(match.group(1), match.group(2))
+    if not match:
+        return {}
 
-    pattern = re.compile(r"No module named '(.*)'")
-    match = re.search(pattern, message)
-    if match:
-        return no_module_named(match.group(1))
-
-    return {"cause": no_information()}
-
-
-def no_module_named(name):
-    _ = current_lang.translate
-
-    if name == "_curses":
-        if sys.platform.startswith("win"):
-            hint = _("The curses module is rarely installed with Python on Windows.\n")
-        else:
-            hint = _("The curses module is often not installed with Python.\n")
-
-        cause = _("You have tried to import the curses module.\n")
-
-        return {"cause": cause + hint, "suggest": hint}
-
-    similar = get_similar_words(name, stdlib_modules.names)
-
-    cause = _(
-        "The name of the module that could not be imported is `{name}`.\n"
-    ).format(name=name)
-    if not similar:
-        return {"cause": cause}
-
-    hint = _("Did you mean `{name}`?\n").format(name=similar[0])
-
-    if len(similar) > 1:
-        cause += _(
-            "The following existing modules have names that are similar \n"
-            "to the module you tried to import: `{names}`\n"
-        ).format(names=", ".join(similar))
-    else:
-        cause += _("`{name}` is an existing module that has a similar name.\n").format(
-            name=similar[0]
-        )
-
-    return {"cause": cause, "suggest": hint}
-
-
-def is_not_a_package(dotted_path, name):
-    _ = current_lang.translate
-
+    dotted_path = match.group(1)
+    name = match.group(2)
     rest = dotted_path.replace(name + ".", "")
 
     # This specific exception should not have been raised if name was not a module.
     # Still, when dealing with imports, better safe than sorry.
     try:
         module = __import__(name)
-    except ImportError as e:  # This should not happen.
+    except ImportError as e:  # pragma: no cover
         cause = _(
             "No additional information available since `{name}` cannot be imported.\n"
         ).format(name=name)
@@ -137,3 +85,48 @@ def is_not_a_package(dotted_path, name):
         )
 
     return {"cause": cause}
+
+
+def curses_no_found():
+    _ = current_lang.translate
+    if sys.platform.startswith("win"):
+        hint = _("The curses module is rarely installed with Python on Windows.\n")
+    else:  # pragma: no cover
+        hint = _("The curses module is often not installed with Python.\n")
+    cause = _("You have tried to import the curses module.\n")
+    return {"cause": cause + hint, "suggest": hint}
+
+
+@parser.add
+def no_module_named(value, _frame, _tb_data):
+    _ = current_lang.translate
+
+    message = str(value)
+    pattern = re.compile(r"No module named '(.*)'$")
+    match = re.search(pattern, message)
+    if not match:  # pragma: no cover
+        return {}
+
+    name = match.group(1)
+    if name == "_curses":
+        return curses_no_found()
+
+    similar = get_similar_words(name, stdlib_modules.names)
+    cause = _(
+        "No module named `{name}` can be imported.\n"
+        "Perhaps you need to install it.\n"
+    ).format(name=name)
+    if not similar:
+        return {"cause": cause}
+
+    hint = _("Did you mean `{name}`?\n").format(name=similar[0])
+    if len(similar) > 1:
+        cause += _(
+            "The following existing modules have names that are similar \n"
+            "to the module you tried to import: `{names}`\n"
+        ).format(names=", ".join(similar))
+    else:
+        cause += _("`{name}` is an existing module that has a similar name.\n").format(
+            name=similar[0]
+        )
+    return {"cause": cause, "suggest": hint}

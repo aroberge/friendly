@@ -115,7 +115,7 @@ def _module_not_found_error(value, frame, tb_data):
 
     from .runtime_errors import module_not_found_error
 
-    return module_not_found_error.get_cause(value, frame, tb_data)
+    return module_not_found_error.parser.get_cause(value, frame, tb_data)
 
 
 @register("NameError")
