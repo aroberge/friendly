@@ -687,6 +687,7 @@ class FriendlyTraceback:
         header = "Traceback (most recent call last):"  # not included in records
         if (
             python_tb[0].startswith(header)
+            and self.tb_data.filename is not None
             and "<SyntaxError>" not in self.tb_data.filename  # Latest IDLE hack
         ):
             tb.insert(0, header)
