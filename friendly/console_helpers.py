@@ -16,7 +16,7 @@ from .path_info import show_paths
 from .my_gettext import current_lang
 
 
-def _show_paths_repr():
+def _show_paths_repr():  # pragma: no cover
     _ = current_lang.translate
     return (_("Shows the paths corresponding to synonyms used."),)  # noqa
 
@@ -43,7 +43,7 @@ def back():
     session.friendly.pop()
 
 
-def _back_repr():
+def _back_repr():  # pragma: no cover
     _ = current_lang.translate
     return (_("Removes the last recorded traceback item."),)  # noqa
 
@@ -62,7 +62,7 @@ def explain(include="explain"):
     friendly.set_include(old_include)
 
 
-def _explain_repr():
+def _explain_repr():  # pragma: no cover
     _ = current_lang.translate
     return (_("Shows all the information about the last traceback."),)  # noqa
 
@@ -77,7 +77,7 @@ def friendly_tb():
     explain("friendly_tb")
 
 
-def _friendly_tb_repr():
+def _friendly_tb_repr():  # pragma: no cover
     _ = current_lang.translate
     return (_("Shows a simplified Python traceback"),)  # noqa
 
@@ -103,7 +103,7 @@ def history():
     session.rich_add_vspace = True
 
 
-def _history_repr():
+def _history_repr():  # pragma: no cover
     _ = current_lang.translate
     return (_("Shows a list of recorded traceback messages."),)  # noqa
 
@@ -118,7 +118,7 @@ def python_tb():
     explain("python_tb")
 
 
-def _python_tb_repr():
+def _python_tb_repr():  # pragma: no cover
     _ = current_lang.translate
     return (_("Shows a normal Python traceback"),)  # noqa
 
@@ -151,7 +151,7 @@ def what(exception=None, pre=False):
     return
 
 
-def _what_repr():
+def _what_repr():  # pragma: no cover
     _ = current_lang.translate
     return (_("Shows the generic meaning of a given exception"),)  # noqa
 
@@ -164,7 +164,7 @@ def where():
     explain("where")
 
 
-def _where_repr():
+def _where_repr():  # pragma: no cover
     _ = current_lang.translate
     return (_("Shows where an exception was raised."),)  # noqa
 
@@ -177,7 +177,7 @@ def why():
     explain("why")
 
 
-def _why_repr():
+def _why_repr():  # pragma: no cover
     _ = current_lang.translate
     return (_("Shows the likely cause of the exception."),)  # noqa
 
@@ -256,7 +256,7 @@ def www(site=None):  # pragma: no cover
         return
 
 
-def _www_repr():
+def _www_repr():  # pragma: no cover
     _ = current_lang.translate
     return (_("Opens a web browser at a useful location."),)  # noqa
 
@@ -271,29 +271,29 @@ set_include = friendly.set_include
 set_formatter = friendly.set_formatter
 
 
-def _get_lang_repr():
+def _get_lang_repr():  # pragma: no cover
     _ = current_lang.translate
     return (_("Returns the language currently used."),)  # noqa
 
 
-def _set_lang_repr():
+def _set_lang_repr():  # pragma: no cover
     _ = current_lang.translate
     return (_("Sets the language to be used."),)  # noqa
 
 
-def _get_include_repr():
+def _get_include_repr():  # pragma: no cover
     _ = current_lang.translate
     return (
         _("Returns the current value used for items to include by default."),
     )  # noqa
 
 
-def _set_include_repr():
+def _set_include_repr():  # pragma: no cover
     _ = current_lang.translate
     return (_("Sets the items to show when an exception is raised."),)  # noqa
 
 
-def _set_formatter_repr():
+def _set_formatter_repr():  # pragma: no cover
     _ = current_lang.translate
     return (_("Sets the formatter to use for display."),)  # noqa
 
@@ -445,11 +445,11 @@ class FriendlyHelpers:
         self.include_in_rich_repr = sorted(self.__include, key=len)
         self.__class__.__name__ = "Friendly"  # For a nicer Rich repr
 
-    def __dir__(self):
+    def __dir__(self):  # pragma: no cover
         """Only include useful friendly methods."""
         return self.__include + list(other_helpers) + list(_debug_helpers)
 
-    def __repr__(self):
+    def __repr__(self):  # pragma: no cover
         """Shows a brief description in the default language of what
         each 'basic' function/method does.
 
@@ -486,7 +486,7 @@ def dark():  # pragma: no cover
     set_formatter("dark")
 
 
-def _dark_repr():
+def _dark_repr():  # pragma: no cover
     _ = current_lang.translate
     return (_("Colour scheme designed for a black background."),)  # noqa
 
@@ -501,7 +501,7 @@ def light():  # pragma: no cover
     set_formatter("light")
 
 
-def _light_repr():
+def _light_repr():  # pragma: no cover
     _ = current_lang.translate
     return (_("Colour scheme designed for a white background."),)  # noqa
 

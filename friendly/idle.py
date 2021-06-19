@@ -21,6 +21,23 @@ Friendly = FriendlyHelpers()
 helpers["Friendly"] = Friendly
 
 
+_old_displayhook = sys.displayhook
+
+
+def displayhook(value):
+    if value is None:
+        return
+    if str(type(value)) == "<class 'function'>" and hasattr(value, "__rich_repr__"):
+        idle_writer(
+            [
+                (f"    {value.__name__}():", "default"),
+                (f" {value.__rich_repr__()[0]}", "stdout"),
+            ]
+        )
+        return
+    _old_displayhook(value)
+
+
 def idle_writer(output, color=None):
     """Use this instead of standard sys.stderr to write traceback so that
     they can be colorized.
@@ -195,6 +212,7 @@ def install(lang="en"):
     friendly.set_formatter(idle_formatter)
     if sys.version_info >= (3, 10):
         install_in_idle_shell(lang=lang)
+        sys.displayhook = displayhook
     else:
         idle_writer("Friendly cannot be installed in this version of IDLE.\n")
         idle_writer("Using Friendly's own console instead.\n")

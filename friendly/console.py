@@ -9,6 +9,7 @@ import builtins
 import copy
 import os
 import platform
+import sys
 import traceback
 from code import InteractiveConsole
 import codeop  # need to import to exclude from tracebacks
@@ -31,6 +32,18 @@ please_comment = (
     "   Do you find these warnings useful?\n"
     "   Comment at https://github.com/aroberge/friendly/issues/112"
 )
+
+
+_old_displayhook = sys.displayhook
+
+
+def displayhook(value):
+    if value is None:
+        return
+    if str(type(value)) == "<class 'function'>" and hasattr(value, "__rich_repr__"):
+        print(f"{value.__name__}(): {value.__rich_repr__()[0]}")
+        return
+    _old_displayhook(value)
 
 
 class FriendlyConsole(InteractiveConsole):
@@ -57,6 +70,8 @@ class FriendlyConsole(InteractiveConsole):
                 self.prompt_color = "[bold bright_green]"
             else:
                 self.prompt_color = "[bold dark_violet]"
+        else:
+            sys.displayhook = displayhook
 
         super().__init__(locals=locals)
         self.check_for_builtins_changes()
