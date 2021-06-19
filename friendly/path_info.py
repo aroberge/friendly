@@ -114,6 +114,8 @@ class PathUtil:
         elif path.startswith("<ipython-input-"):
             parts = path.split("-")
             path = "[" + parts[-2] + "]"
+        if path.endswith("<SyntaxError>"):  # with IDLE's latest hack
+            path = "<SyntaxError>"
         return path
 
 

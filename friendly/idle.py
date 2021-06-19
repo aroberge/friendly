@@ -5,6 +5,8 @@ import inspect
 from pathlib import Path
 import sys  # noqa
 
+import linecache
+
 from idlelib import rpc
 from idlelib import run as idlelib_run
 
@@ -14,6 +16,9 @@ from friendly.console_helpers import helpers, FriendlyHelpers  # noqa
 from friendly import source_cache
 from friendly.formatters import select_items, repl_indentation, no_result
 from friendly.my_gettext import current_lang
+from friendly.config import session
+
+friendly.exclude_file_from_traceback(__file__)
 
 del dark  # noqa
 del light  # noqa
@@ -21,7 +26,7 @@ Friendly = FriendlyHelpers()
 Friendly.__friendly_repr__ = Friendly.__repr__
 helpers["Friendly"] = Friendly
 
-
+__all__ = list(helpers)
 _old_displayhook = sys.displayhook
 
 
@@ -106,6 +111,8 @@ def format_source(text, keep_caret):
     highlighting scheme used by IDLE.
     """
     lines = text.split("\n")
+    while not lines[-1].strip():
+        lines.pop()
     caret_set = {"^"}
     error_line = -2
     begin = end = 0
@@ -147,9 +154,26 @@ def format_text(info, item, indentation):
                         new_lines.append((fragment, "default"))
                 else:
                     new_lines.append((fragment, "stdout"))
-            new_lines.append(("\n", "stdout"))
+            if fragment.endswith("\n"):
+                new_lines.append(("", "stdout"))
+            else:
+                new_lines.append(("\n", "stdout"))
         else:
+            line = line.strip()
             new_lines.append((indentation + line + "\n", "stdout"))
+
+    lines = reversed(new_lines)
+    count = 0
+    for fragment, _ in lines:
+        if not fragment.strip():
+            count += 1
+            continue
+        break
+    if count > 1:
+        for _ in range(count):
+            new_lines.pop()
+        new_lines.append(("", "stdout"))
+
     return new_lines
 
 
@@ -222,6 +246,7 @@ def install_in_idle_shell(lang="en"):
     source_cache.idle_get_lines = get_lines
 
     friendly.install(include="friendly_tb", redirect=idle_writer, lang=lang)
+    linecache.idle_showsyntaxerror = sys.excepthook
     # Current limitation
     idle_writer("                                WARNING\n", "ERROR")  # noqa
     idle_writer("Friendly cannot handle SyntaxErrors for code entered in the shell.\n")
@@ -315,7 +340,34 @@ def run(filename, lang=None, include="friendly_tb", args=None, console=True):
     )
 
 
-__all__ = list(helpers)
 __all__.append("install")
 __all__.append("start_console")
 __all__.append("run")
+
+if sys.version_info >= (3, 10):
+
+    def friendly_syntax_error():
+        _ = current_lang.translate
+        filename = "<SyntaxError>"
+        rpchandler = rpc.objecttable["exec"].rpchandler  # noqa
+        try:
+            lines = rpchandler.remotecall("linecache", "getlines", (filename, None), {})
+        except Exception:  # noqa
+            idle_writer(_("No SyntaxError recorded.", "stderr"))
+            return None
+        if not lines:
+            idle_writer(_("No SyntaxError recorded.", "stderr"))
+            return
+        source = "\n".join(lines)
+        try:
+            compile(source, filename, "single")
+        except Exception:  # noqa
+            session.explain_traceback()
+
+    _old_explain = explain  # noqa
+
+    def explain(include="explain"):
+        if include == "syntax":
+            friendly_syntax_error()
+        else:
+            _old_explain(include=include)

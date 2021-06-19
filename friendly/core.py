@@ -685,7 +685,10 @@ class FriendlyTraceback:
         shortened_tb = self.shorten(tb)
 
         header = "Traceback (most recent call last):"  # not included in records
-        if python_tb[0].startswith(header):
+        if (
+            python_tb[0].startswith(header)
+            and "<SyntaxError>" not in self.tb_data.filename  # Latest IDLE hack
+        ):
             tb.insert(0, header)
             shortened_tb.insert(0, header)
 
