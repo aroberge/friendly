@@ -37,7 +37,7 @@ please_comment = (
 _old_displayhook = sys.displayhook
 
 
-def displayhook(value):
+def _displayhook(value):
     if value is None:
         return
     if str(type(value)) == "<class 'function'>" and hasattr(value, "__rich_repr__"):
@@ -48,7 +48,9 @@ def displayhook(value):
 
 class FriendlyConsole(InteractiveConsole):
     # skipcq: PYL-W0622
-    def __init__(self, locals=None, formatter="dark", background=None):  # noqa
+    def __init__(
+        self, locals=None, formatter="dark", background=None, displayhook=None
+    ):  # noqa
         """This class builds upon Python's code.InteractiveConsole
         so as to provide friendly tracebacks. It keeps track
         of code fragment executed by treating each of them as
@@ -70,7 +72,7 @@ class FriendlyConsole(InteractiveConsole):
                 self.prompt_color = "[bold bright_green]"
             else:
                 self.prompt_color = "[bold dark_violet]"
-        else:
+        elif displayhook is not None:
             sys.displayhook = displayhook
 
         super().__init__(locals=locals)
@@ -310,12 +312,15 @@ def start_console(
     lang="en",
     banner=None,
     background=None,
+    displayhook=None,
 ):
     """Starts a console; modified from code.interact"""
     # from . import config
 
     if banner is None:
         banner = BANNER
+    if displayhook is None:
+        displayhook = _displayhook
 
     if not friendly.is_installed():
         friendly.install(include=include, lang=lang)
@@ -327,6 +332,9 @@ def start_console(
         helpers.update(local_vars)
 
     console = FriendlyConsole(
-        locals=helpers, formatter=formatter, background=background
+        locals=helpers,
+        formatter=formatter,
+        background=background,
+        displayhook=displayhook,
     )
     console.interact(banner=banner)

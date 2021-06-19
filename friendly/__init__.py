@@ -232,6 +232,7 @@ def start_console(  # pragma: no cover
     lang="en",
     banner=None,
     background=None,
+    displayhook=None,
 ):
     """Starts a Friendly console."""
     from . import console
@@ -243,6 +244,7 @@ def start_console(  # pragma: no cover
         lang=lang,
         banner=banner,
         background=background,
+        displayhook=displayhook,
     )
 
 

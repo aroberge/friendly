@@ -18,6 +18,7 @@ from friendly.my_gettext import current_lang
 del dark  # noqa
 del light  # noqa
 Friendly = FriendlyHelpers()
+Friendly.__friendly_repr__ = Friendly.__repr__
 helpers["Friendly"] = Friendly
 
 
@@ -32,9 +33,32 @@ def displayhook(value):
             [
                 (f"    {value.__name__}():", "default"),
                 (f" {value.__rich_repr__()[0]}", "stdout"),
+                "\n",
             ]
         )
         return
+    if hasattr(value, "__friendly_repr__"):
+        lines = value.__friendly_repr__().split("\n")
+        for line in lines:
+            if "`" in line:
+                newline = []
+                parts = line.split("`")
+                for index, content in enumerate(parts):
+                    if index % 2 == 0:
+                        newline.append((content, "stdout"))
+                    else:
+                        newline.append((content, "default"))
+                newline.append("\n")
+                idle_writer(newline)
+            elif "():" in line:
+                parts = line.split("():")
+                idle_writer(
+                    ((f"{    parts[0]}():", "default"), (parts[1], "stdout"), "\n")
+                )
+            else:
+                idle_writer(line + "\n")
+        return
+
     _old_displayhook(value)
 
 
@@ -216,14 +240,14 @@ def install(lang="en"):
     else:
         idle_writer("Friendly cannot be installed in this version of IDLE.\n")
         idle_writer("Using Friendly's own console instead.\n")
-        start_console(lang=lang)
+        start_console(lang=lang, displayhook=displayhook)
 
 
-def start_console(lang="en"):
+def start_console(lang="en", displayhook=None):
     """Starts a Friendly console with a custom formatter for IDLE"""
     sys.stderr = sys.stdout.shell  # noqa
     friendly.set_stream(idle_writer)
-    friendly.start_console(formatter=idle_formatter, lang=lang)
+    friendly.start_console(formatter=idle_formatter, lang=lang, displayhook=displayhook)
 
 
 def run(filename, lang=None, include="friendly_tb", args=None, console=True):
