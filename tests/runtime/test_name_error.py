@@ -14,7 +14,7 @@ def test_Generic():
     
     assert "NameError: name 'something' is not defined" in result
     if friendly.get_lang() == "en":
-        assert "In your program, `something` is an unknown name." in result
+        assert "In your program, no object with the name `something` exists." in result
     return result, message
 
 x: 3
@@ -109,6 +109,27 @@ def test_Missing_import():
     assert "NameError: name 'unicodedata' is not defined" in result
     if friendly.get_lang() == "en":
         assert "Perhaps you forgot to import `unicodedata`" in result
+    return result, message
+
+
+def test_Free_variable_referenced():
+    def outer():
+        def inner():
+            return var
+        inner()
+        var = 4
+
+    try:
+        outer()
+    except NameError as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
+
+    assert "free variable 'var' referenced" in result
+    if friendly.get_lang() == "en":
+        assert "that exists in an enclosing scope" in result
+        assert "but has not yet been assigned a value." in result
     return result, message
 
 if __name__ == "__main__":

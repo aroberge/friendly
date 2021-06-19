@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-06-18 15:00-0300\n"
+"POT-Creation-Date: 2021-06-19 08:08-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: __init__.py:196 __main__.py:178 idle.py:257
+#: __init__.py:196 __main__.py:178 idle.py:275
 msgid "The file {filename} does not exist."
 msgstr ""
 
@@ -23,20 +23,20 @@ msgstr ""
 msgid "Nothing to show: no exception recorded."
 msgstr ""
 
-#: console.py:175
+#: console.py:190
 msgid "Warning: you added a type hint to the python builtin `{name}`."
 msgstr ""
 
-#: console.py:178
+#: console.py:193
 msgid ""
 "Warning: you used a type hint for a variable without assigning it a value.\n"
 msgstr ""
 
-#: console.py:181
+#: console.py:196
 msgid "Instead of `{hint}`, perhaps you meant `{assignment}`."
 msgstr ""
 
-#: console.py:252
+#: console.py:267
 msgid "Warning: you have redefined the python builtin `{name}`."
 msgstr ""
 
@@ -386,7 +386,7 @@ msgid ""
 "by zero either directly or by using some other mathematical operation.\n"
 msgstr ""
 
-#: info_specific.py:84
+#: info_specific.py:79
 msgid ""
 "In your program, the name of the\n"
 "file that cannot be found is `{filename}`.\n"
@@ -948,13 +948,13 @@ msgstr ""
 #: runtime_errors\name_error.py:61
 msgid ""
 "In your program, `{var_name}` is an unknown name\n"
-"that had been declared as belonging in a nonlocal scope;\n"
-"however, no such name could not be found.\n"
+"that exists in an enclosing scope,\n"
+"but has not yet been assigned a value.\n"
 msgstr ""
 
 #: runtime_errors\name_error.py:71
 msgid ""
-"In your program, `{var_name}` is an unknown name.\n"
+"In your program, no object with the name `{var_name}` exists.\n"
 msgstr ""
 
 #: runtime_errors\name_error.py:89

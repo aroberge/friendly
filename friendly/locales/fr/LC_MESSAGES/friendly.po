@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-06-18 15:00-0300\n"
+"POT-Creation-Date: 2021-06-19 08:08-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: André Roberge <andre.roberge@gmail.com>\n"
 "Language-Team: \n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.0\n"
 
-#: __init__.py:196 __main__.py:178 idle.py:257
+#: __init__.py:196 __main__.py:178 idle.py:275
 msgid "The file {filename} does not exist."
 msgstr "Le fichier {filename} n'existe pas."
 
@@ -23,26 +23,26 @@ msgstr "Le fichier {filename} n'existe pas."
 msgid "Nothing to show: no exception recorded."
 msgstr "Rien à montrer: pas d’exception enregistrée."
 
-#: console.py:175
+#: console.py:190
 msgid "Warning: you added a type hint to the python builtin `{name}`."
 msgstr ""
 "Attention : vous avez utilisé des annotations de type pour l'identifiant "
 "Python (builtin) `{name}`."
 
-#: console.py:178
+#: console.py:193
 msgid ""
 "Warning: you used a type hint for a variable without assigning it a value.\n"
 msgstr ""
 "Attention : vous avez utilisé une annotation de type pour une variable sans "
 "lui attribuer une valeur.\n"
 
-#: console.py:181
+#: console.py:196
 msgid "Instead of `{hint}`, perhaps you meant `{assignment}`."
 msgstr ""
 "Au lieu de `{hint}`, peut-être que vous vouliez plutôt écrire : `{assignment}"
 "`."
 
-#: console.py:252
+#: console.py:267
 msgid "Warning: you have redefined the python builtin `{name}`."
 msgstr ""
 "Attention : vous avez redéfini l'identifiant Python (builtin) `{name}`."
@@ -517,7 +517,7 @@ msgstr ""
 "diviser une valeur\n"
 "par zéro soit directement ou en utilisant une autre opération mathématique.\n"
 
-#: info_specific.py:84
+#: info_specific.py:79
 msgid ""
 "In your program, the name of the\n"
 "file that cannot be found is `{filename}`.\n"
@@ -1204,16 +1204,17 @@ msgstr "Vous utilisez déjà Python!"
 #: runtime_errors\name_error.py:61
 msgid ""
 "In your program, `{var_name}` is an unknown name\n"
-"that had been declared as belonging in a nonlocal scope;\n"
-"however, no such name could not be found.\n"
+"that exists in an enclosing scope,\n"
+"but has not yet been assigned a value.\n"
 msgstr ""
-"Dans votre programme,`{var_name}` est un nom inconnu\n"
-"qui avaient été déclaré comme appartenant à une portée non locale;\n"
-"cependant, aucun objet avec ce nom n’a pu être trouvé.\n"
+"Dans votre programme, `{var_name}` est un nom inconnu\n"
+"qui existe dans une portée englobante,\n"
+"mais qui n'a pas encore reçu de valeur.\n"
 
 #: runtime_errors\name_error.py:71
-msgid "In your program, `{var_name}` is an unknown name.\n"
-msgstr "Dans votre programme, `{var_name}` est un nom inconnu.\n"
+msgid "In your program, no object with the name `{var_name}` exists.\n"
+msgstr ""
+"Dans votre programme, aucun objet portant le nom `{var_name}` n'existe.\n"
 
 #: runtime_errors\name_error.py:89
 msgid "Did you mean `1j`?\n"

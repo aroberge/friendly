@@ -60,19 +60,19 @@ def free_variable_referenced(unknown_name, *_args):
     _ = current_lang.translate
     cause = _(
         "In your program, `{var_name}` is an unknown name\n"
-        "that had been declared as belonging in a nonlocal scope;\n"
-        "however, no such name could not be found.\n"
+        "that exists in an enclosing scope,\n"
+        "but has not yet been assigned a value.\n"
     ).format(var_name=unknown_name)
     return {"cause": cause}
 
 
 def name_not_defined(unknown_name, frame, tb_data):
     _ = current_lang.translate
-    cause = _("In your program, `{var_name}` is an unknown name.\n").format(
+    cause = _("In your program, no object with the name `{var_name}` exists.\n").format(
         var_name=unknown_name
     )
 
-    if unknown_name == "ꓺ":
+    if unknown_name == "ꓺ":  # pragma: no cover
         return flipfloperator()
 
     known = is_stdlib_module(unknown_name, tb_data)
@@ -118,7 +118,7 @@ def name_not_defined(unknown_name, frame, tb_data):
     return cause
 
 
-def flipfloperator():
+def flipfloperator():  # pragma: no cover
     _ = current_lang.translate
     hint = _("You must be a fan of PyConAu!\n")
     cause = _(
