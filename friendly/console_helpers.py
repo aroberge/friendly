@@ -29,9 +29,6 @@ def back():
 
     The intention is to allow recovering from a typo when trying interactively
     to find out specific information about a given exception.
-
-    Note that, if the language is changed at some point, going back in time does
-    not change the language in which a given traceback information was recorded.
     """
     _ = current_lang.translate
     if not session.saved_info:
@@ -41,6 +38,11 @@ def back():
         debug_helper.log("Problem: saved info is not empty but friendly is")
     session.saved_info.pop()
     session.friendly.pop()
+    if session.saved_info:
+        info = session.saved_info[-1]
+        if info["lang"] != friendly.get_lang():
+            info["lang"] = friendly.get_lang()
+            session.friendly[-1].recompile_info()
 
 
 def _back_repr():  # pragma: no cover
@@ -378,7 +380,7 @@ def _set_debug(flag=True):  # pragma: no cover
 def _show_info():  # pragma: no cover
     """Debugging tool: shows the complete content of traceback info.
 
-    Prints ``None`` for a given item if it is not present.
+    Prints ``''`` for a given item if it is not present.
     """
     info = session.saved_info[-1] if session.saved_info else []
 
@@ -389,7 +391,13 @@ def _show_info():  # pragma: no cover
                 print("   ", line)
             print()
         else:
-            print(f"{item}: None")
+            print(f"{item}: ''")
+
+    print("=" * 56)
+    print("The following are not meant to be shown to the end user:\n")
+    for item in info:
+        if item not in formatters.items_in_order:
+            print(f"{item}: {info[item]}")
 
 
 basic_helpers = {  # Will appear in basic help

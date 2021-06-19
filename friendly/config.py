@@ -96,6 +96,7 @@ class _State:
                     "Problem: saved_info includes content but friendly doesn't."
                 )
             self.friendly[-1].recompile_info()
+            self.friendly[-1].info["lang"] = lang
 
     def install_gettext(self, lang):
         """Sets the current language for gettext."""
@@ -219,6 +220,7 @@ class _State:
             self.friendly.append(core.FriendlyTraceback(etype, value, tb))
             self.friendly[-1].compile_info()
             info = self.friendly[-1].info
+            info["lang"] = self.lang
             self.saved_info.append(info)
             explanation = self.formatter(info, include=self.include)
         except Exception as e:  # pragma: no cover
