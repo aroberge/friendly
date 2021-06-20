@@ -28,7 +28,7 @@ def _get_cause(value, frame, tb_data):
     if match:
         return index_out_of_range(match.group(1), frame, tb_data)
 
-    debug_helper.log("New case to consider.")  # pragma: no cover
+    debug_helper.log("New IndexError case to consider.")  # pragma: no cover
     return {"cause": no_information()}  # pragma: no cover
 
 
@@ -57,39 +57,35 @@ def index_out_of_range(obj_type, frame, tb_data):
 
     length = len(sequence)
     evaluator = pure_eval.Evaluator.from_frame(frame)
+    # The information that we want may differ for different
+    # Python versions
     try:
         index = evaluator[node.slice.value]
     except Exception:  # noqa
         try:
-            index = node.slice.value
+            index = evaluator[node.slice]
         except Exception:  # noqa  # pragma: no cover
-            debug_helper.log("New case to consider.")
-            index = "unknown"
+            debug_helper.log("Unknown index: new case to consider.")
+            cause = _(
+                "You have tried to get an item from `{name}`,\n"
+                "{obj_type} of length `{length}`, by using a value for the index\n"
+                "that I cannot determine but which is not allowed.\n"
+            ).format(
+                name=name, length=length, obj_type=info_variables.convert_type(obj_type)
+            )
+            return {"cause": cause}
 
-    if index != "unknown":
-        cause = _(
-            "You have tried to get the item with index `{index}` of `{name}`,\n"
-            "{obj_type} of length `{length}`.\n"
-        ).format(
-            index=index,
-            name=name,
-            length=length,
-            obj_type=info_variables.convert_type(obj_type),
-        )
-    else:  # pragma: no cover
-        debug_helper.log("New case to consider")
-        cause = _(
-            "You have tried to get an item from `{name}`,\n"
-            "{obj_type} of length `{length}`, by using a value for the index\n"
-            "that I cannot determine but which is not allowed.\n"
-        ).format(
-            index=index,
-            name=name,
-            length=length,
-            obj_type=info_variables.convert_type(obj_type),
-        )
+    cause = _(
+        "You have tried to get the item with index `{index}` of `{name}`,\n"
+        "{obj_type} of length `{length}`.\n"
+    ).format(
+        index=index,
+        name=name,
+        length=length,
+        obj_type=info_variables.convert_type(obj_type),
+    )
 
-    if index != "unknown" and length != 0:
+    if length != 0:
         cause += _(
             "The valid index values of `{name}` are integers ranging from\n"
             "`{min}` to `{max}`.\n"
@@ -99,7 +95,7 @@ def index_out_of_range(obj_type, frame, tb_data):
                 "Remember: the first item of {obj_type} is not at index 1 but at index 0.\n"
             ).format(obj_type=info_variables.convert_type(obj_type))
             return {"cause": cause, "suggest": hint}
-    elif length == 0:
+    else:
         hint = _("`{name}` contains no item.\n").format(name=name)
         cause = _(
             "You have tried to get the item with index `{index}` of `{name}`,\n"

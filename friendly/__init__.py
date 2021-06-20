@@ -37,6 +37,7 @@ import inspect
 import warnings as _warnings
 from pathlib import Path
 
+from . import debug_helper
 from . import editors_helpers
 from . import formatters
 from . import path_info
@@ -105,7 +106,7 @@ def get_output(flush=True):
     return session.get_captured(flush=flush)
 
 
-def install(lang=None, redirect=None, include="explain"):
+def install(lang=None, redirect=None, include="explain", _debug=None):
     """
     Replaces ``sys.excepthook`` by friendly's own version.
     Intercepts, and provides an explanation for all Python exceptions except
@@ -122,6 +123,8 @@ def install(lang=None, redirect=None, include="explain"):
         include: controls the amount of information displayed.
         See set_include() for details.
     """
+    if _debug is not None:
+        debug_helper.DEBUG = _debug
     session.install(lang=lang, redirect=redirect, include=include)
 
 
