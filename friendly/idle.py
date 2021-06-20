@@ -358,7 +358,7 @@ if sys.version_info >= (3, 10):
         if not lines:
             idle_writer(_("No SyntaxError recorded.", "stderr"))
             return
-        source = "\n".join(lines)
+        source = "\n".join(lines) + "\n"
         try:
             compile(source, filename, "single")
         except Exception:  # noqa
