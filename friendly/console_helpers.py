@@ -73,8 +73,8 @@ explain.__rich_repr__ = _explain_repr
 
 
 def friendly_tb():
-    """Shows the friendly traceback, which includes the hint/suggestion
-    if available.
+    """Shows the a simplified Python traceback,
+    which includes the hint/suggestion if available.
     """
     explain("friendly_tb")
 
@@ -444,10 +444,10 @@ class FriendlyHelpers:
 
     version = __version__
 
-    def __init__(self, color_schemes=None):
+    def __init__(self, local_helpers=None):
         self.__include = list(basic_helpers)
-        if color_schemes is not None:
-            self.__include.extend(color_schemes)
+        if local_helpers is not None:
+            self.__include.extend(local_helpers)
         self.__include = sorted(self.__include)  # first alphabetically
         # then by word length, as it is easier to read.
         self.include_in_rich_repr = sorted(self.__include, key=len)

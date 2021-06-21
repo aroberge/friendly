@@ -14,9 +14,9 @@ import friendly  # noqa
 from friendly.console_helpers import *  # noqa
 from friendly.console_helpers import helpers, FriendlyHelpers  # noqa
 from friendly import source_cache
-from friendly.formatters import select_items, repl_indentation, no_result
 from friendly.my_gettext import current_lang
 from friendly.config import session
+from friendly._idle import idle_formatter
 
 friendly.exclude_file_from_traceback(__file__)
 
@@ -26,11 +26,23 @@ Friendly = FriendlyHelpers()
 Friendly.__friendly_repr__ = Friendly.__repr__
 helpers["Friendly"] = Friendly
 
+_set_formatter = set_formatter  # noqa
+
+
+def set_formatter(formatter=None, **kwargs):
+    if formatter == "idle":
+        _set_formatter(idle_formatter)
+    else:
+        _set_formatter(formatter=formatter, **kwargs)
+
+
+set_formatter.__rich_repr__ = _set_formatter.__rich_repr__  # noqa
+
 __all__ = list(helpers)
 _old_displayhook = sys.displayhook
 
 
-def displayhook(value):
+def _displayhook(value):
     if value is None:
         return
     if str(type(value)) == "<class 'function'>" and hasattr(value, "__rich_repr__"):
@@ -86,137 +98,6 @@ def idle_writer(output, color=None):
             sys.stdout.shell.write(fragment[0], "stderr")  # noqa
 
 
-def format_traceback(text):
-    """We format tracebacks using the default stderr color (usually read)
-    except that lines with code are shown in the default color (usually black).
-    """
-    lines = text.split("\n")
-    new_lines = []
-    for line in lines:
-        if line.startswith("    "):
-            new_lines.append((line, "default"))
-        elif line:
-            new_lines.append((line, "stderr"))
-        new_lines.append(("\n", "default"))
-    return new_lines
-
-
-def format_source(text, keep_caret):
-    """Formats the source code.
-
-    Often, the location of an error is indicated by one or more ^ below
-    the line with the error. IDLE uses highlighting with red background the
-    normal single character location of an error.
-    This function replaces the ^ used to highlight an error by the same
-    highlighting scheme used by IDLE.
-    """
-    lines = text.split("\n")
-    while not lines[-1].strip():
-        lines.pop()
-    caret_set = {"^"}
-    error_line = -2
-    begin = end = 0
-    for index, line in enumerate(lines):
-        if set(line.strip()) == caret_set:
-            error_line = index
-            begin = line.find("^")
-            end = begin + len(line.strip())
-            break
-
-    new_lines = []
-    for index, line in enumerate(lines):
-        if index == error_line and not keep_caret:
-            continue
-
-        if index == error_line - 1:
-            new_lines.append((line[0:begin], "default"))
-            new_lines.append((line[begin:end], "ERROR"))
-            new_lines.append((line[end:], "default"))
-        else:
-            new_lines.append((line, "default"))
-        new_lines.append(("\n", "default"))
-    return new_lines
-
-
-def format_text(info, item, indentation):
-    """Format text with embedded code fragment surrounded by backquote characters."""
-    new_lines = []
-    for line in info[item].split("\n"):
-        if "`" in line and line.count("`") % 2 == 0:
-            fragments = line.split("`")
-            for index, fragment in enumerate(fragments):
-                if index == 0:
-                    new_lines.append((indentation + fragment, "stdout"))
-                elif index % 2:
-                    if "Error" in fragment:
-                        new_lines.append((fragment, "stderr"))
-                    else:
-                        new_lines.append((fragment, "default"))
-                else:
-                    new_lines.append((fragment, "stdout"))
-            if fragment.endswith("\n"):
-                new_lines.append(("", "stdout"))
-            else:
-                new_lines.append(("\n", "stdout"))
-        else:
-            line = line.strip()
-            new_lines.append((indentation + line + "\n", "stdout"))
-
-    lines = reversed(new_lines)
-    count = 0
-    for fragment, _ in lines:
-        if not fragment.strip():
-            count += 1
-            continue
-        break
-    if count > 1:
-        for _ in range(count):
-            new_lines.pop()
-        new_lines.append(("", "stdout"))
-
-    return new_lines
-
-
-def idle_formatter(info, include="friendly_tb"):
-    """Formatter that takes care of color definitions."""
-    # The explanation for SyntaxError and subclasses states that the
-    # location of the error is indicated by ^
-    keep_caret = (
-        "SyntaxError" in info["shortened_traceback"]
-        or "IndentationError" in info["shortened_traceback"]
-        or "TabError" in info["shortened_traceback"]
-    )
-    items_to_show = select_items(include)
-    spacing = {"single": " " * 4, "double": " " * 8, "none": ""}
-    result = ["\n"]
-    for item in items_to_show:
-        if item == "header":
-            continue
-
-        if item in info:
-            if "traceback" in item:  # no additional indentation
-                result.extend(format_traceback(info[item]))
-            elif "source" in item:  # no additional indentation
-                result.extend(format_source(info[item], keep_caret))
-            elif "header" in item:
-                indentation = spacing[repl_indentation[item]]
-                result.append((indentation + info[item], "stderr"))
-            elif item == "message":  # Highlight error name
-                parts = info[item].split(":")
-                parts[0] = "`" + parts[0] + "`"
-                _info = {item: ":".join(parts)}
-                indentation = spacing[repl_indentation[item]]
-                result.extend(format_text(_info, item, indentation))
-            else:
-                indentation = spacing[repl_indentation[item]]
-                result.extend(format_text(info, item, indentation))
-
-    if result == ["\n"]:
-        return no_result(info, include)
-
-    return result
-
-
 def install_in_idle_shell(lang="en"):
     """Installs Friendly in IDLE's shell so that it can retrieve
     code entered in IDLE's repl.
@@ -254,18 +135,20 @@ def install_in_idle_shell(lang="en"):
 
 def install(lang="en"):
     """Installs Friendly in the IDLE shell, with a custom formatter.
-    For Python versions before 3.10, this is not directly supported, so a
+    For Python versions before 3.10, this was not directly supported, so a
     Friendly console is used instead of IDLE's shell.
+
+    Changes introduced in Python 3.10 were back-ported to Python 3.9.5.
     """
     sys.stderr = sys.stdout.shell  # noqa
     friendly.set_formatter(idle_formatter)
-    if sys.version_info >= (3, 10):
+    if sys.version_info >= (3, 9, 5):
         install_in_idle_shell(lang=lang)
-        sys.displayhook = displayhook
+        sys.displayhook = _displayhook
     else:
         idle_writer("Friendly cannot be installed in this version of IDLE.\n")
         idle_writer("Using Friendly's own console instead.\n")
-        start_console(lang=lang, displayhook=displayhook)
+        start_console(lang=lang, displayhook=_displayhook)
 
 
 def start_console(lang="en", displayhook=None):
@@ -276,7 +159,7 @@ def start_console(lang="en", displayhook=None):
 
 
 def run(filename, lang=None, include="friendly_tb", args=None, console=True):
-    """This function executes the code found in a python file.
+    """This function executes the code found in a Python file.
 
     ``filename`` should be either an absolute path or, it should be the name of a
     file (filename.py) found in the same directory as the file from which ``run()``
@@ -344,7 +227,8 @@ __all__.append("install")
 __all__.append("start_console")
 __all__.append("run")
 
-if sys.version_info >= (3, 10):
+if sys.version_info >= (3, 10):  # current hack
+    # used with https://bugs.python.org/issue43476
 
     def friendly_syntax_error():
         _ = current_lang.translate

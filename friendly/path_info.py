@@ -101,7 +101,16 @@ class PathUtil:
         path = path.replace("'", "")  # We might get passed a path repr
         path = os.path.abspath(path)
         path_lower = path.lower()
-        if path_lower.startswith(SITE_PACKAGES.lower()):
+
+        if path.endswith("<SyntaxError>"):  # with IDLE's latest hack
+            # see https://bugs.python.org/issue43476
+            path = "<SyntaxError>"
+        elif path.endswith("<pyshell#"):
+            path = "<pyshell#" + path.split("<pyshell#")[1]
+        elif path.startswith("<ipython-input-"):
+            parts = path.split("-")
+            path = "[" + parts[-2] + "]"
+        elif path_lower.startswith(SITE_PACKAGES.lower()):
             path = "LOCAL:" + path[len(SITE_PACKAGES) :]
         elif path_lower.startswith(self.python.lower()):
             path = "PYTHON_LIB:" + path[len(self.python) :]
@@ -111,11 +120,6 @@ class PathUtil:
             path = "TESTS:" + path[len(TESTS) :]
         elif path_lower.startswith(self.home.lower()):
             path = "HOME:" + path[len(self.home) :]
-        elif path.startswith("<ipython-input-"):
-            parts = path.split("-")
-            path = "[" + parts[-2] + "]"
-        if path.endswith("<SyntaxError>"):  # with IDLE's latest hack
-            path = "<SyntaxError>"
         return path
 
 
