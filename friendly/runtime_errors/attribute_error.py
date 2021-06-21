@@ -3,7 +3,7 @@ import builtins
 import re
 import sys
 
-
+from .. import console_helpers
 from ..my_gettext import current_lang, no_information, please_report, internal_error
 from ..utils import get_similar_words, list_to_string
 from ..path_info import path_utils
@@ -15,7 +15,7 @@ from . import stdlib_modules
 def get_cause(value, frame, tb_data):
     try:
         return _get_cause(value, frame, tb_data)
-    except Exception:  # pragma: no cover
+    except Exception:  # pragma: no cover  # noqa
         debug_helper.log_error()
         return {"cause": internal_error(), "suggest": internal_error()}
 
@@ -203,6 +203,7 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
 
     all_objects = info_variables.get_all_objects(tb_data.bad_line, frame)["name, obj"]
     obj = info_variables.get_object_from_name(obj_type, frame)
+
     if obj is None:  # object could be an instance of obj_type
         # this is to fix issue #212
         for obj_name, _obj in all_objects:
@@ -221,8 +222,11 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
             return {"cause": cause + please_report()}
     else:
         for obj_name, instance in all_objects:
-            if isinstance(instance, obj) or instance == obj:
-                break
+            try:
+                if isinstance(instance, obj) or instance == obj:
+                    break
+            except TypeError:
+                pass
         else:
             possible_objects = []
             for obj_name, _obj in all_objects:
@@ -230,6 +234,10 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
                 if (
                     t.endswith(f".{obj_type}'>") or t.endswith(f"'{obj_type}'>")
                 ) and not hasattr(_obj, attribute):
+                    possible_objects.append((obj_name, _obj))
+                elif obj_name == "Friendly" and isinstance(
+                    _obj, console_helpers.FriendlyHelpers
+                ):
                     possible_objects.append((obj_name, _obj))
 
             if not possible_objects:
