@@ -16,7 +16,8 @@ from friendly.console_helpers import helpers, FriendlyHelpers  # noqa
 from friendly import source_cache
 from friendly.my_gettext import current_lang
 from friendly.config import session
-from friendly._idle import idle_formatter
+from . import _idle_formatter
+
 
 friendly.exclude_file_from_traceback(__file__)
 
@@ -31,7 +32,7 @@ _set_formatter = set_formatter  # noqa
 
 def set_formatter(formatter=None, **kwargs):
     if formatter == "idle":
-        _set_formatter(idle_formatter)
+        _set_formatter(_idle_formatter.idle_formatter)
     else:
         _set_formatter(formatter=formatter, **kwargs)
 
@@ -141,7 +142,7 @@ def install(lang="en"):
     Changes introduced in Python 3.10 were back-ported to Python 3.9.5.
     """
     sys.stderr = sys.stdout.shell  # noqa
-    friendly.set_formatter(idle_formatter)
+    friendly.set_formatter(_idle_formatter.idle_formatter)
     if sys.version_info >= (3, 9, 5):
         install_in_idle_shell(lang=lang)
         sys.displayhook = _displayhook
@@ -155,7 +156,9 @@ def start_console(lang="en", displayhook=None):
     """Starts a Friendly console with a custom formatter for IDLE"""
     sys.stderr = sys.stdout.shell  # noqa
     friendly.set_stream(idle_writer)
-    friendly.start_console(formatter=idle_formatter, lang=lang, displayhook=displayhook)
+    friendly.start_console(
+        formatter=_idle_formatter.idle_formatter, lang=lang, displayhook=displayhook
+    )
 
 
 def run(filename, lang=None, include="friendly_tb", args=None, console=True):
@@ -192,7 +195,7 @@ def run(filename, lang=None, include="friendly_tb", args=None, console=True):
     _ = current_lang.translate
 
     sys.stderr = sys.stdout.shell  # noqa
-    friendly.set_formatter(idle_formatter)
+    friendly.set_formatter(_idle_formatter.idle_formatter)
     friendly.set_stream(idle_writer)
 
     filename = Path(filename)
@@ -219,7 +222,7 @@ def run(filename, lang=None, include="friendly_tb", args=None, console=True):
         include=include,
         args=args,
         console=console,
-        formatter=idle_formatter,
+        formatter=_idle_formatter.idle_formatter,
     )
 
 
@@ -263,7 +266,7 @@ if sys.version_info >= (3, 10):  # current hack
 
         include = get_include()  # noqa
         set_include("explain")  # noqa
-        session.exception_hook(exc_type, value, _("Traceback not available from IDLE"))
+        session.exception_hook(exc_type, value, "")
         set_include(include)  # noqa
 
     _old_explain = explain  # noqa

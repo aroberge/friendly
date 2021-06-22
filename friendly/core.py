@@ -684,8 +684,10 @@ class FriendlyTraceback:
         if not hasattr(self, "message"):
             self.assign_message()
         if isinstance(self.tb_data.formatted_tb, str):
-            # for example: "Traceback not available from IDLE"
-            tb = self.info["message"] + "\n" + self.tb_data.formatted_tb + "\n"
+            # for example: "Traceback not available from IDLE" ...
+            tb = self.info["message"]
+            if self.tb_data.formatted_tb:
+                tb = self.info["message"] + "\n" + self.tb_data.formatted_tb + "\n"
             self.info["simulated_python_traceback"] = tb
             self.info["shortened_traceback"] = tb
             self.info["original_python_traceback"] = tb
