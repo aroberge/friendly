@@ -10,10 +10,11 @@ import sys
 import friendly
 
 from friendly import debug_helper, formatters, __version__
-from .config import session
-from .info_generic import get_generic_explanation
-from .path_info import show_paths
-from .my_gettext import current_lang
+from friendly.config import session
+from friendly.info_generic import get_generic_explanation
+from friendly.path_info import show_paths
+from friendly.my_gettext import current_lang
+from friendly.utils import add_rich_repr
 
 _ = current_lang.lazy_translate
 
@@ -258,12 +259,8 @@ def _get_tb_data():  # pragma: no cover
 
 
 def _set_debug(flag=True):  # pragma: no cover
-    """This functions displays the true traceback recorded, that
-    includes friendly's own code.
-    It also sets a debug flag for the current session.
-    """
+    """This sets the value of the debug flag for the current session."""
     debug_helper.DEBUG = flag
-    explain("debug_tb")
 
 
 def _show_info():  # pragma: no cover
@@ -292,9 +289,7 @@ def _show_info():  # pragma: no cover
 basic_helpers = {
     "back": back,
     "explain": explain,
-    "friendly_tb": friendly_tb,
     "history": history,
-    "python_tb": python_tb,
     "set_lang": set_lang,
     "show_paths": show_paths,
     "what": what,
@@ -305,9 +300,7 @@ basic_helpers = {
 
 back.help = lambda: _("Removes the last recorded traceback item.")
 explain.help = lambda: _("Shows all the information about the last traceback.")
-friendly_tb.help = lambda: _("Shows a simplified Python traceback")
 history.help = lambda: _("Shows a list of recorded traceback messages.")
-python_tb.help = lambda: _("Shows a normal Python traceback")
 set_lang.help = lambda: _("Sets the language to be used.")
 show_paths.help = lambda: _("Shows the paths corresponding to synonyms used.")
 what.help = lambda: _("Shows the generic meaning of a given exception")
@@ -315,50 +308,49 @@ where.help = lambda: _("Shows where an exception was raised.")
 why.help = lambda: _("Shows the likely cause of the exception.")
 www.help = lambda: _("Opens a web browser at a useful location.")
 
-
-def add_rich_repr(functions):
-    """Given a dict whose content is of the form
-    {function_name_string: function_obj}
-    it adds a custom __rich__repr attribute for all such function objecs which
-    have a help method as attribute.
-    """
-    for name in functions:
-        func = functions[name]
-        if hasattr(func, "help"):
-            setattr(func, "__rich_repr__", lambda func=func: (func.help(),))  # noqa
-
-
 add_rich_repr(basic_helpers)
-
 
 other_helpers = {
     "hint": hint,
     "get_lang": get_lang,
+    "python_tb": python_tb,
+    "friendly_tb": friendly_tb,
     "get_include": get_include,
     "set_include": set_include,
     "set_formatter": set_formatter,
 }
-
-get_include.__rich_repr__ = lambda: (
-    _("Returns the current value used for items to include by default."),
+hint.help = lambda: _("Suggestion sometimes added to a friendly traceback.")
+python_tb.help = lambda: _("Shows a normal Python traceback.")
+friendly_tb.help = lambda: _("Shows a simplified Python traceback.")
+get_include.help = lambda: _(
+    "Returns the current value used for items to include by default."
 )
-set_include.__rich_repr__ = lambda: (
-    _("Sets the items to show when an exception is raised."),
+set_include.help = lambda: _(
+    "Sets the items to show by default when an exception is raised."
 )
-get_lang.__rich_repr__ = lambda: (_("Returns the language currently used."),)
-set_formatter.__rich_repr__ = lambda: (_("Sets the formatter to use for display."),)
+get_lang.help = lambda: _("Returns the language currently used.")
+set_formatter.help = lambda: _("Sets the formatter to use for display.")
+add_rich_repr(other_helpers)
 
 helpers = {**basic_helpers, **other_helpers}
 
 _debug_helpers = {
     "_debug_tb": _debug_tb,
-    "_show_info": _show_info,
-    "_get_exception": _get_exception,
     "_get_frame": _get_frame,
-    "_get_statement": _get_statement,
-    "_get_tb_data": _get_tb_data,
     "_set_debug": _set_debug,
+    "_show_info": _show_info,
+    "_get_tb_data": _get_tb_data,
+    "_get_exception": _get_exception,
+    "_get_statement": _get_statement,
 }
+
+_debug_tb.help = lambda: "Shows the full traceback, including code from friendly."
+_show_info.help = lambda: "Shows the all the items recorded in the traceback."
+_get_exception.help = lambda: "Returns the exception instance."
+_get_frame.help = lambda: "Returns the frame object where the exception occurred."
+_get_statement.help = lambda: "Returns the statement in which a SyntaxError occurred."
+_get_tb_data.help = lambda: "Return a special traceback object."
+_set_debug.help = lambda: "Use True (default) or False to set the debug flag."
 
 
 class FriendlyHelpers:
@@ -371,17 +363,23 @@ class FriendlyHelpers:
     version = __version__
 
     def __init__(self, local_helpers=None):
-        self.__include = list(basic_helpers)
+        self.__include_basic = list(basic_helpers)
         if local_helpers is not None:
-            self.__include.extend(local_helpers)
-        self.__include = sorted(self.__include)  # first alphabetically
+            self.__include_basic.extend(local_helpers)
+        self.__include_basic = sorted(self.__include_basic)  # first alphabetically
         # then by word length, as it is easier to read.
-        self.include_in_rich_repr = sorted(self.__include, key=len)
+        self.include_in_rich_repr = sorted(self.__include_basic, key=len)
+
+        self.__include_more = list(other_helpers)
+        self.__include_more = sorted(self.__include_more)  # first alphabetically
+        # then by word length, as it is easier to read.
+        self.include_in_help = sorted(self.__include_more, key=len)
+
         self.__class__.__name__ = "Friendly"  # For a nicer Rich repr
 
     def __dir__(self):  # pragma: no cover
         """Only include useful friendly methods."""
-        return self.__include + list(other_helpers) + list(_debug_helpers)
+        return self.__include_basic + list(other_helpers) + list(_debug_helpers)
 
     def __repr__(self):  # pragma: no cover
         """Shows a brief description in the default language of what
@@ -390,16 +388,32 @@ class FriendlyHelpers:
         'Advanced' and debugging helper functions are not included
         in the display.
         """
-        _ = current_lang.translate
-        text = _("Use `help(Friendly)` and `dir(Friendly)` for more information.")
-        parts = [text + "\n\n"]
+        header = (
+            _(
+                "The following methods of the Friendly object might also "
+                "be available as functions."
+            )
+            + "\n\n"
+            + _("Basic methods:")
+        )
+        parts = [header + "\n\n"]
         for item in self.include_in_rich_repr:
             parts.append(item + "(): ")
             fn = getattr(Friendly, item)
             if hasattr(fn, "help"):
                 parts.append(getattr(Friendly, item).help() + "\n")
             else:
-                print("item", item, "has not help()")
+                print("Warning:", item, "has no help() method.")
+
+        more_header = _("Less commonly used methods/functions.")
+        parts.append("\n" + more_header + "\n\n")
+        for item in self.include_in_help:
+            parts.append(item + "(): ")
+            fn = getattr(Friendly, item)
+            if hasattr(fn, "help"):
+                parts.append(getattr(Friendly, item).help() + "\n")
+            else:
+                print("Warning:", item, "has no help() method.")
 
         return "".join(parts)
 

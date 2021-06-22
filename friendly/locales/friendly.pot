@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2021-06-19 08:08-0300\n"
+"POT-Creation-Date: 2021-06-22 11:15-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,115 +15,131 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: __init__.py:196 __main__.py:178 idle.py:275
+#: __init__.py:199 __main__.py:178 idle.py:207
 msgid "The file {filename} does not exist."
 msgstr ""
 
-#: config.py:66 config.py:188 console_helpers.py:97
+#: config.py:66 config.py:189 console_helpers.py:70
 msgid "Nothing to show: no exception recorded."
 msgstr ""
 
-#: console.py:190
+#: console.py:29
+msgid "Type 'Friendly' for help on special functions/methods."
+msgstr ""
+
+#: console.py:196
 msgid "Warning: you added a type hint to the python builtin `{name}`."
 msgstr ""
 
-#: console.py:193
+#: console.py:199
 msgid ""
 "Warning: you used a type hint for a variable without assigning it a value.\n"
 msgstr ""
 
-#: console.py:196
+#: console.py:202
 msgid "Instead of `{hint}`, perhaps you meant `{assignment}`."
 msgstr ""
 
-#: console.py:267
+#: console.py:273
 msgid "Warning: you have redefined the python builtin `{name}`."
 msgstr ""
 
-#: console_helpers.py:21
-msgid "Shows the paths corresponding to synonyms used."
-msgstr ""
-
-#: console_helpers.py:38
+#: console_helpers.py:30
 msgid "Nothing to go back to: no exception recorded."
 msgstr ""
 
-#: console_helpers.py:48
-msgid "Removes the last recorded traceback item."
-msgstr ""
-
-#: console_helpers.py:67
-msgid "Shows all the information about the last traceback."
-msgstr ""
-
-#: console_helpers.py:82
-msgid "Shows a simplified Python traceback"
-msgstr ""
-
-#: console_helpers.py:108
-msgid "Shows a list of recorded traceback messages."
-msgstr ""
-
-#: console_helpers.py:123
-msgid "Shows a normal Python traceback"
-msgstr ""
-
-#: console_helpers.py:156
-msgid "Shows the generic meaning of a given exception"
-msgstr ""
-
-#: console_helpers.py:169
-msgid "Shows where an exception was raised."
-msgstr ""
-
-#: console_helpers.py:182
-msgid "Shows the likely cause of the exception."
-msgstr ""
-
-#: console_helpers.py:231
+#: console_helpers.py:164
 msgid ""
 "Invalid argument for `www()`.\n"
 "Valid arguments include `None` or one of `{sites}`.\n"
 msgstr ""
 
-#: console_helpers.py:255
+#: console_helpers.py:188
 msgid "The default web browser cannot be used for searching."
 msgstr ""
 
-#: console_helpers.py:261
-msgid "Opens a web browser at a useful location."
+#: console_helpers.py:301
+msgid "Removes the last recorded traceback item."
 msgstr ""
 
-#: console_helpers.py:276
-msgid "Returns the language currently used."
+#: console_helpers.py:302
+msgid "Shows all the information about the last traceback."
 msgstr ""
 
-#: console_helpers.py:281
+#: console_helpers.py:303
+msgid "Shows a list of recorded traceback messages."
+msgstr ""
+
+#: console_helpers.py:304
 msgid "Sets the language to be used."
 msgstr ""
 
-#: console_helpers.py:287
+#: console_helpers.py:305
+msgid "Shows the paths corresponding to synonyms used."
+msgstr ""
+
+#: console_helpers.py:306
+msgid "Shows the generic meaning of a given exception"
+msgstr ""
+
+#: console_helpers.py:307
+msgid "Shows where an exception was raised."
+msgstr ""
+
+#: console_helpers.py:308
+msgid "Shows the likely cause of the exception."
+msgstr ""
+
+#: console_helpers.py:309
+msgid "Opens a web browser at a useful location."
+msgstr ""
+
+#: console_helpers.py:322
+msgid "Suggestion sometimes added to a friendly traceback."
+msgstr ""
+
+#: console_helpers.py:323
+msgid "Shows a normal Python traceback."
+msgstr ""
+
+#: console_helpers.py:324
+msgid "Shows a simplified Python traceback."
+msgstr ""
+
+#: console_helpers.py:325
 msgid "Returns the current value used for items to include by default."
 msgstr ""
 
-#: console_helpers.py:293
-msgid "Sets the items to show when an exception is raised."
+#: console_helpers.py:328
+msgid "Sets the items to show by default when an exception is raised."
 msgstr ""
 
-#: console_helpers.py:298
+#: console_helpers.py:331
+msgid "Returns the language currently used."
+msgstr ""
+
+#: console_helpers.py:332
 msgid "Sets the formatter to use for display."
 msgstr ""
 
-#: console_helpers.py:460
-msgid "Use `help(Friendly)` and `dir(Friendly)` for more information."
+#: console_helpers.py:392
+msgid "The following methods of the Friendly object might also be available as functions."
 msgstr ""
 
-#: console_helpers.py:491
-msgid "Colour scheme designed for a black background."
+#: console_helpers.py:397
+msgid "Basic methods:"
 msgstr ""
 
-#: console_helpers.py:506
-msgid "Colour scheme designed for a white background."
+#: console_helpers.py:408
+msgid "Less commonly used methods/functions."
+msgstr ""
+
+#: console_helpers.py:448
+msgid "Sets a colour scheme designed for a black background."
+msgstr ""
+
+#: console_helpers.py:449
+msgid "Sets a colour scheme designed for a white background."
 msgstr ""
 
 #: core.py:376
@@ -182,12 +198,12 @@ msgid ""
 "'{filename}'.\n"
 msgstr ""
 
-#: core.py:850
+#: core.py:854
 msgid ""
 "Problem: source of `{filename}` is not available\n"
 msgstr ""
 
-#: core.py:892
+#: core.py:896
 msgid ""
 "Unfortunately, no additional information is available:\n"
 "the content of file '<stdin>' is not accessible.\n"
@@ -461,25 +477,25 @@ msgid ""
 "Friendly themes are only available in Mu's REPL.\n"
 msgstr ""
 
-#: my_gettext.py:75
+#: my_gettext.py:79
 msgid ""
 "Please report this example to\n"
 "https://github.com/aroberge/friendly/issues\n"
 "\n"
 msgstr ""
 
-#: my_gettext.py:84
+#: my_gettext.py:88
 msgid ""
 "No information is known about this exception.\n"
 msgstr ""
 
-#: my_gettext.py:86
+#: my_gettext.py:90
 msgid ""
 "If you are using the Friendly console, use `www()` to\n"
 "do an Internet search for this particular case.\n"
 msgstr ""
 
-#: my_gettext.py:95
+#: my_gettext.py:99
 msgid ""
 "Internal error for Friendly.\n"
 msgstr ""
@@ -529,7 +545,7 @@ msgid ""
 msgstr ""
 
 #: runtime_errors\attribute_error.py:111 runtime_errors\attribute_error.py:119
-#: runtime_errors\attribute_error.py:152 runtime_errors\attribute_error.py:312
+#: runtime_errors\attribute_error.py:152 runtime_errors\attribute_error.py:320
 #: runtime_errors\import_error.py:105 runtime_errors\key_error.py:56
 #: runtime_errors\key_error.py:63 runtime_errors\module_not_found_error.py:122
 #: runtime_errors\name_error.py:99 runtime_errors\unbound_local_error.py:39
@@ -599,14 +615,14 @@ msgid ""
 "which does not have an attribute named `{attribute}.`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:216
+#: runtime_errors\attribute_error.py:217
 msgid ""
 "An object of type `{obj_type}` has no attribute named `{attr}`.\n"
 "Unfortunately I cannot find such an object on the line where\n"
 "the problem occurs.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:236
+#: runtime_errors\attribute_error.py:244
 msgid ""
 "An object of type `{obj_type}` has no attribute named `{attr}`.\n"
 "\n"
@@ -615,7 +631,7 @@ msgid ""
 "but it does not appear to be the object causing the problem.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:245
+#: runtime_errors\attribute_error.py:253
 msgid ""
 "An object of type `{obj_type}` has no attribute named `{attr}`.\n"
 "\n"
@@ -623,51 +639,51 @@ msgid ""
 "{names}.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:285
+#: runtime_errors\attribute_error.py:293
 msgid ""
 "The object `{obj}` has no attribute named `{attr}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:289
+#: runtime_errors\attribute_error.py:297
 msgid ""
 "Note that object `{obj}` uses `__slots__` which prevents\n"
 "the creation of new attributes.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:297
+#: runtime_errors\attribute_error.py:305
 msgid ""
 "The following are some of its known attributes:\n"
 "`{names}`."
 msgstr ""
 
-#: runtime_errors\attribute_error.py:308
+#: runtime_errors\attribute_error.py:316
 msgid ""
 "The object `{obj_name}` has no attribute named `{attribute}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:313
+#: runtime_errors\attribute_error.py:321
 msgid ""
 "Perhaps you meant to write `{obj}.{correct}` instead of `{obj}.{typo}`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:319 runtime_errors\import_error.py:112
+#: runtime_errors\attribute_error.py:327 runtime_errors\import_error.py:112
 msgid ""
 "Did you mean one of the following: `{names}`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:320
+#: runtime_errors\attribute_error.py:328
 msgid ""
 "Instead of writing `{obj}.{typo}`, perhaps you meant to write one of \n"
 "the following names which are attributes of object `{obj}`:\n"
 "`{names}`\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:345
+#: runtime_errors\attribute_error.py:353
 msgid ""
 "Did you write a comma by mistake?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:346
+#: runtime_errors\attribute_error.py:354
 msgid ""
 "`{obj_name}` is a tuple that contains a single item\n"
 "which does have `'{attribute}'` as an attribute.\n"
@@ -675,56 +691,56 @@ msgid ""
 "where you defined `{obj_name}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:359
+#: runtime_errors\attribute_error.py:367
 msgid ""
 "Did you mean `'...'.join({obj_name})`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:360
+#: runtime_errors\attribute_error.py:368
 msgid ""
 "The object `{obj_name}` has no attribute named `join`.\n"
 "Perhaps you wanted something like `'...'.join({obj_name})`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:369
+#: runtime_errors\attribute_error.py:377
 msgid ""
 "Did you mean `{known_builtin}({obj_name})`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:372
+#: runtime_errors\attribute_error.py:380
 msgid ""
 "The object `{obj_name}` has no attribute named `{attribute}`.\n"
 "Perhaps you can use the Python builtin function `{known_builtin}` instead:\n"
 "`{known_builtin}({obj_name})`."
 msgstr ""
 
-#: runtime_errors\attribute_error.py:400
+#: runtime_errors\attribute_error.py:408
 msgid ""
 "Did you mean `{attr}`?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:401
+#: runtime_errors\attribute_error.py:409
 msgid ""
 "The object `{name}` has no attribute named `{attribute}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:405
+#: runtime_errors\attribute_error.py:413
 msgid ""
 "However, `{attr}` is an attribute of `{name}` with a similar meaning.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:409
+#: runtime_errors\attribute_error.py:417
 msgid ""
 "However, `{name}` has the following attributes with similar meanings:\n"
 "`{attributes}`.\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:420
+#: runtime_errors\attribute_error.py:428
 msgid ""
 "Did you mean to separate object names by a comma?\n"
 msgstr ""
 
-#: runtime_errors\attribute_error.py:422
+#: runtime_errors\attribute_error.py:430
 msgid ""
 "`{second}` is not an attribute of `{first}`.\n"
 "However, both `{first}` and `{second}` are known objects.\n"
@@ -785,36 +801,36 @@ msgid ""
 "a second time, before Python had completed the first import.\n"
 msgstr ""
 
-#: runtime_errors\index_error.py:70
-msgid ""
-"You have tried to get the item with index `{index}` of `{name}`,\n"
-"{obj_type} of length `{length}`.\n"
-msgstr ""
-
-#: runtime_errors\index_error.py:81
+#: runtime_errors\index_error.py:69
 msgid ""
 "You have tried to get an item from `{name}`,\n"
 "{obj_type} of length `{length}`, by using a value for the index\n"
 "that I cannot determine but which is not allowed.\n"
 msgstr ""
 
-#: runtime_errors\index_error.py:93
+#: runtime_errors\index_error.py:78
+msgid ""
+"You have tried to get the item with index `{index}` of `{name}`,\n"
+"{obj_type} of length `{length}`.\n"
+msgstr ""
+
+#: runtime_errors\index_error.py:89
 msgid ""
 "The valid index values of `{name}` are integers ranging from\n"
 "`{min}` to `{max}`.\n"
 msgstr ""
 
-#: runtime_errors\index_error.py:98
+#: runtime_errors\index_error.py:94
 msgid ""
 "Remember: the first item of {obj_type} is not at index 1 but at index 0.\n"
 msgstr ""
 
-#: runtime_errors\index_error.py:103
+#: runtime_errors\index_error.py:99
 msgid ""
 "`{name}` contains no item.\n"
 msgstr ""
 
-#: runtime_errors\index_error.py:104
+#: runtime_errors\index_error.py:100
 msgid ""
 "You have tried to get the item with index `{index}` of `{name}`,\n"
 "{obj_type} which contains no item.\n"

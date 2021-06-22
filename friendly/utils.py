@@ -45,6 +45,18 @@ class RuntimeMessageParser:
         return {"cause": no_information()}
 
 
+def add_rich_repr(functions):
+    """Given a dict whose content is of the form
+    {function_name_string: function_obj}
+    it adds a custom __rich__repr attribute for all such
+    function objects that have a help method.
+    """
+    for name in functions:
+        func = functions[name]
+        if hasattr(func, "help"):
+            setattr(func, "__rich_repr__", lambda func=func: (func.help(),))  # noqa
+
+
 def unique_variable_name():
     """Creates a unique variable name. Useful when attempting to introduce
     a new token to see if it can fix specific cases of SyntaxError."""

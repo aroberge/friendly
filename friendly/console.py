@@ -24,6 +24,11 @@ from .console_helpers import helpers, default_color_schemes
 from .my_gettext import current_lang
 
 
+def type_friendly():
+    _ = current_lang.translate
+    return _("Type 'Friendly' for help on special functions/methods.")
+
+
 BANNER = "\nFriendly Console version {}. [Python version: {}]\n".format(
     friendly.__version__, platform.python_version()
 )
@@ -319,7 +324,7 @@ def start_console(
     # from . import config
 
     if banner is None:
-        banner = BANNER
+        banner = BANNER + type_friendly() + "\n"
     if displayhook is None:
         displayhook = _displayhook
 
