@@ -71,8 +71,12 @@ class TracebackData:
         self.exception_name = etype.__name__
         self.value = value
         self.message = convert_value_to_message(value)
-        self.formatted_tb = traceback.format_exception(etype, value, tb)
-        self.records = self.get_records(tb)
+        if isinstance(tb, str):  # for SyntaxErrors from IDLE hack
+            self.formatted_tb = tb
+            self.records = []
+        else:
+            self.formatted_tb = traceback.format_exception(etype, value, tb)
+            self.records = self.get_records(tb)
 
         # The following three attributes get their correct values in get_source_info()
         self.bad_line = "\n"
@@ -679,6 +683,14 @@ class FriendlyTraceback:
         _ = current_lang.translate
         if not hasattr(self, "message"):
             self.assign_message()
+        if isinstance(self.tb_data.formatted_tb, str):
+            # for example: "Traceback not available from IDLE"
+            tb = self.info["message"] + "\n" + self.tb_data.formatted_tb + "\n"
+            self.info["simulated_python_traceback"] = tb
+            self.info["shortened_traceback"] = tb
+            self.info["original_python_traceback"] = tb
+            return
+
         python_tb = [line.rstrip() for line in self.tb_data.formatted_tb]
 
         tb = self.create_traceback()

@@ -413,11 +413,10 @@ class Statement:
 
         if self.statement_tokens:  # Protecting against EOF while parsing
             last_line = token_utils.untokenize(self.statement_tokens)
-            if not last_line.strip():
-                if self.all_statements:
-                    self.statement_tokens = self.all_statements[-1]
-            else:
+            if last_line.strip():
                 self.all_statements.append(self.statement_tokens)
+            elif self.all_statements:
+                self.statement_tokens = self.all_statements[-1]
 
     def remove_meaningless_tokens(self):
         """Given a list of tokens, remove all space-like tokens and comments;

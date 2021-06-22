@@ -102,10 +102,10 @@ class PathUtil:
         path = os.path.abspath(path)
         path_lower = path.lower()
 
-        if path.endswith("<SyntaxError>"):  # with IDLE's latest hack
+        if "<SyntaxError>" in path:  # with IDLE's latest hack
             # see https://bugs.python.org/issue43476
             path = "<SyntaxError>"
-        elif path.endswith("<pyshell#"):
+        elif "<pyshell#" in path:
             path = "<pyshell#" + path.split("<pyshell#")[1]
         elif path.startswith("<ipython-input-"):
             parts = path.split("-")

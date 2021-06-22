@@ -230,6 +230,19 @@ __all__.append("run")
 if sys.version_info >= (3, 10):  # current hack
     # used with https://bugs.python.org/issue43476
 
+    class FakeSyntaxError:
+        def __init__(self, value):
+            self.msg = value[0]
+            self.filename = value[1][0]
+            self.lineno = value[1][1]
+            self.offset = value[1][2]
+            self.text = value[1][3]
+            self.end_lineno = value[1][4]
+            self.end_offset = value[1][5]
+
+        def __str__(self):
+            return self.msg
+
     def friendly_syntax_error():
         _ = current_lang.translate
         filename = "<SyntaxError>"
@@ -242,11 +255,16 @@ if sys.version_info >= (3, 10):  # current hack
         if not lines:
             idle_writer(_("No SyntaxError recorded.", "stderr"))
             return
-        source = "\n".join(lines) + "\n"
-        try:
-            compile(source, filename, "single")
-        except Exception:  # noqa
-            session.explain_traceback()
+        exc_name, *args = eval(lines[0])
+        value = FakeSyntaxError(args[0])
+        if " indent" in exc_name or " unindent" in exc_name:
+            exc_name = "IndentationError"
+        exc_type = eval(exc_name)
+
+        include = get_include()  # noqa
+        set_include("explain")  # noqa
+        session.exception_hook(exc_type, value, _("Traceback not available from IDLE"))
+        set_include(include)  # noqa
 
     _old_explain = explain  # noqa
 
