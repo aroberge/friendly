@@ -64,7 +64,11 @@ class LangState:
                 # is not available.
             )
         self.lang = lang
-        self.translate = self.no_translation if lang == "en" else _lang.gettext
+        # self.translate = self.no_translation if lang == "en" else _lang.gettext
+        self.translate = _lang.gettext
+
+    def lazy_translate(self, text):
+        return self.translate(text)
 
 
 current_lang = LangState()  # noqa

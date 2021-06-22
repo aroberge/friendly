@@ -234,6 +234,7 @@ def start_console(  # pragma: no cover
     include="friendly_tb",
     lang="en",
     banner=None,
+    color_schemes=None,
     background=None,
     displayhook=None,
 ):
@@ -246,6 +247,7 @@ def start_console(  # pragma: no cover
         include=include,
         lang=lang,
         banner=banner,
+        color_schemes=color_schemes,
         background=background,
         displayhook=displayhook,
     )
