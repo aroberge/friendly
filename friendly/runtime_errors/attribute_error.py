@@ -80,11 +80,10 @@ def circular_import(module, message):
         hint = _("You have a circular import.\n")
     else:
         hint = _("You likely have a circular import.\n")
-    cause = _(
-        "Python indicated that the module `{module}` was not fully imported.\n"
-        "This can occur if, during the execution of the code in module `{module}`.\n"
-        "some other module is imported where an attempt to import\n"
-        "and execute the code in `{module}` is made again!\n"
+    cause = _("Python indicated that the module `{module}` was not fully imported.\n")
+    cause += _(
+        "This can occur if, during the execution of the code in module `{module}`\n"
+        "an attempt is made to import the same module again.\n"
     ).format(module=module)
     return {"cause": cause, "suggest": hint}
 
@@ -113,8 +112,13 @@ def attribute_error_in_module(module, attribute, frame):
                 "If so, you should use a different name for your program.\n"
             ).format(module=module)
             return {"cause": cause, "suggest": hint}
-
-        return {"cause": cause}
+        else:
+            cause = hint = _("You likely have a circular import.\n")
+            cause += _(
+                "This can occur if, during the execution of the code in module `{module}`\n"
+                "an attempt is made to import the same module again.\n"
+            ).format(module=module)
+        return {"cause": cause, "suggest": hint}
 
     similar_attributes = get_similar_words(attribute, dir(mod))
     if similar_attributes:

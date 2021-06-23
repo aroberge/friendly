@@ -330,10 +330,6 @@ def test_Circular_import():
     except AttributeError as e:
         message = str(e)
         friendly.explain_traceback(redirect="capture")
-    except Exception as e:
-        message = str(e)
-        friendly.explain_traceback(redirect="capture")
-        print(message)
 
     result = friendly.get_output()
     # Different messages for python < 3.8
@@ -344,6 +340,25 @@ def test_Circular_import():
         assert "from Python's standard library" in result
     stdlib_modules.names.pop()
     return result, message
+
+def test_Circular_import_b():
+    try:
+        import circular_c
+    except AttributeError as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+
+    result = friendly.get_output()
+
+    assert (
+        "module 'circular_c' has no attribute 'something'" in result or
+        "partially initialized module 'circular_c' has no attribute 'something'"
+        in result
+    )
+    if friendly.get_lang() == "en":
+        assert "have a circular import." in result
+    return result, message
+
 
 if __name__ == "__main__":
     print(test_Generic()[0])

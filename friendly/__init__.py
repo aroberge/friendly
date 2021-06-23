@@ -28,7 +28,7 @@ if not valid_version:  # pragma: no cover
     sys.exit()
 
 del valid_version
-__version__ = "0.3.120"
+__version__ = "0.3.121"
 
 
 # ===========================================

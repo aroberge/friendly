@@ -79,8 +79,9 @@ current_lang = LangState()  # noqa
 def please_report():
     _ = current_lang.translate
     return _(
-        "Please report this example to\n"
-        "https://github.com/aroberge/friendly/issues\n\n"
+        "Please report this example to "
+        "https://github.com/aroberge/friendly/issues.\n"
+        "If you are using a REPL, use `www('bug')` to do so.\n\n"
     )
 
 
