@@ -107,8 +107,9 @@ class PathUtil:
             path = "<SyntaxError>"
         elif "<pyshell#" in path:
             path = "<pyshell#" + path.split("<pyshell#")[1]
-        elif path.startswith("<ipython-input-"):
-            parts = path.split("-")
+        elif "<ipython-input-" in path:
+            parts = path.split("<ipython")
+            parts = parts[1].split("-")
             path = "[" + parts[-2] + "]"
         elif path_lower.startswith(SITE_PACKAGES.lower()):
             path = "LOCAL:" + path[len(SITE_PACKAGES) :]

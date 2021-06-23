@@ -13,9 +13,12 @@ def using_python():  # pragma: no cover
 
 
 # The following is also intended to be used in custom environments;
-# we currently use it in Mu.
+# we currently use it in Mu.  It is meant to recognize names that
+# are intended as a single word command, or call to a function
+# that does is not available in a given environment.
 CUSTOM_NAMES = {}
 CUSTOM_NAMES["python"] = using_python
+CUSTOM_NAMES["python3"] = using_python
 
 
 def get_cause(value, frame, tb_data):
@@ -28,11 +31,15 @@ def get_cause(value, frame, tb_data):
 
 def _get_cause(value, frame, tb_data):
 
+    # We use a different approach in this module than the usual
+    # way to loop over the messages, adding message parsers
+    # for each case. This is because we need to access get_unknown_name
+    # from elsewhere.
     name, fn = get_unknown_name(str(value))
     if name is not None:
         return fn(name, frame, tb_data)
 
-    return {"cause": no_information()}
+    return {"cause": no_information()}  # pragma: no cover
 
 
 def get_unknown_name(message):
@@ -53,7 +60,7 @@ def get_unknown_name(message):
     if match:
         return match.group(1), free_variable_referenced
 
-    return None, None
+    return None, None  # pragma: no cover
 
 
 def free_variable_referenced(unknown_name, *_args):
@@ -106,8 +113,9 @@ def name_not_defined(unknown_name, frame, tb_data):
     try:
         more, hint = missing_self(unknown_name, frame, tb_data, hint)
         additional += more
-    except Exception as e:
-        print("exception raised: ", e)
+    except Exception as e:  # pragma: no cover
+        debug_helper.log("Problem in name_not_defined()")
+        debug_helper.log_error(e)
     if not additional:
         additional = _("I have no additional information for you.\n")
 
@@ -138,7 +146,10 @@ def is_stdlib_module(name, tb_data):
     if name != "Turtle":  # Turtle is a special case
         try:
             tokens = token_utils.get_significant_tokens(tb_data.bad_line)
-        except Exception:  # noqa
+        except Exception:  # noqa  # pragma: no cover
+            debug_helper.log(
+                "Problem in getting significant tokens " "in is_stdlib_module()"
+            )
             return {}
 
         prev = "0"
@@ -208,13 +219,18 @@ def missing_self(unknown_name, frame, tb_data, hint):
     and is an attribute of a known object, perhaps 'self.'
     is missing."""
     _ = current_lang.translate
+    # TODO: revise this when looking at https://github.com/aroberge/friendly/issues/202
     message = ""
     try:
         tokens = token_utils.get_significant_tokens(tb_data.bad_line)
-    except Exception:  # noqa
+    except Exception:  # noqa  # pragma: no cover
+        debug_helper.log(
+            "Exception raised in missing_self() while trying to get tokens"
+        )
         return message, hint
 
-    if not tokens:
+    if not tokens:  # pragma: no cover
+        debug_helper.log("No significant token found in missing_self()")
         return message, hint
 
     prev_token = tokens[0]

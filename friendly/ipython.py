@@ -9,7 +9,12 @@ except ImportError:
 
 import colorama
 
-from friendly import install, exclude_file_from_traceback, explain_traceback, session
+from friendly import (
+    install,
+    exclude_file_from_traceback,
+    explain_traceback,
+    session,
+)  # noqa
 from friendly.console_helpers import *  # noqa
 from friendly.console_helpers import __all__  # noqa
 

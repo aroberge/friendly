@@ -99,6 +99,32 @@ def test_Synonym():
 
 
 def test_Missing_import():
+    # Check to see if a module from the stdlib should have been
+    # imported.
+    try:
+        Tkinter.frame
+    except NameError as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
+
+    assert "NameError: name 'Tkinter' is not defined" in result
+    if friendly.get_lang() == "en":
+        assert "Perhaps you forgot to import `tkinter`" in result
+        assert "module is `tkinter` and not `Tkinter`." in result
+
+    # The following is for negative result
+    try:
+        unknown.attribute
+    except NameError as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
+
+    assert "NameError: name 'unknown' is not defined" in result
+    if friendly.get_lang() == "en":
+        assert "I have no additional information for you." in result
+
     try:
         unicodedata.something
     except NameError as e:
@@ -130,6 +156,19 @@ def test_Free_variable_referenced():
     if friendly.get_lang() == "en":
         assert "that exists in an enclosing scope" in result
         assert "but has not yet been assigned a value." in result
+    return result, message
+
+def test_Custom_name():
+    try:
+        python
+    except NameError as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
+
+    assert "NameError: name 'python' is not defined" in result
+    if friendly.get_lang() == "en":
+        assert "You are already using Python!" in result
     return result, message
 
 if __name__ == "__main__":
