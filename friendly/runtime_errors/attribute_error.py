@@ -104,6 +104,16 @@ def attribute_error_in_module(module, attribute, frame):
             "attribute named `{attribute}`.\n"
             "However, it does not appear that module `{module}` was imported.\n"
         ).format(module=module, attribute=attribute)
+        if module in stdlib_modules.names:
+            hint = _("Did you give your program the same name as a Python module?\n")
+            cause += _(
+                "I suspect that you used the name `{module}.py` for your program\n"
+                "and that you also wanted to import a module with the same name\n"
+                "from Python's standard library.\n"
+                "If so, you should use a different name for your program.\n"
+            ).format(module=module)
+            return {"cause": cause, "suggest": hint}
+
         return {"cause": cause}
 
     similar_attributes = get_similar_words(attribute, dir(mod))

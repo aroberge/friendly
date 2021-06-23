@@ -322,6 +322,28 @@ def test_Use_join_with_str():
     return result, message
 
 
+def test_Circular_import():
+    from friendly.runtime_errors import stdlib_modules
+    stdlib_modules.names.append("my_turtle1")
+    try:
+       import my_turtle1
+    except AttributeError as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+    except Exception as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+        print(message)
+
+    result = friendly.get_output()
+    # Different messages for python < 3.8
+    assert ( "partially initialized module 'my_turtle1'" in result or
+             "module 'my_turtle1' has no attribute 'something'" in result)
+    if friendly.get_lang() == "en":
+        assert "import a module with the same name" in result
+        assert "from Python's standard library" in result
+    stdlib_modules.names.pop()
+    return result, message
 
 if __name__ == "__main__":
     print(test_Generic()[0])
