@@ -308,5 +308,20 @@ def test_Attribute_from_other_module():
     return result, message
 
 
+def test_Use_join_with_str():
+    try:
+        a = ['a', '2'].join('abc') + ['b', '3'].join('\n')
+    except AttributeError as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+
+    result = friendly.get_output()
+    assert "'list' object has no attribute 'join'" in result
+    if friendly.get_lang() == "en":
+        assert "something like `'abc'.join(['a', '2'])`" in result
+    return result, message
+
+
+
 if __name__ == "__main__":
     print(test_Generic()[0])

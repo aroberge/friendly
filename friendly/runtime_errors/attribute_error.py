@@ -1,4 +1,5 @@
 """Getting specific information for AttributeError"""
+import ast
 import builtins
 import re
 import sys
@@ -273,7 +274,7 @@ def attribute_error_in_object(obj_type, attribute, tb_data, frame):
     if attribute == "join":
         join = perhaps_join(obj)
         if join:
-            return use_str_join(obj_name)
+            return use_str_join(obj_name, tb_data)
 
     # Example: both "this" and "that" are known objects
     # this.that -> this, that
@@ -362,13 +363,27 @@ def tuple_by_accident(obj, obj_name, attribute):
     return {}
 
 
-def use_str_join(obj_name):
+def use_str_join(obj_name, tb_data):
     _ = current_lang.translate
-    hint = _("Did you mean `'...'.join({obj_name})`?\n").format(obj_name=obj_name)
+    str_content = repr("...")
+    hint = _("Did you mean `{str_content}.join({obj_name})`?\n")
     cause = _(
         "The object `{obj_name}` has no attribute named `join`.\n"
-        "Perhaps you wanted something like `'...'.join({obj_name})`.\n"
-    ).format(obj_name=obj_name)
+        "Perhaps you wanted something like `{str_content}.join({obj_name})`.\n"
+    )
+    parts = tb_data.original_bad_line.split(tb_data.bad_line)
+    if len(parts) >= 2 and parts[1].strip().startswith("("):
+        index = parts[1].find(")")
+        if index != -1:
+            content = parts[1][1:index].strip()
+            try:
+                content = ast.literal_eval(content)
+            except Exception:  # noqa
+                content = None
+            if isinstance(content, str):
+                str_content = repr(content)
+    hint = hint.format(obj_name=obj_name, str_content=str_content)
+    cause = cause.format(obj_name=obj_name, str_content=str_content)
     return {"cause": cause, "suggest": hint}
 
 

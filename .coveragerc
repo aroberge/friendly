@@ -6,7 +6,7 @@ omit =
     Fake_filename
     *mu.py
     *ipython.py
-    *idle.py
+    *idle/*
     *jupyter.py
     *console.py
     *theme/*
