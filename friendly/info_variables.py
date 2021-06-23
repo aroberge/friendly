@@ -166,14 +166,13 @@ def get_variables_in_frame_by_scope(frame, scope):
         return frame.f_globals
 
     if scope == "nonlocal":
-        globals_ = frame.f_globals
         non_locals = {}
         while frame.f_back is not None:
             frame = frame.f_back
             # By creating a new list here, we prevent a failure when
             # running with pytest.
             for key in list(frame.f_locals):
-                if key in globals_ or key in non_locals:
+                if key in non_locals:
                     continue
                 non_locals[key] = frame.f_locals[key]
         return non_locals
@@ -346,15 +345,14 @@ def get_similar_names(name, frame):
     if all_similar:
         most_similar = utils.get_similar_words(name, all_similar)
         similar["best"] = most_similar[0]
-    else:
+    elif name in ["length", "lenght"]:
         # utils.get_similar_words() used above only look for relatively
         # minor letter mismatches in making suggestions.
         # Here we add a few additional hard-coded cases.
-        if name in ["length", "lenght"]:
-            similar["builtins"] = ["len"]
-            similar["best"] = "len"
-        else:
-            similar["best"] = None
+        similar["builtins"] = ["len"]
+        similar["best"] = "len"
+    else:
+        similar["best"] = None
     return similar
 
 

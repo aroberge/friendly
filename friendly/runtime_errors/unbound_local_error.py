@@ -32,21 +32,24 @@ def local_variable_referenced(unknown_name, frame):
     scopes = info_variables.get_definition_scope(unknown_name, frame)
     if not scopes:
         similar = info_variables.get_similar_names(unknown_name, frame)
-        # TODO: rework this, looking for variables that have __add__ as method.
-        if similar["best"] is not None:
-            best_guess = similar["best"]
-            if best_guess in similar["locals"]:
-                hint = _("Did you mean `{name}`?\n").format(name=similar["best"])
+        all_similar_locals = similar["locals"]
+        if all_similar_locals:
+            similar_locals = []
+            for name in all_similar_locals:
+                obj = info_variables.get_object_from_name(name, frame)
+                # Usually, this error message will be because we have
+                # something like:
+                # unknown += ...
+                # or equivalent. We make sure to not include similar
+                # names that refer to functions, etc., which could
+                # not be assigned a value.
+                if hasattr(obj, "__add__"):
+                    similar_locals.append(name)
+            if similar_locals:
+                first_guess = similar_locals[0]
+                hint = _("Did you mean `{name}`?\n").format(name=first_guess)
                 cause = format_similar_names(unknown_name, similar)
                 return {"cause": cause, "suggest": hint}
-
-        else:
-            cause = info_variables.name_has_type_hint(unknown_name, frame)
-            if cause:
-                hint = _("Did you use a colon instead of an equal sign?\n")
-                return {"cause": cause, "suggest": hint}
-
-            return {}
 
     if "global" in scopes and "nonlocal" in scopes:
         cause = _(
@@ -68,7 +71,10 @@ def local_variable_referenced(unknown_name, frame):
         scope = "global"
     elif "nonlocal" in scopes:
         scope = "nonlocal"
-    else:
+    else:  # pragma: no cover
+        debug_helper.log("problem in local_variable_referenced().")
+        debug_helper.log("We have found variables in scopes")
+        debug_helper.log("yet not in global nor nonlocal.")
         return {}
 
     cause = _(
@@ -77,11 +83,9 @@ def local_variable_referenced(unknown_name, frame):
         "    {scope} {var_name}\n\n"
         "should have been included as the first line inside your function.\n"
     ).format(var_name=unknown_name, scope=scope)
-
     hint = _("Did you forget to add `{scope} {var_name}`?\n").format(
         var_name=unknown_name, scope=scope
     )
-
     return {"cause": cause, "suggest": hint}
 
 
