@@ -16,7 +16,7 @@ from friendly.path_info import show_paths
 from friendly.my_gettext import current_lang
 from friendly.utils import add_rich_repr
 
-_ = current_lang.lazy_translate
+_ = current_lang.translate
 
 
 def back():
@@ -25,7 +25,6 @@ def back():
     The intention is to allow recovering from a typo when trying interactively
     to find out specific information about a given exception.
     """
-    _ = current_lang.translate
     if not session.saved_info:
         session.write_err(_("Nothing to go back to: no exception recorded.") + "\n")
         return
@@ -65,7 +64,6 @@ def hint():
 
 def history():
     """Prints the list of error messages recorded so far."""
-    _ = current_lang.translate
     if not session.saved_info:
         session.write_err(_("Nothing to show: no exception recorded.") + "\n")
         return
@@ -148,7 +146,6 @@ def www(site=None):  # pragma: no cover
     import urllib
     import webbrowser
 
-    _ = current_lang.translate
     urls = {
         "friendly": "https://aroberge.github.io/friendly-traceback-docs/docs/html/",
         "python": "https://docs.python.org/3",

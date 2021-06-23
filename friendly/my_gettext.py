@@ -20,19 +20,16 @@ where current_lang.translate means gettext.translation().gettext where
 gettext.translation() is the class-based API for gettext.
 """
 
-
 import gettext
 import os
+
+from . import debug_helper
 
 
 class LangState:
     def __init__(self):
-        self.translate = None
+        self._translate = lambda text: text
         self.lang = "en"
-
-    @staticmethod
-    def no_translation(text):
-        return text
 
     def install(self, lang=None):
         """Sets the language to be used for translations"""
@@ -64,11 +61,16 @@ class LangState:
                 # is not available.
             )
         self.lang = lang
-        # self.translate = self.no_translation if lang == "en" else _lang.gettext
-        self.translate = _lang.gettext
+        self._translate = _lang.gettext
 
-    def lazy_translate(self, text):
-        return self.translate(text)
+    def translate(self, text):
+        translation = self._translate(text)
+        if self.lang == "en":
+            return translation
+        if translation == text:  # pragma: no cover
+            debug_helper.log(f"Potentially untranslated text for {self.lang}:")
+            debug_helper.log(text)
+        return translation
 
 
 current_lang = LangState()  # noqa
