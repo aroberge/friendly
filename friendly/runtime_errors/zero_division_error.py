@@ -1,4 +1,5 @@
 from ..my_gettext import current_lang
+from .. import debug_helper
 from ..utils import RuntimeMessageParser
 
 parser = RuntimeMessageParser()
@@ -12,9 +13,9 @@ def expression_is_zero(expression, modulo=False):
             if modulo:
                 return _("Using the modulo operator, you are dividing by zero.\n")
             return _("You are dividing by zero.\n")
-        return ""
     except Exception:  # noqa
         return ""
+    debug_helper.log("New case to consider for expression_is_zero")  # pragma: no cover
 
 
 @parser.add
@@ -136,7 +137,8 @@ def float_modulo(message, _frame, tb_data):
 def float_divmod(message, *_ignore):
     _ = current_lang.translate
     if message != "float divmod()":
-        return {}
+        debug_helper.log("new case to consider")  # pragma: no cover
+        return {}  # pragma: no cover
 
-    cause = _("The second argument to the `divmod()` function is equal to zero.\n")
+    cause = _("The second argument of the `divmod()` function is equal to zero.\n")
     return {"cause": cause}

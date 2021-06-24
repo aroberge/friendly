@@ -61,7 +61,8 @@ def _get_cause(value, frame, tb_data):
             match3.group(1), match3.group(2), tb_data, frame
         )
 
-    return {"cause": no_information()}
+    debug_helper.log("New case to consider.")  # pragma: no cover
+    return {"cause": no_information()}  # pragma: no cover
 
 
 def circular_import(module, message):
@@ -78,7 +79,9 @@ def circular_import(module, message):
 
     if "circular import" in message:
         hint = _("You have a circular import.\n")
-    else:
+    else:  # pragma: no cover
+        # I thought a version did not include the mention of circular import.
+        debug_helper.log("New case to consider.")
         hint = _("You likely have a circular import.\n")
     cause = _("Python indicated that the module `{module}` was not fully imported.\n")
     cause += _(
