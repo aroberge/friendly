@@ -3,51 +3,53 @@
 import re
 import sys
 
-from ..my_gettext import current_lang, no_information, internal_error
-from ..utils import get_similar_words, list_to_string
+from ..my_gettext import current_lang, please_report
+from ..utils import get_similar_words, list_to_string, RuntimeMessageParser
 from ..path_info import path_utils
 from .. import debug_helper
 
-
-def get_cause(value, _frame, tb_data):
-    try:
-        return _get_cause(value, tb_data)
-    except Exception as e:  # pragma: no cover
-        debug_helper.log_error(e)
-        return {"cause": internal_error()}
+parser = RuntimeMessageParser()
 
 
-def _get_cause(value, tb_data):
-    _ = current_lang.translate
-
-    message = str(value)
+@parser.add
+def partially_initialized_module(message, _frame, tb_data):
     # Python 3.8+
-    pattern1 = re.compile(
+    pattern = re.compile(
         r"cannot import name '(.*)' from partially initialized module '(.*)'"
     )
-    match1 = re.search(pattern1, message)
+    match = re.search(pattern, message)
+    if not match:
+        return {}
+    if "circular import" in message:
+        return cannot_import_name_from(
+            match.group(1), match.group(2), tb_data, add_circular_hint=False
+        )
+    # I thought I saw such a case where "circular import" was not added
+    # but have not been able to find it again.
+    return cannot_import_name_from(
+        match.group(1), match.group(2), tb_data
+    )  # pragma: no cover
+
+
+@parser.add
+def _cannot_import_name_from(message, _frame, tb_data):
     # Python 3.7+
-    pattern2 = re.compile(r"cannot import name '(.*)' from '(.*)'")
-    match2 = re.search(pattern2, message)
-    # Python 3.6
-    pattern3 = re.compile(r"cannot import name '(.*)'")
-    match3 = re.search(pattern3, message)
+    pattern = re.compile(r"cannot import name '(.*)' from '(.*)'")
+    match = re.search(pattern, message)
+    if not match:
+        return {}
+    return cannot_import_name_from(match.group(1), match.group(2), tb_data)
 
-    if match1:
-        if "circular import" in message:
-            return cannot_import_name_from(
-                match1.group(1), match1.group(2), tb_data, add_circular_hint=False
-            )
 
-        return cannot_import_name_from(match1.group(1), match1.group(2), tb_data)
-
-    if match2:
-        return cannot_import_name_from(match2.group(1), match2.group(2), tb_data)
-
-    if match3:
-        return cannot_import_name(match3.group(1), tb_data)
-
-    return {"cause": no_information()}
+@parser.add
+def _cannot_import_name(message, _frame, tb_data):
+    # Python 3.6 does not give us more information
+    pattern = re.compile(r"cannot import name '(.*)'")
+    match = re.search(pattern, message)
+    if not match:  # pragma: no cover
+        debug_helper.log("New case to consider.")
+        return {}
+    return cannot_import_name(match.group(1), tb_data)
 
 
 def cannot_import_name_from(name, module, tb_data, add_circular_hint=True):
@@ -75,7 +77,8 @@ def cannot_import_name_from(name, module, tb_data, add_circular_hint=True):
 
         return {"cause": cause + "\n" + circular_info, "suggest": hint}
 
-    if not add_circular_hint:
+    if not add_circular_hint:  # pragma: no cover
+        debug_helper.log("New case to consider")
         return {
             "cause": cause
             + "\n"
@@ -90,7 +93,7 @@ def cannot_import_name_from(name, module, tb_data, add_circular_hint=True):
 
     try:
         mod = sys.modules[module]
-    except Exception:  # noqa
+    except Exception:  # noqa  # pragma: no cover
         cause += "\n" + _(
             "Inconsistent state: `'{module}'` was apparently not imported.\n"
             "As a result, no further analysis can be done.\n"
@@ -127,14 +130,17 @@ def cannot_import_name(name, tb_data):
     _ = current_lang.translate
     pattern = re.compile(r"from (.*) import")
     match = re.search(pattern, tb_data.bad_line)
-    if match:
-        return cannot_import_name_from(name, match.group(1), tb_data)
 
-    return {
-        "cause": _("The object that could not be imported is `{name}`.\n").format(
-            name=name
-        )
-    }
+    if not match:  # pragma: no cover
+        debug_helper.log("New case to consider.")
+        return {
+            "cause": _("The object that could not be imported is `{name}`.\n").format(
+                name=name
+            )
+            + please_report()
+        }
+
+    return cannot_import_name_from(name, match.group(1), tb_data)
 
 
 def extract_import_data_from_traceback(tb_data):

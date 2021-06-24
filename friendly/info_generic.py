@@ -71,7 +71,7 @@ def attribute_error():
 
 
 @register("EOFError")
-def eof_error():
+def eof_error():  # pragma: no cover
     _ = current_lang.translate
     return _(
         "An `EOFError` is raised when the `input()` function hits\n"
@@ -171,9 +171,7 @@ def name_error():
     )
 
 
-register("OSError")
-
-
+@register("OSError")
 def os_error():
     _ = current_lang.translate
     return _(

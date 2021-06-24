@@ -87,7 +87,7 @@ def _file_not_found_error(value, *_args):
 def _import_error(value, frame, tb_data):
     from .runtime_errors import import_error
 
-    return import_error.get_cause(value, frame, tb_data)
+    return import_error.parser.get_cause(value, frame, tb_data)
 
 
 @register("IndexError")
