@@ -262,7 +262,7 @@ def simplify_name(name):
             start = "<"
         file_name = file_name.replace(start, "")
         name = start + obj_name + " from " + file_name
-    if "__main__." in name:
+    if "__main__." in name:  # pragma: no cover
         name = name.replace("__main__.", "") + " from __main__"
     return name
 

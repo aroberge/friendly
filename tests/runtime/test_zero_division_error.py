@@ -93,9 +93,10 @@ def test_Divmod():
 
 def test_Float_modulo():
     zero = 0.
+    a = 10**1000  # for coverage: tests format_var_info for long variables
 
     try:
-        2 % 1 % zero
+        a % 1 % zero
     except ZeroDivisionError as e:
         friendly.explain_traceback(redirect="capture")
     result = friendly.get_output()
