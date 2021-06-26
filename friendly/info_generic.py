@@ -124,7 +124,7 @@ def key_error():
     _ = current_lang.translate
     return _(
         "A `KeyError` is raised when a value is not found as a\n"
-        "key in a Python dict.\n"
+        "key in a Python dict or in a similar object.\n"
     )
 
 

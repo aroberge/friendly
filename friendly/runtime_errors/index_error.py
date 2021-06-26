@@ -15,7 +15,7 @@ def get_cause(value, frame, tb_data):
         return _get_cause(value, frame, tb_data)
     except Exception as e:  # pragma: no cover
         debug_helper.log_error(e)
-        return {"cause": internal_error()}
+        return {"cause": internal_error(e)}
 
 
 def _get_cause(value, frame, tb_data):

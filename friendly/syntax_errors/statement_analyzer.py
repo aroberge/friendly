@@ -49,7 +49,7 @@ def analyze_statement(statement):
     on which the error occurred."""
     if not statement.tokens:  # pragma: no cover
         debug_helper.log("Statement with no tokens in statement_analyser.py")
-        return {"cause": internal_error()}
+        return {"cause": internal_error("No tokens")}
 
     if statement.first_token == "def" or (
         statement.first_token == "async" and statement.tokens[1] == "def"

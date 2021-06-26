@@ -76,8 +76,13 @@ class LangState:
 current_lang = LangState()  # noqa
 
 
+# Todo: replace localized messages about new cases by the function below
+# which will do the logging automatically.
+
+
 def please_report():
     _ = current_lang.translate
+    debug_helper.log("New case to consider.")
     return _(
         "Please report this example to "
         "https://github.com/aroberge/friendly/issues.\n"
@@ -87,6 +92,7 @@ def please_report():
 
 def no_information():
     _ = current_lang.translate
+    debug_helper.log("New case to consider.")
     return (
         _("No information is known about this exception.\n")
         + please_report()
@@ -97,6 +103,7 @@ def no_information():
     )
 
 
-def internal_error():
+def internal_error(e):
     _ = current_lang.translate
+    debug_helper.log("--> Internal error: " + repr(e))
     return _("Internal error for Friendly.\n") + please_report()

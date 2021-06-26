@@ -16,9 +16,9 @@ from . import stdlib_modules
 def get_cause(value, frame, tb_data):
     try:
         return _get_cause(value, frame, tb_data)
-    except Exception:  # pragma: no cover  # noqa
+    except Exception as e:  # pragma: no cover  # noqa
         debug_helper.log_error()
-        return {"cause": internal_error(), "suggest": internal_error()}
+        return {"cause": internal_error(e), "suggest": internal_error(e)}
 
 
 def _get_cause(value, frame, tb_data):

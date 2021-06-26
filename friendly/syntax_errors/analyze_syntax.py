@@ -47,7 +47,7 @@ def set_cause_syntax(value, tb_data):
         return find_syntax_error_cause(value, tb_data)
     except Exception as e:  # pragma: no cover
         debug_helper.log_error(e)
-        return {"cause": internal_error()}
+        return {"cause": internal_error(e)}
 
 
 def find_syntax_error_cause(value, tb_data):

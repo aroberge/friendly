@@ -6,6 +6,8 @@ class MyException(Exception):
 
 
 def test_Generic():
+    old_debug = friendly.debug_helper.DEBUG
+    friendly.debug_helper.DEBUG = False
     try:
         raise MyException("Some informative message about an unknown exception.")
     except Exception as e:
@@ -16,6 +18,7 @@ def test_Generic():
     assert "Some informative message" in result
     if friendly.get_lang() == "en":
         assert "No information is known about this exception." in result
+    friendly.debug_helper.DEBUG = old_debug
     return result, message
 
 

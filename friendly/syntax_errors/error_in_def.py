@@ -50,7 +50,7 @@ def analyze_def_statement(statement):
     global ASYNC
     if not statement.tokens:  # pragma: no cover
         debug_helper.log("Statement with no tokens in error_in_def.py")
-        return {"cause": internal_error()}
+        return {"cause": internal_error("No tokens")}
 
     ASYNC = 0
     if statement.tokens[0] == "async":

@@ -17,12 +17,13 @@ def get_cause(value, frame, _tb_data):
 
 def _get_cause(value, frame):
     _ = current_lang.translate
-    cause = {"cause": no_information()}
 
     pattern = re.compile(r"local variable '(.*)' referenced before assignment")
     match = re.search(pattern, str(value))
     if match:
         cause = local_variable_referenced(match.group(1), frame)
+    else:
+        cause = {"cause": no_information()}
 
     return cause
 

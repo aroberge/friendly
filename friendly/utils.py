@@ -9,7 +9,6 @@ import uuid
 import pure_eval
 from . import debug_helper
 from .my_gettext import no_information, internal_error
-from .path_info import path_utils
 
 
 class RuntimeMessageParser:
@@ -25,21 +24,22 @@ class RuntimeMessageParser:
         """Use as a decorator to add a message parser"""
         self.parsers.append(func)
 
-    def get_cause(self, value, frame, tb_data):
-        """Called from info_specific.py"""
-        message = str(value)
+    def get_cause(self, value_or_message, frame, tb_data):
+        """Called from info_specific.py where, depending on error type,
+        the value could be converted into a message by calling str().
+        """
         try:
-            return self._get_cause(message, frame, tb_data)
+            return self._get_cause(value_or_message, frame, tb_data)
         except Exception as e:  # noqa # pragma: no cover
             debug_helper.log(f"Problem with {self.current_parser.__name__}")
-            debug_helper.log(f"in module {path_utils.shorten_path(__file__)}")
-            return {"cause": internal_error(), "suggest": internal_error()}
+            debug_helper.log(f"in module {self.current_parser.__module__}")
+            return {"cause": internal_error(e), "suggest": internal_error(e)}
 
-    def _get_cause(self, message, frame, tb_data):
+    def _get_cause(self, value_or_message, frame, tb_data):
         """Cycle through the parsers, looking for one that can find a cause."""
         for self.current_parser in self.parsers:
             # This could be simpler if we could use the walrus operator
-            cause = self.current_parser(message, frame, tb_data)
+            cause = self.current_parser(value_or_message, frame, tb_data)
             if cause:
                 return cause
         return {"cause": no_information()}
@@ -72,7 +72,7 @@ def eval_expr(expr, frame):
     This can raise some exceptions which are meant to be caught by the
     calling function.
     """
-    node = ast.parse(expr.strip()).body[0].value
+    node = ast.parse(expr.strip()).body[0].value  # noqa
     evaluator = pure_eval.Evaluator.from_frame(frame)
     return evaluator[node]  # can raise an exception
 
@@ -138,3 +138,25 @@ def list_to_string(list_, sep=", "):
     string of names, like "a, b, c"."""
     result = ["{c}".format(c=c.replace("'", "")) for c in list_]
     return sep.join(result)
+
+
+def expected_in_result(expected, result):
+    """Used in tests. Intended to help more quickly identify
+    differences between what was expected and what was found."""
+    if expected in result:
+        return True, "Test is satisfied: 'expected' is found in 'result'."
+    result = result.strip(" ")
+    lines = result.splitlines()
+    best_ratio = 0
+    best_line = ""
+    for line in lines:
+        line = line.strip(" ")
+        ratio = difflib.SequenceMatcher(None, expected, line).ratio()
+        if ratio > best_ratio:
+            best_ratio = ratio
+            best_line = line
+
+    if result == best_line:
+        return False, "Only differences are different white spaces at the ends."
+
+    return False, "\n" + "\n".join(difflib.ndiff([expected], [best_line]))

@@ -25,7 +25,7 @@ def get_likely_cause(etype, value, frame, tb_data):
     except Exception as e:  # noqa  # pragma: no cover
         debug_helper.log("Exception caught in get_likely_cause().")
         debug_helper.log_error(e)
-        return {"cause": internal_error()}
+        return {"cause": internal_error(e)}
 
     try:
         # see if it could be the result of using socket, or urllib, urllib3, etc.
@@ -87,7 +87,7 @@ def _file_not_found_error(value, *_args):
 def _import_error(value, frame, tb_data):
     from .runtime_errors import import_error
 
-    return import_error.parser.get_cause(value, frame, tb_data)
+    return import_error.parser.get_cause(str(value), frame, tb_data)
 
 
 @register("IndexError")
@@ -102,7 +102,7 @@ def _key_error(value, frame, tb_data):
     _ = current_lang.translate
     from .runtime_errors import key_error
 
-    return key_error.get_cause(value, frame, tb_data)
+    return key_error.parser.get_cause(value, frame, tb_data)
 
 
 @register("ModuleNotFoundError")
@@ -110,7 +110,7 @@ def _module_not_found_error(value, frame, tb_data):
 
     from .runtime_errors import module_not_found_error
 
-    return module_not_found_error.parser.get_cause(value, frame, tb_data)
+    return module_not_found_error.parser.get_cause(str(value), frame, tb_data)
 
 
 @register("NameError")
@@ -139,14 +139,14 @@ def _overflow_error(*_args):
 def _type_error(value, frame, tb_data):
     from .runtime_errors import type_error
 
-    return type_error.parser.get_cause(value, frame, tb_data)
+    return type_error.parser.get_cause(str(value), frame, tb_data)
 
 
 @register("ValueError")
 def _value_error(value, frame, tb_data):
     from .runtime_errors import value_error
 
-    return value_error.parser.get_cause(value, frame, tb_data)
+    return value_error.parser.get_cause(str(value), frame, tb_data)
 
 
 @register("UnboundLocalError")
@@ -160,4 +160,4 @@ def _unbound_local_error(value, frame, tb_data):
 def _zero_division_error(value, frame, tb_data):
     from .runtime_errors import zero_division_error
 
-    return zero_division_error.parser.get_cause(value, frame, tb_data)
+    return zero_division_error.parser.get_cause(str(value), frame, tb_data)
