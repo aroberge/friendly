@@ -17,7 +17,13 @@ import codeop  # need to import to exclude from tracebacks
 import friendly
 
 from . import source_cache
-from . import theme
+
+try:
+    from . import theme
+
+    rich_available = True
+except ImportError:
+    rich_available = False
 
 from .config import session
 from .console_helpers import helpers, default_color_schemes
@@ -71,7 +77,7 @@ class FriendlyConsole(InteractiveConsole):
             self.saved_builtins[name] = getattr(builtins, name)
         self.rich_console = False
         friendly.set_formatter(formatter, background=background)
-        if formatter in ["dark", "light"]:
+        if formatter in ["dark", "light"] and rich_available:
             self.rich_console = session.console
             if formatter == "dark":
                 self.prompt_color = "[bold bright_green]"

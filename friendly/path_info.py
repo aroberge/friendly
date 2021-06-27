@@ -7,11 +7,11 @@ If Friendly-traceback is used by some other program,
 it might be desirable to exclude additional files.
 """
 import os
-import rich  # Only use it to find site-packages
+import asttokens  # Only use it to find site-packages
 
 EXCLUDED_FILE_PATH = set()
 EXCLUDED_DIR_NAMES = set()
-SITE_PACKAGES = os.path.abspath(os.path.join(os.path.dirname(rich.__file__), ".."))
+SITE_PACKAGES = os.path.abspath(os.path.join(os.path.dirname(asttokens.__file__), ".."))
 FRIENDLY = os.path.abspath(os.path.dirname(__file__))
 TESTS = os.path.abspath(os.path.join(FRIENDLY, "..", "tests"))
 

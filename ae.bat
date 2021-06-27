@@ -6,6 +6,7 @@ if "%1"=="3.7" goto py_37
 if "%1"=="3.9" goto py_39
 if "%1"=="3.10" goto py_310
 if "%1"=="ipython" goto ipython
+if "%1"=="no-rich" goto no_rich
 
 
 
@@ -31,6 +32,10 @@ goto end
 
 :ipython
 venv-friendly-ipython\scripts\activate
+goto end
+
+:no_rich
+venv-friendly-no-rich\scripts\activate
 goto end
 
 :end

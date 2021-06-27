@@ -13,9 +13,10 @@ Before submitting code, you should ensure that it conforms to the
 formatting requirements and that all tests pass. Feel free to include
 additional unit tests.
 
-Currently, the code is only tested on Windows. The repository include
-some batch (`.bat`) files which help to automate some processes, and are described
-later in this document.
+Currently, the code is only tested on Windows locally although
+some github actions are used to run unit tests for Ubuntu and MacOS.
+The repository includes some batch (`.bat`) files which help to
+automate some processes, and are described later in this document.
 
 
 ## Using virtual environments

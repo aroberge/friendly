@@ -7,8 +7,14 @@ import sys
 from . import core
 from . import debug_helper
 from . import formatters
-from . import theme
 from .my_gettext import current_lang
+
+try:  # Making Rich optional; see issue #236
+    from . import theme
+
+    rich_available = True
+except ImportError:
+    rich_available = False
 
 
 def _write_err(text):  # pragma: no cover
@@ -125,6 +131,9 @@ class _State:
         elif formatter == "jupyter":  # pragma: no cover
             self.formatter = formatters.jupyter
         elif formatter in ["dark", "light"]:  # pragma: no cover
+            if not rich_available:
+                self.formatter = formatters.repl
+                return
             self.formatter = formatters.rich_markdown
             self.console = theme.init_rich_console(
                 style=formatter,
