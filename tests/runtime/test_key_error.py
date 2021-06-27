@@ -109,6 +109,55 @@ def test_String_by_mistake():
     return result, message
 
 
+def test_Forgot_to_convert_to_string():
+    squares = {"1": 1, "2": 4, "3": 9}
+    try:
+        print(squares[2])
+    except KeyError as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+
+    result = friendly.get_output()
+    assert "KeyError: 2" in result
+    if friendly.get_lang() == "en":
+        expected = "Did you forget to convert `2` into a string?"
+        ok, diff = expected_in_result(expected, result)
+        assert ok, diff
+    return result, message
+
+
+def test_Similar_names():
+    first = {"alpha": 1, "beta": 2, "gamma": 3}
+    try:
+        a = first["alpha1"]
+    except KeyError as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
+    assert "KeyError: 'alpha1'" in result
+    if friendly.get_lang() == "en":
+        expected = "Did you mean `'alpha'`?"
+        ok, diff = expected_in_result(expected, result)
+        assert ok, diff
+
+    second = {"alpha0": 1, "alpha11": 2, "alpha12": 3}
+    try:
+        a = second["alpha"]
+    except KeyError as e:
+        message = str(e)
+        friendly.explain_traceback(redirect="capture")
+    result = friendly.get_output()
+    assert "KeyError: 'alpha'" in result
+    if friendly.get_lang() == "en":
+        expected = "Did you mean `'alpha0'`?"
+        ok, diff = expected_in_result(expected, result)
+        assert ok, diff
+        expected = "'alpha0', 'alpha12', 'alpha11'"
+        ok, diff = expected_in_result(expected, result)
+        assert ok, diff
+
+    return result, message
+
 
 if __name__ == "__main__":
     print(test_Generic()[0])

@@ -68,25 +68,29 @@ def missing_key_in_chain_map(value, frame, tb_data):
     while the correct "bad_line" is identified correctly.
     """
     _ = current_lang.translate
-    key = value.args[0]
-
-    if not key.startswith("Key not found in the first mapping: "):
+    message = str(value)
+    if "Key not found in the first mapping: " not in message:
         return {}
 
+    key = value.args[0]
+    if not (
+        isinstance(key, str) and key.startswith("Key not found in the first mapping: ")
+    ):
+        return {}  # pragma: no cover
+
     key = key.replace("Key not found in the first mapping: ", "", 1)
+    try:
+        key = ast.literal_eval(key)
+    except Exception:  # pragma: no cover  # noqa
+        pass
 
     bad_line = tb_data.bad_line.strip()
     if bad_line.startswith("raise "):
         bad_line = tb_data.program_stopped_bad_line.strip()
         frame = tb_data.program_stopped_frame
 
-    if key.startswith("'") or key.startswith('"'):
-        inner_key = key[1:-1]
-    else:
-        inner_key = key
-
-    if inner_key in bad_line:
-        cause = analyze_missing_key(inner_key, frame, bad_line)
+    if str(key) in bad_line:
+        cause = analyze_missing_key(key, frame, bad_line)
         if cause:
             return cause
 
@@ -94,7 +98,7 @@ def missing_key_in_chain_map(value, frame, tb_data):
         "cause": _(
             "Missing key `{key}` in a `ChainMap` or in a similar object.\n"
         ).format(key=key)
-    }
+    }  # pragma: no cover
 
 
 @parser.add
@@ -103,7 +107,7 @@ def missing_key_in_dict(value, frame, tb_data):
     bad_line = tb_data.bad_line.strip()
     if bad_line.startswith("raise "):
         return {}
-    if key not in bad_line:
+    if str(key) not in bad_line:
         return {}
 
     return analyze_missing_key(key, frame, bad_line)
@@ -117,7 +121,7 @@ def missing_key_in_dict_like(value, _frame, tb_data):
     if not bad_line.startswith("raise "):
         return {}
     bad_line = tb_data.program_stopped_bad_line
-    if key not in bad_line:
+    if str(key) not in bad_line:
         return {}
     frame = tb_data.program_stopped_frame
 
@@ -134,11 +138,7 @@ def analyze_missing_key(key, frame, bad_line):
         )
         return {"cause": cause}
 
-    try:
-        key = ast.literal_eval(key)
-        key_repr = repr(key)
-    except Exception:  # noqa  # pragma: no cover
-        key_repr = repr(key)
+    key_repr = repr(key)
 
     if isinstance(obj, dict):
         begin_cause = _(
@@ -150,8 +150,8 @@ def analyze_missing_key(key, frame, bad_line):
             "The key `{key}` cannot be found in `{name}`, an object of type `{obj_type}`.\n"
         ).format(key=key_repr, name=name, obj_type=obj_type)
 
-    if isinstance(key_repr, str):
-        result = key_is_a_string(key_repr, name, obj)
+    if isinstance(key, str):
+        result = key_is_a_string(key, name, obj)
         if result:
             result["cause"] = begin_cause + result["cause"]
             return result
@@ -180,18 +180,20 @@ def key_is_a_string(key, dict_name, obj):
 
     string_keys = [k for k in obj.keys() if isinstance(k, str)]
     similar = utils.get_similar_words(key, string_keys)
+    similar = [repr(k) for k in similar]
     if len(similar) == 1:
         hint = _("Did you mean `{name}`?\n").format(name=similar[0])
         additional = _(
             "`{name}` is a key of `{dict_}` which is similar to `{key}`.\n"
-        ).format(name=similar[0], dict_=dict_name, key=key)
+        ).format(name=similar[0], dict_=dict_name, key=repr(key))
         return {"cause": additional, "suggest": hint}
 
     if similar:
         hint = _("Did you mean `{name}`?\n").format(name=similar[0])
+        names = ", ".join(similar)
         additional = _(
-            "`{name}` has some keys similar to `{key}` including:\n" "`{names}`\n"
-        ).format(name=dict_name, key=key, names=utils.list_to_string(similar))
+            "`{name}` has some keys similar to `{key}` including:\n`{names}`.\n"
+        ).format(name=dict_name, key=repr(key), names=names)
         return {"cause": additional, "suggest": hint}
 
     return {}

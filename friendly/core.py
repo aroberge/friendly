@@ -170,6 +170,9 @@ class TracebackData:
                 ]
                 _, line = cache.get_formatted_partial_source(filename, linenumber)
                 self.program_stopped_bad_line = line.rstrip()
+            else:
+                self.program_stopped_bad_line = self.bad_line
+                self.program_stopped_frame = self.exception_frame
             return
 
         # We should never reach this stage.
