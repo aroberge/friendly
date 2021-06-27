@@ -46,10 +46,12 @@ This module currently contains 6 formatters:
 from .my_gettext import current_lang
 from . import debug_helper
 
-from pygments import highlight
-from pygments.lexers import PythonLexer, PythonTracebackLexer  # noqa
-from pygments.formatters import HtmlFormatter  # noqa
-
+try:  # allow to use without installing pygments.
+    from pygments import highlight  # noqa
+    from pygments.lexers import PythonLexer, PythonTracebackLexer  # noqa
+    from pygments.formatters import HtmlFormatter  # noqa
+except ImportError:
+    pass
 
 ipython_available = False
 try:  # pragma: no cover
