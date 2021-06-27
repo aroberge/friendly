@@ -133,21 +133,59 @@ def invalid_literal_for_int(message, *_args):
     match = re.search(pattern, message)
     if match is None:
         return {}
-    base, value = int(match.group(1)), match.group(2).strip()
-    if base == 10:
-        try:
-            _value = float(value)  # noqa
-            return _convert_to_float(value)
-        except ValueError:
-            pass
+    base, value = int(match.group(1)), match.group(2)
+    if not value:
+        cause = _(
+            "`int()` expects an argument that looks like a number in base `{base}`\n"
+            "but you gave it an empty string.\n"
+        ).format(base=base)
+        return {"cause": cause}
 
-    return {}
+    begin_cause = _(
+        "`{value}` is an invalid argument for `int()` in base `{base}`.\n"
+    ).format(value=repr(value), base=base)
+
+    try:
+        _value = float(value)  # noqa
+        cause = _convert_to_float(value)
+        cause["cause"] = begin_cause + cause["cause"]
+        return cause
+    except ValueError:
+        pass
+
+    valid = "0123456789abcdefghijiklmnopqrstuvwxyz"
+
+    if 2 <= base <= 10:
+        cause = _(
+            "In base `{base}`, `int()` is most often use to convert a string\n"
+            "containing the digits `0` to `{max_n}` into an integer.\n"
+        ).format(base=base, max_n=valid[base - 1])
+    elif base == 11:
+        cause = _(
+            "In base `11`, `int()` is most often use to convert a string\n"
+            "containing the digits `0` to `9` and the letter `'a'` into an integer.\n"
+        )
+    elif base <= 36:
+        cause = _(
+            "In base `base`, `int()` is most often use to convert a string\n"
+            "containing the digits `0` to `9` and the letters\n"
+            "from `'a'` to `'{max_n}'` into an integer.\n"
+        ).format(base=base, max_n=valid[base - 1])
+    elif base == 0:
+        cause = _(
+            "When base `0` is specified, `int()` expects the string argument to\n"
+            "represent an integer literal.\n"
+        )
+    else:
+        return {}
+
+    return {"cause": begin_cause + cause}
 
 
 def _convert_to_float(value):
     _ = current_lang.translate
 
-    hint = _("You need to convert to a float first.\n")
+    hint = _("You need to convert `'{value}'` to a float first.\n").format(value=value)
     cause = _(
         "The string `'{value}'` needs to be first converted using `float()`\n"
         "before the result can be converted into an integer using `int()`.\n"
@@ -170,6 +208,7 @@ def date_month_must_be_between_1_and_12(message, *_args):
     return {"cause": cause, "suggest": hint}
 
 
+@parser.add
 def unrecognized_message(_value, frame, tb_data):
     """This attempts to provide some help when a message is not recognized."""
     _ = current_lang.translate
