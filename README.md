@@ -1,6 +1,6 @@
 # This project has been moved!
 
-Please go to (friendly_traceback)[https://github.com/friendly-traceback/friendly-traceback]
+Please go to [friendly_traceback](https://github.com/friendly-traceback/friendly-traceback)
 
 
 ## Quick summary
